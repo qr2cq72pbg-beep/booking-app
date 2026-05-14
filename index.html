@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Booking App</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 { margin-top: 0; }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 11px;
+      margin: 7px 0;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: bold;
+    }
+
+    button:hover { background: #1d4ed8; }
+    button.danger { background: #dc2626; }
+    button.danger:hover { background: #b91c1c; }
+    button.secondary { background: #6b7280; }
+    button.secondary:hover { background: #4b5563; }
+    button.success { background: #16a34a; }
+    button.success:hover { background: #15803d; }
+
+    .hidden { display: none; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .three {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .topbar {
+      background: #111827;
+      color: white;
+      padding: 16px 20px;
+    }
+
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .topbar button {
+      width: auto;
+      padding: 9px 14px;
+      margin: 0;
+      background: #374151;
+    }
+
+    .mode-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .public-link-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 10px;
+      word-break: break-all;
+      margin-top: 6px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .copy-link-row {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 6px 0;
+      color: #111827;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: bold;
+    }
+
+    .next-booking-box {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .day-name {
+      font-weight: bold;
+      text-align: center;
+      color: #374151;
+      padding: 6px;
+    }
+
+    .calendar-day {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      min-height: 75px;
+      border-radius: 10px;
+      padding: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .calendar-day:hover { border-color: #2563eb; }
+
+    .calendar-day.selected {
+      outline: 3px solid #2563eb;
+      background: #eff6ff;
+    }
+
+    .calendar-day.closed {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+
+    .calendar-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    .badge-red { background: #dc2626; color: white; }
+    .badge-gray { background: #6b7280; color: white; }
+    .badge-green { background: #16a34a; color: white; }
+
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .slot {
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      background: #ecfdf5;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .slot:hover { background: #bbf7d0; }
+
+    .slot.booked {
+      background: #fecaca;
+      color: #991b1b;
+      cursor: not-allowed;
+    }
+
+    .slot.break {
+      background: #e5e7eb;
+      color: #4b5563;
+      cursor: not-allowed;
+    }
+
+    .slot.closed {
+      background: #fee2e2;
+      color: #991b1b;
+      cursor: not-allowed;
+    }
+
+    .list-item {
+      border: 1px solid #e5e7eb;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #f9fafb;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .actions button {
+      width: auto;
+      flex: 1;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .check-card {
+      border: 1px solid #d1d5db;
+      padding: 10px;
+      border-radius: 9px;
+      background: #f9fafb;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .check-card input {
+      width: auto;
+      margin: 0;
+    }
+
+    .edit-box {
+      border: 2px solid #2563eb;
+      background: #eff6ff;
+    }
+
+    .filter-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    
+    .admin-grid {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .widget-card {
+      padding:14px !important;
+    }
+
+    .widget-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      margin-bottom:8px;
+    }
+
+    .widget-header h2 {
+      margin:0;
+      font-size:18px;
+    }
+
+    .widget-content.collapsed {
+      display:none;
+    }
+
+    .mini-text {
+      font-size:12px;
+      color:#6b7280;
+      margin-top:4px;
+    }
+
+
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 4px 0;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+
+    .status-confirmed {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #22c55e;
+    }
+
+    .status-cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #ef4444;
+    }
+
+    @media (max-width: 900px) {
+      .admin-grid {
+        grid-template-columns:1fr;
+      }
+    }
+
+
+    @media (max-width: 700px) {
+      .row, .three, .mode-buttons, .stats-grid, .copy-link-row {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+
+      .calendar-day {
+        min-height: 58px;
+        font-size: 12px;
+        padding: 5px;
+      }
+
+      .checkbox-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <strong>Booking App</strong>
+      <div class="topbar-actions">
+        <button id="homeBtn" class="hidden" onclick="goHome()">Home</button>
+        <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div id="modeView" class="card hidden">
+      <h1>Choose Mode</h1>
+      <p class="small">Избери дали влегуваш како Admin или како Customer.</p>
+
+      <div class="mode-buttons">
+        <button onclick="chooseAdmin()">Admin</button>
+        <button class="success" onclick="chooseCustomer()">Customer</button>
+      </div>
+    </div>
+
+    <div id="authView" class="card hidden">
+      <h1>Admin Login / Signup</h1>
+      <input id="authEmail" type="email" placeholder="Email" />
+      <input id="authPassword" type="password" placeholder="Password" />
+
+      <div class="row">
+        <button onclick="login()">Login</button>
+        <button class="success" onclick="signup()">Signup</button>
+      </div>
+
+      <button class="secondary" onclick="goHome()">Back</button>
+
+      <p class="small">Admin делот е за логирани корисници. Public booking работи преку business link.</p>
+    </div>
+
+    <div id="adminView" class="hidden">
+<div class="admin-grid">
+
+      <div class="card widget-card">
+        <h1>Admin Dashboard</h1>
+        <p id="adminEmail" class="small"></p>
+
+        <p class="small">Public booking link:</p>
+        <div class="copy-link-row">
+          <div id="publicLink" class="public-link-box"></div>
+
+          <div class="actions">
+            <button class="success" onclick="copyPublicLink()">Copy Link</button>
+            <button onclick="openPublicLink()">Open Link</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Bookings</div>
+            <div id="statTotalBookings" class="stat-number">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Today Bookings</div>
+            <div id="statTodayBookings" class="stat-number">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Upcoming Bookings</div>
+            <div id="statUpcomingBookings" class="stat-number">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Total Services</div>
+            <div id="statTotalServices" class="stat-number">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Closed Days</div>
+            <div id="statClosedDays" class="stat-number">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">This Month Bookings</div>
+            <div id="statMonthBookings" class="stat-number">0</div>
+          </div>
+        </div>
+
+        <div class="next-booking-box">
+          <strong>Next Booking:</strong>
+          <div id="statNextBooking" class="small">No upcoming booking.</div>
+        </div>
+      </div>
+
+      <div class="card widget-card">
+        <div class="widget-header">
+<h2>Business Settings</h2>
+<button type="button" onclick="toggleWidget('widgetSettings')">Open / Close</button>
+</div>
+<div id="widgetSettings" class="widget-content">
+
+        <input id="businessName" placeholder="Business name" />
+
+        <div class="row">
+          <input id="workStart" type="time" value="09:00" />
+          <input id="workEnd" type="time" value="17:00" />
+        </div>
+
+        <h3>Working Days</h3>
+        <div class="checkbox-grid">
+          <label class="check-card"><input type="checkbox" class="workDay" value="1" /> Monday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="2" /> Tuesday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="3" /> Wednesday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="4" /> Thursday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="5" /> Friday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="6" /> Saturday</label>
+          <label class="check-card"><input type="checkbox" class="workDay" value="0" /> Sunday</label>
+        </div>
+
+        <h3>Optional Break / Pause</h3>
+        <div class="row">
+          <input id="breakStart" type="time" />
+          <input id="breakEnd" type="time" />
+        </div>
+
+        <div class="row">
+          <input id="bookingWindowWeeks" type="number" min="1" max="52" value="4" placeholder="Booking window weeks" />
+          <button onclick="saveBusinessSettings()">Save Settings</button>
+        </div>
+      </div>
+
+      <div class="card widget-card">
+        <div class="widget-header">
+<h2>Services</h2>
+<button type="button" onclick="toggleWidget('widgetServices')">Open / Close</button>
+</div>
+<div id="widgetServices" class="widget-content">
+        <div class="three">
+          <input id="serviceName" placeholder="Service name" />
+          <input id="serviceDuration" type="number" placeholder="Duration minutes" />
+          <input id="servicePrice" type="number" placeholder="Price optional" />
+        </div>
+        <button onclick="addService()">Add Service</button>
+        <div id="servicesList"></div></div>
+
+        <div id="editServiceCard" class="card edit-box hidden" style="margin-top: 14px;">
+          <h2>Edit Service</h2>
+          <input id="editServiceId" type="hidden" />
+
+          <div class="three">
+            <input id="editServiceName" placeholder="Service name" />
+            <input id="editServiceDuration" type="number" min="5" step="5" placeholder="Duration minutes" />
+            <input id="editServicePrice" type="number" min="0" step="1" placeholder="Price optional" />
+          </div>
+
+          <div class="actions">
+            <button class="success" onclick="saveEditedService()">Save Service</button>
+            <button class="secondary" onclick="cancelEditService()">Cancel</button>
+          </div>
+
+          <p class="small">Ако стар service нема duration, системот ќе користи 30 min како fallback.</p>
+        </div>
+      </div>
+
+      <div class="card widget-card">
+        <h2>Staff / Employees</h2>
+        <p class="small">Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.</p>
+        <div id="staffSetupNotice" class="small"></div>
+
+        <div class="row">
+          <input id="staffName" placeholder="Staff name, e.g. Stefan" />
+          <input id="staffRole" placeholder="Role optional, e.g. Barber" />
+        </div>
+
+        <button class="success" onclick="addStaffMember()">Add Staff</button>
+        <div id="staffList"></div>
+      </div>
+
+      <div class="card widget-card">
+        <div class="widget-header">
+<h2>Blocked / Closed Days</h2>
+<button type="button" onclick="toggleWidget('widgetBlocked')">Open / Close</button>
+</div>
+<div id="widgetBlocked" class="widget-content">
+        <p class="small">Овде додаваш денови кога бизнисот не работи — празник, одмор, приватна причина итн.</p>
+
+        <div class="row">
+          <input id="blockedDate" type="date" />
+          <input id="blockedReason" placeholder="Reason optional, e.g. Holiday" />
+        </div>
+
+        <button class="danger" onclick="addBlockedDay()">Add Closed Day</button>
+
+        <h3>Closed Days List</h3>
+        <div id="blockedDaysList"></div></div>
+      </div>
+
+      <div class="card widget-card">
+        <div class="widget-header">
+<h2>Admin Calendar</h2>
+<button type="button" onclick="toggleWidget('widgetCalendar')">Open / Close</button>
+</div>
+<div id="widgetCalendar" class="widget-content">
+        <div class="row">
+          <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
+          <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+        </div>
+        <h3 id="calendarTitle"></h3>
+        <div id="calendar" class="calendar"></div></div>
+      </div>
+
+      <div class="card widget-card">
+        <h2>Admin Add Booking</h2>
+        <p class="small">За термин што клиент го договорил преку телефон, Instagram, Viber или директно со тебе.</p>
+
+        <div class="row">
+          <input id="adminAddCustomerName" placeholder="Customer name" />
+          <input id="adminAddCustomerPhone" placeholder="Customer phone" />
+        </div>
+
+        <div class="row">
+          <input id="adminAddCustomerEmail" type="email" placeholder="Customer email optional" />
+          <select id="adminAddService"></select>
+        </div>
+
+        <div class="row">
+          <select id="adminAddStaff"></select>
+          <input id="adminAddDate" type="date" />
+        </div>
+
+        <div class="row">
+          <input id="adminAddTime" type="time" />
+          <select id="adminAddStatus">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+
+
+        <textarea id="adminAddNotes" placeholder="Notes optional"></textarea>
+        <button class="success" onclick="addAdminBooking()">Add Booking</button>
+
+        <p class="small">Системот проверува working days, break/pause, closed days, booking window и дали терминот се судира со друг booking.</p>
+      </div>
+
+      <div id="editBookingCard" class="card edit-box hidden">
+        <h2>Edit Booking</h2>
+        <input id="editBookingId" type="hidden" />
+
+        <div class="row">
+          <input id="editCustomerName" placeholder="Customer name" />
+          <input id="editCustomerPhone" placeholder="Customer phone" />
+        </div>
+
+        <div class="row">
+          <input id="editCustomerEmail" type="email" placeholder="Customer email optional" />
+          <select id="editService"></select>
+        </div>
+
+        <div class="row">
+          <select id="editStaff"></select>
+          <select id="editBookingStatus">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <input id="editDate" type="date" />
+          <input id="editTime" type="time" />
+        </div>
+
+        <textarea id="editNotes" placeholder="Notes optional"></textarea>
+
+        <div class="actions">
+          <button class="success" onclick="saveEditedBooking()">Save Changes</button>
+          <button class="secondary" onclick="cancelEditBooking()">Cancel</button>
+        </div>
+
+        <p class="small">
+          Save проверува дали терминот се судира со друг booking и дали денот е closed.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="widget-header">
+<h2>Bookings</h2>
+<button type="button" onclick="toggleWidget('widgetBookings')">Open / Close</button>
+</div>
+<div id="widgetBookings" class="widget-content">
+
+        <div class="filter-box">
+          <h3>Search / Filter</h3>
+
+          <div class="three">
+            <input id="bookingSearch" placeholder="Search name, phone, email..." oninput="renderBookings()" />
+            <input id="bookingDateFilter" type="date" onchange="renderBookings()" />
+            <select id="bookingServiceFilter" onchange="renderBookings()">
+              <option value="">All services</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <button class="secondary" onclick="clearBookingFilters()">Clear Filters</button>
+            <button onclick="renderBookings()">Apply Filters</button>
+          </div>
+
+          <p id="bookingFilterInfo" class="small"></p>
+        </div>
+
+        <div id="bookingsList"></div></div>
+      </div>
+
+    </div>
+
+</div>
+
+    <div id="publicView" class="hidden">
+
+      <div id="customerStartCard" class="card hidden">
+        <h1>Customer Booking</h1>
+        <p class="small">
+          Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
+        </p>
+        <input id="manualBusinessId" placeholder="Business ID" />
+        <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
+        <button class="secondary" onclick="goHome()">Back</button>
+      </div>
+
+      <div id="publicBookingContent" class="hidden">
+
+        <div class="card">
+          <h1 id="publicBusinessName">Book Appointment</h1>
+          <p class="small">Избери услуга, датум и слободен термин.</p>
+
+          <select id="publicService" onchange="renderPublicCalendar()"></select>
+          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
+
+          <div class="row">
+            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
+            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+          </div>
+
+          <h3 id="publicCalendarTitle"></h3>
+          <div id="publicCalendar" class="calendar"></div>
+        </div>
+
+        <div class="card">
+          <h2 id="selectedDateTitle">Select a date</h2>
+          <div id="slotsContainer" class="slot-grid"></div>
+        </div>
+
+        <div id="bookingFormCard" class="card hidden">
+          <h2>Confirm Booking</h2>
+          <p id="chosenSlotText"></p>
+          <input id="customerName" placeholder="Your name" />
+          <input id="customerPhone" placeholder="Phone" />
+          <input id="customerEmail" type="email" placeholder="Email optional" />
+          <textarea id="customerNotes" placeholder="Notes optional"></textarea>
+          <button onclick="createPublicBooking()">Book Now</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+  const SUPABASE_URL = "https://sdqothuulzeczcncyfqd.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_Gn743-ISr01JNKmrOOc8Mw_S3TbNbaU";
+
+  let sb = null;
+
+  function initSupabaseClient() {
+    if (sb) return true;
+
+    if (!window.supabase || !window.supabase.createClient) {
+      alert("Supabase library did not load. Check internet connection or CDN access.");
+      return false;
+    }
+
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    return true;
+  }
+
+  let currentUser = null;
+  let businessId = null;
+  let businessSettings = null;
+  let services = [];
+  let staffMembers = [];
+  let staffFeatureAvailable = false;
+  let bookingStaffColumnAvailable = false;
+  let bookings = [];
+  let blockedDays = [];
+  let currentDate = new Date();
+  let selectedDate = null;
+  let selectedSlot = null;
+  let selectedService = null;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const publicBusinessId = urlParams.get("business");
+
+  document.addEventListener("DOMContentLoaded", init);
+
+  async function init() {
+    if (!initSupabaseClient()) return;
+
+    if (publicBusinessId) {
+      businessId = publicBusinessId;
+      showPublicView(true);
+      await loadPublicData();
+      return;
+    }
+
+    const { data, error } = await sb.auth.getSession();
+
+    if (error) {
+      alert("Session error: " + error.message);
+      return;
+    }
+
+    if (data && data.session) {
+      currentUser = data.session.user;
+      businessId = currentUser.id;
+      showAdminView();
+      await loadAdminData();
+    } else {
+      showModeView();
+    }
+  }
+
+  function hideAllViews() {
+    document.getElementById("modeView").classList.add("hidden");
+    document.getElementById("authView").classList.add("hidden");
+    document.getElementById("adminView").classList.add("hidden");
+    document.getElementById("publicView").classList.add("hidden");
+  }
+
+  function showModeView() {
+    hideAllViews();
+    document.getElementById("modeView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.add("hidden");
+    document.getElementById("homeBtn").classList.add("hidden");
+  }
+
+  function showAuthView() {
+    hideAllViews();
+    document.getElementById("authView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.add("hidden");
+    document.getElementById("homeBtn").classList.remove("hidden");
+  }
+
+  function showAdminView() {
+    hideAllViews();
+    document.getElementById("adminView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.remove("hidden");
+    document.getElementById("homeBtn").classList.add("hidden");
+  }
+
+  function showPublicView(hasBusiness) {
+    hideAllViews();
+    document.getElementById("publicView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.add("hidden");
+    document.getElementById("homeBtn").classList.remove("hidden");
+
+    if (hasBusiness) {
+      document.getElementById("customerStartCard").classList.add("hidden");
+      document.getElementById("publicBookingContent").classList.remove("hidden");
+    } else {
+      document.getElementById("customerStartCard").classList.remove("hidden");
+      document.getElementById("publicBookingContent").classList.add("hidden");
+    }
+  }
+
+  function chooseAdmin() {
+    showAuthView();
+  }
+
+  function chooseCustomer() {
+    showPublicView(false);
+  }
+
+  function goHome() {
+    if (currentUser) {
+      showAdminView();
+      return;
+    }
+
+    businessId = null;
+    businessSettings = null;
+    services = [];
+    bookings = [];
+    blockedDays = [];
+    selectedDate = null;
+    selectedSlot = null;
+    selectedService = null;
+
+    history.replaceState(null, "", window.location.pathname);
+    showModeView();
+  }
+
+  async function copyPublicLink() {
+    const link = document.getElementById("publicLink").innerText.trim();
+
+    if (!link) {
+      alert("No public link found.");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(link);
+      alert("Public booking link copied.");
+    } catch (err) {
+      const tempInput = document.createElement("input");
+      tempInput.value = link;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      alert("Public booking link copied.");
+    }
+  }
+
+  function openPublicLink() {
+    const link = document.getElementById("publicLink").innerText.trim();
+
+    if (!link) {
+      alert("No public link found.");
+      return;
+    }
+
+    window.open(link, "_blank");
+  }
+
+  async function loadManualCustomerBusiness() {
+    const id = document.getElementById("manualBusinessId").value.trim();
+
+    if (!id) {
+      alert("Enter business ID.");
+      return;
+    }
+
+    businessId = id;
+    currentDate = new Date();
+    selectedDate = null;
+    selectedSlot = null;
+    selectedService = null;
+
+    showPublicView(true);
+    await loadPublicData();
+  }
+
+  async function signup() {
+    if (!initSupabaseClient()) return;
+
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value.trim();
+
+    if (!email || !password) {
+      alert("Enter email and password.");
+      return;
+    }
+
+    const { error } = await sb.auth.signUp({ email, password });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert("Signup success. If Supabase asks email confirmation, confirm first, then login.");
+  }
+
+  async function login() {
+    if (!initSupabaseClient()) return;
+
+    try {
+      const email = document.getElementById("authEmail").value.trim();
+      const password = document.getElementById("authPassword").value.trim();
+
+      if (!email || !password) {
+        alert("Enter email and password.");
+        return;
+      }
+
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      if (!data || !data.user) {
+        alert("Login failed. No user returned from Supabase.");
+        return;
+      }
+
+      currentUser = data.user;
+      businessId = currentUser.id;
+      showAdminView();
+      await loadAdminData();
+    } catch (err) {
+      alert("Login crash: " + err.message);
+    }
+  }
+
+  async function logout() {
+    if (!initSupabaseClient()) return;
+
+    await sb.auth.signOut();
+    location.href = window.location.pathname;
+  }
+
+  async function loadAdminData() {
+    document.getElementById("adminEmail").innerText = "Logged in as: " + currentUser.email;
+    document.getElementById("publicLink").innerText = window.location.origin + window.location.pathname + "?business=" + businessId;
+
+    await ensureBusinessSettings();
+    await loadServices();
+    await loadStaffMembers();
+    await checkBookingStaffColumn();
+    await loadBookings();
+    await loadBlockedDays();
+
+    fillBusinessSettingsForm();
+    renderServices();
+    renderStaffMembers();
+    renderBlockedDays();
+    renderAdminCalendar();
+    renderBookingServiceFilter();
+    renderAdminAddServiceOptions();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderBookings();
+    renderAdminStats();
+  }
+
+  async function loadPublicData() {
+    await loadBusinessSettings();
+    await loadServices();
+    await loadStaffMembers();
+    await checkBookingStaffColumn();
+    await loadBookings();
+    await loadBlockedDays();
+
+    if (!businessSettings) {
+      alert("Business not found or settings are missing.");
+      showPublicView(false);
+      return;
+    }
+
+    document.getElementById("publicBusinessName").innerText =
+      businessSettings?.business_name || "Book Appointment";
+
+    document.getElementById("selectedDateTitle").innerText = "Select a date";
+    document.getElementById("slotsContainer").innerHTML = "";
+    document.getElementById("bookingFormCard").classList.add("hidden");
+
+    renderPublicServices();
+    renderPublicStaffOptions();
+    renderPublicCalendar();
+  }
+
+  function renderAdminStats() {
+    const today = getTodayDateString();
+    const nowDateTime = new Date();
+
+    const totalBookings = bookings.length;
+    const todayBookings = bookings.filter(b => b.date === today).length;
+
+    const upcomingBookings = bookings.filter(b => {
+      const dt = new Date(`${b.date}T${b.time || "00:00"}:00`);
+      return dt >= nowDateTime;
+    });
+
+    const monthPrefix = today.slice(0, 7);
+    const monthBookings = bookings.filter(b => String(b.date || "").startsWith(monthPrefix)).length;
+
+    document.getElementById("statTotalBookings").innerText = totalBookings;
+    document.getElementById("statTodayBookings").innerText = todayBookings;
+    document.getElementById("statUpcomingBookings").innerText = upcomingBookings.length;
+    document.getElementById("statTotalServices").innerText = services.length;
+    document.getElementById("statClosedDays").innerText = blockedDays.length;
+    document.getElementById("statMonthBookings").innerText = monthBookings;
+
+    const sortedUpcoming = [...upcomingBookings].sort((a, b) => {
+      const da = new Date(`${a.date}T${a.time || "00:00"}:00`);
+      const db = new Date(`${b.date}T${b.time || "00:00"}:00`);
+      return da - db;
+    });
+
+    const next = sortedUpcoming[0];
+
+    if (!next) {
+      document.getElementById("statNextBooking").innerText = "No upcoming booking.";
+      return;
+    }
+
+    const service = services.find(s => s.id === next.service_id);
+    document.getElementById("statNextBooking").innerText =
+      `${next.date} at ${next.time} • ${next.customer_name || "Customer"} • ${service?.name || next.service_name || "Unknown service"}`;
+  }
+
+  async function ensureBusinessSettings() {
+    await loadBusinessSettings();
+
+    if (!businessSettings) {
+      const defaultSettings = {
+        business_id: businessId,
+        business_name: "My Business",
+        work_start: "09:00",
+        work_end: "17:00",
+        working_days: [1,2,3,4,5],
+        break_start: null,
+        break_end: null,
+        booking_window_weeks: 4
+      };
+
+      const { error } = await sb
+        .from("business_settings")
+        .insert(defaultSettings);
+
+      if (error) {
+        alert("Business settings error: " + error.message);
+        return;
+      }
+
+      await loadBusinessSettings();
+    }
+  }
+
+  async function loadBusinessSettings() {
+    const { data, error } = await sb
+      .from("business_settings")
+      .select("*")
+      .eq("business_id", businessId)
+      .maybeSingle();
+
+    if (error) {
+      alert("Load settings error: " + error.message);
+      return;
+    }
+
+    businessSettings = data;
+  }
+
+  function fillBusinessSettingsForm() {
+    if (!businessSettings) return;
+
+    document.getElementById("businessName").value = businessSettings.business_name || "";
+    document.getElementById("workStart").value = businessSettings.work_start || "09:00";
+    document.getElementById("workEnd").value = businessSettings.work_end || "17:00";
+    document.getElementById("breakStart").value = businessSettings.break_start || "";
+    document.getElementById("breakEnd").value = businessSettings.break_end || "";
+    document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
+
+    const days = getWorkingDaysArray();
+    document.querySelectorAll(".workDay").forEach(cb => {
+      cb.checked = days.includes(Number(cb.value));
+    });
+  }
+
+  function getWorkingDaysArray() {
+    let days = businessSettings?.working_days;
+
+    if (typeof days === "string") {
+      try {
+        days = JSON.parse(days);
+      } catch (e) {
+        days = [1,2,3,4,5];
+      }
+    }
+
+    if (!Array.isArray(days)) {
+      days = [1,2,3,4,5];
+    }
+
+    return days.map(Number);
+  }
+
+  async function saveBusinessSettings() {
+    const workingDays = Array.from(document.querySelectorAll(".workDay:checked"))
+      .map(cb => Number(cb.value));
+
+    const updates = {
+      business_name: document.getElementById("businessName").value.trim(),
+      work_start: document.getElementById("workStart").value,
+      work_end: document.getElementById("workEnd").value,
+      working_days: workingDays,
+      break_start: document.getElementById("breakStart").value || null,
+      break_end: document.getElementById("breakEnd").value || null,
+      booking_window_weeks: Number(document.getElementById("bookingWindowWeeks").value || 4)
+    };
+
+    const { error } = await sb
+      .from("business_settings")
+      .update(updates)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Save settings error: " + error.message);
+      return;
+    }
+
+    alert("Settings saved.");
+    await loadAdminData();
+  }
+
+  function getServiceDurationValue(service) {
+    const duration = Number(service?.duration_minutes);
+
+    if (!duration || isNaN(duration) || duration <= 0) {
+      return 30;
+    }
+
+    return duration;
+  }
+
+  function getServicePriceValue(service) {
+    const price = Number(service?.price);
+
+    if (isNaN(price) || price < 0) {
+      return 0;
+    }
+
+    return price;
+  }
+
+  async function loadServices() {
+    const { data, error } = await sb
+      .from("services")
+      .select("*")
+      .eq("business_id", businessId)
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      alert("Load services error: " + error.message);
+      return;
+    }
+
+    services = data || [];
+  }
+
+  async function addService() {
+    const name = document.getElementById("serviceName").value.trim();
+    const duration = Number(document.getElementById("serviceDuration").value || 30);
+    const price = Number(document.getElementById("servicePrice").value || 0);
+
+    if (!name) {
+      alert("Enter service name.");
+      return;
+    }
+
+    if (!duration || duration <= 0) {
+      alert("Duration must be greater than 0.");
+      return;
+    }
+
+    const { error } = await sb
+      .from("services")
+      .insert({
+        business_id: businessId,
+        name,
+        duration_minutes: duration,
+        price
+      });
+
+    if (error) {
+      alert("Add service error: " + error.message);
+      return;
+    }
+
+    document.getElementById("serviceName").value = "";
+    document.getElementById("serviceDuration").value = "";
+    document.getElementById("servicePrice").value = "";
+
+    await loadServices();
+    renderServices();
+    renderEditServiceOptions();
+    renderBookingServiceFilter();
+    renderAdminAddServiceOptions();
+    renderAdminStats();
+  }
+
+  async function deleteService(id) {
+    if (!confirm("Delete this service?")) return;
+
+    const { error } = await sb
+      .from("services")
+      .delete()
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Delete service error: " + error.message);
+      return;
+    }
+
+    await loadServices();
+    renderServices();
+    renderEditServiceOptions();
+    renderBookingServiceFilter();
+    renderAdminAddServiceOptions();
+    renderBookings();
+    renderAdminStats();
+  }
+
+  function renderServices() {
+    const box = document.getElementById("servicesList");
+    box.innerHTML = "";
+
+    if (!services.length) {
+      box.innerHTML = "<p class='small'>No services yet.</p>";
+      return;
+    }
+
+    services.forEach(s => {
+      const duration = getServiceDurationValue(s);
+      const price = getServicePriceValue(s);
+
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <strong>${escapeHtml(s.name)}</strong><br>
+        <span class="small">${duration} min ${price ? "• " + price + " MKD" : ""}</span>
+        <div class="actions">
+          <button onclick="editServiceItem('${s.id}')">Edit</button>
+          <button class="danger" onclick="deleteService('${s.id}')">Delete</button>
+        </div>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  function editServiceItem(id) {
+    const service = services.find(s => s.id === id);
+
+    if (!service) {
+      alert("Service not found.");
+      return;
+    }
+
+    document.getElementById("editServiceId").value = service.id;
+    document.getElementById("editServiceName").value = service.name || "";
+    document.getElementById("editServiceDuration").value = getServiceDurationValue(service);
+    document.getElementById("editServicePrice").value = getServicePriceValue(service);
+
+    document.getElementById("editServiceCard").classList.remove("hidden");
+    document.getElementById("editServiceCard").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function cancelEditService() {
+    document.getElementById("editServiceCard").classList.add("hidden");
+    document.getElementById("editServiceId").value = "";
+    document.getElementById("editServiceName").value = "";
+    document.getElementById("editServiceDuration").value = "";
+    document.getElementById("editServicePrice").value = "";
+  }
+
+  async function saveEditedService() {
+    const id = document.getElementById("editServiceId").value;
+    const name = document.getElementById("editServiceName").value.trim();
+    const duration = Number(document.getElementById("editServiceDuration").value || 30);
+    const price = Number(document.getElementById("editServicePrice").value || 0);
+
+    if (!id) {
+      alert("No service selected.");
+      return;
+    }
+
+    if (!name) {
+      alert("Service name is required.");
+      return;
+    }
+
+    if (!duration || duration <= 0) {
+      alert("Duration must be greater than 0.");
+      return;
+    }
+
+    const { error } = await sb
+      .from("services")
+      .update({
+        name,
+        duration_minutes: duration,
+        price
+      })
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Edit service error: " + error.message);
+      return;
+    }
+
+    alert("Service updated successfully.");
+
+    cancelEditService();
+
+    await loadServices();
+    await loadBookings();
+
+    renderServices();
+    renderEditServiceOptions();
+    renderBookingServiceFilter();
+    renderAdminAddServiceOptions();
+    renderBookings();
+    renderAdminCalendar();
+    renderAdminStats();
+
+    if (!document.getElementById("publicView").classList.contains("hidden")) {
+      renderPublicServices();
+      renderPublicCalendar();
+      if (selectedDate) renderSlots(selectedDate);
+    }
+  }
+
+  function renderPublicServices() {
+    const select = document.getElementById("publicService");
+    select.innerHTML = "";
+
+    if (!services.length) {
+      select.innerHTML = `<option value="">No services available</option>`;
+      return;
+    }
+
+    services.forEach(s => {
+      const option = document.createElement("option");
+      option.value = s.id;
+      option.textContent = `${s.name} - ${getServiceDurationValue(s)} min`;
+      select.appendChild(option);
+    });
+  }
+
+  function renderEditServiceOptions(selectedId) {
+    const select = document.getElementById("editService");
+    if (!select) return;
+
+    select.innerHTML = "";
+
+    if (!services.length) {
+      select.innerHTML = `<option value="">No services available</option>`;
+      return;
+    }
+
+    services.forEach(s => {
+      const option = document.createElement("option");
+      option.value = s.id;
+      option.textContent = `${s.name} - ${getServiceDurationValue(s)} min`;
+      if (selectedId && s.id === selectedId) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function renderBookingServiceFilter() {
+    const select = document.getElementById("bookingServiceFilter");
+    if (!select) return;
+
+    const currentValue = select.value;
+    select.innerHTML = `<option value="">All services</option>`;
+
+    services.forEach(s => {
+      const option = document.createElement("option");
+      option.value = s.id;
+      option.textContent = s.name;
+      if (currentValue && currentValue === s.id) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function renderAdminAddServiceOptions(selectedId) {
+    const select = document.getElementById("adminAddService");
+    if (!select) return;
+
+    select.innerHTML = "";
+
+    if (!services.length) {
+      select.innerHTML = `<option value="">No services available</option>`;
+      return;
+    }
+
+    services.forEach(s => {
+      const option = document.createElement("option");
+      option.value = s.id;
+      option.textContent = `${s.name} - ${getServiceDurationValue(s)} min`;
+      if (selectedId && s.id === selectedId) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+
+  function getStaffName(staffId) {
+    if (!staffId) return "Any staff";
+    const staff = staffMembers.find(x => x.id === staffId);
+    return staff ? staff.name : "Unknown staff";
+  }
+
+  async function loadStaffMembers() {
+    const { data, error } = await sb
+      .from("staff_members")
+      .select("*")
+      .eq("business_id", businessId)
+      .order("created_at", { ascending: true });
+
+    if (error) {
+      staffMembers = [];
+      staffFeatureAvailable = false;
+      return;
+    }
+
+    staffMembers = data || [];
+    staffFeatureAvailable = true;
+  }
+
+  async function checkBookingStaffColumn() {
+    const { error } = await sb
+      .from("bookings")
+      .select("staff_id")
+      .eq("business_id", businessId)
+      .limit(1);
+
+    bookingStaffColumnAvailable = !error;
+  }
+
+  function renderStaffMembers() {
+    const box = document.getElementById("staffList");
+    const notice = document.getElementById("staffSetupNotice");
+    if (!box) return;
+
+    box.innerHTML = "";
+
+    if (!staffFeatureAvailable) {
+      if (notice) {
+        notice.innerHTML = "<strong>Staff table is not ready.</strong> Run the SQL from README.txt in Supabase, then reload this page.";
+      }
+      box.innerHTML = "<p class='small'>Staff system is disabled until SQL is added.</p>";
+      return;
+    }
+
+    if (notice) {
+      notice.innerHTML = bookingStaffColumnAvailable
+        ? "Staff system is active."
+        : "Staff table exists, but bookings.staff_id is missing. Run the full SQL from README.txt.";
+    }
+
+    if (!staffMembers.length) {
+      box.innerHTML = "<p class='small'>No staff added yet.</p>";
+      return;
+    }
+
+    staffMembers.forEach(staff => {
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <strong>${escapeHtml(staff.name)}</strong><br>
+        <span class="small">${escapeHtml(staff.role || "Staff")} ${staff.active === false ? "• Inactive" : "• Active"}</span>
+        <div class="actions">
+          <button onclick="toggleStaffActive('${staff.id}', ${staff.active === false ? 'true' : 'false'})">
+            ${staff.active === false ? 'Activate' : 'Deactivate'}
+          </button>
+          <button class="danger" onclick="deleteStaffMember('${staff.id}')">Delete</button>
+        </div>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  async function addStaffMember() {
+    if (!staffFeatureAvailable) {
+      alert("Run the staff SQL from README.txt first, then reload the app.");
+      return;
+    }
+
+    const name = document.getElementById("staffName").value.trim();
+    const role = document.getElementById("staffRole").value.trim();
+
+    if (!name) {
+      alert("Enter staff name.");
+      return;
+    }
+
+    const { error } = await sb
+      .from("staff_members")
+      .insert({
+        business_id: businessId,
+        name,
+        role: role || null,
+        active: true
+      });
+
+    if (error) {
+      alert("Add staff error: " + error.message);
+      return;
+    }
+
+    document.getElementById("staffName").value = "";
+    document.getElementById("staffRole").value = "";
+
+    await loadStaffMembers();
+    renderStaffMembers();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderPublicStaffOptions();
+  }
+
+  async function toggleStaffActive(id, active) {
+    if (!staffFeatureAvailable) return;
+
+    const { error } = await sb
+      .from("staff_members")
+      .update({ active })
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Staff update error: " + error.message);
+      return;
+    }
+
+    await loadStaffMembers();
+    renderStaffMembers();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderPublicStaffOptions();
+  }
+
+  async function deleteStaffMember(id) {
+    if (!confirm("Delete this staff member? Existing bookings will keep working, but staff may become empty if SQL uses ON DELETE SET NULL.")) return;
+
+    const { error } = await sb
+      .from("staff_members")
+      .delete()
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Delete staff error: " + error.message);
+      return;
+    }
+
+    await loadStaffMembers();
+    await loadBookings();
+    renderStaffMembers();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderPublicStaffOptions();
+    renderBookings();
+    renderAdminCalendar();
+  }
+
+  function getActiveStaffMembers() {
+    return staffMembers.filter(staff => staff.active !== false);
+  }
+
+  function renderAdminAddStaffOptions(selectedId) {
+    const select = document.getElementById("adminAddStaff");
+    if (!select) return;
+
+    select.innerHTML = `<option value="">Any staff</option>`;
+
+    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) {
+      select.disabled = true;
+      return;
+    }
+
+    select.disabled = false;
+    getActiveStaffMembers().forEach(staff => {
+      const option = document.createElement("option");
+      option.value = staff.id;
+      option.textContent = staff.role ? `${staff.name} - ${staff.role}` : staff.name;
+      if (selectedId && selectedId === staff.id) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function renderEditStaffOptions(selectedId) {
+    const select = document.getElementById("editStaff");
+    if (!select) return;
+
+    select.innerHTML = `<option value="">Any staff</option>`;
+
+    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) {
+      select.disabled = true;
+      return;
+    }
+
+    select.disabled = false;
+    getActiveStaffMembers().forEach(staff => {
+      const option = document.createElement("option");
+      option.value = staff.id;
+      option.textContent = staff.role ? `${staff.name} - ${staff.role}` : staff.name;
+      if (selectedId && selectedId === staff.id) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function renderPublicStaffOptions(selectedId) {
+    const select = document.getElementById("publicStaff");
+    if (!select) return;
+
+    select.innerHTML = `<option value="">Any staff</option>`;
+
+    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) {
+      select.classList.add("hidden");
+      return;
+    }
+
+    select.classList.remove("hidden");
+    getActiveStaffMembers().forEach(staff => {
+      const option = document.createElement("option");
+      option.value = staff.id;
+      option.textContent = staff.role ? `${staff.name} - ${staff.role}` : staff.name;
+      if (selectedId && selectedId === staff.id) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function getSelectedPublicStaffId() {
+    const select = document.getElementById("publicStaff");
+    if (!select || select.classList.contains("hidden")) return null;
+    return select.value || null;
+  }
+
+  function handlePublicStaffChange() {
+    document.getElementById("bookingFormCard").classList.add("hidden");
+    if (selectedDate) renderSlots(selectedDate);
+  }
+
+  async function loadBookings() {
+    const { data, error } = await sb
+      .from("bookings")
+      .select("*")
+      .eq("business_id", businessId)
+      .order("date", { ascending: true })
+      .order("time", { ascending: true });
+
+    if (error) {
+      alert("Load bookings error: " + error.message);
+      return;
+    }
+
+    bookings = data || [];
+  }
+
+  function getFilteredBookings() {
+    const search = (document.getElementById("bookingSearch")?.value || "").trim().toLowerCase();
+    const dateFilter = document.getElementById("bookingDateFilter")?.value || "";
+    const serviceFilter = document.getElementById("bookingServiceFilter")?.value || "";
+
+    return bookings.filter(b => {
+      const service = services.find(s => s.id === b.service_id);
+      const serviceName = service?.name || b.service_name || "";
+
+      const searchableText = `
+        ${b.customer_name || ""}
+        ${b.customer_phone || ""}
+        ${b.customer_email || ""}
+        ${b.notes || ""}
+        ${serviceName}
+      `.toLowerCase();
+
+      const matchesSearch = !search || searchableText.includes(search);
+      const matchesDate = !dateFilter || b.date === dateFilter;
+      const matchesService = !serviceFilter || b.service_id === serviceFilter;
+
+      return matchesSearch && matchesDate && matchesService;
+    });
+  }
+
+  function clearBookingFilters() {
+    document.getElementById("bookingSearch").value = "";
+    document.getElementById("bookingDateFilter").value = "";
+    document.getElementById("bookingServiceFilter").value = "";
+    renderBookings();
+  }
+
+
+  function getBookingStatus(booking) {
+    const status = booking?.booking_status || booking?.status || "Pending";
+    if (["Pending", "Confirmed", "Cancelled"].includes(status)) return status;
+    return "Pending";
+  }
+
+  function getStatusClass(status) {
+    if (status === "Confirmed") return "status-confirmed";
+    if (status === "Cancelled") return "status-cancelled";
+    return "status-pending";
+  }
+
+  async function updateBookingStatus(id, status) {
+    if (!id || !status) return;
+
+    const { error } = await sb
+      .from("bookings")
+      .update({ booking_status: status })
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Status update error: " + error.message);
+      return;
+    }
+
+    await loadAdminData();
+  }
+
+  function renderBookings() {
+    const box = document.getElementById("bookingsList");
+    const info = document.getElementById("bookingFilterInfo");
+
+    box.innerHTML = "";
+
+    const filteredBookings = getFilteredBookings();
+
+    if (info) {
+      info.innerText = `Showing ${filteredBookings.length} of ${bookings.length} bookings.`;
+    }
+
+    if (!filteredBookings.length) {
+      box.innerHTML = "<p class='small'>No bookings found.</p>";
+      return;
+    }
+
+    filteredBookings.forEach(b => {
+      const service = services.find(s => s.id === b.service_id);
+      const status = getBookingStatus(b);
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <strong>${escapeHtml(b.customer_name || "Customer")}</strong><br>
+        <span class="small">
+          ${b.date} at ${b.time}<br>
+          <span class="status-badge ${getStatusClass(status)}">${status}</span><br>
+          Service: ${escapeHtml(service?.name || b.service_name || "Unknown")}<br>
+          Staff: ${escapeHtml(getStaffName(b.staff_id))}<br>
+          Phone: ${escapeHtml(b.customer_phone || "")}<br>
+          Email: ${escapeHtml(b.customer_email || "")}<br>
+          Notes: ${escapeHtml(b.notes || "")}
+        </span>
+        <div class="actions">
+          <button onclick="editBooking('${b.id}')">Edit</button>
+          <button class="success" onclick="updateBookingStatus('${b.id}', 'Confirmed')">Confirm</button>
+          <button class="secondary" onclick="updateBookingStatus('${b.id}', 'Pending')">Pending</button>
+          <button class="danger" onclick="updateBookingStatus('${b.id}', 'Cancelled')">Cancel</button>
+          <button class="danger" onclick="deleteBooking('${b.id}')">Delete</button>
+        </div>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  async function addAdminBooking() {
+    const customerName = document.getElementById("adminAddCustomerName").value.trim();
+    const customerPhone = document.getElementById("adminAddCustomerPhone").value.trim();
+    const customerEmail = document.getElementById("adminAddCustomerEmail").value.trim();
+    const serviceId = document.getElementById("adminAddService").value;
+    const staffId = document.getElementById("adminAddStaff")?.value || null;
+    const date = document.getElementById("adminAddDate").value;
+    const time = document.getElementById("adminAddTime").value;
+    const bookingStatus = document.getElementById("adminAddStatus")?.value || "Pending";
+    const notes = document.getElementById("adminAddNotes").value.trim();
+
+    if (!customerName || !customerPhone || !serviceId || !date || !time) {
+      alert("Name, phone, service, date and time are required.");
+      return;
+    }
+
+    const service = services.find(s => s.id === serviceId);
+    if (!service) {
+      alert("Selected service not found.");
+      return;
+    }
+
+    const isClosed = blockedDays.some(d => d.date === date);
+    if (isClosed) {
+      alert("This date is blocked / closed.");
+      return;
+    }
+
+    const dateObj = new Date(date + "T00:00:00");
+    const workingDays = getWorkingDaysArray();
+    if (!workingDays.includes(dateObj.getDay())) {
+      alert("This is not a working day.");
+      return;
+    }
+
+    if (isOutsideBookingWindow(date)) {
+      alert("This date is outside booking window.");
+      return;
+    }
+
+    if (isPastDate(date)) {
+      alert("Past date is not allowed.");
+      return;
+    }
+
+    const duration = getServiceDurationValue(service);
+
+    if (isSlotInBreak(time, duration)) {
+      alert("This time is inside break / pause.");
+      return;
+    }
+
+    const start = timeToMinutes(time);
+    const end = start + duration;
+    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
+    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+
+    if (start < workStart || end > workEnd) {
+      alert("This booking is outside working hours.");
+      return;
+    }
+
+    await loadBookings();
+
+    const conflict = hasConflict(date, time, serviceId, null, staffId);
+    if (conflict) {
+      alert("This time conflicts with another booking.");
+      return;
+    }
+
+    const bookingPayload = {
+      business_id: businessId,
+      service_id: service.id,
+      service_name: service.name,
+      date,
+      time,
+      duration_minutes: duration,
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      customer_email: customerEmail || null,
+      notes: notes || null,
+      booking_status: bookingStatus
+    };
+
+    if (bookingStaffColumnAvailable && staffId) {
+      bookingPayload.staff_id = staffId;
+    }
+
+    const { error } = await sb
+      .from("bookings")
+      .insert(bookingPayload);
+
+    if (error) {
+      alert("Add booking error: " + error.message);
+      return;
+    }
+
+    alert("Booking added successfully.");
+
+    document.getElementById("adminAddCustomerName").value = "";
+    document.getElementById("adminAddCustomerPhone").value = "";
+    document.getElementById("adminAddCustomerEmail").value = "";
+    document.getElementById("adminAddDate").value = "";
+    document.getElementById("adminAddTime").value = "";
+    document.getElementById("adminAddNotes").value = "";
+    if (document.getElementById("adminAddStaff")) document.getElementById("adminAddStaff").value = "";
+    if (document.getElementById("adminAddStatus")) document.getElementById("adminAddStatus").value = "Pending";
+
+    await loadAdminData();
+  }
+
+  function editBooking(id) {
+    const booking = bookings.find(b => b.id === id);
+    if (!booking) return;
+
+    document.getElementById("editBookingId").value = booking.id;
+    document.getElementById("editCustomerName").value = booking.customer_name || "";
+    document.getElementById("editCustomerPhone").value = booking.customer_phone || "";
+    document.getElementById("editCustomerEmail").value = booking.customer_email || "";
+    document.getElementById("editDate").value = booking.date || "";
+    document.getElementById("editTime").value = booking.time || "";
+    document.getElementById("editNotes").value = booking.notes || "";
+    if (document.getElementById("editBookingStatus")) document.getElementById("editBookingStatus").value = getBookingStatus(booking);
+
+    renderEditServiceOptions(booking.service_id);
+    renderEditStaffOptions(booking.staff_id || "");
+
+    document.getElementById("editBookingCard").classList.remove("hidden");
+    document.getElementById("editBookingCard").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function cancelEditBooking() {
+    document.getElementById("editBookingCard").classList.add("hidden");
+    document.getElementById("editBookingId").value = "";
+  }
+
+  async function saveEditedBooking() {
+    const id = document.getElementById("editBookingId").value;
+    const customerName = document.getElementById("editCustomerName").value.trim();
+    const customerPhone = document.getElementById("editCustomerPhone").value.trim();
+    const customerEmail = document.getElementById("editCustomerEmail").value.trim();
+    const serviceId = document.getElementById("editService").value;
+    const staffId = document.getElementById("editStaff")?.value || null;
+    const newDate = document.getElementById("editDate").value;
+    const newTime = document.getElementById("editTime").value;
+    const bookingStatus = document.getElementById("editBookingStatus")?.value || "Pending";
+    const notes = document.getElementById("editNotes").value.trim();
+
+    if (!id) {
+      alert("No booking selected.");
+      return;
+    }
+
+    if (!customerName || !customerPhone || !serviceId || !newDate || !newTime) {
+      alert("Name, phone, service, date and time are required.");
+      return;
+    }
+
+    const selectedEditService = services.find(s => s.id === serviceId);
+    if (!selectedEditService) {
+      alert("Selected service not found.");
+      return;
+    }
+
+    const isClosed = blockedDays.some(d => d.date === newDate);
+    if (isClosed) {
+      alert("This date is blocked / closed.");
+      return;
+    }
+
+    const dateObj = new Date(newDate + "T00:00:00");
+    const workingDays = getWorkingDaysArray();
+    if (!workingDays.includes(dateObj.getDay())) {
+      alert("This is not a working day.");
+      return;
+    }
+
+    if (isOutsideBookingWindow(newDate)) {
+      alert("This date is outside booking window.");
+      return;
+    }
+
+    if (isPastDate(newDate)) {
+      alert("Past date is not allowed.");
+      return;
+    }
+
+    if (isSlotInBreak(newTime, getServiceDurationValue(selectedEditService))) {
+      alert("This time is inside break / pause.");
+      return;
+    }
+
+    const start = timeToMinutes(newTime);
+    const end = start + Number(getServiceDurationValue(selectedEditService));
+    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
+    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+
+    if (start < workStart || end > workEnd) {
+      alert("This booking is outside working hours.");
+      return;
+    }
+
+    const conflict = hasConflict(newDate, newTime, serviceId, id, staffId);
+    if (conflict) {
+      alert("This time conflicts with another booking.");
+      return;
+    }
+
+    const updatePayload = {
+      service_id: serviceId,
+      service_name: selectedEditService.name,
+      date: newDate,
+      time: newTime,
+      duration_minutes: getServiceDurationValue(selectedEditService),
+      customer_name: customerName,
+      customer_phone: customerPhone,
+      customer_email: customerEmail || null,
+      notes: notes || null,
+      booking_status: bookingStatus
+    };
+
+    if (bookingStaffColumnAvailable) {
+      updatePayload.staff_id = staffId || null;
+    }
+
+    const { error } = await sb
+      .from("bookings")
+      .update(updatePayload)
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Edit booking error: " + error.message);
+      return;
+    }
+
+    alert("Booking updated successfully.");
+    cancelEditBooking();
+    await loadAdminData();
+  }
+
+  async function deleteBooking(id) {
+    if (!confirm("Delete this booking?")) return;
+
+    const { error } = await sb
+      .from("bookings")
+      .delete()
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Delete booking error: " + error.message);
+      return;
+    }
+
+    await loadAdminData();
+  }
+
+  async function loadBlockedDays() {
+    const { data, error } = await sb
+      .from("blocked_days")
+      .select("*")
+      .eq("business_id", businessId)
+      .order("date", { ascending: true });
+
+    if (error) {
+      alert("Load blocked days error: " + error.message);
+      return;
+    }
+
+    blockedDays = data || [];
+  }
+
+  async function addBlockedDay() {
+    const date = document.getElementById("blockedDate").value;
+    const reason = document.getElementById("blockedReason").value.trim();
+
+    if (!date) {
+      alert("Choose date.");
+      return;
+    }
+
+    const alreadyBlocked = blockedDays.some(d => d.date === date);
+    if (alreadyBlocked) {
+      alert("This date is already blocked.");
+      return;
+    }
+
+    const existingBookings = bookings.filter(b => b.date === date);
+
+    if (existingBookings.length > 0) {
+      const ok = confirm("There are bookings on this date. Block anyway?");
+      if (!ok) return;
+    }
+
+    const { error } = await sb
+      .from("blocked_days")
+      .insert({
+        business_id: businessId,
+        date,
+        reason: reason || null
+      });
+
+    if (error) {
+      alert("Add blocked day error: " + error.message);
+      return;
+    }
+
+    document.getElementById("blockedDate").value = "";
+    document.getElementById("blockedReason").value = "";
+
+    await loadAdminData();
+  }
+
+  async function deleteBlockedDay(id) {
+    if (!confirm("Remove this closed day?")) return;
+
+    const { error } = await sb
+      .from("blocked_days")
+      .delete()
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      alert("Delete blocked day error: " + error.message);
+      return;
+    }
+
+    await loadAdminData();
+  }
+
+  function renderBlockedDays() {
+    const box = document.getElementById("blockedDaysList");
+    box.innerHTML = "";
+
+    if (!blockedDays.length) {
+      box.innerHTML = "<p class='small'>No closed days yet.</p>";
+      return;
+    }
+
+    blockedDays.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "list-item";
+      div.innerHTML = `
+        <strong>${d.date}</strong>
+        <br>
+        <span class="small">${escapeHtml(d.reason || "No reason")}</span>
+        <div class="actions">
+          <button class="danger" onclick="deleteBlockedDay('${d.id}')">Remove</button>
+        </div>
+      `;
+      box.appendChild(div);
+    });
+  }
+
+  function changeMonth(offset) {
+    currentDate.setMonth(currentDate.getMonth() + offset);
+
+    if (document.getElementById("publicView").classList.contains("hidden")) {
+      renderAdminCalendar();
+    } else {
+      renderPublicCalendar();
+    }
+  }
+
+  function renderAdminCalendar() {
+    const calendar = document.getElementById("calendar");
+    const title = document.getElementById("calendarTitle");
+
+    calendar.innerHTML = "";
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    title.innerText = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+
+    const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    dayNames.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "day-name";
+      div.innerText = d;
+      calendar.appendChild(div);
+    });
+
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    let startOffset = firstDay.getDay();
+    startOffset = startOffset === 0 ? 6 : startOffset - 1;
+
+    for (let i = 0; i < startOffset; i++) {
+      const empty = document.createElement("div");
+      empty.className = "calendar-day empty";
+      calendar.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = formatDate(year, month, day);
+      const dayBookings = bookings.filter(b => b.date === dateStr);
+      const closed = blockedDays.find(d => d.date === dateStr);
+
+      const div = document.createElement("div");
+      div.className = "calendar-day";
+      if (closed) div.classList.add("closed");
+
+      div.innerHTML = `
+        <strong>${day}</strong><br>
+        ${closed ? `<span class="badge badge-red">Closed</span><br>` : ""}
+        ${dayBookings.length ? `<span class="badge badge-green">${dayBookings.length} booking</span>` : ""}
+      `;
+
+      div.onclick = () => {
+        selectedDate = dateStr;
+        alert(
+          closed
+            ? `Closed day: ${dateStr}\nReason: ${closed.reason || "No reason"}`
+            : `Selected date: ${dateStr}\nBookings: ${dayBookings.length}`
+        );
+      };
+
+      calendar.appendChild(div);
+    }
+  }
+
+  function renderPublicCalendar() {
+    const calendar = document.getElementById("publicCalendar");
+    const title = document.getElementById("publicCalendarTitle");
+
+    calendar.innerHTML = "";
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    title.innerText = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+
+    const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    dayNames.forEach(d => {
+      const div = document.createElement("div");
+      div.className = "day-name";
+      div.innerText = d;
+      calendar.appendChild(div);
+    });
+
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    let startOffset = firstDay.getDay();
+    startOffset = startOffset === 0 ? 6 : startOffset - 1;
+
+    for (let i = 0; i < startOffset; i++) {
+      const empty = document.createElement("div");
+      empty.className = "calendar-day empty";
+      calendar.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = formatDate(year, month, day);
+      const dateObj = new Date(year, month, day);
+      const dayOfWeek = dateObj.getDay();
+
+      const workingDays = getWorkingDaysArray();
+      const isWorkingDay = workingDays.includes(dayOfWeek);
+      const isClosed = blockedDays.some(d => d.date === dateStr);
+      const isPast = isPastDate(dateStr);
+      const outsideWindow = isOutsideBookingWindow(dateStr);
+
+      const div = document.createElement("div");
+      div.className = "calendar-day";
+
+      if (isClosed) div.classList.add("closed");
+
+      div.innerHTML = `
+        <strong>${day}</strong><br>
+        ${isClosed ? `<span class="badge badge-red">Closed</span>` : ""}
+        ${!isClosed && !isWorkingDay ? `<span class="badge badge-gray">Off</span>` : ""}
+      `;
+
+      if (isPast || outsideWindow || !isWorkingDay || isClosed) {
+        div.onclick = () => {
+          if (isClosed) alert("This day is closed.");
+          else if (!isWorkingDay) alert("This is not a working day.");
+          else if (outsideWindow) alert("This date is outside booking window.");
+          else alert("Past date.");
+        };
+      } else {
+        div.onclick = () => selectPublicDate(dateStr);
+      }
+
+      calendar.appendChild(div);
+    }
+  }
+
+  function selectPublicDate(dateStr) {
+    selectedDate = dateStr;
+    selectedSlot = null;
+
+    document.getElementById("selectedDateTitle").innerText = "Available slots for " + dateStr;
+    document.getElementById("bookingFormCard").classList.add("hidden");
+
+    renderSlots(dateStr);
+  }
+
+  function renderSlots(dateStr) {
+    const container = document.getElementById("slotsContainer");
+    container.innerHTML = "";
+
+    const serviceId = document.getElementById("publicService").value;
+    selectedService = services.find(s => s.id === serviceId);
+
+    if (!selectedService) {
+      container.innerHTML = "<p>No service selected.</p>";
+      return;
+    }
+
+    const closed = blockedDays.some(d => d.date === dateStr);
+    if (closed) {
+      container.innerHTML = `<div class="slot closed">Closed</div>`;
+      return;
+    }
+
+    const selectedStaffId = getSelectedPublicStaffId();
+
+    const slots = generateSlots(
+      businessSettings.work_start || "09:00",
+      businessSettings.work_end || "17:00",
+      getServiceDurationValue(selectedService)
+    );
+
+    if (!slots.length) {
+      container.innerHTML = "<p>No slots available.</p>";
+      return;
+    }
+
+    slots.forEach(time => {
+      const div = document.createElement("div");
+
+      const isBreak = isSlotInBreak(time, getServiceDurationValue(selectedService));
+      const conflict = hasConflict(dateStr, time, selectedService.id, null, selectedStaffId);
+
+      div.className = "slot";
+
+      if (isBreak) {
+        div.classList.add("break");
+        div.innerText = time + " Break";
+      } else if (conflict) {
+        div.classList.add("booked");
+        div.innerText = time + " Booked";
+      } else {
+        div.innerText = time;
+        div.onclick = () => chooseSlot(time);
+      }
+
+      container.appendChild(div);
+    });
+  }
+
+  function chooseSlot(time) {
+    selectedSlot = time;
+
+    document.getElementById("bookingFormCard").classList.remove("hidden");
+    document.getElementById("chosenSlotText").innerText =
+      `${selectedDate} at ${selectedSlot} - ${selectedService.name}`;
+  }
+
+  async function createPublicBooking() {
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    const email = document.getElementById("customerEmail").value.trim();
+    const notes = document.getElementById("customerNotes").value.trim();
+    const staffId = getSelectedPublicStaffId();
+
+    if (!selectedDate || !selectedSlot || !selectedService) {
+      alert("Choose date, slot and service.");
+      return;
+    }
+
+    if (!name || !phone) {
+      alert("Name and phone are required.");
+      return;
+    }
+
+    const closed = blockedDays.some(d => d.date === selectedDate);
+    if (closed) {
+      alert("This day is closed.");
+      return;
+    }
+
+    await loadBookings();
+
+    const conflict = hasConflict(selectedDate, selectedSlot, selectedService.id, null, staffId);
+    if (conflict) {
+      alert("Sorry, this slot is already booked.");
+      await loadPublicData();
+      return;
+    }
+
+    const bookingPayload = {
+      business_id: businessId,
+      service_id: selectedService.id,
+      service_name: selectedService.name,
+      date: selectedDate,
+      time: selectedSlot,
+      duration_minutes: getServiceDurationValue(selectedService),
+      customer_name: name,
+      customer_phone: phone,
+      customer_email: email || null,
+      notes: notes || null
+    };
+
+    if (bookingStaffColumnAvailable && staffId) {
+      bookingPayload.staff_id = staffId;
+    }
+
+    const { error } = await sb
+      .from("bookings")
+      .insert(bookingPayload);
+
+    if (error) {
+      alert("Booking error: " + error.message);
+      return;
+    }
+
+    alert("Booking created successfully.");
+
+    document.getElementById("customerName").value = "";
+    document.getElementById("customerPhone").value = "";
+    document.getElementById("customerEmail").value = "";
+    document.getElementById("customerNotes").value = "";
+    document.getElementById("bookingFormCard").classList.add("hidden");
+
+    await loadPublicData();
+
+    if (selectedDate) renderSlots(selectedDate);
+  }
+
+  function generateSlots(start, end, duration) {
+    const slots = [];
+
+    let current = timeToMinutes(start);
+    const endMin = timeToMinutes(end);
+
+    while (current + duration <= endMin) {
+      slots.push(minutesToTime(current));
+      current += Number(duration);
+    }
+
+    return slots;
+  }
+
+  function hasConflict(date, time, serviceId, ignoreBookingId, staffId) {
+    const service = services.find(s => s.id === serviceId);
+    if (!service) return false;
+
+    const newStart = timeToMinutes(time);
+    const newEnd = newStart + getServiceDurationValue(service);
+
+    return bookings.some(b => {
+      if (b.date !== date) return false;
+      if (ignoreBookingId && b.id === ignoreBookingId) return false;
+
+      if (bookingStaffColumnAvailable && staffId) {
+        const existingStaffId = b.staff_id || null;
+        if (existingStaffId && existingStaffId !== staffId) return false;
+      }
+
+      const existingStart = timeToMinutes(b.time);
+      const existingDuration = Number(b.duration_minutes || 30);
+      const existingEnd = existingStart + existingDuration;
+
+      return newStart < existingEnd && newEnd > existingStart;
+    });
+  }
+
+  function isSlotInBreak(time, duration) {
+    const breakStart = businessSettings?.break_start;
+    const breakEnd = businessSettings?.break_end;
+
+    if (!breakStart || !breakEnd) return false;
+
+    const slotStart = timeToMinutes(time);
+    const slotEnd = slotStart + Number(duration);
+
+    const pauseStart = timeToMinutes(breakStart);
+    const pauseEnd = timeToMinutes(breakEnd);
+
+    return slotStart < pauseEnd && slotEnd > pauseStart;
+  }
+
+  function isPastDate(dateStr) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const d = new Date(dateStr + "T00:00:00");
+    return d < today;
+  }
+
+  function isOutsideBookingWindow(dateStr) {
+    const weeks = Number(businessSettings?.booking_window_weeks || 4);
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const max = new Date(today);
+    max.setDate(max.getDate() + weeks * 7);
+
+    const d = new Date(dateStr + "T00:00:00");
+
+    return d > max;
+  }
+
+  function getTodayDateString() {
+    const today = new Date();
+    return formatDate(today.getFullYear(), today.getMonth(), today.getDate());
+  }
+
+  function timeToMinutes(time) {
+    const [h, m] = time.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function minutesToTime(minutes) {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+  }
+
+  function formatDate(year, month, day) {
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  }
+
+  function escapeHtml(text) {
+    return String(text || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+function toggleWidget(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.classList.toggle('collapsed');
+}
+
+</script>
+
+</body>
+</html>
