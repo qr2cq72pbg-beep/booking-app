@@ -2290,17 +2290,23 @@
 
   async function loadPublicData() {
     await loadBusinessSettings();
+
+    // IMPORTANT:
+    // Public links can use a friendly slug like booking-app-2c4416.
+    // First resolve that slug through business_settings, then switch businessId
+    // to the real UUID before loading services/bookings/blocked days.
+    // Without this guard Supabase tries to compare the slug with uuid columns.
+    if (!businessSettings) {
+      alert("Business not found or settings are missing. Check the public link / Business ID.");
+      showPublicView(false);
+      return;
+    }
+
     await loadServices();
     await loadStaffMembers();
     await checkBookingStaffColumn();
     await loadBookings();
     await loadBlockedDays();
-
-    if (!businessSettings) {
-      alert("Business not found or settings are missing.");
-      showPublicView(false);
-      return;
-    }
 
     document.getElementById("publicBusinessName").innerText =
       businessSettings?.business_name || "Book Appointment";
