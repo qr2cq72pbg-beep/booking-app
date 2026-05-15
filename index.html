@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- Customer signup mandatory fields + profile SQL fix v3 -->
+  <!-- Customer signup mandatory fields + global custom phone picker typeahead fix v4 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -417,6 +417,82 @@
       appearance: auto;
       background: #fff;
       font-weight: 700;
+    }
+
+    .country-picker {
+      position: relative;
+      margin: 7px 0;
+    }
+
+    .country-picker-button {
+      width: 100%;
+      padding: 11px;
+      margin: 0;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #111827;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .country-picker-button:hover,
+    .country-picker-button:focus {
+      background: #fff;
+      border-color: #2563eb;
+      outline: none;
+    }
+
+    .country-picker-arrow {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .country-picker-list {
+      position: absolute;
+      z-index: 9999;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      max-height: 260px;
+      overflow-y: auto;
+      background: #fff;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.14);
+      padding: 6px;
+      display: none;
+    }
+
+    .country-picker.open .country-picker-list {
+      display: block;
+    }
+
+    .country-picker-option {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #111827;
+    }
+
+    .country-picker-option:hover,
+    .country-picker-option.active {
+      background: #eff6ff;
+    }
+
+    .country-picker-option-code {
+      color: #6b7280;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     .country-typeahead-hint {
@@ -836,9 +912,17 @@
         <div id="customerAuthBox">
           <input id="customerAuthName" placeholder="Customer name *" required />
           <div class="phone-row">
-            <select id="customerCountryCode" class="country-phone-select" aria-label="Country calling code"></select>
+            <div id="customerCountryPicker" class="country-picker">
+              <button id="customerCountryButton" type="button" class="country-picker-button" onclick="toggleCountryPicker()" onkeydown="handleCountryPickerKeydown(event)">
+                <span id="customerCountryButtonText">🇲🇰 North Macedonia (+389)</span>
+                <span class="country-picker-arrow">▼</span>
+              </button>
+              <input id="customerCountryCode" type="hidden" value="MK" />
+              <div id="customerCountryList" class="country-picker-list"></div>
+            </div>
             <input id="customerAuthPhone" inputmode="tel" autocomplete="tel-national" placeholder="Phone number * e.g. 78359201" required />
           </div>
+          <div id="countryTypeaheadHint" class="country-typeahead-hint"></div>
           <input id="customerAuthEmail" type="email" placeholder="Customer email *" required />
           <div class="password-wrap">
             <input id="customerAuthPassword" type="password" placeholder="Customer password *" required />
@@ -1153,75 +1237,176 @@
 
   let countryTypeBuffer = "";
   let countryTypeTimer = null;
+  let selectedCountryIso = "MK";
 
   function populateCountryPhoneDropdown() {
-    const select = document.getElementById("customerCountryCode");
-    if (!select) return;
+    const hiddenInput = document.getElementById("customerCountryCode");
+    const list = document.getElementById("customerCountryList");
+    if (!hiddenInput || !list) return;
 
-    const currentValue = select.value;
-    select.innerHTML = "";
-
-    COUNTRY_PHONE_CODES.forEach(country => {
-      const option = document.createElement("option");
-      option.value = country.iso;
-      option.dataset.dial = country.dial;
-      option.dataset.name = country.name;
-      option.textContent = `${flagEmoji(country.iso)} ${country.name} (${country.dial})`;
-      select.appendChild(option);
-    });
-
-    const browserCountry = (navigator.language || "").split("-")[1];
+    const browserCountry = ((navigator.language || "").split("-")[1] || "").toUpperCase();
     const fallbackIso = "MK";
-    const targetIso = currentValue || (COUNTRY_PHONE_CODES.some(c => c.iso === browserCountry) ? browserCountry : fallbackIso);
-    select.value = targetIso;
+    const startIso = COUNTRY_PHONE_CODES.some(c => c.iso === browserCountry) ? browserCountry : fallbackIso;
+    selectedCountryIso = hiddenInput.value || selectedCountryIso || startIso;
 
-    setupCountryTypeahead(select);
+    renderCountryOptions(COUNTRY_PHONE_CODES);
+    selectCountryByIso(selectedCountryIso, false);
+    setupCountryPickerGlobalClose();
   }
 
-  function setupCountryTypeahead(select) {
-    if (!select || select.dataset.typeaheadReady === "1") return;
-    select.dataset.typeaheadReady = "1";
+  function renderCountryOptions(countries) {
+    const list = document.getElementById("customerCountryList");
+    if (!list) return;
 
-    select.addEventListener("keydown", function(event) {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      if (!event.key || event.key.length !== 1 || !/[a-z0-9]/i.test(event.key)) return;
+    list.innerHTML = "";
 
-      countryTypeBuffer += event.key.toLowerCase();
-      clearTimeout(countryTypeTimer);
-      countryTypeTimer = setTimeout(() => {
-        countryTypeBuffer = "";
-        hideCountryTypeaheadHint();
-      }, 1500);
-
-      const matches = COUNTRY_PHONE_CODES.filter(country =>
-        country.name.toLowerCase().startsWith(countryTypeBuffer)
-      );
-
-      if (!matches.length) return;
-
-      select.value = matches[0].iso;
-      showCountryTypeaheadHint(countryTypeBuffer, matches);
+    countries.forEach(country => {
+      const option = document.createElement("div");
+      option.className = "country-picker-option";
+      option.dataset.iso = country.iso;
+      option.dataset.name = country.name;
+      option.dataset.dial = country.dial;
+      option.innerHTML = `
+        <span>${flagEmoji(country.iso)} ${escapeHtml(country.name)}</span>
+        <span class="country-picker-option-code">${escapeHtml(country.dial)}</span>
+      `;
+      option.onclick = () => {
+        selectCountryByIso(country.iso, true);
+      };
+      list.appendChild(option);
     });
 
-    select.addEventListener("change", function() {
+    highlightSelectedCountry();
+  }
+
+  function setupCountryPickerGlobalClose() {
+    if (window.__countryPickerGlobalCloseReady) return;
+    window.__countryPickerGlobalCloseReady = true;
+
+    document.addEventListener("click", function(event) {
+      const picker = document.getElementById("customerCountryPicker");
+      if (!picker) return;
+      if (!picker.contains(event.target)) {
+        closeCountryPicker();
+      }
+    });
+  }
+
+  function toggleCountryPicker() {
+    const picker = document.getElementById("customerCountryPicker");
+    if (!picker) return;
+
+    if (picker.classList.contains("open")) {
+      closeCountryPicker();
+    } else {
+      openCountryPicker();
+    }
+  }
+
+  function openCountryPicker() {
+    const picker = document.getElementById("customerCountryPicker");
+    if (!picker) return;
+    picker.classList.add("open");
+    renderCountryOptions(COUNTRY_PHONE_CODES);
+    scrollSelectedCountryIntoView();
+  }
+
+  function closeCountryPicker() {
+    const picker = document.getElementById("customerCountryPicker");
+    if (!picker) return;
+    picker.classList.remove("open");
+    countryTypeBuffer = "";
+    hideCountryTypeaheadHint();
+  }
+
+  function selectCountryByIso(iso, closeAfterSelect = true) {
+    const country = COUNTRY_PHONE_CODES.find(c => c.iso === iso) || COUNTRY_PHONE_CODES.find(c => c.iso === "MK") || COUNTRY_PHONE_CODES[0];
+    if (!country) return;
+
+    selectedCountryIso = country.iso;
+
+    const hiddenInput = document.getElementById("customerCountryCode");
+    const buttonText = document.getElementById("customerCountryButtonText");
+
+    if (hiddenInput) hiddenInput.value = country.iso;
+    if (buttonText) buttonText.textContent = `${flagEmoji(country.iso)} ${country.name} (${country.dial})`;
+
+    highlightSelectedCountry();
+
+    if (closeAfterSelect) {
+      closeCountryPicker();
+      const button = document.getElementById("customerCountryButton");
+      if (button) button.focus();
+    }
+  }
+
+  function highlightSelectedCountry() {
+    document.querySelectorAll(".country-picker-option").forEach(option => {
+      option.classList.toggle("active", option.dataset.iso === selectedCountryIso);
+    });
+  }
+
+  function scrollSelectedCountryIntoView() {
+    const active = document.querySelector(".country-picker-option.active");
+    if (active) active.scrollIntoView({ block: "nearest" });
+  }
+
+  function handleCountryPickerKeydown(event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+
+    if (event.key === "Escape") {
+      closeCountryPicker();
+      return;
+    }
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleCountryPicker();
+      return;
+    }
+
+    if (!event.key || event.key.length !== 1 || !/[a-z0-9]/i.test(event.key)) return;
+
+    event.preventDefault();
+    openCountryPicker();
+
+    countryTypeBuffer += event.key.toLowerCase();
+    clearTimeout(countryTypeTimer);
+    countryTypeTimer = setTimeout(() => {
       countryTypeBuffer = "";
+      renderCountryOptions(COUNTRY_PHONE_CODES);
       hideCountryTypeaheadHint();
-    });
+    }, 1800);
 
-    select.addEventListener("blur", function() {
-      setTimeout(hideCountryTypeaheadHint, 200);
-    });
+    const matches = COUNTRY_PHONE_CODES.filter(country =>
+      country.name.toLowerCase().startsWith(countryTypeBuffer)
+    );
+
+    if (!matches.length) {
+      showCountryTypeaheadHint(countryTypeBuffer, []);
+      return;
+    }
+
+    renderCountryOptions(matches);
+    selectCountryByIso(matches[0].iso, false);
+    showCountryTypeaheadHint(countryTypeBuffer, matches);
   }
 
   function showCountryTypeaheadHint(query, matches) {
     const hint = document.getElementById("countryTypeaheadHint");
     if (!hint) return;
 
+    if (!matches.length) {
+      hint.innerHTML = `<strong>${escapeHtml(query.toUpperCase())}</strong>: No countries found.`;
+      hint.style.display = "block";
+      return;
+    }
+
     const preview = matches.slice(0, 8).map(country =>
       `${flagEmoji(country.iso)} ${country.name} (${country.dial})`
     ).join(", ");
 
-    hint.innerHTML = `<strong>${query.toUpperCase()}</strong>: ${preview}${matches.length > 8 ? "…" : ""}`;
+    hint.innerHTML = `<strong>${escapeHtml(query.toUpperCase())}</strong>: ${escapeHtml(preview)}${matches.length > 8 ? "…" : ""}`;
     hint.style.display = "block";
   }
 
@@ -1233,10 +1418,9 @@
   }
 
   function getSelectedDialCode() {
-    const select = document.getElementById("customerCountryCode");
-    if (!select) return "";
-    const option = select.options[select.selectedIndex];
-    return option?.dataset?.dial || "";
+    const iso = document.getElementById("customerCountryCode")?.value || selectedCountryIso || "MK";
+    const country = COUNTRY_PHONE_CODES.find(c => c.iso === iso);
+    return country?.dial || "+389";
   }
 
   function getCustomerPhoneInternational() {
