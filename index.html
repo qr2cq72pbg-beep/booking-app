@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- Customer signup mandatory fields + global custom phone picker typeahead fix v4 -->
+  <!-- Email confirmations via Supabase Edge Function + Resend v1 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -2087,6 +2087,26 @@
     location.href = window.location.pathname;
   }
 
+  async function sendBookingEmailNotification(type, bookingId, extra = {}) {
+    if (!bookingId || !type) return;
+
+    try {
+      const { error } = await sb.functions.invoke("send-booking-email", {
+        body: {
+          type,
+          bookingId,
+          ...extra
+        }
+      });
+
+      if (error) {
+        console.warn("Email notification skipped:", error.message || error);
+      }
+    } catch (err) {
+      console.warn("Email notification failed:", err?.message || err);
+    }
+  }
+
   async function loadAdminData() {
     document.getElementById("adminEmail").innerText = "Logged in as: " + currentUser.email;
     document.getElementById("publicLink").innerText = window.location.origin + window.location.pathname + "?business=" + businessId;
@@ -2866,17 +2886,20 @@
   async function updateBookingStatus(id, status) {
     if (!id || !status) return;
 
-    const { error } = await sb
+    const { data: updatedBooking, error } = await sb
       .from("bookings")
       .update({ booking_status: status })
       .eq("id", id)
-      .eq("business_id", businessId);
+      .eq("business_id", businessId)
+      .select("id, booking_status")
+      .single();
 
     if (error) {
       alert("Status update error: " + error.message);
       return;
     }
 
+    await sendBookingEmailNotification("booking_status_updated", updatedBooking?.id || id, { status });
     await loadAdminData();
   }
 
@@ -3013,14 +3036,18 @@
       bookingPayload.staff_id = staffId;
     }
 
-    const { error } = await sb
+    const { data: insertedBooking, error } = await sb
       .from("bookings")
-      .insert(bookingPayload);
+      .insert(bookingPayload)
+      .select("id")
+      .single();
 
     if (error) {
       alert("Add booking error: " + error.message);
       return;
     }
+
+    await sendBookingEmailNotification("booking_created", insertedBooking?.id, { source: "admin" });
 
     alert("Booking added successfully.");
 
@@ -3150,16 +3177,20 @@
       updatePayload.staff_id = staffId || null;
     }
 
-    const { error } = await sb
+    const { data: updatedBooking, error } = await sb
       .from("bookings")
       .update(updatePayload)
       .eq("id", id)
-      .eq("business_id", businessId);
+      .eq("business_id", businessId)
+      .select("id, booking_status")
+      .single();
 
     if (error) {
       alert("Edit booking error: " + error.message);
       return;
     }
+
+    await sendBookingEmailNotification("booking_status_updated", updatedBooking?.id || id, { status: bookingStatus });
 
     alert("Booking updated successfully.");
     cancelEditBooking();
@@ -3547,16 +3578,20 @@
       bookingPayload.staff_id = staffId;
     }
 
-    const { error } = await sb
+    const { data: insertedBooking, error } = await sb
       .from("bookings")
-      .insert(bookingPayload);
+      .insert(bookingPayload)
+      .select("id")
+      .single();
 
     if (error) {
       alert("Booking error: " + error.message);
       return;
     }
 
-    alert("Booking created successfully.");
+    await sendBookingEmailNotification("booking_created", insertedBooking?.id, { source: "customer" });
+
+    alert("Booking created successfully. Email confirmation will be sent if email is provided.");
 
     document.getElementById("customerName").value = "";
     document.getElementById("customerPhone").value = "";
