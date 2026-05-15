@@ -405,6 +405,27 @@
       color: #111827;
     }
 
+
+    .phone-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 340px) 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .country-select {
+      height: 50px;
+      background: white;
+      font-weight: 700;
+    }
+
+    .phone-help {
+      margin-top: -2px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
     @media (max-width: 900px) {
       .admin-grid {
         grid-template-columns:1fr;
@@ -413,7 +434,7 @@
 
 
     @media (max-width: 700px) {
-      .row, .three, .mode-buttons, .stats-grid, .copy-link-row {
+      .row, .three, .mode-buttons, .stats-grid, .copy-link-row, .phone-row {
         grid-template-columns: 1fr;
       }
 
@@ -801,8 +822,12 @@
         <div id="customerAuthBox">
           <div class="row">
             <input id="customerAuthName" placeholder="Customer name *" required />
-            <input id="customerAuthPhone" placeholder="Phone *" required />
           </div>
+          <div class="phone-row">
+            <select id="customerCountryCode" class="country-select" aria-label="Country code"></select>
+            <input id="customerAuthPhone" inputmode="tel" placeholder="Phone number without country code *" required />
+          </div>
+          <div class="phone-help">Избери држава и внеси само број, пример за North Macedonia: +389 + 78359201 = +38978359201.</div>
           <input id="customerAuthEmail" type="email" placeholder="Customer email *" required />
           <div class="password-wrap">
             <input id="customerAuthPassword" type="password" placeholder="Customer password *" required />
@@ -903,10 +928,220 @@
   const urlParams = new URLSearchParams(window.location.search);
   const publicBusinessId = urlParams.get("business");
 
+
+  const COUNTRY_DIAL_CODES = [
+    { iso: "AF", flag: "🇦🇫", name: "Afghanistan", dial: "+93" },
+    { iso: "AL", flag: "🇦🇱", name: "Albania", dial: "+355" },
+    { iso: "DZ", flag: "🇩🇿", name: "Algeria", dial: "+213" },
+    { iso: "AD", flag: "🇦🇩", name: "Andorra", dial: "+376" },
+    { iso: "AO", flag: "🇦🇴", name: "Angola", dial: "+244" },
+    { iso: "AR", flag: "🇦🇷", name: "Argentina", dial: "+54" },
+    { iso: "AM", flag: "🇦🇲", name: "Armenia", dial: "+374" },
+    { iso: "AU", flag: "🇦🇺", name: "Australia", dial: "+61" },
+    { iso: "AT", flag: "🇦🇹", name: "Austria", dial: "+43" },
+    { iso: "AZ", flag: "🇦🇿", name: "Azerbaijan", dial: "+994" },
+    { iso: "BS", flag: "🇧🇸", name: "Bahamas", dial: "+1" },
+    { iso: "BH", flag: "🇧🇭", name: "Bahrain", dial: "+973" },
+    { iso: "BD", flag: "🇧🇩", name: "Bangladesh", dial: "+880" },
+    { iso: "BB", flag: "🇧🇧", name: "Barbados", dial: "+1" },
+    { iso: "BY", flag: "🇧🇾", name: "Belarus", dial: "+375" },
+    { iso: "BE", flag: "🇧🇪", name: "Belgium", dial: "+32" },
+    { iso: "BZ", flag: "🇧🇿", name: "Belize", dial: "+501" },
+    { iso: "BJ", flag: "🇧🇯", name: "Benin", dial: "+229" },
+    { iso: "BT", flag: "🇧🇹", name: "Bhutan", dial: "+975" },
+    { iso: "BO", flag: "🇧🇴", name: "Bolivia", dial: "+591" },
+    { iso: "BA", flag: "🇧🇦", name: "Bosnia & Herzegovina", dial: "+387" },
+    { iso: "BW", flag: "🇧🇼", name: "Botswana", dial: "+267" },
+    { iso: "BR", flag: "🇧🇷", name: "Brazil", dial: "+55" },
+    { iso: "BN", flag: "🇧🇳", name: "Brunei", dial: "+673" },
+    { iso: "BG", flag: "🇧🇬", name: "Bulgaria", dial: "+359" },
+    { iso: "BF", flag: "🇧🇫", name: "Burkina Faso", dial: "+226" },
+    { iso: "BI", flag: "🇧🇮", name: "Burundi", dial: "+257" },
+    { iso: "KH", flag: "🇰🇭", name: "Cambodia", dial: "+855" },
+    { iso: "CM", flag: "🇨🇲", name: "Cameroon", dial: "+237" },
+    { iso: "CA", flag: "🇨🇦", name: "Canada", dial: "+1" },
+    { iso: "CV", flag: "🇨🇻", name: "Cape Verde", dial: "+238" },
+    { iso: "CF", flag: "🇨🇫", name: "Central African Republic", dial: "+236" },
+    { iso: "TD", flag: "🇹🇩", name: "Chad", dial: "+235" },
+    { iso: "CL", flag: "🇨🇱", name: "Chile", dial: "+56" },
+    { iso: "CN", flag: "🇨🇳", name: "China", dial: "+86" },
+    { iso: "CO", flag: "🇨🇴", name: "Colombia", dial: "+57" },
+    { iso: "KM", flag: "🇰🇲", name: "Comoros", dial: "+269" },
+    { iso: "CG", flag: "🇨🇬", name: "Congo", dial: "+242" },
+    { iso: "CD", flag: "🇨🇩", name: "DR Congo", dial: "+243" },
+    { iso: "CR", flag: "🇨🇷", name: "Costa Rica", dial: "+506" },
+    { iso: "CI", flag: "🇨🇮", name: "Côte d’Ivoire", dial: "+225" },
+    { iso: "HR", flag: "🇭🇷", name: "Croatia", dial: "+385" },
+    { iso: "CU", flag: "🇨🇺", name: "Cuba", dial: "+53" },
+    { iso: "CY", flag: "🇨🇾", name: "Cyprus", dial: "+357" },
+    { iso: "CZ", flag: "🇨🇿", name: "Czechia", dial: "+420" },
+    { iso: "DK", flag: "🇩🇰", name: "Denmark", dial: "+45" },
+    { iso: "DJ", flag: "🇩🇯", name: "Djibouti", dial: "+253" },
+    { iso: "DO", flag: "🇩🇴", name: "Dominican Republic", dial: "+1" },
+    { iso: "EC", flag: "🇪🇨", name: "Ecuador", dial: "+593" },
+    { iso: "EG", flag: "🇪🇬", name: "Egypt", dial: "+20" },
+    { iso: "SV", flag: "🇸🇻", name: "El Salvador", dial: "+503" },
+    { iso: "GQ", flag: "🇬🇶", name: "Equatorial Guinea", dial: "+240" },
+    { iso: "ER", flag: "🇪🇷", name: "Eritrea", dial: "+291" },
+    { iso: "EE", flag: "🇪🇪", name: "Estonia", dial: "+372" },
+    { iso: "SZ", flag: "🇸🇿", name: "Eswatini", dial: "+268" },
+    { iso: "ET", flag: "🇪🇹", name: "Ethiopia", dial: "+251" },
+    { iso: "FJ", flag: "🇫🇯", name: "Fiji", dial: "+679" },
+    { iso: "FI", flag: "🇫🇮", name: "Finland", dial: "+358" },
+    { iso: "FR", flag: "🇫🇷", name: "France", dial: "+33" },
+    { iso: "GA", flag: "🇬🇦", name: "Gabon", dial: "+241" },
+    { iso: "GM", flag: "🇬🇲", name: "Gambia", dial: "+220" },
+    { iso: "GE", flag: "🇬🇪", name: "Georgia", dial: "+995" },
+    { iso: "DE", flag: "🇩🇪", name: "Germany", dial: "+49" },
+    { iso: "GH", flag: "🇬🇭", name: "Ghana", dial: "+233" },
+    { iso: "GR", flag: "🇬🇷", name: "Greece", dial: "+30" },
+    { iso: "GT", flag: "🇬🇹", name: "Guatemala", dial: "+502" },
+    { iso: "GN", flag: "🇬🇳", name: "Guinea", dial: "+224" },
+    { iso: "GW", flag: "🇬🇼", name: "Guinea-Bissau", dial: "+245" },
+    { iso: "GY", flag: "🇬🇾", name: "Guyana", dial: "+592" },
+    { iso: "HT", flag: "🇭🇹", name: "Haiti", dial: "+509" },
+    { iso: "HN", flag: "🇭🇳", name: "Honduras", dial: "+504" },
+    { iso: "HK", flag: "🇭🇰", name: "Hong Kong", dial: "+852" },
+    { iso: "HU", flag: "🇭🇺", name: "Hungary", dial: "+36" },
+    { iso: "IS", flag: "🇮🇸", name: "Iceland", dial: "+354" },
+    { iso: "IN", flag: "🇮🇳", name: "India", dial: "+91" },
+    { iso: "ID", flag: "🇮🇩", name: "Indonesia", dial: "+62" },
+    { iso: "IR", flag: "🇮🇷", name: "Iran", dial: "+98" },
+    { iso: "IQ", flag: "🇮🇶", name: "Iraq", dial: "+964" },
+    { iso: "IE", flag: "🇮🇪", name: "Ireland", dial: "+353" },
+    { iso: "IL", flag: "🇮🇱", name: "Israel", dial: "+972" },
+    { iso: "IT", flag: "🇮🇹", name: "Italy", dial: "+39" },
+    { iso: "JM", flag: "🇯🇲", name: "Jamaica", dial: "+1" },
+    { iso: "JP", flag: "🇯🇵", name: "Japan", dial: "+81" },
+    { iso: "JO", flag: "🇯🇴", name: "Jordan", dial: "+962" },
+    { iso: "KZ", flag: "🇰🇿", name: "Kazakhstan", dial: "+7" },
+    { iso: "KE", flag: "🇰🇪", name: "Kenya", dial: "+254" },
+    { iso: "KR", flag: "🇰🇷", name: "South Korea", dial: "+82" },
+    { iso: "KW", flag: "🇰🇼", name: "Kuwait", dial: "+965" },
+    { iso: "KG", flag: "🇰🇬", name: "Kyrgyzstan", dial: "+996" },
+    { iso: "LA", flag: "🇱🇦", name: "Laos", dial: "+856" },
+    { iso: "LV", flag: "🇱🇻", name: "Latvia", dial: "+371" },
+    { iso: "LB", flag: "🇱🇧", name: "Lebanon", dial: "+961" },
+    { iso: "LS", flag: "🇱🇸", name: "Lesotho", dial: "+266" },
+    { iso: "LR", flag: "🇱🇷", name: "Liberia", dial: "+231" },
+    { iso: "LY", flag: "🇱🇾", name: "Libya", dial: "+218" },
+    { iso: "LI", flag: "🇱🇮", name: "Liechtenstein", dial: "+423" },
+    { iso: "LT", flag: "🇱🇹", name: "Lithuania", dial: "+370" },
+    { iso: "LU", flag: "🇱🇺", name: "Luxembourg", dial: "+352" },
+    { iso: "MO", flag: "🇲🇴", name: "Macao", dial: "+853" },
+    { iso: "MG", flag: "🇲🇬", name: "Madagascar", dial: "+261" },
+    { iso: "MW", flag: "🇲🇼", name: "Malawi", dial: "+265" },
+    { iso: "MY", flag: "🇲🇾", name: "Malaysia", dial: "+60" },
+    { iso: "MV", flag: "🇲🇻", name: "Maldives", dial: "+960" },
+    { iso: "ML", flag: "🇲🇱", name: "Mali", dial: "+223" },
+    { iso: "MT", flag: "🇲🇹", name: "Malta", dial: "+356" },
+    { iso: "MR", flag: "🇲🇷", name: "Mauritania", dial: "+222" },
+    { iso: "MU", flag: "🇲🇺", name: "Mauritius", dial: "+230" },
+    { iso: "MX", flag: "🇲🇽", name: "Mexico", dial: "+52" },
+    { iso: "MD", flag: "🇲🇩", name: "Moldova", dial: "+373" },
+    { iso: "MC", flag: "🇲🇨", name: "Monaco", dial: "+377" },
+    { iso: "MN", flag: "🇲🇳", name: "Mongolia", dial: "+976" },
+    { iso: "ME", flag: "🇲🇪", name: "Montenegro", dial: "+382" },
+    { iso: "MA", flag: "🇲🇦", name: "Morocco", dial: "+212" },
+    { iso: "MZ", flag: "🇲🇿", name: "Mozambique", dial: "+258" },
+    { iso: "MM", flag: "🇲🇲", name: "Myanmar", dial: "+95" },
+    { iso: "NA", flag: "🇳🇦", name: "Namibia", dial: "+264" },
+    { iso: "NP", flag: "🇳🇵", name: "Nepal", dial: "+977" },
+    { iso: "NL", flag: "🇳🇱", name: "Netherlands", dial: "+31" },
+    { iso: "NZ", flag: "🇳🇿", name: "New Zealand", dial: "+64" },
+    { iso: "NI", flag: "🇳🇮", name: "Nicaragua", dial: "+505" },
+    { iso: "NE", flag: "🇳🇪", name: "Niger", dial: "+227" },
+    { iso: "NG", flag: "🇳🇬", name: "Nigeria", dial: "+234" },
+    { iso: "MK", flag: "🇲🇰", name: "North Macedonia", dial: "+389" },
+    { iso: "NO", flag: "🇳🇴", name: "Norway", dial: "+47" },
+    { iso: "OM", flag: "🇴🇲", name: "Oman", dial: "+968" },
+    { iso: "PK", flag: "🇵🇰", name: "Pakistan", dial: "+92" },
+    { iso: "PA", flag: "🇵🇦", name: "Panama", dial: "+507" },
+    { iso: "PY", flag: "🇵🇾", name: "Paraguay", dial: "+595" },
+    { iso: "PE", flag: "🇵🇪", name: "Peru", dial: "+51" },
+    { iso: "PH", flag: "🇵🇭", name: "Philippines", dial: "+63" },
+    { iso: "PL", flag: "🇵🇱", name: "Poland", dial: "+48" },
+    { iso: "PT", flag: "🇵🇹", name: "Portugal", dial: "+351" },
+    { iso: "QA", flag: "🇶🇦", name: "Qatar", dial: "+974" },
+    { iso: "RO", flag: "🇷🇴", name: "Romania", dial: "+40" },
+    { iso: "RU", flag: "🇷🇺", name: "Russia", dial: "+7" },
+    { iso: "RW", flag: "🇷🇼", name: "Rwanda", dial: "+250" },
+    { iso: "SA", flag: "🇸🇦", name: "Saudi Arabia", dial: "+966" },
+    { iso: "SN", flag: "🇸🇳", name: "Senegal", dial: "+221" },
+    { iso: "RS", flag: "🇷🇸", name: "Serbia", dial: "+381" },
+    { iso: "SC", flag: "🇸🇨", name: "Seychelles", dial: "+248" },
+    { iso: "SL", flag: "🇸🇱", name: "Sierra Leone", dial: "+232" },
+    { iso: "SG", flag: "🇸🇬", name: "Singapore", dial: "+65" },
+    { iso: "SK", flag: "🇸🇰", name: "Slovakia", dial: "+421" },
+    { iso: "SI", flag: "🇸🇮", name: "Slovenia", dial: "+386" },
+    { iso: "SO", flag: "🇸🇴", name: "Somalia", dial: "+252" },
+    { iso: "ZA", flag: "🇿🇦", name: "South Africa", dial: "+27" },
+    { iso: "ES", flag: "🇪🇸", name: "Spain", dial: "+34" },
+    { iso: "LK", flag: "🇱🇰", name: "Sri Lanka", dial: "+94" },
+    { iso: "SD", flag: "🇸🇩", name: "Sudan", dial: "+249" },
+    { iso: "SE", flag: "🇸🇪", name: "Sweden", dial: "+46" },
+    { iso: "CH", flag: "🇨🇭", name: "Switzerland", dial: "+41" },
+    { iso: "SY", flag: "🇸🇾", name: "Syria", dial: "+963" },
+    { iso: "TW", flag: "🇹🇼", name: "Taiwan", dial: "+886" },
+    { iso: "TJ", flag: "🇹🇯", name: "Tajikistan", dial: "+992" },
+    { iso: "TZ", flag: "🇹🇿", name: "Tanzania", dial: "+255" },
+    { iso: "TH", flag: "🇹🇭", name: "Thailand", dial: "+66" },
+    { iso: "TG", flag: "🇹🇬", name: "Togo", dial: "+228" },
+    { iso: "TN", flag: "🇹🇳", name: "Tunisia", dial: "+216" },
+    { iso: "TR", flag: "🇹🇷", name: "Turkey", dial: "+90" },
+    { iso: "TM", flag: "🇹🇲", name: "Turkmenistan", dial: "+993" },
+    { iso: "UG", flag: "🇺🇬", name: "Uganda", dial: "+256" },
+    { iso: "UA", flag: "🇺🇦", name: "Ukraine", dial: "+380" },
+    { iso: "AE", flag: "🇦🇪", name: "United Arab Emirates", dial: "+971" },
+    { iso: "GB", flag: "🇬🇧", name: "United Kingdom", dial: "+44" },
+    { iso: "US", flag: "🇺🇸", name: "United States", dial: "+1" },
+    { iso: "UY", flag: "🇺🇾", name: "Uruguay", dial: "+598" },
+    { iso: "UZ", flag: "🇺🇿", name: "Uzbekistan", dial: "+998" },
+    { iso: "VE", flag: "🇻🇪", name: "Venezuela", dial: "+58" },
+    { iso: "VN", flag: "🇻🇳", name: "Vietnam", dial: "+84" },
+    { iso: "YE", flag: "🇾🇪", name: "Yemen", dial: "+967" },
+    { iso: "ZM", flag: "🇿🇲", name: "Zambia", dial: "+260" },
+    { iso: "ZW", flag: "🇿🇼", name: "Zimbabwe", dial: "+263" }
+  ];
+
+  function getPreferredCountryIso() {
+    const lang = navigator.language || (navigator.languages && navigator.languages[0]) || "";
+    const match = String(lang).match(/-([A-Z]{2})$/i);
+    const iso = match ? match[1].toUpperCase() : "MK";
+    return COUNTRY_DIAL_CODES.some(c => c.iso === iso) ? iso : "MK";
+  }
+
+  function renderCountryDialSelect() {
+    const select = document.getElementById("customerCountryCode");
+    if (!select) return;
+    const preferred = getPreferredCountryIso();
+    select.innerHTML = "";
+    COUNTRY_DIAL_CODES.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country.dial;
+      option.dataset.iso = country.iso;
+      option.textContent = `${country.flag} ${country.name} (${country.dial})`;
+      if (country.iso === preferred) option.selected = true;
+      select.appendChild(option);
+    });
+  }
+
+  function getCustomerInternationalPhone() {
+    const select = document.getElementById("customerCountryCode");
+    const phoneInput = document.getElementById("customerAuthPhone");
+    const dial = select?.value || "+389";
+    let number = (phoneInput?.value || "").trim();
+    number = number.replace(/[\s\-()]/g, "");
+    if (number.startsWith("+")) return number;
+    number = number.replace(/^0+/, "");
+    return dial + number;
+  }
+
   document.addEventListener("DOMContentLoaded", init);
 
   async function init() {
     if (!initSupabaseClient()) return;
+    renderCountryDialSelect();
 
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
     const queryParams = new URLSearchParams(window.location.search);
@@ -1212,12 +1447,13 @@
     if (!initSupabaseClient()) return;
 
     const fullName = document.getElementById("customerAuthName").value.trim();
-    const phone = document.getElementById("customerAuthPhone").value.trim();
+    const rawPhone = document.getElementById("customerAuthPhone").value.trim();
+    const phone = getCustomerInternationalPhone();
     const email = document.getElementById("customerAuthEmail").value.trim();
     const password = document.getElementById("customerAuthPassword").value.trim();
     const confirmPassword = document.getElementById("customerAuthConfirmPassword").value.trim();
 
-    if (!fullName || !phone || !email || !password || !confirmPassword) {
+    if (!fullName || !rawPhone || !email || !password || !confirmPassword) {
       alert("For customer signup, name, phone, email, password and confirm password are required.");
       return;
     }
