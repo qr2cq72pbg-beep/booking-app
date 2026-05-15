@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 -->
+  <!-- Email confirmations + business slug public flow UUID fix v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -516,50 +516,6 @@
       color: #111827;
     }
 
-
-    .business-profile-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .business-profile-preview {
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 12px;
-      margin: 10px 0 14px;
-    }
-
-    .business-profile-preview strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .business-id-row {
-      display: grid;
-      grid-template-columns: 1fr 170px;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .public-business-info {
-      margin: 10px 0 16px;
-      padding: 12px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      background: #f9fafb;
-    }
-
-    .public-business-info img {
-      max-height: 70px;
-      max-width: 160px;
-      object-fit: contain;
-      display: block;
-      margin-bottom: 8px;
-    }
-
     @media (max-width: 700px) {
       .phone-row {
         grid-template-columns: 1fr;
@@ -574,7 +530,7 @@
 
 
     @media (max-width: 700px) {
-      .row, .three, .mode-buttons, .stats-grid, .copy-link-row, .business-profile-grid, .business-id-row {
+      .row, .three, .mode-buttons, .stats-grid, .copy-link-row {
         grid-template-columns: 1fr;
       }
 
@@ -663,13 +619,6 @@
         <h1>Admin Dashboard</h1>
         <p id="adminEmail" class="small"></p>
 
-        <div class="business-profile-preview">
-          <strong>Business Profile</strong>
-          <div class="small">Business ID / slug:</div>
-          <div id="businessIdDisplay" class="public-link-box"></div>
-          <p class="small">Ова е friendly ID што customer може рачно да го внесе, а public link го користи автоматски.</p>
-        </div>
-
         <p class="small">Public booking link:</p>
         <div class="copy-link-row">
           <div id="publicLink" class="public-link-box"></div>
@@ -725,27 +674,18 @@
 </div>
 <div id="widgetSettings" class="widget-content">
 
-        <input id="businessName" placeholder="Business name" oninput="previewBusinessPublicLink()" />
+        <input id="businessName" placeholder="Business name" />
 
-
-        <label class="small"><strong>Business ID / Public Slug</strong></label>
-        <div class="business-id-row">
-          <input id="businessSlug" placeholder="e.g. barber-shop-skopje" oninput="previewBusinessPublicLink()" />
-          <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
-        </div>
-        <p class="small">Користи мали букви, бројки и - . Пример: <strong>barber-shop-skopje</strong>. Customer може да го внесе ова наместо долгиот UUID.</p>
-
-        <div class="business-profile-grid">
-          <input id="businessLogoUrl" placeholder="Logo URL optional" />
+        <div class="row">
+          <input id="businessSlug" placeholder="Business slug, e.g. barber-shop-skopje" />
           <input id="businessPhone" placeholder="Business phone optional" />
         </div>
+
         <input id="businessAddress" placeholder="Business address optional" />
         <textarea id="businessDescription" placeholder="Short business description optional"></textarea>
+        <input id="businessLogo" placeholder="Logo URL optional" />
 
-        <div class="business-profile-preview">
-          <strong>Public Link Preview</strong>
-          <div id="businessPublicLinkPreview" class="small"></div>
-        </div>
+        <p class="small">Business slug е friendly ID за public link. Користи мали букви, бројки и -. Пример: barber-shop-skopje</p>
 
         <div class="row">
           <input id="workStart" type="time" value="09:00" />
@@ -973,7 +913,7 @@
         <p class="small">
           Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
         </p>
-        <input id="manualBusinessId" placeholder="Business ID" />
+        <input id="manualBusinessId" placeholder="Business ID or business slug" />
         <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
 
         <hr style="margin: 18px 0; border: none; border-top: 1px solid #e5e7eb;">
@@ -983,15 +923,11 @@
 
         <div id="customerLoggedInBox" class="hidden">
           <p id="customerLoggedInText" class="small"></p>
-          <p class="small">Внеси Business ID погоре и кликни Open Booking, или користи Continue to Booking.</p>
-          <div class="row">
-            <button class="success" onclick="continueCustomerToBooking()">Continue to Booking</button>
-            <button class="secondary" onclick="customerLogout()">Customer Logout</button>
-          </div>
+          <button class="secondary" onclick="customerLogout()">Customer Logout</button>
         </div>
 
         <div id="customerAuthBox">
-          <input id="customerAuthName" placeholder="Customer name *" required />
+          <input id="customerAuthName" autocomplete="name" placeholder="Customer name *" required />
           <div class="phone-row">
             <div id="customerCountryPicker" class="country-picker">
               <button id="customerCountryButton" type="button" class="country-picker-button" onclick="toggleCountryPicker()" onkeydown="handleCountryPickerKeydown(event)">
@@ -1004,13 +940,13 @@
             <input id="customerAuthPhone" inputmode="tel" autocomplete="tel-national" placeholder="Phone number * e.g. 78359201" required />
           </div>
           <div id="countryTypeaheadHint" class="country-typeahead-hint"></div>
-          <input id="customerAuthEmail" type="email" placeholder="Customer email *" required />
+          <input id="customerAuthEmail" type="email" autocomplete="email" placeholder="Customer email *" required />
           <div class="password-wrap">
-            <input id="customerAuthPassword" type="password" placeholder="Customer password *" required />
+            <input id="customerAuthPassword" type="password" autocomplete="current-password" placeholder="Customer password *" required />
             <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthPassword', this)">👁</button>
           </div>
           <div class="password-wrap">
-            <input id="customerAuthConfirmPassword" type="password" placeholder="Confirm password *" required />
+            <input id="customerAuthConfirmPassword" type="password" autocomplete="new-password" placeholder="Confirm password *" required />
             <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthConfirmPassword', this)">👁</button>
           </div>
           <div class="row">
@@ -1027,7 +963,6 @@
         <div class="card">
           <h1 id="publicBusinessName">Book Appointment</h1>
           <p class="small">Избери услуга, датум и слободен термин.</p>
-          <div id="publicBusinessInfo" class="public-business-info hidden"></div>
 
           <select id="publicService" onchange="renderPublicCalendar()"></select>
           <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
@@ -1641,50 +1576,78 @@
   const urlParams = new URLSearchParams(window.location.search);
   const publicBusinessId = urlParams.get("business");
 
-
-  function isValidUuid(value) {
+  function isUuid(value) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || "").trim());
   }
 
-  function normalizeBusinessSlug(value) {
+  function sanitizeBusinessSlug(value) {
     return String(value || "")
       .trim()
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 60);
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
   }
 
-  function getBusinessPublicIdentifier() {
-    const slug = normalizeBusinessSlug(businessSettings?.business_slug || "");
-    return slug || businessId;
+  function makeDefaultBusinessSlug() {
+    const name = document.getElementById("businessName")?.value || businessSettings?.business_name || "booking-app";
+    const base = sanitizeBusinessSlug(name) || "booking-app";
+    const suffix = String(businessId || "").replace(/-/g, "").slice(0, 6) || Math.random().toString(36).slice(2, 8);
+    return `${base}-${suffix}`;
   }
 
-  function buildPublicBookingLink(identifier = null) {
-    const publicId = identifier || getBusinessPublicIdentifier();
-    return window.location.origin + window.location.pathname + "?business=" + encodeURIComponent(publicId);
+  function getPublicBusinessKey() {
+    return businessSettings?.business_slug || businessId;
   }
 
-  function generateFallbackBusinessSlug() {
-    const baseName = businessSettings?.business_name || document.getElementById("businessName")?.value || "my-business";
-    const base = normalizeBusinessSlug(baseName) || "my-business";
-    const suffix = String(businessId || "").replace(/-/g, "").slice(0, 6);
-    return suffix ? `${base}-${suffix}` : base;
+  function buildPublicBookingLink() {
+    return window.location.origin + window.location.pathname + "?business=" + encodeURIComponent(getPublicBusinessKey());
   }
 
-  function generateBusinessSlugFromName() {
-    const input = document.getElementById("businessSlug");
-    if (!input) return;
-    input.value = generateFallbackBusinessSlug();
-    previewBusinessPublicLink();
+  function updatePublicLinkDisplay() {
+    const box = document.getElementById("publicLink");
+    if (box) box.innerText = buildPublicBookingLink();
   }
 
-  function previewBusinessPublicLink() {
-    const preview = document.getElementById("businessPublicLinkPreview");
-    if (!preview) return;
-    const rawSlug = document.getElementById("businessSlug")?.value || businessSettings?.business_slug || businessId;
-    const slug = normalizeBusinessSlug(rawSlug) || businessId;
-    preview.innerText = buildPublicBookingLink(slug);
+  async function resolveBusinessIdentifierToUuid(input) {
+    const key = String(input || "").trim();
+
+    if (!key) return null;
+
+    // If the key is already a UUID, read business_settings directly by business_id.
+    if (isUuid(key)) {
+      const { data, error } = await sb
+        .from("business_settings")
+        .select("*")
+        .eq("business_id", key)
+        .maybeSingle();
+
+      if (error) {
+        alert("Load business settings error: " + error.message);
+        return null;
+      }
+
+      businessSettings = data || null;
+      return data?.business_id || key;
+    }
+
+    // If the key is not a UUID, treat it as a friendly slug.
+    const slug = sanitizeBusinessSlug(key);
+
+    const { data, error } = await sb
+      .from("business_settings")
+      .select("*")
+      .eq("business_slug", slug)
+      .maybeSingle();
+
+    if (error) {
+      alert("Load business slug error: " + error.message);
+      return null;
+    }
+
+    businessSettings = data || null;
+    return data?.business_id || null;
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -1845,7 +1808,7 @@
     if (currentUser && currentUserRole === "customer") {
       authBox.classList.add("hidden");
       loggedBox.classList.remove("hidden");
-      textBox.innerText = "Logged in as customer: " + (currentUser.email || "customer");
+      textBox.innerText = "Logged in as customer: " + (currentUser.email || "customer") + ". Enter Business ID/slug above or open a public booking link.";
     } else {
       authBox.classList.remove("hidden");
       loggedBox.classList.add("hidden");
@@ -1944,27 +1907,6 @@
     const id = document.getElementById("manualBusinessId").value.trim();
 
     if (!id) {
-      alert("Enter business ID.");
-      return;
-    }
-
-    businessId = id;
-    currentDate = new Date();
-    selectedDate = null;
-    selectedSlot = null;
-    selectedService = null;
-
-    showPublicView(true);
-    await loadPublicData();
-  }
-
-
-
-  async function continueCustomerToBooking() {
-    const manualInput = document.getElementById("manualBusinessId");
-    const id = (manualInput?.value || publicBusinessId || "").trim();
-
-    if (!id) {
       alert("Enter business ID or open a public booking link.");
       return;
     }
@@ -2060,11 +2002,6 @@
     document.getElementById("customerAuthConfirmPassword").value = "";
     alert("Customer signup success. If email confirmation is required, confirm the email first, then login.");
     updateCustomerAuthUI();
-
-    const manualId = document.getElementById("manualBusinessId")?.value.trim();
-    if (manualId || publicBusinessId) {
-      await continueCustomerToBooking();
-    }
   }
 
   async function customerLogin() {
@@ -2106,11 +2043,6 @@
     if (document.getElementById("customerAuthConfirmPassword")) document.getElementById("customerAuthConfirmPassword").value = "";
     alert("Customer login success.");
     updateCustomerAuthUI();
-
-    const manualId = document.getElementById("manualBusinessId")?.value.trim();
-    if (manualId || publicBusinessId) {
-      await continueCustomerToBooking();
-    }
   }
 
   async function customerLogout() {
@@ -2264,10 +2196,7 @@
     document.getElementById("adminEmail").innerText = "Logged in as: " + currentUser.email;
 
     await ensureBusinessSettings();
-    const publicIdentifier = getBusinessPublicIdentifier();
-    document.getElementById("publicLink").innerText = buildPublicBookingLink(publicIdentifier);
-    const businessIdDisplay = document.getElementById("businessIdDisplay");
-    if (businessIdDisplay) businessIdDisplay.innerText = publicIdentifier;
+    updatePublicLinkDisplay();
 
     await loadServices();
     await loadStaffMembers();
@@ -2289,18 +2218,16 @@
   }
 
   async function loadPublicData() {
-    await loadBusinessSettings();
+    const originalBusinessKey = businessId;
+    const resolvedBusinessId = await resolveBusinessIdentifierToUuid(originalBusinessKey);
 
-    // IMPORTANT:
-    // Public links can use a friendly slug like booking-app-2c4416.
-    // First resolve that slug through business_settings, then switch businessId
-    // to the real UUID before loading services/bookings/blocked days.
-    // Without this guard Supabase tries to compare the slug with uuid columns.
-    if (!businessSettings) {
+    if (!resolvedBusinessId || !businessSettings) {
       alert("Business not found or settings are missing. Check the public link / Business ID.");
       showPublicView(false);
       return;
     }
+
+    businessId = resolvedBusinessId;
 
     await loadServices();
     await loadStaffMembers();
@@ -2311,8 +2238,6 @@
     document.getElementById("publicBusinessName").innerText =
       businessSettings?.business_name || "Book Appointment";
 
-    renderPublicBusinessProfileInfo();
-
     document.getElementById("selectedDateTitle").innerText = "Select a date";
     document.getElementById("slotsContainer").innerHTML = "";
     document.getElementById("bookingFormCard").classList.add("hidden");
@@ -2320,32 +2245,6 @@
     renderPublicServices();
     renderPublicStaffOptions();
     renderPublicCalendar();
-  }
-
-
-
-  function renderPublicBusinessProfileInfo() {
-    const box = document.getElementById("publicBusinessInfo");
-    if (!box) return;
-
-    const logo = businessSettings?.business_logo_url || "";
-    const address = businessSettings?.business_address || "";
-    const phone = businessSettings?.business_phone || "";
-    const description = businessSettings?.business_description || "";
-
-    if (!logo && !address && !phone && !description) {
-      box.classList.add("hidden");
-      box.innerHTML = "";
-      return;
-    }
-
-    box.classList.remove("hidden");
-    box.innerHTML = `
-      ${logo ? `<img src="${escapeHtml(logo)}" alt="Business logo" />` : ""}
-      ${description ? `<div>${escapeHtml(description)}</div>` : ""}
-      ${address ? `<div class="small"><strong>Address:</strong> ${escapeHtml(address)}</div>` : ""}
-      ${phone ? `<div class="small"><strong>Phone:</strong> ${escapeHtml(phone)}</div>` : ""}
-    `;
   }
 
   function renderAdminStats() {
@@ -2392,15 +2291,14 @@
     await loadBusinessSettings();
 
     if (!businessSettings) {
-      const fallbackSlug = generateFallbackBusinessSlug();
       const defaultSettings = {
         business_id: businessId,
-        business_slug: fallbackSlug,
         business_name: "My Business",
-        business_logo_url: null,
-        business_address: null,
+        business_slug: makeDefaultBusinessSlug(),
         business_phone: null,
+        business_address: null,
         business_description: null,
+        business_logo: null,
         work_start: "09:00",
         work_end: "17:00",
         working_days: [1,2,3,4,5],
@@ -2420,54 +2318,49 @@
 
       await loadBusinessSettings();
     }
+
+    if (businessSettings && !businessSettings.business_slug) {
+      const { error } = await sb
+        .from("business_settings")
+        .update({ business_slug: makeDefaultBusinessSlug() })
+        .eq("business_id", businessId);
+
+      if (!error) await loadBusinessSettings();
+    }
   }
 
   async function loadBusinessSettings() {
-    if (!businessId) {
-      businessSettings = null;
-      return;
-    }
-
-    let query = sb
+    const { data, error } = await sb
       .from("business_settings")
-      .select("*");
-
-    if (isValidUuid(businessId)) {
-      query = query.eq("business_id", businessId);
-    } else {
-      query = query.eq("business_slug", normalizeBusinessSlug(businessId));
-    }
-
-    const { data, error } = await query.maybeSingle();
+      .select("*")
+      .eq("business_id", businessId)
+      .maybeSingle();
 
     if (error) {
-      alert("Load settings error: " + error.message + "\n\nIf you just added Business ID / slug, run the SQL from the ZIP first.");
+      alert("Load settings error: " + error.message);
       return;
     }
 
     businessSettings = data;
-
-    // After loading by slug, switch internal businessId to the real owner UUID for bookings/services.
-    if (data?.business_id) {
-      businessId = data.business_id;
-    }
   }
 
   function fillBusinessSettingsForm() {
     if (!businessSettings) return;
 
     document.getElementById("businessName").value = businessSettings.business_name || "";
-    if (document.getElementById("businessSlug")) document.getElementById("businessSlug").value = businessSettings.business_slug || generateFallbackBusinessSlug();
-    if (document.getElementById("businessLogoUrl")) document.getElementById("businessLogoUrl").value = businessSettings.business_logo_url || "";
+    if (document.getElementById("businessSlug")) document.getElementById("businessSlug").value = businessSettings.business_slug || makeDefaultBusinessSlug();
     if (document.getElementById("businessPhone")) document.getElementById("businessPhone").value = businessSettings.business_phone || "";
     if (document.getElementById("businessAddress")) document.getElementById("businessAddress").value = businessSettings.business_address || "";
     if (document.getElementById("businessDescription")) document.getElementById("businessDescription").value = businessSettings.business_description || "";
-    previewBusinessPublicLink();
+    if (document.getElementById("businessLogo")) document.getElementById("businessLogo").value = businessSettings.business_logo || "";
+
     document.getElementById("workStart").value = businessSettings.work_start || "09:00";
     document.getElementById("workEnd").value = businessSettings.work_end || "17:00";
     document.getElementById("breakStart").value = businessSettings.break_start || "";
     document.getElementById("breakEnd").value = businessSettings.break_end || "";
     document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
+
+    updatePublicLinkDisplay();
 
     const days = getWorkingDaysArray();
     document.querySelectorAll(".workDay").forEach(cb => {
@@ -2497,26 +2390,21 @@
     const workingDays = Array.from(document.querySelectorAll(".workDay:checked"))
       .map(cb => Number(cb.value));
 
-    const businessNameValue = document.getElementById("businessName").value.trim();
-    const slugValue = normalizeBusinessSlug(document.getElementById("businessSlug")?.value || businessNameValue || businessId);
+    const rawSlug = document.getElementById("businessSlug")?.value || makeDefaultBusinessSlug();
+    const slug = sanitizeBusinessSlug(rawSlug);
 
-    if (!businessNameValue) {
-      alert("Business name is required.");
-      return;
-    }
-
-    if (!slugValue) {
-      alert("Business ID / slug is required.");
+    if (!slug) {
+      alert("Business slug is required. Example: barber-shop-skopje");
       return;
     }
 
     const updates = {
-      business_name: businessNameValue,
-      business_slug: slugValue,
-      business_logo_url: document.getElementById("businessLogoUrl")?.value.trim() || null,
-      business_address: document.getElementById("businessAddress")?.value.trim() || null,
+      business_name: document.getElementById("businessName").value.trim(),
+      business_slug: slug,
       business_phone: document.getElementById("businessPhone")?.value.trim() || null,
+      business_address: document.getElementById("businessAddress")?.value.trim() || null,
       business_description: document.getElementById("businessDescription")?.value.trim() || null,
+      business_logo: document.getElementById("businessLogo")?.value.trim() || null,
       work_start: document.getElementById("workStart").value,
       work_end: document.getElementById("workEnd").value,
       working_days: workingDays,
@@ -2531,7 +2419,7 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Save settings error: " + error.message + "\n\nIf the error mentions business_slug/logo/address/phone/description, run the SQL file from the ZIP first. If it says duplicate key, choose another Business ID / slug.");
+      alert("Save settings error: " + error.message);
       return;
     }
 
@@ -3695,6 +3583,32 @@
     renderSlots(dateStr);
   }
 
+  async function prefillCustomerBookingFormFromProfile() {
+    if (!currentUser || currentUserRole !== "customer") return;
+
+    const nameInput = document.getElementById("customerName");
+    const phoneInput = document.getElementById("customerPhone");
+    const emailInput = document.getElementById("customerEmail");
+
+    if (emailInput && !emailInput.value) emailInput.value = currentUser.email || "";
+
+    try {
+      const { data } = await sb
+        .from("user_profiles")
+        .select("full_name, phone, email")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+      if (data) {
+        if (nameInput && !nameInput.value) nameInput.value = data.full_name || "";
+        if (phoneInput && !phoneInput.value) phoneInput.value = data.phone || "";
+        if (emailInput && !emailInput.value) emailInput.value = data.email || currentUser.email || "";
+      }
+    } catch (e) {
+      // Profile prefill is optional. Booking can still continue.
+    }
+  }
+
   function renderSlots(dateStr) {
     const container = document.getElementById("slotsContainer");
     container.innerHTML = "";
@@ -3749,41 +3663,14 @@
     });
   }
 
-
-
-  async function loadCustomerProfileForBookingForm() {
-    if (!currentUser || currentUserRole !== "customer") return;
-
-    try {
-      const { data } = await sb
-        .from("user_profiles")
-        .select("full_name, phone, email")
-        .eq("id", currentUser.id)
-        .maybeSingle();
-
-      const nameInput = document.getElementById("customerName");
-      const phoneInput = document.getElementById("customerPhone");
-      const emailInput = document.getElementById("customerEmail");
-
-      if (nameInput && !nameInput.value) nameInput.value = data?.full_name || "";
-      if (phoneInput && !phoneInput.value) phoneInput.value = data?.phone || "";
-      if (emailInput && !emailInput.value) emailInput.value = data?.email || currentUser.email || "";
-    } catch (err) {
-      const emailInput = document.getElementById("customerEmail");
-      if (emailInput && !emailInput.value) emailInput.value = currentUser.email || "";
-    }
-  }
-
-  async function chooseSlot(time) {
+  function chooseSlot(time) {
     selectedSlot = time;
 
     document.getElementById("bookingFormCard").classList.remove("hidden");
     document.getElementById("chosenSlotText").innerText =
       `${selectedDate} at ${selectedSlot} - ${selectedService.name}`;
 
-    if (currentUser && currentUserRole === "customer") {
-      await loadCustomerProfileForBookingForm();
-    }
+    prefillCustomerBookingFormFromProfile();
   }
 
   async function createPublicBooking() {
