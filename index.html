@@ -485,8 +485,14 @@
     }
 
     .country-picker-option:hover,
-    .country-picker-option.active {
+    .country-picker-option.active,
+    .country-picker-option.typeahead-active {
       background: #eff6ff;
+    }
+
+    .country-picker-button,
+    .country-picker-option {
+      user-select: none;
     }
 
     .country-picker-option-code {
@@ -1290,6 +1296,18 @@
         closeCountryPicker();
       }
     });
+
+    // Capture typing while the custom country dropdown is open.
+    // This avoids the browser scrolling the page/list to the top or bottom.
+    document.addEventListener("keydown", function(event) {
+      const picker = document.getElementById("customerCountryPicker");
+      if (!picker || !picker.classList.contains("open")) return;
+
+      const button = document.getElementById("customerCountryButton");
+      if (!button) return;
+
+      handleCountryPickerKeydown(event);
+    }, true);
   }
 
   function toggleCountryPicker() {
@@ -1305,10 +1323,18 @@
 
   function openCountryPicker() {
     const picker = document.getElementById("customerCountryPicker");
+    const button = document.getElementById("customerCountryButton");
     if (!picker) return;
+
     picker.classList.add("open");
-    renderCountryOptions(COUNTRY_PHONE_CODES);
-    scrollSelectedCountryIntoView();
+
+    // Open with the full list, but do not jump around while the user types.
+    if (!countryTypeBuffer) {
+      renderCountryOptions(COUNTRY_PHONE_CODES);
+      scrollSelectedCountryIntoView();
+    }
+
+    if (button) button.focus({ preventScroll: true });
   }
 
   function closeCountryPicker() {
@@ -1316,6 +1342,7 @@
     if (!picker) return;
     picker.classList.remove("open");
     countryTypeBuffer = "";
+    renderCountryOptions(COUNTRY_PHONE_CODES);
     hideCountryTypeaheadHint();
   }
 
@@ -1336,7 +1363,7 @@
     if (closeAfterSelect) {
       closeCountryPicker();
       const button = document.getElementById("customerCountryButton");
-      if (button) button.focus();
+      if (button) button.focus({ preventScroll: true });
     }
   }
 
@@ -1351,45 +1378,110 @@
     if (active) active.scrollIntoView({ block: "nearest" });
   }
 
+  function markFirstVisibleCountryAsTypeaheadActive() {
+    document.querySelectorAll(".country-picker-option").forEach((option, index) => {
+      option.classList.toggle("typeahead-active", index === 0);
+    });
+  }
+
+  function selectFirstVisibleCountry() {
+    const first = document.querySelector(".country-picker-option.typeahead-active") || document.querySelector(".country-picker-option");
+    if (first?.dataset?.iso) {
+      selectCountryByIso(first.dataset.iso, true);
+    }
+  }
+
+  function resetCountryTypeaheadSoon() {
+    clearTimeout(countryTypeTimer);
+    countryTypeTimer = setTimeout(() => {
+      countryTypeBuffer = "";
+      if (document.getElementById("customerCountryPicker")?.classList.contains("open")) {
+        renderCountryOptions(COUNTRY_PHONE_CODES);
+        highlightSelectedCountry();
+      }
+      hideCountryTypeaheadHint();
+    }, 1800);
+  }
+
   function handleCountryPickerKeydown(event) {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
 
+    const picker = document.getElementById("customerCountryPicker");
+    const isOpen = picker?.classList.contains("open");
+
     if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
       closeCountryPicker();
       return;
     }
 
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      toggleCountryPicker();
+    if (event.key === "Enter") {
+      if (isOpen) {
+        event.preventDefault();
+        event.stopPropagation();
+        selectFirstVisibleCountry();
+      }
       return;
     }
 
-    if (!event.key || event.key.length !== 1 || !/[a-z0-9]/i.test(event.key)) return;
+    if (event.key === " " || event.key === "ArrowDown") {
+      event.preventDefault();
+      event.stopPropagation();
+      openCountryPicker();
+      return;
+    }
+
+    if (event.key === "Backspace") {
+      if (!isOpen) return;
+      event.preventDefault();
+      event.stopPropagation();
+      countryTypeBuffer = countryTypeBuffer.slice(0, -1);
+      applyCountryTypeaheadFilter();
+      resetCountryTypeaheadSoon();
+      return;
+    }
+
+    if (!event.key || event.key.length !== 1 || !/[a-z]/i.test(event.key)) return;
 
     event.preventDefault();
+    event.stopPropagation();
+
     openCountryPicker();
-
     countryTypeBuffer += event.key.toLowerCase();
-    clearTimeout(countryTypeTimer);
-    countryTypeTimer = setTimeout(() => {
-      countryTypeBuffer = "";
-      renderCountryOptions(COUNTRY_PHONE_CODES);
-      hideCountryTypeaheadHint();
-    }, 1800);
+    applyCountryTypeaheadFilter();
+    resetCountryTypeaheadSoon();
+  }
 
-    const matches = COUNTRY_PHONE_CODES.filter(country =>
-      country.name.toLowerCase().startsWith(countryTypeBuffer)
+  function applyCountryTypeaheadFilter() {
+    const query = countryTypeBuffer.trim().toLowerCase();
+
+    if (!query) {
+      renderCountryOptions(COUNTRY_PHONE_CODES);
+      highlightSelectedCountry();
+      hideCountryTypeaheadHint();
+      return;
+    }
+
+    const startsWithMatches = COUNTRY_PHONE_CODES.filter(country =>
+      country.name.toLowerCase().startsWith(query)
     );
 
+    const containsMatches = COUNTRY_PHONE_CODES.filter(country =>
+      !country.name.toLowerCase().startsWith(query) && country.name.toLowerCase().includes(query)
+    );
+
+    const matches = [...startsWithMatches, ...containsMatches];
+
     if (!matches.length) {
-      showCountryTypeaheadHint(countryTypeBuffer, []);
+      renderCountryOptions([]);
+      showCountryTypeaheadHint(query, []);
       return;
     }
 
     renderCountryOptions(matches);
-    selectCountryByIso(matches[0].iso, false);
-    showCountryTypeaheadHint(countryTypeBuffer, matches);
+    markFirstVisibleCountryAsTypeaheadActive();
+    showCountryTypeaheadHint(query, matches);
   }
 
   function showCountryTypeaheadHint(query, matches) {
