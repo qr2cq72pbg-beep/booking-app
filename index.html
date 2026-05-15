@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v3 fixed slug resolving -->
+  <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 + robust slot click fix -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -238,6 +238,13 @@
     }
 
     .slot:hover { background: #bbf7d0; }
+
+    .slot.selected {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    }
 
     .slot.booked {
       background: #fecaca;
@@ -991,7 +998,7 @@
         </div>
 
         <div id="customerAuthBox">
-          <input id="customerAuthName" autocomplete="name" placeholder="Customer name *" required />
+          <input id="customerAuthName" placeholder="Customer name *" required />
           <div class="phone-row">
             <div id="customerCountryPicker" class="country-picker">
               <button id="customerCountryButton" type="button" class="country-picker-button" onclick="toggleCountryPicker()" onkeydown="handleCountryPickerKeydown(event)">
@@ -1004,13 +1011,13 @@
             <input id="customerAuthPhone" inputmode="tel" autocomplete="tel-national" placeholder="Phone number * e.g. 78359201" required />
           </div>
           <div id="countryTypeaheadHint" class="country-typeahead-hint"></div>
-          <input id="customerAuthEmail" type="email" autocomplete="email" placeholder="Customer email *" required />
+          <input id="customerAuthEmail" type="email" placeholder="Customer email *" required />
           <div class="password-wrap">
-            <input id="customerAuthPassword" type="password" autocomplete="current-password" placeholder="Customer password *" required />
+            <input id="customerAuthPassword" type="password" placeholder="Customer password *" required />
             <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthPassword', this)">👁</button>
           </div>
           <div class="password-wrap">
-            <input id="customerAuthConfirmPassword" type="password" autocomplete="new-password" placeholder="Confirm password *" required />
+            <input id="customerAuthConfirmPassword" type="password" placeholder="Confirm password *" required />
             <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthConfirmPassword', this)">👁</button>
           </div>
           <div class="row">
@@ -2014,39 +2021,6 @@
   }
 
 
-  async function loadCustomerProfileIntoAuthFields() {
-    if (!currentUser) return;
-
-    const { data, error } = await sb
-      .from("user_profiles")
-      .select("full_name, phone, email")
-      .eq("id", currentUser.id)
-      .maybeSingle();
-
-    if (error || !data) return;
-
-    const nameInput = document.getElementById("customerAuthName");
-    const phoneInput = document.getElementById("customerAuthPhone");
-    const emailInput = document.getElementById("customerAuthEmail");
-
-    if (nameInput && data.full_name) nameInput.value = data.full_name;
-    if (emailInput && (data.email || currentUser.email)) emailInput.value = data.email || currentUser.email;
-
-    if (phoneInput && data.phone) {
-      const country = COUNTRY_PHONE_CODES
-        .slice()
-        .sort((a, b) => b.dial.length - a.dial.length)
-        .find(c => String(data.phone).startsWith(c.dial));
-
-      if (country) {
-        selectCountryByIso(country.iso, false);
-        phoneInput.value = String(data.phone).replace(country.dial, "");
-      } else {
-        phoneInput.value = data.phone;
-      }
-    }
-  }
-
   async function customerSignup() {
     if (!initSupabaseClient()) return;
 
@@ -2135,7 +2109,6 @@
       if (!ok) return;
     }
 
-    await loadCustomerProfileIntoAuthFields();
     document.getElementById("customerAuthPassword").value = "";
     if (document.getElementById("customerAuthConfirmPassword")) document.getElementById("customerAuthConfirmPassword").value = "";
     alert("Customer login success.");
@@ -2323,19 +2296,16 @@
   }
 
   async function loadPublicData() {
-    const requestedIdentifier = String(businessId || publicBusinessId || "").trim();
-
     await loadBusinessSettings();
 
-    if (!businessSettings || !businessId || !isValidUuid(businessId)) {
-      alert(
-        "Business not found or settings are missing.\n\n" +
-        "Checked Business ID / slug: " + requestedIdentifier + "\n\n" +
-        "Fix: Admin must open Business Settings, click Save Settings once, and the SQL from the ZIP must be run in Supabase."
-      );
+    // IMPORTANT:
+    // Public links can use a friendly slug like booking-app-2c4416.
+    // First resolve that slug through business_settings, then switch businessId
+    // to the real UUID before loading services/bookings/blocked days.
+    // Without this guard Supabase tries to compare the slug with uuid columns.
+    if (!businessSettings) {
+      alert("Business not found or settings are missing. Check the public link / Business ID.");
       showPublicView(false);
-      const manualInput = document.getElementById("manualBusinessId");
-      if (manualInput && requestedIdentifier) manualInput.value = requestedIdentifier;
       return;
     }
 
@@ -2451,32 +2421,11 @@
         .insert(defaultSettings);
 
       if (error) {
-        alert("Business settings error: " + error.message + "\n\nIf this mentions RLS/policy, run the SQL file from the ZIP.");
+        alert("Business settings error: " + error.message);
         return;
       }
 
       await loadBusinessSettings();
-      return;
-    }
-
-    // Important fix: older businesses existed before business_slug was added.
-    // If the row exists but slug is empty, save a fallback slug immediately,
-    // otherwise the public link will point to a slug that Supabase cannot find.
-    if (!businessSettings.business_slug) {
-      const fallbackSlug = generateFallbackBusinessSlug();
-      const { error } = await sb
-        .from("business_settings")
-        .update({
-          business_slug: fallbackSlug,
-          business_name: businessSettings.business_name || document.getElementById("businessName")?.value?.trim() || "My Business"
-        })
-        .eq("business_id", businessId);
-
-      if (error) {
-        console.warn("Could not auto-save business slug:", error.message);
-      } else {
-        await loadBusinessSettings();
-      }
     }
   }
 
@@ -3800,7 +3749,20 @@
         div.innerText = time + " Booked";
       } else {
         div.innerText = time;
-        div.onclick = () => chooseSlot(time);
+        div.dataset.slotTime = time;
+        div.setAttribute("role", "button");
+        div.setAttribute("tabindex", "0");
+        div.onclick = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          chooseSlot(time);
+        };
+        div.onkeydown = (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            chooseSlot(time);
+          }
+        };
       }
 
       container.appendChild(div);
@@ -3835,13 +3797,22 @@
   async function chooseSlot(time) {
     selectedSlot = time;
 
-    document.getElementById("bookingFormCard").classList.remove("hidden");
+    document.querySelectorAll(".slot.selected").forEach(slot => slot.classList.remove("selected"));
+    const selectedSlotEl = document.querySelector(`.slot[data-slot-time="${CSS.escape(time)}"]`);
+    if (selectedSlotEl) selectedSlotEl.classList.add("selected");
+
+    const formCard = document.getElementById("bookingFormCard");
+    formCard.classList.remove("hidden");
     document.getElementById("chosenSlotText").innerText =
       `${selectedDate} at ${selectedSlot} - ${selectedService.name}`;
 
     if (currentUser && currentUserRole === "customer") {
       await loadCustomerProfileForBookingForm();
     }
+
+    setTimeout(() => {
+      formCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
   }
 
   async function createPublicBooking() {
