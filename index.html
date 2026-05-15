@@ -1103,9 +1103,7 @@
     const { error } = await sb.auth.updateUser({ password });
 
     if (error) {
-      alert("Save password error: " + error.message + "
-
-If this happens, send a new recovery email and open the newest link.");
+      alert("Save password error: " + error.message + "\n\nIf this happens, send a new recovery email and open the newest link.");
       return;
     }
 
