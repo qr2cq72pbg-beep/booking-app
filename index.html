@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
+  <!-- FIX VERSION: customer-direct-child-2026-05-15 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -464,6 +465,55 @@
       <p class="small">Ако не си дошол преку reset email, прво кликни Forgot / Reset Password од Login екранот.</p>
     </div>
 
+    <div id="publicView" class="hidden">
+
+      <div id="customerStartCard" class="card hidden">
+        <h1>Customer Booking</h1>
+        <p class="small">
+          Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
+        </p>
+        <input id="manualBusinessId" placeholder="Business ID" />
+        <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
+        <button class="secondary" onclick="goHome()">Back</button>
+      </div>
+
+      <div id="publicBookingContent" class="hidden">
+
+        <div class="card">
+          <h1 id="publicBusinessName">Book Appointment</h1>
+          <p class="small">Избери услуга, датум и слободен термин.</p>
+
+          <select id="publicService" onchange="renderPublicCalendar()"></select>
+          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
+
+          <div class="row">
+            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
+            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+          </div>
+
+          <h3 id="publicCalendarTitle"></h3>
+          <div id="publicCalendar" class="calendar"></div>
+        </div>
+
+        <div class="card">
+          <h2 id="selectedDateTitle">Select a date</h2>
+          <div id="slotsContainer" class="slot-grid"></div>
+        </div>
+
+        <div id="bookingFormCard" class="card hidden">
+          <h2>Confirm Booking</h2>
+          <p id="chosenSlotText"></p>
+          <input id="customerName" placeholder="Your name" />
+          <input id="customerPhone" placeholder="Phone" />
+          <input id="customerEmail" type="email" placeholder="Email optional" />
+          <textarea id="customerNotes" placeholder="Notes optional"></textarea>
+          <button onclick="createPublicBooking()">Book Now</button>
+        </div>
+
+      </div>
+
+    </div>
+
     <div id="adminView" class="hidden">
 <div class="admin-grid">
 
@@ -745,54 +795,6 @@
 
 </div>
 
-    <div id="publicView" class="hidden">
-
-      <div id="customerStartCard" class="card hidden">
-        <h1>Customer Booking</h1>
-        <p class="small">
-          Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
-        </p>
-        <input id="manualBusinessId" placeholder="Business ID" />
-        <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
-        <button class="secondary" onclick="goHome()">Back</button>
-      </div>
-
-      <div id="publicBookingContent" class="hidden">
-
-        <div class="card">
-          <h1 id="publicBusinessName">Book Appointment</h1>
-          <p class="small">Избери услуга, датум и слободен термин.</p>
-
-          <select id="publicService" onchange="renderPublicCalendar()"></select>
-          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
-
-          <div class="row">
-            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
-            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
-          </div>
-
-          <h3 id="publicCalendarTitle"></h3>
-          <div id="publicCalendar" class="calendar"></div>
-        </div>
-
-        <div class="card">
-          <h2 id="selectedDateTitle">Select a date</h2>
-          <div id="slotsContainer" class="slot-grid"></div>
-        </div>
-
-        <div id="bookingFormCard" class="card hidden">
-          <h2>Confirm Booking</h2>
-          <p id="chosenSlotText"></p>
-          <input id="customerName" placeholder="Your name" />
-          <input id="customerPhone" placeholder="Phone" />
-          <input id="customerEmail" type="email" placeholder="Email optional" />
-          <textarea id="customerNotes" placeholder="Notes optional"></textarea>
-          <button onclick="createPublicBooking()">Book Now</button>
-        </div>
-
-      </div>
-
-    </div>
 
   </div>
 
@@ -842,6 +844,7 @@
 
   async function init() {
     if (!initSupabaseClient()) return;
+    repairPublicViewPlacement();
 
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
     const queryParams = new URLSearchParams(window.location.search);
@@ -887,7 +890,16 @@
     }
   }
 
+  function repairPublicViewPlacement() {
+    const publicView = document.getElementById("publicView");
+    const container = document.querySelector(".container");
+    if (publicView && container && publicView.parentElement !== container) {
+      container.appendChild(publicView);
+    }
+  }
+
   function hideAllViews() {
+    repairPublicViewPlacement();
     document.getElementById("modeView").classList.add("hidden");
     document.getElementById("authView").classList.add("hidden");
     document.getElementById("resetPasswordView").classList.add("hidden");
@@ -924,6 +936,7 @@
   }
 
   function showPublicView(hasBusiness) {
+    repairPublicViewPlacement();
     hideAllViews();
     document.getElementById("publicView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.add("hidden");
