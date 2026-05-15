@@ -446,9 +446,22 @@
         <button class="success" onclick="signup()">Signup</button>
       </div>
 
+      <button class="secondary" onclick="sendPasswordResetEmail()">Forgot / Reset Password</button>
       <button class="secondary" onclick="goHome()">Back</button>
 
       <p class="small">Admin делот е за логирани корисници. Public booking работи преку business link.</p>
+    </div>
+
+    <div id="resetPasswordView" class="card hidden">
+      <h1>Set New Password</h1>
+      <p class="small">Внеси нов password за Admin акаунтот. Овој екран се отвора кога доаѓаш преку reset password email.</p>
+      <input id="newPassword" type="password" placeholder="New password" />
+      <input id="confirmNewPassword" type="password" placeholder="Confirm new password" />
+      <div class="row">
+        <button class="success" onclick="saveNewPassword()">Save New Password</button>
+        <button class="secondary" onclick="cancelPasswordReset()">Back to Login</button>
+      </div>
+      <p class="small">Ако не си дошол преку reset email, прво кликни Forgot / Reset Password од Login екранот.</p>
     </div>
 
     <div id="adminView" class="hidden">
@@ -830,6 +843,35 @@
   async function init() {
     if (!initSupabaseClient()) return;
 
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const queryParams = new URLSearchParams(window.location.search);
+    const isRecoveryLink =
+      queryParams.get("reset_password") === "1" ||
+      queryParams.get("type") === "recovery" ||
+      hashParams.get("type") === "recovery" ||
+      window.location.href.includes("type=recovery");
+
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        currentUser = session?.user || null;
+        showResetPasswordView();
+      }
+    });
+
+    const { data, error } = await sb.auth.getSession();
+
+    if (error) {
+      alert("Session error: " + error.message);
+      showModeView();
+      return;
+    }
+
+    if (isRecoveryLink) {
+      currentUser = data?.session?.user || null;
+      showResetPasswordView();
+      return;
+    }
+
     if (publicBusinessId) {
       businessId = publicBusinessId;
       showPublicView(true);
@@ -837,18 +879,9 @@
       return;
     }
 
-    const { data, error } = await sb.auth.getSession();
-
-    if (error) {
-      alert("Session error: " + error.message);
-      return;
-    }
-
     if (data && data.session) {
       currentUser = data.session.user;
-      businessId = currentUser.id;
-      showAdminView();
-      await loadAdminData();
+      showModeView();
     } else {
       showModeView();
     }
@@ -857,6 +890,7 @@
   function hideAllViews() {
     document.getElementById("modeView").classList.add("hidden");
     document.getElementById("authView").classList.add("hidden");
+    document.getElementById("resetPasswordView").classList.add("hidden");
     document.getElementById("adminView").classList.add("hidden");
     document.getElementById("publicView").classList.add("hidden");
   }
@@ -871,6 +905,13 @@
   function showAuthView() {
     hideAllViews();
     document.getElementById("authView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.add("hidden");
+    document.getElementById("homeBtn").classList.remove("hidden");
+  }
+
+  function showResetPasswordView() {
+    hideAllViews();
+    document.getElementById("resetPasswordView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.add("hidden");
     document.getElementById("homeBtn").classList.remove("hidden");
   }
@@ -897,28 +938,48 @@
     }
   }
 
-  function chooseAdmin() {
+  async function chooseAdmin() {
+    if (currentUser) {
+      businessId = currentUser.id;
+      showAdminView();
+      await loadAdminData();
+      return;
+    }
+
     showAuthView();
   }
 
   function chooseCustomer() {
-    showPublicView(false);
-  }
-
-  function goHome() {
-    if (currentUser) {
-      showAdminView();
-      return;
-    }
-
     businessId = null;
     businessSettings = null;
     services = [];
+    staffMembers = [];
     bookings = [];
     blockedDays = [];
     selectedDate = null;
     selectedSlot = null;
     selectedService = null;
+    currentDate = new Date();
+
+    history.replaceState(null, "", window.location.pathname);
+    showPublicView(false);
+  }
+
+  function goHome() {
+    businessId = null;
+    businessSettings = null;
+    services = [];
+    staffMembers = [];
+    bookings = [];
+    blockedDays = [];
+    selectedDate = null;
+    selectedSlot = null;
+    selectedService = null;
+    currentDate = new Date();
+
+    if (document.getElementById("manualBusinessId")) document.getElementById("manualBusinessId").value = "";
+    if (document.getElementById("slotsContainer")) document.getElementById("slotsContainer").innerHTML = "";
+    if (document.getElementById("bookingFormCard")) document.getElementById("bookingFormCard").classList.add("hidden");
 
     history.replaceState(null, "", window.location.pathname);
     showModeView();
@@ -996,6 +1057,75 @@
     alert("Signup success. If Supabase asks email confirmation, confirm first, then login.");
   }
 
+  async function sendPasswordResetEmail() {
+    if (!initSupabaseClient()) return;
+
+    const email = document.getElementById("authEmail").value.trim();
+
+    if (!email) {
+      alert("Enter your email first, then click Forgot / Reset Password.");
+      return;
+    }
+
+    const redirectTo = window.location.origin + window.location.pathname + "?reset_password=1";
+
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
+
+    if (error) {
+      alert("Password reset error: " + error.message);
+      return;
+    }
+
+    alert("Password reset email sent. Open the email link, then set a new password in this app.");
+  }
+
+  async function saveNewPassword() {
+    if (!initSupabaseClient()) return;
+
+    const password = document.getElementById("newPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmNewPassword").value.trim();
+
+    if (!password || !confirmPassword) {
+      alert("Enter and confirm the new password.");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    const { error } = await sb.auth.updateUser({ password });
+
+    if (error) {
+      alert("Save password error: " + error.message + "
+
+If this happens, send a new recovery email and open the newest link.");
+      return;
+    }
+
+    alert("Password changed successfully. Login again with the new password.");
+    await sb.auth.signOut();
+    currentUser = null;
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmNewPassword").value = "";
+    history.replaceState(null, "", window.location.pathname);
+    showAuthView();
+  }
+
+  async function cancelPasswordReset() {
+    if (!initSupabaseClient()) return;
+    await sb.auth.signOut();
+    currentUser = null;
+    history.replaceState(null, "", window.location.pathname);
+    showAuthView();
+  }
+
   async function login() {
     if (!initSupabaseClient()) return;
 
@@ -1033,6 +1163,7 @@
     if (!initSupabaseClient()) return;
 
     await sb.auth.signOut();
+    currentUser = null;
     location.href = window.location.pathname;
   }
 
