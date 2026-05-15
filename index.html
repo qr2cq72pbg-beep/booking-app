@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- FIX VERSION: customer-direct-child-2026-05-15 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -465,55 +464,6 @@
       <p class="small">Ако не си дошол преку reset email, прво кликни Forgot / Reset Password од Login екранот.</p>
     </div>
 
-    <div id="publicView" class="hidden">
-
-      <div id="customerStartCard" class="card hidden">
-        <h1>Customer Booking</h1>
-        <p class="small">
-          Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
-        </p>
-        <input id="manualBusinessId" placeholder="Business ID" />
-        <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
-        <button class="secondary" onclick="goHome()">Back</button>
-      </div>
-
-      <div id="publicBookingContent" class="hidden">
-
-        <div class="card">
-          <h1 id="publicBusinessName">Book Appointment</h1>
-          <p class="small">Избери услуга, датум и слободен термин.</p>
-
-          <select id="publicService" onchange="renderPublicCalendar()"></select>
-          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
-
-          <div class="row">
-            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
-            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
-          </div>
-
-          <h3 id="publicCalendarTitle"></h3>
-          <div id="publicCalendar" class="calendar"></div>
-        </div>
-
-        <div class="card">
-          <h2 id="selectedDateTitle">Select a date</h2>
-          <div id="slotsContainer" class="slot-grid"></div>
-        </div>
-
-        <div id="bookingFormCard" class="card hidden">
-          <h2>Confirm Booking</h2>
-          <p id="chosenSlotText"></p>
-          <input id="customerName" placeholder="Your name" />
-          <input id="customerPhone" placeholder="Phone" />
-          <input id="customerEmail" type="email" placeholder="Email optional" />
-          <textarea id="customerNotes" placeholder="Notes optional"></textarea>
-          <button onclick="createPublicBooking()">Book Now</button>
-        </div>
-
-      </div>
-
-    </div>
-
     <div id="adminView" class="hidden">
 <div class="admin-grid">
 
@@ -795,6 +745,78 @@
 
 </div>
 
+    <div id="publicView" class="hidden">
+
+      <div id="customerStartCard" class="card hidden">
+        <h1>Customer Booking</h1>
+        <p class="small">
+          Ако имаш public booking link, отвори го директно. Ако тестираш рачно, внеси business ID.
+        </p>
+        <input id="manualBusinessId" placeholder="Business ID" />
+        <button class="success" onclick="loadManualCustomerBusiness()">Open Booking</button>
+
+        <hr style="margin: 18px 0; border: none; border-top: 1px solid #e5e7eb;">
+
+        <h2>Customer Login / Signup</h2>
+        <p class="small">Customer account е опционален. Клиент може да се регистрира, да се најави, и потоа да закаже преку business link или business ID.</p>
+
+        <div id="customerLoggedInBox" class="hidden">
+          <p id="customerLoggedInText" class="small"></p>
+          <button class="secondary" onclick="customerLogout()">Customer Logout</button>
+        </div>
+
+        <div id="customerAuthBox">
+          <div class="row">
+            <input id="customerAuthName" placeholder="Customer name optional" />
+            <input id="customerAuthPhone" placeholder="Phone optional" />
+          </div>
+          <input id="customerAuthEmail" type="email" placeholder="Customer email" />
+          <input id="customerAuthPassword" type="password" placeholder="Customer password" />
+          <div class="row">
+            <button onclick="customerLogin()">Customer Login</button>
+            <button class="success" onclick="customerSignup()">Customer Signup</button>
+          </div>
+        </div>
+
+        <button class="secondary" onclick="goHome()">Back</button>
+      </div>
+
+      <div id="publicBookingContent" class="hidden">
+
+        <div class="card">
+          <h1 id="publicBusinessName">Book Appointment</h1>
+          <p class="small">Избери услуга, датум и слободен термин.</p>
+
+          <select id="publicService" onchange="renderPublicCalendar()"></select>
+          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
+
+          <div class="row">
+            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
+            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+          </div>
+
+          <h3 id="publicCalendarTitle"></h3>
+          <div id="publicCalendar" class="calendar"></div>
+        </div>
+
+        <div class="card">
+          <h2 id="selectedDateTitle">Select a date</h2>
+          <div id="slotsContainer" class="slot-grid"></div>
+        </div>
+
+        <div id="bookingFormCard" class="card hidden">
+          <h2>Confirm Booking</h2>
+          <p id="chosenSlotText"></p>
+          <input id="customerName" placeholder="Your name" />
+          <input id="customerPhone" placeholder="Phone" />
+          <input id="customerEmail" type="email" placeholder="Email optional" />
+          <textarea id="customerNotes" placeholder="Notes optional"></textarea>
+          <button onclick="createPublicBooking()">Book Now</button>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -824,6 +846,7 @@
   }
 
   let currentUser = null;
+  let currentUserRole = null;
   let businessId = null;
   let businessSettings = null;
   let services = [];
@@ -844,7 +867,6 @@
 
   async function init() {
     if (!initSupabaseClient()) return;
-    repairPublicViewPlacement();
 
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
     const queryParams = new URLSearchParams(window.location.search);
@@ -890,16 +912,7 @@
     }
   }
 
-  function repairPublicViewPlacement() {
-    const publicView = document.getElementById("publicView");
-    const container = document.querySelector(".container");
-    if (publicView && container && publicView.parentElement !== container) {
-      container.appendChild(publicView);
-    }
-  }
-
   function hideAllViews() {
-    repairPublicViewPlacement();
     document.getElementById("modeView").classList.add("hidden");
     document.getElementById("authView").classList.add("hidden");
     document.getElementById("resetPasswordView").classList.add("hidden");
@@ -936,7 +949,6 @@
   }
 
   function showPublicView(hasBusiness) {
-    repairPublicViewPlacement();
     hideAllViews();
     document.getElementById("publicView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.add("hidden");
@@ -949,10 +961,82 @@
       document.getElementById("customerStartCard").classList.remove("hidden");
       document.getElementById("publicBookingContent").classList.add("hidden");
     }
+
+    updateCustomerAuthUI();
+  }
+
+
+  async function loadCurrentUserRole() {
+    currentUserRole = null;
+
+    if (!currentUser) return null;
+
+    const { data, error } = await sb
+      .from("user_profiles")
+      .select("role")
+      .eq("id", currentUser.id)
+      .maybeSingle();
+
+    if (error) {
+      // Backwards compatibility: old admin accounts may not have a profile yet.
+      return null;
+    }
+
+    currentUserRole = data?.role || null;
+    return currentUserRole;
+  }
+
+  async function upsertUserProfile(user, role, extra = {}) {
+    if (!user) return false;
+
+    const payload = {
+      id: user.id,
+      email: user.email || extra.email || null,
+      role,
+      full_name: extra.full_name || null,
+      phone: extra.phone || null
+    };
+
+    const { error } = await sb
+      .from("user_profiles")
+      .upsert(payload, { onConflict: "id" });
+
+    if (error) {
+      alert("User profile SQL is missing. Run the SQL file from the ZIP in Supabase first.\n\n" + error.message);
+      return false;
+    }
+
+    currentUserRole = role;
+    return true;
+  }
+
+  function updateCustomerAuthUI() {
+    const authBox = document.getElementById("customerAuthBox");
+    const loggedBox = document.getElementById("customerLoggedInBox");
+    const textBox = document.getElementById("customerLoggedInText");
+
+    if (!authBox || !loggedBox || !textBox) return;
+
+    if (currentUser && currentUserRole === "customer") {
+      authBox.classList.add("hidden");
+      loggedBox.classList.remove("hidden");
+      textBox.innerText = "Logged in as customer: " + (currentUser.email || "customer");
+    } else {
+      authBox.classList.remove("hidden");
+      loggedBox.classList.add("hidden");
+      textBox.innerText = "";
+    }
   }
 
   async function chooseAdmin() {
     if (currentUser) {
+      const role = await loadCurrentUserRole();
+
+      if (role === "customer") {
+        alert("You are logged in as Customer. Logout first, then login with an Admin account.");
+        return;
+      }
+
       businessId = currentUser.id;
       showAdminView();
       await loadAdminData();
@@ -1060,14 +1144,108 @@
       return;
     }
 
-    const { error } = await sb.auth.signUp({ email, password });
+    const { data, error } = await sb.auth.signUp({ email, password });
 
     if (error) {
       alert(error.message);
       return;
     }
 
-    alert("Signup success. If Supabase asks email confirmation, confirm first, then login.");
+    if (data?.user) {
+      await upsertUserProfile(data.user, "admin", { email });
+    }
+
+    alert("Admin signup success. If Supabase asks email confirmation, confirm first, then login.");
+  }
+
+
+  async function customerSignup() {
+    if (!initSupabaseClient()) return;
+
+    const fullName = document.getElementById("customerAuthName").value.trim();
+    const phone = document.getElementById("customerAuthPhone").value.trim();
+    const email = document.getElementById("customerAuthEmail").value.trim();
+    const password = document.getElementById("customerAuthPassword").value.trim();
+
+    if (!email || !password) {
+      alert("Enter customer email and password.");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    const { data, error } = await sb.auth.signUp({ email, password });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    if (data?.user) {
+      currentUser = data.user;
+      const ok = await upsertUserProfile(data.user, "customer", {
+        email,
+        full_name: fullName,
+        phone
+      });
+
+      if (!ok) return;
+    }
+
+    document.getElementById("customerAuthPassword").value = "";
+    alert("Customer signup success. If email confirmation is required, confirm the email first, then login.");
+    updateCustomerAuthUI();
+  }
+
+  async function customerLogin() {
+    if (!initSupabaseClient()) return;
+
+    const email = document.getElementById("customerAuthEmail").value.trim();
+    const password = document.getElementById("customerAuthPassword").value.trim();
+
+    if (!email || !password) {
+      alert("Enter customer email and password.");
+      return;
+    }
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    currentUser = data.user;
+    const role = await loadCurrentUserRole();
+
+    if (role === "admin") {
+      alert("This is an Admin account. Use Admin login instead.");
+      await sb.auth.signOut();
+      currentUser = null;
+      currentUserRole = null;
+      updateCustomerAuthUI();
+      return;
+    }
+
+    if (!role) {
+      const ok = await upsertUserProfile(currentUser, "customer", { email });
+      if (!ok) return;
+    }
+
+    document.getElementById("customerAuthPassword").value = "";
+    alert("Customer login success.");
+    updateCustomerAuthUI();
+  }
+
+  async function customerLogout() {
+    if (!initSupabaseClient()) return;
+    await sb.auth.signOut();
+    currentUser = null;
+    currentUserRole = null;
+    updateCustomerAuthUI();
   }
 
   async function sendPasswordResetEmail() {
@@ -1162,6 +1340,16 @@
       }
 
       currentUser = data.user;
+      const role = await loadCurrentUserRole();
+
+      if (role === "customer") {
+        alert("This is a Customer account. Use Customer login instead.");
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        return;
+      }
+
       businessId = currentUser.id;
       showAdminView();
       await loadAdminData();
@@ -1175,6 +1363,7 @@
 
     await sb.auth.signOut();
     currentUser = null;
+    currentUserRole = null;
     location.href = window.location.pathname;
   }
 
@@ -2578,6 +2767,11 @@
     document.getElementById("bookingFormCard").classList.remove("hidden");
     document.getElementById("chosenSlotText").innerText =
       `${selectedDate} at ${selectedSlot} - ${selectedService.name}`;
+
+    if (currentUser && currentUserRole === "customer") {
+      const emailInput = document.getElementById("customerEmail");
+      if (emailInput && !emailInput.value) emailInput.value = currentUser.email || "";
+    }
   }
 
   async function createPublicBooking() {
