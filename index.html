@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supabase Booking App</title>
-  <!-- Customer signup + publicView parent fix v2 -->
+  <!-- Customer signup mandatory fields + profile SQL fix v3 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -373,6 +373,36 @@
       background: #fee2e2;
       color: #991b1b;
       border: 1px solid #ef4444;
+    }
+
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 48px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: auto;
+      margin: 0;
+      padding: 6px 8px;
+      background: transparent;
+      color: #374151;
+      border: none;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .password-toggle:hover {
+      background: transparent;
+      color: #111827;
     }
 
     @media (max-width: 900px) {
@@ -761,7 +791,7 @@
         <hr style="margin: 18px 0; border: none; border-top: 1px solid #e5e7eb;">
 
         <h2>Customer Login / Signup</h2>
-        <p class="small">Customer account е опционален. Клиент може да се регистрира, да се најави, и потоа да закаже преку business link или business ID.</p>
+        <p class="small">Customer account: внеси име, телефон, email и password. Confirm password мора да биде ист. Со 👁 можеш да го видиш password-от додека пишуваш.</p>
 
         <div id="customerLoggedInBox" class="hidden">
           <p id="customerLoggedInText" class="small"></p>
@@ -770,11 +800,18 @@
 
         <div id="customerAuthBox">
           <div class="row">
-            <input id="customerAuthName" placeholder="Customer name optional" />
-            <input id="customerAuthPhone" placeholder="Phone optional" />
+            <input id="customerAuthName" placeholder="Customer name *" required />
+            <input id="customerAuthPhone" placeholder="Phone *" required />
           </div>
-          <input id="customerAuthEmail" type="email" placeholder="Customer email" />
-          <input id="customerAuthPassword" type="password" placeholder="Customer password" />
+          <input id="customerAuthEmail" type="email" placeholder="Customer email *" required />
+          <div class="password-wrap">
+            <input id="customerAuthPassword" type="password" placeholder="Customer password *" required />
+            <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthPassword', this)">👁</button>
+          </div>
+          <div class="password-wrap">
+            <input id="customerAuthConfirmPassword" type="password" placeholder="Confirm password *" required />
+            <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthConfirmPassword', this)">👁</button>
+          </div>
           <div class="row">
             <button onclick="customerLogin()">Customer Login</button>
             <button class="success" onclick="customerSignup()">Customer Signup</button>
@@ -1136,6 +1173,15 @@
     await loadPublicData();
   }
 
+  function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    const isPassword = input.type === "password";
+    input.type = isPassword ? "text" : "password";
+    if (btn) btn.textContent = isPassword ? "🙈" : "👁";
+  }
+
   async function signup() {
     if (!initSupabaseClient()) return;
 
@@ -1169,14 +1215,20 @@
     const phone = document.getElementById("customerAuthPhone").value.trim();
     const email = document.getElementById("customerAuthEmail").value.trim();
     const password = document.getElementById("customerAuthPassword").value.trim();
+    const confirmPassword = document.getElementById("customerAuthConfirmPassword").value.trim();
 
-    if (!email || !password) {
-      alert("Enter customer email and password.");
+    if (!fullName || !phone || !email || !password || !confirmPassword) {
+      alert("For customer signup, name, phone, email, password and confirm password are required.");
       return;
     }
 
     if (password.length < 6) {
       alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
       return;
     }
 
@@ -1199,6 +1251,7 @@
     }
 
     document.getElementById("customerAuthPassword").value = "";
+    document.getElementById("customerAuthConfirmPassword").value = "";
     alert("Customer signup success. If email confirmation is required, confirm the email first, then login.");
     updateCustomerAuthUI();
   }
@@ -1239,6 +1292,7 @@
     }
 
     document.getElementById("customerAuthPassword").value = "";
+    if (document.getElementById("customerAuthConfirmPassword")) document.getElementById("customerAuthConfirmPassword").value = "";
     alert("Customer login success.");
     updateCustomerAuthUI();
   }
@@ -2821,6 +2875,10 @@
       customer_email: email || null,
       notes: notes || null
     };
+
+    if (currentUser && currentUserRole === "customer") {
+      bookingPayload.customer_user_id = currentUser.id;
+    }
 
     if (bookingStaffColumnAvailable && staffId) {
       bookingPayload.staff_id = staffId;
