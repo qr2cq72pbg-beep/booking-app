@@ -6,7 +6,7 @@
   <title>Supabase Booking App</title>
   <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 + robust slot click fix -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
     :root {
@@ -823,7 +823,8 @@
       line-height: 0;
     }
 
-    #bookingQrCanvas {
+    #bookingQrHost canvas,
+    #bookingQrHost img {
       display: block;
       max-width: 100%;
       height: auto;
@@ -1204,7 +1205,7 @@
             </div>
           </div>
           <div class="booking-qr-canvas-wrap">
-            <canvas id="bookingQrCanvas" width="200" height="200" aria-label="Public booking QR code"></canvas>
+            <div id="bookingQrHost" aria-label="Public booking QR code"></div>
           </div>
         </div>
 
@@ -2264,38 +2265,56 @@
     }, 200);
   }
 
-  async function generateBookingQr() {
-    const canvas = document.getElementById("bookingQrCanvas");
-    if (!canvas) return;
-
-    const url = getPublicBookingLinkForSettings();
-    if (!url) {
-      const ctx = canvas.getContext("2d");
-      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
-      return;
-    }
-
-    if (!window.QRCode || typeof window.QRCode.toCanvas !== "function") {
-      console.warn("QRCode library not loaded.");
-      return;
-    }
-
-    try {
-      await window.QRCode.toCanvas(canvas, url, {
-        width: 200,
-        margin: 2,
-        errorCorrectionLevel: "M"
-      });
-    } catch (err) {
-      console.warn("QR generation failed:", err?.message || err);
-    }
+  function buildBookingQrImageApiUrl(text) {
+    return (
+      "https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=" +
+      encodeURIComponent(text)
+    );
   }
 
-  function downloadBookingQr() {
-    const canvas = document.getElementById("bookingQrCanvas");
+  function renderBookingQrWithImageApi(host, url) {
+    const img = document.createElement("img");
+    img.width = 200;
+    img.height = 200;
+    img.alt = "Public booking QR code";
+    img.decoding = "async";
+    img.src = buildBookingQrImageApiUrl(url);
+    host.appendChild(img);
+  }
+
+  function generateBookingQr() {
+    const host = document.getElementById("bookingQrHost");
+    if (!host) return;
+
+    const url = getPublicBookingLinkForSettings();
+    host.innerHTML = "";
+
+    if (!url) return;
+
+    if (typeof window.QRCode === "function") {
+      try {
+        new window.QRCode(host, {
+          text: url,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: window.QRCode.CorrectLevel.M
+        });
+        return;
+      } catch (err) {
+        console.warn("QRCode.js render failed, using image API:", err?.message || err);
+      }
+    }
+
+    renderBookingQrWithImageApi(host, url);
+  }
+
+  async function downloadBookingQr() {
+    const host = document.getElementById("bookingQrHost");
     const url = getPublicBookingLinkForSettings();
 
-    if (!canvas || !url) {
+    if (!host || !url) {
       showToast("Set a public slug first.", "error");
       return;
     }
@@ -2305,10 +2324,30 @@
         document.getElementById("businessSlug")?.value || businessSettings?.business_slug || "booking"
       ) || "booking";
 
+    const canvas = host.querySelector("canvas");
+    const img = host.querySelector("img");
     const link = document.createElement("a");
     link.download = slug + "-booking-qr.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+
+    if (canvas) {
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      return;
+    }
+
+    const src = img?.src || buildBookingQrImageApiUrl(url);
+    try {
+      const response = await fetch(src);
+      const blob = await response.blob();
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } catch (err) {
+      link.href = src;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.click();
+    }
   }
 
   async function copyPublicBookingLink() {
