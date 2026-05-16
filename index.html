@@ -6,56 +6,104 @@
   <title>Supabase Booking App</title>
   <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 + robust slot click fix -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 
   <style>
+    :root {
+      --color-primary: #2563eb;
+      --color-primary-hover: #1d4ed8;
+      --color-success: #16a34a;
+      --color-success-hover: #15803d;
+      --color-danger: #dc2626;
+      --color-danger-hover: #b91c1c;
+      --color-muted: #6b7280;
+      --color-border: #e5e7eb;
+      --color-surface: #ffffff;
+      --color-bg: #f3f4f6;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --space-xs: 6px;
+      --space-sm: 10px;
+      --space-md: 16px;
+      --space-lg: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--color-bg);
       margin: 0;
       color: #111827;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 20px;
+      padding: var(--space-lg) var(--space-md);
+      width: 100%;
     }
 
     .card {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      background: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
     }
 
-    h1, h2, h3 { margin-top: 0; }
+    h1, h2, h3 { margin-top: 0; line-height: 1.25; }
+    h1 { font-size: 1.65rem; letter-spacing: -0.02em; }
+    h2 { font-size: 1.2rem; }
 
     input, select, textarea, button {
       width: 100%;
-      padding: 11px;
-      margin: 7px 0;
-      border-radius: 9px;
+      padding: 11px 12px;
+      margin: var(--space-xs) 0;
+      border-radius: var(--radius-sm);
       border: 1px solid #d1d5db;
       font-size: 15px;
       box-sizing: border-box;
+      font-family: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     button {
       cursor: pointer;
-      background: #2563eb;
+      background: var(--color-primary);
       color: white;
       border: none;
-      font-weight: bold;
+      font-weight: 600;
+      min-height: 44px;
     }
 
-    button:hover { background: #1d4ed8; }
-    button.danger { background: #dc2626; }
-    button.danger:hover { background: #b91c1c; }
+    button:hover { background: var(--color-primary-hover); }
+    button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
+    }
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    button.danger { background: var(--color-danger); }
+    button.danger:hover { background: var(--color-danger-hover); }
     button.secondary { background: #6b7280; }
     button.secondary:hover { background: #4b5563; }
-    button.success { background: #16a34a; }
-    button.success:hover { background: #15803d; }
+    button.success { background: var(--color-success); }
+    button.success:hover { background: var(--color-success-hover); }
 
     .hidden { display: none; }
 
@@ -79,7 +127,8 @@
     .topbar {
       background: #111827;
       color: white;
-      padding: 16px 20px;
+      padding: 14px var(--space-md);
+      border-bottom: 1px solid #1f2937;
     }
 
     .topbar-inner {
@@ -88,27 +137,69 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: var(--space-md);
+      width: 100%;
+    }
+
+    .topbar-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .topbar-title {
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .topbar-tagline {
+      font-size: 12px;
+      color: #9ca3af;
+      font-weight: 400;
     }
 
     .topbar-actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+      justify-content: flex-end;
     }
 
     .topbar button {
       width: auto;
       padding: 9px 14px;
       margin: 0;
+      min-height: 40px;
       background: #374151;
+      font-size: 14px;
+    }
+
+    .topbar button:hover {
+      background: #4b5563;
+    }
+
+    #modeView {
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #modeView h1 {
+      margin-bottom: var(--space-xs);
     }
 
     .mode-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 16px;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .mode-buttons button {
+      min-height: 48px;
+      font-size: 16px;
     }
 
     .public-link-box {
@@ -117,6 +208,7 @@
       padding: 12px;
       border-radius: 10px;
       word-break: break-all;
+      overflow-wrap: anywhere;
       margin-top: 6px;
       margin-bottom: 8px;
       font-weight: bold;
@@ -138,22 +230,25 @@
 
     .stat-card {
       background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 16px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
     }
 
     .stat-number {
-      font-size: 28px;
+      font-size: 1.75rem;
       font-weight: 800;
-      margin: 6px 0;
+      margin: 4px 0 2px;
       color: #111827;
+      line-height: 1.1;
     }
 
     .stat-label {
-      font-size: 13px;
-      color: #6b7280;
-      font-weight: bold;
+      font-size: 12px;
+      color: var(--color-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .next-booking-box {
@@ -188,10 +283,11 @@
       position: relative;
     }
 
-    .calendar-day:hover { border-color: #2563eb; }
+    .calendar-day:hover { border-color: var(--color-primary); }
 
     .calendar-day.selected {
-      outline: 3px solid #2563eb;
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
       background: #eff6ff;
     }
 
@@ -222,28 +318,33 @@
 
     .slot-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-      gap: 10px;
-      margin-top: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
     }
 
     .slot {
-      padding: 12px;
+      padding: 12px 8px;
       text-align: center;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
+      border-radius: var(--radius-sm);
+      border: 1px solid #bbf7d0;
       background: #ecfdf5;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .slot:hover { background: #bbf7d0; }
+    .slot:hover { background: #bbf7d0; border-color: #86efac; }
 
     .slot.selected {
-      background: #2563eb;
+      background: var(--color-primary);
       color: #ffffff;
-      border-color: #1d4ed8;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+      border-color: var(--color-primary-hover);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
     }
 
     .slot.booked {
@@ -265,11 +366,15 @@
     }
 
     .list-item {
-      border: 1px solid #e5e7eb;
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      background: #f9fafb;
+      border: 1px solid var(--color-border);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-sm);
+      background: #fafafa;
+    }
+
+    .list-item:last-child {
+      margin-bottom: 0;
     }
 
     .actions {
@@ -312,35 +417,45 @@
 
     .filter-box {
       background: #f9fafb;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 14px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
     }
 
-    
     .admin-grid {
-      display:grid;
+      display: grid;
       grid-template-columns: 1fr 1fr;
-      gap:16px;
-      align-items:start;
+      gap: var(--space-md);
+      align-items: start;
     }
 
     .widget-card {
-      padding:14px !important;
+      padding: var(--space-md) !important;
+      margin-bottom: 0;
     }
 
     .widget-header {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      cursor:pointer;
-      margin-bottom:8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--color-border);
     }
 
     .widget-header h2 {
-      margin:0;
-      font-size:18px;
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .widget-header h2::after {
+      content: " ▾";
+      font-size: 0.8em;
+      color: var(--color-muted);
+      font-weight: 400;
     }
 
     .widget-content.collapsed {
@@ -551,20 +666,212 @@
       align-items: center;
     }
 
-    .public-business-info {
-      margin: 10px 0 16px;
-      padding: 12px;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      background: #f9fafb;
+    #publicBookingContent {
+      --business-accent: #2563eb;
     }
 
-    .public-business-info img {
-      max-height: 70px;
-      max-width: 160px;
+    .public-booking-card {
+      margin-bottom: var(--space-md);
+    }
+
+    .public-booking-hero-card {
+      border-top: 4px solid var(--business-accent, #2563eb);
+      box-shadow: var(--shadow-md);
+    }
+
+    .public-booking-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .public-booking-logo {
+      width: 72px;
+      height: 72px;
       object-fit: contain;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .public-booking-hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #publicBusinessName {
+      margin: 0 0 var(--space-xs);
+      font-size: 1.5rem;
+    }
+
+    .public-booking-tagline {
+      margin: 0 0 var(--space-xs);
+      color: var(--color-muted);
+    }
+
+    .public-booking-about {
+      margin: 0;
+      color: #374151;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .public-booking-intro {
+      margin: 0 0 var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .public-business-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: var(--space-md);
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    .public-business-meta span strong {
+      color: #374151;
+    }
+
+    .branding-color-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .branding-color-row input[type="color"] {
+      width: 56px;
+      height: 44px;
+      padding: 4px;
+      margin: var(--space-xs) 0;
+      cursor: pointer;
+    }
+
+    .branding-preview {
+      margin: var(--space-md) 0;
+      padding: var(--space-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fafafa;
+      border-top: 4px solid var(--business-accent, #2563eb);
+    }
+
+    .branding-preview-hero {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+
+    .branding-preview-hero img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: #fff;
+    }
+
+    .logo-upload-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: var(--space-xs) 0 var(--space-sm);
+    }
+
+    .logo-upload-row button {
+      width: auto;
+      min-height: 44px;
+      padding: 10px 16px;
+      margin: 0;
+    }
+
+    #logoUploadStatus {
+      margin: 0 0 var(--space-sm);
+    }
+
+    #logoUploadStatus:not(.hidden) {
       display: block;
-      margin-bottom: 8px;
+    }
+
+    .booking-qr-section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: start;
+      margin: var(--space-md) 0;
+      padding: var(--space-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fafafa;
+    }
+
+    .booking-qr-details {
+      min-width: 0;
+    }
+
+    .booking-qr-canvas-wrap {
+      background: #fff;
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      line-height: 0;
+    }
+
+    #bookingQrCanvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .booking-qr-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: var(--space-sm);
+    }
+
+    .booking-qr-actions button {
+      width: auto;
+      min-height: 44px;
+      padding: 10px 16px;
+      margin: 0;
+    }
+
+    #publicBookingContent .slot.selected {
+      background: var(--business-accent, #2563eb);
+      border-color: var(--business-accent, #2563eb);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #2563eb) 25%, transparent);
+    }
+
+    #publicBookingContent .calendar-day:hover {
+      border-color: var(--business-accent, #2563eb);
+    }
+
+    #publicBookingContent #bookingFormCard {
+      border-top: 3px solid var(--business-accent, #2563eb);
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 6%, white);
+    }
+
+    #publicBookingContent #bookingFormCard > button:not(.secondary):not(.danger):not(.success) {
+      background: var(--business-accent, #2563eb);
+    }
+
+    #publicBookingContent #bookingFormCard > button:not(.secondary):not(.danger):not(.success):hover {
+      filter: brightness(0.92);
+    }
+
+    #selectedDateTitle {
+      margin-bottom: var(--space-xs);
+    }
+
+    .copy-link-row > * {
+      min-width: 0;
     }
 
     @media (max-width: 700px) {
@@ -575,25 +882,85 @@
 
     @media (max-width: 900px) {
       .admin-grid {
-        grid-template-columns:1fr;
+        grid-template-columns: 1fr;
       }
     }
 
-
     @media (max-width: 700px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .container {
+        padding: var(--space-md) 12px;
+      }
+
+      .card {
+        padding: var(--space-md);
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
       .row, .three, .mode-buttons, .stats-grid, .copy-link-row, .business-profile-grid, .business-id-row {
         grid-template-columns: 1fr;
       }
 
+      .copy-link-row {
+        gap: var(--space-sm);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
       .calendar {
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(7, minmax(0, 1fr));
         gap: 4px;
       }
 
       .calendar-day {
-        min-height: 58px;
-        font-size: 12px;
-        padding: 5px;
+        min-height: 52px;
+        font-size: 11px;
+        padding: 4px;
+      }
+
+      .day-name {
+        font-size: 11px;
+        padding: 4px 2px;
+      }
+
+      .slot-grid {
+        grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+        gap: 8px;
+      }
+
+      .public-booking-hero {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .public-booking-hero-text {
+        width: 100%;
+      }
+
+      .booking-qr-section {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-qr-actions {
+        flex-direction: column;
+      }
+
+      .booking-qr-actions button {
+        width: 100%;
       }
 
       .checkbox-grid {
@@ -607,6 +974,88 @@
       .actions button {
         width: 100%;
       }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--space-lg) var(--space-md);
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fafafa;
+      color: var(--color-muted);
+      font-size: 14px;
+    }
+
+    .empty-state-title {
+      display: block;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+
+    .loading-state {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: var(--space-lg) var(--space-md);
+      color: var(--color-muted);
+      font-size: 14px;
+    }
+
+    .loading-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #e5e7eb;
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: app-spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes app-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .app-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      max-width: min(420px, calc(100vw - 32px));
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .app-toast.hidden {
+      display: none;
+    }
+
+    .app-toast.success {
+      background: #ecfdf5;
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+
+    .app-toast.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .app-toast.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
     }
   </style>
 </head>
@@ -615,7 +1064,10 @@
 
   <div class="topbar">
     <div class="topbar-inner">
-      <strong>Booking App</strong>
+      <div class="topbar-brand">
+        <strong class="topbar-title">Booking App</strong>
+        <span class="topbar-tagline">Private business booking</span>
+      </div>
       <div class="topbar-actions">
         <button id="homeBtn" class="hidden" onclick="goHome()">Home</button>
         <button id="logoutBtn" class="hidden" onclick="logout()">Logout</button>
@@ -732,7 +1184,7 @@
 </div>
 <div id="widgetSettings" class="widget-content">
 
-        <input id="businessName" placeholder="Business name" oninput="previewBusinessPublicLink()" />
+        <input id="businessName" placeholder="Business name" oninput="previewBusinessPublicLink(); previewBusinessBranding()" />
 
 
         <label class="small"><strong>Business ID / Public Slug</strong></label>
@@ -742,12 +1194,45 @@
         </div>
         <p class="small">Користи мали букви, бројки и - . Пример: <strong>barber-shop-skopje</strong>. Customer може да го внесе ова наместо долгиот UUID.</p>
 
-        <div class="business-profile-grid">
-          <input id="businessLogoUrl" placeholder="Logo URL optional" />
-          <input id="businessPhone" placeholder="Business phone optional" />
+        <h3>Public Booking QR</h3>
+        <div class="booking-qr-section">
+          <div class="booking-qr-details">
+            <div id="bookingQrLink" class="public-link-box small"></div>
+            <div class="booking-qr-actions">
+              <button type="button" class="success" onclick="copyPublicBookingLink()">Copy Link</button>
+              <button type="button" class="secondary" onclick="downloadBookingQr()">Download QR</button>
+            </div>
+          </div>
+          <div class="booking-qr-canvas-wrap">
+            <canvas id="bookingQrCanvas" width="200" height="200" aria-label="Public booking QR code"></canvas>
+          </div>
         </div>
-        <input id="businessAddress" placeholder="Business address optional" />
-        <textarea id="businessDescription" placeholder="Short business description optional"></textarea>
+
+        <h3>Branding</h3>
+        <p class="small">Shown on your public booking page.</p>
+        <label class="small"><strong>Business logo</strong></label>
+        <div class="logo-upload-row">
+          <button type="button" class="secondary" id="businessLogoUploadBtn" onclick="triggerBusinessLogoUpload()">Upload Logo</button>
+          <button type="button" class="secondary hidden" id="businessLogoRemoveBtn" onclick="removeBusinessLogo()">Remove Logo</button>
+          <input type="file" id="businessLogoFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessLogoFileSelected(event)" />
+        </div>
+        <input type="hidden" id="businessLogoUrl" />
+        <div id="logoUploadStatus" class="hidden"></div>
+        <textarea id="businessDescription" placeholder="About your business (shown to customers)" oninput="previewBusinessBranding()"></textarea>
+        <label class="small"><strong>Accent color</strong></label>
+        <div class="branding-color-row">
+          <input id="businessAccentColorPicker" type="color" value="#2563eb" oninput="syncBusinessAccentFromPicker()" />
+          <input id="businessAccentColor" placeholder="#2563eb" oninput="syncBusinessAccentFromText(); previewBusinessBranding()" />
+        </div>
+        <div class="business-profile-preview">
+          <strong>Booking page preview</strong>
+          <div id="brandingPreview" class="branding-preview small"></div>
+        </div>
+
+        <div class="business-profile-grid">
+          <input id="businessPhone" placeholder="Business phone optional" oninput="previewBusinessBranding()" />
+          <input id="businessAddress" placeholder="Business address optional" oninput="previewBusinessBranding()" />
+        </div>
 
         <div class="business-profile-preview">
           <strong>Public Link Preview</strong>
@@ -1031,10 +1516,17 @@
 
       <div id="publicBookingContent" class="hidden">
 
-        <div class="card">
-          <h1 id="publicBusinessName">Book Appointment</h1>
-          <p class="small">Избери услуга, датум и слободен термин.</p>
-          <div id="publicBusinessInfo" class="public-business-info hidden"></div>
+        <div class="card public-booking-card public-booking-hero-card">
+          <header class="public-booking-hero">
+            <img id="publicBusinessLogo" class="public-booking-logo hidden" alt="" />
+            <div class="public-booking-hero-text">
+              <h1 id="publicBusinessName">Book Appointment</h1>
+              <p id="publicBusinessTagline" class="public-booking-tagline small">Book your appointment online</p>
+              <p id="publicBusinessAbout" class="public-booking-about hidden"></p>
+            </div>
+          </header>
+          <div id="publicBusinessInfo" class="public-business-meta hidden"></div>
+          <p class="small public-booking-intro">Choose a service, date and available time.</p>
 
           <select id="publicService" onchange="renderPublicCalendar()"></select>
           <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
@@ -1048,12 +1540,12 @@
           <div id="publicCalendar" class="calendar"></div>
         </div>
 
-        <div class="card">
+        <div class="card public-booking-card">
           <h2 id="selectedDateTitle">Select a date</h2>
           <div id="slotsContainer" class="slot-grid"></div>
         </div>
 
-        <div id="bookingFormCard" class="card hidden">
+        <div id="bookingFormCard" class="card public-booking-card hidden">
           <h2>Confirm Booking</h2>
           <p id="chosenSlotText"></p>
           <input id="customerName" placeholder="Your name" />
@@ -1068,6 +1560,8 @@
     </div>
 
   </div>
+
+  <div id="appToast" class="app-toast hidden" role="status" aria-live="polite"></div>
 
 <script>
   const SUPABASE_URL = "https://sdqothuulzeczcncyfqd.supabase.co";
@@ -1644,10 +2138,60 @@
   let selectedDate = null;
   let selectedSlot = null;
   let selectedService = null;
+  let bookingRealtimeChannel = null;
+  let bookingRealtimeRefreshTimer = null;
+  let toastHideTimer = null;
+  let lastToastMessage = "";
+  let lastToastAt = 0;
 
   const urlParams = new URLSearchParams(window.location.search);
   const publicBusinessId = urlParams.get("business");
 
+  function showToast(message, type = "info", duration = 4000) {
+    const text = String(message || "").trim();
+    if (!text) return;
+
+    const now = Date.now();
+    if (text === lastToastMessage && now - lastToastAt < 600) return;
+    lastToastMessage = text;
+    lastToastAt = now;
+
+    const el = document.getElementById("appToast");
+    if (!el) return;
+
+    if (toastHideTimer) {
+      clearTimeout(toastHideTimer);
+      toastHideTimer = null;
+    }
+
+    el.textContent = text;
+    el.className = "app-toast " + (type === "success" || type === "error" ? type : "info");
+
+    toastHideTimer = setTimeout(() => {
+      el.className = "app-toast hidden";
+      el.textContent = "";
+      toastHideTimer = null;
+      lastToastMessage = "";
+    }, duration);
+  }
+
+  function emptyStateHtml(title, message = "") {
+    return `
+      <div class="empty-state">
+        <span class="empty-state-title">${escapeHtml(title)}</span>
+        ${message ? `<span>${escapeHtml(message)}</span>` : ""}
+      </div>
+    `;
+  }
+
+  function loadingStateHtml(message = "Loading…") {
+    return `
+      <div class="loading-state" role="status" aria-live="polite">
+        <span class="loading-spinner" aria-hidden="true"></span>
+        <span>${escapeHtml(message)}</span>
+      </div>
+    `;
+  }
 
   function isValidUuid(value) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || "").trim());
@@ -1686,12 +2230,380 @@
     previewBusinessPublicLink();
   }
 
+  let bookingQrGenerateTimer = null;
+
+  function getPublicBookingLinkForSettings() {
+    const rawSlug =
+      document.getElementById("businessSlug")?.value ||
+      businessSettings?.business_slug ||
+      businessId;
+    const slug = normalizeBusinessSlug(rawSlug) || businessId;
+    if (!slug) return "";
+    return buildPublicBookingLink(slug);
+  }
+
   function previewBusinessPublicLink() {
     const preview = document.getElementById("businessPublicLinkPreview");
-    if (!preview) return;
     const rawSlug = document.getElementById("businessSlug")?.value || businessSettings?.business_slug || businessId;
     const slug = normalizeBusinessSlug(rawSlug) || businessId;
-    preview.innerText = buildPublicBookingLink(slug);
+    const link = buildPublicBookingLink(slug);
+
+    if (preview) preview.innerText = link;
+    updatePublicBookingQrSection(link);
+  }
+
+  function updatePublicBookingQrSection(linkOverride) {
+    const link = linkOverride || getPublicBookingLinkForSettings();
+    const linkEl = document.getElementById("bookingQrLink");
+    if (linkEl) linkEl.textContent = link || "—";
+
+    if (bookingQrGenerateTimer) clearTimeout(bookingQrGenerateTimer);
+    bookingQrGenerateTimer = setTimeout(() => {
+      bookingQrGenerateTimer = null;
+      generateBookingQr();
+    }, 200);
+  }
+
+  async function generateBookingQr() {
+    const canvas = document.getElementById("bookingQrCanvas");
+    if (!canvas) return;
+
+    const url = getPublicBookingLinkForSettings();
+    if (!url) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    if (!window.QRCode || typeof window.QRCode.toCanvas !== "function") {
+      console.warn("QRCode library not loaded.");
+      return;
+    }
+
+    try {
+      await window.QRCode.toCanvas(canvas, url, {
+        width: 200,
+        margin: 2,
+        errorCorrectionLevel: "M"
+      });
+    } catch (err) {
+      console.warn("QR generation failed:", err?.message || err);
+    }
+  }
+
+  function downloadBookingQr() {
+    const canvas = document.getElementById("bookingQrCanvas");
+    const url = getPublicBookingLinkForSettings();
+
+    if (!canvas || !url) {
+      showToast("Set a public slug first.", "error");
+      return;
+    }
+
+    const slug =
+      normalizeBusinessSlug(
+        document.getElementById("businessSlug")?.value || businessSettings?.business_slug || "booking"
+      ) || "booking";
+
+    const link = document.createElement("a");
+    link.download = slug + "-booking-qr.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+
+  async function copyPublicBookingLink() {
+    const link = getPublicBookingLinkForSettings();
+
+    if (!link) {
+      showToast("No public link found.", "error");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(link);
+      showToast("Public booking link copied.", "success");
+    } catch (err) {
+      const tempInput = document.createElement("input");
+      tempInput.value = link;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      showToast("Public booking link copied.", "success");
+    }
+  }
+
+  function normalizeAccentColor(value) {
+    const raw = String(value || "").trim();
+    if (/^#[0-9A-Fa-f]{6}$/.test(raw)) return raw.toLowerCase();
+    if (/^[0-9A-Fa-f]{6}$/.test(raw)) return ("#" + raw).toLowerCase();
+    return "#2563eb";
+  }
+
+  function getBusinessAccentColorFromForm() {
+    const text = document.getElementById("businessAccentColor")?.value || "";
+    const picker = document.getElementById("businessAccentColorPicker")?.value || "";
+    return normalizeAccentColor(text || picker);
+  }
+
+  function syncBusinessAccentFromPicker() {
+    const picker = document.getElementById("businessAccentColorPicker");
+    const text = document.getElementById("businessAccentColor");
+    if (picker && text) text.value = picker.value;
+    previewBusinessBranding();
+  }
+
+  function syncBusinessAccentFromText() {
+    const text = document.getElementById("businessAccentColor");
+    const picker = document.getElementById("businessAccentColorPicker");
+    if (!text || !picker) return;
+    picker.value = normalizeAccentColor(text.value);
+  }
+
+  function applyPublicBusinessBranding() {
+    const root = document.getElementById("publicBookingContent");
+    if (!root) return;
+
+    const accent = normalizeAccentColor(businessSettings?.business_accent_color);
+    root.style.setProperty("--business-accent", accent);
+
+    const preview = document.getElementById("brandingPreview");
+    if (preview) preview.style.setProperty("--business-accent", accent);
+  }
+
+  const BUSINESS_LOGO_BUCKET = "business-logos";
+  const BUSINESS_LOGO_MAX_BYTES = 3 * 1024 * 1024;
+  const BUSINESS_LOGO_ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+  function getBusinessLogoUrl() {
+    return (
+      document.getElementById("businessLogoUrl")?.value.trim() ||
+      businessSettings?.business_logo_url ||
+      ""
+    );
+  }
+
+  function updateLogoUploadUi() {
+    const removeBtn = document.getElementById("businessLogoRemoveBtn");
+    const hasLogo = !!getBusinessLogoUrl();
+    if (removeBtn) removeBtn.classList.toggle("hidden", !hasLogo);
+  }
+
+  function setLogoUploadStatus(html, visible = true) {
+    const box = document.getElementById("logoUploadStatus");
+    if (!box) return;
+    box.innerHTML = html || "";
+    box.classList.toggle("hidden", !visible || !html);
+  }
+
+  function triggerBusinessLogoUpload() {
+    if (!currentUser) {
+      showToast("Login as Admin to upload a logo.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Open Admin dashboard first so your business is loaded.", "error");
+      return;
+    }
+    document.getElementById("businessLogoFile")?.click();
+  }
+
+  function getLogoFileExtension(file) {
+    const name = String(file?.name || "").toLowerCase();
+    const match = name.match(/\.(jpe?g|png|webp)$/i);
+    if (match) {
+      const ext = match[1];
+      return ext === "jpeg" ? "jpg" : ext;
+    }
+    if (file?.type === "image/jpeg") return "jpg";
+    if (file?.type === "image/png") return "png";
+    if (file?.type === "image/webp") return "webp";
+    return null;
+  }
+
+  async function persistBusinessLogoUrl(publicUrl) {
+    const hidden = document.getElementById("businessLogoUrl");
+    if (hidden) hidden.value = publicUrl || "";
+
+    if (businessSettings) {
+      businessSettings.business_logo_url = publicUrl || null;
+    }
+
+    const { error } = await sb
+      .from("business_settings")
+      .update({ business_logo_url: publicUrl || null })
+      .eq("business_id", businessId);
+
+    if (error) {
+      showToast("Could not save logo URL: " + error.message, "error");
+      return false;
+    }
+
+    updateLogoUploadUi();
+    previewBusinessBranding();
+    return true;
+  }
+
+  async function handleBusinessLogoFileSelected(event) {
+    const input = event?.target;
+    const file = input?.files?.[0];
+    if (input) input.value = "";
+
+    if (!file) return;
+
+    if (!initSupabaseClient()) return;
+
+    if (!currentUser) {
+      showToast("Login as Admin to upload a logo.", "error");
+      return;
+    }
+
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded. Open Admin dashboard first.", "error");
+      return;
+    }
+
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      return;
+    }
+
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Logo must be 3 MB or smaller.", "error");
+      return;
+    }
+
+    const ext = getLogoFileExtension(file);
+    if (!ext) {
+      showToast("Unsupported image type.", "error");
+      return;
+    }
+
+    const uploadBtn = document.getElementById("businessLogoUploadBtn");
+    if (uploadBtn) uploadBtn.disabled = true;
+
+    setLogoUploadStatus(loadingStateHtml("Uploading logo…"), true);
+
+    try {
+      const filePath = `${businessId}/logo.${ext}`;
+
+      const { error: uploadError } = await sb.storage
+        .from(BUSINESS_LOGO_BUCKET)
+        .upload(filePath, file, {
+          upsert: true,
+          cacheControl: "3600",
+          contentType: file.type
+        });
+
+      if (uploadError) {
+        showToast("Logo upload failed: " + uploadError.message, "error");
+        setLogoUploadStatus("", false);
+        return;
+      }
+
+      const { data: urlData } = sb.storage.from(BUSINESS_LOGO_BUCKET).getPublicUrl(filePath);
+      const publicUrl = urlData?.publicUrl || "";
+
+      if (!publicUrl) {
+        showToast("Upload succeeded but public URL was missing.", "error");
+        setLogoUploadStatus("", false);
+        return;
+      }
+
+      const saved = await persistBusinessLogoUrl(publicUrl);
+      if (saved) {
+        showToast("Logo uploaded.", "success");
+        setLogoUploadStatus("", false);
+      }
+    } catch (err) {
+      showToast("Logo upload failed: " + (err?.message || err), "error");
+      setLogoUploadStatus("", false);
+    } finally {
+      if (uploadBtn) uploadBtn.disabled = false;
+    }
+  }
+
+  async function removeBusinessLogo() {
+    if (!confirm("Remove this logo?")) return;
+
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded.", "error");
+      return;
+    }
+
+    setLogoUploadStatus(loadingStateHtml("Removing logo…"), true);
+
+    try {
+      const extensions = ["jpg", "jpeg", "png", "webp"];
+      const paths = extensions.map((ext) => `${businessId}/logo.${ext}`);
+      await sb.storage.from(BUSINESS_LOGO_BUCKET).remove(paths);
+
+      const saved = await persistBusinessLogoUrl(null);
+      if (saved) showToast("Logo removed.", "success");
+    } catch (err) {
+      showToast("Could not remove logo: " + (err?.message || err), "error");
+    } finally {
+      setLogoUploadStatus("", false);
+    }
+  }
+
+  function previewBusinessBranding() {
+    const preview = document.getElementById("brandingPreview");
+    if (!preview) return;
+
+    const name =
+      document.getElementById("businessName")?.value.trim() ||
+      businessSettings?.business_name ||
+      "My Business";
+    const logo = getBusinessLogoUrl();
+    const description = document.getElementById("businessDescription")?.value.trim() || "";
+    const address = document.getElementById("businessAddress")?.value.trim() || "";
+    const phone = document.getElementById("businessPhone")?.value.trim() || "";
+    const accent = getBusinessAccentColorFromForm();
+
+    preview.style.setProperty("--business-accent", accent);
+
+    const logoHtml = logo
+      ? `<img src="${escapeHtml(logo)}" alt="" onerror="this.style.display='none'" />`
+      : "";
+
+    const metaParts = [];
+    if (address) metaParts.push(`<span><strong>Address:</strong> ${escapeHtml(address)}</span>`);
+    if (phone) metaParts.push(`<span><strong>Phone:</strong> ${escapeHtml(phone)}</span>`);
+
+    preview.innerHTML = `
+      <div class="branding-preview-hero">
+        ${logoHtml}
+        <div>
+          <strong style="font-size:1.1rem;display:block;margin-bottom:4px;">${escapeHtml(name)}</strong>
+          <span style="color:#6b7280;">Book your appointment online</span>
+          ${description ? `<div style="margin-top:8px;color:#374151;">${escapeHtml(description)}</div>` : ""}
+        </div>
+      </div>
+      ${metaParts.length ? `<div class="public-business-meta" style="margin-top:10px;">${metaParts.join("")}</div>` : ""}
+    `;
+    updateLogoUploadUi();
+  }
+
+  function setPublicBusinessLogo(url) {
+    const img = document.getElementById("publicBusinessLogo");
+    if (!img) return;
+
+    const logoUrl = String(url || "").trim();
+    if (!logoUrl) {
+      img.removeAttribute("src");
+      img.classList.add("hidden");
+      img.onerror = null;
+      return;
+    }
+
+    img.onerror = () => {
+      img.classList.add("hidden");
+      img.removeAttribute("src");
+    };
+    img.onload = () => img.classList.remove("hidden");
+    img.src = logoUrl;
+    img.alt = (businessSettings?.business_name || "Business") + " logo";
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -1731,17 +2643,21 @@
 
     if (publicBusinessId) {
       businessId = publicBusinessId;
+      if (data?.session?.user) {
+        currentUser = data.session.user;
+        await loadCurrentUserRole();
+      }
       showPublicView(true);
       await loadPublicData();
       return;
     }
 
-    if (data && data.session) {
-      currentUser = data.session.user;
-      showModeView();
-    } else {
-      showModeView();
+    if (data?.session) {
+      await restoreAuthenticatedSession(data.session);
+      return;
     }
+
+    showModeView();
   }
 
   function hideAllViews() {
@@ -1797,6 +2713,24 @@
     updateCustomerAuthUI();
   }
 
+
+  async function restoreAdminSession() {
+    businessId = currentUser.id;
+    showAdminView();
+    await loadAdminData();
+  }
+
+  async function restoreAuthenticatedSession(session) {
+    currentUser = session.user;
+    const role = await loadCurrentUserRole();
+
+    if (role === "customer") {
+      showModeView();
+      return;
+    }
+
+    await restoreAdminSession();
+  }
 
   async function loadCurrentUserRole() {
     currentUserRole = null;
@@ -1865,13 +2799,11 @@
       const role = await loadCurrentUserRole();
 
       if (role === "customer") {
-        alert("You are logged in as Customer. Logout first, then login with an Admin account.");
+        showToast("You are logged in as Customer. Logout first, then login with an Admin account.", "error")
         return;
       }
 
-      businessId = currentUser.id;
-      showAdminView();
-      await loadAdminData();
+      await restoreAdminSession();
       return;
     }
 
@@ -1879,6 +2811,7 @@
   }
 
   function chooseCustomer() {
+    stopBookingRealtime();
     businessId = null;
     businessSettings = null;
     services = [];
@@ -1895,6 +2828,7 @@
   }
 
   function goHome() {
+    stopBookingRealtime();
     businessId = null;
     businessSettings = null;
     services = [];
@@ -1918,13 +2852,13 @@
     const link = document.getElementById("publicLink").innerText.trim();
 
     if (!link) {
-      alert("No public link found.");
+      showToast("No public link found.", "error")
       return;
     }
 
     try {
       await navigator.clipboard.writeText(link);
-      alert("Public booking link copied.");
+      showToast("Public booking link copied.", "success")
     } catch (err) {
       const tempInput = document.createElement("input");
       tempInput.value = link;
@@ -1932,7 +2866,7 @@
       tempInput.select();
       document.execCommand("copy");
       document.body.removeChild(tempInput);
-      alert("Public booking link copied.");
+      showToast("Public booking link copied.", "success")
     }
   }
 
@@ -1940,7 +2874,7 @@
     const link = document.getElementById("publicLink").innerText.trim();
 
     if (!link) {
-      alert("No public link found.");
+      showToast("No public link found.", "error")
       return;
     }
 
@@ -1951,7 +2885,7 @@
     const id = document.getElementById("manualBusinessId").value.trim();
 
     if (!id) {
-      alert("Enter business ID.");
+      showToast("Enter business ID.", "error")
       return;
     }
 
@@ -1972,7 +2906,7 @@
     const id = (manualInput?.value || publicBusinessId || "").trim();
 
     if (!id) {
-      alert("Enter business ID or open a public booking link.");
+      showToast("Enter business ID or open a public booking link.", "error")
       return;
     }
 
@@ -2002,14 +2936,14 @@
     const password = document.getElementById("authPassword").value.trim();
 
     if (!email || !password) {
-      alert("Enter email and password.");
+      showToast("Enter email and password.", "error")
       return;
     }
 
     const { data, error } = await sb.auth.signUp({ email, password });
 
     if (error) {
-      alert(error.message);
+      showToast(error.message, "error")
       return;
     }
 
@@ -2017,7 +2951,7 @@
       await upsertUserProfile(data.user, "admin", { email });
     }
 
-    alert("Admin signup success. If Supabase asks email confirmation, confirm first, then login.");
+    showToast("Admin signup success. If Supabase asks email confirmation, confirm first, then login.", "success")
   }
 
 
@@ -2031,24 +2965,24 @@
     const confirmPassword = document.getElementById("customerAuthConfirmPassword").value.trim();
 
     if (!fullName || !phone || !email || !password || !confirmPassword) {
-      alert("For customer signup, name, phone, email, password and confirm password are required.");
+      showToast("For customer signup, name, phone, email, password and confirm password are required.", "error")
       return;
     }
 
     if (password.length < 6) {
-      alert("Password must be at least 6 characters.");
+      showToast("Password must be at least 6 characters.", "error")
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      showToast("Passwords do not match.", "error")
       return;
     }
 
     const { data, error } = await sb.auth.signUp({ email, password });
 
     if (error) {
-      alert(error.message);
+      showToast(error.message, "error")
       return;
     }
 
@@ -2065,7 +2999,7 @@
 
     document.getElementById("customerAuthPassword").value = "";
     document.getElementById("customerAuthConfirmPassword").value = "";
-    alert("Customer signup success. If email confirmation is required, confirm the email first, then login.");
+    showToast("Customer signup success. If email confirmation is required, confirm the email first, then login.", "success")
     updateCustomerAuthUI();
 
     const manualId = document.getElementById("manualBusinessId")?.value.trim();
@@ -2081,14 +3015,14 @@
     const password = document.getElementById("customerAuthPassword").value.trim();
 
     if (!email || !password) {
-      alert("Enter customer email and password.");
+      showToast("Enter customer email and password.", "error")
       return;
     }
 
     const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
     if (error) {
-      alert(error.message);
+      showToast(error.message, "error")
       return;
     }
 
@@ -2096,7 +3030,7 @@
     const role = await loadCurrentUserRole();
 
     if (role === "admin") {
-      alert("This is an Admin account. Use Admin login instead.");
+      showToast("This is an Admin account. Use Admin login instead.", "error")
       await sb.auth.signOut();
       currentUser = null;
       currentUserRole = null;
@@ -2111,7 +3045,7 @@
 
     document.getElementById("customerAuthPassword").value = "";
     if (document.getElementById("customerAuthConfirmPassword")) document.getElementById("customerAuthConfirmPassword").value = "";
-    alert("Customer login success.");
+    showToast("Customer login success.", "success")
     updateCustomerAuthUI();
 
     const manualId = document.getElementById("manualBusinessId")?.value.trim();
@@ -2134,7 +3068,7 @@
     const email = document.getElementById("authEmail").value.trim();
 
     if (!email) {
-      alert("Enter your email first, then click Forgot / Reset Password.");
+      showToast("Enter your email first, then click Forgot / Reset Password.", "error")
       return;
     }
 
@@ -2143,11 +3077,11 @@
     const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
 
     if (error) {
-      alert("Password reset error: " + error.message);
+      showToast("Password reset error: " + error.message, "error")
       return;
     }
 
-    alert("Password reset email sent. Open the email link, then set a new password in this app.");
+    showToast("Password reset email sent. Open the email link, then set a new password in this app.", "success")
   }
 
   async function saveNewPassword() {
@@ -2157,28 +3091,28 @@
     const confirmPassword = document.getElementById("confirmNewPassword").value.trim();
 
     if (!password || !confirmPassword) {
-      alert("Enter and confirm the new password.");
+      showToast("Enter and confirm the new password.", "error")
       return;
     }
 
     if (password.length < 6) {
-      alert("Password must be at least 6 characters.");
+      showToast("Password must be at least 6 characters.", "error")
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match.");
+      showToast("Passwords do not match.", "error")
       return;
     }
 
     const { error } = await sb.auth.updateUser({ password });
 
     if (error) {
-      alert("Save password error: " + error.message + "\n\nIf this happens, send a new recovery email and open the newest link.");
+      showToast("Save password error: " + error.message + "\n\nIf this happens, send a new recovery email and open the newest link.", "error")
       return;
     }
 
-    alert("Password changed successfully. Login again with the new password.");
+    showToast("Password changed successfully. Login again with the new password.", "success")
     await sb.auth.signOut();
     currentUser = null;
     document.getElementById("newPassword").value = "";
@@ -2203,19 +3137,19 @@
       const password = document.getElementById("authPassword").value.trim();
 
       if (!email || !password) {
-        alert("Enter email and password.");
+        showToast("Enter email and password.", "error")
         return;
       }
 
       const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
       if (error) {
-        alert(error.message);
+        showToast(error.message, "error")
         return;
       }
 
       if (!data || !data.user) {
-        alert("Login failed. No user returned from Supabase.");
+        showToast("Login failed. No user returned from Supabase.", "error")
         return;
       }
 
@@ -2223,18 +3157,16 @@
       const role = await loadCurrentUserRole();
 
       if (role === "customer") {
-        alert("This is a Customer account. Use Customer login instead.");
+        showToast("This is a Customer account. Use Customer login instead.", "error")
         await sb.auth.signOut();
         currentUser = null;
         currentUserRole = null;
         return;
       }
 
-      businessId = currentUser.id;
-      showAdminView();
-      await loadAdminData();
+      await restoreAdminSession();
     } catch (err) {
-      alert("Login crash: " + err.message);
+      showToast("Login crash: " + err.message, "error")
     }
   }
 
@@ -2270,6 +3202,9 @@
   async function loadAdminData() {
     document.getElementById("adminEmail").innerText = "Logged in as: " + currentUser.email;
 
+    const bookingsListEl = document.getElementById("bookingsList");
+    if (bookingsListEl) bookingsListEl.innerHTML = loadingStateHtml("Loading bookings…");
+
     await ensureBusinessSettings();
     const publicIdentifier = getBusinessPublicIdentifier();
     document.getElementById("publicLink").innerText = buildPublicBookingLink(publicIdentifier);
@@ -2293,6 +3228,7 @@
     renderEditStaffOptions();
     renderBookings();
     renderAdminStats();
+    startBookingRealtime();
   }
 
   async function loadPublicData() {
@@ -2304,9 +3240,16 @@
     // to the real UUID before loading services/bookings/blocked days.
     // Without this guard Supabase tries to compare the slug with uuid columns.
     if (!businessSettings) {
-      alert("Business not found or settings are missing. Check the public link / Business ID.");
+      stopBookingRealtime();
+      showToast("Business not found or settings are missing. Check the public link / Business ID.", "error", 6000);
       showPublicView(false);
       return;
+    }
+
+    const slotsRefreshDate = selectedDate;
+    const slotsEl = document.getElementById("slotsContainer");
+    if (slotsRefreshDate && slotsEl) {
+      slotsEl.innerHTML = loadingStateHtml("Loading availability…");
     }
 
     await loadServices();
@@ -2315,44 +3258,64 @@
     await loadBookings();
     await loadBlockedDays();
 
-    document.getElementById("publicBusinessName").innerText =
-      businessSettings?.business_name || "Book Appointment";
-
     renderPublicBusinessProfileInfo();
+    applyPublicBusinessBranding();
 
-    document.getElementById("selectedDateTitle").innerText = "Select a date";
-    document.getElementById("slotsContainer").innerHTML = "";
+    if (selectedDate) {
+      document.getElementById("selectedDateTitle").innerText = "Available slots for " + selectedDate;
+      renderSlots(selectedDate);
+    } else {
+      document.getElementById("selectedDateTitle").innerText = "Select a date";
+      document.getElementById("slotsContainer").innerHTML = "";
+    }
     document.getElementById("bookingFormCard").classList.add("hidden");
 
     renderPublicServices();
     renderPublicStaffOptions();
     renderPublicCalendar();
+    startBookingRealtime();
   }
 
 
 
   function renderPublicBusinessProfileInfo() {
-    const box = document.getElementById("publicBusinessInfo");
-    if (!box) return;
-
+    const name = businessSettings?.business_name || "Book Appointment";
     const logo = businessSettings?.business_logo_url || "";
     const address = businessSettings?.business_address || "";
     const phone = businessSettings?.business_phone || "";
     const description = businessSettings?.business_description || "";
 
-    if (!logo && !address && !phone && !description) {
-      box.classList.add("hidden");
-      box.innerHTML = "";
+    const titleEl = document.getElementById("publicBusinessName");
+    if (titleEl) titleEl.innerText = name;
+
+    setPublicBusinessLogo(logo);
+
+    const aboutEl = document.getElementById("publicBusinessAbout");
+    if (aboutEl) {
+      if (description) {
+        aboutEl.textContent = description;
+        aboutEl.classList.remove("hidden");
+      } else {
+        aboutEl.textContent = "";
+        aboutEl.classList.add("hidden");
+      }
+    }
+
+    const metaBox = document.getElementById("publicBusinessInfo");
+    if (!metaBox) return;
+
+    const metaParts = [];
+    if (address) metaParts.push(`<span><strong>Address:</strong> ${escapeHtml(address)}</span>`);
+    if (phone) metaParts.push(`<span><strong>Phone:</strong> ${escapeHtml(phone)}</span>`);
+
+    if (!metaParts.length) {
+      metaBox.classList.add("hidden");
+      metaBox.innerHTML = "";
       return;
     }
 
-    box.classList.remove("hidden");
-    box.innerHTML = `
-      ${logo ? `<img src="${escapeHtml(logo)}" alt="Business logo" />` : ""}
-      ${description ? `<div>${escapeHtml(description)}</div>` : ""}
-      ${address ? `<div class="small"><strong>Address:</strong> ${escapeHtml(address)}</div>` : ""}
-      ${phone ? `<div class="small"><strong>Phone:</strong> ${escapeHtml(phone)}</div>` : ""}
-    `;
+    metaBox.classList.remove("hidden");
+    metaBox.innerHTML = metaParts.join("");
   }
 
   function renderAdminStats() {
@@ -2408,6 +3371,7 @@
         business_address: null,
         business_phone: null,
         business_description: null,
+        business_accent_color: null,
         work_start: "09:00",
         work_end: "17:00",
         working_days: [1,2,3,4,5],
@@ -2465,11 +3429,18 @@
 
     document.getElementById("businessName").value = businessSettings.business_name || "";
     if (document.getElementById("businessSlug")) document.getElementById("businessSlug").value = businessSettings.business_slug || generateFallbackBusinessSlug();
-    if (document.getElementById("businessLogoUrl")) document.getElementById("businessLogoUrl").value = businessSettings.business_logo_url || "";
+    if (document.getElementById("businessLogoUrl")) {
+      document.getElementById("businessLogoUrl").value = businessSettings.business_logo_url || "";
+    }
+    updateLogoUploadUi();
     if (document.getElementById("businessPhone")) document.getElementById("businessPhone").value = businessSettings.business_phone || "";
     if (document.getElementById("businessAddress")) document.getElementById("businessAddress").value = businessSettings.business_address || "";
     if (document.getElementById("businessDescription")) document.getElementById("businessDescription").value = businessSettings.business_description || "";
+    const accent = normalizeAccentColor(businessSettings.business_accent_color);
+    if (document.getElementById("businessAccentColor")) document.getElementById("businessAccentColor").value = accent;
+    if (document.getElementById("businessAccentColorPicker")) document.getElementById("businessAccentColorPicker").value = accent;
     previewBusinessPublicLink();
+    previewBusinessBranding();
     document.getElementById("workStart").value = businessSettings.work_start || "09:00";
     document.getElementById("workEnd").value = businessSettings.work_end || "17:00";
     document.getElementById("breakStart").value = businessSettings.break_start || "";
@@ -2508,22 +3479,23 @@
     const slugValue = normalizeBusinessSlug(document.getElementById("businessSlug")?.value || businessNameValue || businessId);
 
     if (!businessNameValue) {
-      alert("Business name is required.");
+      showToast("Business name is required.", "error")
       return;
     }
 
     if (!slugValue) {
-      alert("Business ID / slug is required.");
+      showToast("Business ID / slug is required.", "error")
       return;
     }
 
     const updates = {
       business_name: businessNameValue,
       business_slug: slugValue,
-      business_logo_url: document.getElementById("businessLogoUrl")?.value.trim() || null,
+      business_logo_url: getBusinessLogoUrl() || null,
       business_address: document.getElementById("businessAddress")?.value.trim() || null,
       business_phone: document.getElementById("businessPhone")?.value.trim() || null,
       business_description: document.getElementById("businessDescription")?.value.trim() || null,
+      business_accent_color: getBusinessAccentColorFromForm(),
       work_start: document.getElementById("workStart").value,
       work_end: document.getElementById("workEnd").value,
       working_days: workingDays,
@@ -2538,16 +3510,16 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Save settings error: " + error.message + "\n\nIf the error mentions business_slug/logo/address/phone/description, run the SQL file from the ZIP first. If it says duplicate key, choose another Business ID / slug.");
+      alert("Save settings error: " + error.message + "\n\nIf the error mentions business_slug/logo/address/phone/description/accent_color, run the SQL file from the ZIP first. If it says duplicate key, choose another Business ID / slug.");
       return;
     }
 
-    alert("Settings saved.");
+    showToast("Settings saved.", "success")
     await loadAdminData();
   }
 
   function getServiceDurationValue(service) {
-    const duration = Number(service?.duration_minutes);
+    const duration = Number(service?.duration);
 
     if (!duration || isNaN(duration) || duration <= 0) {
       return 30;
@@ -2574,7 +3546,7 @@
       .order("created_at", { ascending: true });
 
     if (error) {
-      alert("Load services error: " + error.message);
+      showToast("Load services error: " + error.message, "error")
       return;
     }
 
@@ -2587,12 +3559,12 @@
     const price = Number(document.getElementById("servicePrice").value || 0);
 
     if (!name) {
-      alert("Enter service name.");
+      showToast("Enter service name.", "error")
       return;
     }
 
     if (!duration || duration <= 0) {
-      alert("Duration must be greater than 0.");
+      showToast("Duration must be greater than 0.", "error")
       return;
     }
 
@@ -2601,12 +3573,12 @@
       .insert({
         business_id: businessId,
         name,
-        duration_minutes: duration,
+        duration: duration,
         price
       });
 
     if (error) {
-      alert("Add service error: " + error.message);
+      showToast("Add service error: " + error.message, "error")
       return;
     }
 
@@ -2632,7 +3604,7 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Delete service error: " + error.message);
+      showToast("Delete service error: " + error.message, "error")
       return;
     }
 
@@ -2650,7 +3622,7 @@
     box.innerHTML = "";
 
     if (!services.length) {
-      box.innerHTML = "<p class='small'>No services yet.</p>";
+      box.innerHTML = emptyStateHtml("No services yet", "Add your first service above.");
       return;
     }
 
@@ -2676,7 +3648,7 @@
     const service = services.find(s => s.id === id);
 
     if (!service) {
-      alert("Service not found.");
+      showToast("Service not found.", "error")
       return;
     }
 
@@ -2704,17 +3676,17 @@
     const price = Number(document.getElementById("editServicePrice").value || 0);
 
     if (!id) {
-      alert("No service selected.");
+      showToast("No service selected.", "error")
       return;
     }
 
     if (!name) {
-      alert("Service name is required.");
+      showToast("Service name is required.", "error")
       return;
     }
 
     if (!duration || duration <= 0) {
-      alert("Duration must be greater than 0.");
+      showToast("Duration must be greater than 0.", "error")
       return;
     }
 
@@ -2722,18 +3694,18 @@
       .from("services")
       .update({
         name,
-        duration_minutes: duration,
+        duration: duration,
         price
       })
       .eq("id", id)
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Edit service error: " + error.message);
+      showToast("Edit service error: " + error.message, "error")
       return;
     }
 
-    alert("Service updated successfully.");
+    showToast("Service updated successfully.", "success")
 
     cancelEditService();
 
@@ -2873,7 +3845,7 @@
       if (notice) {
         notice.innerHTML = "<strong>Staff table is not ready.</strong> Run the SQL from README.txt in Supabase, then reload this page.";
       }
-      box.innerHTML = "<p class='small'>Staff system is disabled until SQL is added.</p>";
+      box.innerHTML = emptyStateHtml("Staff not configured", "Run the staff SQL from README.txt, then reload.");
       return;
     }
 
@@ -2884,7 +3856,7 @@
     }
 
     if (!staffMembers.length) {
-      box.innerHTML = "<p class='small'>No staff added yet.</p>";
+      box.innerHTML = emptyStateHtml("No staff yet", "Add team members above.");
       return;
     }
 
@@ -2907,7 +3879,7 @@
 
   async function addStaffMember() {
     if (!staffFeatureAvailable) {
-      alert("Run the staff SQL from README.txt first, then reload the app.");
+      showToast("Run the staff SQL from README.txt first, then reload the app.", "error")
       return;
     }
 
@@ -2915,7 +3887,7 @@
     const role = document.getElementById("staffRole").value.trim();
 
     if (!name) {
-      alert("Enter staff name.");
+      showToast("Enter staff name.", "error")
       return;
     }
 
@@ -2929,7 +3901,7 @@
       });
 
     if (error) {
-      alert("Add staff error: " + error.message);
+      showToast("Add staff error: " + error.message, "error")
       return;
     }
 
@@ -2953,7 +3925,7 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Staff update error: " + error.message);
+      showToast("Staff update error: " + error.message, "error")
       return;
     }
 
@@ -2974,7 +3946,7 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Delete staff error: " + error.message);
+      showToast("Delete staff error: " + error.message, "error")
       return;
     }
 
@@ -3066,7 +4038,7 @@
     if (selectedDate) renderSlots(selectedDate);
   }
 
-  async function loadBookings() {
+  async function loadBookings(silent = false) {
     const { data, error } = await sb
       .from("bookings")
       .select("*")
@@ -3075,11 +4047,101 @@
       .order("time", { ascending: true });
 
     if (error) {
-      alert("Load bookings error: " + error.message);
-      return;
+      if (!silent) showToast("Load bookings error: " + error.message, "error")
+      return false;
     }
 
     bookings = data || [];
+    return true;
+  }
+
+  function stopBookingRealtime() {
+    if (bookingRealtimeRefreshTimer) {
+      clearTimeout(bookingRealtimeRefreshTimer);
+      bookingRealtimeRefreshTimer = null;
+    }
+
+    if (bookingRealtimeChannel && sb) {
+      sb.removeChannel(bookingRealtimeChannel);
+      bookingRealtimeChannel = null;
+    }
+  }
+
+  function scheduleBookingRealtimeRefresh() {
+    if (bookingRealtimeRefreshTimer) clearTimeout(bookingRealtimeRefreshTimer);
+    bookingRealtimeRefreshTimer = setTimeout(() => {
+      bookingRealtimeRefreshTimer = null;
+      handleBookingRealtimeRefresh();
+    }, 250);
+  }
+
+  async function handleBookingRealtimeRefresh() {
+    if (!businessId || !isValidUuid(businessId)) return;
+
+    const publicVisible = !document.getElementById("publicView").classList.contains("hidden");
+    const adminVisible = !document.getElementById("adminView").classList.contains("hidden");
+    if (!publicVisible && !adminVisible) return;
+
+    const bookingsOk = await loadBookings(true);
+    if (!bookingsOk) return;
+
+    if (publicVisible) {
+      const slotsEl = document.getElementById("slotsContainer");
+      if (selectedDate && slotsEl) {
+        slotsEl.innerHTML = loadingStateHtml("Updating availability…");
+      }
+
+      await loadBlockedDays(true);
+      renderPublicCalendar();
+
+      if (selectedDate) {
+        const serviceId = document.getElementById("publicService")?.value || selectedService?.id;
+        if (
+          selectedSlot &&
+          serviceId &&
+          hasConflict(selectedDate, selectedSlot, serviceId, null, getSelectedPublicStaffId())
+        ) {
+          selectedSlot = null;
+          document.getElementById("bookingFormCard").classList.add("hidden");
+        }
+        renderSlots(selectedDate);
+      }
+    }
+
+    if (adminVisible) {
+      renderAdminCalendar();
+      renderBookings();
+      renderAdminStats();
+    }
+  }
+
+  function startBookingRealtime() {
+    stopBookingRealtime();
+    if (!sb || !businessId || !isValidUuid(businessId)) return;
+
+    bookingRealtimeChannel = sb
+      .channel("booking-availability-" + businessId)
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "bookings",
+          filter: "business_id=eq." + businessId
+        },
+        () => scheduleBookingRealtimeRefresh()
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "blocked_days",
+          filter: "business_id=eq." + businessId
+        },
+        () => scheduleBookingRealtimeRefresh()
+      )
+      .subscribe();
   }
 
   function getFilteredBookings() {
@@ -3139,7 +4201,7 @@
       .single();
 
     if (error) {
-      alert("Status update error: " + error.message);
+      showToast("Status update error: " + error.message, "error")
       return;
     }
 
@@ -3160,7 +4222,7 @@
     }
 
     if (!filteredBookings.length) {
-      box.innerHTML = "<p class='small'>No bookings found.</p>";
+      box.innerHTML = emptyStateHtml("No bookings found", "Try changing filters or add a booking.");
       return;
     }
 
@@ -3192,6 +4254,33 @@
     });
   }
 
+  function formatBookingRpcError(error) {
+    const msg = String(error?.message || error || "").trim();
+    return msg || "Booking failed. Please try again.";
+  }
+
+  async function invokeCreateBookingRpc(params) {
+    const { data, error } = await sb.rpc("create_booking", {
+      p_business_id: params.businessId,
+      p_service_id: params.serviceId,
+      p_date: params.date,
+      p_time: params.time,
+      p_customer_name: params.customerName,
+      p_customer_phone: params.customerPhone,
+      p_customer_email: params.customerEmail ?? null,
+      p_notes: params.notes ?? null,
+      p_staff_id: bookingStaffColumnAvailable && params.staffId ? params.staffId : null,
+      p_customer_user_id: params.customerUserId ?? null,
+      p_booking_status: params.bookingStatus || "Pending"
+    });
+
+    if (error) {
+      return { data: null, error: { message: formatBookingRpcError(error) } };
+    }
+
+    return { data, error: null };
+  }
+
   async function addAdminBooking() {
     const customerName = document.getElementById("adminAddCustomerName").value.trim();
     const customerPhone = document.getElementById("adminAddCustomerPhone").value.trim();
@@ -3204,43 +4293,43 @@
     const notes = document.getElementById("adminAddNotes").value.trim();
 
     if (!customerName || !customerPhone || !serviceId || !date || !time) {
-      alert("Name, phone, service, date and time are required.");
+      showToast("Name, phone, service, date and time are required.", "error")
       return;
     }
 
     const service = services.find(s => s.id === serviceId);
     if (!service) {
-      alert("Selected service not found.");
+      showToast("Selected service not found.", "error")
       return;
     }
 
     const isClosed = blockedDays.some(d => d.date === date);
     if (isClosed) {
-      alert("This date is blocked / closed.");
+      showToast("This date is blocked / closed.", "error")
       return;
     }
 
     const dateObj = new Date(date + "T00:00:00");
     const workingDays = getWorkingDaysArray();
     if (!workingDays.includes(dateObj.getDay())) {
-      alert("This is not a working day.");
+      showToast("This is not a working day.", "error")
       return;
     }
 
     if (isOutsideBookingWindow(date)) {
-      alert("This date is outside booking window.");
+      showToast("This date is outside booking window.", "error")
       return;
     }
 
     if (isPastDate(date)) {
-      alert("Past date is not allowed.");
+      showToast("Past date is not allowed.", "error")
       return;
     }
 
     const duration = getServiceDurationValue(service);
 
     if (isSlotInBreak(time, duration)) {
-      alert("This time is inside break / pause.");
+      showToast("This time is inside break / pause.", "error")
       return;
     }
 
@@ -3250,7 +4339,7 @@
     const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
 
     if (start < workStart || end > workEnd) {
-      alert("This booking is outside working hours.");
+      showToast("This booking is outside working hours.", "error")
       return;
     }
 
@@ -3258,42 +4347,31 @@
 
     const conflict = hasConflict(date, time, serviceId, null, staffId);
     if (conflict) {
-      alert("This time conflicts with another booking.");
+      showToast("This time conflicts with another booking.", "error")
       return;
     }
 
-    const bookingPayload = {
-      business_id: businessId,
-      service_id: service.id,
-      service_name: service.name,
+    const { data: insertedBooking, error } = await invokeCreateBookingRpc({
+      businessId,
+      serviceId: service.id,
       date,
       time,
-      duration_minutes: duration,
-      customer_name: customerName,
-      customer_phone: customerPhone,
-      customer_email: customerEmail || null,
+      customerName,
+      customerPhone,
+      customerEmail: customerEmail || null,
       notes: notes || null,
-      booking_status: bookingStatus
-    };
-
-    if (bookingStaffColumnAvailable && staffId) {
-      bookingPayload.staff_id = staffId;
-    }
-
-    const { data: insertedBooking, error } = await sb
-      .from("bookings")
-      .insert(bookingPayload)
-      .select("id")
-      .single();
+      staffId,
+      bookingStatus
+    });
 
     if (error) {
-      alert("Add booking error: " + error.message);
+      showToast(error.message, "error")
       return;
     }
 
     await sendBookingEmailNotification("booking_created", insertedBooking?.id, { source: "admin" });
 
-    alert("Booking added successfully.");
+    showToast("Booking added successfully.", "success")
 
     document.getElementById("adminAddCustomerName").value = "";
     document.getElementById("adminAddCustomerPhone").value = "";
@@ -3345,46 +4423,46 @@
     const notes = document.getElementById("editNotes").value.trim();
 
     if (!id) {
-      alert("No booking selected.");
+      showToast("No booking selected.", "error")
       return;
     }
 
     if (!customerName || !customerPhone || !serviceId || !newDate || !newTime) {
-      alert("Name, phone, service, date and time are required.");
+      showToast("Name, phone, service, date and time are required.", "error")
       return;
     }
 
     const selectedEditService = services.find(s => s.id === serviceId);
     if (!selectedEditService) {
-      alert("Selected service not found.");
+      showToast("Selected service not found.", "error")
       return;
     }
 
     const isClosed = blockedDays.some(d => d.date === newDate);
     if (isClosed) {
-      alert("This date is blocked / closed.");
+      showToast("This date is blocked / closed.", "error")
       return;
     }
 
     const dateObj = new Date(newDate + "T00:00:00");
     const workingDays = getWorkingDaysArray();
     if (!workingDays.includes(dateObj.getDay())) {
-      alert("This is not a working day.");
+      showToast("This is not a working day.", "error")
       return;
     }
 
     if (isOutsideBookingWindow(newDate)) {
-      alert("This date is outside booking window.");
+      showToast("This date is outside booking window.", "error")
       return;
     }
 
     if (isPastDate(newDate)) {
-      alert("Past date is not allowed.");
+      showToast("Past date is not allowed.", "error")
       return;
     }
 
     if (isSlotInBreak(newTime, getServiceDurationValue(selectedEditService))) {
-      alert("This time is inside break / pause.");
+      showToast("This time is inside break / pause.", "error")
       return;
     }
 
@@ -3394,13 +4472,13 @@
     const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
 
     if (start < workStart || end > workEnd) {
-      alert("This booking is outside working hours.");
+      showToast("This booking is outside working hours.", "error")
       return;
     }
 
     const conflict = hasConflict(newDate, newTime, serviceId, id, staffId);
     if (conflict) {
-      alert("This time conflicts with another booking.");
+      showToast("This time conflicts with another booking.", "error")
       return;
     }
 
@@ -3430,13 +4508,13 @@
       .single();
 
     if (error) {
-      alert("Edit booking error: " + error.message);
+      showToast("Edit booking error: " + error.message, "error")
       return;
     }
 
     await sendBookingEmailNotification("booking_status_updated", updatedBooking?.id || id, { status: bookingStatus });
 
-    alert("Booking updated successfully.");
+    showToast("Booking updated successfully.", "success")
     cancelEditBooking();
     await loadAdminData();
   }
@@ -3451,14 +4529,14 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Delete booking error: " + error.message);
+      showToast("Delete booking error: " + error.message, "error")
       return;
     }
 
     await loadAdminData();
   }
 
-  async function loadBlockedDays() {
+  async function loadBlockedDays(silent = false) {
     const { data, error } = await sb
       .from("blocked_days")
       .select("*")
@@ -3466,11 +4544,12 @@
       .order("date", { ascending: true });
 
     if (error) {
-      alert("Load blocked days error: " + error.message);
-      return;
+      if (!silent) showToast("Load blocked days error: " + error.message, "error")
+      return false;
     }
 
     blockedDays = data || [];
+    return true;
   }
 
   async function addBlockedDay() {
@@ -3478,13 +4557,13 @@
     const reason = document.getElementById("blockedReason").value.trim();
 
     if (!date) {
-      alert("Choose date.");
+      showToast("Choose date.", "error")
       return;
     }
 
     const alreadyBlocked = blockedDays.some(d => d.date === date);
     if (alreadyBlocked) {
-      alert("This date is already blocked.");
+      showToast("This date is already blocked.", "error")
       return;
     }
 
@@ -3504,7 +4583,7 @@
       });
 
     if (error) {
-      alert("Add blocked day error: " + error.message);
+      showToast("Add blocked day error: " + error.message, "error")
       return;
     }
 
@@ -3524,7 +4603,7 @@
       .eq("business_id", businessId);
 
     if (error) {
-      alert("Delete blocked day error: " + error.message);
+      showToast("Delete blocked day error: " + error.message, "error")
       return;
     }
 
@@ -3536,7 +4615,7 @@
     box.innerHTML = "";
 
     if (!blockedDays.length) {
-      box.innerHTML = "<p class='small'>No closed days yet.</p>";
+      box.innerHTML = emptyStateHtml("No closed days", "Block holidays or days off above.");
       return;
     }
 
@@ -3613,10 +4692,12 @@
 
       div.onclick = () => {
         selectedDate = dateStr;
-        alert(
+        showToast(
           closed
-            ? `Closed day: ${dateStr}\nReason: ${closed.reason || "No reason"}`
-            : `Selected date: ${dateStr}\nBookings: ${dayBookings.length}`
+            ? `Closed day: ${dateStr} — ${closed.reason || "No reason"}`
+            : `Selected date: ${dateStr} — ${dayBookings.length} booking(s)`,
+          "info",
+          5000
         );
       };
 
@@ -3679,10 +4760,10 @@
 
       if (isPast || outsideWindow || !isWorkingDay || isClosed) {
         div.onclick = () => {
-          if (isClosed) alert("This day is closed.");
-          else if (!isWorkingDay) alert("This is not a working day.");
-          else if (outsideWindow) alert("This date is outside booking window.");
-          else alert("Past date.");
+          if (isClosed) showToast("This day is closed.", "error")
+          else if (!isWorkingDay) showToast("This is not a working day.", "error")
+          else if (outsideWindow) showToast("This date is outside booking window.", "error")
+          else showToast("Past date.", "error")
         };
       } else {
         div.onclick = () => selectPublicDate(dateStr);
@@ -3710,7 +4791,7 @@
     selectedService = services.find(s => s.id === serviceId);
 
     if (!selectedService) {
-      container.innerHTML = "<p>No service selected.</p>";
+      container.innerHTML = emptyStateHtml("No service selected", "Choose a service to see available times.");
       return;
     }
 
@@ -3729,7 +4810,7 @@
     );
 
     if (!slots.length) {
-      container.innerHTML = "<p>No slots available.</p>";
+      container.innerHTML = emptyStateHtml("No slots available", "Try another date or service.");
       return;
     }
 
@@ -3823,18 +4904,18 @@
     const staffId = getSelectedPublicStaffId();
 
     if (!selectedDate || !selectedSlot || !selectedService) {
-      alert("Choose date, slot and service.");
+      showToast("Choose date, slot and service.", "error")
       return;
     }
 
     if (!name || !phone) {
-      alert("Name and phone are required.");
+      showToast("Name and phone are required.", "error")
       return;
     }
 
     const closed = blockedDays.some(d => d.date === selectedDate);
     if (closed) {
-      alert("This day is closed.");
+      showToast("This day is closed.", "error")
       return;
     }
 
@@ -3842,46 +4923,36 @@
 
     const conflict = hasConflict(selectedDate, selectedSlot, selectedService.id, null, staffId);
     if (conflict) {
-      alert("Sorry, this slot is already booked.");
+      showToast("Sorry, this slot is already booked.", "error")
       await loadPublicData();
       return;
     }
 
-    const bookingPayload = {
-      business_id: businessId,
-      service_id: selectedService.id,
-      service_name: selectedService.name,
+    const { data: insertedBooking, error } = await invokeCreateBookingRpc({
+      businessId,
+      serviceId: selectedService.id,
       date: selectedDate,
       time: selectedSlot,
-      duration_minutes: getServiceDurationValue(selectedService),
-      customer_name: name,
-      customer_phone: phone,
-      customer_email: email || null,
-      notes: notes || null
-    };
-
-    if (currentUser && currentUserRole === "customer") {
-      bookingPayload.customer_user_id = currentUser.id;
-    }
-
-    if (bookingStaffColumnAvailable && staffId) {
-      bookingPayload.staff_id = staffId;
-    }
-
-    const { data: insertedBooking, error } = await sb
-      .from("bookings")
-      .insert(bookingPayload)
-      .select("id")
-      .single();
+      customerName: name,
+      customerPhone: phone,
+      customerEmail: email || null,
+      notes: notes || null,
+      staffId,
+      customerUserId: currentUser && currentUserRole === "customer" ? currentUser.id : null,
+      bookingStatus: "Pending"
+    });
 
     if (error) {
-      alert("Booking error: " + error.message);
+      showToast(error.message, "error")
+      if (/not available|already exists|conflict/i.test(error.message)) {
+        await loadPublicData();
+      }
       return;
     }
 
     await sendBookingEmailNotification("booking_created", insertedBooking?.id, { source: "customer" });
 
-    alert("Booking created successfully. Email confirmation will be sent if email is provided.");
+    showToast("Booking created successfully. Email confirmation will be sent if email is provided.", "success")
 
     document.getElementById("customerName").value = "";
     document.getElementById("customerPhone").value = "";
@@ -3890,8 +4961,6 @@
     document.getElementById("bookingFormCard").classList.add("hidden");
 
     await loadPublicData();
-
-    if (selectedDate) renderSlots(selectedDate);
   }
 
   function generateSlots(start, end, duration) {
