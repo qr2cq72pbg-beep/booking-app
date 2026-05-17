@@ -867,6 +867,36 @@
       filter: brightness(0.92);
     }
 
+    .booking-manage-ref {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin: var(--space-sm) 0;
+    }
+
+    .booking-manage-link-box {
+      word-break: break-all;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      margin: var(--space-sm) 0;
+    }
+
+    .booking-manage-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: var(--space-md);
+    }
+
+    .booking-manage-actions button {
+      width: auto;
+      min-height: 44px;
+      padding: 10px 16px;
+      margin: 0;
+    }
+
     #selectedDateTitle {
       margin-bottom: var(--space-xs);
     }
@@ -1370,8 +1400,8 @@
         <div class="row">
           <input id="adminAddTime" type="time" />
           <select id="adminAddStatus">
+            <option value="Confirmed" selected>Confirmed</option>
             <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
             <option value="Cancelled">Cancelled</option>
           </select>
         </div>
@@ -1401,8 +1431,8 @@
         <div class="row">
           <select id="editStaff"></select>
           <select id="editBookingStatus">
+            <option value="Confirmed" selected>Confirmed</option>
             <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
             <option value="Cancelled">Cancelled</option>
           </select>
         </div>
@@ -1416,7 +1446,7 @@
 
         <div class="actions">
           <button class="success" onclick="saveEditedBooking()">Save Changes</button>
-          <button class="secondary" onclick="cancelEditBooking()">Cancel</button>
+          <button type="button" class="secondary" onclick="cancelEditBooking()">Close</button>
         </div>
 
         <p class="small">
@@ -1554,6 +1584,45 @@
           <input id="customerEmail" type="email" placeholder="Email optional" />
           <textarea id="customerNotes" placeholder="Notes optional"></textarea>
           <button onclick="createPublicBooking()">Book Now</button>
+        </div>
+
+        <div id="bookingSuccessCard" class="card public-booking-card hidden">
+          <h2>Booking confirmed</h2>
+          <p class="small">Save your reference and manage link to reschedule or cancel later.</p>
+          <p class="small"><strong>Reference</strong></p>
+          <p id="bookingSuccessRef" class="booking-manage-ref"></p>
+          <p class="small"><strong>Manage your booking</strong></p>
+          <div id="bookingSuccessLink" class="booking-manage-link-box small"></div>
+          <div class="booking-manage-actions">
+            <button type="button" class="success" onclick="copyManageBookingLink('bookingSuccessLink')">Copy manage link</button>
+            <button type="button" class="secondary" onclick="openManageBookingFromToken(activeManageToken)">Manage booking</button>
+            <button type="button" class="secondary" onclick="showPublicBookingWizard()">Book another</button>
+          </div>
+        </div>
+
+        <div id="manageBookingCard" class="card public-booking-card hidden">
+          <h2>Manage your booking</h2>
+          <div id="manageBookingLoading" class="loading-state hidden" role="status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>Loading booking…</span>
+          </div>
+          <div id="manageBookingError" class="empty-state hidden"></div>
+          <div id="manageBookingBody" class="hidden">
+            <p id="manageBookingRef" class="booking-manage-ref"></p>
+            <p id="manageBookingSummary" class="small"></p>
+            <p id="manageBookingStatus" class="small"></p>
+            <div id="manageBookingRescheduleFields" class="row">
+              <input id="manageBookingDate" type="date" />
+              <input id="manageBookingTime" type="time" />
+            </div>
+            <div class="booking-manage-actions">
+              <button type="button" class="success" id="manageBookingRescheduleBtn" onclick="submitManageReschedule()">Reschedule</button>
+              <button type="button" class="danger" id="manageBookingCancelBtn" onclick="submitManageCancel()">Cancel booking</button>
+              <button type="button" class="secondary" onclick="copyManageBookingLink('manageBookingLinkBox')">Copy manage link</button>
+              <button type="button" class="secondary" onclick="showPublicBookingWizard()">Book another</button>
+            </div>
+            <div id="manageBookingLinkBox" class="booking-manage-link-box small hidden"></div>
+          </div>
         </div>
 
       </div>
@@ -2147,6 +2216,9 @@
 
   const urlParams = new URLSearchParams(window.location.search);
   const publicBusinessId = urlParams.get("business");
+  const publicManageToken = urlParams.get("manage");
+  let activeManageToken = publicManageToken ? String(publicManageToken).trim() : null;
+  let manageBookingData = null;
 
   function showToast(message, type = "info", duration = 4000) {
     const text = String(message || "").trim();
@@ -2215,6 +2287,247 @@
   function buildPublicBookingLink(identifier = null) {
     const publicId = identifier || getBusinessPublicIdentifier();
     return window.location.origin + window.location.pathname + "?business=" + encodeURIComponent(publicId);
+  }
+
+  function buildManageBookingLink(token, identifier = null) {
+    const publicId = identifier || getBusinessPublicIdentifier();
+    if (!token) return buildPublicBookingLink(publicId);
+    return (
+      window.location.origin +
+      window.location.pathname +
+      "?business=" +
+      encodeURIComponent(publicId) +
+      "&manage=" +
+      encodeURIComponent(token)
+    );
+  }
+
+  function setPublicBookingWizardVisible(visible) {
+    const content = document.getElementById("publicBookingContent");
+    if (!content) return;
+    content.querySelectorAll(".public-booking-card").forEach(el => {
+      if (el.id === "bookingSuccessCard" || el.id === "manageBookingCard") return;
+      el.classList.toggle("hidden", !visible);
+    });
+    if (visible) {
+      document.getElementById("bookingSuccessCard")?.classList.add("hidden");
+      document.getElementById("manageBookingCard")?.classList.add("hidden");
+    }
+  }
+
+  function showPublicBookingWizard() {
+    activeManageToken = null;
+    manageBookingData = null;
+    setPublicBookingWizardVisible(true);
+    document.getElementById("bookingSuccessCard")?.classList.add("hidden");
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    loadPublicData();
+  }
+
+  function showBookingSuccessCard(booking) {
+    const token = booking?.manage_token;
+    const ref = booking?.booking_ref || "—";
+    if (!token) {
+      showToast("Booking confirmed.", "success");
+      return;
+    }
+
+    activeManageToken = token;
+    const link = buildManageBookingLink(token);
+
+    document.getElementById("bookingSuccessRef").textContent = ref;
+    const linkEl = document.getElementById("bookingSuccessLink");
+    if (linkEl) linkEl.textContent = link;
+
+    setPublicBookingWizardVisible(false);
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    document.getElementById("bookingSuccessCard")?.classList.remove("hidden");
+    document.getElementById("bookingSuccessCard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function copyManageBookingLink(elementId) {
+    const el = document.getElementById(elementId);
+    const link =
+      (el?.textContent || "").trim() ||
+      (activeManageToken ? buildManageBookingLink(activeManageToken) : "");
+
+    if (!link) {
+      showToast("No manage link found.", "error");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(link);
+      showToast("Manage link copied.", "success");
+    } catch (err) {
+      const tempInput = document.createElement("input");
+      tempInput.value = link;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      showToast("Manage link copied.", "success");
+    }
+  }
+
+  function formatManageRpcError(error) {
+    return formatBookingRpcError(error);
+  }
+
+  async function fetchBookingByManageToken(token) {
+    const { data, error } = await sb.rpc("get_booking_by_manage_token", {
+      p_manage_token: token
+    });
+    if (error) {
+      return { data: null, error: { message: formatManageRpcError(error) } };
+    }
+    return { data, error: null };
+  }
+
+  async function cancelBookingByManageToken(token) {
+    const { data, error } = await sb.rpc("cancel_booking_by_manage_token", {
+      p_manage_token: token
+    });
+    if (error) {
+      return { data: null, error: { message: formatManageRpcError(error) } };
+    }
+    return { data, error: null };
+  }
+
+  async function rescheduleBookingByManageToken(token, date, time) {
+    const { data, error } = await sb.rpc("reschedule_booking_by_manage_token", {
+      p_manage_token: token,
+      p_date: date,
+      p_time: time
+    });
+    if (error) {
+      return { data: null, error: { message: formatManageRpcError(error) } };
+    }
+    return { data, error: null };
+  }
+
+  function renderManageBookingCard(booking) {
+    manageBookingData = booking;
+    const loading = document.getElementById("manageBookingLoading");
+    const errorBox = document.getElementById("manageBookingError");
+    const body = document.getElementById("manageBookingBody");
+
+    if (loading) loading.classList.add("hidden");
+    if (errorBox) errorBox.classList.add("hidden");
+    if (body) body.classList.remove("hidden");
+
+    const status = booking?.booking_status || "Pending";
+    const canManage = booking?.can_manage !== false && String(status).toLowerCase() !== "cancelled";
+
+    document.getElementById("manageBookingRef").textContent = booking?.booking_ref || "—";
+    document.getElementById("manageBookingSummary").innerHTML =
+      `<strong>${escapeHtml(booking?.customer_name || "Customer")}</strong><br>` +
+      `${escapeHtml(booking?.date || "")} at ${escapeHtml(booking?.time || "")}<br>` +
+      `Service: ${escapeHtml(booking?.service_name || "—")}` +
+      (booking?.staff_name ? `<br>Staff: ${escapeHtml(booking.staff_name)}` : "");
+
+    document.getElementById("manageBookingStatus").innerHTML =
+      `Status: <span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span>`;
+
+    document.getElementById("manageBookingDate").value = booking?.date || "";
+    document.getElementById("manageBookingTime").value = booking?.time || "";
+
+    const linkBox = document.getElementById("manageBookingLinkBox");
+    if (linkBox && activeManageToken) {
+      linkBox.textContent = buildManageBookingLink(activeManageToken, booking?.business_slug || null);
+      linkBox.classList.remove("hidden");
+    }
+
+    const rescheduleBtn = document.getElementById("manageBookingRescheduleBtn");
+    const cancelBtn = document.getElementById("manageBookingCancelBtn");
+    const fields = document.getElementById("manageBookingRescheduleFields");
+
+    if (rescheduleBtn) rescheduleBtn.disabled = !canManage;
+    if (cancelBtn) cancelBtn.disabled = !canManage;
+    if (fields) fields.style.opacity = canManage ? "1" : "0.6";
+  }
+
+  function showManageBookingError(message) {
+    const loading = document.getElementById("manageBookingLoading");
+    const errorBox = document.getElementById("manageBookingError");
+    const body = document.getElementById("manageBookingBody");
+
+    if (loading) loading.classList.add("hidden");
+    if (body) body.classList.add("hidden");
+    if (errorBox) {
+      errorBox.classList.remove("hidden");
+      errorBox.innerHTML = emptyStateHtml("Unable to load booking", message);
+    }
+  }
+
+  async function openManageBookingFromToken(token) {
+    const manageToken = String(token || activeManageToken || "").trim();
+    if (!manageToken) {
+      showToast("Manage link is missing.", "error");
+      return;
+    }
+
+    activeManageToken = manageToken;
+    setPublicBookingWizardVisible(false);
+    document.getElementById("bookingSuccessCard")?.classList.add("hidden");
+
+    const card = document.getElementById("manageBookingCard");
+    const loading = document.getElementById("manageBookingLoading");
+    const errorBox = document.getElementById("manageBookingError");
+    const body = document.getElementById("manageBookingBody");
+
+    card?.classList.remove("hidden");
+    loading?.classList.remove("hidden");
+    errorBox?.classList.add("hidden");
+    body?.classList.add("hidden");
+
+    const { data, error } = await fetchBookingByManageToken(manageToken);
+    if (error) {
+      showManageBookingError(error.message);
+      return;
+    }
+
+    renderManageBookingCard(data);
+    card?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function submitManageReschedule() {
+    if (!activeManageToken) return;
+
+    const newDate = document.getElementById("manageBookingDate")?.value;
+    const newTime = document.getElementById("manageBookingTime")?.value;
+
+    if (!newDate || !newTime) {
+      showToast("Choose date and time.", "error");
+      return;
+    }
+
+    const { data, error } = await rescheduleBookingByManageToken(activeManageToken, newDate, newTime);
+    if (error) {
+      showToast(error.message, "error");
+      return;
+    }
+
+    showToast("Booking rescheduled.", "success");
+    await loadBookings(true);
+    renderManageBookingCard(data);
+  }
+
+  async function submitManageCancel() {
+    if (!activeManageToken) return;
+    if (!confirm("Cancel this booking?")) return;
+
+    const { data, error } = await cancelBookingByManageToken(activeManageToken);
+    if (error) {
+      showToast(error.message, "error");
+      return;
+    }
+
+    showToast("Booking cancelled.", "success");
+    await loadBookings(true);
+    const { data: refreshed } = await fetchBookingByManageToken(activeManageToken);
+    if (refreshed) renderManageBookingCard(refreshed);
+    else if (data) renderManageBookingCard({ ...manageBookingData, booking_status: "Cancelled", can_manage: false });
   }
 
   function generateFallbackBusinessSlug() {
@@ -2688,6 +3001,9 @@
       }
       showPublicView(true);
       await loadPublicData();
+      if (publicManageToken) {
+        await openManageBookingFromToken(publicManageToken);
+      }
       return;
     }
 
@@ -4114,15 +4430,15 @@
     }, 250);
   }
 
-  async function handleBookingRealtimeRefresh() {
-    if (!businessId || !isValidUuid(businessId)) return;
+  async function refreshBookingsAfterChange(silentLoad) {
+    if (!businessId || !isValidUuid(businessId)) return false;
 
     const publicVisible = !document.getElementById("publicView").classList.contains("hidden");
     const adminVisible = !document.getElementById("adminView").classList.contains("hidden");
-    if (!publicVisible && !adminVisible) return;
+    if (!publicVisible && !adminVisible) return true;
 
-    const bookingsOk = await loadBookings(true);
-    if (!bookingsOk) return;
+    const bookingsOk = await loadBookings(!!silentLoad);
+    if (!bookingsOk) return false;
 
     if (publicVisible) {
       const slotsEl = document.getElementById("slotsContainer");
@@ -4130,7 +4446,7 @@
         slotsEl.innerHTML = loadingStateHtml("Updating availability…");
       }
 
-      await loadBlockedDays(true);
+      await loadBlockedDays(!!silentLoad);
       renderPublicCalendar();
 
       if (selectedDate) {
@@ -4152,6 +4468,18 @@
       renderBookings();
       renderAdminStats();
     }
+
+    return true;
+  }
+
+  async function handleBookingRealtimeRefresh() {
+    if (!businessId || !isValidUuid(businessId)) return;
+
+    const publicVisible = !document.getElementById("publicView").classList.contains("hidden");
+    const adminVisible = !document.getElementById("adminView").classList.contains("hidden");
+    if (!publicVisible && !adminVisible) return;
+
+    await refreshBookingsAfterChange(true);
   }
 
   function startBookingRealtime() {
@@ -4228,6 +4556,12 @@
     return "status-pending";
   }
 
+  async function cancelBooking(id) {
+    if (!id) return;
+    if (!confirm("Cancel this booking?")) return;
+    await updateBookingStatus(id, "Cancelled");
+  }
+
   async function updateBookingStatus(id, status) {
     if (!id || !status) return;
 
@@ -4245,7 +4579,7 @@
     }
 
     await sendBookingEmailNotification("booking_status_updated", updatedBooking?.id || id, { status });
-    await loadAdminData();
+    await refreshBookingsAfterChange(false);
   }
 
   function renderBookings() {
@@ -4282,11 +4616,11 @@
           Notes: ${escapeHtml(b.notes || "")}
         </span>
         <div class="actions">
-          <button onclick="editBooking('${b.id}')">Edit</button>
-          <button class="success" onclick="updateBookingStatus('${b.id}', 'Confirmed')">Confirm</button>
-          <button class="secondary" onclick="updateBookingStatus('${b.id}', 'Pending')">Pending</button>
-          <button class="danger" onclick="updateBookingStatus('${b.id}', 'Cancelled')">Cancel</button>
-          <button class="danger" onclick="deleteBooking('${b.id}')">Delete</button>
+          <button type="button" onclick="editBooking('${b.id}')">Edit</button>
+          ${status !== "Cancelled" ? `
+          <button type="button" class="danger" onclick="cancelBooking('${b.id}')">Cancel booking</button>
+          ` : ""}
+          <button type="button" class="danger" onclick="deleteBooking('${b.id}')">Delete</button>
         </div>
       `;
       box.appendChild(div);
@@ -4310,7 +4644,7 @@
       p_notes: params.notes ?? null,
       p_staff_id: bookingStaffColumnAvailable && params.staffId ? params.staffId : null,
       p_customer_user_id: params.customerUserId ?? null,
-      p_booking_status: params.bookingStatus || "Pending"
+      p_booking_status: params.bookingStatus || "Confirmed"
     });
 
     if (error) {
@@ -4328,7 +4662,7 @@
     const staffId = document.getElementById("adminAddStaff")?.value || null;
     const date = document.getElementById("adminAddDate").value;
     const time = document.getElementById("adminAddTime").value;
-    const bookingStatus = document.getElementById("adminAddStatus")?.value || "Pending";
+    const bookingStatus = document.getElementById("adminAddStatus")?.value || "Confirmed";
     const notes = document.getElementById("adminAddNotes").value.trim();
 
     if (!customerName || !customerPhone || !serviceId || !date || !time) {
@@ -4419,7 +4753,7 @@
     document.getElementById("adminAddTime").value = "";
     document.getElementById("adminAddNotes").value = "";
     if (document.getElementById("adminAddStaff")) document.getElementById("adminAddStaff").value = "";
-    if (document.getElementById("adminAddStatus")) document.getElementById("adminAddStatus").value = "Pending";
+    if (document.getElementById("adminAddStatus")) document.getElementById("adminAddStatus").value = "Confirmed";
 
     await loadAdminData();
   }
@@ -4458,7 +4792,7 @@
     const staffId = document.getElementById("editStaff")?.value || null;
     const newDate = document.getElementById("editDate").value;
     const newTime = document.getElementById("editTime").value;
-    const bookingStatus = document.getElementById("editBookingStatus")?.value || "Pending";
+    const bookingStatus = document.getElementById("editBookingStatus")?.value || "Confirmed";
     const notes = document.getElementById("editNotes").value.trim();
 
     if (!id) {
@@ -4555,11 +4889,11 @@
 
     showToast("Booking updated successfully.", "success")
     cancelEditBooking();
-    await loadAdminData();
+    await refreshBookingsAfterChange(false);
   }
 
   async function deleteBooking(id) {
-    if (!confirm("Delete this booking?")) return;
+    if (!confirm("Delete this booking permanently?")) return;
 
     const { error } = await sb
       .from("bookings")
@@ -4572,7 +4906,7 @@
       return;
     }
 
-    await loadAdminData();
+    await refreshBookingsAfterChange(false);
   }
 
   async function loadBlockedDays(silent = false) {
@@ -4978,7 +5312,7 @@
       notes: notes || null,
       staffId,
       customerUserId: currentUser && currentUserRole === "customer" ? currentUser.id : null,
-      bookingStatus: "Pending"
+      bookingStatus: "Confirmed"
     });
 
     if (error) {
@@ -4991,15 +5325,23 @@
 
     await sendBookingEmailNotification("booking_created", insertedBooking?.id, { source: "customer" });
 
-    showToast("Booking created successfully. Email confirmation will be sent if email is provided.", "success")
-
     document.getElementById("customerName").value = "";
     document.getElementById("customerPhone").value = "";
     document.getElementById("customerEmail").value = "";
     document.getElementById("customerNotes").value = "";
     document.getElementById("bookingFormCard").classList.add("hidden");
+    selectedSlot = null;
 
-    await loadPublicData();
+    if (insertedBooking?.manage_token) {
+      await loadBookings(true);
+      await loadBlockedDays(true);
+      startBookingRealtime();
+      showBookingSuccessCard(insertedBooking);
+      showToast("Booking confirmed. Save your manage link below.", "success");
+    } else {
+      showToast("Booking created successfully. Email confirmation will be sent if email is provided.", "success");
+      await loadPublicData();
+    }
   }
 
   function generateSlots(start, end, duration) {
@@ -5026,6 +5368,7 @@
     return bookings.some(b => {
       if (b.date !== date) return false;
       if (ignoreBookingId && b.id === ignoreBookingId) return false;
+      if (getBookingStatus(b) === "Cancelled") return false;
 
       if (bookingStaffColumnAvailable && staffId) {
         const existingStaffId = b.staff_id || null;
