@@ -537,38 +537,74 @@
       letter-spacing: -0.02em;
     }
 
-    #adminSectionServices > .card.widget-card {
+    #adminSectionServices > .card.widget-card,
+    #adminSectionStaff > .card.widget-card {
       padding: 14px 16px !important;
     }
 
-    #adminSectionServices .admin-saas__body {
+    #adminSectionServices .admin-saas__body,
+    #adminSectionStaff .admin-saas__body {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    #adminSectionServices .admin-saas-form {
+    #adminSectionServices .admin-saas__intro,
+    #adminSectionStaff .admin-saas__intro {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--color-muted);
+      line-height: 1.45;
+    }
+
+    #adminSectionServices .admin-saas-status,
+    #adminSectionStaff .admin-saas-status {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--color-muted);
+    }
+
+    #adminSectionServices .admin-saas-form,
+    #adminSectionStaff .admin-saas-form {
       padding: 10px 12px;
       border: 1px solid var(--color-border);
       border-radius: 10px;
       background: var(--admin-surface-2, #f8fafc);
     }
 
-    #adminSectionServices .admin-saas-form__fields {
+    #adminSectionServices .admin-saas-form__fields,
+    #adminSectionStaff .admin-saas-form__fields {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
       gap: 8px 10px;
       align-items: end;
     }
 
-    #adminSectionServices .admin-saas-field {
+    #adminSectionStaff .admin-saas-form__fields--staff {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto;
+    }
+
+    #adminSectionServices .admin-saas-field,
+    #adminSectionStaff .admin-saas-field {
       display: flex;
       flex-direction: column;
       gap: 4px;
       min-width: 0;
     }
 
-    #adminSectionServices .admin-saas-field__label {
+    #adminSectionStaff .admin-saas-field--photo {
+      min-width: 0;
+    }
+
+    #adminSectionStaff .admin-saas-staff-photo-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    #adminSectionServices .admin-saas-field__label,
+    #adminSectionStaff .admin-saas-field__label {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.03em;
@@ -577,7 +613,8 @@
       line-height: 1.2;
     }
 
-    #adminSectionServices .admin-saas-field input {
+    #adminSectionServices .admin-saas-field input,
+    #adminSectionStaff .admin-saas-field input {
       width: 100%;
       margin: 0;
       padding: 7px 10px;
@@ -588,13 +625,15 @@
       background: var(--color-surface);
     }
 
-    #adminSectionServices .admin-saas-form__actions {
+    #adminSectionServices .admin-saas-form__actions,
+    #adminSectionStaff .admin-saas-form__actions {
       display: flex;
       justify-content: flex-end;
       margin-top: 8px;
     }
 
-    #adminSectionServices .admin-saas-btn {
+    #adminSectionServices .admin-saas-btn,
+    #adminSectionStaff .admin-saas-btn {
       width: auto;
       min-height: 30px;
       padding: 5px 11px;
@@ -606,72 +645,99 @@
       transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
     }
 
-    #adminSectionServices .admin-saas-btn:hover:not(:disabled) {
+    #adminSectionServices .admin-saas-btn:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn:hover:not(:disabled) {
       transform: translateY(-1px);
     }
 
-    #adminSectionServices .admin-saas-btn:active:not(:disabled) {
+    #adminSectionServices .admin-saas-btn:active:not(:disabled),
+    #adminSectionStaff .admin-saas-btn:active:not(:disabled) {
       transform: translateY(0);
     }
 
-    #adminSectionServices .admin-saas-btn--primary {
+    #adminSectionServices .admin-saas-btn--primary,
+    #adminSectionStaff .admin-saas-btn--primary {
       background: var(--color-primary);
       color: #fff;
       border: none;
       box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
     }
 
-    #adminSectionServices .admin-saas-btn--primary:hover:not(:disabled) {
+    #adminSectionServices .admin-saas-btn--primary:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn--primary:hover:not(:disabled) {
       background: var(--color-primary-hover);
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
     }
 
-    #adminSectionServices .admin-saas-btn--ghost {
+    #adminSectionServices .admin-saas-btn--ghost,
+    #adminSectionStaff .admin-saas-btn--ghost {
       background: transparent;
       color: var(--color-primary);
       border: 1px solid color-mix(in srgb, var(--color-primary) 32%, var(--color-border));
     }
 
-    #adminSectionServices .admin-saas-btn--ghost:hover:not(:disabled) {
+    #adminSectionServices .admin-saas-btn--ghost:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn--ghost:hover:not(:disabled) {
       background: color-mix(in srgb, var(--color-primary) 9%, transparent);
       border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
     }
 
-    #adminSectionServices .admin-saas-btn--ghost-danger {
+    #adminSectionServices .admin-saas-btn--ghost-warn,
+    #adminSectionStaff .admin-saas-btn--ghost-warn {
+      background: transparent;
+      color: #c2410c;
+      border: 1px solid color-mix(in srgb, #ea580c 30%, var(--color-border));
+    }
+
+    #adminSectionServices .admin-saas-btn--ghost-warn:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn--ghost-warn:hover:not(:disabled) {
+      background: color-mix(in srgb, #ea580c 9%, transparent);
+      border-color: color-mix(in srgb, #ea580c 45%, var(--color-border));
+      color: #9a3412;
+    }
+
+    #adminSectionServices .admin-saas-btn--ghost-danger,
+    #adminSectionStaff .admin-saas-btn--ghost-danger {
       background: transparent;
       color: var(--color-danger);
       border: 1px solid color-mix(in srgb, var(--color-danger) 28%, var(--color-border));
     }
 
-    #adminSectionServices .admin-saas-btn--ghost-danger:hover:not(:disabled) {
+    #adminSectionServices .admin-saas-btn--ghost-danger:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn--ghost-danger:hover:not(:disabled) {
       background: color-mix(in srgb, var(--color-danger) 8%, transparent);
       border-color: color-mix(in srgb, var(--color-danger) 42%, var(--color-border));
     }
 
-    #adminSectionServices .admin-saas-btn--muted {
+    #adminSectionServices .admin-saas-btn--muted,
+    #adminSectionStaff .admin-saas-btn--muted {
       background: var(--color-surface);
       color: var(--color-muted);
       border: 1px solid var(--color-border);
     }
 
-    #adminSectionServices .admin-saas-btn--muted:hover:not(:disabled) {
+    #adminSectionServices .admin-saas-btn--muted:hover:not(:disabled),
+    #adminSectionStaff .admin-saas-btn--muted:hover:not(:disabled) {
       background: var(--admin-surface-2, #f3f4f6);
       color: #374151;
     }
 
-    #adminSectionServices .admin-saas-list {
+    #adminSectionServices .admin-saas-list,
+    #adminSectionStaff .admin-saas-list {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
-    #adminSectionServices .admin-saas-list .empty-state {
+    #adminSectionServices .admin-saas-list .empty-state,
+    #adminSectionStaff .admin-saas-list .empty-state {
       padding: 14px 12px;
       font-size: 13px;
       border-radius: 10px;
     }
 
-    #adminSectionServices .admin-saas-row {
+    #adminSectionServices .admin-saas-row,
+    #adminSectionStaff .admin-saas-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -680,20 +746,168 @@
       border: 1px solid var(--color-border);
       border-radius: 10px;
       background: var(--color-surface);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
     }
 
-    #adminSectionServices .admin-saas-row:hover {
+    #adminSectionServices .admin-saas-row:hover,
+    #adminSectionStaff .admin-saas-row:hover {
       border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 28%, var(--color-border));
       box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     }
 
-    #adminSectionServices .admin-saas-row__main {
+    #adminSectionStaff .admin-saas-row--staff:hover {
+      transform: translateY(-1px);
+    }
+
+    #adminSectionStaff .admin-saas-row--staff.admin-saas-row--inactive {
+      opacity: 0.78;
+    }
+
+    #adminSectionStaff .admin-saas-row--staff {
+      gap: 10px;
+      padding: 8px 10px;
+    }
+
+    #adminSectionStaff .admin-saas-row__avatar {
+      flex-shrink: 0;
+    }
+
+    #adminSectionStaff .staff-list-avatar-slot {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: color-mix(in srgb, var(--business-accent, #6366f1) 8%, #eef2ff);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    #adminSectionStaff .staff-list-avatar-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #adminSectionStaff .staff-list-avatar-slot {
+      position: relative;
+    }
+
+    #adminSectionStaff .staff-list-avatar-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: color-mix(in srgb, var(--business-accent, #4338ca) 70%, #4338ca);
+      letter-spacing: -0.02em;
+    }
+
+    #adminSectionStaff .staff-list-avatar-photo:not(.staff-list-avatar-photo--err) ~ .staff-list-avatar-initials {
+      opacity: 0;
+    }
+
+    #adminSectionStaff .staff-list-avatar-photo.staff-list-avatar-photo--err {
+      display: none;
+    }
+
+    #adminSectionStaff .staff-list-avatar-photo.staff-list-avatar-photo--err ~ .staff-list-avatar-initials {
+      opacity: 1 !important;
+    }
+
+    #adminSectionStaff .admin-saas-row__status--active {
+      color: #15803d;
+    }
+
+    #adminSectionStaff .admin-saas-row__status--inactive {
+      color: #c2410c;
+    }
+
+    #adminSectionStaff .admin-saas-staff-edit-layout {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    #adminSectionStaff .admin-saas-staff-edit-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    #adminSectionStaff .staff-edit-photo-preview {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: color-mix(in srgb, var(--business-accent, #6366f1) 8%, #eef2ff);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    #adminSectionStaff .staff-edit-photo-preview img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #adminSectionStaff .staff-edit-photo-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: color-mix(in srgb, var(--business-accent, #4338ca) 70%, #4338ca);
+    }
+
+    #adminSectionStaff .admin-saas-staff-edit-fields {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #adminSectionStaff .admin-saas-form__fields--staff-edit {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    #adminSectionStaff .admin-saas-field--checkbox {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      grid-column: 1 / -1;
+      padding-top: 2px;
+    }
+
+    #adminSectionStaff .admin-saas-field--checkbox .admin-saas-field__label {
+      text-transform: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin: 0;
+    }
+
+    #adminSectionStaff .admin-saas-field--checkbox input {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    #adminSectionServices .admin-saas-row__main,
+    #adminSectionStaff .admin-saas-row__main {
       min-width: 0;
       flex: 1;
     }
 
-    #adminSectionServices .admin-saas-row__title {
+    #adminSectionServices .admin-saas-row__title,
+    #adminSectionStaff .admin-saas-row__title {
       font-size: 14px;
       font-weight: 700;
       line-height: 1.3;
@@ -701,7 +915,8 @@
       letter-spacing: -0.01em;
     }
 
-    #adminSectionServices .admin-saas-row__meta {
+    #adminSectionServices .admin-saas-row__meta,
+    #adminSectionStaff .admin-saas-row__meta {
       margin-top: 1px;
       font-size: 12px;
       font-weight: 500;
@@ -709,14 +924,16 @@
       line-height: 1.35;
     }
 
-    #adminSectionServices .admin-saas-row__actions {
+    #adminSectionServices .admin-saas-row__actions,
+    #adminSectionStaff .admin-saas-row__actions {
       display: flex;
       flex-shrink: 0;
       align-items: center;
       gap: 6px;
     }
 
-    #adminSectionServices .admin-saas-edit-panel {
+    #adminSectionServices .admin-saas-edit-panel,
+    #adminSectionStaff .admin-saas-edit-panel {
       margin-top: 8px;
       padding: 10px 12px;
       border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
@@ -724,47 +941,70 @@
       background: color-mix(in srgb, var(--color-primary) 5%, var(--color-surface));
     }
 
-    #adminSectionServices .admin-saas-edit-panel h2 {
+    #adminSectionServices .admin-saas-edit-panel h2,
+    #adminSectionStaff .admin-saas-edit-panel h2 {
       margin: 0 0 8px;
       font-size: 0.95rem;
       font-weight: 700;
     }
 
-    #adminSectionServices .admin-saas-edit-panel .admin-saas-form__fields {
+    #adminSectionServices .admin-saas-edit-panel .admin-saas-form__fields,
+    #adminSectionStaff .admin-saas-edit-panel .admin-saas-form__fields {
       margin-bottom: 0;
     }
 
-    #adminSectionServices .admin-saas-edit-panel .admin-saas-form__actions {
+    #adminSectionServices .admin-saas-edit-panel .admin-saas-form__actions,
+    #adminSectionStaff .admin-saas-edit-panel .admin-saas-form__actions {
       margin-top: 8px;
       justify-content: flex-start;
       gap: 8px;
     }
 
-    #adminSectionServices .admin-saas-edit-panel .admin-saas-hint {
+    #adminSectionServices .admin-saas-edit-panel .admin-saas-hint,
+    #adminSectionStaff .admin-saas-edit-panel .admin-saas-hint {
       margin: 8px 0 0;
       font-size: 12px;
       color: var(--color-muted);
     }
 
     body.app-theme-dark #adminSectionServices .admin-saas-form,
-    body.app-theme-dark #adminSectionServices .admin-saas-row {
+    body.app-theme-dark #adminSectionStaff .admin-saas-form,
+    body.app-theme-dark #adminSectionServices .admin-saas-row,
+    body.app-theme-dark #adminSectionStaff .admin-saas-row {
       background: var(--admin-surface-2, #151d2e);
       border-color: var(--admin-border, #334155);
     }
 
-    body.app-theme-dark #adminSectionServices .admin-saas-field input {
+    body.app-theme-dark #adminSectionServices .admin-saas-field input,
+    body.app-theme-dark #adminSectionStaff .admin-saas-field input {
       background: var(--admin-surface, #1e293b);
       border-color: var(--admin-border, #334155);
       color: var(--admin-text, #f1f5f9);
     }
 
-    body.app-theme-dark #adminSectionServices .admin-saas-edit-panel {
+    body.app-theme-dark #adminSectionServices .admin-saas-edit-panel,
+    body.app-theme-dark #adminSectionStaff .admin-saas-edit-panel {
       background: color-mix(in srgb, var(--business-accent, #38bdf8) 6%, var(--admin-surface, #1e293b));
     }
 
+    body.app-theme-dark #adminSectionStaff .admin-saas-row__status--active {
+      color: #4ade80;
+    }
+
+    body.app-theme-dark #adminSectionStaff .admin-saas-row__status--inactive {
+      color: #fb923c;
+    }
+
     @media (max-width: 720px) {
-      #adminSectionServices .admin-saas-form__fields {
+      #adminSectionServices .admin-saas-form__fields,
+      #adminSectionStaff .admin-saas-form__fields,
+      #adminSectionStaff .admin-saas-form__fields--staff,
+      #adminSectionStaff .admin-saas-form__fields--staff-edit {
         grid-template-columns: 1fr;
+      }
+
+      #adminSectionStaff .admin-saas-staff-edit-layout {
+        flex-direction: column;
       }
     }
 
@@ -775,8 +1015,18 @@
         gap: 8px;
       }
 
-      #adminSectionServices .admin-saas-row__actions {
+      #adminSectionStaff .admin-saas-row--staff {
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      #adminSectionServices .admin-saas-row__actions,
+      #adminSectionStaff .admin-saas-row__actions {
         justify-content: flex-end;
+      }
+
+      #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions {
+        width: 100%;
       }
     }
 
@@ -5611,32 +5861,93 @@
           </section>
 
           <section id="adminSectionStaff" class="admin-section" data-admin-section="staff" hidden aria-label="Staff">
-      <div class="card widget-card">
-        <h2 class="admin-section-title">Staff</h2>
-        <p class="small">Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.</p>
-        <div id="staffSetupNotice" class="small"></div>
+      <div class="card widget-card admin-saas">
+        <h2 class="admin-section-title admin-saas__title">Staff</h2>
+        <p class="admin-saas__intro">Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.</p>
+        <div id="staffSetupNotice" class="admin-saas-status"></div>
 
-        <div class="staff-dashboard-add-row">
-          <input id="staffName" placeholder="Staff name, e.g. Stefan" />
-          <input id="staffRole" placeholder="Role optional, e.g. Barber" />
-          <input
-            id="staffMemberPhotoFile"
-            type="file"
-            class="hidden"
-            accept="image/jpeg,image/png,image/webp"
-            aria-label="Optional staff photo"
-            onchange="handleDashboardStaffPhotoFileChosen()"
-          />
-          <div class="staff-dashboard-photo-tools">
-            <button type="button" class="secondary" onclick="triggerDashboardStaffPhotoPick()">Photo</button>
-            <button type="button" class="secondary hidden" id="staffMemberPhotoClearBtn" onclick="clearDashboardStaffPhotoSelection()">
-              Clear
-            </button>
+        <div class="admin-saas__body">
+          <div class="admin-saas-form">
+            <div class="admin-saas-form__fields admin-saas-form__fields--staff">
+              <label class="admin-saas-field">
+                <span class="admin-saas-field__label">Name</span>
+                <input id="staffName" type="text" placeholder="e.g. Stefan" autocomplete="off" />
+              </label>
+              <label class="admin-saas-field">
+                <span class="admin-saas-field__label">Role</span>
+                <input id="staffRole" type="text" placeholder="e.g. Barber" autocomplete="off" />
+              </label>
+              <div class="admin-saas-field admin-saas-field--photo">
+                <span class="admin-saas-field__label">Photo</span>
+                <input
+                  id="staffMemberPhotoFile"
+                  type="file"
+                  class="hidden"
+                  accept="image/jpeg,image/png,image/webp"
+                  aria-label="Optional staff photo"
+                  onchange="handleDashboardStaffPhotoChosen()"
+                />
+                <div class="admin-saas-staff-photo-tools">
+                  <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="triggerDashboardStaffPhotoPick()">Upload</button>
+                  <button type="button" class="admin-saas-btn admin-saas-btn--muted hidden" id="staffMemberPhotoClearBtn" onclick="clearDashboardStaffPhotoSelection()">
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="admin-saas-form__actions">
+              <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="addStaffMember()">Add staff</button>
+            </div>
+          </div>
+          <div id="staffList" class="admin-saas-list" role="list" aria-label="Staff members"></div>
+
+          <div id="editStaffCard" class="admin-saas-edit-panel hidden">
+            <h2>Edit staff member</h2>
+            <input id="editStaffMemberId" type="hidden" />
+            <div class="admin-saas-staff-edit-layout">
+              <div class="admin-saas-staff-edit-photo">
+                <div class="staff-edit-photo-preview" aria-hidden="true">
+                  <img id="editStaffPhotoPreviewImg" class="hidden" alt="" />
+                  <span id="editStaffPhotoPreviewInitials" class="staff-edit-photo-initials">?</span>
+                </div>
+                <input
+                  id="editStaffMemberPhotoFile"
+                  type="file"
+                  class="hidden"
+                  accept="image/jpeg,image/png,image/webp"
+                  aria-label="Staff photo"
+                  onchange="handleEditStaffPhotoFileChosen()"
+                />
+                <div class="admin-saas-staff-photo-tools">
+                  <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="triggerEditStaffPhotoPick()">Change</button>
+                  <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger hidden" id="editStaffPhotoRemoveBtn" onclick="removeEditStaffPhoto()">
+                    Remove
+                  </button>
+                </div>
+              </div>
+              <div class="admin-saas-staff-edit-fields">
+                <div class="admin-saas-form__fields admin-saas-form__fields--staff-edit">
+                  <label class="admin-saas-field">
+                    <span class="admin-saas-field__label">Name</span>
+                    <input id="editStaffMemberName" type="text" placeholder="Name" autocomplete="off" oninput="syncEditStaffPhotoPreview()" />
+                  </label>
+                  <label class="admin-saas-field">
+                    <span class="admin-saas-field__label">Role</span>
+                    <input id="editStaffMemberRole" type="text" placeholder="Role" autocomplete="off" />
+                  </label>
+                  <label class="admin-saas-field admin-saas-field--checkbox">
+                    <input id="editStaffMemberActive" type="checkbox" checked />
+                    <span class="admin-saas-field__label">Active on booking page</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="admin-saas-form__actions">
+              <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="saveEditedStaffMember()">Save</button>
+              <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="cancelEditStaffMember()">Cancel</button>
+            </div>
           </div>
         </div>
-
-        <button class="success" onclick="addStaffMember()">Add Staff</button>
-        <div id="staffList"></div>
       </div>
           </section>
 
@@ -7234,6 +7545,11 @@
   let businessSettings = null;
   let services = [];
   let staffMembers = [];
+  let dashboardStaffEditId = null;
+  let dashboardStaffEditSnapshot = null;
+  let dashboardStaffEditPendingPhotoFile = null;
+  let dashboardStaffEditPhotoObjectUrl = null;
+  let dashboardStaffEditPhotoRemovalRequested = false;
   let staffFeatureAvailable = false;
   let bookingStaffColumnAvailable = false;
   let bookings = [];
@@ -13032,11 +13348,16 @@
     }
 
     staffMembers.forEach(staff => {
+      const isActive = staff.active !== false;
       const div = document.createElement("div");
-      div.className = "list-item";
+      div.className = "admin-saas-row admin-saas-row--staff" + (isActive ? "" : " admin-saas-row--inactive");
+      div.setAttribute("role", "listitem");
 
       const photoRaw = String(staff.photo_url || "").trim();
       const initials = escapeHtml(staffMemberInitials(staff.name));
+      const roleLabel = escapeHtml(staff.role || "Staff");
+      const statusClass = isActive ? "admin-saas-row__status--active" : "admin-saas-row__status--inactive";
+      const statusLabel = isActive ? "Active" : "Inactive";
 
       let avatarHtml = `
         <div class="staff-list-avatar-slot" aria-hidden="true">
@@ -13058,23 +13379,285 @@
         </div>`;
       }
 
+      const toggleLabel = isActive ? "Deactivate" : "Activate";
+
       div.innerHTML = `
-        <div class="staff-list-main">
-          ${avatarHtml}
-          <div class="staff-list-text">
-            <strong>${escapeHtml(staff.name)}</strong><br>
-            <span class="small">${escapeHtml(staff.role || "Staff")} ${staff.active === false ? "• Inactive" : "• Active"}</span>
-            <div class="actions">
-              <button onclick="toggleStaffActive('${staff.id}', ${staff.active === false ? 'true' : 'false'})">
-                ${staff.active === false ? 'Activate' : 'Deactivate'}
-              </button>
-              <button class="danger" onclick="deleteStaffMember('${staff.id}')">Delete</button>
-            </div>
-          </div>
+        <div class="admin-saas-row__avatar">${avatarHtml}</div>
+        <div class="admin-saas-row__main">
+          <div class="admin-saas-row__title">${escapeHtml(staff.name)}</div>
+          <div class="admin-saas-row__meta">${roleLabel} · <span class="${statusClass}">${statusLabel}</span></div>
+        </div>
+        <div class="admin-saas-row__actions">
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost" onclick="openEditStaffMember('${staff.id}')">Edit</button>
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-warn" onclick="toggleStaffActive('${staff.id}', ${isActive ? "false" : "true"})">${toggleLabel}</button>
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger" onclick="deleteStaffMember('${staff.id}')">Delete</button>
         </div>
       `;
       box.appendChild(div);
     });
+  }
+
+  function getDashboardStaffEditSnapshotPhoto() {
+    return String(dashboardStaffEditSnapshot?.photoUrl || "").trim();
+  }
+
+  function revokeDashboardStaffEditPhotoObjectUrl() {
+    if (dashboardStaffEditPhotoObjectUrl) {
+      URL.revokeObjectURL(dashboardStaffEditPhotoObjectUrl);
+      dashboardStaffEditPhotoObjectUrl = null;
+    }
+  }
+
+  function resetDashboardStaffEditPhotoLocal() {
+    revokeDashboardStaffEditPhotoObjectUrl();
+    dashboardStaffEditPendingPhotoFile = null;
+    dashboardStaffEditPhotoRemovalRequested = false;
+    const fi = document.getElementById("editStaffMemberPhotoFile");
+    if (fi) fi.value = "";
+  }
+
+  function syncEditStaffPhotoPreview() {
+    const img = document.getElementById("editStaffPhotoPreviewImg");
+    const initialsEl = document.getElementById("editStaffPhotoPreviewInitials");
+    const removeBtn = document.getElementById("editStaffPhotoRemoveBtn");
+    const name = document.getElementById("editStaffMemberName")?.value || dashboardStaffEditSnapshot?.name || "";
+    const snapPhoto = getDashboardStaffEditSnapshotPhoto();
+
+    if (initialsEl) initialsEl.textContent = staffMemberInitials(name);
+
+    if (img) {
+      img.onerror = () => {
+        img.classList.add("hidden");
+        img.removeAttribute("src");
+        if (initialsEl) initialsEl.classList.remove("hidden");
+      };
+    }
+
+    const showCommitted = !!(snapPhoto && !dashboardStaffEditPhotoRemovalRequested);
+
+    if (dashboardStaffEditPendingPhotoFile) {
+      if (!dashboardStaffEditPhotoObjectUrl) {
+        dashboardStaffEditPhotoObjectUrl = URL.createObjectURL(dashboardStaffEditPendingPhotoFile);
+      }
+      if (img) {
+        img.classList.remove("hidden");
+        img.src = dashboardStaffEditPhotoObjectUrl;
+      }
+      if (initialsEl) initialsEl.classList.add("hidden");
+    } else if (showCommitted && snapPhoto) {
+      revokeDashboardStaffEditPhotoObjectUrl();
+      if (img) {
+        img.classList.remove("hidden");
+        img.src = snapPhoto;
+      }
+      if (initialsEl) initialsEl.classList.add("hidden");
+    } else {
+      revokeDashboardStaffEditPhotoObjectUrl();
+      if (img) {
+        img.classList.add("hidden");
+        img.removeAttribute("src");
+      }
+      if (initialsEl) initialsEl.classList.remove("hidden");
+    }
+
+    if (removeBtn) {
+      const showRemove = !!dashboardStaffEditPendingPhotoFile || showCommitted;
+      removeBtn.classList.toggle("hidden", !showRemove);
+    }
+  }
+
+  function openEditStaffMember(id) {
+    if (!staffFeatureAvailable) {
+      showToast("Staff system is not ready.", "error");
+      return;
+    }
+
+    const staff = staffMembers.find((s) => s.id === id);
+    if (!staff) {
+      showToast("Staff member not found.", "error");
+      return;
+    }
+
+    dashboardStaffEditId = staff.id;
+    dashboardStaffEditSnapshot = {
+      name: staff.name || "",
+      role: staff.role || "",
+      active: staff.active !== false,
+      photoUrl: String(staff.photo_url || "").trim()
+    };
+    resetDashboardStaffEditPhotoLocal();
+
+    const idEl = document.getElementById("editStaffMemberId");
+    const nameEl = document.getElementById("editStaffMemberName");
+    const roleEl = document.getElementById("editStaffMemberRole");
+    const activeEl = document.getElementById("editStaffMemberActive");
+    if (idEl) idEl.value = staff.id;
+    if (nameEl) nameEl.value = dashboardStaffEditSnapshot.name;
+    if (roleEl) roleEl.value = dashboardStaffEditSnapshot.role;
+    if (activeEl) activeEl.checked = dashboardStaffEditSnapshot.active;
+
+    syncEditStaffPhotoPreview();
+
+    const panel = document.getElementById("editStaffCard");
+    if (panel) {
+      panel.classList.remove("hidden");
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }
+
+  function cancelEditStaffMember() {
+    dashboardStaffEditId = null;
+    dashboardStaffEditSnapshot = null;
+    resetDashboardStaffEditPhotoLocal();
+
+    const idEl = document.getElementById("editStaffMemberId");
+    const nameEl = document.getElementById("editStaffMemberName");
+    const roleEl = document.getElementById("editStaffMemberRole");
+    const activeEl = document.getElementById("editStaffMemberActive");
+    if (idEl) idEl.value = "";
+    if (nameEl) nameEl.value = "";
+    if (roleEl) roleEl.value = "";
+    if (activeEl) activeEl.checked = true;
+
+    syncEditStaffPhotoPreview();
+    document.getElementById("editStaffCard")?.classList.add("hidden");
+  }
+
+  function triggerEditStaffPhotoPick() {
+    if (!currentUser) {
+      showToast("Login as Admin to upload a photo.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Open Admin dashboard first so your business is loaded.", "error");
+      return;
+    }
+    if (!dashboardStaffEditId) {
+      showToast("Open a staff member to edit first.", "error");
+      return;
+    }
+    document.getElementById("editStaffMemberPhotoFile")?.click();
+  }
+
+  function handleEditStaffPhotoFileChosen() {
+    const input = document.getElementById("editStaffMemberPhotoFile");
+    const file = input?.files?.[0];
+    if (!file) return;
+
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      if (input) input.value = "";
+      return;
+    }
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Photo must be 3 MB or smaller.", "error");
+      if (input) input.value = "";
+      return;
+    }
+    if (!getLogoFileExtension(file)) {
+      showToast("Unsupported image type.", "error");
+      if (input) input.value = "";
+      return;
+    }
+
+    revokeDashboardStaffEditPhotoObjectUrl();
+    dashboardStaffEditPendingPhotoFile = file;
+    dashboardStaffEditPhotoRemovalRequested = false;
+    syncEditStaffPhotoPreview();
+  }
+
+  function removeEditStaffPhoto() {
+    dashboardStaffEditPendingPhotoFile = null;
+    revokeDashboardStaffEditPhotoObjectUrl();
+    const input = document.getElementById("editStaffMemberPhotoFile");
+    if (input) input.value = "";
+
+    if (getDashboardStaffEditSnapshotPhoto()) {
+      dashboardStaffEditPhotoRemovalRequested = true;
+    } else {
+      dashboardStaffEditPhotoRemovalRequested = false;
+    }
+    syncEditStaffPhotoPreview();
+  }
+
+  async function refreshStaffAdminMirrors() {
+    await loadStaffMembers();
+    renderStaffMembers();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderPublicStaffOptions();
+  }
+
+  async function saveEditedStaffMember() {
+    if (!staffFeatureAvailable) {
+      showToast("Staff system is not ready.", "error");
+      return;
+    }
+
+    const id = document.getElementById("editStaffMemberId")?.value || dashboardStaffEditId;
+    const name = document.getElementById("editStaffMemberName")?.value.trim() || "";
+    const role = document.getElementById("editStaffMemberRole")?.value.trim() || "";
+    const active = document.getElementById("editStaffMemberActive")?.checked !== false;
+
+    if (!id) {
+      showToast("No staff member selected.", "error");
+      return;
+    }
+    if (!name) {
+      showToast("Staff name is required.", "error");
+      return;
+    }
+
+    const snapPhoto = getDashboardStaffEditSnapshotPhoto();
+
+    const { error } = await sb
+      .from("staff_members")
+      .update({
+        name,
+        role: role || null,
+        active
+      })
+      .eq("id", id)
+      .eq("business_id", businessId);
+
+    if (error) {
+      showToast("Update staff error: " + error.message, "error");
+      return;
+    }
+
+    try {
+      if (dashboardStaffEditPendingPhotoFile) {
+        const uploaded = await uploadStaffMemberPhotoFromFile(id, dashboardStaffEditPendingPhotoFile);
+        if (!uploaded.ok) return;
+        const { error: perr } = await sb
+          .from("staff_members")
+          .update({ photo_url: uploaded.publicUrl })
+          .eq("id", id)
+          .eq("business_id", businessId);
+        if (perr) {
+          showToast("Could not save photo URL: " + perr.message, "error");
+          return;
+        }
+      } else if (dashboardStaffEditPhotoRemovalRequested && snapPhoto) {
+        await deleteStaffPhotoStorageForMember(id);
+        const { error: rerr } = await sb
+          .from("staff_members")
+          .update({ photo_url: null })
+          .eq("id", id)
+          .eq("business_id", businessId);
+        if (rerr) {
+          showToast("Could not remove photo: " + rerr.message, "error");
+          return;
+        }
+      }
+    } catch (err) {
+      showToast("Photo update failed: " + (err?.message || err), "error");
+      return;
+    }
+
+    showToast("Staff member updated.", "success");
+    cancelEditStaffMember();
+    await refreshStaffAdminMirrors();
   }
 
   function triggerDashboardStaffPhotoPick() {
@@ -13215,6 +13798,8 @@
 
   async function deleteStaffMember(id) {
     if (!confirm("Delete this staff member? Existing bookings will keep working, but staff may become empty if SQL uses ON DELETE SET NULL.")) return;
+
+    if (dashboardStaffEditId === id) cancelEditStaffMember();
 
     if (initSupabaseClient() && id) {
       await deleteStaffPhotoStorageForMember(id);
