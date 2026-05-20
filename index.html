@@ -617,6 +617,937 @@
       justify-content: center;
     }
 
+    /* Step 1 — business identity (wizard only, not dashboard widgets) */
+    #adminOnboardingStep1Panel.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingStep1Panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .wizard-field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .wizard-field input[type="text"],
+    .wizard-field select {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 52px;
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+    }
+
+    .wizard-field select {
+      cursor: pointer;
+      appearance: auto;
+      -webkit-appearance: menulist;
+    }
+
+    .wizard-field-hint {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    .wizard-field-error {
+      margin: 8px 0 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #b91c1c;
+    }
+
+    .wizard-link-preview-card {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+
+    .wizard-link-preview-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .wizard-link-preview-url {
+      display: block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      word-break: break-all;
+      line-height: 1.45;
+      color: #0f172a;
+    }
+
+    .wizard-category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (min-width: 400px) {
+      .wizard-category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    #adminOnboardingView .wizard-category-pill {
+      min-height: 52px;
+      padding: 12px 10px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    #adminOnboardingView .wizard-category-pill:hover {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    #adminOnboardingView .wizard-category-pill.wizard-category-pill--selected {
+      border-color: var(--color-primary, #2563eb);
+      background: #eff6ff;
+      color: var(--color-primary, #2563eb);
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
+
+    .wizard-logo-field .wizard-field-label {
+      margin-bottom: 6px;
+    }
+
+    .wizard-logo-preview-wrap {
+      margin-bottom: 12px;
+    }
+
+    .wizard-logo-preview-wrap.hidden {
+      display: none !important;
+    }
+
+    .wizard-logo-preview-img {
+      display: block;
+      max-height: 88px;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      padding: 8px;
+    }
+
+    .wizard-logo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #adminOnboardingView .onboarding-logo-btn {
+      min-height: 48px;
+      padding: 0 18px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    #onboardingLogoUploadStatus:not(.hidden) {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    /* Step 2 — services (wizard) */
+    #adminOnboardingStep2Panel.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingStep2Panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .wizard-service-examples {
+      margin: -6px 0 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #64748b;
+    }
+
+    .wizard-services-empty-hint {
+      margin: 0;
+      padding: 18px 16px;
+      text-align: center;
+      font-size: 15px;
+      color: #64748b;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+    }
+
+    .wizard-services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #adminOnboardingView .wizard-service-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px 16px;
+    }
+
+    #adminOnboardingView .wizard-service-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    #adminOnboardingView .wizard-service-card-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    #adminOnboardingView .wizard-service-card-meta {
+      margin: 0;
+      font-size: 15px;
+      color: #475569;
+    }
+
+    #adminOnboardingView .wizard-service-card-actions {
+      display: flex;
+      flex-shrink: 0;
+      gap: 8px;
+    }
+
+    #adminOnboardingView .wizard-service-card-actions button {
+      min-height: 44px;
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+    }
+
+    #adminOnboardingView .wizard-service-add-btn {
+      width: 100%;
+      min-height: 52px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 12px;
+      border-style: dashed;
+      border-width: 2px;
+      border-color: #94a3b8;
+      background: #fff;
+      color: var(--color-primary, #2563eb);
+    }
+
+    #adminOnboardingView .wizard-service-composer.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingView .wizard-service-composer {
+      padding: 18px 16px;
+      border-radius: 14px;
+      border: 1px solid #c7d2fe;
+      background: #eef2ff;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    #adminOnboardingView .wizard-service-composer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    #adminOnboardingView .wizard-service-composer-actions button {
+      flex: 1;
+      min-width: 120px;
+      min-height: 52px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    .wizard-duration-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+
+    #adminOnboardingView .wizard-duration-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    #adminOnboardingView .wizard-duration-preset {
+      min-height: 44px;
+      min-width: 56px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    #adminOnboardingView .wizard-duration-preset.wizard-duration-preset--active {
+      border-color: var(--color-primary, #2563eb);
+      background: #eff6ff;
+      color: var(--color-primary, #2563eb);
+    }
+
+    #adminOnboardingStep3Panel.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingStep3Panel {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Step 4 — staff (wizard) */
+    #adminOnboardingStep4Panel.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingStep4Panel {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .wizard-staff-lead {
+      margin: -4px 0 0;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #475569;
+    }
+
+    .wizard-staff-unavailable {
+      margin: 0;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      color: #991b1b;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .wizard-staff-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #adminOnboardingView .wizard-staff-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    #adminOnboardingView .wizard-staff-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    #adminOnboardingView .wizard-staff-card-avatar {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #adminOnboardingView .wizard-staff-card-avatar-slot {
+      position: relative;
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06);
+    }
+
+    #adminOnboardingView .wizard-staff-card-avatar-slot .wizard-staff-card-avatar-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 999px;
+      z-index: 1;
+    }
+
+    #adminOnboardingView .wizard-staff-card-avatar-slot .wizard-staff-card-avatar {
+      width: 100%;
+      height: 100%;
+    }
+
+    #adminOnboardingView
+      .wizard-staff-card-avatar-slot
+      .wizard-staff-card-avatar-photo:not(.wizard-staff-card-avatar-photo--err)
+      ~ .wizard-staff-card-avatar {
+      opacity: 0;
+    }
+
+    #adminOnboardingView
+      .wizard-staff-card-avatar-slot
+      .wizard-staff-card-avatar-photo.wizard-staff-card-avatar-photo--err {
+      display: none;
+    }
+
+    #adminOnboardingView
+      .wizard-staff-card-avatar-slot
+      .wizard-staff-card-avatar-photo.wizard-staff-card-avatar-photo--err
+      ~ .wizard-staff-card-avatar {
+      opacity: 1 !important;
+    }
+
+    #adminOnboardingView .wizard-staff-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #adminOnboardingView .wizard-staff-card-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 0 4px;
+      line-height: 1.25;
+    }
+
+    #adminOnboardingView .wizard-staff-card-meta {
+      margin: 0;
+      font-size: 15px;
+      color: #475569;
+    }
+
+    #adminOnboardingView .wizard-staff-card-actions {
+      display: flex;
+      flex-shrink: 0;
+      gap: 8px;
+    }
+
+    #adminOnboardingView .wizard-staff-card-actions button {
+      min-height: 44px;
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+    }
+
+    .wizard-staff-active-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .wizard-staff-active-row input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--color-primary, #2563eb);
+    }
+
+    .wizard-staff-empty-hint {
+      margin: 0;
+      padding: 18px 16px;
+      text-align: center;
+      font-size: 15px;
+      color: #64748b;
+      background: #f8fafc;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 2px 0 0;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-preview {
+      position: relative;
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e0e7ff;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06);
+    }
+
+    #adminOnboardingView .wizard-staff-photo-preview-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-preview-img.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-preview-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      color: #3730a3;
+      font-variant-numeric: tabular-nums;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-preview-img:not(.hidden) ~ .wizard-staff-photo-preview-initials {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-actions {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-actions button {
+      min-height: 40px;
+      padding: 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+    }
+
+    #adminOnboardingView .wizard-staff-photo-hint {
+      margin: 6px 0 0 !important;
+    }
+
+    .staff-dashboard-add-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .staff-dashboard-add-row input {
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    .staff-dashboard-photo-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .staff-dashboard-photo-tools button.secondary {
+      min-height: 40px;
+      padding: 0 12px;
+      font-size: 14px;
+    }
+
+    .staff-list-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .staff-list-avatar-slot {
+      position: relative;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #eef2ff;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06);
+    }
+
+    .staff-list-avatar-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .staff-list-avatar-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #4338ca;
+    }
+
+    .staff-list-avatar-photo:not(.staff-list-avatar-photo--err) ~ .staff-list-avatar-initials {
+      opacity: 0;
+    }
+
+    .staff-list-avatar-photo.staff-list-avatar-photo--err {
+      display: none;
+    }
+
+    .staff-list-avatar-photo.staff-list-avatar-photo--err ~ .staff-list-avatar-initials {
+      opacity: 1 !important;
+    }
+
+    .staff-list-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #adminOnboardingView .wizard-weekday-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #adminOnboardingView .wizard-weekday-pill {
+      min-height: 48px;
+      min-width: calc(50% - 4px);
+      flex: 1 1 calc(50% - 4px);
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 10px 8px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+
+    @media (min-width: 440px) {
+      #adminOnboardingView .wizard-weekday-pill {
+        flex: 1 1 calc(33.333% - 6px);
+        min-width: calc(33.333% - 6px);
+      }
+    }
+
+    #adminOnboardingView .wizard-weekday-pill.wizard-weekday-pill--selected {
+      border-color: var(--color-primary, #2563eb);
+      background: #eff6ff;
+      color: var(--color-primary, #2563eb);
+    }
+
+    .wizard-time-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* 15-minute time steppers (onboarding + settings) — mobile-first */
+    .time-stepper {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 0;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      overflow: hidden;
+      min-height: 52px;
+    }
+
+    .time-stepper__btn {
+      flex: 0 0 48px;
+      min-height: 52px;
+      border: none;
+      background: #fff;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1;
+      color: #334155;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .time-stepper__btn:active {
+      background: #e2e8f0;
+    }
+
+    .time-stepper__value {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+      color: #0f172a;
+      background: #fff;
+      user-select: none;
+    }
+
+    .time-stepper__value.time-stepper__value--empty {
+      color: #94a3b8;
+      letter-spacing: 0.08em;
+    }
+
+    .wizard-schedule-base-hint {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      margin: -6px 0 4px;
+      line-height: 1.4;
+    }
+
+    .wizard-override-details summary {
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    /* Step 3: match override / break / base schedule surfaces */
+    #adminOnboardingStep3Panel .wizard-schedule-base.wizard-field {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+
+    #adminOnboardingStep3Panel .wizard-schedule-base .wizard-schedule-base-hint {
+      margin-top: 0;
+    }
+
+    #adminOnboardingStep3Panel > .wizard-field > .wizard-field-label:first-child,
+    #adminOnboardingStep3Panel .wizard-schedule-base .wizard-field-label {
+      letter-spacing: 0;
+    }
+
+    #adminOnboardingStep3Panel .wizard-override-details {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 4px 14px 14px;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+
+    #adminOnboardingStep3Panel .wizard-override-details summary {
+      font-size: 15px;
+      font-weight: 700;
+      color: #475569;
+      padding: 12px 0;
+      min-height: 44px;
+      list-style: none;
+    }
+
+    #adminOnboardingStep3Panel .wizard-override-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #adminOnboardingStep3Panel .wizard-override-hint {
+      margin-top: 0;
+    }
+
+    .wizard-override-hint {
+      font-size: 13px;
+      color: #64748b;
+      margin: 8px 0 12px;
+      line-height: 1.45;
+    }
+
+    .wizard-override-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .wizard-override-row {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wizard-override-row-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      color: #1e293b;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .wizard-override-row-head input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary, #2563eb);
+    }
+
+    .wizard-override-window {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px 12px;
+      align-items: center;
+    }
+
+    .wizard-override-mini-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .settings-time-row-labeled {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .settings-time-row-labeled > div {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    #adminOnboardingStep3Panel .wizard-time-pair label.wizard-field-label {
+      margin-bottom: 6px;
+    }
+
+    .wizard-break-details {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 4px 14px 14px;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+
+    .wizard-break-details summary {
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+      color: #475569;
+      padding: 12px 0;
+      min-height: 44px;
+      list-style: none;
+    }
+
+    .wizard-break-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .wizard-break-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .wizard-break-inner .time-stepper {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #adminOnboardingView .wizard-break-inner .wizard-field-label {
+      margin-bottom: 6px;
+    }
+
+    /* Settings dashboard: optional break aligns with Opens / Closes row */
+    .settings-break-heading {
+      margin-top: 18px;
+      margin-bottom: 4px;
+      font-weight: 800;
+    }
+
+    .settings-break-hint.small {
+      margin-bottom: 10px;
+    }
+
+    .wizard-fieldset {
+      margin: 0;
+      padding: 0;
+      border: none;
+      min-width: 0;
+    }
+
+    .wizard-fieldset legend {
+      float: left;
+      width: 100%;
+      padding: 0;
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      letter-spacing: 0.02em;
+    }
+
+    .wizard-fieldset .wizard-category-grid {
+      clear: both;
+      margin-top: 4px;
+    }
+
     .wizard-footer {
       flex-shrink: 0;
       padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
@@ -1844,10 +2775,34 @@
           <div id="businessPublicLinkPreview" class="small"></div>
         </div>
 
-        <div class="row">
-          <input id="workStart" type="time" value="09:00" />
-          <input id="workEnd" type="time" value="17:00" />
+        <h3 class="small" style="margin-top:18px;margin-bottom:4px;font-weight:800">Working hours</h3>
+        <p class="small">Default opening hours for each working day (15-minute increments).</p>
+        <div class="settings-time-row-labeled row">
+          <div>
+            <label class="small" for="workStart"><strong>Opens</strong></label>
+            <div class="time-stepper" role="group" aria-label="Default opening time">
+              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+              <span class="time-stepper__value" aria-live="polite">09:00</span>
+              <input type="hidden" id="workStart" value="09:00" autocomplete="off" />
+              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+            </div>
+          </div>
+          <div>
+            <label class="small" for="workEnd"><strong>Closes</strong></label>
+            <div class="time-stepper" role="group" aria-label="Default closing time">
+              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+              <span class="time-stepper__value" aria-live="polite">17:00</span>
+              <input type="hidden" id="workEnd" value="17:00" autocomplete="off" />
+              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+            </div>
+          </div>
         </div>
+
+        <details class="wizard-override-details" style="margin:12px 0">
+          <summary style="cursor:pointer;font-weight:700;color:#334155">Optional overrides for certain weekdays</summary>
+          <p class="wizard-override-hint">Uses the defaults above unless you enable a weekday below.</p>
+          <div id="settingsDayOverrideRows" data-override-context="settings" class="wizard-override-list"></div>
+        </details>
 
         <h3>Working Days</h3>
         <div class="checkbox-grid">
@@ -1860,10 +2815,27 @@
           <label class="check-card"><input type="checkbox" class="workDay" value="0" /> Sunday</label>
         </div>
 
-        <h3>Optional Break / Pause</h3>
-        <div class="row">
-          <input id="breakStart" type="time" />
-          <input id="breakEnd" type="time" />
+        <h3 class="settings-break-heading small">Optional break / pause</h3>
+        <p class="settings-break-hint small">Uses the same 15-minute − / + controls as working hours.</p>
+        <div class="settings-time-row-labeled settings-break-row row">
+          <div>
+            <label class="small" for="breakStart"><strong>Break starts</strong></label>
+            <div class="time-stepper" role="group" aria-label="Break start optional" data-allow-empty="true" data-seed-time="12:00">
+              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+              <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+              <input type="hidden" id="breakStart" value="" autocomplete="off" />
+              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+            </div>
+          </div>
+          <div>
+            <label class="small" for="breakEnd"><strong>Break ends</strong></label>
+            <div class="time-stepper" role="group" aria-label="Break end optional" data-allow-empty="true" data-seed-time="13:00">
+              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+              <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+              <input type="hidden" id="breakEnd" value="" autocomplete="off" />
+              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+            </div>
+          </div>
         </div>
 
         <div class="row">
@@ -1910,9 +2882,23 @@
         <p class="small">Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.</p>
         <div id="staffSetupNotice" class="small"></div>
 
-        <div class="row">
+        <div class="staff-dashboard-add-row">
           <input id="staffName" placeholder="Staff name, e.g. Stefan" />
           <input id="staffRole" placeholder="Role optional, e.g. Barber" />
+          <input
+            id="staffMemberPhotoFile"
+            type="file"
+            class="hidden"
+            accept="image/jpeg,image/png,image/webp"
+            aria-label="Optional staff photo"
+            onchange="handleDashboardStaffPhotoFileChosen()"
+          />
+          <div class="staff-dashboard-photo-tools">
+            <button type="button" class="secondary" onclick="triggerDashboardStaffPhotoPick()">Photo</button>
+            <button type="button" class="secondary hidden" id="staffMemberPhotoClearBtn" onclick="clearDashboardStaffPhotoSelection()">
+              Clear
+            </button>
+          </div>
         </div>
 
         <button class="success" onclick="addStaffMember()">Add Staff</button>
@@ -2092,6 +3078,390 @@
             <h1 id="adminOnboardingStepTitle" class="wizard-step-headline"></h1>
             <p id="adminOnboardingGuidance" class="wizard-step-subtitle"></p>
             <p id="adminOnboardingHelper" class="wizard-step-helper"></p>
+
+            <div id="adminOnboardingStep1Panel" class="hidden">
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingBusinessName">Business name</label>
+                <input
+                  id="onboardingBusinessName"
+                  type="text"
+                  name="onboardingBusinessName"
+                  autocomplete="organization"
+                  placeholder="Petre Barber Shop"
+                  aria-required="true"
+                />
+              </div>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingBusinessSlug">Your booking link</label>
+                <input
+                  id="onboardingBusinessSlug"
+                  type="text"
+                  name="onboardingBusinessSlug"
+                  autocomplete="off"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  aria-required="true"
+                  aria-invalid="false"
+                  aria-describedby="onboardingSlugHint onboardingSlugError"
+                />
+                <p id="onboardingSlugHint" class="wizard-field-hint">This will be your public booking link.</p>
+                <p id="onboardingSlugError" class="wizard-field-error hidden" role="alert"></p>
+              </div>
+
+              <div class="wizard-link-preview-card" aria-live="polite">
+                <span class="wizard-link-preview-label">Public link preview</span>
+                <code id="onboardingPublicLinkPreview" class="wizard-link-preview-url"></code>
+              </div>
+
+              <div class="wizard-field wizard-logo-field">
+                <span class="wizard-field-label" id="onboardingLogoLabel">Add your logo</span>
+                <p class="wizard-field-hint" style="margin-top: 0; margin-bottom: 12px">
+                  Optional — you can add or change this later.
+                </p>
+                <div id="onboardingLogoPreviewWrap" class="wizard-logo-preview-wrap hidden" aria-hidden="true">
+                  <img id="onboardingLogoPreview" class="wizard-logo-preview-img" alt="" />
+                </div>
+                <div class="wizard-logo-actions">
+                  <button
+                    type="button"
+                    class="secondary onboarding-logo-btn"
+                    id="onboardingLogoUploadBtn"
+                    onclick="triggerBusinessLogoUpload()"
+                  >
+                    Upload
+                  </button>
+                  <button
+                    type="button"
+                    class="secondary hidden onboarding-logo-btn"
+                    id="onboardingLogoRemoveBtn"
+                    onclick="removeBusinessLogo()"
+                  >
+                    Remove
+                  </button>
+                </div>
+                <div id="onboardingLogoUploadStatus" class="hidden" aria-live="polite"></div>
+              </div>
+
+              <fieldset class="wizard-fieldset">
+                <legend>Business category</legend>
+                <div class="wizard-category-grid" role="group" aria-label="Business category">
+                  <button type="button" class="wizard-category-pill" data-category="barber">Barber</button>
+                  <button type="button" class="wizard-category-pill" data-category="salon">Salon</button>
+                  <button type="button" class="wizard-category-pill" data-category="dentist">Dentist</button>
+                  <button type="button" class="wizard-category-pill" data-category="clinic">Clinic</button>
+                  <button type="button" class="wizard-category-pill" data-category="fitness">Fitness</button>
+                  <button type="button" class="wizard-category-pill" data-category="other">Other</button>
+                </div>
+              </fieldset>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingTimezone">Timezone</label>
+                <select id="onboardingTimezone" name="onboardingTimezone" aria-label="Timezone">
+                  <option value="Europe/Skopje">Europe / Skopje</option>
+                  <option value="Europe/Belgrade">Europe / Belgrade</option>
+                  <option value="Europe/Berlin">Europe / Berlin</option>
+                  <option value="Europe/London">Europe / London</option>
+                  <option value="Europe/Paris">Europe / Paris</option>
+                  <option value="America/New_York">America / New York</option>
+                  <option value="UTC">UTC</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="adminOnboardingStep2Panel" class="hidden">
+              <p id="adminOnboardingServiceExamples" class="wizard-service-examples" aria-live="polite"></p>
+
+              <div id="onboardingServicesList" class="wizard-services-list" aria-live="polite"></div>
+
+              <div id="onboardingServiceComposer" class="wizard-service-composer hidden">
+                <label class="wizard-field-label" for="onboardingServiceName">Service name</label>
+                <input
+                  id="onboardingServiceName"
+                  type="text"
+                  name="onboardingServiceName"
+                  autocomplete="off"
+                  placeholder=" e.g. Classic haircut "
+                />
+
+                <div>
+                  <span class="wizard-duration-label">Duration</span>
+                  <div class="wizard-duration-presets" role="group" aria-label="Quick duration presets">
+                    <button type="button" class="wizard-duration-preset" data-minutes="15">15 min</button>
+                    <button type="button" class="wizard-duration-preset" data-minutes="30">30 min</button>
+                    <button type="button" class="wizard-duration-preset" data-minutes="45">45 min</button>
+                    <button type="button" class="wizard-duration-preset" data-minutes="60">60 min</button>
+                    <button type="button" class="wizard-duration-preset" data-minutes="90">90 min</button>
+                    <button type="button" class="wizard-duration-preset" data-minutes="120">120 min</button>
+                  </div>
+                  <label class="wizard-field-label" for="onboardingServiceDuration">Minutes (custom OK)</label>
+                  <input
+                    id="onboardingServiceDuration"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="999"
+                    step="1"
+                    placeholder="Minutes"
+                  />
+                </div>
+
+                <div class="wizard-field" style="margin: 0">
+                  <label class="wizard-field-label" for="onboardingServicePrice">Price (optional)</label>
+                  <input
+                    id="onboardingServicePrice"
+                    type="number"
+                    inputmode="decimal"
+                    min="0"
+                    step="any"
+                    placeholder=" e.g. 500 — leave blank for free "
+                  />
+                </div>
+
+                <div class="wizard-service-composer-actions">
+                  <button type="button" class="success" onclick="onboardingComposerSave()" id="onboardingServiceComposerSaveBtn">
+                    Save service
+                  </button>
+                  <button type="button" class="secondary" onclick="onboardingComposerCancel()">Cancel</button>
+                </div>
+              </div>
+
+              <button type="button" class="wizard-service-add-btn" id="onboardingServiceAddBtn" onclick="openOnboardingServiceComposer(null)">
+                + Add a service
+              </button>
+            </div>
+
+            <div id="adminOnboardingStep3Panel" class="hidden">
+              <div class="wizard-field">
+                <span class="wizard-field-label" id="onboardingDaysLabel">Working days</span>
+                <div
+                  id="onboardingWorkingDaysGrid"
+                  class="wizard-weekday-grid"
+                  role="group"
+                  aria-labelledby="onboardingDaysLabel"
+                >
+                  <button type="button" class="wizard-weekday-pill" data-workday="1" aria-pressed="false">
+                    Monday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="2" aria-pressed="false">
+                    Tuesday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="3" aria-pressed="false">
+                    Wednesday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="4" aria-pressed="false">
+                    Thursday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="5" aria-pressed="false">
+                    Friday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="6" aria-pressed="false">
+                    Saturday
+                  </button>
+                  <button type="button" class="wizard-weekday-pill" data-workday="0" aria-pressed="false">
+                    Sunday
+                  </button>
+                </div>
+              </div>
+
+              <div class="wizard-field wizard-schedule-base">
+                <span class="wizard-field-label">Apply these hours to all selected days</span>
+                <p class="wizard-schedule-base-hint">
+                  Default window for every working day you select — adjust in 15-minute steps (− / +).
+                </p>
+                <div class="wizard-time-pair">
+                  <div>
+                    <label class="wizard-field-label" for="onboardingWorkStart">Opens</label>
+                    <div
+                      class="time-stepper"
+                      role="group"
+                      aria-label="Default opening time for selected days"
+                    >
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">
+                        −
+                      </button>
+                      <span class="time-stepper__value" aria-live="polite">09:00</span>
+                      <input type="hidden" id="onboardingWorkStart" value="09:00" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="wizard-field-label" for="onboardingWorkEnd">Closes</label>
+                    <div
+                      class="time-stepper"
+                      role="group"
+                      aria-label="Default closing time for selected days"
+                    >
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">
+                        −
+                      </button>
+                      <span class="time-stepper__value" aria-live="polite">17:00</span>
+                      <input type="hidden" id="onboardingWorkEnd" value="17:00" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <details class="wizard-override-details">
+                <summary>Optional: override hours on specific weekdays</summary>
+                <p class="wizard-override-hint">
+                  Closed by default — turn on only when a day differs. Everything else keeps the default schedule above.
+                </p>
+                <div id="onboardingDayOverrideRows" data-override-context="onboarding-step3" class="wizard-override-list"></div>
+              </details>
+
+              <details class="wizard-break-details">
+                <summary>Break between appointments <span style="font-weight: 600; color: #64748b">(optional)</span></summary>
+                <div class="wizard-break-inner wizard-time-pair">
+                  <div>
+                    <label class="wizard-field-label" for="onboardingBreakStart">Break starts</label>
+                    <div
+                      class="time-stepper"
+                      role="group"
+                      aria-label="Break start optional"
+                      data-allow-empty="true"
+                      data-seed-time="12:00"
+                    >
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">
+                        −
+                      </button>
+                      <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                      <input type="hidden" id="onboardingBreakStart" value="" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="wizard-field-label" for="onboardingBreakEnd">Break ends</label>
+                    <div
+                      class="time-stepper"
+                      role="group"
+                      aria-label="Break end optional"
+                      data-allow-empty="true"
+                      data-seed-time="13:00"
+                    >
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">
+                        −
+                      </button>
+                      <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                      <input type="hidden" id="onboardingBreakEnd" value="" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingBookingWindowWeeks">How far ahead can customers book?</label>
+                <select id="onboardingBookingWindowWeeks" aria-describedby="onboardingBwHint">
+                  <option value="1">1 week</option>
+                  <option value="2">2 weeks</option>
+                  <option value="4">4 weeks</option>
+                  <option value="8">8 weeks</option>
+                </select>
+                <p id="onboardingBwHint" class="wizard-field-hint">This is how many weeks into the future your calendar opens.</p>
+              </div>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingMinimumNoticeMinutes">Minimum notice</label>
+                <select id="onboardingMinimumNoticeMinutes" aria-describedby="onboardingMnHint">
+                  <option value="0">No minimum</option>
+                  <option value="30">30 minutes</option>
+                  <option value="60">1 hour</option>
+                  <option value="120">2 hours</option>
+                  <option value="360">6 hours</option>
+                  <option value="1440">24 hours</option>
+                </select>
+                <p id="onboardingMnHint" class="wizard-field-hint">How much heads-up you need before a booking starts.</p>
+              </div>
+            </div>
+
+            <div id="adminOnboardingStep4Panel" class="hidden">
+              <p class="wizard-staff-lead">
+                Add teammates only if customers should pick who they book with. If it’s just you, skip—your calendar still works great solo.
+              </p>
+
+              <p id="onboardingStaffUnavailableNotice" class="wizard-staff-unavailable hidden" role="status"></p>
+
+              <div id="onboardingStaffList" class="wizard-staff-list" aria-live="polite"></div>
+
+              <div id="onboardingStaffComposer" class="wizard-service-composer hidden">
+                <label class="wizard-field-label" for="onboardingStaffNameInput">Name</label>
+                <input
+                  id="onboardingStaffNameInput"
+                  type="text"
+                  name="onboardingStaffNameInput"
+                  autocomplete="name"
+                  placeholder="e.g. Ana, Mike, Dr. Petrov"
+                  aria-required="true"
+                />
+
+                <div class="wizard-field" style="margin: 0">
+                  <label class="wizard-field-label" for="onboardingStaffRoleInput">Role or title (optional)</label>
+                  <input
+                    id="onboardingStaffRoleInput"
+                    type="text"
+                    name="onboardingStaffRoleInput"
+                    autocomplete="organization-title"
+                    placeholder="e.g. Barber, Stylist, Dentist, Trainer"
+                  />
+                </div>
+
+                <label class="wizard-staff-active-row">
+                  <input type="checkbox" id="onboardingStaffActiveInput" checked />
+                  <span>Show as available for booking (active)</span>
+                </label>
+
+                <div class="wizard-staff-photo-row">
+                  <div class="wizard-staff-photo-preview" aria-hidden="true">
+                    <img id="onboardingStaffPhotoPreviewImg" class="wizard-staff-photo-preview-img hidden" alt="" />
+                    <div id="onboardingStaffPhotoPreviewInitials" class="wizard-staff-photo-preview-initials">?</div>
+                  </div>
+                  <div class="wizard-staff-photo-actions">
+                    <input
+                      type="file"
+                      id="onboardingStaffPhotoFile"
+                      class="hidden"
+                      accept="image/jpeg,image/png,image/webp"
+                      aria-label="Staff photo upload"
+                      onchange="handleOnboardingStaffPhotoFileSelected(event)"
+                    />
+                    <button type="button" class="secondary" onclick="triggerOnboardingStaffPhotoPick()" id="onboardingStaffPhotoUploadBtn">
+                      Photo
+                    </button>
+                    <button type="button" class="secondary hidden" id="onboardingStaffPhotoRemoveBtn" onclick="clearOnboardingStaffPhotoSelection()">
+                      Remove photo
+                    </button>
+                  </div>
+                </div>
+                <p class="wizard-field-hint wizard-staff-photo-hint">Optional — JPG, PNG or WebP, max 3 MB.</p>
+
+                <div class="wizard-service-composer-actions">
+                  <button type="button" class="success" id="onboardingStaffComposerSaveBtn" onclick="onboardingStaffComposerSave()">
+                    Save
+                  </button>
+                  <button type="button" class="secondary" onclick="onboardingStaffComposerCancel()">Cancel</button>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="wizard-service-add-btn"
+                id="onboardingStaffAddBtn"
+                onclick="openOnboardingStaffComposer(null)"
+              >
+                + Add a team member
+              </button>
+            </div>
+
             <div id="adminOnboardingPlaceholder" class="wizard-step-placeholder"></div>
           </article>
         </div>
@@ -3243,8 +4613,10 @@
 
     const start = timeToMinutes(timeStr);
     const end = start + Number(duration);
-    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
-    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+    const dow = dayOfWeekFromDateStr(dateStr);
+    const win = getWorkWindowForDayOfWeek(dow);
+    const workStart = timeToMinutes(win.start);
+    const workEnd = timeToMinutes(win.end);
     if (start < workStart || end > workEnd) return "This booking is outside working hours.";
 
     const staffId = booking?.staff_id || null;
@@ -3335,11 +4707,9 @@
 
     const staffId = booking?.staff_id || null;
     const ignoreBookingId = booking?.id || null;
-    const slots = generateSlots(
-      businessSettings?.work_start || "09:00",
-      businessSettings?.work_end || "17:00",
-      getServiceDurationValue(service)
-    );
+    const dowSlot = dayOfWeekFromDateStr(dateStr);
+    const winSlot = getWorkWindowForDayOfWeek(dowSlot);
+    const slots = generateSlots(winSlot.start, winSlot.end, getServiceDurationValue(service));
 
     if (!slots.length) {
       container.innerHTML = emptyStateHtml("No slots available", "Try another date.");
@@ -3850,13 +5220,45 @@
     const removeBtn = document.getElementById("businessLogoRemoveBtn");
     const hasLogo = !!getBusinessLogoUrl();
     if (removeBtn) removeBtn.classList.toggle("hidden", !hasLogo);
+
+    const onRemove = document.getElementById("onboardingLogoRemoveBtn");
+    if (onRemove) onRemove.classList.toggle("hidden", !hasLogo);
+
+    const wrap = document.getElementById("onboardingLogoPreviewWrap");
+    const img = document.getElementById("onboardingLogoPreview");
+    if (wrap && img) {
+      if (hasLogo) {
+        const url = getBusinessLogoUrl();
+        img.onerror = () => {
+          wrap.classList.add("hidden");
+          wrap.setAttribute("aria-hidden", "true");
+        };
+        img.onload = () => {
+          wrap.classList.remove("hidden");
+          wrap.setAttribute("aria-hidden", "false");
+        };
+        img.src = url;
+        img.alt = (businessSettings?.business_name || "Business") + " logo";
+        if (img.complete && img.naturalHeight > 0) {
+          wrap.classList.remove("hidden");
+          wrap.setAttribute("aria-hidden", "false");
+        }
+      } else {
+        img.removeAttribute("src");
+        img.removeAttribute("alt");
+        wrap.classList.add("hidden");
+        wrap.setAttribute("aria-hidden", "true");
+      }
+    }
   }
 
   function setLogoUploadStatus(html, visible = true) {
-    const box = document.getElementById("logoUploadStatus");
-    if (!box) return;
-    box.innerHTML = html || "";
-    box.classList.toggle("hidden", !visible || !html);
+    ["logoUploadStatus", "onboardingLogoUploadStatus"].forEach((id) => {
+      const box = document.getElementById(id);
+      if (!box) return;
+      box.innerHTML = html || "";
+      box.classList.toggle("hidden", !visible || !html);
+    });
   }
 
   function triggerBusinessLogoUpload() {
@@ -3871,7 +5273,7 @@
     document.getElementById("businessLogoFile")?.click();
   }
 
-  function getLogoFileExtension(file) {
+    function getLogoFileExtension(file) {
     const name = String(file?.name || "").toLowerCase();
     const match = name.match(/\.(jpe?g|png|webp)$/i);
     if (match) {
@@ -3882,6 +5284,61 @@
     if (file?.type === "image/png") return "png";
     if (file?.type === "image/webp") return "webp";
     return null;
+  }
+
+  /** Removes any JPEG/PNG/WEBP object for this staff member under business-logos (same bucket as business logo). */
+  async function deleteStaffPhotoStorageForMember(staffId) {
+    if (!staffId || !businessId || !sb) return;
+    const extensions = ["jpg", "jpeg", "png", "webp"];
+    const paths = extensions.map((ext) => `${businessId}/staff/${staffId}.${ext}`);
+    try {
+      await sb.storage.from(BUSINESS_LOGO_BUCKET).remove(paths);
+    } catch (_e) {
+      /* non-fatal */
+    }
+  }
+
+  /**
+   * Validates like business logo upload, stores at `${businessId}/staff/${staffId}.ext`.
+   * @returns {{ ok: true, publicUrl: string } | { ok: false }}
+   */
+  async function uploadStaffMemberPhotoFromFile(staffId, file) {
+    if (!initSupabaseClient()) return { ok: false };
+    if (!staffId || !businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded.", "error");
+      return { ok: false };
+    }
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      return { ok: false };
+    }
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Photo must be 3 MB or smaller.", "error");
+      return { ok: false };
+    }
+    const ext = getLogoFileExtension(file);
+    if (!ext) {
+      showToast("Unsupported image type.", "error");
+      return { ok: false };
+    }
+    await deleteStaffPhotoStorageForMember(staffId);
+    const filePath = `${businessId}/staff/${staffId}.${ext}`;
+    const { error: uploadError } = await sb.storage.from(BUSINESS_LOGO_BUCKET).upload(filePath, file, {
+      upsert: true,
+      cacheControl: "3600",
+      contentType: file.type
+    });
+    if (uploadError) {
+      showToast("Photo upload failed: " + uploadError.message, "error");
+      return { ok: false };
+    }
+    const { data: urlData } = sb.storage.from(BUSINESS_LOGO_BUCKET).getPublicUrl(filePath);
+    const publicUrl = urlData?.publicUrl || "";
+    if (!publicUrl) {
+      showToast("Upload succeeded but public URL was missing.", "error");
+      return { ok: false };
+    }
+    return { ok: true, publicUrl };
   }
 
   async function persistBusinessLogoUrl(publicUrl) {
@@ -3943,7 +5400,9 @@
     }
 
     const uploadBtn = document.getElementById("businessLogoUploadBtn");
+    const onboardingUploadBtn = document.getElementById("onboardingLogoUploadBtn");
     if (uploadBtn) uploadBtn.disabled = true;
+    if (onboardingUploadBtn) onboardingUploadBtn.disabled = true;
 
     setLogoUploadStatus(loadingStateHtml("Uploading logo…"), true);
 
@@ -3983,6 +5442,7 @@
       setLogoUploadStatus("", false);
     } finally {
       if (uploadBtn) uploadBtn.disabled = false;
+      if (onboardingUploadBtn) onboardingUploadBtn.disabled = false;
     }
   }
 
@@ -4072,6 +5532,7 @@
   document.addEventListener("DOMContentLoaded", init);
 
   async function init() {
+    bindDocumentTimeStepperHandlerOnce();
     populateCountryPhoneDropdown();
     if (!initSupabaseClient()) return;
 
@@ -4200,7 +5661,7 @@
 
     if (isAdminOnboardingRequired()) {
       showAdminOnboardingView();
-      renderAdminOnboardingShell();
+      await renderAdminOnboardingShell();
       return;
     }
 
@@ -4234,34 +5695,1363 @@
     document.getElementById("homeBtn").classList.add("hidden");
   }
 
+  let onboardingSlugUserEdited = false;
+  let onboardingStep1ListenersBound = false;
+  let onboardingStep1Saving = false;
+
+  function bindOnboardingStep1Listeners() {
+    if (onboardingStep1ListenersBound) return;
+    onboardingStep1ListenersBound = true;
+
+    const nameEl = document.getElementById("onboardingBusinessName");
+    const slugEl = document.getElementById("onboardingBusinessSlug");
+    const tzEl = document.getElementById("onboardingTimezone");
+
+    if (nameEl && slugEl) {
+      nameEl.addEventListener("input", () => {
+        if (!onboardingSlugUserEdited) {
+          slugEl.value = normalizeBusinessSlug(nameEl.value);
+        }
+        refreshOnboardingPublicLinkPreview();
+        clearOnboardingSlugConflictError();
+        updateWizardStep1Validation();
+      });
+    }
+
+    if (slugEl) {
+      slugEl.addEventListener("input", () => {
+        onboardingSlugUserEdited = true;
+        slugEl.setAttribute("aria-invalid", "false");
+        refreshOnboardingPublicLinkPreview();
+        clearOnboardingSlugConflictError();
+        updateWizardStep1Validation();
+      });
+
+      slugEl.addEventListener("blur", () => {
+        const n = normalizeBusinessSlug(slugEl.value);
+        slugEl.value = n;
+        refreshOnboardingPublicLinkPreview();
+        updateWizardStep1Validation();
+      });
+    }
+
+    if (tzEl) {
+      tzEl.addEventListener("change", () => updateWizardStep1Validation());
+    }
+
+    document.getElementById("adminOnboardingView")?.addEventListener("click", (e) => {
+      const pill = e.target.closest(".wizard-category-pill");
+      if (!pill || !document.getElementById("adminOnboardingStep1Panel")?.contains(pill)) return;
+      pill.closest(".wizard-category-grid")?.querySelectorAll(".wizard-category-pill").forEach((p) => {
+        p.classList.remove("wizard-category-pill--selected");
+        p.setAttribute("aria-pressed", "false");
+      });
+      pill.classList.add("wizard-category-pill--selected");
+      pill.setAttribute("aria-pressed", "true");
+      updateWizardStep1Validation();
+    });
+  }
+
+  function clearOnboardingSlugConflictError() {
+    const err = document.getElementById("onboardingSlugError");
+    if (!err) return;
+    err.textContent = "";
+    err.classList.add("hidden");
+  }
+
+  function setOnboardingSlugConflictError(message) {
+    const err = document.getElementById("onboardingSlugError");
+    const slugEl = document.getElementById("onboardingBusinessSlug");
+    if (!err) return;
+    err.textContent = message;
+    err.classList.toggle("hidden", !message);
+    if (slugEl) slugEl.setAttribute("aria-invalid", message ? "true" : "false");
+  }
+
+  function refreshOnboardingPublicLinkPreview() {
+    const preview = document.getElementById("onboardingPublicLinkPreview");
+    if (!preview) return;
+    const slug = normalizeBusinessSlug(document.getElementById("onboardingBusinessSlug")?.value || "");
+    if (!slug) {
+      preview.textContent = "—";
+      return;
+    }
+    preview.textContent = buildPublicBookingLink(slug);
+  }
+
+  function getSelectedWizardBusinessCategory() {
+    const selected = document.querySelector(
+      "#adminOnboardingStep1Panel .wizard-category-pill.wizard-category-pill--selected"
+    );
+    return selected ? String(selected.dataset.category || "").trim().toLowerCase() : null;
+  }
+
+  function setWizardCategorySelection(raw) {
+    const v = String(raw || "")
+      .trim()
+      .toLowerCase();
+    document.querySelectorAll("#adminOnboardingStep1Panel .wizard-category-pill").forEach((p) => {
+      const on = v && p.dataset.category === v;
+      p.classList.toggle("wizard-category-pill--selected", on);
+      p.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function hydrateOnboardingStep1FromSettings() {
+    bindOnboardingStep1Listeners();
+
+    const nameEl = document.getElementById("onboardingBusinessName");
+    const slugEl = document.getElementById("onboardingBusinessSlug");
+    const tzEl = document.getElementById("onboardingTimezone");
+
+    if (!nameEl || !slugEl) return;
+
+    const nameVal = String(businessSettings?.business_name ?? "").trim();
+    const slugStored = normalizeBusinessSlug(businessSettings?.business_slug ?? "");
+    nameEl.value = nameVal;
+    slugEl.value = slugStored;
+    onboardingSlugUserEdited = slugStored !== normalizeBusinessSlug(nameVal);
+
+    clearOnboardingSlugConflictError();
+    slugEl.setAttribute("aria-invalid", "false");
+
+    const tz = businessSettings?.timezone;
+    let tzMatched = false;
+    if (tzEl && tz) {
+      for (let i = 0; i < tzEl.options.length; i++) {
+        if (tzEl.options[i].value === tz) {
+          tzEl.value = tz;
+          tzMatched = true;
+          break;
+        }
+      }
+    }
+    if (tzEl && !tzMatched) {
+      tzEl.value = "Europe/Skopje";
+    }
+
+    setWizardCategorySelection(businessSettings?.business_category || "");
+    const hiddenLogo = document.getElementById("businessLogoUrl");
+    if (hiddenLogo && businessSettings) {
+      hiddenLogo.value = businessSettings.business_logo_url || "";
+    }
+    updateLogoUploadUi();
+
+    refreshOnboardingPublicLinkPreview();
+    updateWizardStep1Validation();
+  }
+
+  function isWizardStep1FormValid() {
+    const nameOk = String(document.getElementById("onboardingBusinessName")?.value || "").trim().length > 0;
+    const slugRaw = normalizeBusinessSlug(document.getElementById("onboardingBusinessSlug")?.value || "");
+    const slugOk = slugRaw.length > 0;
+    const catOk = !!getSelectedWizardBusinessCategory();
+    return nameOk && slugOk && catOk && !onboardingStep1Saving;
+  }
+
+  function updateWizardStep1Validation() {
+    const step = getAdminOnboardingStep();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (!contBtn || step !== 1) return;
+    contBtn.disabled = !isWizardStep1FormValid();
+    contBtn.setAttribute("aria-busy", onboardingStep1Saving ? "true" : "false");
+  }
+
+  async function isBusinessSlugTakenByAnotherBusiness(normalizedSlug) {
+    if (!normalizedSlug || !businessId || !initSupabaseClient()) return false;
+
+    const { data, error } = await sb
+      .from("business_settings")
+      .select("business_id")
+      .eq("business_slug", normalizedSlug)
+      .neq("business_id", businessId)
+      .limit(1);
+
+    if (error) {
+      console.warn("Slug uniqueness check failed:", error.message);
+      return false;
+    }
+
+    return Array.isArray(data) && data.length > 0;
+  }
+
+  async function saveAdminOnboardingStep1AndAdvance() {
+    const name = String(document.getElementById("onboardingBusinessName")?.value || "").trim();
+    const slug = normalizeBusinessSlug(document.getElementById("onboardingBusinessSlug")?.value || "");
+    const category = getSelectedWizardBusinessCategory();
+    const timezone =
+      document.getElementById("onboardingTimezone")?.value || businessSettings?.timezone || "Europe/Skopje";
+
+    clearOnboardingSlugConflictError();
+
+    if (!name) {
+      showToast("Please enter your business name.", "error");
+      return false;
+    }
+
+    if (!slug) {
+      showToast("Please set a booking link (slug).", "error");
+      return false;
+    }
+
+    if (!category) {
+      showToast("Please choose a business category.", "error");
+      return false;
+    }
+
+    if (!businessId || !initSupabaseClient()) return false;
+
+    const taken = await isBusinessSlugTakenByAnotherBusiness(slug);
+    if (taken) {
+      setOnboardingSlugConflictError("This link is already taken. Try a small change to make it unique.");
+      showToast("That booking link is already in use.", "error");
+      return false;
+    }
+
+    onboardingStep1Saving = true;
+    updateWizardStep1Validation();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    const backBtn = document.getElementById("adminOnboardingBackBtn");
+    if (contBtn) contBtn.textContent = "Saving…";
+    if (backBtn) backBtn.disabled = true;
+
+    const { error } = await sb
+      .from("business_settings")
+      .update({
+        business_name: name,
+        business_slug: slug,
+        business_category: category,
+        timezone,
+        onboarding_step: 2
+      })
+      .eq("business_id", businessId);
+
+    onboardingStep1Saving = false;
+    if (backBtn) backBtn.disabled = false;
+    if (contBtn) contBtn.textContent = "Continue";
+
+    if (error) {
+      const msg = String(error.message || "");
+      showToast("Could not save: " + msg, "error");
+      if (/duplicate|unique/i.test(msg)) {
+        setOnboardingSlugConflictError("This link is already taken. Try a small change to make it unique.");
+      }
+      updateWizardStep1Validation();
+      return false;
+    }
+
+    businessSettings = { ...(businessSettings || {}), business_name: name, business_slug: slug, business_category: category, timezone, onboarding_step: 2 };
+    await loadBusinessSettings();
+    updateWizardStep1Validation();
+    return true;
+  }
+
+  let onboardingStep2EditId = null;
+  let onboardingStep2Advancing = false;
+  let onboardingStep2ListenersBound = false;
+
+  function onboardingComposerVisible() {
+    const c = document.getElementById("onboardingServiceComposer");
+    return !!(c && !c.classList.contains("hidden"));
+  }
+
+  function onboardingComposerReadState() {
+    const visible = onboardingComposerVisible();
+    const name = String(document.getElementById("onboardingServiceName")?.value || "").trim();
+    const durEl = document.getElementById("onboardingServiceDuration");
+    const durRaw = durEl?.value;
+    const hasDur = !(durRaw === "" || durRaw === undefined || durRaw === null);
+    const duration = hasDur ? Number(durRaw) : NaN;
+    const priceRaw = document.getElementById("onboardingServicePrice")?.value;
+    const priceTouched = !(priceRaw === "" || priceRaw === undefined || priceRaw === null);
+
+    const touched = !!(name.length > 0 || hasDur || priceTouched);
+    const durOk = hasDur && Number.isFinite(duration) && duration > 0 && duration <= 999;
+    const pendingFullValid = name.length > 0 && durOk;
+
+    /** Open composer + any filled field that's not fully valid blocks Continue */
+
+    const partialInvalid = visible && touched && !pendingFullValid;
+
+    /** Count an unsaved *new* service row once it is fully valid */
+
+    let effectiveCount = services.length;
+    if (visible && pendingFullValid && !onboardingStep2EditId) effectiveCount += 1;
+
+    const savedRowsValid =
+      Array.isArray(services) &&
+      services.every((s) => {
+        const n = String(s.name || "").trim();
+        const d = Number(s.duration);
+        return n.length > 0 && Number.isFinite(d) && d > 0 && d <= 999;
+      });
+
+    const effectiveOk = effectiveCount >= 1 && !partialInvalid && savedRowsValid;
+
+    return {
+      touched,
+      pendingFullValid,
+      partialInvalid,
+      visible,
+      effectiveOk,
+      name,
+      duration: pendingFullValid ? duration : NaN
+    };
+  }
+
+  function onboardingSyncWizardServiceExamplesText() {
+    const el = document.getElementById("adminOnboardingServiceExamples");
+    if (!el) return;
+    const cat = String(businessSettings?.business_category || "").toLowerCase();
+    let line =
+      "Examples: Haircut, Beard trim, Consultation, Teeth cleaning, or whatever you offer.";
+    if (cat === "barber") line = "Examples: Haircut, beard trim, hot towel shave, kids cut.";
+    else if (cat === "salon") line = "Examples: Cut & blow-dry, color refresh, manicure.";
+    else if (cat === "dentist" || cat === "clinic") line = "Examples: Check-up, cleaning, consultation.";
+    else if (cat === "fitness") line = "Examples: PT session, yoga class, intro workout.";
+    el.textContent = line;
+  }
+
+  function syncOnboardingDurationPresetHighlight() {
+    const durEl = document.getElementById("onboardingServiceDuration");
+    const v = Number(durEl?.value);
+    document.querySelectorAll("#onboardingServiceComposer .wizard-duration-preset").forEach((btn) => {
+      const m = Number(btn.dataset.minutes);
+      const on = Number.isFinite(v) && Number.isFinite(m) && v === m;
+      btn.classList.toggle("wizard-duration-preset--active", on);
+    });
+  }
+
+  function bindOnboardingStep2Listeners() {
+    if (onboardingStep2ListenersBound) return;
+    onboardingStep2ListenersBound = true;
+
+    document.getElementById("adminOnboardingStep2Panel")?.addEventListener("click", (e) => {
+      const pill = e.target.closest(".wizard-duration-preset");
+      if (!pill || !document.getElementById("onboardingServiceComposer")?.contains(pill)) return;
+      const mins = Number(pill.dataset.minutes);
+      const durInput = document.getElementById("onboardingServiceDuration");
+      if (durInput && Number.isFinite(mins)) durInput.value = String(mins);
+      syncOnboardingDurationPresetHighlight();
+      updateWizardStep2Validation();
+    });
+
+    ["onboardingServiceName", "onboardingServiceDuration", "onboardingServicePrice"].forEach((id) => {
+      document.getElementById(id)?.addEventListener("input", () => {
+        syncOnboardingDurationPresetHighlight();
+        updateWizardStep2Validation();
+      });
+    });
+  }
+
+  function onboardingRefreshAdminServiceMirrors() {
+    renderServices();
+    renderEditServiceOptions();
+    renderBookingServiceFilter();
+    renderAdminAddServiceOptions();
+    renderAdminStats();
+  }
+
+  function closeOnboardingServiceComposer() {
+    onboardingStep2EditId = null;
+    const composer = document.getElementById("onboardingServiceComposer");
+    if (composer) composer.classList.add("hidden");
+    const nameEl = document.getElementById("onboardingServiceName");
+    const durEl = document.getElementById("onboardingServiceDuration");
+    const priceEl = document.getElementById("onboardingServicePrice");
+    if (nameEl) nameEl.value = "";
+    if (durEl) durEl.value = "";
+    if (priceEl) priceEl.value = "";
+    document.getElementById("onboardingServiceAddBtn")?.classList.remove("hidden");
+    syncOnboardingDurationPresetHighlight();
+    updateWizardStep2Validation();
+  }
+
+  function openOnboardingServiceComposer(editId) {
+    bindOnboardingStep2Listeners();
+    onboardingStep2EditId = editId ? String(editId) : null;
+
+    const composer = document.getElementById("onboardingServiceComposer");
+    const addBtn = document.getElementById("onboardingServiceAddBtn");
+    if (composer) composer.classList.remove("hidden");
+    if (addBtn) addBtn.classList.add("hidden");
+
+    const nameEl = document.getElementById("onboardingServiceName");
+    const durEl = document.getElementById("onboardingServiceDuration");
+    const priceEl = document.getElementById("onboardingServicePrice");
+
+    if (!editId) {
+      if (nameEl) nameEl.value = "";
+      if (durEl) durEl.value = "30";
+      if (priceEl) priceEl.value = "";
+    } else {
+      const svc = services.find((s) => s.id === editId);
+      if (svc) {
+        if (nameEl) nameEl.value = svc.name || "";
+        if (durEl) durEl.value = String(getServiceDurationValue(svc));
+        const p = Number(svc.price);
+        if (priceEl) priceEl.value = Number.isFinite(p) && p > 0 ? String(p) : "";
+      }
+    }
+
+    syncOnboardingDurationPresetHighlight();
+    updateWizardStep2Validation();
+    nameEl?.focus();
+  }
+
+  function renderOnboardingServicesStep() {
+    const mount = document.getElementById("onboardingServicesList");
+    if (!mount) return;
+    mount.innerHTML = "";
+
+    if (!services.length) {
+      const p = document.createElement("p");
+      p.className = "wizard-services-empty-hint";
+      p.textContent = "Add at least one service with a clear name and duration to continue.";
+      mount.appendChild(p);
+      updateWizardStep2Validation();
+      return;
+    }
+
+    services.forEach((s) => {
+      const dur = getServiceDurationValue(s);
+      const price = getServicePriceValue(s);
+      const priceSuffix = price > 0 ? ` • ${price} MKD` : "";
+
+      const art = document.createElement("article");
+      art.className = "wizard-service-card";
+      const sid = escapeHtml(s.id || "");
+      const sname = escapeHtml(s.name || "Service");
+
+      art.innerHTML = `
+        <div class="wizard-service-card-top">
+          <div>
+            <h3 class="wizard-service-card-name">${sname}</h3>
+            <p class="wizard-service-card-meta">${dur} minutes${escapeHtml(priceSuffix)}</p>
+          </div>
+          <div class="wizard-service-card-actions">
+            <button type="button" class="secondary" data-action="edit" data-service-id="${sid}">Edit</button>
+            <button type="button" class="danger" data-action="remove" data-service-id="${sid}">Remove</button>
+          </div>
+        </div>`;
+      mount.appendChild(art);
+    });
+
+    mount.querySelectorAll("button[data-action]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const sid = btn.getAttribute("data-service-id");
+        if (!sid) return;
+        if (btn.getAttribute("data-action") === "edit") openOnboardingServiceComposer(sid);
+        else onboardingWizardRemoveService(sid);
+      });
+    });
+
+    updateWizardStep2Validation();
+  }
+
+  async function onboardingWizardRemoveService(id) {
+    if (!confirm("Remove this service?")) return;
+    if (!businessId || !initSupabaseClient()) return;
+
+    const { error } = await sb.from("services").delete().eq("id", id).eq("business_id", businessId);
+    if (error) {
+      showToast("Remove service error: " + error.message, "error");
+      return;
+    }
+
+    await loadServices();
+    renderOnboardingServicesStep();
+    onboardingRefreshAdminServiceMirrors();
+    renderBookings();
+    updateWizardStep2Validation();
+  }
+
+  async function onboardingPersistComposerFromFields() {
+    const st = onboardingComposerReadState();
+    if (!st.pendingFullValid) return false;
+
+    const name = st.name;
+    const duration = st.duration;
+
+    const priceRaw = document.getElementById("onboardingServicePrice")?.value;
+    const priceNum =
+      !(priceRaw === "" || priceRaw === undefined || priceRaw === null) && Number.isFinite(Number(priceRaw))
+        ? Number(priceRaw)
+        : 0;
+
+    let price = priceNum >= 0 ? priceNum : 0;
+
+    if (!businessId || !initSupabaseClient()) return false;
+
+    const editId = onboardingStep2EditId;
+    if (editId) {
+      const { error } = await sb
+        .from("services")
+        .update({ name, duration, price })
+        .eq("id", editId)
+        .eq("business_id", businessId);
+      if (error) {
+        showToast("Update service error: " + error.message, "error");
+        return false;
+      }
+    } else {
+      const { error } = await sb.from("services").insert({
+        business_id: businessId,
+        name,
+        duration,
+        price
+      });
+      if (error) {
+        showToast("Add service error: " + error.message, "error");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  async function onboardingComposerSave() {
+    const st = onboardingComposerReadState();
+    if (!st.pendingFullValid) {
+      showToast("Enter a service name and a duration greater than zero.", "error");
+      return;
+    }
+
+    const saveBtn = document.getElementById("onboardingServiceComposerSaveBtn");
+    if (saveBtn) saveBtn.disabled = true;
+    try {
+      const ok = await onboardingPersistComposerFromFields();
+      if (!ok) return;
+      await loadServices();
+      closeOnboardingServiceComposer();
+      renderOnboardingServicesStep();
+      onboardingRefreshAdminServiceMirrors();
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  }
+
+  function onboardingComposerCancel() {
+    closeOnboardingServiceComposer();
+    renderOnboardingServicesStep();
+  }
+
+  async function onboardingTryFlushComposerBeforeContinue() {
+    if (!onboardingComposerVisible()) return true;
+
+    const st = onboardingComposerReadState();
+    if (!st.touched) {
+      closeOnboardingServiceComposer();
+      return true;
+    }
+    if (!st.pendingFullValid) {
+      showToast("Finish the draft service (name + duration) or tap Cancel to continue.", "error");
+      return false;
+    }
+    const ok = await onboardingPersistComposerFromFields();
+    if (!ok) return false;
+    await loadServices();
+    closeOnboardingServiceComposer();
+    renderOnboardingServicesStep();
+    onboardingRefreshAdminServiceMirrors();
+    return true;
+  }
+
+  async function hydrateOnboardingStep2() {
+    bindOnboardingStep2Listeners();
+    closeOnboardingServiceComposer();
+    await loadServices();
+    onboardingSyncWizardServiceExamplesText();
+    renderOnboardingServicesStep();
+    updateWizardStep2Validation();
+  }
+
+  function updateWizardStep2Validation() {
+    const step = getAdminOnboardingStep();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (!contBtn || step !== 2) return;
+
+    const st = onboardingComposerReadState();
+    const ok = !onboardingStep2Advancing && st.effectiveOk;
+    contBtn.disabled = !ok;
+    contBtn.setAttribute("aria-busy", onboardingStep2Advancing ? "true" : "false");
+  }
+
+  let onboardingStep3Advancing = false;
+  let onboardingStep3ListenersBound = false;
+
+  let onboardingStep4Advancing = false;
+  let onboardingStaffComposerEditId = null;
+  let onboardingStaffComposerSnapshot = null;
+  let onboardingStaffPendingPhotoFile = null;
+  let onboardingStaffPhotoObjectUrl = null;
+  let onboardingStaffPhotoRemovalRequested = false;
+  let onboardingStep4ListenersBound = false;
+
+  const ONBOARDING_BOOKING_WINDOW_WEEKS_OPTS = Object.freeze([1, 2, 4, 8]);
+  const ONBOARDING_MIN_NOTICE_OPTS = Object.freeze([0, 30, 60, 120, 360, 1440]);
+
+  function bindOnboardingStep3Listeners() {
+    if (onboardingStep3ListenersBound) return;
+    onboardingStep3ListenersBound = true;
+
+    document.getElementById("adminOnboardingStep3Panel")?.addEventListener("click", (e) => {
+      const pill = e.target.closest(".wizard-weekday-pill");
+      if (!pill || !document.getElementById("onboardingWorkingDaysGrid")?.contains(pill)) return;
+      pill.classList.toggle("wizard-weekday-pill--selected");
+      const on = pill.classList.contains("wizard-weekday-pill--selected");
+      pill.setAttribute("aria-pressed", on ? "true" : "false");
+      updateWizardStep3Validation();
+    });
+
+    ["onboardingWorkStart", "onboardingWorkEnd", "onboardingBreakStart", "onboardingBreakEnd", "onboardingBookingWindowWeeks", "onboardingMinimumNoticeMinutes"].forEach((id) => {
+      document.getElementById(id)?.addEventListener("change", updateWizardStep3Validation);
+      document.getElementById(id)?.addEventListener("input", updateWizardStep3Validation);
+    });
+  }
+
+  function getOnboardingSelectedWorkingDaysSorted() {
+    const out = [];
+    document.querySelectorAll("#onboardingWorkingDaysGrid .wizard-weekday-pill.wizard-weekday-pill--selected").forEach((p) => {
+      const v = Number(p.dataset.workday);
+      if (Number.isFinite(v)) out.push(v);
+    });
+    return [...new Set(out)].sort((a, b) => {
+      /* Mon-first display order matches [1..6,0] */
+      const ma = a === 0 ? 7 : a;
+      const mb = b === 0 ? 7 : b;
+      return ma - mb;
+    });
+  }
+
+  function hydrateOnboardingStep3WorkingDayPills() {
+    const days = new Set(getWorkingDaysArray());
+    document.querySelectorAll("#onboardingWorkingDaysGrid .wizard-weekday-pill").forEach((p) => {
+      const v = Number(p.dataset.workday);
+      const on = days.has(v);
+      p.classList.toggle("wizard-weekday-pill--selected", on);
+      p.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function hydrateOnboardingStep3() {
+    bindOnboardingStep3Listeners();
+    if (!businessSettings) return;
+
+    hydrateOnboardingStep3WorkingDayPills();
+
+    const ws = document.getElementById("onboardingWorkStart");
+    const we = document.getElementById("onboardingWorkEnd");
+    if (ws) ws.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
+    if (we) we.value = snapTimeStringToQuarterHour(businessSettings.work_end || "17:00");
+
+    ensureDayOverrideRowsBuilt("onboardingDayOverrideRows", "onboarding");
+    hydrateDayOverrideRowsUi("onboardingDayOverrideRows", "onboarding", businessSettings.working_hours_overrides);
+
+    const bs = document.getElementById("onboardingBreakStart");
+    const be = document.getElementById("onboardingBreakEnd");
+    if (bs) bs.value = String(businessSettings.break_start ?? "").trim();
+    if (be) be.value = String(businessSettings.break_end ?? "").trim();
+
+    const step3 = document.getElementById("adminOnboardingStep3Panel");
+    if (step3) syncAllTimeStepperDisplaysUnder(step3);
+
+    const bwEl = document.getElementById("onboardingBookingWindowWeeks");
+    if (bwEl) {
+      const bw = Number(businessSettings.booking_window_weeks);
+      bwEl.value = ONBOARDING_BOOKING_WINDOW_WEEKS_OPTS.includes(bw) ? String(bw) : "4";
+    }
+
+    const mnEl = document.getElementById("onboardingMinimumNoticeMinutes");
+    if (mnEl) {
+      const raw = businessSettings.minimum_notice_minutes;
+      let mn = raw === null || typeof raw === "undefined" ? 0 : Math.max(0, Math.round(Number(raw) || 0));
+      if (!ONBOARDING_MIN_NOTICE_OPTS.includes(mn)) mn = 60;
+      mnEl.value = String(mn);
+    }
+
+    updateWizardStep3Validation();
+  }
+
+  function isWizardStep3FormValid() {
+    if (getOnboardingSelectedWorkingDaysSorted().length < 1) return false;
+
+    const ws = document.getElementById("onboardingWorkStart")?.value || "";
+    const we = document.getElementById("onboardingWorkEnd")?.value || "";
+    if (!ws || !we || !/^\d{2}:\d{2}$/.test(ws) || !/^\d{2}:\d{2}$/.test(we)) return false;
+
+    let startM;
+    let endM;
+    try {
+      startM = timeToMinutes(ws);
+      endM = timeToMinutes(we);
+    } catch (e) {
+      return false;
+    }
+    if (!(endM > startM)) return false;
+
+    if (!validateConditionalDayOverridesForContainer("onboardingDayOverrideRows", "onboarding")) return false;
+
+    const bks = document.getElementById("onboardingBreakStart")?.value?.trim() || "";
+    const bke = document.getElementById("onboardingBreakEnd")?.value?.trim() || "";
+    if (bks || bke) {
+      if (!bks || !bke || !/^\d{2}:\d{2}$/.test(bks) || !/^\d{2}:\d{2}$/.test(bke)) return false;
+      let bsM;
+      let beM;
+      try {
+        bsM = timeToMinutes(bks);
+        beM = timeToMinutes(bke);
+      } catch (e2) {
+        return false;
+      }
+      if (!(beM > bsM)) return false;
+    }
+
+    return true;
+  }
+
+  function updateWizardStep3Validation() {
+    const step = getAdminOnboardingStep();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (!contBtn || step !== 3) return;
+    const ok = !onboardingStep3Advancing && isWizardStep3FormValid();
+    contBtn.disabled = !ok;
+    contBtn.setAttribute("aria-busy", onboardingStep3Advancing ? "true" : "false");
+  }
+
+  async function saveAdminOnboardingStep3AndAdvance() {
+    if (!isWizardStep3FormValid()) {
+      if (!validateConditionalDayOverridesForContainer("onboardingDayOverrideRows", "onboarding")) {
+        showToast(
+          "Optional weekday overrides need valid hours on each enabled day (Opens before Closes, 15-minute times).",
+          "error"
+        );
+      } else {
+        showToast("Select at least one day and enter a valid time range (end after start).", "error");
+      }
+      return false;
+    }
+
+    const bksRaw = document.getElementById("onboardingBreakStart")?.value?.trim() || "";
+    const bkeRaw = document.getElementById("onboardingBreakEnd")?.value?.trim() || "";
+    const break_start = bksRaw ? bksRaw : null;
+    const break_end = bkeRaw ? bkeRaw : null;
+
+    const booking_window_weeks = Number(document.getElementById("onboardingBookingWindowWeeks")?.value || 4);
+    const minimum_notice_minutes = Number(document.getElementById("onboardingMinimumNoticeMinutes")?.value ?? 0);
+
+    const working_hours_overrides = collectDayOverridesPayload("onboardingDayOverrideRows", "onboarding");
+
+    if (!businessId || !initSupabaseClient()) return false;
+
+    onboardingStep3Advancing = true;
+    updateWizardStep3Validation();
+    const backBtn = document.getElementById("adminOnboardingBackBtn");
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (backBtn) backBtn.disabled = true;
+    const prevLabel = contBtn?.textContent;
+    if (contBtn) contBtn.textContent = "Saving…";
+
+    const payload = {
+      working_days: getOnboardingSelectedWorkingDaysSorted(),
+      work_start: snapTimeStringToQuarterHour(String(document.getElementById("onboardingWorkStart").value || "").trim()),
+      work_end: snapTimeStringToQuarterHour(String(document.getElementById("onboardingWorkEnd").value || "").trim()),
+      working_hours_overrides,
+      break_start,
+      break_end,
+      booking_window_weeks,
+      minimum_notice_minutes,
+      onboarding_step: 4
+    };
+
+    try {
+      const { error } = await sb.from("business_settings").update(payload).eq("business_id", businessId);
+
+      if (error) {
+        showToast("Could not save availability: " + error.message, "error");
+        return false;
+      }
+
+      businessSettings = { ...(businessSettings || {}), ...payload };
+      await loadBusinessSettings();
+      syncDashboardAvailabilityFieldsFromBusinessSettings();
+      return true;
+    } finally {
+      onboardingStep3Advancing = false;
+      if (backBtn) {
+        backBtn.disabled =
+          getAdminOnboardingStep() <= 1 ||
+          onboardingStep1Saving ||
+          onboardingStep2Advancing ||
+          onboardingStep3Advancing ||
+          onboardingStep4Advancing;
+      }
+      if (contBtn && prevLabel !== undefined) contBtn.textContent = prevLabel;
+      updateWizardStep3Validation();
+    }
+  }
+
+  function staffMemberInitials(name) {
+    const t = String(name || "").trim();
+    if (!t) return "?";
+    const parts = t.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return t.slice(0, 2).toUpperCase();
+  }
+
+  function getOnboardingStaffComposerSnapshotPhoto() {
+    return String(onboardingStaffComposerSnapshot?.photoUrl || "").trim();
+  }
+
+  function revokeOnboardingStaffPhotoObjectUrl() {
+    if (onboardingStaffPhotoObjectUrl) {
+      URL.revokeObjectURL(onboardingStaffPhotoObjectUrl);
+      onboardingStaffPhotoObjectUrl = null;
+    }
+  }
+
+  function resetOnboardingStaffPhotoComposerLocal() {
+    revokeOnboardingStaffPhotoObjectUrl();
+    onboardingStaffPendingPhotoFile = null;
+    onboardingStaffPhotoRemovalRequested = false;
+    const fi = document.getElementById("onboardingStaffPhotoFile");
+    if (fi) fi.value = "";
+  }
+
+  function syncOnboardingStaffComposerPhotoPreview() {
+    const img = document.getElementById("onboardingStaffPhotoPreviewImg");
+    const initialsEl = document.getElementById("onboardingStaffPhotoPreviewInitials");
+    const removeBtn = document.getElementById("onboardingStaffPhotoRemoveBtn");
+    const name = document.getElementById("onboardingStaffNameInput")?.value || "";
+    const snapPhoto = getOnboardingStaffComposerSnapshotPhoto();
+
+    if (initialsEl) initialsEl.textContent = staffMemberInitials(name);
+
+    if (img) {
+      img.onerror = () => {
+        img.classList.add("hidden");
+        img.removeAttribute("src");
+        if (initialsEl) initialsEl.classList.remove("hidden");
+      };
+    }
+
+    const showCommitted = !!(snapPhoto && !onboardingStaffPhotoRemovalRequested);
+
+    if (onboardingStaffPendingPhotoFile) {
+      if (!onboardingStaffPhotoObjectUrl) {
+        onboardingStaffPhotoObjectUrl = URL.createObjectURL(onboardingStaffPendingPhotoFile);
+      }
+      if (img) {
+        img.classList.remove("hidden");
+        img.src = onboardingStaffPhotoObjectUrl;
+      }
+      if (initialsEl) initialsEl.classList.add("hidden");
+    } else if (showCommitted && snapPhoto) {
+      revokeOnboardingStaffPhotoObjectUrl();
+      if (img) {
+        img.classList.remove("hidden");
+        img.src = snapPhoto;
+      }
+      if (initialsEl) initialsEl.classList.add("hidden");
+    } else {
+      revokeOnboardingStaffPhotoObjectUrl();
+      if (img) {
+        img.classList.add("hidden");
+        img.removeAttribute("src");
+      }
+      if (initialsEl) initialsEl.classList.remove("hidden");
+    }
+
+    if (removeBtn) {
+      const showRemove = !!onboardingStaffPendingPhotoFile || showCommitted;
+      removeBtn.classList.toggle("hidden", !showRemove);
+    }
+  }
+
+  function triggerOnboardingStaffPhotoPick() {
+    if (!currentUser) {
+      showToast("Login as Admin to upload a photo.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Open Admin dashboard first so your business is loaded.", "error");
+      return;
+    }
+    document.getElementById("onboardingStaffPhotoFile")?.click();
+  }
+
+  function handleOnboardingStaffPhotoFileSelected(event) {
+    const input = event?.target;
+    const file = input?.files?.[0];
+    if (input) input.value = "";
+    if (!file) return;
+
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      return;
+    }
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Photo must be 3 MB or smaller.", "error");
+      return;
+    }
+    if (!getLogoFileExtension(file)) {
+      showToast("Unsupported image type.", "error");
+      return;
+    }
+
+    revokeOnboardingStaffPhotoObjectUrl();
+    onboardingStaffPendingPhotoFile = file;
+    onboardingStaffPhotoRemovalRequested = false;
+    syncOnboardingStaffComposerPhotoPreview();
+    updateWizardStep4Validation();
+  }
+
+  function clearOnboardingStaffPhotoSelection() {
+    onboardingStaffPendingPhotoFile = null;
+    revokeOnboardingStaffPhotoObjectUrl();
+    if (getOnboardingStaffComposerSnapshotPhoto()) {
+      onboardingStaffPhotoRemovalRequested = true;
+    } else {
+      onboardingStaffPhotoRemovalRequested = false;
+    }
+    syncOnboardingStaffComposerPhotoPreview();
+    updateWizardStep4Validation();
+  }
+
+  function onboardingStaffComposerVisible() {
+    const c = document.getElementById("onboardingStaffComposer");
+    return !!(c && !c.classList.contains("hidden"));
+  }
+
+  function onboardingStaffComposerReadState() {
+    const visible = onboardingStaffComposerVisible();
+    const name = String(document.getElementById("onboardingStaffNameInput")?.value || "").trim();
+    const role = String(document.getElementById("onboardingStaffRoleInput")?.value || "").trim();
+    const active = document.getElementById("onboardingStaffActiveInput")?.checked !== false;
+    const snap = onboardingStaffComposerSnapshot;
+    const snapPhoto = getOnboardingStaffComposerSnapshotPhoto();
+    const photoTouched =
+      onboardingStaffPendingPhotoFile != null || (onboardingStaffPhotoRemovalRequested && !!snapPhoto);
+    let touched = false;
+    if (visible && snap) {
+      touched = name !== snap.name || role !== snap.role || active !== snap.active || photoTouched;
+    }
+    const pendingFullValid = name.length > 0;
+    const partialInvalid = !!(visible && touched && !pendingFullValid);
+    return { visible, touched, pendingFullValid, partialInvalid, name, role, active };
+  }
+
+  function bindOnboardingStep4ComposerInputs() {
+    if (onboardingStep4ListenersBound) return;
+    onboardingStep4ListenersBound = true;
+    ["onboardingStaffNameInput", "onboardingStaffRoleInput"].forEach((id) => {
+      document.getElementById(id)?.addEventListener("input", () => {
+        syncOnboardingStaffComposerPhotoPreview();
+        updateWizardStep4Validation();
+      });
+    });
+    document.getElementById("onboardingStaffActiveInput")?.addEventListener("change", () => updateWizardStep4Validation());
+  }
+
+  function closeOnboardingStaffComposer() {
+    onboardingStaffComposerEditId = null;
+    onboardingStaffComposerSnapshot = null;
+    resetOnboardingStaffPhotoComposerLocal();
+    const composer = document.getElementById("onboardingStaffComposer");
+    if (composer) composer.classList.add("hidden");
+    document.getElementById("onboardingStaffNameInput") && (document.getElementById("onboardingStaffNameInput").value = "");
+    document.getElementById("onboardingStaffRoleInput") && (document.getElementById("onboardingStaffRoleInput").value = "");
+    const chk = document.getElementById("onboardingStaffActiveInput");
+    if (chk) chk.checked = true;
+    syncOnboardingStaffComposerPhotoPreview();
+    document.getElementById("onboardingStaffAddBtn")?.classList.remove("hidden");
+    updateWizardStep4Validation();
+  }
+
+  function openOnboardingStaffComposer(editId) {
+    if (!staffFeatureAvailable) {
+      showToast("Run the staff SQL from README first, then reload the app.", "error");
+      return;
+    }
+    bindOnboardingStep4ComposerInputs();
+    const composer = document.getElementById("onboardingStaffComposer");
+    const addBtn = document.getElementById("onboardingStaffAddBtn");
+    if (composer) composer.classList.remove("hidden");
+    if (addBtn) addBtn.classList.add("hidden");
+
+    onboardingStaffComposerEditId = editId ? String(editId) : null;
+    const nameEl = document.getElementById("onboardingStaffNameInput");
+    const roleEl = document.getElementById("onboardingStaffRoleInput");
+    const actEl = document.getElementById("onboardingStaffActiveInput");
+
+    if (!editId) {
+      if (nameEl) nameEl.value = "";
+      if (roleEl) roleEl.value = "";
+      if (actEl) actEl.checked = true;
+      resetOnboardingStaffPhotoComposerLocal();
+      onboardingStaffComposerSnapshot = { name: "", role: "", active: true, photoUrl: "" };
+    } else {
+      const st = staffMembers.find((x) => x.id === editId);
+      if (st) {
+        const n = String(st.name || "").trim();
+        const r = String(st.role || "").trim();
+        const a = st.active !== false;
+        const pu = String(st.photo_url || "").trim();
+        if (nameEl) nameEl.value = n;
+        if (roleEl) roleEl.value = r;
+        if (actEl) actEl.checked = a;
+        resetOnboardingStaffPhotoComposerLocal();
+        onboardingStaffComposerSnapshot = { name: n, role: r, active: a, photoUrl: pu };
+      } else {
+        closeOnboardingStaffComposer();
+        return;
+      }
+    }
+
+    syncOnboardingStaffComposerPhotoPreview();
+    updateWizardStep4Validation();
+    nameEl?.focus();
+  }
+
+  function updateOnboardingStaffUnavailableUi() {
+    const note = document.getElementById("onboardingStaffUnavailableNotice");
+    const addBtn = document.getElementById("onboardingStaffAddBtn");
+    const listEl = document.getElementById("onboardingStaffList");
+    const composer = document.getElementById("onboardingStaffComposer");
+    if (!note || !addBtn) return;
+
+    if (!staffFeatureAvailable) {
+      note.classList.remove("hidden");
+      note.textContent =
+        "Team setup isn't available yet—finish the Staff SQL from your README, then reload. You can still tap Continue.";
+      addBtn.classList.add("hidden");
+      if (listEl && !staffMembers.length) listEl.innerHTML = "";
+      closeOnboardingStaffComposer();
+      composer?.classList.add("hidden");
+    } else {
+      note.classList.add("hidden");
+      note.textContent = "";
+      addBtn.classList.remove("hidden");
+    }
+    updateWizardStep4Validation();
+  }
+
+  async function hydrateOnboardingStep4() {
+    bindOnboardingStep4ComposerInputs();
+    if (!businessId || !initSupabaseClient()) return;
+
+    onboardingStep4Advancing = false;
+    await loadStaffMembers();
+    await checkBookingStaffColumn();
+    closeOnboardingStaffComposer();
+
+    renderOnboardingStaffStep();
+    updateOnboardingStaffUnavailableUi();
+
+    refreshOnboardingStaffAdminMirrors();
+    updateWizardStep4Validation();
+  }
+
+  function renderOnboardingStaffStep() {
+    const mount = document.getElementById("onboardingStaffList");
+    if (!mount) return;
+    mount.innerHTML = "";
+
+    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) {
+      if (staffFeatureAvailable && !bookingStaffColumnAvailable) {
+        const p = document.createElement("p");
+        p.className = "wizard-field-hint";
+        p.style.textAlign = "center";
+        p.textContent =
+          "Staff profiles are saved, but bookings need the staff column—run full SQL when you’re ready. You can still continue.";
+        mount.appendChild(p);
+      }
+    }
+
+    if (staffMembers.length === 0) {
+      const p = document.createElement("p");
+      p.className = "wizard-staff-empty-hint";
+      p.textContent =
+        "Solo business? Perfect—tap Continue. Add people here only if customers should choose who they book.";
+      mount.appendChild(p);
+      updateWizardStep4Validation();
+      return;
+    }
+
+    staffMembers.forEach((staff) => {
+      const sid = staff.id;
+      const sname = escapeHtml(staff.name || "");
+      const roleRaw = String(staff.role || "").trim();
+      const inactive = staff.active === false;
+      const roleLine = roleRaw
+        ? escapeHtml(roleRaw) + (inactive ? " • Inactive" : "")
+        : (inactive ? "Inactive" : "");
+
+      const photoRaw = String(staff.photo_url || "").trim();
+      const initials = escapeHtml(staffMemberInitials(staff.name));
+      let avatarInner = `
+        <div class="wizard-staff-card-avatar-slot" aria-hidden="true">
+          <div class="wizard-staff-card-avatar">${initials}</div>
+        </div>`;
+      if (photoRaw) {
+        const safePhoto = escapeHtml(photoRaw);
+        avatarInner = `
+        <div class="wizard-staff-card-avatar-slot" aria-hidden="true">
+          <img
+            class="wizard-staff-card-avatar-photo"
+            src="${safePhoto}"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onerror="this.classList.add('wizard-staff-card-avatar-photo--err')"
+          />
+          <div class="wizard-staff-card-avatar">${initials}</div>
+        </div>`;
+      }
+
+      const art = document.createElement("article");
+      art.className = "wizard-staff-card";
+
+      art.innerHTML = `
+        <div class="wizard-staff-card-top">
+          ${avatarInner}
+          <div class="wizard-staff-card-body">
+            <h3 class="wizard-staff-card-name">${sname}</h3>
+            <p class="wizard-staff-card-meta">${roleLine ? roleLine : "Team member"}</p>
+          </div>
+          <div class="wizard-staff-card-actions">
+            <button type="button" class="secondary" data-staff-edit="${sid}">Edit</button>
+            <button type="button" class="danger" data-staff-remove="${sid}">Remove</button>
+          </div>
+        </div>
+      `;
+      mount.appendChild(art);
+    });
+
+    mount.querySelectorAll("button[data-staff-edit]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-staff-edit");
+        if (id) openOnboardingStaffComposer(id);
+      });
+    });
+    mount.querySelectorAll("button[data-staff-remove]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-staff-remove");
+        if (id) onboardingWizardRemoveStaff(id);
+      });
+    });
+
+    updateWizardStep4Validation();
+  }
+
+  async function onboardingWizardRemoveStaff(id) {
+    await deleteStaffMember(id);
+    if (getAdminOnboardingStep() === 4) {
+      renderOnboardingStaffStep();
+      updateOnboardingStaffUnavailableUi();
+    }
+  }
+
+  function refreshOnboardingStaffAdminMirrors() {
+    renderStaffMembers();
+    renderAdminAddStaffOptions();
+    renderEditStaffOptions();
+    renderPublicStaffOptions();
+  }
+
+  async function onboardingPersistStaffFromComposer() {
+    const st = onboardingStaffComposerReadState();
+    if (!st.pendingFullValid) return false;
+    const name = st.name;
+    const roleStr = String(st.role || "").trim();
+    const active = !!st.active;
+    const snapPhoto = getOnboardingStaffComposerSnapshotPhoto();
+
+    if (!businessId || !initSupabaseClient()) return false;
+    if (!staffFeatureAvailable) {
+      showToast("Run the staff SQL from README first, then reload the app.", "error");
+      return false;
+    }
+
+    const editId = onboardingStaffComposerEditId;
+    let targetId = editId || null;
+
+    if (editId) {
+      const { error } = await sb
+        .from("staff_members")
+        .update({ name, role: roleStr || null, active })
+        .eq("id", editId)
+        .eq("business_id", businessId);
+      if (error) {
+        showToast("Update staff error: " + error.message, "error");
+        return false;
+      }
+    } else {
+      const { data, error } = await sb.from("staff_members").insert({
+        business_id: businessId,
+        name,
+        role: roleStr || null,
+        active
+      }).select("id").single();
+
+      if (error) {
+        showToast("Add staff error: " + error.message, "error");
+        return false;
+      }
+
+      targetId = data?.id;
+      if (!targetId) {
+        showToast("Could not read new staff member id.", "error");
+        return false;
+      }
+    }
+
+    try {
+      if (onboardingStaffPendingPhotoFile) {
+        const uploaded = await uploadStaffMemberPhotoFromFile(targetId, onboardingStaffPendingPhotoFile);
+        if (!uploaded.ok) return false;
+        const { error: perr } = await sb
+          .from("staff_members")
+          .update({ photo_url: uploaded.publicUrl })
+          .eq("id", targetId)
+          .eq("business_id", businessId);
+        if (perr) {
+          showToast("Could not save photo URL: " + perr.message, "error");
+          return false;
+        }
+      } else if (onboardingStaffPhotoRemovalRequested && snapPhoto) {
+        await deleteStaffPhotoStorageForMember(targetId);
+        const { error: rerr } = await sb
+          .from("staff_members")
+          .update({ photo_url: null })
+          .eq("id", targetId)
+          .eq("business_id", businessId);
+        if (rerr) {
+          showToast("Could not remove photo: " + rerr.message, "error");
+          return false;
+        }
+      }
+    } catch (err) {
+      showToast("Photo update failed: " + (err?.message || err), "error");
+      return false;
+    }
+
+    return true;
+  }
+
+  async function onboardingStaffComposerSave() {
+    const st = onboardingStaffComposerReadState();
+    if (!st.pendingFullValid) {
+      showToast("Enter a team member name to save.", "error");
+      return;
+    }
+
+    const saveBtn = document.getElementById("onboardingStaffComposerSaveBtn");
+    if (saveBtn) saveBtn.disabled = true;
+    try {
+      const ok = await onboardingPersistStaffFromComposer();
+      if (!ok) return;
+      await loadStaffMembers();
+      closeOnboardingStaffComposer();
+      renderOnboardingStaffStep();
+      refreshOnboardingStaffAdminMirrors();
+      updateWizardStep4Validation();
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  }
+
+  function onboardingStaffComposerCancel() {
+    closeOnboardingStaffComposer();
+    renderOnboardingStaffStep();
+  }
+
+  async function onboardingTryFlushStaffComposerBeforeContinue() {
+    if (!onboardingStaffComposerVisible()) return true;
+
+    const st = onboardingStaffComposerReadState();
+    if (!st.touched) {
+      closeOnboardingStaffComposer();
+      renderOnboardingStaffStep();
+      return true;
+    }
+    if (!st.pendingFullValid) {
+      showToast("Finish the team member card (name required) or tap Cancel to continue.", "error");
+      return false;
+    }
+    const ok = await onboardingPersistStaffFromComposer();
+    if (!ok) return false;
+    await loadStaffMembers();
+    closeOnboardingStaffComposer();
+    renderOnboardingStaffStep();
+    refreshOnboardingStaffAdminMirrors();
+    return true;
+  }
+
+  function updateWizardStep4Validation() {
+    const step = getAdminOnboardingStep();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (!contBtn || step !== 4) return;
+
+    const st = onboardingStaffComposerReadState();
+    const ok = !onboardingStep4Advancing && !st.partialInvalid;
+    contBtn.disabled = !ok;
+    contBtn.setAttribute("aria-busy", onboardingStep4Advancing ? "true" : "false");
+  }
+
+  function syncDashboardAvailabilityFieldsFromBusinessSettings() {
+    if (!businessSettings) return;
+    try {
+      const ws = document.getElementById("workStart");
+      const we = document.getElementById("workEnd");
+      if (ws) ws.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
+      if (we) we.value = snapTimeStringToQuarterHour(businessSettings.work_end || "17:00");
+      document.getElementById("breakStart").value = String(businessSettings.break_start ?? "").trim();
+      document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
+      hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
+      syncAllTimeStepperDisplaysUnder(document.body);
+      document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
+      const days = getWorkingDaysArray();
+      document.querySelectorAll(".workDay").forEach((cb) => {
+        cb.checked = days.includes(Number(cb.value));
+      });
+    } catch (e) {
+      /* dashboard nodes may be absent in edge cases */
+    }
+  }
+
   const ADMIN_ONBOARDING_UI_STEPS = [
     {
       slug: "Business",
       title: "What's your business called?",
-      guidance: "This name shows on your public booking page and in customer emails.",
-      helper: "Next, we’ll help you choose a simple link so customers find you quickly.",
-      placeholder: "Brand name & link editor coming in Phase B — placeholders only."
+      guidance:
+        "Customers will see this on your booking page. Choose a simple name customers can remember.",
+      helper: "You can change branding later in Settings whenever you like.",
+      placeholder: ""
     },
     {
       slug: "Services",
-      title: "What customers book",
-      guidance: "Add services customers can choose—haircut, cleaning session, consultation, and more.",
-      helper: "Each service has a length so we only offer times that truly fit your calendar.",
-      placeholder: "Your service list editor will appear here."
+      title: "Add the services customers can book.",
+      guidance: "Customers will choose from these services when booking.",
+      helper:
+        "Start simple—you can always add more later. You can edit services anytime in Settings.",
+      placeholder: ""
     },
     {
       slug: "Availability",
-      title: "When you accept bookings",
-      guidance: "Choose when customers can schedule appointments.",
-      helper: "Basic hours and breaks come first. Advanced calendars stay under Settings later.",
-      placeholder: "Working days & hours setup goes here."
+      title: "When can customers book appointments?",
+      guidance: "Choose the days customers can book appointments.",
+      helper: "Keep it simple for now—you can fine-tune schedules anytime in Settings.",
+      placeholder: ""
     },
     {
       slug: "Staff",
-      title: "Your team (optional)",
-      guidance: "If it’s just you, skip this—you can always add employees later.",
-      helper: "You can skip staff and add employees later.",
-      placeholder: "Staff setup will appear here."
+      title: "Who can customers book with?",
+      guidance: "Add employees only if customers should be able to book with them.",
+      helper:
+        "Skip this if you work alone—you can still take every booking yourself. You can add or change team members later in Settings.",
+      placeholder: ""
     },
     {
       slug: "Booking page",
@@ -4279,7 +7069,7 @@
     return s;
   }
 
-  function renderAdminOnboardingShell() {
+  async function renderAdminOnboardingShell() {
     const step = getAdminOnboardingStep();
     const idx = step - 1;
     const meta = ADMIN_ONBOARDING_UI_STEPS[idx] || ADMIN_ONBOARDING_UI_STEPS[0];
@@ -4302,13 +7092,90 @@
     document.getElementById("adminOnboardingStepTitle").textContent = meta.title;
     document.getElementById("adminOnboardingGuidance").textContent = meta.guidance;
     document.getElementById("adminOnboardingHelper").textContent = meta.helper;
-    document.getElementById("adminOnboardingPlaceholder").textContent = meta.placeholder;
+
+    const step1Panel = document.getElementById("adminOnboardingStep1Panel");
+    const step2Panel = document.getElementById("adminOnboardingStep2Panel");
+    const step3Panel = document.getElementById("adminOnboardingStep3Panel");
+    const step4Panel = document.getElementById("adminOnboardingStep4Panel");
+    const placeholderEl = document.getElementById("adminOnboardingPlaceholder");
+
+    if (step === 1) {
+      if (step1Panel) step1Panel.classList.remove("hidden");
+      if (step2Panel) step2Panel.classList.add("hidden");
+      if (step3Panel) step3Panel.classList.add("hidden");
+      if (step4Panel) step4Panel.classList.add("hidden");
+      if (placeholderEl) {
+        placeholderEl.textContent = "";
+        placeholderEl.classList.add("hidden");
+      }
+      hydrateOnboardingStep1FromSettings();
+    } else if (step === 2) {
+      if (step1Panel) step1Panel.classList.add("hidden");
+      if (step2Panel) step2Panel.classList.remove("hidden");
+      if (step3Panel) step3Panel.classList.add("hidden");
+      if (step4Panel) step4Panel.classList.add("hidden");
+      if (placeholderEl) {
+        placeholderEl.textContent = "";
+        placeholderEl.classList.add("hidden");
+      }
+      await hydrateOnboardingStep2();
+    } else if (step === 3) {
+      if (step1Panel) step1Panel.classList.add("hidden");
+      if (step2Panel) step2Panel.classList.add("hidden");
+      if (step3Panel) step3Panel.classList.remove("hidden");
+      if (step4Panel) step4Panel.classList.add("hidden");
+      if (placeholderEl) {
+        placeholderEl.textContent = "";
+        placeholderEl.classList.add("hidden");
+      }
+      hydrateOnboardingStep3();
+    } else if (step === 4) {
+      if (step1Panel) step1Panel.classList.add("hidden");
+      if (step2Panel) step2Panel.classList.add("hidden");
+      if (step3Panel) step3Panel.classList.add("hidden");
+      if (step4Panel) step4Panel.classList.remove("hidden");
+      if (placeholderEl) {
+        placeholderEl.textContent = "";
+        placeholderEl.classList.add("hidden");
+      }
+      await hydrateOnboardingStep4();
+    } else {
+      if (step1Panel) step1Panel.classList.add("hidden");
+      if (step2Panel) step2Panel.classList.add("hidden");
+      if (step3Panel) step3Panel.classList.add("hidden");
+      if (step4Panel) step4Panel.classList.add("hidden");
+      if (placeholderEl) {
+        placeholderEl.classList.remove("hidden");
+        placeholderEl.textContent = meta.placeholder;
+      }
+    }
 
     const backBtn = document.getElementById("adminOnboardingBackBtn");
-    if (backBtn) backBtn.disabled = step <= 1;
+    if (backBtn) {
+      backBtn.disabled =
+        step <= 1 ||
+        onboardingStep1Saving ||
+        onboardingStep2Advancing ||
+        onboardingStep3Advancing ||
+        onboardingStep4Advancing;
+    }
 
     const contBtn = document.getElementById("adminOnboardingContinueBtn");
-    if (contBtn) contBtn.textContent = step >= 5 ? "Finish & open dashboard" : "Continue";
+    if (contBtn) {
+      contBtn.textContent = step >= 5 ? "Finish & open dashboard" : "Continue";
+      if (step === 1) {
+        updateWizardStep1Validation();
+      } else if (step === 2) {
+        updateWizardStep2Validation();
+      } else if (step === 3) {
+        updateWizardStep3Validation();
+      } else if (step === 4) {
+        updateWizardStep4Validation();
+      } else {
+        contBtn.disabled = false;
+        contBtn.removeAttribute("aria-busy");
+      }
+    }
 
     const mainScroll = document.querySelector("#adminOnboardingView .wizard-main");
     if (mainScroll) mainScroll.scrollTop = 0;
@@ -4333,19 +7200,87 @@
 
   async function adminOnboardingContinue() {
     const step = getAdminOnboardingStep();
+    if (step === 1) {
+      const ok = await saveAdminOnboardingStep1AndAdvance();
+      if (ok) await renderAdminOnboardingShell();
+      return;
+    }
+    if (step === 2) {
+      onboardingStep2Advancing = true;
+      updateWizardStep2Validation();
+      let advanceToShell = false;
+      try {
+        const flushed = await onboardingTryFlushComposerBeforeContinue();
+        if (!flushed) return;
+
+        await loadServices();
+        renderOnboardingServicesStep();
+        updateWizardStep2Validation();
+
+        if (services.length < 1) {
+          showToast("Add at least one service with a valid name and duration.", "error");
+          return;
+        }
+
+        const badSaved = services.some((s) => {
+          const n = String(s.name || "").trim();
+          const d = Number(s.duration);
+          return !(n.length > 0 && Number.isFinite(d) && d > 0 && d <= 999);
+        });
+
+        if (badSaved) {
+          showToast("Each service needs a valid name and a duration over zero.", "error");
+          return;
+        }
+
+        const ok = await persistAdminOnboardingStep(3);
+        if (!ok) return;
+        advanceToShell = true;
+      } finally {
+        onboardingStep2Advancing = false;
+        updateWizardStep2Validation();
+      }
+      if (advanceToShell) await renderAdminOnboardingShell();
+      return;
+    }
+    if (step === 3) {
+      const ok = await saveAdminOnboardingStep3AndAdvance();
+      if (ok) await renderAdminOnboardingShell();
+      return;
+    }
+    if (step === 4) {
+      onboardingStep4Advancing = true;
+      updateWizardStep4Validation();
+      let advanceToShell = false;
+      try {
+        const flushed = await onboardingTryFlushStaffComposerBeforeContinue();
+        if (!flushed) return;
+        const ok = await persistAdminOnboardingStep(5);
+        if (!ok) return;
+        advanceToShell = true;
+      } finally {
+        onboardingStep4Advancing = false;
+        updateWizardStep4Validation();
+      }
+      if (advanceToShell) await renderAdminOnboardingShell();
+      return;
+    }
     if (step >= 5) {
       await completeAdminOnboardingPhaseA();
       return;
     }
     const ok = await persistAdminOnboardingStep(step + 1);
-    if (ok) renderAdminOnboardingShell();
+    if (ok) await renderAdminOnboardingShell();
   }
 
   async function adminOnboardingBack() {
+    onboardingStep2Advancing = false;
+    onboardingStep3Advancing = false;
+    onboardingStep4Advancing = false;
     const step = getAdminOnboardingStep();
     if (step <= 1) return;
     const ok = await persistAdminOnboardingStep(step - 1);
-    if (ok) renderAdminOnboardingShell();
+    if (ok) await renderAdminOnboardingShell();
   }
 
   async function completeAdminOnboardingPhaseA() {
@@ -5092,6 +8027,7 @@
         work_start: "09:00",
         work_end: "17:00",
         working_days: [1, 2, 3, 4, 5],
+        working_hours_overrides: null,
         break_start: null,
         break_end: null,
         booking_window_weeks: 4,
@@ -5168,10 +8104,14 @@
     if (document.getElementById("businessAccentColorPicker")) document.getElementById("businessAccentColorPicker").value = accent;
     previewBusinessPublicLink();
     previewBusinessBranding();
-    document.getElementById("workStart").value = businessSettings.work_start || "09:00";
-    document.getElementById("workEnd").value = businessSettings.work_end || "17:00";
-    document.getElementById("breakStart").value = businessSettings.break_start || "";
-    document.getElementById("breakEnd").value = businessSettings.break_end || "";
+    const wS = document.getElementById("workStart");
+    const wE = document.getElementById("workEnd");
+    if (wS) wS.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
+    if (wE) wE.value = snapTimeStringToQuarterHour(businessSettings.work_end || "17:00");
+    document.getElementById("breakStart").value = String(businessSettings.break_start ?? "").trim();
+    document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
+    hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
+    syncAllTimeStepperDisplaysUnder(document.body);
     document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
 
     const days = getWorkingDaysArray();
@@ -5210,6 +8150,11 @@
       return;
     }
 
+    if (!validateConditionalDayOverridesForContainer("settingsDayOverrideRows", "settings")) {
+      showToast("Check optional weekday overrides: each enabled day needs Opens before Closes (15-minute times).", "error")
+      return;
+    }
+
     if (!slugValue) {
       showToast("Business ID / slug is required.", "error")
       return;
@@ -5223,9 +8168,10 @@
       business_phone: document.getElementById("businessPhone")?.value.trim() || null,
       business_description: document.getElementById("businessDescription")?.value.trim() || null,
       business_accent_color: getBusinessAccentColorFromForm(),
-      work_start: document.getElementById("workStart").value,
-      work_end: document.getElementById("workEnd").value,
+      work_start: snapTimeStringToQuarterHour(String(document.getElementById("workStart").value || "").trim()),
+      work_end: snapTimeStringToQuarterHour(String(document.getElementById("workEnd").value || "").trim()),
       working_days: workingDays,
+      working_hours_overrides: collectDayOverridesPayload("settingsDayOverrideRows", "settings"),
       break_start: document.getElementById("breakStart").value || null,
       break_end: document.getElementById("breakEnd").value || null,
       booking_window_weeks: Number(document.getElementById("bookingWindowWeeks").value || 4)
@@ -5590,18 +8536,100 @@
     staffMembers.forEach(staff => {
       const div = document.createElement("div");
       div.className = "list-item";
+
+      const photoRaw = String(staff.photo_url || "").trim();
+      const initials = escapeHtml(staffMemberInitials(staff.name));
+
+      let avatarHtml = `
+        <div class="staff-list-avatar-slot" aria-hidden="true">
+          <div class="staff-list-avatar-initials">${initials}</div>
+        </div>`;
+      if (photoRaw) {
+        const safePhoto = escapeHtml(photoRaw);
+        avatarHtml = `
+        <div class="staff-list-avatar-slot" aria-hidden="true">
+          <img
+            class="staff-list-avatar-photo"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            src="${safePhoto}"
+            onerror="this.classList.add('staff-list-avatar-photo--err')"
+          />
+          <div class="staff-list-avatar-initials">${initials}</div>
+        </div>`;
+      }
+
       div.innerHTML = `
-        <strong>${escapeHtml(staff.name)}</strong><br>
-        <span class="small">${escapeHtml(staff.role || "Staff")} ${staff.active === false ? "• Inactive" : "• Active"}</span>
-        <div class="actions">
-          <button onclick="toggleStaffActive('${staff.id}', ${staff.active === false ? 'true' : 'false'})">
-            ${staff.active === false ? 'Activate' : 'Deactivate'}
-          </button>
-          <button class="danger" onclick="deleteStaffMember('${staff.id}')">Delete</button>
+        <div class="staff-list-main">
+          ${avatarHtml}
+          <div class="staff-list-text">
+            <strong>${escapeHtml(staff.name)}</strong><br>
+            <span class="small">${escapeHtml(staff.role || "Staff")} ${staff.active === false ? "• Inactive" : "• Active"}</span>
+            <div class="actions">
+              <button onclick="toggleStaffActive('${staff.id}', ${staff.active === false ? 'true' : 'false'})">
+                ${staff.active === false ? 'Activate' : 'Deactivate'}
+              </button>
+              <button class="danger" onclick="deleteStaffMember('${staff.id}')">Delete</button>
+            </div>
+          </div>
         </div>
       `;
       box.appendChild(div);
     });
+  }
+
+  function triggerDashboardStaffPhotoPick() {
+    if (!currentUser) {
+      showToast("Login as Admin to upload a photo.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Open Admin dashboard first so your business is loaded.", "error");
+      return;
+    }
+    document.getElementById("staffMemberPhotoFile")?.click();
+  }
+
+  function syncDashboardStaffPhotoClearBtn() {
+    const input = document.getElementById("staffMemberPhotoFile");
+    const clearBtn = document.getElementById("staffMemberPhotoClearBtn");
+    const has = !!(input && input.files && input.files[0]);
+    if (clearBtn) clearBtn.classList.toggle("hidden", !has);
+  }
+
+  function handleDashboardStaffPhotoChosen() {
+    const input = document.getElementById("staffMemberPhotoFile");
+    const file = input?.files?.[0];
+    if (!file) {
+      syncDashboardStaffPhotoClearBtn();
+      return;
+    }
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      if (input) input.value = "";
+      syncDashboardStaffPhotoClearBtn();
+      return;
+    }
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Photo must be 3 MB or smaller.", "error");
+      if (input) input.value = "";
+      syncDashboardStaffPhotoClearBtn();
+      return;
+    }
+    if (!getLogoFileExtension(file)) {
+      showToast("Unsupported image type.", "error");
+      if (input) input.value = "";
+      syncDashboardStaffPhotoClearBtn();
+      return;
+    }
+    syncDashboardStaffPhotoClearBtn();
+  }
+
+  function clearDashboardStaffPhotoSelection() {
+    const input = document.getElementById("staffMemberPhotoFile");
+    if (input) input.value = "";
+    syncDashboardStaffPhotoClearBtn();
   }
 
   async function addStaffMember() {
@@ -5613,27 +8641,51 @@
     const name = document.getElementById("staffName").value.trim();
     const role = document.getElementById("staffRole").value.trim();
 
+    const photoInput = document.getElementById("staffMemberPhotoFile");
+    const photoFile = photoInput?.files?.[0];
+
     if (!name) {
       showToast("Enter staff name.", "error")
       return;
     }
 
-    const { error } = await sb
+    const { data, error } = await sb
       .from("staff_members")
       .insert({
         business_id: businessId,
         name,
         role: role || null,
         active: true
-      });
+      })
+      .select("id")
+      .single();
 
     if (error) {
       showToast("Add staff error: " + error.message, "error")
       return;
     }
 
+    const newId = data?.id;
+
+    if (photoFile && newId) {
+      const uploaded = await uploadStaffMemberPhotoFromFile(newId, photoFile);
+      if (!uploaded.ok) {
+        /* Row exists without photo — upload errors already toasted. */
+      } else {
+        const { error: perr } = await sb
+          .from("staff_members")
+          .update({ photo_url: uploaded.publicUrl })
+          .eq("id", newId)
+          .eq("business_id", businessId);
+        if (perr) {
+          showToast("Staff added but photo was not linked: " + perr.message, "error");
+        }
+      }
+    }
+
     document.getElementById("staffName").value = "";
     document.getElementById("staffRole").value = "";
+    clearDashboardStaffPhotoSelection();
 
     await loadStaffMembers();
     renderStaffMembers();
@@ -5665,6 +8717,10 @@
 
   async function deleteStaffMember(id) {
     if (!confirm("Delete this staff member? Existing bookings will keep working, but staff may become empty if SQL uses ON DELETE SET NULL.")) return;
+
+    if (initSupabaseClient() && id) {
+      await deleteStaffPhotoStorageForMember(id);
+    }
 
     const { error } = await sb
       .from("staff_members")
@@ -6086,8 +9142,9 @@
 
     const start = timeToMinutes(time);
     const end = start + duration;
-    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
-    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+    const win = getWorkWindowForDayOfWeek(dateObj.getDay());
+    const workStart = timeToMinutes(win.start);
+    const workEnd = timeToMinutes(win.end);
 
     if (start < workStart || end > workEnd) {
       showToast("This booking is outside working hours.", "error")
@@ -6224,8 +9281,10 @@
 
     const start = timeToMinutes(newTime);
     const end = start + Number(getServiceDurationValue(selectedEditService));
-    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
-    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+    const editDow = new Date(newDate + "T00:00:00").getDay();
+    const win = getWorkWindowForDayOfWeek(editDow);
+    const workStart = timeToMinutes(win.start);
+    const workEnd = timeToMinutes(win.end);
 
     if (start < workStart || end > workEnd) {
       showToast("This booking is outside working hours.", "error")
@@ -6575,9 +9634,11 @@
 
     const selectedStaffId = getSelectedPublicStaffId();
 
+    const dowSlot = dayOfWeekFromDateStr(dateStr);
+    const winSlot = getWorkWindowForDayOfWeek(dowSlot);
     const slots = generateSlots(
-      businessSettings.work_start || "09:00",
-      businessSettings.work_end || "17:00",
+      winSlot.start,
+      winSlot.end,
       getServiceDurationValue(selectedService)
     );
 
@@ -6836,6 +9897,320 @@
     const h = Math.floor(minutes / 60);
     const m = minutes % 60;
     return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+  }
+
+  const WORK_DAY_ORDER_MON_FIRST = Object.freeze([1, 2, 3, 4, 5, 6, 0]);
+  const DOW_LABELS = Object.freeze({
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  });
+
+  function snapMinutesToQuarterHour(totalMin) {
+    const q = 15;
+    const rounded = Math.round(totalMin / q) * q;
+    return Math.max(0, Math.min(24 * 60 - q, rounded));
+  }
+
+  function snapTimeStringToQuarterHour(t) {
+    if (!t || typeof t !== "string") return "09:00";
+    const s = t.trim();
+    if (!/^\d{2}:\d{2}$/.test(s)) return "09:00";
+    try {
+      return minutesToTime(snapMinutesToQuarterHour(timeToMinutes(s)));
+    } catch (e) {
+      return "09:00";
+    }
+  }
+
+  function bumpTimeStringByQuantum(prev, deltaMin) {
+    if (!prev || typeof prev !== "string") return "09:00";
+    try {
+      return minutesToTime(snapMinutesToQuarterHour(timeToMinutes(prev) + deltaMin));
+    } catch (e2) {
+      return "09:00";
+    }
+  }
+
+  function syncTimeStepperDisplay(stepper) {
+    if (!stepper) return;
+    const input = stepper.querySelector('input[type="hidden"]');
+    const label = stepper.querySelector(".time-stepper__value");
+    if (!input || !label) return;
+
+    const allowEmpty = stepper.getAttribute("data-allow-empty") === "true";
+    const raw = (input.value || "").trim();
+
+    if (allowEmpty && !raw) {
+      label.textContent = "\u2014 : \u2014";
+      label.classList.add("time-stepper__value--empty");
+      return;
+    }
+
+    label.classList.remove("time-stepper__value--empty");
+    label.textContent = raw || "09:00";
+  }
+
+  function syncAllTimeStepperDisplaysUnder(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll(".time-stepper").forEach(syncTimeStepperDisplay);
+  }
+
+  function bindDocumentTimeStepperHandlerOnce() {
+    if (bindDocumentTimeStepperHandlerOnce._done) return;
+    bindDocumentTimeStepperHandlerOnce._done = true;
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest(".time-stepper__btn");
+      if (!btn) return;
+      const stepper = btn.closest(".time-stepper");
+      if (!stepper) return;
+      const input = stepper.querySelector('input[type="hidden"]');
+      if (!input) return;
+      const delta = Number(btn.getAttribute("data-delta-min") || "0");
+      if (!delta) return;
+
+      const allowEmpty = stepper.getAttribute("data-allow-empty") === "true";
+      const seedRaw = String(stepper.getAttribute("data-seed-time") || "12:00").trim();
+
+      let cur = (input.value || "").trim();
+
+      if (allowEmpty) {
+        if (!cur) {
+          if (delta < 0) return;
+          input.value = snapTimeStringToQuarterHour(seedRaw);
+          syncTimeStepperDisplay(stepper);
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+          return;
+        }
+
+        if (delta < 0) {
+          try {
+            const m = timeToMinutes(cur);
+            if (m < 15) {
+              input.value = "";
+              syncTimeStepperDisplay(stepper);
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+              input.dispatchEvent(new Event("change", { bubbles: true }));
+              return;
+            }
+          } catch (eClear) {
+            input.value = "";
+            syncTimeStepperDisplay(stepper);
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+            return;
+          }
+        }
+      }
+
+      const base = cur || "09:00";
+      input.value = bumpTimeStringByQuantum(base, delta);
+      syncTimeStepperDisplay(stepper);
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  }
+
+  function normalizeWorkingHoursOverrides(raw) {
+    const out = {};
+    if (!raw || typeof raw !== "object") return out;
+    Object.keys(raw).forEach((key) => {
+      const dow = Number(key);
+      if (!Number.isFinite(dow) || dow < 0 || dow > 6) return;
+      const v = raw[key];
+      if (!v || typeof v !== "object") return;
+      let start = String(v.start ?? "").trim();
+      let end = String(v.end ?? "").trim();
+      if (!/^\d{2}:\d{2}$/.test(start) || !/^\d{2}:\d{2}$/.test(end)) return;
+      start = snapTimeStringToQuarterHour(start);
+      end = snapTimeStringToQuarterHour(end);
+      let sm;
+      let em;
+      try {
+        sm = timeToMinutes(start);
+        em = timeToMinutes(end);
+      } catch (e2) {
+        return;
+      }
+      if (!(em > sm)) return;
+      out[String(dow)] = { start, end };
+    });
+    return out;
+  }
+
+  function getWorkingHoursOverridesEffective() {
+    return normalizeWorkingHoursOverrides(businessSettings?.working_hours_overrides);
+  }
+
+  /** @returns {{ start: string, end: string }} */
+  function getWorkWindowForDayOfWeek(dow) {
+    const overrides = getWorkingHoursOverridesEffective();
+    const key = String(dow);
+    if (overrides[key]) return { start: overrides[key].start, end: overrides[key].end };
+    return {
+      start: businessSettings?.work_start || "09:00",
+      end: businessSettings?.work_end || "17:00"
+    };
+  }
+
+  function dayOfWeekFromDateStr(dateStr) {
+    return new Date(dateStr + "T12:00:00").getDay();
+  }
+
+  function ensureDayOverrideRowsBuilt(containerId, fieldPrefix) {
+    const wrap = document.getElementById(containerId);
+    if (!wrap || wrap.dataset.built === "1") return wrap;
+    WORK_DAY_ORDER_MON_FIRST.forEach((dow) => {
+      const nm = String(dow);
+      const row = document.createElement("div");
+      row.className = "wizard-override-row";
+      row.dataset.overrideDow = nm;
+      const label = document.createElement("label");
+      label.className = "wizard-override-row-head";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.className = "wizard-override-enable";
+      cb.setAttribute("aria-label", "Custom hours for " + DOW_LABELS[nm]);
+      label.appendChild(cb);
+      const sp = document.createElement("span");
+      sp.textContent = DOW_LABELS[nm] || nm;
+      label.appendChild(sp);
+      const stepWrap = document.createElement("div");
+      stepWrap.className = "wizard-override-steppers";
+      stepWrap.hidden = true;
+      const grid = document.createElement("div");
+      grid.className = "wizard-override-window";
+      const addStepper = (which, initial) => {
+        const mini = document.createElement("span");
+        mini.className = "wizard-override-mini-label";
+        mini.textContent = which === "start" ? "Opens" : "Closes";
+        const ts = document.createElement("div");
+        ts.className = "time-stepper";
+        ts.setAttribute("role", "group");
+        ts.setAttribute("aria-label", (which === "start" ? "Opens " : "Closes ") + DOW_LABELS[nm]);
+        const b1 = document.createElement("button");
+        b1.type = "button";
+        b1.className = "time-stepper__btn";
+        b1.setAttribute("data-delta-min", "-15");
+        b1.setAttribute("aria-label", "15 minutes earlier");
+        b1.textContent = "−";
+        const span = document.createElement("span");
+        span.className = "time-stepper__value";
+        span.setAttribute("aria-live", "polite");
+        const hid = document.createElement("input");
+        hid.type = "hidden";
+        hid.id = `${fieldPrefix}_override_${which}_${nm}`;
+        hid.value = initial;
+        hid.autocomplete = "off";
+        const b2 = document.createElement("button");
+        b2.type = "button";
+        b2.className = "time-stepper__btn";
+        b2.setAttribute("data-delta-min", "15");
+        b2.setAttribute("aria-label", "15 minutes later");
+        b2.textContent = "+";
+        ts.appendChild(b1);
+        ts.appendChild(span);
+        ts.appendChild(hid);
+        ts.appendChild(b2);
+        grid.appendChild(mini);
+        grid.appendChild(ts);
+        syncTimeStepperDisplay(ts);
+      };
+      addStepper("start", "09:00");
+      addStepper("end", "17:00");
+      stepWrap.appendChild(grid);
+      row.appendChild(label);
+      row.appendChild(stepWrap);
+      wrap.appendChild(row);
+      cb.addEventListener("change", () => {
+        stepWrap.hidden = !cb.checked;
+        const ctx = wrap.dataset.overrideContext;
+        if (ctx === "onboarding-step3") updateWizardStep3Validation();
+      });
+    });
+    wrap.dataset.built = "1";
+    syncAllTimeStepperDisplaysUnder(wrap);
+    return wrap;
+  }
+
+  function hydrateDayOverrideRowsUi(containerId, fieldPrefix, rawOverrides) {
+    const wrap = ensureDayOverrideRowsBuilt(containerId, fieldPrefix);
+    if (!wrap) return;
+    const normalized = normalizeWorkingHoursOverrides(rawOverrides);
+    wrap.querySelectorAll(".wizard-override-row").forEach((row) => {
+      const dow = row.dataset.overrideDow;
+      if (dow === undefined) return;
+      const cb = row.querySelector(".wizard-override-enable");
+      const stepWrap = row.querySelector(".wizard-override-steppers");
+      const ov = normalized[String(dow)];
+      const startEl = document.getElementById(`${fieldPrefix}_override_start_${dow}`);
+      const endEl = document.getElementById(`${fieldPrefix}_override_end_${dow}`);
+      if (cb && stepWrap && startEl && endEl) {
+        if (ov) {
+          cb.checked = true;
+          stepWrap.hidden = false;
+          startEl.value = snapTimeStringToQuarterHour(ov.start);
+          endEl.value = snapTimeStringToQuarterHour(ov.end);
+        } else {
+          cb.checked = false;
+          stepWrap.hidden = true;
+          startEl.value = "09:00";
+          endEl.value = "17:00";
+        }
+      }
+    });
+    syncAllTimeStepperDisplaysUnder(wrap);
+  }
+
+  function collectDayOverridesPayload(containerId, fieldPrefix) {
+    const wrap = document.getElementById(containerId);
+    if (!wrap) return null;
+    const out = {};
+    wrap.querySelectorAll(".wizard-override-row").forEach((row) => {
+      const dow = row.dataset.overrideDow;
+      const cb = row.querySelector(".wizard-override-enable");
+      if (!cb?.checked || dow === undefined) return;
+      const sEl = document.getElementById(`${fieldPrefix}_override_start_${dow}`);
+      const eEl = document.getElementById(`${fieldPrefix}_override_end_${dow}`);
+      if (!sEl || !eEl) return;
+      const start = snapTimeStringToQuarterHour(String(sEl.value || "").trim());
+      const end = snapTimeStringToQuarterHour(String(eEl.value || "").trim());
+      if (!/^\d{2}:\d{2}$/.test(start) || !/^\d{2}:\d{2}$/.test(end)) return;
+      let sm;
+      let em;
+      try {
+        sm = timeToMinutes(start);
+        em = timeToMinutes(end);
+      } catch (e) {
+        return;
+      }
+      if (!(em > sm)) return;
+      out[String(dow)] = { start, end };
+    });
+    return Object.keys(out).length ? out : null;
+  }
+
+  function validateConditionalDayOverridesForContainer(containerId, fieldPrefix) {
+    const wrap = document.getElementById(containerId);
+    if (!wrap) return true;
+    let ok = true;
+    wrap.querySelectorAll(".wizard-override-row").forEach((row) => {
+      const dow = row.dataset.overrideDow;
+      const cb = row.querySelector(".wizard-override-enable");
+      if (!cb?.checked) return;
+      const sEl = document.getElementById(`${fieldPrefix}_override_start_${dow}`);
+      const eEl = document.getElementById(`${fieldPrefix}_override_end_${dow}`);
+      const sVal = String(sEl?.value || "").trim();
+      const eVal = String(eEl?.value || "").trim();
+      if (!sVal || !eVal || !/^\d{2}:\d{2}$/.test(sVal) || !/^\d{2}:\d{2}$/.test(eVal)) ok = false;
+      else if (timeToMinutes(eVal) <= timeToMinutes(sVal)) ok = false;
+    });
+    return ok;
   }
 
   function formatDate(year, month, day) {
