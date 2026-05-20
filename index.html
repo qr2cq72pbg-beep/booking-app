@@ -538,19 +538,22 @@
     }
 
     #adminSectionServices > .card.widget-card,
-    #adminSectionStaff > .card.widget-card {
+    #adminSectionStaff > .card.widget-card,
+    #adminSectionAvailability > .card.widget-card {
       padding: 14px 16px !important;
     }
 
     #adminSectionServices .admin-saas__body,
-    #adminSectionStaff .admin-saas__body {
+    #adminSectionStaff .admin-saas__body,
+    #adminSectionAvailability .admin-saas__body {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
     #adminSectionServices .admin-saas__intro,
-    #adminSectionStaff .admin-saas__intro {
+    #adminSectionStaff .admin-saas__intro,
+    #adminSectionAvailability .admin-saas__intro {
       margin: 0 0 8px;
       font-size: 13px;
       color: var(--color-muted);
@@ -558,14 +561,16 @@
     }
 
     #adminSectionServices .admin-saas-status,
-    #adminSectionStaff .admin-saas-status {
+    #adminSectionStaff .admin-saas-status,
+    #adminSectionAvailability .admin-saas-status {
       margin: 0 0 8px;
       font-size: 12px;
       color: var(--color-muted);
     }
 
     #adminSectionServices .admin-saas-form,
-    #adminSectionStaff .admin-saas-form {
+    #adminSectionStaff .admin-saas-form,
+    #adminSectionAvailability .admin-saas-form {
       padding: 10px 12px;
       border: 1px solid var(--color-border);
       border-radius: 10px;
@@ -573,7 +578,8 @@
     }
 
     #adminSectionServices .admin-saas-form__fields,
-    #adminSectionStaff .admin-saas-form__fields {
+    #adminSectionStaff .admin-saas-form__fields,
+    #adminSectionAvailability .admin-saas-form__fields {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
       gap: 8px 10px;
@@ -585,7 +591,8 @@
     }
 
     #adminSectionServices .admin-saas-field,
-    #adminSectionStaff .admin-saas-field {
+    #adminSectionStaff .admin-saas-field,
+    #adminSectionAvailability .admin-saas-field {
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -604,7 +611,8 @@
     }
 
     #adminSectionServices .admin-saas-field__label,
-    #adminSectionStaff .admin-saas-field__label {
+    #adminSectionStaff .admin-saas-field__label,
+    #adminSectionAvailability .admin-saas-field__label {
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.03em;
@@ -614,7 +622,11 @@
     }
 
     #adminSectionServices .admin-saas-field input,
-    #adminSectionStaff .admin-saas-field input {
+    #adminSectionStaff .admin-saas-field input,
+    #adminSectionAvailability .admin-saas-field input,
+    #adminSectionServices .admin-saas-field select,
+    #adminSectionStaff .admin-saas-field select,
+    #adminSectionAvailability .admin-saas-field select {
       width: 100%;
       margin: 0;
       padding: 7px 10px;
@@ -626,14 +638,16 @@
     }
 
     #adminSectionServices .admin-saas-form__actions,
-    #adminSectionStaff .admin-saas-form__actions {
+    #adminSectionStaff .admin-saas-form__actions,
+    #adminSectionAvailability .admin-saas-form__actions {
       display: flex;
       justify-content: flex-end;
       margin-top: 8px;
     }
 
     #adminSectionServices .admin-saas-btn,
-    #adminSectionStaff .admin-saas-btn {
+    #adminSectionStaff .admin-saas-btn,
+    #adminSectionAvailability .admin-saas-btn {
       width: auto;
       min-height: 30px;
       padding: 5px 11px;
@@ -646,17 +660,20 @@
     }
 
     #adminSectionServices .admin-saas-btn:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn:hover:not(:disabled) {
       transform: translateY(-1px);
     }
 
     #adminSectionServices .admin-saas-btn:active:not(:disabled),
-    #adminSectionStaff .admin-saas-btn:active:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn:active:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn:active:not(:disabled) {
       transform: translateY(0);
     }
 
     #adminSectionServices .admin-saas-btn--primary,
-    #adminSectionStaff .admin-saas-btn--primary {
+    #adminSectionStaff .admin-saas-btn--primary,
+    #adminSectionAvailability .admin-saas-btn--primary {
       background: var(--color-primary);
       color: #fff;
       border: none;
@@ -664,80 +681,92 @@
     }
 
     #adminSectionServices .admin-saas-btn--primary:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn--primary:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn--primary:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn--primary:hover:not(:disabled) {
       background: var(--color-primary-hover);
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
     }
 
     #adminSectionServices .admin-saas-btn--ghost,
-    #adminSectionStaff .admin-saas-btn--ghost {
+    #adminSectionStaff .admin-saas-btn--ghost,
+    #adminSectionAvailability .admin-saas-btn--ghost {
       background: transparent;
       color: var(--color-primary);
       border: 1px solid color-mix(in srgb, var(--color-primary) 32%, var(--color-border));
     }
 
     #adminSectionServices .admin-saas-btn--ghost:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn--ghost:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn--ghost:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn--ghost:hover:not(:disabled) {
       background: color-mix(in srgb, var(--color-primary) 9%, transparent);
       border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
     }
 
     #adminSectionServices .admin-saas-btn--ghost-warn,
-    #adminSectionStaff .admin-saas-btn--ghost-warn {
+    #adminSectionStaff .admin-saas-btn--ghost-warn,
+    #adminSectionAvailability .admin-saas-btn--ghost-warn {
       background: transparent;
       color: #c2410c;
       border: 1px solid color-mix(in srgb, #ea580c 30%, var(--color-border));
     }
 
     #adminSectionServices .admin-saas-btn--ghost-warn:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn--ghost-warn:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn--ghost-warn:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn--ghost-warn:hover:not(:disabled) {
       background: color-mix(in srgb, #ea580c 9%, transparent);
       border-color: color-mix(in srgb, #ea580c 45%, var(--color-border));
       color: #9a3412;
     }
 
     #adminSectionServices .admin-saas-btn--ghost-danger,
-    #adminSectionStaff .admin-saas-btn--ghost-danger {
+    #adminSectionStaff .admin-saas-btn--ghost-danger,
+    #adminSectionAvailability .admin-saas-btn--ghost-danger {
       background: transparent;
       color: var(--color-danger);
       border: 1px solid color-mix(in srgb, var(--color-danger) 28%, var(--color-border));
     }
 
     #adminSectionServices .admin-saas-btn--ghost-danger:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn--ghost-danger:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn--ghost-danger:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn--ghost-danger:hover:not(:disabled) {
       background: color-mix(in srgb, var(--color-danger) 8%, transparent);
       border-color: color-mix(in srgb, var(--color-danger) 42%, var(--color-border));
     }
 
     #adminSectionServices .admin-saas-btn--muted,
-    #adminSectionStaff .admin-saas-btn--muted {
+    #adminSectionStaff .admin-saas-btn--muted,
+    #adminSectionAvailability .admin-saas-btn--muted {
       background: var(--color-surface);
       color: var(--color-muted);
       border: 1px solid var(--color-border);
     }
 
     #adminSectionServices .admin-saas-btn--muted:hover:not(:disabled),
-    #adminSectionStaff .admin-saas-btn--muted:hover:not(:disabled) {
+    #adminSectionStaff .admin-saas-btn--muted:hover:not(:disabled),
+    #adminSectionAvailability .admin-saas-btn--muted:hover:not(:disabled) {
       background: var(--admin-surface-2, #f3f4f6);
       color: #374151;
     }
 
     #adminSectionServices .admin-saas-list,
-    #adminSectionStaff .admin-saas-list {
+    #adminSectionStaff .admin-saas-list,
+    #adminSectionAvailability .admin-saas-list {
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
     #adminSectionServices .admin-saas-list .empty-state,
-    #adminSectionStaff .admin-saas-list .empty-state {
+    #adminSectionStaff .admin-saas-list,
+    #adminSectionAvailability .admin-saas-list .empty-state {
       padding: 14px 12px;
       font-size: 13px;
       border-radius: 10px;
     }
 
     #adminSectionServices .admin-saas-row,
-    #adminSectionStaff .admin-saas-row {
+    #adminSectionStaff .admin-saas-row,
+    #adminSectionAvailability .admin-saas-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -750,7 +779,8 @@
     }
 
     #adminSectionServices .admin-saas-row:hover,
-    #adminSectionStaff .admin-saas-row:hover {
+    #adminSectionStaff .admin-saas-row:hover,
+    #adminSectionAvailability .admin-saas-row:hover {
       border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 28%, var(--color-border));
       box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
     }
@@ -901,13 +931,15 @@
     }
 
     #adminSectionServices .admin-saas-row__main,
-    #adminSectionStaff .admin-saas-row__main {
+    #adminSectionStaff .admin-saas-row__main,
+    #adminSectionAvailability .admin-saas-row__main {
       min-width: 0;
       flex: 1;
     }
 
     #adminSectionServices .admin-saas-row__title,
-    #adminSectionStaff .admin-saas-row__title {
+    #adminSectionStaff .admin-saas-row__title,
+    #adminSectionAvailability .admin-saas-row__title {
       font-size: 14px;
       font-weight: 700;
       line-height: 1.3;
@@ -916,7 +948,8 @@
     }
 
     #adminSectionServices .admin-saas-row__meta,
-    #adminSectionStaff .admin-saas-row__meta {
+    #adminSectionStaff .admin-saas-row__meta,
+    #adminSectionAvailability .admin-saas-row__meta {
       margin-top: 1px;
       font-size: 12px;
       font-weight: 500;
@@ -925,7 +958,8 @@
     }
 
     #adminSectionServices .admin-saas-row__actions,
-    #adminSectionStaff .admin-saas-row__actions {
+    #adminSectionStaff .admin-saas-row__actions,
+    #adminSectionAvailability .admin-saas-row__actions {
       display: flex;
       flex-shrink: 0;
       align-items: center;
@@ -933,7 +967,8 @@
     }
 
     #adminSectionServices .admin-saas-edit-panel,
-    #adminSectionStaff .admin-saas-edit-panel {
+    #adminSectionStaff .admin-saas-edit-panel,
+    #adminSectionAvailability .admin-saas-edit-panel {
       margin-top: 8px;
       padding: 10px 12px;
       border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
@@ -942,26 +977,30 @@
     }
 
     #adminSectionServices .admin-saas-edit-panel h2,
-    #adminSectionStaff .admin-saas-edit-panel h2 {
+    #adminSectionStaff .admin-saas-edit-panel,
+    #adminSectionAvailability .admin-saas-edit-panel h2 {
       margin: 0 0 8px;
       font-size: 0.95rem;
       font-weight: 700;
     }
 
     #adminSectionServices .admin-saas-edit-panel .admin-saas-form__fields,
-    #adminSectionStaff .admin-saas-edit-panel .admin-saas-form__fields {
+    #adminSectionStaff .admin-saas-edit-panel,
+    #adminSectionAvailability .admin-saas-edit-panel .admin-saas-form__fields {
       margin-bottom: 0;
     }
 
     #adminSectionServices .admin-saas-edit-panel .admin-saas-form__actions,
-    #adminSectionStaff .admin-saas-edit-panel .admin-saas-form__actions {
+    #adminSectionStaff .admin-saas-edit-panel,
+    #adminSectionAvailability .admin-saas-edit-panel .admin-saas-form__actions {
       margin-top: 8px;
       justify-content: flex-start;
       gap: 8px;
     }
 
     #adminSectionServices .admin-saas-edit-panel .admin-saas-hint,
-    #adminSectionStaff .admin-saas-edit-panel .admin-saas-hint {
+    #adminSectionStaff .admin-saas-edit-panel,
+    #adminSectionAvailability .admin-saas-edit-panel .admin-saas-hint {
       margin: 8px 0 0;
       font-size: 12px;
       color: var(--color-muted);
@@ -969,14 +1008,20 @@
 
     body.app-theme-dark #adminSectionServices .admin-saas-form,
     body.app-theme-dark #adminSectionStaff .admin-saas-form,
+    body.app-theme-dark #adminSectionAvailability .admin-saas-form,
     body.app-theme-dark #adminSectionServices .admin-saas-row,
-    body.app-theme-dark #adminSectionStaff .admin-saas-row {
+    body.app-theme-dark #adminSectionStaff .admin-saas-row,
+    body.app-theme-dark #adminSectionAvailability .admin-saas-row {
       background: var(--admin-surface-2, #151d2e);
       border-color: var(--admin-border, #334155);
     }
 
     body.app-theme-dark #adminSectionServices .admin-saas-field input,
-    body.app-theme-dark #adminSectionStaff .admin-saas-field input {
+    body.app-theme-dark #adminSectionStaff .admin-saas-field input,
+    body.app-theme-dark #adminSectionAvailability .admin-saas-field input,
+    body.app-theme-dark #adminSectionServices .admin-saas-field select,
+    body.app-theme-dark #adminSectionStaff .admin-saas-field select,
+    body.app-theme-dark #adminSectionAvailability .admin-saas-field select {
       background: var(--admin-surface, #1e293b);
       border-color: var(--admin-border, #334155);
       color: var(--admin-text, #f1f5f9);
@@ -1026,6 +1071,209 @@
       }
 
       #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions {
+        width: 100%;
+      }
+    }
+
+    /* Availability — compact SaaS subsections */
+    #adminSectionAvailability .admin-saas-availability {
+      gap: 14px;
+    }
+
+    #adminSectionAvailability .admin-saas-subsection {
+      padding: 10px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-surface);
+    }
+
+    #adminSectionAvailability .admin-saas-subsection + .admin-saas-subsection {
+      margin-top: 0;
+    }
+
+    #adminSectionAvailability .admin-saas-subsection__title {
+      margin: 0 0 4px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    #adminSectionAvailability .admin-saas-subsection__hint {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.4;
+    }
+
+    #adminSectionAvailability .admin-saas-time-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 12px;
+      align-items: end;
+    }
+
+    #adminSectionAvailability .admin-saas-time-field__label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--color-muted);
+    }
+
+    #adminSectionAvailability .time-stepper {
+      min-height: 38px;
+      border-radius: 10px;
+      border-color: var(--color-border);
+      background: var(--admin-surface-2, #f8fafc);
+    }
+
+    #adminSectionAvailability .time-stepper__btn {
+      flex: 0 0 36px;
+      min-height: 38px;
+      font-size: 18px;
+      background: var(--color-surface);
+    }
+
+    #adminSectionAvailability .time-stepper__value {
+      font-size: 15px;
+      font-weight: 700;
+      background: var(--color-surface);
+    }
+
+    #adminSectionAvailability .admin-saas-override-details {
+      margin-top: 8px;
+      border: 1px dashed var(--color-border);
+      border-radius: 8px;
+      padding: 6px 10px 8px;
+      background: var(--admin-surface-2, #f8fafc);
+    }
+
+    #adminSectionAvailability .admin-saas-override-details summary {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-muted);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    #adminSectionAvailability .admin-saas-override-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #adminSectionAvailability .admin-saas-override-details .wizard-override-hint {
+      margin: 6px 0 8px;
+      font-size: 12px;
+    }
+
+    #adminSectionAvailability .admin-saas-override-details .wizard-override-row {
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pill {
+      position: relative;
+      cursor: pointer;
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pill input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pill span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-muted);
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pill input:checked + span {
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 12%, var(--color-surface));
+      border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 45%, var(--color-border));
+      color: var(--color-primary);
+      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
+    }
+
+    #adminSectionAvailability .admin-saas-weekday-pill input:focus-visible + span {
+      outline: 2px solid var(--business-accent, var(--color-primary));
+      outline-offset: 2px;
+    }
+
+    #adminSectionAvailability .admin-saas-break-status {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-muted);
+    }
+
+    #adminSectionAvailability .admin-saas-break-status--empty {
+      font-style: italic;
+      color: #94a3b8;
+    }
+
+    #adminSectionAvailability .admin-saas-form__fields--closed {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+
+    #adminSectionAvailability .admin-saas-save-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    #adminSectionAvailability .admin-saas-save-bar .admin-saas-btn--primary {
+      min-width: 140px;
+    }
+
+    body.app-theme-dark #adminSectionAvailability .admin-saas-subsection,
+    body.app-theme-dark #adminSectionAvailability .admin-saas-override-details {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionAvailability .time-stepper {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionAvailability .time-stepper__btn,
+    body.app-theme-dark #adminSectionAvailability .time-stepper__value {
+      background: var(--admin-surface, #1e293b);
+      color: var(--admin-text, #f1f5f9);
+    }
+
+    body.app-theme-dark #adminSectionAvailability .admin-saas-weekday-pill span {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+      color: var(--admin-muted, #94a3b8);
+    }
+
+    @media (max-width: 720px) {
+      #adminSectionAvailability .admin-saas-time-grid,
+      #adminSectionAvailability .admin-saas-form__fields--closed {
+        grid-template-columns: 1fr;
+      }
+
+      #adminSectionAvailability .admin-saas-save-bar .admin-saas-btn--primary {
         width: 100%;
       }
     }
@@ -5718,93 +5966,122 @@
           </section>
 
           <section id="adminSectionAvailability" class="admin-section" data-admin-section="availability" hidden aria-label="Availability">
-      <div class="card widget-card">
-        <h2 class="admin-section-title">Availability</h2>
-<div id="widgetSettings" class="widget-content">
+      <div class="card widget-card admin-saas">
+        <h2 class="admin-section-title admin-saas__title">Availability</h2>
+        <div id="widgetSettings" class="widget-content admin-saas__body admin-saas-availability">
 
-        <h3 class="small" style="margin-top:0;margin-bottom:4px;font-weight:800">Working hours</h3>
-        <p class="small">Default opening hours for each working day (15-minute increments).</p>
-        <div class="settings-time-row-labeled row">
-          <div>
-            <label class="small" for="workStart"><strong>Opens</strong></label>
-            <div class="time-stepper" role="group" aria-label="Default opening time">
-              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-              <span class="time-stepper__value" aria-live="polite">09:00</span>
-              <input type="hidden" id="workStart" value="09:00" autocomplete="off" />
-              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+          <section class="admin-saas-subsection" aria-labelledby="availabilityHoursHeading">
+            <h3 id="availabilityHoursHeading" class="admin-saas-subsection__title">Working hours</h3>
+            <p class="admin-saas-subsection__hint">Default opening hours for each working day (15-minute steps).</p>
+            <div class="admin-saas-time-grid">
+              <div class="admin-saas-time-field">
+                <label class="admin-saas-time-field__label" for="workStart">Opens</label>
+                <div class="time-stepper" role="group" aria-label="Default opening time">
+                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                  <span class="time-stepper__value" aria-live="polite">09:00</span>
+                  <input type="hidden" id="workStart" value="09:00" autocomplete="off" />
+                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                </div>
+              </div>
+              <div class="admin-saas-time-field">
+                <label class="admin-saas-time-field__label" for="workEnd">Closes</label>
+                <div class="time-stepper" role="group" aria-label="Default closing time">
+                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                  <span class="time-stepper__value" aria-live="polite">17:00</span>
+                  <input type="hidden" id="workEnd" value="17:00" autocomplete="off" />
+                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div>
-            <label class="small" for="workEnd"><strong>Closes</strong></label>
-            <div class="time-stepper" role="group" aria-label="Default closing time">
-              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-              <span class="time-stepper__value" aria-live="polite">17:00</span>
-              <input type="hidden" id="workEnd" value="17:00" autocomplete="off" />
-              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+            <details class="admin-saas-override-details wizard-override-details">
+              <summary>Optional overrides for certain weekdays</summary>
+              <p class="wizard-override-hint">Uses the defaults above unless you enable a weekday below.</p>
+              <div id="settingsDayOverrideRows" data-override-context="settings" class="wizard-override-list"></div>
+            </details>
+          </section>
+
+          <section class="admin-saas-subsection" aria-labelledby="availabilityDaysHeading">
+            <h3 id="availabilityDaysHeading" class="admin-saas-subsection__title">Working days</h3>
+            <p class="admin-saas-subsection__hint">Select which days customers can book.</p>
+            <div class="admin-saas-weekday-pills" role="group" aria-label="Working days">
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="1" /><span>Mon</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="2" /><span>Tue</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="3" /><span>Wed</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="4" /><span>Thu</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="5" /><span>Fri</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="6" /><span>Sat</span></label>
+              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="0" /><span>Sun</span></label>
             </div>
-          </div>
-        </div>
+          </section>
 
-        <details class="wizard-override-details" style="margin:12px 0">
-          <summary style="cursor:pointer;font-weight:700;color:#334155">Optional overrides for certain weekdays</summary>
-          <p class="wizard-override-hint">Uses the defaults above unless you enable a weekday below.</p>
-          <div id="settingsDayOverrideRows" data-override-context="settings" class="wizard-override-list"></div>
-        </details>
-
-        <h3>Working Days</h3>
-        <div class="checkbox-grid">
-          <label class="check-card"><input type="checkbox" class="workDay" value="1" /> Monday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="2" /> Tuesday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="3" /> Wednesday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="4" /> Thursday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="5" /> Friday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="6" /> Saturday</label>
-          <label class="check-card"><input type="checkbox" class="workDay" value="0" /> Sunday</label>
-        </div>
-
-        <h3 class="settings-break-heading small">Optional break / pause</h3>
-        <p class="settings-break-hint small">Uses the same 15-minute − / + controls as working hours.</p>
-        <div class="settings-time-row-labeled settings-break-row row">
-          <div>
-            <label class="small" for="breakStart"><strong>Break starts</strong></label>
-            <div class="time-stepper" role="group" aria-label="Break start optional" data-allow-empty="true" data-seed-time="12:00">
-              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-              <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
-              <input type="hidden" id="breakStart" value="" autocomplete="off" />
-              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+          <section class="admin-saas-subsection" aria-labelledby="availabilityBreakHeading">
+            <h3 id="availabilityBreakHeading" class="admin-saas-subsection__title">Break / pause</h3>
+            <p id="availabilityBreakStatus" class="admin-saas-break-status admin-saas-break-status--empty" aria-live="polite">No break set</p>
+            <div class="admin-saas-time-grid">
+              <div class="admin-saas-time-field">
+                <label class="admin-saas-time-field__label" for="breakStart">Break starts</label>
+                <div class="time-stepper" role="group" aria-label="Break start optional" data-allow-empty="true" data-seed-time="12:00">
+                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                  <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                  <input type="hidden" id="breakStart" value="" autocomplete="off" />
+                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                </div>
+              </div>
+              <div class="admin-saas-time-field">
+                <label class="admin-saas-time-field__label" for="breakEnd">Break ends</label>
+                <div class="time-stepper" role="group" aria-label="Break end optional" data-allow-empty="true" data-seed-time="13:00">
+                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                  <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                  <input type="hidden" id="breakEnd" value="" autocomplete="off" />
+                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div>
-            <label class="small" for="breakEnd"><strong>Break ends</strong></label>
-            <div class="time-stepper" role="group" aria-label="Break end optional" data-allow-empty="true" data-seed-time="13:00">
-              <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-              <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
-              <input type="hidden" id="breakEnd" value="" autocomplete="off" />
-              <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
-            </div>
-          </div>
-        </div>
+          </section>
 
-        <div class="row">
-          <input id="bookingWindowWeeks" type="number" min="1" max="52" value="4" placeholder="Booking window weeks" />
-          <button type="button" class="success" onclick="saveBusinessSettings()">Save availability settings</button>
+          <section class="admin-saas-subsection" aria-labelledby="availabilityWindowHeading">
+            <h3 id="availabilityWindowHeading" class="admin-saas-subsection__title">Booking window</h3>
+            <p class="admin-saas-subsection__hint">How far ahead customers can schedule appointments.</p>
+            <label class="admin-saas-field">
+              <span class="admin-saas-field__label">Book ahead</span>
+              <select id="bookingWindowWeeks" aria-label="Booking window in weeks">
+                <option value="1">1 week</option>
+                <option value="2">2 weeks</option>
+                <option value="4" selected>4 weeks</option>
+                <option value="8">8 weeks</option>
+              </select>
+            </label>
+          </section>
+
+          <div class="admin-saas-save-bar">
+            <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="saveBusinessSettings()">Save availability</button>
+          </div>
         </div>
       </div>
 
-      <div class="card widget-card">
-        <h3>Blocked / closed days</h3>
-<div id="widgetBlocked" class="widget-content">
-        <p class="small">Add days when your business is closed — holidays, time off, etc.</p>
+      <div class="card widget-card admin-saas" style="margin-top:10px">
+        <div id="widgetBlocked" class="admin-saas__body">
+          <h3 class="admin-saas-subsection__title">Closed days</h3>
+          <p class="admin-saas-subsection__hint">Block holidays, time off, or other days when you are closed.</p>
 
-        <div class="row">
-          <input id="blockedDate" type="date" />
-          <input id="blockedReason" placeholder="Reason optional, e.g. Holiday" />
+          <div class="admin-saas-form">
+            <div class="admin-saas-form__fields admin-saas-form__fields--closed">
+              <label class="admin-saas-field">
+                <span class="admin-saas-field__label">Date</span>
+                <input id="blockedDate" type="date" />
+              </label>
+              <label class="admin-saas-field">
+                <span class="admin-saas-field__label">Reason</span>
+                <input id="blockedReason" type="text" placeholder="Optional, e.g. Holiday" autocomplete="off" />
+              </label>
+            </div>
+            <div class="admin-saas-form__actions">
+              <button type="button" class="admin-saas-btn admin-saas-btn--ghost-warn" onclick="addBlockedDay()">Add closed day</button>
+            </div>
+          </div>
+
+          <div id="blockedDaysList" class="admin-saas-list" role="list" aria-label="Closed days"></div>
         </div>
-
-        <button class="danger" onclick="addBlockedDay()">Add Closed Day</button>
-
-        <h3>Closed Days List</h3>
-        <div id="blockedDaysList"></div></div>
       </div>
           </section>
 
@@ -11648,7 +11925,10 @@
       document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
       hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
       syncAllTimeStepperDisplaysUnder(document.body);
-      document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
+      const bookingWindowEl = document.getElementById("bookingWindowWeeks");
+      if (bookingWindowEl) {
+        bookingWindowEl.value = String(normalizeBookingWindowWeeksForSelect(businessSettings.booking_window_weeks));
+      }
       const days = getWorkingDaysArray();
       document.querySelectorAll(".workDay").forEach((cb) => {
         cb.checked = days.includes(Number(cb.value));
@@ -12792,7 +13072,10 @@
     document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
     hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
     syncAllTimeStepperDisplaysUnder(document.body);
-    document.getElementById("bookingWindowWeeks").value = businessSettings.booking_window_weeks || 4;
+    const bookingWindowEl = document.getElementById("bookingWindowWeeks");
+    if (bookingWindowEl) {
+      bookingWindowEl.value = String(normalizeBookingWindowWeeksForSelect(businessSettings.booking_window_weeks));
+    }
 
     const days = getWorkingDaysArray();
     document.querySelectorAll(".workDay").forEach(cb => {
@@ -14662,13 +14945,15 @@
 
     blockedDays.forEach(d => {
       const div = document.createElement("div");
-      div.className = "list-item";
+      div.className = "admin-saas-row";
+      div.setAttribute("role", "listitem");
       div.innerHTML = `
-        <strong>${d.date}</strong>
-        <br>
-        <span class="small">${escapeHtml(d.reason || "No reason")}</span>
-        <div class="actions">
-          <button class="danger" onclick="deleteBlockedDay('${d.id}')">Remove</button>
+        <div class="admin-saas-row__main">
+          <div class="admin-saas-row__title">${escapeHtml(d.date)}</div>
+          <div class="admin-saas-row__meta">${escapeHtml(d.reason || "No reason")}</div>
+        </div>
+        <div class="admin-saas-row__actions">
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger" onclick="deleteBlockedDay('${d.id}')">Remove</button>
         </div>
       `;
       box.appendChild(div);
@@ -15252,9 +15537,36 @@
     label.textContent = raw || "09:00";
   }
 
+  function normalizeBookingWindowWeeksForSelect(value) {
+    const n = Number(value) || 4;
+    const allowed = [1, 2, 4, 8];
+    if (allowed.includes(n)) return n;
+    return allowed.reduce((best, cur) => (Math.abs(cur - n) < Math.abs(best - n) ? cur : best));
+  }
+
+  function syncAvailabilityBreakStatus() {
+    const hint = document.getElementById("availabilityBreakStatus");
+    if (!hint) return;
+    const start = String(document.getElementById("breakStart")?.value || "").trim();
+    const end = String(document.getElementById("breakEnd")?.value || "").trim();
+    if (!start && !end) {
+      hint.textContent = "No break set";
+      hint.classList.add("admin-saas-break-status--empty");
+      return;
+    }
+    if (start && end) {
+      hint.textContent = `Break ${start} – ${end}`;
+      hint.classList.remove("admin-saas-break-status--empty");
+      return;
+    }
+    hint.textContent = "Set both break start and end, or clear both";
+    hint.classList.remove("admin-saas-break-status--empty");
+  }
+
   function syncAllTimeStepperDisplaysUnder(root) {
     if (!root || !root.querySelectorAll) return;
     root.querySelectorAll(".time-stepper").forEach(syncTimeStepperDisplay);
+    syncAvailabilityBreakStatus();
   }
 
   function bindDocumentTimeStepperHandlerOnce() {
