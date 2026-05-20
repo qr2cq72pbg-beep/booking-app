@@ -1186,7 +1186,8 @@
     #adminSectionServices > .card.widget-card,
     #adminSectionStaff > .card.widget-card,
     #adminSectionAvailability > .card.widget-card,
-    #adminSectionCalendar > .card.widget-card {
+    #adminSectionCalendar > .card.widget-card,
+    #adminSectionBookings > .card.widget-card {
       padding: 14px 16px !important;
     }
 
@@ -1719,6 +1720,434 @@
 
       #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions {
         width: 100%;
+      }
+    }
+
+    /* —— Admin Bookings compact SaaS —— */
+    #adminSectionBookings .admin-saas__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #adminSectionBookings .admin-saas-status {
+      margin: 0;
+      font-size: 12px;
+      color: var(--color-muted);
+    }
+
+    #adminSectionBookings .admin-saas-btn {
+      width: auto;
+      min-height: 30px;
+      padding: 5px 11px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.25;
+      border-radius: 8px;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+    }
+
+    #adminSectionBookings .admin-saas-btn--primary {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      box-shadow: 0 1px 2px rgba(37, 99, 235, 0.2);
+    }
+
+    #adminSectionBookings .admin-saas-btn--primary:hover:not(:disabled) {
+      background: var(--color-primary-hover);
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1px solid color-mix(in srgb, var(--color-primary) 32%, var(--color-border));
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--color-primary) 9%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost-warn {
+      background: transparent;
+      color: #c2410c;
+      border: 1px solid color-mix(in srgb, #ea580c 30%, var(--color-border));
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost-warn:hover:not(:disabled) {
+      background: color-mix(in srgb, #ea580c 9%, transparent);
+      color: #9a3412;
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost-danger {
+      background: transparent;
+      color: var(--color-danger);
+      border: 1px solid color-mix(in srgb, var(--color-danger) 28%, var(--color-border));
+    }
+
+    #adminSectionBookings .admin-saas-btn--ghost-danger:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-btn--muted {
+      background: var(--color-surface);
+      color: var(--color-muted);
+      border: 1px solid var(--color-border);
+    }
+
+    #adminSectionBookings .admin-saas-btn--muted:hover:not(:disabled) {
+      background: var(--admin-surface-2, #f3f4f6);
+      color: #374151;
+    }
+
+    #adminSectionBookings .admin-saas-bookings-panel {
+      gap: 0;
+    }
+
+    #adminSectionBookings .admin-saas-bookings-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 8px 10px;
+      padding: 10px 12px;
+      margin: 0 0 8px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--admin-surface-2, #f8fafc);
+      box-shadow: 0 1px 0 color-mix(in srgb, var(--color-border) 80%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-toolbar-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    #adminSectionBookings .admin-saas-toolbar-field--grow {
+      flex: 1 1 180px;
+      min-width: 140px;
+    }
+
+    #adminSectionBookings .admin-saas-toolbar-field .admin-saas-field__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    #adminSectionBookings .admin-saas-toolbar-field input,
+    #adminSectionBookings .admin-saas-toolbar-field select {
+      width: 100%;
+      margin: 0;
+      padding: 7px 10px;
+      min-height: 34px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    #adminSectionBookings .admin-saas-toolbar-actions {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    #adminSectionBookings .admin-saas-bookings-scroll {
+      max-height: min(68vh, 680px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    #adminSectionBookings .admin-saas-bookings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    #adminSectionBookings .admin-saas-bookings-list .empty-state {
+      padding: 14px 12px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    #adminSectionBookings .admin-saas-row--booking {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 8px 11px;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      background: var(--color-surface);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    #adminSectionBookings .admin-saas-row--booking:hover {
+      border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 28%, var(--color-border));
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    }
+
+    #adminSectionBookings .admin-saas-row--booking.admin-saas-row--cancelled {
+      opacity: 0.68;
+      background: color-mix(in srgb, var(--color-surface) 94%, #f1f5f9);
+    }
+
+    #adminSectionBookings .admin-saas-booking__main {
+      min-width: 0;
+    }
+
+    #adminSectionBookings .admin-saas-booking__title {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: inherit;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .admin-saas-booking__service {
+      margin-top: 1px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text, #1e293b);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .admin-saas-booking__when,
+    #adminSectionBookings .admin-saas-booking__staff {
+      margin-top: 1px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-muted);
+      line-height: 1.35;
+    }
+
+    #adminSectionBookings .admin-saas-booking__contact {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--color-muted);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .admin-saas-booking__notes {
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--color-muted);
+      font-style: italic;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    #adminSectionBookings .admin-saas-booking__status {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 88px;
+    }
+
+    #adminSectionBookings .admin-saas-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    #adminSectionBookings .admin-saas-badge--confirmed {
+      background: #dcfce7;
+      color: #166534;
+      border-color: color-mix(in srgb, #22c55e 45%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-badge--pending {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: color-mix(in srgb, #f59e0b 45%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-badge--cancelled {
+      background: color-mix(in srgb, #fee2e2 70%, var(--color-surface));
+      color: #9f1239;
+      border-color: color-mix(in srgb, #f87171 40%, transparent);
+    }
+
+    #adminSectionBookings .admin-saas-row--booking .admin-saas-row__actions {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel {
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-border));
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--color-primary) 5%, var(--color-surface));
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel h2 {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 10px;
+      margin-bottom: 8px;
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel .row input,
+    #adminSectionBookings .admin-saas-edit-panel .row select,
+    #adminSectionBookings .admin-saas-edit-panel textarea {
+      width: 100%;
+      margin: 0;
+      padding: 7px 10px;
+      min-height: 34px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel textarea {
+      min-height: 72px;
+      margin-bottom: 8px;
+    }
+
+    #adminSectionBookings .admin-saas-edit-panel .admin-saas-form__actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 0;
+    }
+
+    #adminSectionBookings .admin-saas-hint {
+      margin: 8px 0 0;
+      font-size: 12px;
+      color: var(--color-muted);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-bookings-toolbar {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.4);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-toolbar-field input,
+    body.app-theme-dark #adminSectionBookings .admin-saas-toolbar-field select,
+    body.app-theme-dark #adminSectionBookings .admin-saas-edit-panel .row input,
+    body.app-theme-dark #adminSectionBookings .admin-saas-edit-panel .row select,
+    body.app-theme-dark #adminSectionBookings .admin-saas-edit-panel textarea {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+      color: var(--admin-text, #f1f5f9);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-row--booking {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-row--booking:hover {
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 35%, var(--admin-border, #334155));
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-booking__service {
+      color: var(--admin-text, #f1f5f9);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-edit-panel {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 6%, var(--admin-surface, #1e293b));
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-badge--confirmed {
+      background: color-mix(in srgb, #22c55e 22%, transparent);
+      color: #86efac;
+      border-color: color-mix(in srgb, #4ade80 40%, transparent);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-badge--pending {
+      background: color-mix(in srgb, #f59e0b 22%, transparent);
+      color: #fcd34d;
+      border-color: color-mix(in srgb, #fbbf24 40%, transparent);
+    }
+
+    body.app-theme-dark #adminSectionBookings .admin-saas-badge--cancelled {
+      background: color-mix(in srgb, #f87171 14%, transparent);
+      color: #fca5a5;
+      border-color: color-mix(in srgb, #f87171 35%, transparent);
+    }
+
+    @media (max-width: 900px) {
+      #adminSectionBookings .admin-saas-bookings-toolbar {
+        align-items: stretch;
+      }
+
+      #adminSectionBookings .admin-saas-toolbar-actions {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #adminSectionBookings .admin-saas-row--booking {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "main status"
+          "actions actions";
+      }
+
+      #adminSectionBookings .admin-saas-booking__main {
+        grid-area: main;
+      }
+
+      #adminSectionBookings .admin-saas-booking__status {
+        grid-area: status;
+        min-width: 0;
+        justify-content: flex-end;
+      }
+
+      #adminSectionBookings .admin-saas-row--booking .admin-saas-row__actions {
+        grid-area: actions;
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 4px;
+        border-top: 1px solid var(--color-border);
+      }
+
+      #adminSectionBookings .admin-saas-edit-panel .row {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -6958,8 +7387,8 @@
           </section>
 
           <section id="adminSectionBookings" class="admin-section" data-admin-section="bookings" hidden aria-label="Bookings">
-      <div id="editBookingCard" class="card edit-box hidden">
-        <h2>Edit Booking</h2>
+      <div id="editBookingCard" class="admin-saas-edit-panel hidden">
+        <h2>Edit booking</h2>
         <input id="editBookingId" type="hidden" />
 
         <div class="row">
@@ -6988,40 +7417,46 @@
 
         <textarea id="editNotes" placeholder="Notes optional"></textarea>
 
-        <div class="actions">
-          <button class="success" onclick="saveEditedBooking()">Save Changes</button>
-          <button type="button" class="secondary" onclick="cancelEditBooking()">Close</button>
+        <div class="admin-saas-form__actions">
+          <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="saveEditedBooking()">Save changes</button>
+          <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="cancelEditBooking()">Close</button>
         </div>
 
-        <p class="small">
+        <p class="admin-saas-hint">
           Save проверува дали терминот се судира со друг booking и дали денот е closed.
         </p>
       </div>
 
-      <div class="card widget-card">
-        <h2 class="admin-section-title">Bookings</h2>
-<div id="widgetBookings" class="widget-content">
-
-        <div class="filter-box">
-          <h3>Search / Filter</h3>
-
-          <div class="three">
-            <input id="bookingSearch" placeholder="Search name, phone, email..." oninput="renderBookings()" />
-            <input id="bookingDateFilter" type="date" onchange="renderBookings()" />
-            <select id="bookingServiceFilter" onchange="renderBookings()">
-              <option value="">All services</option>
-            </select>
+      <div class="card widget-card admin-saas">
+        <h2 class="admin-section-title admin-saas__title">Bookings</h2>
+        <div id="widgetBookings" class="widget-content admin-saas__body admin-saas-bookings-panel">
+          <div class="admin-saas-bookings-toolbar" role="search">
+            <label class="admin-saas-toolbar-field admin-saas-toolbar-field--grow">
+              <span class="admin-saas-field__label">Search</span>
+              <input id="bookingSearch" type="search" placeholder="Name, phone, email…" oninput="renderBookings()" autocomplete="off" />
+            </label>
+            <label class="admin-saas-toolbar-field">
+              <span class="admin-saas-field__label">Date</span>
+              <input id="bookingDateFilter" type="date" onchange="renderBookings()" />
+            </label>
+            <label class="admin-saas-toolbar-field">
+              <span class="admin-saas-field__label">Service</span>
+              <select id="bookingServiceFilter" onchange="renderBookings()">
+                <option value="">All services</option>
+              </select>
+            </label>
+            <div class="admin-saas-toolbar-actions">
+              <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="clearBookingFilters()">Clear</button>
+              <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="renderBookings()">Apply</button>
+            </div>
           </div>
 
-          <div class="row">
-            <button class="secondary" onclick="clearBookingFilters()">Clear Filters</button>
-            <button onclick="renderBookings()">Apply Filters</button>
-          </div>
+          <p id="bookingFilterInfo" class="admin-saas-status"></p>
 
-          <p id="bookingFilterInfo" class="small"></p>
+          <div class="admin-saas-bookings-scroll">
+            <div id="bookingsList" class="admin-saas-list admin-saas-bookings-list" role="list" aria-label="Bookings"></div>
+          </div>
         </div>
-
-        <div id="bookingsList"></div></div>
       </div>
           </section>
 
@@ -15199,6 +15634,12 @@
     await refreshBookingsAfterChange(false);
   }
 
+  function getBookingSaasBadgeClass(status) {
+    if (status === "Confirmed") return "admin-saas-badge--confirmed";
+    if (status === "Cancelled") return "admin-saas-badge--cancelled";
+    return "admin-saas-badge--pending";
+  }
+
   function renderBookings() {
     const box = document.getElementById("bookingsList");
     const info = document.getElementById("bookingFilterInfo");
@@ -15208,7 +15649,7 @@
     const filteredBookings = getFilteredBookings();
 
     if (info) {
-      info.innerText = `Showing ${filteredBookings.length} of ${bookings.length} bookings.`;
+      info.innerText = `Showing ${filteredBookings.length} of ${bookings.length} bookings`;
     }
 
     if (!filteredBookings.length) {
@@ -15216,28 +15657,46 @@
       return;
     }
 
-    filteredBookings.forEach(b => {
-      const service = services.find(s => s.id === b.service_id);
+    filteredBookings.forEach((b) => {
+      const service = services.find((s) => s.id === b.service_id);
       const status = getBookingStatus(b);
+      const serviceName = service?.name || b.service_name || "Unknown service";
+      const staffName = getStaffName(b.staff_id);
+      const timeStr = String(b.time || "").slice(0, 5);
+      const phone = String(b.customer_phone || "").trim();
+      const email = String(b.customer_email || "").trim();
+      const contactParts = [];
+      if (phone) contactParts.push(phone);
+      if (email) contactParts.push(email);
+      const contactLine = contactParts.length ? contactParts.join(" · ") : "—";
+      const notes = String(b.notes || "").trim();
+
       const div = document.createElement("div");
-      div.className = "list-item";
+      div.className =
+        "admin-saas-row admin-saas-row--booking" + (status === "Cancelled" ? " admin-saas-row--cancelled" : "");
+      div.setAttribute("role", "listitem");
+
+      const cancelBtn =
+        status !== "Cancelled"
+          ? `<button type="button" class="admin-saas-btn admin-saas-btn--ghost-warn" onclick="cancelBooking('${b.id}')">Cancel</button>`
+          : "";
+
       div.innerHTML = `
-        <strong>${escapeHtml(b.customer_name || "Customer")}</strong><br>
-        <span class="small">
-          ${b.date} at ${b.time}<br>
-          <span class="status-badge ${getStatusClass(status)}">${status}</span><br>
-          Service: ${escapeHtml(service?.name || b.service_name || "Unknown")}<br>
-          Staff: ${escapeHtml(getStaffName(b.staff_id))}<br>
-          Phone: ${escapeHtml(b.customer_phone || "")}<br>
-          Email: ${escapeHtml(b.customer_email || "")}<br>
-          Notes: ${escapeHtml(b.notes || "")}
-        </span>
-        <div class="actions">
-          <button type="button" onclick="editBooking('${b.id}')">Edit</button>
-          ${status !== "Cancelled" ? `
-          <button type="button" class="danger" onclick="cancelBooking('${b.id}')">Cancel booking</button>
-          ` : ""}
-          <button type="button" class="danger" onclick="deleteBooking('${b.id}')">Delete</button>
+        <div class="admin-saas-booking__main">
+          <div class="admin-saas-booking__title">${escapeHtml(b.customer_name || "Customer")}</div>
+          <div class="admin-saas-booking__service">${escapeHtml(serviceName)}</div>
+          <div class="admin-saas-booking__when">${escapeHtml(b.date)} · ${escapeHtml(timeStr)}</div>
+          <div class="admin-saas-booking__staff">${escapeHtml(staffName)}</div>
+          <div class="admin-saas-booking__contact">${escapeHtml(contactLine)}</div>
+          ${notes ? `<div class="admin-saas-booking__notes">${escapeHtml(notes)}</div>` : ""}
+        </div>
+        <div class="admin-saas-booking__status">
+          <span class="admin-saas-badge ${getBookingSaasBadgeClass(status)}">${escapeHtml(status)}</span>
+        </div>
+        <div class="admin-saas-row__actions">
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost" onclick="editBooking('${b.id}')">Edit</button>
+          ${cancelBtn}
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger" onclick="deleteBooking('${b.id}')">Delete</button>
         </div>
       `;
       box.appendChild(div);
