@@ -434,6 +434,268 @@
       align-items: start;
     }
 
+    /* —— Fullscreen admin onboarding wizard (premium shell, mobile-first) —— */
+    body.wizard-open {
+      overflow: hidden;
+    }
+
+    body.wizard-open .topbar {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #adminOnboardingView.wizard-fs {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(165deg, #f8fafc 0%, #eef2ff 45%, #f1f5f9 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    #adminOnboardingView.wizard-fs.hidden {
+      display: none;
+    }
+
+    .wizard-topbar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px calc(16px + env(safe-area-inset-right, 0px)) 10px calc(16px + env(safe-area-inset-left, 0px));
+      padding-top: calc(14px + env(safe-area-inset-top, 0px));
+    }
+
+    .wizard-brand {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    .wizard-brand span {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .wizard-logout {
+      min-height: 44px;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-sm, 8px);
+    }
+
+    .wizard-main {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 16px 24px;
+      padding-left: calc(16px + env(safe-area-inset-left, 0px));
+      padding-right: calc(16px + env(safe-area-inset-right, 0px));
+    }
+
+    .wizard-inner {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .wizard-step-counter {
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      margin: 0 0 14px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .wizard-pills {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .wizard-pill {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #64748b;
+      background: #fff;
+      border: 2px solid #e2e8f0;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .wizard-pill--done {
+      background: #ecfdf5;
+      border-color: #86efac;
+      color: #047857;
+    }
+
+    .wizard-pill--active {
+      background: var(--color-primary, #2563eb);
+      border-color: var(--color-primary, #2563eb);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .wizard-progress-track {
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .wizard-progress-fill {
+      height: 100%;
+      background: var(--color-primary, #2563eb);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .wizard-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 22px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .wizard-step-headline {
+      font-size: clamp(1.45rem, 5vw, 1.65rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #0f172a;
+      margin: 0 0 12px;
+    }
+
+    .wizard-step-subtitle {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #334155;
+      margin: 0 0 10px;
+    }
+
+    .wizard-step-helper {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #64748b;
+      margin: 0 0 24px;
+    }
+
+    .wizard-step-placeholder {
+      min-height: 120px;
+      padding: 24px 18px;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 15px;
+      line-height: 1.5;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wizard-footer {
+      flex-shrink: 0;
+      padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(16px + env(safe-area-inset-left, 0px));
+      padding-right: calc(16px + env(safe-area-inset-right, 0px));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(248, 250, 252, 0.97) 22%, #f8fafc 100%);
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .wizard-footer-inner {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .wizard-footer-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .wizard-footer-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .wizard-footer-row button {
+      flex: 1;
+      min-height: 52px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    .wizard-footer-row .wizard-btn-back {
+      flex: 0 0 auto;
+      min-width: 100px;
+    }
+
+    .wizard-footer-row .wizard-btn-continue {
+      flex: 1;
+    }
+
+    .wizard-skip-btn {
+      width: 100%;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 12px;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    .wizard-footer-hint {
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+      margin: 12px 0 0;
+      line-height: 1.45;
+    }
+
+    @media (min-width: 480px) {
+      .wizard-footer-actions {
+        flex-direction: column;
+      }
+
+      .wizard-footer-row {
+        flex-direction: row;
+      }
+
+      .wizard-footer-row .wizard-btn-back {
+        flex: 1;
+        max-width: 140px;
+      }
+    }
+
     .widget-card {
       padding: var(--space-md) !important;
       margin-bottom: 0;
@@ -1799,6 +2061,54 @@
 
 </div>
 
+    </div>
+
+    <div id="adminOnboardingView" class="wizard-fs hidden">
+      <header class="wizard-topbar">
+        <div class="wizard-brand">
+          Booking
+          <span>Setup wizard</span>
+        </div>
+        <button type="button" class="secondary wizard-logout" onclick="logout()">Log out</button>
+      </header>
+
+      <main class="wizard-main">
+        <div class="wizard-inner">
+          <p id="adminOnboardingProgressLabel" class="wizard-step-counter">Step 1 of 5</p>
+
+          <div class="wizard-pills" role="list" aria-label="Setup steps">
+            <span class="wizard-pill" data-wizard-step="1" role="listitem" aria-current="step">1</span>
+            <span class="wizard-pill" data-wizard-step="2" role="listitem">2</span>
+            <span class="wizard-pill" data-wizard-step="3" role="listitem">3</span>
+            <span class="wizard-pill" data-wizard-step="4" role="listitem">4</span>
+            <span class="wizard-pill" data-wizard-step="5" role="listitem">5</span>
+          </div>
+
+          <div class="wizard-progress-track" aria-hidden="true">
+            <div id="adminOnboardingProgressFill" class="wizard-progress-fill" style="width:20%"></div>
+          </div>
+
+          <article class="wizard-card">
+            <h1 id="adminOnboardingStepTitle" class="wizard-step-headline"></h1>
+            <p id="adminOnboardingGuidance" class="wizard-step-subtitle"></p>
+            <p id="adminOnboardingHelper" class="wizard-step-helper"></p>
+            <div id="adminOnboardingPlaceholder" class="wizard-step-placeholder"></div>
+          </article>
+        </div>
+      </main>
+
+      <footer class="wizard-footer">
+        <div class="wizard-footer-inner">
+          <div class="wizard-footer-actions">
+            <div class="wizard-footer-row">
+              <button type="button" class="secondary wizard-btn-back" id="adminOnboardingBackBtn" onclick="adminOnboardingBack()">Back</button>
+              <button type="button" class="success wizard-btn-continue" id="adminOnboardingContinueBtn" onclick="adminOnboardingContinue()">Continue</button>
+            </div>
+            <button type="button" class="wizard-skip-btn" onclick="skipAdminOnboardingToDashboard()">Skip setup — open dashboard</button>
+            <p class="wizard-footer-hint">You can finish details later in Business Settings.</p>
+          </div>
+        </div>
+      </footer>
     </div>
 
     <div id="publicView" class="hidden">
@@ -3818,10 +4128,12 @@
   }
 
   function hideAllViews() {
+    document.body.classList.remove("wizard-open");
     document.getElementById("modeView").classList.add("hidden");
     document.getElementById("authView").classList.add("hidden");
     document.getElementById("resetPasswordView").classList.add("hidden");
     document.getElementById("adminView").classList.add("hidden");
+    document.getElementById("adminOnboardingView").classList.add("hidden");
     document.getElementById("publicView").classList.add("hidden");
   }
 
@@ -3873,8 +4185,202 @@
 
   async function restoreAdminSession() {
     businessId = currentUser.id;
+    await bootstrapAdminAfterLogin();
+  }
+
+  async function bootstrapAdminAfterLogin() {
+    await ensureBusinessSettings();
+    await loadBusinessSettings();
+
+    if (!businessSettings) {
+      showAdminView();
+      await loadAdminData();
+      return;
+    }
+
+    if (isAdminOnboardingRequired()) {
+      showAdminOnboardingView();
+      renderAdminOnboardingShell();
+      return;
+    }
+
     showAdminView();
     await loadAdminData();
+  }
+
+  function isAdminOnboardingMigrationPresent(settings) {
+    if (!settings) return false;
+    return (
+      Object.prototype.hasOwnProperty.call(settings, "onboarding_step") ||
+      Object.prototype.hasOwnProperty.call(settings, "onboarding_completed_at")
+    );
+  }
+
+  function isAdminOnboardingRequired() {
+    if (!businessSettings || !businessId) return false;
+    if (!isAdminOnboardingMigrationPresent(businessSettings)) return false;
+
+    /* PostgREST often omits null keys; missing property means "not completed" */
+    const v = businessSettings.onboarding_completed_at;
+    if (v === null || typeof v === "undefined" || String(v).trim() === "") return true;
+    return false;
+  }
+
+  function showAdminOnboardingView() {
+    hideAllViews();
+    document.body.classList.add("wizard-open");
+    document.getElementById("adminOnboardingView").classList.remove("hidden");
+    document.getElementById("logoutBtn").classList.remove("hidden");
+    document.getElementById("homeBtn").classList.add("hidden");
+  }
+
+  const ADMIN_ONBOARDING_UI_STEPS = [
+    {
+      slug: "Business",
+      title: "What's your business called?",
+      guidance: "This name shows on your public booking page and in customer emails.",
+      helper: "Next, we’ll help you choose a simple link so customers find you quickly.",
+      placeholder: "Brand name & link editor coming in Phase B — placeholders only."
+    },
+    {
+      slug: "Services",
+      title: "What customers book",
+      guidance: "Add services customers can choose—haircut, cleaning session, consultation, and more.",
+      helper: "Each service has a length so we only offer times that truly fit your calendar.",
+      placeholder: "Your service list editor will appear here."
+    },
+    {
+      slug: "Availability",
+      title: "When you accept bookings",
+      guidance: "Choose when customers can schedule appointments.",
+      helper: "Basic hours and breaks come first. Advanced calendars stay under Settings later.",
+      placeholder: "Working days & hours setup goes here."
+    },
+    {
+      slug: "Staff",
+      title: "Your team (optional)",
+      guidance: "If it’s just you, skip this—you can always add employees later.",
+      helper: "You can skip staff and add employees later.",
+      placeholder: "Staff setup will appear here."
+    },
+    {
+      slug: "Booking page",
+      title: "Share your booking page",
+      guidance: "Choose how your public page looks and grab your link & QR code.",
+      helper: "Customers keep a simple booking flow; branding stays on your side.",
+      placeholder: "Layouts, QR & sharing tools arrive in the next phase."
+    }
+  ];
+
+  function getAdminOnboardingStep() {
+    let s = Number(businessSettings?.onboarding_step);
+    if (!Number.isFinite(s) || s < 1) s = 1;
+    if (s > 5) s = 5;
+    return s;
+  }
+
+  function renderAdminOnboardingShell() {
+    const step = getAdminOnboardingStep();
+    const idx = step - 1;
+    const meta = ADMIN_ONBOARDING_UI_STEPS[idx] || ADMIN_ONBOARDING_UI_STEPS[0];
+
+    document.getElementById("adminOnboardingProgressLabel").textContent = `Step ${step} of 5`;
+    document.getElementById("adminOnboardingProgressFill").style.width = `${(step / 5) * 100}%`;
+
+    document.querySelectorAll(".wizard-pill").forEach((el) => {
+      const n = Number(el.dataset.wizardStep);
+      el.classList.remove("wizard-pill--done", "wizard-pill--active");
+      el.setAttribute("aria-current", "false");
+      if (Number.isFinite(n)) {
+        if (n === step) {
+          el.classList.add("wizard-pill--active");
+          el.setAttribute("aria-current", "step");
+        } else if (n < step) el.classList.add("wizard-pill--done");
+      }
+    });
+
+    document.getElementById("adminOnboardingStepTitle").textContent = meta.title;
+    document.getElementById("adminOnboardingGuidance").textContent = meta.guidance;
+    document.getElementById("adminOnboardingHelper").textContent = meta.helper;
+    document.getElementById("adminOnboardingPlaceholder").textContent = meta.placeholder;
+
+    const backBtn = document.getElementById("adminOnboardingBackBtn");
+    if (backBtn) backBtn.disabled = step <= 1;
+
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (contBtn) contBtn.textContent = step >= 5 ? "Finish & open dashboard" : "Continue";
+
+    const mainScroll = document.querySelector("#adminOnboardingView .wizard-main");
+    if (mainScroll) mainScroll.scrollTop = 0;
+  }
+
+  async function persistAdminOnboardingStep(nextStep) {
+    if (!businessId || !initSupabaseClient()) return false;
+    const s = Math.max(1, Math.min(5, Number(nextStep) || 1));
+    const { error } = await sb
+      .from("business_settings")
+      .update({ onboarding_step: s })
+      .eq("business_id", businessId);
+
+    if (error) {
+      showToast("Could not save progress: " + error.message, "error");
+      return false;
+    }
+
+    businessSettings.onboarding_step = s;
+    return true;
+  }
+
+  async function adminOnboardingContinue() {
+    const step = getAdminOnboardingStep();
+    if (step >= 5) {
+      await completeAdminOnboardingPhaseA();
+      return;
+    }
+    const ok = await persistAdminOnboardingStep(step + 1);
+    if (ok) renderAdminOnboardingShell();
+  }
+
+  async function adminOnboardingBack() {
+    const step = getAdminOnboardingStep();
+    if (step <= 1) return;
+    const ok = await persistAdminOnboardingStep(step - 1);
+    if (ok) renderAdminOnboardingShell();
+  }
+
+  async function completeAdminOnboardingPhaseA() {
+    if (!businessId || !initSupabaseClient()) return false;
+    const nowIso = new Date().toISOString();
+    const { error } = await sb
+      .from("business_settings")
+      .update({
+        onboarding_completed_at: nowIso,
+        onboarding_step: 5
+      })
+      .eq("business_id", businessId);
+
+    if (error) {
+      showToast("Could not finish setup: " + error.message, "error");
+      return false;
+    }
+
+    businessSettings.onboarding_completed_at = nowIso;
+    businessSettings.onboarding_step = 5;
+    showAdminView();
+    await loadAdminData();
+    showToast("Your dashboard is ready. Finish branding anytime in Settings.", "success");
+    return true;
+  }
+
+  async function skipAdminOnboardingToDashboard() {
+    if (
+      !confirm(
+        "Skip the guided setup and open your dashboard now?\n\nYou can finish branding and services anytime under Business Settings.\nYour public booking link may be incomplete until then."
+      )
+    ) {
+      return;
+    }
+    await completeAdminOnboardingPhaseA();
   }
 
   async function restoreAuthenticatedSession(session) {
@@ -4585,10 +5091,20 @@
         business_accent_color: null,
         work_start: "09:00",
         work_end: "17:00",
-        working_days: [1,2,3,4,5],
+        working_days: [1, 2, 3, 4, 5],
         break_start: null,
         break_end: null,
-        booking_window_weeks: 4
+        booking_window_weeks: 4,
+        onboarding_completed_at: null,
+        onboarding_step: 1,
+        minimum_notice_minutes: 60,
+        business_category: null,
+        timezone: "Europe/Skopje",
+        public_layout: "default",
+        public_show_logo: true,
+        public_show_prices: true,
+        public_show_staff: true,
+        public_show_address: true
       };
 
       const { error } = await sb
