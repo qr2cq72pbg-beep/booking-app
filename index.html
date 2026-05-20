@@ -1258,6 +1258,1213 @@
       min-width: 0;
     }
 
+    /* Step 5 — public page style, share, launch */
+    #adminOnboardingStep5Panel.hidden {
+      display: none !important;
+    }
+
+    #adminOnboardingStep5Panel {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .wizard-step5-heading {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .wizard-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 520px) {
+      .wizard-layout-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    #adminOnboardingView .wizard-layout-card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      cursor: pointer;
+      text-align: left;
+      min-height: 52px;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    #adminOnboardingView .wizard-layout-card:hover {
+      border-color: #cbd5e1;
+    }
+
+    #adminOnboardingView .wizard-layout-card.wizard-layout-card--selected {
+      border-color: var(--color-primary, #2563eb);
+      background: #f8fbff;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary, #2563eb) 18%, transparent);
+    }
+
+    .wizard-layout-card-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0;
+    }
+
+    .wizard-layout-card-desc {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .wizard-layout-mini {
+      border-radius: 10px;
+      overflow: hidden;
+      min-height: 88px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      pointer-events: none;
+    }
+
+    .wizard-layout-mini--minimal {
+      background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
+      padding: 10px;
+    }
+
+    .wizard-layout-mini--minimal .wizard-layout-mini-bar {
+      height: 6px;
+      width: 42%;
+      border-radius: 4px;
+      background: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
+    .wizard-layout-mini--minimal .wizard-layout-mini-line {
+      height: 4px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      margin-bottom: 5px;
+    }
+
+    .wizard-layout-mini--minimal .wizard-layout-mini-line:nth-child(3) {
+      width: 70%;
+    }
+
+    .wizard-layout-mini--cards {
+      background: #f1f5f9;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .wizard-layout-mini--cards .wizard-layout-mini-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+
+    .wizard-layout-mini--cards .wizard-layout-mini-card span {
+      display: block;
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      margin-bottom: 4px;
+    }
+
+    .wizard-layout-mini--dark {
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      padding: 10px;
+    }
+
+    .wizard-layout-mini--dark .wizard-layout-mini-bar {
+      height: 6px;
+      width: 48%;
+      border-radius: 4px;
+      background: #38bdf8;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    .wizard-layout-mini--dark .wizard-layout-mini-line {
+      height: 4px;
+      border-radius: 3px;
+      background: rgba(248, 250, 252, 0.2);
+      margin-bottom: 5px;
+    }
+
+    .wizard-visibility-toggles {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .wizard-visibility-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 15px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .wizard-visibility-row input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--color-primary, #2563eb);
+      flex-shrink: 0;
+    }
+
+    .wizard-step5-share-card {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .wizard-step5-link-preview {
+      word-break: break-all;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #0f172a;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .wizard-step5-share-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .wizard-step5-share-actions button {
+      flex: 1;
+      min-width: 120px;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    .wizard-step5-qr-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .wizard-step5-qr-wrap {
+      background: #fff;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      line-height: 0;
+    }
+
+    #onboardingStep5QrHost canvas,
+    #onboardingStep5QrHost img,
+    #onboardingLaunchQrHost canvas,
+    #onboardingLaunchQrHost img {
+      display: block;
+      width: 160px;
+      height: 160px;
+    }
+
+    .wizard-quick-share {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .wizard-quick-share button {
+      min-height: 44px;
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 999px;
+      width: auto;
+      flex: 0 1 auto;
+    }
+
+    #adminOnboardingLaunchScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px 32px;
+      background: linear-gradient(165deg, #0f172a 0%, #1e3a5f 48%, #0f172a 100%);
+      color: #f8fafc;
+      text-align: center;
+      overflow-y: auto;
+    }
+
+    #adminOnboardingLaunchScreen.hidden {
+      display: none !important;
+    }
+
+    .wizard-launch-inner {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .wizard-launch-badge {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid rgba(74, 222, 128, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .wizard-launch-headline {
+      margin: 0;
+      font-size: clamp(1.65rem, 5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .wizard-launch-sub {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #cbd5e1;
+      max-width: 340px;
+    }
+
+    .wizard-launch-business {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .wizard-launch-link-box {
+      width: 100%;
+      word-break: break-all;
+      font-size: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+    }
+
+    .wizard-launch-qr-wrap {
+      background: #fff;
+      padding: 12px;
+      border-radius: 16px;
+      line-height: 0;
+    }
+
+    .wizard-launch-actions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .wizard-launch-actions button {
+      min-height: 52px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 14px;
+      width: 100%;
+    }
+
+    .wizard-launch-actions .success {
+      background: #22c55e;
+      border-color: #16a34a;
+    }
+
+    /* Public page layout themes (visual only) */
+    #publicBookingContent.public-layout-minimal .public-booking-hero-card {
+      box-shadow: none;
+      border: 1px solid var(--color-border);
+      border-top-width: 3px;
+    }
+
+    #publicBookingContent.public-layout-minimal .public-booking-card:not(.public-booking-hero-card) {
+      box-shadow: none;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+    }
+
+    #publicBookingContent.public-layout-cards {
+      background: #f1f5f9;
+      padding: 4px 0 24px;
+      border-radius: var(--radius-lg);
+    }
+
+    #publicBookingContent.public-layout-cards .public-booking-card {
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    #publicBookingContent.public-layout-dark {
+      background: #0f172a;
+      padding: 8px 12px 28px;
+      border-radius: var(--radius-lg);
+      color: #e2e8f0;
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-card {
+      background: #1e293b;
+      border-color: #334155;
+      color: #e2e8f0;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-hero-card {
+      border-top-color: var(--business-accent, #38bdf8);
+    }
+
+    #publicBookingContent.public-layout-dark #publicBusinessName,
+    #publicBookingContent.public-layout-dark h2,
+    #publicBookingContent.public-layout-dark h3 {
+      color: #f8fafc;
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-tagline,
+    #publicBookingContent.public-layout-dark .public-booking-intro,
+    #publicBookingContent.public-layout-dark .public-business-meta,
+    #publicBookingContent.public-layout-dark .small {
+      color: #94a3b8;
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-about {
+      color: #cbd5e1;
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-intro {
+      border-bottom-color: #334155;
+    }
+
+    #publicBookingContent.public-layout-dark select,
+    #publicBookingContent.public-layout-dark input,
+    #publicBookingContent.public-layout-dark textarea {
+      background: #0f172a;
+      border-color: #475569;
+      color: #f8fafc;
+    }
+
+    #publicBookingContent.public-layout-dark .slot:not(.booked):not(.break):not(.closed) {
+      background: #334155;
+      color: #f8fafc;
+      border-color: #475569;
+    }
+
+    /* —— Premium public booking page (dark barber/salon) —— */
+    #publicBookingContent {
+      --public-bg: #0b1120;
+      --public-surface: #151d2e;
+      --public-surface-2: #1a2438;
+      --public-border: rgba(148, 163, 184, 0.18);
+      --public-text: #f1f5f9;
+      --public-muted: #94a3b8;
+      --business-accent: #38bdf8;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 16px 32px;
+      color: var(--public-text);
+    }
+
+    .public-booking-shell {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--public-border);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+      background: var(--public-bg);
+    }
+
+    .public-booking-body {
+      padding: 0;
+    }
+
+    .public-booking-wizard {
+      padding: 0 16px 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .public-booking-wizard {
+        padding: 0 28px 28px;
+      }
+    }
+
+    .public-booking-progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 20px 8px 24px;
+      flex-wrap: wrap;
+    }
+
+    .public-booking-progress-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--public-muted);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .public-booking-progress-item--active {
+      color: #fff;
+    }
+
+    .public-booking-progress-item--done {
+      color: color-mix(in srgb, var(--business-accent, #38bdf8) 85%, #fff);
+    }
+
+    .public-booking-progress-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 2px solid var(--public-border);
+      background: var(--public-surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .public-booking-progress-item--active .public-booking-progress-dot,
+    .public-booking-progress-item--done .public-booking-progress-dot {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 18%, var(--public-surface-2));
+      color: #fff;
+    }
+
+    .public-booking-progress-item--active .public-booking-progress-dot {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #38bdf8) 25%, transparent);
+    }
+
+    .public-booking-progress-sep {
+      width: 24px;
+      height: 2px;
+      background: var(--public-border);
+      margin: 0 4px;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .public-booking-progress-sep {
+        width: 40px;
+      }
+
+      .public-booking-progress-item {
+        font-size: 13px;
+      }
+    }
+
+    .public-booking-steps-viewport {
+      position: relative;
+      min-height: 280px;
+    }
+
+    .public-booking-step {
+      display: none;
+      opacity: 0;
+      transform: translateX(16px);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+    }
+
+    .public-booking-step:not([hidden]) {
+      display: block;
+    }
+
+    .public-booking-step--active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .public-booking-step--exit {
+      opacity: 0;
+      transform: translateX(-12px);
+      pointer-events: none;
+    }
+
+    .public-booking-step-inner {
+      padding-bottom: 8px;
+    }
+
+    .public-booking-step-heading {
+      text-align: center;
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
+    }
+
+    .public-booking-step-hint {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .public-booking-step--staff .public-staff-cards--wizard {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 520px) {
+      .public-booking-step--staff .public-staff-cards--wizard {
+        max-width: 480px;
+      }
+    }
+
+    .public-booking-step--staff .public-staff-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 22px 20px;
+      min-height: 0;
+      gap: 14px;
+    }
+
+    .public-booking-step--staff .public-staff-card-avatar {
+      width: 80px;
+      height: 80px;
+    }
+
+    .public-booking-step--staff .public-staff-card-initials {
+      font-size: 22px;
+    }
+
+    .public-booking-step--staff .public-staff-card-name {
+      font-size: 17px;
+    }
+
+    .public-booking-step--staff .public-staff-card-role {
+      font-size: 13px;
+    }
+
+    .public-booking-step--staff .public-staff-card-body {
+      width: 100%;
+    }
+
+    .public-booking-wizard-footer {
+      display: flex;
+      justify-content: flex-start;
+      padding: 8px 0 0;
+      min-height: 48px;
+    }
+
+    .public-wizard-back-btn {
+      min-height: 44px;
+      padding: 10px 20px;
+    }
+
+    #publicBookingStepSchedule .public-schedule-panel {
+      padding: 20px 18px 22px;
+    }
+
+    #publicBookingStepDetails .public-confirm-panel {
+      margin: 0;
+    }
+
+    @media (max-width: 767px) {
+      .public-booking-wizard-footer--sticky-confirm {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        margin: 0 -16px;
+        padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(180deg, transparent 0%, var(--public-bg) 28%);
+        border-top: 1px solid var(--public-border);
+      }
+
+      #publicBookingStepDetails .public-wizard-confirm-btn {
+        width: 100%;
+        min-height: 52px;
+        font-size: 16px;
+      }
+    }
+
+    .public-hero {
+      position: relative;
+      min-height: 168px;
+      padding: 24px 24px 20px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .public-hero {
+        min-height: 140px;
+        padding: 28px 32px 24px;
+      }
+
+      .public-hero-inner {
+        max-width: 100%;
+      }
+    }
+
+    .public-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 45%, #0c4a6e 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .public-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.35) 0%, rgba(11, 17, 32, 0.92) 100%);
+    }
+
+    .public-hero-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .public-hero-avatar-wrap {
+      flex-shrink: 0;
+      width: 88px;
+      height: 88px;
+      border-radius: 999px;
+      padding: 3px;
+      background: linear-gradient(145deg, var(--business-accent, #38bdf8), #6366f1);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .public-hero-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 3px solid #0f172a;
+      background: #1e293b;
+      display: block;
+    }
+
+    .public-hero-avatar-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: #1e293b;
+      border: 3px solid #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 800;
+      color: #93c5fd;
+    }
+
+    .public-hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #publicBusinessName {
+      margin: 0 0 6px;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.15;
+    }
+
+    .public-hero-tagline {
+      margin: 0;
+      font-size: 15px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .public-hero-about {
+      margin: 10px 0 0;
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .public-hero-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .public-hero-meta span strong {
+      color: #e2e8f0;
+    }
+
+    .public-booking-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 16px;
+      align-items: start;
+    }
+
+    @media (min-width: 768px) {
+      .public-booking-grid {
+        grid-template-columns: minmax(360px, 400px) minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px;
+      }
+    }
+
+    .public-booking-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+      order: 1;
+    }
+
+    .public-booking-schedule {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-width: 0;
+      order: 2;
+    }
+
+    .public-schedule-panel {
+      padding: 20px 18px 22px;
+    }
+
+    .public-calendar-block {
+      margin-bottom: 0;
+    }
+
+    .public-times-block {
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--public-border);
+    }
+
+    .public-panel {
+      background: var(--public-surface);
+      border: 1px solid var(--public-border);
+      border-radius: 16px;
+      padding: 18px 16px;
+    }
+
+    .public-panel-title {
+      margin: 0 0 4px;
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .public-panel-hint {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: var(--public-muted);
+    }
+
+    .public-service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .public-service-card {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 2px solid var(--public-border);
+      background: var(--public-surface-2);
+      color: var(--public-text);
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      min-height: 52px;
+    }
+
+    .public-service-card:hover {
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 50%, transparent);
+    }
+
+    .public-service-card--selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 12%, var(--public-surface-2));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #38bdf8) 22%, transparent);
+    }
+
+    .public-service-card-name {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .public-service-card-meta {
+      display: block;
+      font-size: 13px;
+      color: var(--public-muted);
+    }
+
+    .public-staff-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .public-staff-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 2px solid var(--public-border);
+      background: var(--public-surface-2);
+      color: var(--public-text);
+      cursor: pointer;
+      text-align: left;
+      min-height: 56px;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+
+    .public-staff-card--selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 12%, var(--public-surface-2));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #38bdf8) 22%, transparent);
+    }
+
+    .public-staff-card-avatar {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #1e293b;
+    }
+
+    .public-staff-card-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .public-staff-card-initials {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #93c5fd;
+    }
+
+    .public-staff-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .public-staff-card-name {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .public-staff-card-role {
+      display: block;
+      font-size: 12px;
+      color: var(--public-muted);
+      margin-top: 2px;
+    }
+
+    .public-calendar-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .public-calendar-month {
+      margin: 0;
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .public-cal-nav {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--public-border);
+      background: var(--public-surface-2);
+      color: #fff;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .public-cal-nav:hover {
+      border-color: var(--business-accent, #38bdf8);
+    }
+
+    .public-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .public-calendar-grid {
+        gap: 10px;
+      }
+    }
+
+    .public-calendar-grid .day-name {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--public-muted);
+      padding: 6px 0 10px;
+    }
+
+    @media (min-width: 768px) {
+      .public-calendar-grid .day-name {
+        font-size: 12px;
+      }
+    }
+
+    .public-calendar-grid .calendar-day {
+      aspect-ratio: 1;
+      min-height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--public-border);
+      background: var(--public-surface-2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      padding: 4px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .public-calendar-grid .calendar-day strong {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .public-calendar-grid .calendar-day:hover:not(.empty):not(.closed) {
+      border-color: var(--business-accent, #38bdf8);
+      transform: translateY(-1px);
+    }
+
+    .public-calendar-grid .calendar-day.selected {
+      background: var(--business-accent, #38bdf8);
+      border-color: var(--business-accent, #38bdf8);
+      color: #0f172a;
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--business-accent, #38bdf8) 45%, transparent);
+    }
+
+    .public-calendar-grid .calendar-day.today:not(.selected) {
+      box-shadow: inset 0 0 0 2px var(--business-accent, #38bdf8);
+    }
+
+    .public-calendar-grid .calendar-day.closed,
+    .public-calendar-grid .calendar-day.off-day {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .public-calendar-grid .calendar-day.empty {
+      border: none;
+      background: transparent;
+      cursor: default;
+    }
+
+    .public-calendar-grid .cal-badge {
+      font-size: 8px;
+      font-weight: 700;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    @media (min-width: 768px) {
+      .public-calendar-grid .calendar-day {
+        min-height: 52px;
+        font-size: 16px;
+      }
+
+      .public-calendar-grid .calendar-day strong {
+        font-size: 17px;
+      }
+
+      .public-calendar-grid .cal-badge {
+        font-size: 9px;
+      }
+    }
+
+    .public-time-slots {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      width: 100%;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .public-time-slots {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+    }
+
+    #publicBookingContent .public-time-slots .slot {
+      min-height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--public-border);
+      background: var(--public-surface-2);
+      color: #e2e8f0;
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+
+    #publicBookingContent .public-time-slots .slot:hover:not(.booked):not(.break):not(.closed) {
+      border-color: var(--business-accent, #38bdf8);
+      transform: translateY(-1px);
+    }
+
+    #publicBookingContent .public-time-slots .slot.selected {
+      background: var(--business-accent, #38bdf8);
+      border-color: var(--business-accent, #38bdf8);
+      color: #0f172a;
+      box-shadow: 0 4px 16px color-mix(in srgb, var(--business-accent, #38bdf8) 40%, transparent);
+    }
+
+    #publicBookingContent .public-time-slots .slot.booked,
+    #publicBookingContent .public-time-slots .slot.break,
+    #publicBookingContent .public-time-slots .slot.closed {
+      opacity: 0.35;
+      cursor: not-allowed;
+      font-size: 12px;
+    }
+
+    #publicBookingContent .public-time-slots .slot {
+      width: 100%;
+      max-width: none;
+    }
+
+    #publicView {
+      width: 100%;
+    }
+
+    #publicView #publicBookingContent {
+      max-width: 1180px;
+    }
+
+    .public-confirm-panel {
+      margin: 0;
+      background: var(--public-surface);
+      border: 1px solid var(--public-border);
+      border-radius: 16px;
+      color: var(--public-text);
+      padding: 20px 18px;
+    }
+
+    @media (min-width: 768px) {
+      .public-confirm-panel {
+        padding: 22px 24px;
+      }
+    }
+
+    #publicBookingContent .public-confirm-panel.booking-flow-card,
+    #publicBookingContent .public-booking-card.booking-flow-card {
+      background: var(--public-surface);
+      border: 1px solid var(--public-border);
+      color: var(--public-text);
+    }
+
+    #publicBookingContent .public-booking-card.booking-flow-card input,
+    #publicBookingContent .public-booking-card.booking-flow-card textarea {
+      background: var(--public-surface-2);
+      border-color: var(--public-border);
+      color: #fff;
+    }
+
+    #coverUploadStatus:not(.hidden) {
+      display: block;
+      margin: 0 0 var(--space-sm);
+    }
+
     #adminOnboardingView .wizard-weekday-grid {
       display: flex;
       flex-wrap: wrap;
@@ -1863,14 +3070,13 @@
       align-items: center;
     }
 
+    /* Public booking width/layout: see premium block above (1180px). Accent only here. */
     #publicBookingContent {
       --business-accent: #2563eb;
       min-width: 0;
-      max-width: 640px;
-      margin: 0 auto;
     }
 
-    .public-booking-card {
+    .public-booking-card:not(.booking-flow-card) {
       margin-bottom: var(--space-md);
       overflow: hidden;
     }
@@ -2488,26 +3694,11 @@
         box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.1);
       }
 
-      #bookingFormCard:not(.hidden) {
+      #publicBookingStepDetails:not([hidden]) #bookingFormCard {
         padding-bottom: calc(var(--sticky-cta-height) + 8px);
       }
 
-      #bookingFormCard:not(.hidden) > button[onclick="createPublicBooking()"] {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 90;
-        margin: 0;
-        border-radius: 0;
-        min-height: 52px;
-        padding: 14px var(--mobile-gutter);
-        padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-        background: var(--business-accent, #2563eb);
-        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.15);
-      }
-
-      #publicBookingContent:has(.booking-flow-card:not(.hidden)) .app-toast {
+      #publicBookingContent:has(#publicBookingStepDetails:not([hidden])) .app-toast {
         bottom: calc(var(--sticky-cta-height) + 12px + env(safe-area-inset-bottom, 0px));
       }
     }
@@ -2754,6 +3945,15 @@
         </div>
         <input type="hidden" id="businessLogoUrl" />
         <div id="logoUploadStatus" class="hidden"></div>
+        <label class="small"><strong>Cover / background image</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
+        <p class="small">Shown behind your public booking hero. JPG, PNG or WebP, max 3 MB.</p>
+        <div class="logo-upload-row">
+          <button type="button" class="secondary" id="businessCoverUploadBtn" onclick="triggerBusinessCoverUpload()">Upload cover</button>
+          <button type="button" class="secondary hidden" id="businessCoverRemoveBtn" onclick="removeBusinessCover()">Remove cover</button>
+          <input type="file" id="businessCoverFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessCoverFileSelected(event)" />
+        </div>
+        <input type="hidden" id="businessCoverUrl" />
+        <div id="coverUploadStatus" class="hidden"></div>
         <textarea id="businessDescription" placeholder="About your business (shown to customers)" oninput="previewBusinessBranding()"></textarea>
         <label class="small"><strong>Accent color</strong></label>
         <div class="branding-color-row">
@@ -3462,10 +4662,122 @@
               </button>
             </div>
 
+            <div id="adminOnboardingStep5Panel" class="hidden">
+              <section class="wizard-step5-section" aria-labelledby="onboardingLayoutHeading">
+                <h2 id="onboardingLayoutHeading" class="wizard-step5-heading">How should your booking page look?</h2>
+                <div
+                  id="onboardingLayoutGrid"
+                  class="wizard-layout-grid"
+                  role="radiogroup"
+                  aria-labelledby="onboardingLayoutHeading"
+                >
+                  <button
+                    type="button"
+                    class="wizard-layout-card wizard-layout-card--selected"
+                    data-layout="minimal"
+                    role="radio"
+                    aria-checked="true"
+                  >
+                    <div>
+                      <p class="wizard-layout-card-title">Clean Minimal</p>
+                      <p class="wizard-layout-card-desc">Light, focused, and easy to scan.</p>
+                    </div>
+                    <div class="wizard-layout-mini wizard-layout-mini--minimal" aria-hidden="true">
+                      <div class="wizard-layout-mini-bar"></div>
+                      <div class="wizard-layout-mini-line"></div>
+                      <div class="wizard-layout-mini-line"></div>
+                      <div class="wizard-layout-mini-line"></div>
+                    </div>
+                  </button>
+                  <button type="button" class="wizard-layout-card" data-layout="cards" role="radio" aria-checked="false">
+                    <div>
+                      <p class="wizard-layout-card-title">Modern Cards</p>
+                      <p class="wizard-layout-card-desc">Layered cards with soft depth.</p>
+                    </div>
+                    <div class="wizard-layout-mini wizard-layout-mini--cards" aria-hidden="true">
+                      <div class="wizard-layout-mini-card"><span></span><span></span></div>
+                      <div class="wizard-layout-mini-card"><span></span></div>
+                    </div>
+                  </button>
+                  <button type="button" class="wizard-layout-card" data-layout="dark" role="radio" aria-checked="false">
+                    <div>
+                      <p class="wizard-layout-card-title">Premium Dark</p>
+                      <p class="wizard-layout-card-desc">Bold dark theme with accent glow.</p>
+                    </div>
+                    <div class="wizard-layout-mini wizard-layout-mini--dark" aria-hidden="true">
+                      <div class="wizard-layout-mini-bar"></div>
+                      <div class="wizard-layout-mini-line"></div>
+                      <div class="wizard-layout-mini-line"></div>
+                    </div>
+                  </button>
+                </div>
+              </section>
+
+              <section class="wizard-step5-section" aria-labelledby="onboardingVisibilityHeading">
+                <h2 id="onboardingVisibilityHeading" class="wizard-step5-heading">What customers see</h2>
+                <div class="wizard-visibility-toggles">
+                  <label class="wizard-visibility-row">
+                    <input type="checkbox" id="onboardingShowLogo" checked />
+                    <span>Show logo on your public page</span>
+                  </label>
+                  <label class="wizard-visibility-row">
+                    <input type="checkbox" id="onboardingShowStaff" checked />
+                    <span>Show staff picker when you have team members</span>
+                  </label>
+                  <label class="wizard-visibility-row">
+                    <input type="checkbox" id="onboardingShowPrices" checked />
+                    <span>Show service prices on the booking page</span>
+                  </label>
+                </div>
+              </section>
+
+              <section class="wizard-step5-section" aria-labelledby="onboardingShareHeading">
+                <h2 id="onboardingShareHeading" class="wizard-step5-heading">Share your booking page</h2>
+                <div class="wizard-step5-share-card">
+                  <div id="onboardingStep5LinkPreview" class="wizard-step5-link-preview" aria-live="polite"></div>
+                  <div class="wizard-step5-share-actions">
+                    <button type="button" class="success" onclick="copyOnboardingPublicBookingLink()">Copy link</button>
+                    <button type="button" class="secondary" onclick="openOnboardingPublicBookingLink()">Open page</button>
+                    <button type="button" class="secondary" onclick="downloadOnboardingStep5Qr()">Download QR</button>
+                  </div>
+                  <div class="wizard-step5-qr-row">
+                    <div class="wizard-step5-qr-wrap">
+                      <div id="onboardingStep5QrHost" aria-label="Booking page QR code preview"></div>
+                    </div>
+                  </div>
+                  <p class="wizard-field-hint" style="margin: 0">Quick share</p>
+                  <div class="wizard-quick-share">
+                    <button type="button" class="secondary" onclick="shareOnboardingBookingLink('instagram')">Instagram</button>
+                    <button type="button" class="secondary" onclick="shareOnboardingBookingLink('facebook')">Facebook</button>
+                    <button type="button" class="secondary" onclick="shareOnboardingBookingLink('viber')">Viber</button>
+                    <button type="button" class="secondary" onclick="shareOnboardingBookingLink('telegram')">Telegram</button>
+                    <button type="button" class="secondary" onclick="shareOnboardingBookingLink('sms')">SMS</button>
+                  </div>
+                </div>
+              </section>
+            </div>
+
             <div id="adminOnboardingPlaceholder" class="wizard-step-placeholder"></div>
           </article>
         </div>
       </main>
+
+      <div id="adminOnboardingLaunchScreen" class="hidden" aria-hidden="true" role="dialog" aria-labelledby="onboardingLaunchHeadline">
+        <div class="wizard-launch-inner">
+          <div class="wizard-launch-badge" aria-hidden="true">✓</div>
+          <h2 id="onboardingLaunchHeadline" class="wizard-launch-headline">Your booking page is live</h2>
+          <p class="wizard-launch-sub">You can now start accepting appointments online.</p>
+          <p id="onboardingLaunchBusinessName" class="wizard-launch-business"></p>
+          <div id="onboardingLaunchLink" class="wizard-launch-link-box"></div>
+          <div class="wizard-launch-qr-wrap">
+            <div id="onboardingLaunchQrHost" aria-label="Your booking QR code"></div>
+          </div>
+          <div class="wizard-launch-actions">
+            <button type="button" class="success" onclick="openOnboardingLaunchBookingPage()">Open booking page</button>
+            <button type="button" class="secondary" onclick="dismissAdminOnboardingLaunchToDashboard()">Go to dashboard</button>
+          </div>
+        </div>
+      </div>
 
       <footer class="wizard-footer">
         <div class="wizard-footer-inner">
@@ -3537,45 +4849,117 @@
         <button class="secondary" onclick="goHome()">Back</button>
       </div>
 
-      <div id="publicBookingContent" class="hidden">
+      <div id="publicBookingContent" class="hidden public-layout-minimal">
 
-        <div class="card public-booking-card public-booking-hero-card">
-          <header class="public-booking-hero">
-            <img id="publicBusinessLogo" class="public-booking-logo hidden" alt="" />
-            <div class="public-booking-hero-text">
-              <h1 id="publicBusinessName">Book Appointment</h1>
-              <p id="publicBusinessTagline" class="public-booking-tagline small">Book your appointment online</p>
-              <p id="publicBusinessAbout" class="public-booking-about hidden"></p>
+        <div class="public-booking-shell">
+          <header class="public-hero" id="publicHero">
+            <div class="public-hero-bg" id="publicHeroBg" aria-hidden="true"></div>
+            <div class="public-hero-overlay" aria-hidden="true"></div>
+            <div class="public-hero-inner">
+              <div class="public-hero-avatar-wrap">
+                <img id="publicBusinessLogo" class="public-hero-avatar hidden" alt="" />
+                <div id="publicBusinessLogoFallback" class="public-hero-avatar-fallback hidden" aria-hidden="true"></div>
+              </div>
+              <div class="public-hero-text">
+                <h1 id="publicBusinessName">Book Appointment</h1>
+                <p id="publicBusinessTagline" class="public-hero-tagline">Book your appointment online</p>
+                <p id="publicBusinessAbout" class="public-hero-about hidden"></p>
+              </div>
             </div>
+            <div id="publicBusinessInfo" class="public-hero-meta hidden"></div>
           </header>
-          <div id="publicBusinessInfo" class="public-business-meta hidden"></div>
-          <p class="small public-booking-intro">Choose a service, date and available time.</p>
 
-          <select id="publicService" onchange="renderPublicCalendar()"></select>
-          <select id="publicStaff" onchange="handlePublicStaffChange()"></select>
+          <div class="public-booking-body">
+            <div class="public-booking-wizard">
+              <nav id="publicBookingProgress" class="public-booking-progress" aria-label="Booking progress"></nav>
 
-          <div class="row">
-            <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
-            <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+              <div id="publicBookingStepsViewport" class="public-booking-steps-viewport">
+                <section
+                  id="publicBookingStepStaff"
+                  class="public-booking-step public-booking-step--staff"
+                  data-step="1"
+                  aria-labelledby="publicStaffStepTitle"
+                >
+                  <div class="public-booking-step-inner">
+                    <h2 id="publicStaffStepTitle" class="public-panel-title public-booking-step-heading">Choose stylist</h2>
+                    <p class="public-panel-hint public-booking-step-hint">Who would you like to book with?</p>
+                    <div class="public-panel public-staff-panel hidden" id="publicStaffPanel">
+                      <div id="publicStaffCards" class="public-staff-cards public-staff-cards--wizard" role="radiogroup" aria-label="Staff"></div>
+                      <input type="hidden" id="publicStaff" value="" />
+                    </div>
+                  </div>
+                </section>
+
+                <section
+                  id="publicBookingStepService"
+                  class="public-booking-step"
+                  data-step="2"
+                  hidden
+                  aria-labelledby="publicServiceStepTitle"
+                >
+                  <div class="public-booking-step-inner">
+                    <h2 id="publicServiceStepTitle" class="public-panel-title public-booking-step-heading">Choose service</h2>
+                    <p class="public-panel-hint public-booking-step-hint">What would you like to book?</p>
+                    <div class="public-panel public-service-panel">
+                      <div id="publicServiceList" class="public-service-list" role="listbox" aria-label="Services"></div>
+                      <input type="hidden" id="publicService" value="" />
+                    </div>
+                  </div>
+                </section>
+
+                <section
+                  id="publicBookingStepSchedule"
+                  class="public-booking-step"
+                  data-step="3"
+                  hidden
+                  aria-labelledby="selectedDateTitle"
+                >
+                  <div class="public-booking-step-inner">
+                    <section class="public-panel public-schedule-panel">
+                      <div class="public-calendar-block">
+                        <div class="public-calendar-toolbar">
+                          <button type="button" class="public-cal-nav" onclick="changeMonth(-1)" aria-label="Previous month">‹</button>
+                          <h2 id="publicCalendarTitle" class="public-calendar-month"></h2>
+                          <button type="button" class="public-cal-nav" onclick="changeMonth(1)" aria-label="Next month">›</button>
+                        </div>
+                        <div id="publicCalendar" class="public-calendar-grid" role="grid" aria-labelledby="publicCalendarTitle"></div>
+                      </div>
+
+                      <div class="public-times-block">
+                        <h2 id="selectedDateTitle" class="public-panel-title">Choose date &amp; time</h2>
+                        <p class="public-panel-hint" id="publicTimesHint">Select a day on the calendar, then pick a time</p>
+                        <div id="slotsContainer" class="public-time-slots" role="group" aria-label="Available times"></div>
+                      </div>
+                    </section>
+                  </div>
+                </section>
+
+                <section
+                  id="publicBookingStepDetails"
+                  class="public-booking-step"
+                  data-step="4"
+                  hidden
+                  aria-labelledby="publicDetailsStepTitle"
+                >
+                  <div class="public-booking-step-inner">
+                    <div id="bookingFormCard" class="public-confirm-panel booking-flow-card">
+                      <h2 id="publicDetailsStepTitle" class="public-panel-title">Your details</h2>
+                      <p id="chosenSlotText" class="booking-flow-lead public-panel-hint"></p>
+                      <input id="customerName" placeholder="Your name" autocomplete="name" />
+                      <input id="customerPhone" placeholder="Phone" autocomplete="tel" inputmode="tel" />
+                      <input id="customerEmail" type="email" placeholder="Email optional" autocomplete="email" />
+                      <textarea id="customerNotes" placeholder="Notes optional" rows="3"></textarea>
+                      <button type="button" id="publicConfirmBookingBtn" class="success public-wizard-confirm-btn" onclick="createPublicBooking()">Confirm booking</button>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <footer class="public-booking-wizard-footer">
+                <button type="button" id="publicBookingBackBtn" class="secondary public-wizard-back-btn hidden" onclick="publicBookingGoBack()">Back</button>
+              </footer>
+            </div>
           </div>
-
-          <h3 id="publicCalendarTitle"></h3>
-          <div id="publicCalendar" class="calendar"></div>
-        </div>
-
-        <div class="card public-booking-card">
-          <h2 id="selectedDateTitle">Select a date</h2>
-          <div id="slotsContainer" class="slot-grid"></div>
-        </div>
-
-        <div id="bookingFormCard" class="card public-booking-card booking-flow-card hidden">
-          <h2>Confirm booking</h2>
-          <p id="chosenSlotText" class="booking-flow-lead"></p>
-          <input id="customerName" placeholder="Your name" autocomplete="name" />
-          <input id="customerPhone" placeholder="Phone" autocomplete="tel" inputmode="tel" />
-          <input id="customerEmail" type="email" placeholder="Email optional" autocomplete="email" />
-          <textarea id="customerNotes" placeholder="Notes optional" rows="3"></textarea>
-          <button type="button" onclick="createPublicBooking()">Book now</button>
         </div>
 
         <div id="bookingSuccessCard" class="card public-booking-card booking-flow-card hidden">
@@ -4242,6 +5626,17 @@
   let selectedDate = null;
   let selectedSlot = null;
   let selectedService = null;
+  const PUBLIC_STAFF_ANY = "__any__";
+  let selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+  const PUBLIC_SLOT_STEP_MINUTES = 15;
+  const PUBLIC_BOOKING_STEP = Object.freeze({
+    STAFF: 1,
+    SERVICE: 2,
+    SCHEDULE: 3,
+    DETAILS: 4
+  });
+  let publicBookingStep = PUBLIC_BOOKING_STEP.STAFF;
+  let publicBookingStepAnimTimer = null;
   let manageRescheduleSelectedTime = null;
   let bookingRealtimeChannel = null;
   let bookingRealtimeRefreshTimer = null;
@@ -4383,9 +5778,220 @@
     );
   }
 
+  function isPublicStaffStepEnabled() {
+    const panel = document.getElementById("publicStaffPanel");
+    return !!(panel && !panel.classList.contains("hidden"));
+  }
+
+  function getPublicBookingFirstStep() {
+    return isPublicStaffStepEnabled() ? PUBLIC_BOOKING_STEP.STAFF : PUBLIC_BOOKING_STEP.SERVICE;
+  }
+
+  function getPublicBookingProgressSteps() {
+    const steps = [];
+    if (isPublicStaffStepEnabled()) {
+      steps.push({ id: PUBLIC_BOOKING_STEP.STAFF, label: "Stylist" });
+    }
+    steps.push(
+      { id: PUBLIC_BOOKING_STEP.SERVICE, label: "Service" },
+      { id: PUBLIC_BOOKING_STEP.SCHEDULE, label: "Date & time" },
+      { id: PUBLIC_BOOKING_STEP.DETAILS, label: "Details" }
+    );
+    return steps;
+  }
+
+  function renderPublicBookingProgress() {
+    const nav = document.getElementById("publicBookingProgress");
+    if (!nav) return;
+
+    const steps = getPublicBookingProgressSteps();
+    const parts = [];
+
+    steps.forEach((step, index) => {
+      const isActive = publicBookingStep === step.id;
+      const isDone = publicBookingStep > step.id;
+      const stateClass = isActive
+        ? "public-booking-progress-item--active"
+        : isDone
+          ? "public-booking-progress-item--done"
+          : "";
+
+      parts.push(`
+        <div class="public-booking-progress-item ${stateClass}" aria-current="${isActive ? "step" : "false"}">
+          <span class="public-booking-progress-dot" aria-hidden="true">${isDone ? "✓" : index + 1}</span>
+          <span class="public-booking-progress-label">${escapeHtml(step.label)}</span>
+        </div>
+      `);
+
+      if (index < steps.length - 1) {
+        parts.push('<span class="public-booking-progress-sep" aria-hidden="true"></span>');
+      }
+    });
+
+    nav.innerHTML = parts.join("");
+  }
+
+  function updatePublicBookingBackButton() {
+    const backBtn = document.getElementById("publicBookingBackBtn");
+    const footer = document.querySelector(".public-booking-wizard-footer");
+    if (!backBtn) return;
+
+    const first = getPublicBookingFirstStep();
+    const showBack = publicBookingStep > first;
+    backBtn.classList.toggle("hidden", !showBack);
+
+    if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+      footer?.classList.add("public-booking-wizard-footer--sticky-confirm");
+    } else {
+      footer?.classList.remove("public-booking-wizard-footer--sticky-confirm");
+    }
+  }
+
+  function resetPublicBookingSelectionsFromStaff() {
+    selectedService = null;
+    selectedDate = null;
+    selectedSlot = null;
+    const serviceHidden = document.getElementById("publicService");
+    if (serviceHidden) serviceHidden.value = "";
+    renderPublicServices();
+    clearPublicSlotsMount();
+    renderPublicCalendar();
+    updatePublicTimesPanelMeta();
+  }
+
+  function resetPublicBookingSelectionsFromScheduleBack() {
+    selectedDate = null;
+    selectedSlot = null;
+    clearPublicSlotsMount();
+    renderPublicCalendar();
+    updatePublicTimesPanelMeta();
+  }
+
+  function resetPublicBookingSelectionsFromServiceBack() {
+    selectedSlot = null;
+    clearPublicSlotsMount();
+    updatePublicTimesPanelMeta();
+  }
+
+  function activatePublicBookingStepPanel(step, direction = "forward") {
+    const stepEls = document.querySelectorAll(".public-booking-step");
+    if (publicBookingStepAnimTimer) {
+      clearTimeout(publicBookingStepAnimTimer);
+      publicBookingStepAnimTimer = null;
+    }
+
+    stepEls.forEach((el) => {
+      const stepNum = Number(el.dataset.step);
+      const isTarget = stepNum === step;
+
+      if (isTarget) {
+        el.hidden = false;
+        el.classList.remove("public-booking-step--exit");
+        requestAnimationFrame(() => {
+          el.classList.add("public-booking-step--active");
+        });
+        return;
+      }
+
+      if (el.classList.contains("public-booking-step--active")) {
+        el.classList.remove("public-booking-step--active");
+        el.classList.add("public-booking-step--exit");
+        publicBookingStepAnimTimer = setTimeout(() => {
+          el.hidden = true;
+          el.classList.remove("public-booking-step--exit");
+          publicBookingStepAnimTimer = null;
+        }, 260);
+      } else {
+        el.hidden = true;
+        el.classList.remove("public-booking-step--active", "public-booking-step--exit");
+      }
+    });
+
+    const staffStep = document.getElementById("publicBookingStepStaff");
+    if (staffStep) {
+      staffStep.classList.toggle("hidden", !isPublicStaffStepEnabled());
+    }
+  }
+
+  function goToPublicBookingStep(step, opts = {}) {
+    const first = getPublicBookingFirstStep();
+    if (step < first) step = first;
+    if (step > PUBLIC_BOOKING_STEP.DETAILS) step = PUBLIC_BOOKING_STEP.DETAILS;
+
+    const prev = publicBookingStep;
+    const direction = step < prev ? "back" : "forward";
+    publicBookingStep = step;
+
+    activatePublicBookingStepPanel(step, direction);
+    renderPublicBookingProgress();
+    updatePublicBookingBackButton();
+
+    if (step === PUBLIC_BOOKING_STEP.SCHEDULE) {
+      refreshPublicAvailability({ refreshCalendar: opts.refreshCalendar !== false });
+    }
+
+    if (step === PUBLIC_BOOKING_STEP.DETAILS) {
+      updatePublicBookingDetailsSummary();
+    }
+
+    if (!opts.silent) {
+      const viewport = document.getElementById("publicBookingStepsViewport");
+      (viewport || document.querySelector(".public-booking-wizard"))?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }
+
+  function updatePublicBookingDetailsSummary() {
+    const staffLabel = getSelectedPublicStaffId()
+      ? getStaffName(getSelectedPublicStaffId())
+      : bookingStaffColumnAvailable && getActiveStaffMembers().length
+        ? "Any available stylist"
+        : "";
+    const textEl = document.getElementById("chosenSlotText");
+    if (!textEl || !selectedDate || !selectedSlot || !selectedService) return;
+
+    textEl.textContent = staffLabel
+      ? `${selectedDate} at ${selectedSlot} · ${selectedService.name} · ${staffLabel}`
+      : `${selectedDate} at ${selectedSlot} · ${selectedService.name}`;
+  }
+
+  function initPublicBookingWizardStep() {
+    publicBookingStep = getPublicBookingFirstStep();
+    goToPublicBookingStep(publicBookingStep, { silent: true, refreshCalendar: true });
+  }
+
+  function publicBookingGoBack() {
+    if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+      selectedSlot = null;
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE);
+      if (selectedDate && selectedService) {
+        renderSlots(selectedDate, selectedService.id);
+      }
+      return;
+    }
+
+    if (publicBookingStep === PUBLIC_BOOKING_STEP.SCHEDULE) {
+      resetPublicBookingSelectionsFromScheduleBack();
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE);
+      return;
+    }
+
+    if (publicBookingStep === PUBLIC_BOOKING_STEP.SERVICE && isPublicStaffStepEnabled()) {
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.STAFF);
+      return;
+    }
+  }
+
   function setPublicBookingWizardVisible(visible) {
     const content = document.getElementById("publicBookingContent");
     if (!content) return;
+    const shell = content.querySelector(".public-booking-shell");
+    if (shell) shell.classList.toggle("hidden", !visible);
+    if (!visible) {
+      publicBookingStep = PUBLIC_BOOKING_STEP.STAFF;
+    }
     content.querySelectorAll(".public-booking-card").forEach(el => {
       if (el.id === "bookingSuccessCard" || el.id === "manageBookingCard") return;
       el.classList.toggle("hidden", !visible);
@@ -5055,7 +6661,7 @@
     if (bookingQrGenerateTimer) clearTimeout(bookingQrGenerateTimer);
     bookingQrGenerateTimer = setTimeout(() => {
       bookingQrGenerateTimer = null;
-      generateBookingQr();
+      generateBookingQr(document.getElementById("bookingQrHost"), link);
     }, 200);
   }
 
@@ -5066,31 +6672,23 @@
     );
   }
 
-  function renderBookingQrWithImageApi(host, url) {
-    const img = document.createElement("img");
-    img.width = 200;
-    img.height = 200;
-    img.alt = "Public booking QR code";
-    img.decoding = "async";
-    img.src = buildBookingQrImageApiUrl(url);
-    host.appendChild(img);
-  }
-
-  function generateBookingQr() {
-    const host = document.getElementById("bookingQrHost");
+  function generateBookingQr(hostEl, urlOverride) {
+    const host = hostEl || document.getElementById("bookingQrHost");
     if (!host) return;
 
-    const url = getPublicBookingLinkForSettings();
+    const url = urlOverride || getPublicBookingLinkForSettings();
     host.innerHTML = "";
 
     if (!url) return;
+
+    const size = host.id === "onboardingStep5QrHost" || host.id === "onboardingLaunchQrHost" ? 160 : 200;
 
     if (typeof window.QRCode === "function") {
       try {
         new window.QRCode(host, {
           text: url,
-          width: 200,
-          height: 200,
+          width: size,
+          height: size,
           colorDark: "#000000",
           colorLight: "#ffffff",
           correctLevel: window.QRCode.CorrectLevel.M
@@ -5101,12 +6699,22 @@
       }
     }
 
-    renderBookingQrWithImageApi(host, url);
+    renderBookingQrWithImageApi(host, url, size);
   }
 
-  async function downloadBookingQr() {
-    const host = document.getElementById("bookingQrHost");
-    const url = getPublicBookingLinkForSettings();
+  function renderBookingQrWithImageApi(host, url, size = 200) {
+    const img = document.createElement("img");
+    img.width = size;
+    img.height = size;
+    img.alt = "Public booking QR code";
+    img.decoding = "async";
+    img.src = buildBookingQrImageApiUrl(url);
+    host.appendChild(img);
+  }
+
+  async function downloadQrFromHost(hostId, urlOverride, filenameSlug) {
+    const host = document.getElementById(hostId);
+    const url = urlOverride || getPublicBookingLinkForSettings();
 
     if (!host || !url) {
       showToast("Set a public slug first.", "error");
@@ -5114,9 +6722,7 @@
     }
 
     const slug =
-      normalizeBusinessSlug(
-        document.getElementById("businessSlug")?.value || businessSettings?.business_slug || "booking"
-      ) || "booking";
+      normalizeBusinessSlug(filenameSlug || businessSettings?.business_slug || "booking") || "booking";
 
     const canvas = host.querySelector("canvas");
     const img = host.querySelector("img");
@@ -5142,6 +6748,10 @@
       link.rel = "noopener";
       link.click();
     }
+  }
+
+  async function downloadBookingQr() {
+    await downloadQrFromHost("bookingQrHost", getPublicBookingLinkForSettings(), null);
   }
 
   async function copyPublicBookingLink() {
@@ -5193,6 +6803,24 @@
     picker.value = normalizeAccentColor(text.value);
   }
 
+  function normalizePublicLayout(value) {
+    const v = String(value || "").trim().toLowerCase();
+    if (v === "cards" || v === "modern-cards" || v === "modern_cards") return "cards";
+    if (v === "dark" || v === "premium-dark" || v === "premium_dark") return "dark";
+    if (v === "minimal" || v === "clean-minimal" || v === "clean_minimal" || v === "default" || !v) {
+      return "minimal";
+    }
+    return "minimal";
+  }
+
+  function applyPublicLayoutTheme() {
+    const root = document.getElementById("publicBookingContent");
+    if (!root) return;
+    const layout = normalizePublicLayout(businessSettings?.public_layout);
+    root.classList.remove("public-layout-minimal", "public-layout-cards", "public-layout-dark");
+    root.classList.add("public-layout-" + layout);
+  }
+
   function applyPublicBusinessBranding() {
     const root = document.getElementById("publicBookingContent");
     if (!root) return;
@@ -5202,6 +6830,98 @@
 
     const preview = document.getElementById("brandingPreview");
     if (preview) preview.style.setProperty("--business-accent", accent);
+
+    applyPublicLayoutTheme();
+  }
+
+  function getOnboardingPublicBookingLink() {
+    const slug = normalizeBusinessSlug(
+      businessSettings?.business_slug ||
+        document.getElementById("onboardingBusinessSlug")?.value ||
+        businessId
+    );
+    return buildPublicBookingLink(slug || businessId);
+  }
+
+  async function copyTextToClipboardWithToast(text, successMessage) {
+    if (!text) {
+      showToast("No link found.", "error");
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(successMessage, "success");
+    } catch (err) {
+      const tempInput = document.createElement("input");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+      showToast(successMessage, "success");
+    }
+  }
+
+  async function copyOnboardingPublicBookingLink() {
+    await copyTextToClipboardWithToast(getOnboardingPublicBookingLink(), "Public booking link copied.");
+  }
+
+  function openOnboardingPublicBookingLink() {
+    const link = getOnboardingPublicBookingLink();
+    if (!link) {
+      showToast("No public link found.", "error");
+      return;
+    }
+    window.open(link, "_blank", "noopener");
+  }
+
+  function openOnboardingLaunchBookingPage() {
+    openOnboardingPublicBookingLink();
+  }
+
+  async function downloadOnboardingStep5Qr() {
+    await downloadQrFromHost("onboardingStep5QrHost", getOnboardingPublicBookingLink(), businessSettings?.business_slug);
+  }
+
+  function shareOnboardingBookingLink(channel) {
+    const link = getOnboardingPublicBookingLink();
+    if (!link) {
+      showToast("No public link found.", "error");
+      return;
+    }
+    const name = businessSettings?.business_name || "our business";
+    const message = `Book an appointment with ${name}: ${link}`;
+
+    switch (channel) {
+      case "facebook":
+        window.open(
+          "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link),
+          "_blank",
+          "noopener,noreferrer"
+        );
+        break;
+      case "telegram":
+        window.open(
+          "https://t.me/share/url?url=" +
+            encodeURIComponent(link) +
+            "&text=" +
+            encodeURIComponent(`Book with ${name}`),
+          "_blank",
+          "noopener,noreferrer"
+        );
+        break;
+      case "viber":
+        window.location.href = "viber://forward?text=" + encodeURIComponent(message);
+        break;
+      case "sms":
+        window.location.href = "sms:?&body=" + encodeURIComponent(message);
+        break;
+      case "instagram":
+        copyTextToClipboardWithToast(link, "Link copied — paste it in your Instagram bio or story.");
+        break;
+      default:
+        copyTextToClipboardWithToast(link, "Link copied.");
+    }
   }
 
   const BUSINESS_LOGO_BUCKET = "business-logos";
@@ -5361,6 +7081,10 @@
 
     updateLogoUploadUi();
     previewBusinessBranding();
+    if (!document.getElementById("publicView").classList.contains("hidden")) {
+      renderPublicBusinessProfileInfo();
+      applyPublicBusinessBranding();
+    }
     return true;
   }
 
@@ -5470,6 +7194,156 @@
     }
   }
 
+  function getBusinessCoverUrl() {
+    return (
+      document.getElementById("businessCoverUrl")?.value.trim() ||
+      businessSettings?.business_cover_url ||
+      ""
+    );
+  }
+
+  function setCoverUploadStatus(html, visible = true) {
+    const box = document.getElementById("coverUploadStatus");
+    if (!box) return;
+    box.innerHTML = html || "";
+    box.classList.toggle("hidden", !visible || !html);
+  }
+
+  function updateCoverUploadUi() {
+    const removeBtn = document.getElementById("businessCoverRemoveBtn");
+    const hasCover = !!getBusinessCoverUrl();
+    if (removeBtn) removeBtn.classList.toggle("hidden", !hasCover);
+  }
+
+  async function persistBusinessCoverUrl(publicUrl) {
+    const hidden = document.getElementById("businessCoverUrl");
+    if (hidden) hidden.value = publicUrl || "";
+
+    if (businessSettings) {
+      businessSettings.business_cover_url = publicUrl || null;
+    }
+
+    const { error } = await sb
+      .from("business_settings")
+      .update({ business_cover_url: publicUrl || null })
+      .eq("business_id", businessId);
+
+    if (error) {
+      showToast("Could not save cover URL: " + error.message, "error");
+      return false;
+    }
+
+    updateCoverUploadUi();
+    if (!document.getElementById("publicView").classList.contains("hidden")) {
+      renderPublicBusinessProfileInfo();
+      applyPublicBusinessBranding();
+    }
+    return true;
+  }
+
+  function triggerBusinessCoverUpload() {
+    if (!currentUser) {
+      showToast("Login as Admin to upload a cover image.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Open Admin dashboard first so your business is loaded.", "error");
+      return;
+    }
+    document.getElementById("businessCoverFile")?.click();
+  }
+
+  async function handleBusinessCoverFileSelected(event) {
+    const input = event?.target;
+    const file = input?.files?.[0];
+    if (input) input.value = "";
+    if (!file) return;
+
+    if (!initSupabaseClient()) return;
+    if (!currentUser) {
+      showToast("Login as Admin to upload a cover image.", "error");
+      return;
+    }
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded.", "error");
+      return;
+    }
+    if (!BUSINESS_LOGO_ALLOWED_TYPES.includes(file.type)) {
+      showToast("Use JPG, PNG, or WEBP only.", "error");
+      return;
+    }
+    if (file.size > BUSINESS_LOGO_MAX_BYTES) {
+      showToast("Cover must be 3 MB or smaller.", "error");
+      return;
+    }
+    const ext = getLogoFileExtension(file);
+    if (!ext) {
+      showToast("Unsupported image type.", "error");
+      return;
+    }
+
+    const uploadBtn = document.getElementById("businessCoverUploadBtn");
+    if (uploadBtn) uploadBtn.disabled = true;
+    setCoverUploadStatus(loadingStateHtml("Uploading cover…"), true);
+
+    try {
+      const extensions = ["jpg", "jpeg", "png", "webp"];
+      const paths = extensions.map((e) => `${businessId}/cover.${e}`);
+      await sb.storage.from(BUSINESS_LOGO_BUCKET).remove(paths);
+
+      const filePath = `${businessId}/cover.${ext}`;
+      const { error: uploadError } = await sb.storage
+        .from(BUSINESS_LOGO_BUCKET)
+        .upload(filePath, file, { upsert: true, cacheControl: "3600", contentType: file.type });
+
+      if (uploadError) {
+        showToast("Cover upload failed: " + uploadError.message, "error");
+        setCoverUploadStatus("", false);
+        return;
+      }
+
+      const { data: urlData } = sb.storage.from(BUSINESS_LOGO_BUCKET).getPublicUrl(filePath);
+      const publicUrl = urlData?.publicUrl || "";
+      if (!publicUrl) {
+        showToast("Upload succeeded but public URL was missing.", "error");
+        setCoverUploadStatus("", false);
+        return;
+      }
+
+      const saved = await persistBusinessCoverUrl(publicUrl);
+      if (saved) {
+        showToast("Cover image uploaded.", "success");
+        setCoverUploadStatus("", false);
+      }
+    } catch (err) {
+      showToast("Cover upload failed: " + (err?.message || err), "error");
+      setCoverUploadStatus("", false);
+    } finally {
+      if (uploadBtn) uploadBtn.disabled = false;
+    }
+  }
+
+  async function removeBusinessCover() {
+    if (!confirm("Remove the cover image?")) return;
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded.", "error");
+      return;
+    }
+
+    setCoverUploadStatus(loadingStateHtml("Removing cover…"), true);
+    try {
+      const extensions = ["jpg", "jpeg", "png", "webp"];
+      const paths = extensions.map((ext) => `${businessId}/cover.${ext}`);
+      await sb.storage.from(BUSINESS_LOGO_BUCKET).remove(paths);
+      const saved = await persistBusinessCoverUrl(null);
+      if (saved) showToast("Cover removed.", "success");
+    } catch (err) {
+      showToast("Could not remove cover: " + (err?.message || err), "error");
+    } finally {
+      setCoverUploadStatus("", false);
+    }
+  }
+
   function previewBusinessBranding() {
     const preview = document.getElementById("brandingPreview");
     if (!preview) return;
@@ -5508,25 +7382,47 @@
     updateLogoUploadUi();
   }
 
-  function setPublicBusinessLogo(url) {
+  function setPublicBusinessLogo(url, businessName) {
     const img = document.getElementById("publicBusinessLogo");
-    if (!img) return;
+    const fallback = document.getElementById("publicBusinessLogoFallback");
+    const displayName = businessName || businessSettings?.business_name || "Business";
+    const initials = staffMemberInitials(displayName);
 
     const logoUrl = String(url || "").trim();
     if (!logoUrl) {
-      img.removeAttribute("src");
-      img.classList.add("hidden");
-      img.onerror = null;
+      if (img) {
+        img.removeAttribute("src");
+        img.classList.add("hidden");
+        img.onerror = null;
+      }
+      if (fallback) {
+        fallback.textContent = initials;
+        fallback.classList.remove("hidden");
+      }
       return;
     }
+
+    if (fallback) fallback.classList.add("hidden");
+    if (!img) return;
 
     img.onerror = () => {
       img.classList.add("hidden");
       img.removeAttribute("src");
+      if (fallback) {
+        fallback.textContent = initials;
+        fallback.classList.remove("hidden");
+      }
     };
-    img.onload = () => img.classList.remove("hidden");
+    img.onload = () => {
+      img.classList.remove("hidden");
+      if (fallback) fallback.classList.add("hidden");
+    };
     img.src = logoUrl;
-    img.alt = (businessSettings?.business_name || "Business") + " logo";
+    img.alt = displayName + " logo";
+    if (img.complete && img.naturalHeight > 0) {
+      img.classList.remove("hidden");
+      if (fallback) fallback.classList.add("hidden");
+    }
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -5689,6 +7585,7 @@
 
   function showAdminOnboardingView() {
     hideAllViews();
+    hideAdminOnboardingLaunchScreen();
     document.body.classList.add("wizard-open");
     document.getElementById("adminOnboardingView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.remove("hidden");
@@ -7000,6 +8897,144 @@
     contBtn.setAttribute("aria-busy", onboardingStep4Advancing ? "true" : "false");
   }
 
+  let onboardingStep5Advancing = false;
+  let onboardingStep5ListenersBound = false;
+
+  function getOnboardingStep5SelectedLayout() {
+    const selected = document.querySelector("#onboardingLayoutGrid .wizard-layout-card.wizard-layout-card--selected");
+    return normalizePublicLayout(selected?.dataset?.layout || businessSettings?.public_layout);
+  }
+
+  function setOnboardingStep5SelectedLayout(layoutValue) {
+    const layout = normalizePublicLayout(layoutValue);
+    document.querySelectorAll("#onboardingLayoutGrid .wizard-layout-card").forEach((btn) => {
+      const on = normalizePublicLayout(btn.dataset.layout) === layout;
+      btn.classList.toggle("wizard-layout-card--selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+  }
+
+  function collectOnboardingStep5Payload() {
+    return {
+      public_layout: getOnboardingStep5SelectedLayout(),
+      public_show_logo: document.getElementById("onboardingShowLogo")?.checked !== false,
+      public_show_staff: document.getElementById("onboardingShowStaff")?.checked !== false,
+      public_show_prices: document.getElementById("onboardingShowPrices")?.checked !== false
+    };
+  }
+
+  function bindOnboardingStep5Listeners() {
+    if (onboardingStep5ListenersBound) return;
+    onboardingStep5ListenersBound = true;
+
+    document.getElementById("onboardingLayoutGrid")?.addEventListener("click", (e) => {
+      const card = e.target.closest(".wizard-layout-card");
+      if (!card || !document.getElementById("onboardingLayoutGrid")?.contains(card)) return;
+      setOnboardingStep5SelectedLayout(card.dataset.layout);
+    });
+  }
+
+  function updateOnboardingStep5ShareUi() {
+    const link = getOnboardingPublicBookingLink();
+    const preview = document.getElementById("onboardingStep5LinkPreview");
+    if (preview) preview.textContent = link || "—";
+    generateBookingQr(document.getElementById("onboardingStep5QrHost"), link);
+  }
+
+  function hydrateOnboardingStep5() {
+    bindOnboardingStep5Listeners();
+    hideAdminOnboardingLaunchScreen();
+
+    const layout = normalizePublicLayout(businessSettings?.public_layout);
+    setOnboardingStep5SelectedLayout(layout);
+
+    const showLogo = document.getElementById("onboardingShowLogo");
+    const showStaff = document.getElementById("onboardingShowStaff");
+    const showPrices = document.getElementById("onboardingShowPrices");
+    if (showLogo) showLogo.checked = businessSettings?.public_show_logo !== false;
+    if (showStaff) showStaff.checked = businessSettings?.public_show_staff !== false;
+    if (showPrices) showPrices.checked = businessSettings?.public_show_prices !== false;
+
+    updateOnboardingStep5ShareUi();
+    updateWizardStep5Validation();
+  }
+
+  function updateWizardStep5Validation() {
+    const step = getAdminOnboardingStep();
+    const contBtn = document.getElementById("adminOnboardingContinueBtn");
+    if (!contBtn || step !== 5) return;
+    const ok = !onboardingStep5Advancing;
+    contBtn.disabled = !ok;
+    contBtn.setAttribute("aria-busy", onboardingStep5Advancing ? "true" : "false");
+  }
+
+  function hideAdminOnboardingLaunchScreen() {
+    const launch = document.getElementById("adminOnboardingLaunchScreen");
+    const main = document.querySelector("#adminOnboardingView .wizard-main");
+    const footer = document.querySelector("#adminOnboardingView .wizard-footer");
+    if (launch) {
+      launch.classList.add("hidden");
+      launch.setAttribute("aria-hidden", "true");
+    }
+    if (main) main.classList.remove("hidden");
+    if (footer) footer.classList.remove("hidden");
+  }
+
+  function showAdminOnboardingLaunchScreen() {
+    const launch = document.getElementById("adminOnboardingLaunchScreen");
+    const main = document.querySelector("#adminOnboardingView .wizard-main");
+    const footer = document.querySelector("#adminOnboardingView .wizard-footer");
+    if (main) main.classList.add("hidden");
+    if (footer) footer.classList.add("hidden");
+    if (launch) {
+      launch.classList.remove("hidden");
+      launch.setAttribute("aria-hidden", "false");
+    }
+
+    const name = businessSettings?.business_name || "Your business";
+    const link = getOnboardingPublicBookingLink();
+    const nameEl = document.getElementById("onboardingLaunchBusinessName");
+    const linkEl = document.getElementById("onboardingLaunchLink");
+    if (nameEl) nameEl.textContent = name;
+    if (linkEl) linkEl.textContent = link || "—";
+    generateBookingQr(document.getElementById("onboardingLaunchQrHost"), link);
+
+    const scroll = document.querySelector("#adminOnboardingView .wizard-main");
+    if (scroll) scroll.scrollTop = 0;
+    launch?.scrollIntoView?.({ block: "start" });
+  }
+
+  async function saveAdminOnboardingStep5AndShowLaunch() {
+    if (!businessId || !initSupabaseClient()) return false;
+
+    const branding = collectOnboardingStep5Payload();
+    const nowIso = new Date().toISOString();
+    const payload = {
+      ...branding,
+      onboarding_completed_at: nowIso,
+      onboarding_step: 5
+    };
+
+    const { error } = await sb.from("business_settings").update(payload).eq("business_id", businessId);
+
+    if (error) {
+      showToast("Could not save your booking page: " + error.message, "error");
+      return false;
+    }
+
+    businessSettings = { ...(businessSettings || {}), ...payload };
+    showAdminOnboardingLaunchScreen();
+    return true;
+  }
+
+  async function dismissAdminOnboardingLaunchToDashboard() {
+    hideAdminOnboardingLaunchScreen();
+    showAdminView();
+    document.body.classList.remove("wizard-open");
+    await loadAdminData();
+    showToast("Your dashboard is ready. Share your link anytime in Settings.", "success");
+  }
+
   function syncDashboardAvailabilityFieldsFromBusinessSettings() {
     if (!businessSettings) return;
     try {
@@ -7055,10 +9090,10 @@
     },
     {
       slug: "Booking page",
-      title: "Share your booking page",
-      guidance: "Choose how your public page looks and grab your link & QR code.",
-      helper: "Customers keep a simple booking flow; branding stays on your side.",
-      placeholder: "Layouts, QR & sharing tools arrive in the next phase."
+      title: "Your booking page is almost ready",
+      guidance: "Pick a look, choose what customers see, and grab your link to go live.",
+      helper: "Same simple booking flow for customers — you control the style and what’s visible.",
+      placeholder: ""
     }
   ];
 
@@ -7097,6 +9132,7 @@
     const step2Panel = document.getElementById("adminOnboardingStep2Panel");
     const step3Panel = document.getElementById("adminOnboardingStep3Panel");
     const step4Panel = document.getElementById("adminOnboardingStep4Panel");
+    const step5Panel = document.getElementById("adminOnboardingStep5Panel");
     const placeholderEl = document.getElementById("adminOnboardingPlaceholder");
 
     if (step === 1) {
@@ -7104,6 +9140,7 @@
       if (step2Panel) step2Panel.classList.add("hidden");
       if (step3Panel) step3Panel.classList.add("hidden");
       if (step4Panel) step4Panel.classList.add("hidden");
+      if (step5Panel) step5Panel.classList.add("hidden");
       if (placeholderEl) {
         placeholderEl.textContent = "";
         placeholderEl.classList.add("hidden");
@@ -7114,6 +9151,7 @@
       if (step2Panel) step2Panel.classList.remove("hidden");
       if (step3Panel) step3Panel.classList.add("hidden");
       if (step4Panel) step4Panel.classList.add("hidden");
+      if (step5Panel) step5Panel.classList.add("hidden");
       if (placeholderEl) {
         placeholderEl.textContent = "";
         placeholderEl.classList.add("hidden");
@@ -7124,6 +9162,7 @@
       if (step2Panel) step2Panel.classList.add("hidden");
       if (step3Panel) step3Panel.classList.remove("hidden");
       if (step4Panel) step4Panel.classList.add("hidden");
+      if (step5Panel) step5Panel.classList.add("hidden");
       if (placeholderEl) {
         placeholderEl.textContent = "";
         placeholderEl.classList.add("hidden");
@@ -7134,16 +9173,29 @@
       if (step2Panel) step2Panel.classList.add("hidden");
       if (step3Panel) step3Panel.classList.add("hidden");
       if (step4Panel) step4Panel.classList.remove("hidden");
+      if (step5Panel) step5Panel.classList.add("hidden");
       if (placeholderEl) {
         placeholderEl.textContent = "";
         placeholderEl.classList.add("hidden");
       }
       await hydrateOnboardingStep4();
+    } else if (step === 5) {
+      if (step1Panel) step1Panel.classList.add("hidden");
+      if (step2Panel) step2Panel.classList.add("hidden");
+      if (step3Panel) step3Panel.classList.add("hidden");
+      if (step4Panel) step4Panel.classList.add("hidden");
+      if (step5Panel) step5Panel.classList.remove("hidden");
+      if (placeholderEl) {
+        placeholderEl.textContent = "";
+        placeholderEl.classList.add("hidden");
+      }
+      hydrateOnboardingStep5();
     } else {
       if (step1Panel) step1Panel.classList.add("hidden");
       if (step2Panel) step2Panel.classList.add("hidden");
       if (step3Panel) step3Panel.classList.add("hidden");
       if (step4Panel) step4Panel.classList.add("hidden");
+      if (step5Panel) step5Panel.classList.add("hidden");
       if (placeholderEl) {
         placeholderEl.classList.remove("hidden");
         placeholderEl.textContent = meta.placeholder;
@@ -7157,7 +9209,8 @@
         onboardingStep1Saving ||
         onboardingStep2Advancing ||
         onboardingStep3Advancing ||
-        onboardingStep4Advancing;
+        onboardingStep4Advancing ||
+        onboardingStep5Advancing;
     }
 
     const contBtn = document.getElementById("adminOnboardingContinueBtn");
@@ -7171,6 +9224,8 @@
         updateWizardStep3Validation();
       } else if (step === 4) {
         updateWizardStep4Validation();
+      } else if (step === 5) {
+        updateWizardStep5Validation();
       } else {
         contBtn.disabled = false;
         contBtn.removeAttribute("aria-busy");
@@ -7266,7 +9321,21 @@
       return;
     }
     if (step >= 5) {
-      await completeAdminOnboardingPhaseA();
+      onboardingStep5Advancing = true;
+      updateWizardStep5Validation();
+      const backBtn = document.getElementById("adminOnboardingBackBtn");
+      const contBtn = document.getElementById("adminOnboardingContinueBtn");
+      if (backBtn) backBtn.disabled = true;
+      const prevLabel = contBtn?.textContent;
+      if (contBtn) contBtn.textContent = "Launching…";
+      try {
+        const ok = await saveAdminOnboardingStep5AndShowLaunch();
+        if (!ok && contBtn && prevLabel !== undefined) contBtn.textContent = prevLabel;
+      } finally {
+        onboardingStep5Advancing = false;
+        if (backBtn) backBtn.disabled = getAdminOnboardingStep() <= 1;
+        updateWizardStep5Validation();
+      }
       return;
     }
     const ok = await persistAdminOnboardingStep(step + 1);
@@ -7277,6 +9346,8 @@
     onboardingStep2Advancing = false;
     onboardingStep3Advancing = false;
     onboardingStep4Advancing = false;
+    onboardingStep5Advancing = false;
+    hideAdminOnboardingLaunchScreen();
     const step = getAdminOnboardingStep();
     if (step <= 1) return;
     const ok = await persistAdminOnboardingStep(step - 1);
@@ -7440,8 +9511,6 @@
 
     if (document.getElementById("manualBusinessId")) document.getElementById("manualBusinessId").value = "";
     if (document.getElementById("slotsContainer")) document.getElementById("slotsContainer").innerHTML = "";
-    if (document.getElementById("bookingFormCard")) document.getElementById("bookingFormCard").classList.add("hidden");
-
     history.replaceState(null, "", window.location.pathname);
     showModeView();
   }
@@ -7913,18 +9982,9 @@
     renderPublicBusinessProfileInfo();
     applyPublicBusinessBranding();
 
-    if (selectedDate) {
-      document.getElementById("selectedDateTitle").innerText = "Available slots for " + selectedDate;
-      renderSlots(selectedDate);
-    } else {
-      document.getElementById("selectedDateTitle").innerText = "Select a date";
-      document.getElementById("slotsContainer").innerHTML = "";
-    }
-    document.getElementById("bookingFormCard").classList.add("hidden");
-
     renderPublicServices();
     renderPublicStaffOptions();
-    renderPublicCalendar();
+    initPublicBookingWizardStep();
     startBookingRealtime();
   }
 
@@ -7932,7 +9992,9 @@
 
   function renderPublicBusinessProfileInfo() {
     const name = businessSettings?.business_name || "Book Appointment";
-    const logo = businessSettings?.business_logo_url || "";
+    const showLogo = businessSettings?.public_show_logo !== false;
+    const logo = showLogo ? businessSettings?.business_logo_url || "" : "";
+    const cover = businessSettings?.business_cover_url || "";
     const address = businessSettings?.business_address || "";
     const phone = businessSettings?.business_phone || "";
     const description = businessSettings?.business_description || "";
@@ -7940,7 +10002,18 @@
     const titleEl = document.getElementById("publicBusinessName");
     if (titleEl) titleEl.innerText = name;
 
-    setPublicBusinessLogo(logo);
+    const heroBg = document.getElementById("publicHeroBg");
+    if (heroBg) {
+      if (cover) {
+        heroBg.style.backgroundImage = "url(" + JSON.stringify(cover) + ")";
+        heroBg.classList.add("public-hero-bg--image");
+      } else {
+        heroBg.style.backgroundImage = "";
+        heroBg.classList.remove("public-hero-bg--image");
+      }
+    }
+
+    setPublicBusinessLogo(logo, name);
 
     const aboutEl = document.getElementById("publicBusinessAbout");
     if (aboutEl) {
@@ -8020,6 +10093,7 @@
         business_slug: fallbackSlug,
         business_name: "My Business",
         business_logo_url: null,
+        business_cover_url: null,
         business_address: null,
         business_phone: null,
         business_description: null,
@@ -8095,7 +10169,11 @@
     if (document.getElementById("businessLogoUrl")) {
       document.getElementById("businessLogoUrl").value = businessSettings.business_logo_url || "";
     }
+    if (document.getElementById("businessCoverUrl")) {
+      document.getElementById("businessCoverUrl").value = businessSettings.business_cover_url || "";
+    }
     updateLogoUploadUi();
+    updateCoverUploadUi();
     if (document.getElementById("businessPhone")) document.getElementById("businessPhone").value = businessSettings.business_phone || "";
     if (document.getElementById("businessAddress")) document.getElementById("businessAddress").value = businessSettings.business_address || "";
     if (document.getElementById("businessDescription")) document.getElementById("businessDescription").value = businessSettings.business_description || "";
@@ -8164,6 +10242,7 @@
       business_name: businessNameValue,
       business_slug: slugValue,
       business_logo_url: getBusinessLogoUrl() || null,
+      business_cover_url: getBusinessCoverUrl() || null,
       business_address: document.getElementById("businessAddress")?.value.trim() || null,
       business_phone: document.getElementById("businessPhone")?.value.trim() || null,
       business_description: document.getElementById("businessDescription")?.value.trim() || null,
@@ -8395,26 +10474,147 @@
 
     if (!document.getElementById("publicView").classList.contains("hidden")) {
       renderPublicServices();
-      renderPublicCalendar();
-      if (selectedDate) renderSlots(selectedDate);
+      refreshPublicAvailability({ refreshCalendar: true });
     }
   }
 
   function renderPublicServices() {
-    const select = document.getElementById("publicService");
-    select.innerHTML = "";
+    const list = document.getElementById("publicServiceList");
+    const hidden = document.getElementById("publicService");
+    if (!list) return;
+
+    list.innerHTML = "";
 
     if (!services.length) {
-      select.innerHTML = `<option value="">No services available</option>`;
+      list.innerHTML = emptyStateHtml("No services yet", "This business has not published services.");
+      if (hidden) hidden.value = "";
+      selectedService = null;
       return;
     }
 
-    services.forEach(s => {
-      const option = document.createElement("option");
-      option.value = s.id;
-      option.textContent = `${s.name} - ${getServiceDurationValue(s)} min`;
-      select.appendChild(option);
+    const showPrices = businessSettings?.public_show_prices !== false;
+    let currentId = hidden?.value || selectedService?.id || "";
+
+    services.forEach((s) => {
+      const duration = getServiceDurationValue(s);
+      let meta = `${duration} min`;
+      if (showPrices) {
+        const price = getServicePriceValue(s);
+        if (price > 0) meta += ` · ${price}`;
+      }
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "public-service-card";
+      btn.dataset.serviceId = s.id;
+      btn.setAttribute("role", "option");
+      btn.setAttribute("aria-selected", s.id === currentId ? "true" : "false");
+      if (s.id === currentId) btn.classList.add("public-service-card--selected");
+
+      btn.innerHTML = `
+        <span class="public-service-card-name">${escapeHtml(s.name)}</span>
+        <span class="public-service-card-meta">${escapeHtml(meta)}</span>
+      `;
+
+      btn.addEventListener("click", () => pickPublicService(s.id));
+      list.appendChild(btn);
     });
+
+    if (currentId && !services.some((s) => s.id === currentId)) currentId = "";
+    syncPublicServiceCardUi(currentId);
+    if (currentId) {
+      selectedService = services.find((s) => s.id === currentId) || null;
+      if (hidden && selectedService) hidden.value = currentId;
+    } else if (!selectedService) {
+      selectedService = null;
+      if (hidden) hidden.value = "";
+    }
+  }
+
+  function syncPublicServiceCardUi(serviceId) {
+    document.querySelectorAll(".public-service-card").forEach((el) => {
+      const on = el.dataset.serviceId === serviceId;
+      el.classList.toggle("public-service-card--selected", on);
+      el.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+
+  function updatePublicTimesPanelMeta() {
+    const titleEl = document.getElementById("selectedDateTitle");
+    const hintEl = document.getElementById("publicTimesHint");
+    const duration = selectedService ? getServiceDurationValue(selectedService) : null;
+
+    if (!selectedDate) {
+      if (titleEl) titleEl.textContent = "Choose date & time";
+      if (hintEl) {
+        hintEl.textContent = selectedService
+          ? `Select a day on the calendar (${duration} min appointments)`
+          : "Select a service, then pick a day on the calendar";
+      }
+      return;
+    }
+
+    if (titleEl) titleEl.textContent = "Choose date & time";
+    if (hintEl) {
+      const dayLabel = new Date(selectedDate + "T12:00:00").toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      });
+      hintEl.textContent = selectedService
+        ? `${dayLabel} · ${duration} min · pick an available time`
+        : `${dayLabel} · pick an available time`;
+    }
+  }
+
+  function clearPublicSlotsMount(message, detail) {
+    const container = document.getElementById("slotsContainer");
+    if (!container) return;
+    if (message) {
+      container.innerHTML = emptyStateHtml(message, detail || "");
+    } else {
+      container.innerHTML = "";
+    }
+  }
+
+  /** Recompute calendar highlight + time grid for current staff/service/date. */
+  function refreshPublicAvailability(opts = {}) {
+    updatePublicTimesPanelMeta();
+    if (opts.refreshCalendar !== false) renderPublicCalendar();
+    if (selectedDate && selectedService) {
+      renderSlots(selectedDate, selectedService.id);
+    } else if (selectedDate && !selectedService) {
+      clearPublicSlotsMount("No service selected", "Choose a service to see available times.");
+    } else {
+      clearPublicSlotsMount();
+    }
+  }
+
+  function pickPublicService(serviceId, opts = {}) {
+    const service = services.find((s) => s.id === serviceId);
+    if (!service) return;
+
+    const prevServiceId = selectedService?.id || "";
+    const serviceChanged = prevServiceId !== serviceId;
+
+    selectedService = service;
+    const hidden = document.getElementById("publicService");
+    if (hidden) hidden.value = serviceId;
+    syncPublicServiceCardUi(serviceId);
+
+    if (serviceChanged || opts.forceRefresh) {
+      selectedSlot = null;
+    }
+
+    refreshPublicAvailability({
+      refreshCalendar: opts.refreshCalendar !== false && (serviceChanged || opts.forceRefresh)
+    });
+
+    if (!opts.silent) {
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, {
+        refreshCalendar: serviceChanged || opts.forceRefresh
+      });
+    }
   }
 
   function renderEditServiceOptions(selectedId) {
@@ -8790,35 +10990,159 @@
   }
 
   function renderPublicStaffOptions(selectedId) {
-    const select = document.getElementById("publicStaff");
-    if (!select) return;
+    const panel = document.getElementById("publicStaffPanel");
+    const mount = document.getElementById("publicStaffCards");
+    const hidden = document.getElementById("publicStaff");
+    if (!mount) return;
 
-    select.innerHTML = `<option value="">Any staff</option>`;
+    mount.innerHTML = "";
 
-    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) {
-      select.classList.add("hidden");
+    if (
+      !staffFeatureAvailable ||
+      !bookingStaffColumnAvailable ||
+      businessSettings?.public_show_staff === false ||
+      !getActiveStaffMembers().length
+    ) {
+      panel?.classList.add("hidden");
+      selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+      if (hidden) hidden.value = "";
       return;
     }
 
-    select.classList.remove("hidden");
-    getActiveStaffMembers().forEach(staff => {
-      const option = document.createElement("option");
-      option.value = staff.id;
-      option.textContent = staff.role ? `${staff.name} - ${staff.role}` : staff.name;
-      if (selectedId && selectedId === staff.id) option.selected = true;
-      select.appendChild(option);
+    panel?.classList.remove("hidden");
+
+    let choice = selectedId || selectedPublicStaffChoice || PUBLIC_STAFF_ANY;
+    if (choice !== PUBLIC_STAFF_ANY && !getActiveStaffMembers().some((s) => s.id === choice)) {
+      choice = PUBLIC_STAFF_ANY;
+    }
+
+    const anyBtn = document.createElement("button");
+    anyBtn.type = "button";
+    anyBtn.className = "public-staff-card";
+    anyBtn.dataset.staffId = PUBLIC_STAFF_ANY;
+    anyBtn.setAttribute("role", "radio");
+    anyBtn.setAttribute("aria-checked", choice === PUBLIC_STAFF_ANY ? "true" : "false");
+    if (choice === PUBLIC_STAFF_ANY) anyBtn.classList.add("public-staff-card--selected");
+    anyBtn.innerHTML = `
+      <div class="public-staff-card-avatar"><span class="public-staff-card-initials">★</span></div>
+      <div class="public-staff-card-body">
+        <span class="public-staff-card-name">Any available</span>
+        <span class="public-staff-card-role">First free stylist at this time</span>
+      </div>
+    `;
+    anyBtn.addEventListener("click", () => pickPublicStaff(PUBLIC_STAFF_ANY));
+    mount.appendChild(anyBtn);
+
+    getActiveStaffMembers().forEach((staff) => {
+      const photo = String(staff.photo_url || "").trim();
+      const initials = escapeHtml(staffMemberInitials(staff.name));
+      const avatarInner = photo
+        ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="public-staff-card-initials" style="display:none">${initials}</span>`
+        : `<span class="public-staff-card-initials">${initials}</span>`;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "public-staff-card";
+      btn.dataset.staffId = staff.id;
+      btn.setAttribute("role", "radio");
+      btn.setAttribute("aria-checked", choice === staff.id ? "true" : "false");
+      if (choice === staff.id) btn.classList.add("public-staff-card--selected");
+
+      btn.innerHTML = `
+        <div class="public-staff-card-avatar">${avatarInner}</div>
+        <div class="public-staff-card-body">
+          <span class="public-staff-card-name">${escapeHtml(staff.name)}</span>
+          <span class="public-staff-card-role">${escapeHtml(staff.role || "Team member")}</span>
+        </div>
+      `;
+      btn.addEventListener("click", () => pickPublicStaff(staff.id));
+      mount.appendChild(btn);
     });
+
+    pickPublicStaff(choice, { silent: true });
+
+    const staffStepEl = document.getElementById("publicBookingStepStaff");
+    if (staffStepEl) {
+      staffStepEl.classList.toggle("hidden", !isPublicStaffStepEnabled());
+    }
   }
 
+  function pickPublicStaff(staffChoice, opts = {}) {
+    const prevChoice = selectedPublicStaffChoice;
+    const staffChanged = prevChoice !== staffChoice;
+
+    selectedPublicStaffChoice = staffChoice;
+    const hidden = document.getElementById("publicStaff");
+    if (hidden) hidden.value = staffChoice === PUBLIC_STAFF_ANY ? "" : staffChoice;
+
+    document.querySelectorAll(".public-staff-card").forEach((el) => {
+      const on = el.dataset.staffId === staffChoice;
+      el.classList.toggle("public-staff-card--selected", on);
+      el.setAttribute("aria-checked", on ? "true" : "false");
+    });
+
+    if (!opts.silent) {
+      if (staffChanged) {
+        resetPublicBookingSelectionsFromStaff();
+      } else {
+        selectedSlot = null;
+      }
+      refreshPublicAvailability({ refreshCalendar: true });
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE);
+    }
+  }
+
+  /** null = any available staff; string = specific staff id */
   function getSelectedPublicStaffId() {
-    const select = document.getElementById("publicStaff");
-    if (!select || select.classList.contains("hidden")) return null;
-    return select.value || null;
+    const panel = document.getElementById("publicStaffPanel");
+    if (!panel || panel.classList.contains("hidden")) return null;
+    if (selectedPublicStaffChoice === PUBLIC_STAFF_ANY) return null;
+    return selectedPublicStaffChoice || null;
   }
 
   function handlePublicStaffChange() {
-    document.getElementById("bookingFormCard").classList.add("hidden");
-    if (selectedDate) renderSlots(selectedDate);
+    pickPublicStaff(selectedPublicStaffChoice || PUBLIC_STAFF_ANY);
+  }
+
+  function bookingOverlapsTime(booking, date, time, serviceId) {
+    const service = services.find((s) => s.id === serviceId);
+    if (!service) return false;
+
+    const newStart = timeToMinutes(time);
+    const newEnd = newStart + getServiceDurationValue(service);
+    const existingStart = timeToMinutes(booking.time);
+    const existingDuration = Number(booking.duration_minutes || 30);
+    const existingEnd = existingStart + existingDuration;
+
+    return newStart < existingEnd && newEnd > existingStart;
+  }
+
+  function slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staffId) {
+    return bookings.some((b) => {
+      if (b.date !== date) return false;
+      if (ignoreBookingId && b.id === ignoreBookingId) return false;
+      if (getBookingStatus(b) === "Cancelled") return false;
+      if (!bookingOverlapsTime(b, date, time, serviceId)) return false;
+
+      if (bookingStaffColumnAvailable && staffId) {
+        const existingStaffId = b.staff_id || null;
+        if (existingStaffId && existingStaffId !== staffId) return false;
+      }
+
+      return true;
+    });
+  }
+
+  function resolveStaffIdForBooking(date, time, serviceId, ignoreBookingId) {
+    const active = getActiveStaffMembers();
+    if (!bookingStaffColumnAvailable || !active.length) return null;
+
+    for (const staff of active) {
+      if (!slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staff.id)) {
+        return staff.id;
+      }
+    }
+    return null;
   }
 
   async function loadBookings(silent = false) {
@@ -8885,9 +11209,11 @@
           hasConflict(selectedDate, selectedSlot, serviceId, null, getSelectedPublicStaffId())
         ) {
           selectedSlot = null;
-          document.getElementById("bookingFormCard").classList.add("hidden");
+          if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+            goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, { silent: true });
+          }
         }
-        renderSlots(selectedDate);
+        refreshPublicAvailability({ refreshCalendar: false });
       }
     }
 
@@ -9539,16 +11865,20 @@
   function renderPublicCalendar() {
     const calendar = document.getElementById("publicCalendar");
     const title = document.getElementById("publicCalendarTitle");
+    if (!calendar) return;
 
     calendar.innerHTML = "";
 
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
+    const todayStr = getTodayDateString();
 
-    title.innerText = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+    if (title) {
+      title.innerText = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+    }
 
     const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    dayNames.forEach(d => {
+    dayNames.forEach((d) => {
       const div = document.createElement("div");
       div.className = "day-name";
       div.innerText = d;
@@ -9574,27 +11904,30 @@
 
       const workingDays = getWorkingDaysArray();
       const isWorkingDay = workingDays.includes(dayOfWeek);
-      const isClosed = blockedDays.some(d => d.date === dateStr);
+      const isClosed = blockedDays.some((d) => d.date === dateStr);
       const isPast = isPastDate(dateStr);
       const outsideWindow = isOutsideBookingWindow(dateStr);
 
       const div = document.createElement("div");
       div.className = "calendar-day";
 
+      if (dateStr === todayStr) div.classList.add("today");
+      if (selectedDate === dateStr) div.classList.add("selected");
       if (isClosed) div.classList.add("closed");
+      if (!isClosed && !isWorkingDay) div.classList.add("off-day");
 
-      div.innerHTML = `
-        <strong>${day}</strong><br>
-        ${isClosed ? `<span class="badge badge-red">Closed</span>` : ""}
-        ${!isClosed && !isWorkingDay ? `<span class="badge badge-gray">Off</span>` : ""}
-      `;
+      let badge = "";
+      if (isClosed) badge = `<span class="cal-badge">Closed</span>`;
+      else if (!isWorkingDay) badge = `<span class="cal-badge">Off</span>`;
+
+      div.innerHTML = `<strong>${day}</strong>${badge}`;
 
       if (isPast || outsideWindow || !isWorkingDay || isClosed) {
         div.onclick = () => {
-          if (isClosed) showToast("This day is closed.", "error")
-          else if (!isWorkingDay) showToast("This is not a working day.", "error")
-          else if (outsideWindow) showToast("This date is outside booking window.", "error")
-          else showToast("Past date.", "error")
+          if (isClosed) showToast("This day is closed.", "error");
+          else if (!isWorkingDay) showToast("This is not a working day.", "error");
+          else if (outsideWindow) showToast("This date is outside booking window.", "error");
+          else showToast("Past date.", "error");
         };
       } else {
         div.onclick = () => selectPublicDate(dateStr);
@@ -9608,18 +11941,39 @@
     selectedDate = dateStr;
     selectedSlot = null;
 
-    document.getElementById("selectedDateTitle").innerText = "Available slots for " + dateStr;
-    document.getElementById("bookingFormCard").classList.add("hidden");
+    const titleEl = document.getElementById("selectedDateTitle");
+    if (titleEl) titleEl.innerText = "Available times";
+    const hintEl = document.getElementById("publicTimesHint");
+    if (hintEl) {
+      hintEl.textContent = new Date(dateStr + "T12:00:00").toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      });
+    }
+    if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+      selectedSlot = null;
+      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, { silent: true });
+    }
 
-    renderSlots(dateStr);
+    updatePublicTimesPanelMeta();
+    renderPublicCalendar();
+    renderSlots(dateStr, selectedService?.id);
   }
 
-  function renderSlots(dateStr) {
+  function renderSlots(dateStr, serviceIdOverride) {
     const container = document.getElementById("slotsContainer");
+    if (!container) return;
     container.innerHTML = "";
 
-    const serviceId = document.getElementById("publicService").value;
-    selectedService = services.find(s => s.id === serviceId);
+    const serviceId =
+      serviceIdOverride ||
+      selectedService?.id ||
+      document.getElementById("publicService")?.value ||
+      "";
+    selectedService = services.find((s) => s.id === serviceId) || null;
+    const hidden = document.getElementById("publicService");
+    if (hidden && serviceId) hidden.value = serviceId;
 
     if (!selectedService) {
       container.innerHTML = emptyStateHtml("No service selected", "Choose a service to see available times.");
@@ -9636,36 +11990,39 @@
 
     const dowSlot = dayOfWeekFromDateStr(dateStr);
     const winSlot = getWorkWindowForDayOfWeek(dowSlot);
-    const slots = generateSlots(
-      winSlot.start,
-      winSlot.end,
-      getServiceDurationValue(selectedService)
-    );
+    const duration = getServiceDurationValue(selectedService);
+    const slots = generateSlots(winSlot.start, winSlot.end, duration, PUBLIC_SLOT_STEP_MINUTES);
 
     if (!slots.length) {
       container.innerHTML = emptyStateHtml("No slots available", "Try another date or service.");
       return;
     }
 
-    slots.forEach(time => {
-      const div = document.createElement("div");
+    let availableCount = 0;
 
-      const isBreak = isSlotInBreak(time, getServiceDurationValue(selectedService));
+    slots.forEach((time) => {
+      const div = document.createElement("div");
+      const isBreak = isSlotInBreak(time, duration);
       const conflict = hasConflict(dateStr, time, selectedService.id, null, selectedStaffId);
 
       div.className = "slot";
 
       if (isBreak) {
         div.classList.add("break");
-        div.innerText = time + " Break";
+        div.innerText = time;
+        div.setAttribute("aria-disabled", "true");
       } else if (conflict) {
         div.classList.add("booked");
-        div.innerText = time + " Booked";
+        div.innerText = time;
+        div.setAttribute("aria-disabled", "true");
       } else {
+        availableCount += 1;
         div.innerText = time;
         div.dataset.slotTime = time;
         div.setAttribute("role", "button");
         div.setAttribute("tabindex", "0");
+        div.setAttribute("aria-pressed", selectedSlot === time ? "true" : "false");
+        if (selectedSlot === time) div.classList.add("selected");
         div.onclick = (event) => {
           event.preventDefault();
           event.stopPropagation();
@@ -9681,6 +12038,15 @@
 
       container.appendChild(div);
     });
+
+    if (availableCount === 0) {
+      container.innerHTML = emptyStateHtml(
+        "Fully booked",
+        selectedStaffId
+          ? "This stylist has no open times on this day. Try another date or stylist."
+          : "No stylists are free on this day. Try another date."
+      );
+    }
   }
 
 
@@ -9711,22 +12077,19 @@
   async function chooseSlot(time) {
     selectedSlot = time;
 
-    document.querySelectorAll(".slot.selected").forEach(slot => slot.classList.remove("selected"));
-    const selectedSlotEl = document.querySelector(`.slot[data-slot-time="${CSS.escape(time)}"]`);
+    document.querySelectorAll("#slotsContainer .slot.selected").forEach((slot) => slot.classList.remove("selected"));
+    const selectedSlotEl = document.querySelector(
+      `#slotsContainer .slot[data-slot-time="${CSS.escape(time)}"]`
+    );
     if (selectedSlotEl) selectedSlotEl.classList.add("selected");
 
-    const formCard = document.getElementById("bookingFormCard");
-    formCard.classList.remove("hidden");
-    document.getElementById("chosenSlotText").innerText =
-      `${selectedDate} at ${selectedSlot} - ${selectedService.name}`;
+    updatePublicBookingDetailsSummary();
 
     if (currentUser && currentUserRole === "customer") {
       await loadCustomerProfileForBookingForm();
     }
 
-    setTimeout(() => {
-      formCard.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+    goToPublicBookingStep(PUBLIC_BOOKING_STEP.DETAILS);
   }
 
   async function createPublicBooking() {
@@ -9734,7 +12097,7 @@
     const phone = document.getElementById("customerPhone").value.trim();
     const email = document.getElementById("customerEmail").value.trim();
     const notes = document.getElementById("customerNotes").value.trim();
-    const staffId = getSelectedPublicStaffId();
+    let staffId = getSelectedPublicStaffId();
 
     if (!selectedDate || !selectedSlot || !selectedService) {
       showToast("Choose date, slot and service.", "error")
@@ -9753,6 +12116,15 @@
     }
 
     await loadBookings();
+
+    if (!staffId && bookingStaffColumnAvailable && getActiveStaffMembers().length) {
+      staffId = resolveStaffIdForBooking(selectedDate, selectedSlot, selectedService.id, null);
+      if (!staffId) {
+        showToast("Sorry, no stylist is available at this time.", "error");
+        await loadPublicData();
+        return;
+      }
+    }
 
     const conflict = hasConflict(selectedDate, selectedSlot, selectedService.id, null, staffId);
     if (conflict) {
@@ -9792,7 +12164,6 @@
     document.getElementById("customerPhone").value = "";
     document.getElementById("customerEmail").value = "";
     document.getElementById("customerNotes").value = "";
-    document.getElementById("bookingFormCard").classList.add("hidden");
     selectedSlot = null;
 
     if (insertedBooking?.manage_token) {
@@ -9807,43 +12178,34 @@
     }
   }
 
-  function generateSlots(start, end, duration) {
+  function generateSlots(start, end, duration, stepMinutes = 15) {
     const slots = [];
-
+    const step = Math.max(5, Number(stepMinutes) || 15);
     let current = timeToMinutes(start);
     const endMin = timeToMinutes(end);
+    const dur = Number(duration) || 30;
 
-    while (current + duration <= endMin) {
+    while (current + dur <= endMin) {
       slots.push(minutesToTime(current));
-      current += Number(duration);
+      current += step;
     }
 
     return slots;
   }
 
   function hasConflict(date, time, serviceId, ignoreBookingId, staffId) {
-    const service = services.find(s => s.id === serviceId);
-    if (!service) return false;
+    const activeStaff = getActiveStaffMembers();
 
-    const newStart = timeToMinutes(time);
-    const newEnd = newStart + getServiceDurationValue(service);
-
-    return bookings.some(b => {
-      if (b.date !== date) return false;
-      if (ignoreBookingId && b.id === ignoreBookingId) return false;
-      if (getBookingStatus(b) === "Cancelled") return false;
-
-      if (bookingStaffColumnAvailable && staffId) {
-        const existingStaffId = b.staff_id || null;
-        if (existingStaffId && existingStaffId !== staffId) return false;
+    if (bookingStaffColumnAvailable && activeStaff.length) {
+      if (staffId) {
+        return slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staffId);
       }
+      return !activeStaff.some(
+        (staff) => !slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staff.id)
+      );
+    }
 
-      const existingStart = timeToMinutes(b.time);
-      const existingDuration = Number(b.duration_minutes || 30);
-      const existingEnd = existingStart + existingDuration;
-
-      return newStart < existingEnd && newEnd > existingStart;
-    });
+    return slotConflictsForStaff(date, time, serviceId, ignoreBookingId, null);
   }
 
   function isSlotInBreak(time, duration) {
