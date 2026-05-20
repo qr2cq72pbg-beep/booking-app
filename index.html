@@ -1042,6 +1042,20 @@
       margin-bottom: var(--space-md);
     }
 
+    .manage-booking-error {
+      text-align: center;
+      padding: var(--space-md) 0;
+    }
+
+    .manage-booking-error .empty-state-title {
+      font-size: 1.1rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .manage-booking-error button {
+      margin-top: var(--space-sm);
+    }
+
     .manage-booking-rescheduled-banner {
       padding: var(--space-md);
       background: #f0fdf4;
@@ -2560,6 +2574,7 @@
   const publicManageToken = urlParams.get("manage");
   let activeManageToken = publicManageToken ? String(publicManageToken).trim() : null;
   let manageBookingData = null;
+  let manageBookingActionInFlight = false;
 
   function showToast(message, type = "info", duration = 4000) {
     const text = String(message || "").trim();
@@ -2783,6 +2798,80 @@
 
   function formatManageRpcError(error) {
     return formatBookingRpcError(error);
+  }
+
+  function isManageBookingCancelled(booking) {
+    return String(booking?.booking_status || "").trim().toLowerCase() === "cancelled";
+  }
+
+  function friendlyManageBookingErrorMessage(message) {
+    const msg = String(message || "").trim();
+    const lower = msg.toLowerCase();
+    if (!msg || lower.includes("not found") || lower.includes("invalid") || lower.includes("manage link")) {
+      return "This manage link is invalid, expired, or the booking no longer exists.";
+    }
+    if (lower.includes("cancelled") && (lower.includes("cannot") || lower.includes("can no longer"))) {
+      return "This booking has been cancelled and can no longer be changed.";
+    }
+    if (msg.length > 180) {
+      return "Unable to load this booking. Please use your confirmation link or contact the business.";
+    }
+    return msg;
+  }
+
+  function manageBookingErrorHtml(message) {
+    const friendly = friendlyManageBookingErrorMessage(message);
+    const businessParam =
+      publicBusinessId ||
+      getBookingBusinessSlug(manageBookingData) ||
+      normalizeBusinessSlug(businessSettings?.business_slug || "");
+    const returnAction = businessParam
+      ? `<button type="button" class="secondary" onclick="openManageBookingPublicReturn()">Book an appointment</button>`
+      : `<button type="button" class="secondary" onclick="goHome()">Go to home</button>`;
+
+    return `
+      <div class="empty-state manage-booking-error">
+        <span class="empty-state-title">Unable to open this booking</span>
+        <span>${escapeHtml(friendly)}</span>
+        <p style="margin-top:16px;">${returnAction}</p>
+      </div>
+    `;
+  }
+
+  function openManageBookingPublicReturn() {
+    const slug =
+      publicBusinessId ||
+      getBookingBusinessSlug(manageBookingData) ||
+      normalizeBusinessSlug(businessSettings?.business_slug || "");
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    if (slug) {
+      businessId = slug;
+      showPublicView(true);
+      setPublicBookingWizardVisible(true);
+      history.replaceState(null, "", window.location.pathname + "?business=" + encodeURIComponent(slug));
+      loadPublicData();
+      return;
+    }
+    goHome();
+  }
+
+  async function refreshManageBookingFromToken(renderOptions = {}) {
+    const token = String(activeManageToken || "").trim();
+    if (!token) return null;
+
+    const { data, error } = await fetchBookingByManageToken(token);
+    if (error || !data) {
+      console.warn("[manage-booking] refresh failed", error?.message || "no data");
+      showManageBookingError(error?.message || "Booking not found.");
+      return null;
+    }
+
+    await loadBookings(true);
+    setPublicBookingWizardVisible(false);
+    document.getElementById("bookingSuccessCard")?.classList.add("hidden");
+    document.getElementById("manageBookingCard")?.classList.remove("hidden");
+    renderManageBookingCard(data, renderOptions);
+    return data;
   }
 
   async function fetchBookingByManageToken(token) {
@@ -3061,7 +3150,10 @@
     }
 
     const cancelBtn = document.getElementById("manageBookingCancelBtn");
-    if (cancelBtn) cancelBtn.disabled = !canManage;
+    if (cancelBtn) {
+      cancelBtn.classList.toggle("hidden", !canManage);
+      cancelBtn.disabled = !canManage;
+    }
 
     const bookNewBtn = document.getElementById("manageBookingBookNewBtn");
     const bookAnotherBtn = document.getElementById("manageBookingBookAnotherBtn");
@@ -3080,21 +3172,13 @@
     if (body) body.classList.add("hidden");
     if (errorBox) {
       errorBox.classList.remove("hidden");
-      errorBox.innerHTML = emptyStateHtml("Unable to load booking", message);
+      errorBox.innerHTML = manageBookingErrorHtml(message);
     }
+    document.getElementById("manageBookingCard")?.classList.remove("hidden");
   }
 
   async function openManageBookingFromToken(token) {
     const manageToken = String(token || activeManageToken || "").trim();
-    if (!manageToken) {
-      showToast("Manage link is missing.", "error");
-      return;
-    }
-
-    activeManageToken = manageToken;
-    setPublicBookingWizardVisible(false);
-    document.getElementById("bookingSuccessCard")?.classList.add("hidden");
-
     const card = document.getElementById("manageBookingCard");
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
@@ -3105,21 +3189,40 @@
     errorBox?.classList.add("hidden");
     body?.classList.add("hidden");
 
-    const { data, error } = await fetchBookingByManageToken(manageToken);
-    if (error) {
-      showManageBookingError(error.message);
+    if (!manageToken) {
+      showManageBookingError("Manage link is missing.");
       return;
     }
 
-    await applyBusinessContextFromManageBooking(data, manageToken);
-    await loadPublicData();
-    await ensurePublicAvailabilityForManage();
-    renderManageBookingCard(data);
-    card?.scrollIntoView({ behavior: "smooth", block: "start" });
+    activeManageToken = manageToken;
+    setPublicBookingWizardVisible(false);
+    document.getElementById("bookingSuccessCard")?.classList.add("hidden");
+
+    try {
+      const { data, error } = await fetchBookingByManageToken(manageToken);
+      if (error || !data) {
+        showManageBookingError(error?.message || "Booking not found.");
+        return;
+      }
+
+      await applyBusinessContextFromManageBooking(data, manageToken);
+      await loadPublicData();
+      await ensurePublicAvailabilityForManage();
+      renderManageBookingCard(data);
+      card?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      console.warn("[manage-booking] load failed", err?.message || err);
+      showManageBookingError("Unable to load this booking right now. Please try again.");
+    }
   }
 
   async function submitManageReschedule() {
     if (!activeManageToken || !manageBookingData) return;
+    if (manageBookingActionInFlight) return;
+    if (isManageBookingCancelled(manageBookingData)) {
+      showToast("This booking is cancelled and cannot be rescheduled.", "error");
+      return;
+    }
 
     const saveBtn = document.getElementById("manageBookingRescheduleBtn");
     const newDate = document.getElementById("manageBookingDate")?.value;
@@ -3148,6 +3251,7 @@
       normalizeBookingDateForInput(manageBookingData?.date) || String(manageBookingData?.date || "").trim();
     const previousTime = String(manageBookingData?.time || "").trim().slice(0, 5);
 
+    manageBookingActionInFlight = true;
     if (saveBtn) saveBtn.disabled = true;
     try {
       const { data, error } = await rescheduleBookingByManageToken(activeManageToken, newDate, newTime);
@@ -3156,18 +3260,15 @@
         return;
       }
 
-      const merged =
-        data && typeof data === "object"
-          ? { ...(manageBookingData || {}), ...data, date: data.date || newDate, time: data.time || newTime }
-          : { ...(manageBookingData || {}), date: newDate, time: newTime };
+      const refreshed = await refreshManageBookingFromToken({ showRescheduledSuccess: true });
+      if (!refreshed) return;
 
-      await loadBookings(true);
-      renderManageBookingCard(merged, { showRescheduledSuccess: true });
+      showToast("Your appointment has been rescheduled.", "success");
       document.getElementById("manageBookingRescheduledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
       await sendBookingEmailNotification(
         EMAIL_NOTIFICATION_TYPES.RESCHEDULED,
-        resolveManageBookingIdForEmail(merged, data, manageBookingData),
+        resolveManageBookingIdForEmail(refreshed, data, manageBookingData),
         {
           source: "manage",
           manageToken: activeManageToken,
@@ -3176,37 +3277,58 @@
         }
       );
     } finally {
-      if (saveBtn) saveBtn.disabled = false;
+      manageBookingActionInFlight = false;
+      if (saveBtn) {
+        const canManage = manageBookingData?.can_manage !== false && !isManageBookingCancelled(manageBookingData);
+        saveBtn.disabled = !canManage || !manageRescheduleSelectedTime;
+      }
     }
   }
 
   async function submitManageCancel() {
     if (!activeManageToken) return;
-    if (!confirm("Cancel this booking?")) return;
-
-    const { data, error } = await cancelBookingByManageToken(activeManageToken);
-    if (error) {
-      showToast(error.message, "error");
+    if (manageBookingActionInFlight) return;
+    if (isManageBookingCancelled(manageBookingData)) {
+      showToast("This booking is already cancelled.", "error");
       return;
     }
+    if (!confirm("Cancel this booking?")) return;
 
-    const cancelledBooking =
-      data && typeof data === "object"
-        ? { ...(manageBookingData || {}), ...data, booking_status: data.booking_status || "Cancelled", can_manage: false }
-        : { ...(manageBookingData || {}), booking_status: "Cancelled", can_manage: false };
+    const cancelBtn = document.getElementById("manageBookingCancelBtn");
+    manageBookingActionInFlight = true;
+    if (cancelBtn) cancelBtn.disabled = true;
 
-    renderManageBookingCard(cancelledBooking);
-    document.getElementById("manageBookingCard")?.classList.remove("hidden");
-    document.getElementById("manageBookingCancelledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-
-    await sendBookingEmailNotification(
-      EMAIL_NOTIFICATION_TYPES.CANCELLED,
-      resolveManageBookingIdForEmail(cancelledBooking, data, manageBookingData),
-      {
-        source: "manage",
-        manageToken: activeManageToken
+    try {
+      const { data, error } = await cancelBookingByManageToken(activeManageToken);
+      if (error) {
+        showToast(error.message, "error");
+        if (cancelBtn) cancelBtn.disabled = false;
+        return;
       }
-    );
+
+      const refreshed = await refreshManageBookingFromToken();
+      if (!refreshed) {
+        const fallback =
+          data && typeof data === "object"
+            ? { ...(manageBookingData || {}), ...data, booking_status: data.booking_status || "Cancelled", can_manage: false }
+            : { ...(manageBookingData || {}), booking_status: "Cancelled", can_manage: false };
+        renderManageBookingCard(fallback);
+      }
+
+      showToast("Your booking has been cancelled.", "success");
+      document.getElementById("manageBookingCancelledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      await sendBookingEmailNotification(
+        EMAIL_NOTIFICATION_TYPES.CANCELLED,
+        resolveManageBookingIdForEmail(manageBookingData, data),
+        {
+          source: "manage",
+          manageToken: activeManageToken
+        }
+      );
+    } finally {
+      manageBookingActionInFlight = false;
+    }
   }
 
   function generateFallbackBusinessSlug() {
