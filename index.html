@@ -307,6 +307,652 @@
       cursor: default;
     }
 
+    /* —— Admin scheduling calendar (Day / Week / Month) —— */
+    #adminSectionCalendar .admin-schedule-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #adminSectionCalendar .admin-schedule-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #adminSectionCalendar .admin-schedule-toolbar__nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #adminSectionCalendar .admin-schedule-nav-btn {
+      width: auto;
+      min-height: 32px;
+      padding: 5px 11px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: inherit;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    #adminSectionCalendar .admin-schedule-nav-btn:hover {
+      background: var(--admin-surface-2, #f1f5f9);
+      border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 35%, var(--color-border));
+    }
+
+    #adminSectionCalendar .admin-schedule-nav-btn--danger {
+      color: var(--color-danger);
+      border-color: color-mix(in srgb, var(--color-danger) 30%, var(--color-border));
+    }
+
+    #adminSectionCalendar .admin-schedule-toolbar__title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    #adminSectionCalendar .admin-calendar-view-tabs {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      background: var(--admin-surface-2, #f1f5f9);
+      gap: 2px;
+    }
+
+    #adminSectionCalendar .admin-calendar-view-tab {
+      border: none;
+      background: transparent;
+      color: var(--color-muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      min-height: 0;
+      width: auto;
+      margin: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #adminSectionCalendar .admin-calendar-view-tab--active {
+      background: var(--color-surface);
+      color: var(--color-primary);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    #adminSectionCalendar .admin-schedule-staff-filter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    #adminSectionCalendar .admin-schedule-staff-filter label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-muted);
+      white-space: nowrap;
+    }
+
+    #adminSectionCalendar .admin-schedule-staff-filter select {
+      min-width: 140px;
+      width: auto;
+      margin: 0;
+      padding: 6px 10px;
+      min-height: 32px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+
+    #adminSectionCalendar .admin-schedule-mount {
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: var(--color-surface);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    #adminSectionCalendar .admin-schedule-week {
+      display: flex;
+      flex-direction: column;
+      max-height: min(72vh, 720px);
+      overflow: auto;
+    }
+
+    #adminSectionCalendar .admin-schedule-week-header {
+      display: grid;
+      grid-template-columns: 52px repeat(7, minmax(0, 1fr));
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    #adminSectionCalendar .admin-schedule-week-header .admin-schedule-gutter {
+      background: var(--color-surface);
+    }
+
+    #adminSectionCalendar .admin-schedule-day-head {
+      padding: 8px 6px;
+      text-align: center;
+      border-left: 1px solid var(--color-border);
+    }
+
+    #adminSectionCalendar .admin-schedule-day-head strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-muted);
+    }
+
+    #adminSectionCalendar .admin-schedule-day-head span {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    #adminSectionCalendar .admin-schedule-day-head--today span {
+      color: var(--business-accent, var(--color-primary));
+    }
+
+    #adminSectionCalendar .admin-schedule-week-body {
+      display: grid;
+      grid-template-columns: 52px repeat(7, minmax(0, 1fr));
+    }
+
+    #adminSectionCalendar .admin-schedule-cols-area {
+      position: relative;
+      display: grid;
+      min-height: 0;
+      grid-column: 2 / -1;
+    }
+
+    #adminSectionCalendar .admin-schedule-week-body .admin-schedule-cols-area {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    #adminSectionCalendar .admin-schedule-day-view .admin-schedule-cols-area {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    #adminSectionCalendar .admin-schedule-hover-ui {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    #adminSectionCalendar .admin-schedule-hover-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      margin-top: -1px;
+      background: var(--business-accent, #2563eb);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--business-accent, #2563eb) 35%, transparent),
+        0 0 12px color-mix(in srgb, var(--business-accent, #2563eb) 45%, transparent);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.1s ease;
+    }
+
+    #adminSectionCalendar .admin-schedule-hover-line.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #adminSectionCalendar .admin-schedule-hover-label {
+      position: absolute;
+      left: 8px;
+      transform: translateY(-50%);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+      color: #fff;
+      background: var(--business-accent, #2563eb);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.1s ease;
+      white-space: nowrap;
+    }
+
+    #adminSectionCalendar .admin-schedule-hover-label.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #adminSectionCalendar .admin-schedule-slot-preview {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      height: calc(15 * var(--admin-schedule-px-per-min, 0.8667px));
+      border-radius: 6px;
+      border: 1px dashed color-mix(in srgb, var(--business-accent, #2563eb) 55%, transparent);
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 10%, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #adminSectionCalendar .admin-schedule-drag-select {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      border-radius: 8px;
+      border: 2px solid color-mix(in srgb, var(--business-accent, #2563eb) 70%, transparent);
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 16%, transparent);
+      pointer-events: none;
+      z-index: 2;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 40%, transparent);
+    }
+
+    #adminSectionCalendar .admin-schedule-now-ui {
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #adminSectionCalendar .admin-schedule-now-ui.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #adminSectionCalendar .admin-schedule-now-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      margin-top: -1px;
+      background: #ef4444;
+      box-shadow: 0 0 0 1px color-mix(in srgb, #ef4444 40%, transparent),
+        0 0 10px color-mix(in srgb, #ef4444 35%, transparent);
+    }
+
+    #adminSectionCalendar .admin-schedule-now-label {
+      position: absolute;
+      right: 6px;
+      transform: translateY(-50%);
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #ef4444;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+    }
+
+    #adminSectionCalendar .admin-schedule-cols-area--interactive .admin-schedule-col--bookable {
+      cursor: crosshair;
+    }
+
+    #adminSectionCalendar .admin-schedule-cols-area--dragging {
+      cursor: ns-resize;
+      user-select: none;
+    }
+
+    #adminSectionCalendar .admin-schedule-time-labels {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+    }
+
+    #adminSectionCalendar .admin-schedule-time-label {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0 6px 0 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--color-muted);
+      font-variant-numeric: tabular-nums;
+      transform: translateY(-6px);
+      box-sizing: border-box;
+    }
+
+    #adminSectionCalendar .admin-schedule-col {
+      position: relative;
+      border-left: 1px solid var(--color-border);
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 3%, var(--color-surface));
+      cursor: pointer;
+    }
+
+    #adminSectionCalendar .admin-schedule-col--closed {
+      background: repeating-linear-gradient(
+        -45deg,
+        color-mix(in srgb, #dc2626 8%, transparent),
+        color-mix(in srgb, #dc2626 8%, transparent) 6px,
+        color-mix(in srgb, #dc2626 4%, transparent) 6px,
+        color-mix(in srgb, #dc2626 4%, transparent) 12px
+      );
+      cursor: not-allowed;
+    }
+
+    #adminSectionCalendar .admin-schedule-col--off {
+      background: repeating-linear-gradient(
+        -45deg,
+        #f1f5f9,
+        #f1f5f9 6px,
+        #e2e8f0 6px,
+        #e2e8f0 12px
+      );
+      cursor: not-allowed;
+    }
+
+    #adminSectionCalendar .admin-schedule-blocked {
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      border-radius: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, #f59e0b 18%, transparent),
+        color-mix(in srgb, #f59e0b 18%, transparent) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      border: 1px dashed color-mix(in srgb, #f59e0b 40%, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #adminSectionCalendar .admin-schedule-event {
+      position: absolute;
+      border-radius: 10px;
+      padding: 5px 7px 4px 10px;
+      font-size: 11px;
+      line-height: 1.25;
+      overflow: hidden;
+      cursor: pointer;
+      z-index: 3;
+      border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+      background: var(--color-surface);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.1);
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      text-align: left;
+    }
+
+    #adminSectionCalendar .admin-schedule-event::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 10px 0 0 10px;
+      background: var(--business-accent, #2563eb);
+    }
+
+    #adminSectionCalendar .admin-schedule-event:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.16);
+      z-index: 4;
+    }
+
+    #adminSectionCalendar .admin-schedule-event--confirmed {
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 14%, var(--color-surface));
+      color: #0f172a;
+    }
+
+    #adminSectionCalendar .admin-schedule-event--confirmed::before {
+      background: var(--business-accent, #2563eb);
+    }
+
+    #adminSectionCalendar .admin-schedule-event--pending {
+      background: color-mix(in srgb, #f59e0b 18%, var(--color-surface));
+      color: #78350f;
+    }
+
+    #adminSectionCalendar .admin-schedule-event--pending::before {
+      background: #f59e0b;
+    }
+
+    #adminSectionCalendar .admin-schedule-event--cancelled {
+      background: color-mix(in srgb, var(--color-surface) 92%, #e2e8f0);
+      color: #64748b;
+      opacity: 0.52;
+      border-style: dashed;
+      text-decoration: line-through;
+      text-decoration-color: color-mix(in srgb, #64748b 55%, transparent);
+    }
+
+    #adminSectionCalendar .admin-schedule-event--cancelled::before {
+      background: #94a3b8;
+    }
+
+    #adminSectionCalendar .admin-schedule-event--cancelled .admin-schedule-event__name {
+      text-decoration: inherit;
+    }
+
+    #adminSectionCalendar .admin-schedule-event__name {
+      display: block;
+      font-weight: 800;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionCalendar .admin-schedule-event__service {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      opacity: 0.92;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+
+    #adminSectionCalendar .admin-schedule-event__time {
+      display: block;
+      font-size: 10px;
+      font-variant-numeric: tabular-nums;
+      opacity: 0.78;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+
+    #adminSectionCalendar .admin-schedule-day-view {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      max-height: min(72vh, 720px);
+      overflow: auto;
+    }
+
+    #adminSectionCalendar .admin-schedule-mount {
+      --admin-schedule-px-per-min: 0.8666667px;
+    }
+
+    #adminSectionCalendar .admin-schedule-month {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      padding: 10px;
+    }
+
+    #adminSectionCalendar .admin-schedule-month .day-name {
+      font-size: 11px;
+      padding: 4px;
+    }
+
+    #adminSectionCalendar .admin-schedule-month-day {
+      min-height: 72px;
+      border-radius: 10px;
+      border: 1px solid var(--color-border);
+      padding: 6px;
+      cursor: pointer;
+      background: var(--color-surface);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    #adminSectionCalendar .admin-schedule-month-day:hover {
+      border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 40%, var(--color-border));
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+    #adminSectionCalendar .admin-schedule-month-day--busy {
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 8%, var(--color-surface));
+    }
+
+    #adminSectionCalendar .admin-schedule-month-day--closed {
+      background: color-mix(in srgb, #dc2626 8%, var(--color-surface));
+      border-color: color-mix(in srgb, #dc2626 25%, var(--color-border));
+    }
+
+    #adminSectionCalendar .admin-schedule-month-day strong {
+      font-size: 14px;
+    }
+
+    #adminSectionCalendar .admin-schedule-month-count {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 15%, transparent);
+      color: var(--color-primary);
+    }
+
+    .admin-booking-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .admin-booking-modal.hidden {
+      display: none !important;
+    }
+
+    .admin-booking-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(2px);
+      pointer-events: auto;
+    }
+
+    .admin-booking-modal__panel {
+      position: relative;
+      z-index: 1;
+      pointer-events: auto;
+      width: 100%;
+      max-width: 400px;
+      max-height: 90vh;
+      overflow: auto;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 24px 64px rgba(15, 23, 42, 0.2);
+    }
+
+    .admin-booking-modal__panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .admin-booking-modal__body {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--color-muted);
+    }
+
+    .admin-booking-modal__body strong {
+      color: inherit;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .admin-booking-modal__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+      justify-content: flex-end;
+    }
+
+    .admin-booking-modal__actions .admin-saas-btn {
+      width: auto;
+      min-height: 30px;
+      padding: 5px 11px;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-schedule-mount,
+    body.app-theme-dark #adminSectionCalendar .admin-schedule-week-header,
+    body.app-theme-dark #adminSectionCalendar .admin-schedule-time-labels {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-schedule-col {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 5%, var(--admin-surface-2, #151d2e));
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-calendar-view-tabs {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-calendar-view-tab--active {
+      background: var(--admin-surface, #1e293b);
+      color: var(--business-accent, #38bdf8);
+    }
+
+    body.app-theme-dark .admin-booking-modal__panel {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+      color: var(--admin-text, #f1f5f9);
+    }
+
+    @media (max-width: 900px) {
+      #adminSectionCalendar .admin-schedule-week-header,
+      #adminSectionCalendar .admin-schedule-week-body {
+        grid-template-columns: 44px repeat(7, minmax(72px, 1fr));
+      }
+
+      #adminSectionCalendar .admin-schedule-week {
+        overflow-x: auto;
+      }
+    }
+
     .badge {
       display: inline-block;
       padding: 3px 7px;
@@ -539,7 +1185,8 @@
 
     #adminSectionServices > .card.widget-card,
     #adminSectionStaff > .card.widget-card,
-    #adminSectionAvailability > .card.widget-card {
+    #adminSectionAvailability > .card.widget-card,
+    #adminSectionCalendar > .card.widget-card {
       padding: 14px 16px !important;
     }
 
@@ -6229,15 +6876,45 @@
           </section>
 
           <section id="adminSectionCalendar" class="admin-section" data-admin-section="calendar" hidden aria-label="Calendar">
-      <div class="card widget-card">
-        <h2 class="admin-section-title">Calendar</h2>
-<div id="widgetCalendar" class="widget-content">
-        <div class="row">
-          <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
-          <button class="secondary" onclick="changeMonth(1)">Next Month</button>
+      <div class="card widget-card admin-saas">
+        <h2 class="admin-section-title admin-saas__title">Calendar</h2>
+        <div id="widgetCalendar" class="widget-content admin-schedule-shell">
+          <div class="admin-schedule-toolbar">
+            <div class="admin-schedule-toolbar__nav">
+              <button type="button" class="admin-schedule-nav-btn" onclick="adminCalendarNavigate(-1)" aria-label="Previous">‹</button>
+              <h3 id="adminCalendarTitle" class="admin-schedule-toolbar__title">—</h3>
+              <button type="button" class="admin-schedule-nav-btn" onclick="adminCalendarNavigate(1)" aria-label="Next">›</button>
+              <button type="button" class="admin-schedule-nav-btn" onclick="adminCalendarGoToday()">Today</button>
+            </div>
+            <div class="admin-calendar-view-tabs" role="tablist" aria-label="Calendar view">
+              <button type="button" class="admin-calendar-view-tab" data-admin-cal-view="day" role="tab" onclick="setAdminCalendarView('day')">Day</button>
+              <button type="button" class="admin-calendar-view-tab admin-calendar-view-tab--active" data-admin-cal-view="week" role="tab" aria-selected="true" onclick="setAdminCalendarView('week')">Week</button>
+              <button type="button" class="admin-calendar-view-tab" data-admin-cal-view="month" role="tab" onclick="setAdminCalendarView('month')">Month</button>
+            </div>
+            <div class="admin-schedule-staff-filter">
+              <label for="adminCalendarStaffFilter">Staff</label>
+              <select id="adminCalendarStaffFilter" onchange="setAdminCalendarStaffFilter(this.value)">
+                <option value="">All staff</option>
+              </select>
+            </div>
+          </div>
+          <div id="adminScheduleCalendar" class="admin-schedule-mount" aria-live="polite"></div>
+          <p class="admin-saas-subsection__hint" style="margin:0">Click an empty slot to add a booking. Click a block for details.</p>
         </div>
-        <h3 id="calendarTitle"></h3>
-        <div id="calendar" class="calendar"></div></div>
+      </div>
+
+      <div id="adminBookingDetailModal" class="admin-booking-modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminBookingDetailTitle">
+        <div class="admin-booking-modal__backdrop" onclick="closeAdminBookingDetailModal()"></div>
+        <div class="admin-booking-modal__panel" onclick="event.stopPropagation()">
+          <h3 id="adminBookingDetailTitle">Booking</h3>
+          <div id="adminBookingDetailBody" class="admin-booking-modal__body"></div>
+          <div class="admin-booking-modal__actions">
+            <button type="button" class="admin-schedule-nav-btn" onclick="event.stopPropagation(); adminModalEditBooking()">Edit</button>
+            <button type="button" class="admin-schedule-nav-btn" onclick="event.stopPropagation(); adminModalCancelBooking()">Cancel booking</button>
+            <button type="button" class="admin-schedule-nav-btn admin-schedule-nav-btn--danger" onclick="event.stopPropagation(); adminModalDeleteBooking()">Delete</button>
+            <button type="button" class="admin-schedule-nav-btn" onclick="event.stopPropagation(); closeAdminBookingDetailModal()">Close</button>
+          </div>
+        </div>
       </div>
           </section>
 
@@ -6273,6 +6950,7 @@
 
 
         <textarea id="adminAddNotes" placeholder="Notes optional"></textarea>
+        <p id="adminAddDurationHint" class="small hidden" style="margin:0 0 8px;color:var(--color-muted,#64748b)"></p>
         <button class="success" onclick="addAdminBooking()">Add Booking</button>
 
         <p class="small">Системот проверува working days, break/pause, closed days, booking window и дали терминот се судира со друг booking.</p>
@@ -7832,6 +8510,16 @@
   let bookings = [];
   let blockedDays = [];
   let currentDate = new Date();
+  let adminCalendarView = "week";
+  let adminCalendarStaffFilter = "";
+  let adminCalendarAnchorDate = new Date();
+  let adminBookingDetailModalId = null;
+  let adminScheduleNowTimer = null;
+  let adminScheduleActiveGrid = null;
+  let adminScheduleDragState = null;
+  const ADMIN_SCHEDULE_PX_PER_HOUR = 52;
+  const ADMIN_SCHEDULE_DRAG_THRESHOLD_PX = 6;
+  const ADMIN_SCHEDULE_PX_PER_MIN = ADMIN_SCHEDULE_PX_PER_HOUR / 60;
   let selectedDate = null;
   let selectedSlot = null;
   let selectedService = null;
@@ -14478,9 +15166,11 @@
   }
 
   async function cancelBooking(id) {
-    if (!id) return;
-    if (!confirm("Cancel this booking?")) return;
+    if (!id) return false;
+    if (!confirm("Cancel this booking?")) return false;
     await updateBookingStatus(id, "Cancelled");
+    const booking = bookings.find((b) => b.id === id);
+    return booking ? getBookingStatus(booking) === "Cancelled" : false;
   }
 
   async function updateBookingStatus(id, status) {
@@ -14844,20 +15534,64 @@
   }
 
   async function deleteBooking(id) {
-    if (!confirm("Delete this booking permanently?")) return;
+    const bookingId = String(id || "").trim();
+    console.log("[DELETE] booking id", bookingId);
 
-    const { error } = await sb
-      .from("bookings")
-      .delete()
-      .eq("id", id)
-      .eq("business_id", businessId);
+    if (!bookingId) {
+      showToast("Missing booking id.", "error");
+      return false;
+    }
+    if (!confirm("Delete this booking permanently?")) return false;
 
-    if (error) {
-      showToast("Delete booking error: " + error.message, "error")
-      return;
+    if (!initSupabaseClient()) {
+      showToast("Connection not ready. Refresh and try again.", "error");
+      return false;
     }
 
+    const booking = bookings.find((b) => String(b.id) === bookingId);
+    const deleteBusinessId =
+      booking?.business_id && isValidUuid(booking.business_id)
+        ? booking.business_id
+        : businessId;
+
+    if (!deleteBusinessId || !isValidUuid(deleteBusinessId)) {
+      showToast("Cannot delete: business context is missing.", "error");
+      return false;
+    }
+
+    const { data, error, count } = await sb
+      .from("bookings")
+      .delete({ count: "exact" })
+      .eq("id", bookingId)
+      .eq("business_id", deleteBusinessId)
+      .select("id");
+
+    console.log("[DELETE RESULT]", { data, error, count, deleteBusinessId });
+
+    if (error) {
+      showToast("Delete booking error: " + error.message, "error");
+      return false;
+    }
+
+    const deletedCount = typeof count === "number" ? count : (data?.length ?? 0);
+    if (deletedCount < 1) {
+      showToast(
+        "Delete did not remove the booking. Run supabase-bookings-admin-delete.sql in Supabase (missing DELETE permission).",
+        "error"
+      );
+      return false;
+    }
+
+    bookings = bookings.filter((b) => String(b.id) !== bookingId);
+
     await refreshBookingsAfterChange(false);
+    renderBookings();
+    if (!document.getElementById("adminView")?.classList.contains("hidden")) {
+      renderAdminCalendar();
+    }
+
+    showToast("Booking deleted.", "success");
+    return true;
   }
 
   async function loadBlockedDays(silent = false) {
@@ -14962,73 +15696,863 @@
 
   function changeMonth(offset) {
     currentDate.setMonth(currentDate.getMonth() + offset);
+    adminCalendarAnchorDate = new Date(currentDate);
 
     if (document.getElementById("publicView").classList.contains("hidden")) {
-      renderAdminCalendar();
+      if (adminCalendarView === "month") renderAdminCalendar();
     } else {
       renderPublicCalendar();
     }
   }
 
-  function renderAdminCalendar() {
-    const calendar = document.getElementById("calendar");
-    const title = document.getElementById("calendarTitle");
+  function getAdminWeekStartMonday(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
 
-    calendar.innerHTML = "";
+  function getAdminScheduleGridBounds() {
+    const start = snapTimeStringToQuarterHour(businessSettings?.work_start || "09:00");
+    const end = snapTimeStringToQuarterHour(businessSettings?.work_end || "17:00");
+    let startMin = timeToMinutes(start);
+    let endMin = timeToMinutes(end);
+    if (endMin <= startMin) endMin = startMin + 8 * 60;
+    return { startMin, endMin, start, end };
+  }
 
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+  function getAdminCalendarFilteredBookings() {
+    const filter = adminCalendarStaffFilter;
+    return bookings.filter((b) => {
+      if (!filter) return true;
+      return String(b.staff_id || "") === filter;
+    });
+  }
 
-    title.innerText = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
+  function getBookingDurationMinutes(booking) {
+    const service = services.find((s) => s.id === booking.service_id);
+    return getServiceDurationValue(service);
+  }
 
+  function getBookingTimeRange(booking) {
+    const startMin = timeToMinutes(String(booking.time || "09:00").slice(0, 5));
+    const duration = getBookingDurationMinutes(booking);
+    return { startMin, endMin: startMin + duration };
+  }
+
+  function getAdminScheduleEventClass(status) {
+    if (status === "Confirmed") return "admin-schedule-event--confirmed";
+    if (status === "Cancelled") return "admin-schedule-event--cancelled";
+    return "admin-schedule-event--pending";
+  }
+
+  function isAdminScheduleDayClosed(dateStr) {
+    return blockedDays.some((d) => d.date === dateStr);
+  }
+
+  function isAdminScheduleDayWorking(dateStr) {
+    const dow = dayOfWeekFromDateStr(dateStr);
+    return getWorkingDaysArray().includes(dow);
+  }
+
+  function getAdminScheduleBreakLayer(grid) {
+    const bs = String(businessSettings?.break_start ?? "").trim();
+    const be = String(businessSettings?.break_end ?? "").trim();
+    if (!bs || !be) return null;
+    const startMin = timeToMinutes(bs);
+    const endMin = timeToMinutes(be);
+    const top = (startMin - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+    const height = Math.max(4, (endMin - startMin) * ADMIN_SCHEDULE_PX_PER_MIN);
+    if (endMin <= grid.startMin || startMin >= grid.endMin) return null;
+    return { top: Math.max(0, top), height };
+  }
+
+  function populateAdminCalendarStaffFilter() {
+    const sel = document.getElementById("adminCalendarStaffFilter");
+    if (!sel) return;
+    const prev = sel.value;
+    sel.innerHTML = `<option value="">All staff</option>`;
+    if (staffFeatureAvailable && bookingStaffColumnAvailable) {
+      staffMembers.forEach((s) => {
+        if (s.active === false) return;
+        const opt = document.createElement("option");
+        opt.value = s.id;
+        opt.textContent = s.role ? `${s.name} — ${s.role}` : s.name;
+        sel.appendChild(opt);
+      });
+    }
+    sel.value = prev && Array.from(sel.options).some((o) => o.value === prev) ? prev : "";
+    adminCalendarStaffFilter = sel.value;
+  }
+
+  function syncAdminCalendarViewTabs() {
+    document.querySelectorAll(".admin-calendar-view-tab").forEach((btn) => {
+      const on = btn.dataset.adminCalView === adminCalendarView;
+      btn.classList.toggle("admin-calendar-view-tab--active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+  }
+
+  function setAdminCalendarView(view) {
+    adminCalendarView = view === "day" || view === "month" ? view : "week";
+    syncAdminCalendarViewTabs();
+    renderAdminCalendar();
+  }
+
+  function setAdminCalendarStaffFilter(value) {
+    adminCalendarStaffFilter = value || "";
+    renderAdminCalendar();
+  }
+
+  function adminCalendarGoToday() {
+    adminCalendarAnchorDate = new Date();
+    currentDate = new Date(adminCalendarAnchorDate);
+    renderAdminCalendar();
+  }
+
+  function adminCalendarNavigate(offset) {
+    const d = new Date(adminCalendarAnchorDate || currentDate);
+    if (adminCalendarView === "month") {
+      currentDate.setMonth(currentDate.getMonth() + offset);
+      adminCalendarAnchorDate = new Date(currentDate);
+    } else if (adminCalendarView === "day") {
+      d.setDate(d.getDate() + offset);
+      adminCalendarAnchorDate = d;
+      currentDate = new Date(d);
+    } else {
+      d.setDate(d.getDate() + offset * 7);
+      adminCalendarAnchorDate = d;
+      currentDate = new Date(d);
+    }
+    renderAdminCalendar();
+  }
+
+  function openAdminCalendarDayView(dateStr) {
+    adminCalendarView = "day";
+    adminCalendarAnchorDate = new Date(dateStr + "T12:00:00");
+    currentDate = new Date(adminCalendarAnchorDate);
+    syncAdminCalendarViewTabs();
+    renderAdminCalendar();
+  }
+
+  function pickAdminServiceForDuration(durationMinutes) {
+    const target = Number(durationMinutes) || 30;
+    if (!services.length) return null;
+    let best = services[0];
+    let bestDiff = Math.abs(getServiceDurationValue(best) - target);
+    for (const s of services) {
+      const diff = Math.abs(getServiceDurationValue(s) - target);
+      if (diff < bestDiff) {
+        best = s;
+        bestDiff = diff;
+      }
+    }
+    return best?.id || null;
+  }
+
+  function openQuickAddBooking(dateStr, time, staffId, durationMinutes) {
+    setAdminSection("manual", { skipRender: true });
+    const dateEl = document.getElementById("adminAddDate");
+    const timeEl = document.getElementById("adminAddTime");
+    const staffEl = document.getElementById("adminAddStaff");
+    const serviceEl = document.getElementById("adminAddService");
+    const hintEl = document.getElementById("adminAddDurationHint");
+    const mins = Math.max(0, Number(durationMinutes) || 0);
+
+    if (dateEl) dateEl.value = dateStr;
+    if (timeEl) timeEl.value = time;
+    if (staffEl && staffId) staffEl.value = staffId;
+
+    if (serviceEl && mins >= 15) {
+      const serviceId = pickAdminServiceForDuration(mins);
+      if (serviceId) serviceEl.value = serviceId;
+    }
+
+    if (hintEl) {
+      if (mins >= 15) {
+        hintEl.textContent = "Calendar slot: " + mins + " minutes (service auto-selected to closest match).";
+        hintEl.classList.remove("hidden");
+      } else {
+        hintEl.textContent = "";
+        hintEl.classList.add("hidden");
+      }
+    }
+
+    const durationNote = mins >= 15 ? " · " + mins + " min" : "";
+    showToast("Add booking — " + dateStr + " at " + time + durationNote, "info", 4000);
+  }
+
+  function stopAdminScheduleNowTimer() {
+    if (adminScheduleNowTimer) {
+      clearInterval(adminScheduleNowTimer);
+      adminScheduleNowTimer = null;
+    }
+  }
+
+  function updateAdminScheduleNowLines() {
+    const grid = adminScheduleActiveGrid;
+    if (!grid) return;
+
+    const todayStr = getTodayDateString();
+    const now = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+
+    document.querySelectorAll("#adminScheduleCalendar .admin-schedule-now-ui").forEach((ui) => {
+      const col = ui.closest(".admin-schedule-col");
+      if (!col || col.dataset.date !== todayStr) {
+        ui.classList.remove("is-visible");
+        return;
+      }
+      if (nowMin < grid.startMin || nowMin > grid.endMin) {
+        ui.classList.remove("is-visible");
+        return;
+      }
+      const top = (nowMin - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+      ui.style.top = top + "px";
+      ui.classList.add("is-visible");
+    });
+  }
+
+  function startAdminScheduleNowTimer(grid) {
+    adminScheduleActiveGrid = grid;
+    stopAdminScheduleNowTimer();
+    updateAdminScheduleNowLines();
+    adminScheduleNowTimer = setInterval(updateAdminScheduleNowLines, 60000);
+  }
+
+  function computeAdminScheduleEventLayouts(dayBookings, grid) {
+    const events = dayBookings
+      .map((booking) => ({ booking, range: getBookingTimeRange(booking) }))
+      .filter(({ range }) => range.endMin > grid.startMin && range.startMin < grid.endMin)
+      .sort((a, b) => a.range.startMin - b.range.startMin || b.range.endMin - a.range.endMin);
+
+    if (!events.length) return [];
+
+    const clusters = [];
+    let cluster = [];
+    let clusterEnd = -Infinity;
+
+    for (const ev of events) {
+      if (!cluster.length || ev.range.startMin < clusterEnd) {
+        cluster.push(ev);
+        clusterEnd = Math.max(clusterEnd, ev.range.endMin);
+      } else {
+        clusters.push(cluster);
+        cluster = [ev];
+        clusterEnd = ev.range.endMin;
+      }
+    }
+    if (cluster.length) clusters.push(cluster);
+
+    const layouts = [];
+    for (const group of clusters) {
+      const columnEnds = [];
+      const groupLayouts = [];
+      for (const ev of group) {
+        let colIndex = columnEnds.findIndex((end) => end <= ev.range.startMin);
+        if (colIndex === -1) {
+          colIndex = columnEnds.length;
+          columnEnds.push(ev.range.endMin);
+        } else {
+          columnEnds[colIndex] = ev.range.endMin;
+        }
+        groupLayouts.push({
+          booking: ev.booking,
+          range: ev.range,
+          colIndex,
+          colCount: 1
+        });
+      }
+      const colCount = Math.max(1, columnEnds.length);
+      groupLayouts.forEach((l) => {
+        l.colCount = colCount;
+      });
+      layouts.push(...groupLayouts);
+    }
+    return layouts;
+  }
+
+  function snapAdminScheduleMinutesFromY(y, grid) {
+    let mins = grid.startMin + y / ADMIN_SCHEDULE_PX_PER_MIN;
+    mins = snapMinutesToQuarterHour(mins);
+    if (mins >= grid.endMin) mins = grid.endMin - 15;
+    if (mins < grid.startMin) mins = grid.startMin;
+    return mins;
+  }
+
+  function adminScheduleTopFromMinutes(mins, grid) {
+    return (mins - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+  }
+
+  function getAdminScheduleColumnFromEvent(e, colsArea) {
+    if (!colsArea) return null;
+    const els = document.elementsFromPoint(e.clientX, e.clientY);
+    for (const el of els) {
+      if (el.classList && el.classList.contains("admin-schedule-col") && colsArea.contains(el)) {
+        return el;
+      }
+    }
+    return null;
+  }
+
+  function isAdminScheduleColumnBookable(col) {
+    if (!col) return false;
+    return (
+      !col.classList.contains("admin-schedule-col--closed") &&
+      !col.classList.contains("admin-schedule-col--off")
+    );
+  }
+
+  function isAdminScheduleMinuteInBreak(mins) {
+    const bs = String(businessSettings?.break_start ?? "").trim();
+    const be = String(businessSettings?.break_end ?? "").trim();
+    if (!bs || !be) return false;
+    return mins >= timeToMinutes(bs) && mins < timeToMinutes(be);
+  }
+
+  function clearAdminScheduleSlotPreviews(colsArea) {
+    if (!colsArea) return;
+    colsArea.querySelectorAll(".admin-schedule-slot-preview, .admin-schedule-drag-select").forEach((el) => el.remove());
+  }
+
+  function clearAdminScheduleDragSelect(col) {
+    col?.querySelectorAll(".admin-schedule-drag-select").forEach((el) => el.remove());
+  }
+
+  function updateAdminScheduleDragSelect(col, grid, startMins, endMins) {
+    clearAdminScheduleDragSelect(col);
+    let a = Math.min(startMins, endMins);
+    let b = Math.max(startMins, endMins);
+    a = snapMinutesToQuarterHour(a);
+    b = snapMinutesToQuarterHour(b);
+    if (b <= a) b = a + 15;
+    const top = adminScheduleTopFromMinutes(a, grid);
+    const height = Math.max(15 * ADMIN_SCHEDULE_PX_PER_MIN, (b - a) * ADMIN_SCHEDULE_PX_PER_MIN);
+    const el = document.createElement("div");
+    el.className = "admin-schedule-drag-select";
+    el.style.top = top + "px";
+    el.style.height = height + "px";
+    col.appendChild(el);
+    return { startMins: a, endMins: b };
+  }
+
+  function adminScheduleRangeOverlapsBreak(startMins, endMins) {
+    const bs = String(businessSettings?.break_start ?? "").trim();
+    const be = String(businessSettings?.break_end ?? "").trim();
+    if (!bs || !be) return false;
+    const bStart = timeToMinutes(bs);
+    const bEnd = timeToMinutes(be);
+    return startMins < bEnd && endMins > bStart;
+  }
+
+  function updateAdminScheduleSlotPreview(col, grid, mins) {
+    clearAdminScheduleSlotPreviews(col.parentElement);
+    const top = adminScheduleTopFromMinutes(mins, grid);
+    const preview = document.createElement("div");
+    preview.className = "admin-schedule-slot-preview";
+    preview.style.top = top + "px";
+    preview.style.height = 15 * ADMIN_SCHEDULE_PX_PER_MIN + "px";
+    col.appendChild(preview);
+  }
+
+  function hideAdminScheduleHoverUi(line, label, colsArea) {
+    if (line) line.classList.remove("is-visible");
+    if (label) label.classList.remove("is-visible");
+    if (colsArea) clearAdminScheduleSlotPreviews(colsArea);
+  }
+
+  function adminScheduleOpenQuickAddAt(dateStr, grid, mins, durationMinutes) {
+    if (!dateStr) return;
+    if (isAdminScheduleMinuteInBreak(mins)) {
+      showToast("This time is during break / pause.", "error");
+      return;
+    }
+    openQuickAddBooking(dateStr, minutesToTime(mins), adminCalendarStaffFilter || "", durationMinutes || 15);
+  }
+
+  function bindAdminScheduleColsAreaInteraction(colsArea, grid, hoverRefs) {
+    const line = hoverRefs.line;
+    const label = hoverRefs.label;
+    colsArea.classList.add("admin-schedule-cols-area--interactive");
+
+    const updateHover = (e) => {
+      if (adminScheduleDragState) return;
+      const rect = colsArea.getBoundingClientRect();
+      const y = e.clientY - rect.top;
+      if (y < 0 || y > rect.height) {
+        hideAdminScheduleHoverUi(line, label, colsArea);
+        return;
+      }
+
+      const col = getAdminScheduleColumnFromEvent(e, colsArea);
+      if (!isAdminScheduleColumnBookable(col)) {
+        hideAdminScheduleHoverUi(line, label, colsArea);
+        return;
+      }
+
+      const mins = snapAdminScheduleMinutesFromY(y, grid);
+      const top = adminScheduleTopFromMinutes(mins, grid);
+      const timeLabel = minutesToTime(mins);
+
+      line.style.top = top + "px";
+      line.classList.add("is-visible");
+      label.style.top = top + "px";
+      label.textContent = timeLabel;
+      label.classList.add("is-visible");
+
+      updateAdminScheduleSlotPreview(col, grid, mins);
+      colsArea.dataset.hoverDate = col.dataset.date || "";
+      colsArea.dataset.hoverMins = String(mins);
+      colsArea.dataset.hoverTime = timeLabel;
+    };
+
+    const finishDrag = (e) => {
+      if (!adminScheduleDragState || adminScheduleDragState.colsArea !== colsArea) return;
+
+      const state = adminScheduleDragState;
+      adminScheduleDragState = null;
+      colsArea.classList.remove("admin-schedule-cols-area--dragging");
+      document.body.style.userSelect = "";
+      hideAdminScheduleHoverUi(line, label, colsArea);
+      clearAdminScheduleDragSelect(state.col);
+
+      document.removeEventListener("mousemove", onDocumentDragMove);
+      document.removeEventListener("mouseup", onDocumentDragEnd);
+
+      const endCol = getAdminScheduleColumnFromEvent(e, colsArea) || state.col;
+      const dateStr = endCol?.dataset?.date || state.dateStr;
+
+      if (!state.moved) {
+        adminScheduleOpenQuickAddAt(dateStr, grid, state.startMins, 15);
+        return;
+      }
+
+      const rect = colsArea.getBoundingClientRect();
+      const y = e.clientY - rect.top;
+      const endMins = snapAdminScheduleMinutesFromY(y, grid);
+      const range = updateAdminScheduleDragSelect(endCol, grid, state.startMins, endMins);
+      clearAdminScheduleDragSelect(endCol);
+
+      const durationMinutes = range.endMins - range.startMins;
+      if (durationMinutes < 15) {
+        adminScheduleOpenQuickAddAt(dateStr, grid, state.startMins, 15);
+        return;
+      }
+      if (adminScheduleRangeOverlapsBreak(range.startMins, range.endMins)) {
+        showToast("Selection overlaps break / pause.", "error");
+        return;
+      }
+      openQuickAddBooking(
+        dateStr,
+        minutesToTime(range.startMins),
+        adminCalendarStaffFilter || "",
+        durationMinutes
+      );
+    };
+
+    const onDocumentDragMove = (e) => {
+      if (!adminScheduleDragState || adminScheduleDragState.colsArea !== colsArea) return;
+      const state = adminScheduleDragState;
+      const rect = colsArea.getBoundingClientRect();
+      const y = e.clientY - rect.top;
+      if (Math.abs(y - state.startY) >= ADMIN_SCHEDULE_DRAG_THRESHOLD_PX) {
+        state.moved = true;
+        hideAdminScheduleHoverUi(line, label, colsArea);
+      }
+      if (!state.moved) return;
+
+      const col = getAdminScheduleColumnFromEvent(e, colsArea) || state.col;
+      if (!isAdminScheduleColumnBookable(col)) return;
+      state.col = col;
+      state.dateStr = col.dataset.date || state.dateStr;
+
+      const endMins = snapAdminScheduleMinutesFromY(y, grid);
+      updateAdminScheduleDragSelect(col, grid, state.startMins, endMins);
+    };
+
+    const onDocumentDragEnd = (e) => finishDrag(e);
+
+    colsArea.addEventListener("mousemove", updateHover);
+    colsArea.addEventListener("mouseleave", () => {
+      if (!adminScheduleDragState) hideAdminScheduleHoverUi(line, label, colsArea);
+    });
+
+    colsArea.addEventListener("mousedown", (e) => {
+      if (e.button !== 0) return;
+      if (e.target.closest(".admin-schedule-event")) return;
+
+      const col = getAdminScheduleColumnFromEvent(e, colsArea);
+      if (!isAdminScheduleColumnBookable(col)) return;
+
+      const rect = colsArea.getBoundingClientRect();
+      const y = e.clientY - rect.top;
+      const startMins = snapAdminScheduleMinutesFromY(y, grid);
+
+      adminScheduleDragState = {
+        colsArea,
+        col,
+        dateStr: col.dataset.date || "",
+        startMins,
+        startY: y,
+        moved: false
+      };
+
+      colsArea.classList.add("admin-schedule-cols-area--dragging");
+      document.body.style.userSelect = "none";
+      hideAdminScheduleHoverUi(line, label, colsArea);
+      clearAdminScheduleSlotPreviews(colsArea);
+
+      document.addEventListener("mousemove", onDocumentDragMove);
+      document.addEventListener("mouseup", onDocumentDragEnd);
+      e.preventDefault();
+    });
+  }
+
+  function buildAdminScheduleColsArea(grid, gridHeight, columnSpecs) {
+    const area = document.createElement("div");
+    area.className = "admin-schedule-cols-area";
+    area.style.minHeight = gridHeight + "px";
+
+    const hoverUi = document.createElement("div");
+    hoverUi.className = "admin-schedule-hover-ui";
+    hoverUi.setAttribute("aria-hidden", "true");
+    const line = document.createElement("div");
+    line.className = "admin-schedule-hover-line";
+    const label = document.createElement("div");
+    label.className = "admin-schedule-hover-label";
+    hoverUi.appendChild(line);
+    hoverUi.appendChild(label);
+    area.appendChild(hoverUi);
+
+    columnSpecs.forEach(({ dateStr, dayBookings }) => {
+      area.appendChild(buildAdminScheduleDayColumn(dateStr, grid, gridHeight, dayBookings));
+    });
+
+    bindAdminScheduleColsAreaInteraction(area, grid, { line, label });
+    return area;
+  }
+
+  function appendAdminScheduleEvents(col, dateStr, grid, dayBookings) {
+    const layouts = computeAdminScheduleEventLayouts(dayBookings, grid);
+    layouts.forEach(({ booking: b, range, colIndex, colCount }) => {
+      const top = (range.startMin - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+      const height = Math.max(26, (range.endMin - range.startMin) * ADMIN_SCHEDULE_PX_PER_MIN);
+
+      const status = getBookingStatus(b);
+      const service = services.find((s) => s.id === b.service_id);
+      const serviceName = service?.name || b.service_name || "Service";
+      const staffName = getStaffName(b.staff_id);
+      const widthPct = 100 / colCount;
+      const leftPct = colIndex * widthPct;
+
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "admin-schedule-event " + getAdminScheduleEventClass(status);
+      el.style.top = Math.max(0, top) + "px";
+      el.style.height = height + "px";
+      el.style.left = "calc(" + leftPct + "% + 3px)";
+      el.style.width = "calc(" + widthPct + "% - 6px)";
+      el.title = (b.customer_name || "Customer") + " · " + serviceName + " · " + staffName;
+      el.innerHTML = `
+        <span class="admin-schedule-event__name">${escapeHtml(b.customer_name || "Customer")}</span>
+        <span class="admin-schedule-event__service">${escapeHtml(serviceName)}</span>
+        <span class="admin-schedule-event__time">${escapeHtml(String(b.time || "").slice(0, 5))} – ${escapeHtml(minutesToTime(range.endMin))}</span>
+      `;
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        openAdminBookingDetailModal(b.id);
+      });
+      col.appendChild(el);
+    });
+  }
+
+  function buildAdminScheduleDayColumn(dateStr, grid, gridHeight, dayBookings) {
+    const col = document.createElement("div");
+    col.className = "admin-schedule-col";
+    col.style.height = gridHeight + "px";
+    col.dataset.date = dateStr;
+
+    if (isAdminScheduleDayClosed(dateStr)) col.classList.add("admin-schedule-col--closed");
+    else if (!isAdminScheduleDayWorking(dateStr)) col.classList.add("admin-schedule-col--off");
+    else col.classList.add("admin-schedule-col--bookable");
+
+    const breakLayer = getAdminScheduleBreakLayer(grid);
+    if (breakLayer && !col.classList.contains("admin-schedule-col--closed")) {
+      const br = document.createElement("div");
+      br.className = "admin-schedule-blocked";
+      br.style.top = breakLayer.top + "px";
+      br.style.height = breakLayer.height + "px";
+      br.title = "Break / pause";
+      col.appendChild(br);
+    }
+
+    if (dateStr === getTodayDateString()) {
+      const nowUi = document.createElement("div");
+      nowUi.className = "admin-schedule-now-ui";
+      nowUi.setAttribute("aria-hidden", "true");
+      nowUi.innerHTML =
+        '<div class="admin-schedule-now-line"></div><span class="admin-schedule-now-label">Now</span>';
+      col.appendChild(nowUi);
+    }
+
+    appendAdminScheduleEvents(col, dateStr, grid, dayBookings);
+    return col;
+  }
+
+  function renderAdminScheduleWeek() {
+    const mount = document.getElementById("adminScheduleCalendar");
+    const title = document.getElementById("adminCalendarTitle");
+    if (!mount) return;
+
+    const anchor = adminCalendarAnchorDate || currentDate;
+    const weekStart = getAdminWeekStartMonday(anchor);
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    if (title) {
+      title.textContent =
+        weekStart.toLocaleDateString(undefined, { month: "short", day: "numeric" }) +
+        " – " +
+        weekEnd.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    }
+
+    const grid = getAdminScheduleGridBounds();
+    const gridHeight = (grid.endMin - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+    const todayStr = getTodayDateString();
+    const filtered = getAdminCalendarFilteredBookings();
     const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    dayNames.forEach(d => {
+
+    const wrap = document.createElement("div");
+    wrap.className = "admin-schedule-week";
+
+    const header = document.createElement("div");
+    header.className = "admin-schedule-week-header";
+    header.innerHTML = `<div class="admin-schedule-gutter"></div>`;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+      const head = document.createElement("div");
+      head.className = "admin-schedule-day-head" + (dateStr === todayStr ? " admin-schedule-day-head--today" : "");
+      head.innerHTML = `<strong>${dayNames[i]}</strong><span>${d.getDate()}</span>`;
+      header.appendChild(head);
+    }
+    wrap.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "admin-schedule-week-body";
+
+    const labels = document.createElement("div");
+    labels.className = "admin-schedule-time-labels";
+    labels.style.height = gridHeight + "px";
+    for (let m = grid.startMin; m < grid.endMin; m += 60) {
+      const lab = document.createElement("div");
+      lab.className = "admin-schedule-time-label";
+      lab.style.height = 60 * ADMIN_SCHEDULE_PX_PER_MIN + "px";
+      lab.textContent = minutesToTime(m);
+      labels.appendChild(lab);
+    }
+    body.appendChild(labels);
+
+    const columnSpecs = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+      columnSpecs.push({ dateStr, dayBookings: filtered.filter((b) => b.date === dateStr) });
+    }
+    body.appendChild(buildAdminScheduleColsArea(grid, gridHeight, columnSpecs));
+
+    wrap.appendChild(body);
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+    startAdminScheduleNowTimer(grid);
+  }
+
+  function renderAdminScheduleDay() {
+    const mount = document.getElementById("adminScheduleCalendar");
+    const title = document.getElementById("adminCalendarTitle");
+    if (!mount) return;
+
+    const anchor = adminCalendarAnchorDate || currentDate;
+    const dateStr = formatDate(anchor.getFullYear(), anchor.getMonth(), anchor.getDate());
+    const dow = dayOfWeekFromDateStr(dateStr);
+    const dayLabel = DOW_LABELS[String(dow)] || "";
+    if (title) {
+      title.textContent = anchor.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    const grid = getAdminScheduleGridBounds();
+    const gridHeight = (grid.endMin - grid.startMin) * ADMIN_SCHEDULE_PX_PER_MIN;
+    const filtered = getAdminCalendarFilteredBookings().filter((b) => b.date === dateStr);
+
+    const wrap = document.createElement("div");
+    wrap.className = "admin-schedule-day-view";
+
+    const labels = document.createElement("div");
+    labels.className = "admin-schedule-time-labels";
+    labels.style.height = gridHeight + "px";
+    for (let m = grid.startMin; m < grid.endMin; m += 60) {
+      const lab = document.createElement("div");
+      lab.className = "admin-schedule-time-label";
+      lab.style.height = 60 * ADMIN_SCHEDULE_PX_PER_MIN + "px";
+      lab.textContent = minutesToTime(m);
+      labels.appendChild(lab);
+    }
+    wrap.appendChild(labels);
+    wrap.appendChild(
+      buildAdminScheduleColsArea(grid, gridHeight, [{ dateStr, dayBookings: filtered }])
+    );
+
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+    startAdminScheduleNowTimer(grid);
+  }
+
+  function renderAdminScheduleMonth() {
+    const mount = document.getElementById("adminScheduleCalendar");
+    const title = document.getElementById("adminCalendarTitle");
+    if (!mount) return;
+
+    stopAdminScheduleNowTimer();
+    adminScheduleActiveGrid = null;
+
+    const anchor = adminCalendarAnchorDate || currentDate;
+    currentDate = new Date(anchor);
+    const year = anchor.getFullYear();
+    const month = anchor.getMonth();
+    if (title) {
+      title.textContent = anchor.toLocaleString("default", { month: "long", year: "numeric" });
+    }
+
+    const filtered = getAdminCalendarFilteredBookings();
+    const todayStr = getTodayDateString();
+    const wrap = document.createElement("div");
+    wrap.className = "admin-schedule-month";
+
+    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].forEach((d) => {
       const div = document.createElement("div");
       div.className = "day-name";
-      div.innerText = d;
-      calendar.appendChild(div);
+      div.textContent = d;
+      wrap.appendChild(div);
     });
 
     const firstDay = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-
     let startOffset = firstDay.getDay();
     startOffset = startOffset === 0 ? 6 : startOffset - 1;
 
     for (let i = 0; i < startOffset; i++) {
       const empty = document.createElement("div");
       empty.className = "calendar-day empty";
-      calendar.appendChild(empty);
+      wrap.appendChild(empty);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
       const dateStr = formatDate(year, month, day);
-      const dayBookings = bookings.filter(b => b.date === dateStr);
-      const closed = blockedDays.find(d => d.date === dateStr);
-
+      const dayBookings = filtered.filter((b) => b.date === dateStr);
+      const closed = isAdminScheduleDayClosed(dateStr);
       const div = document.createElement("div");
-      div.className = "calendar-day";
-      if (closed) div.classList.add("closed");
+      div.className = "admin-schedule-month-day";
+      if (closed) div.classList.add("admin-schedule-month-day--closed");
+      else if (dayBookings.length) div.classList.add("admin-schedule-month-day--busy");
+      if (dateStr === todayStr) div.style.outline = "2px solid var(--business-accent, var(--color-primary))";
 
       div.innerHTML = `
-        <strong>${day}</strong><br>
-        ${closed ? `<span class="badge badge-red">Closed</span><br>` : ""}
-        ${dayBookings.length ? `<span class="badge badge-green">${dayBookings.length} booking</span>` : ""}
+        <strong>${day}</strong>
+        ${closed ? `<span class="badge badge-red">Closed</span>` : ""}
+        ${dayBookings.length ? `<span class="admin-schedule-month-count">${dayBookings.length} appt${dayBookings.length === 1 ? "" : "s"}</span>` : ""}
       `;
-
-      div.onclick = () => {
-        selectedDate = dateStr;
-        showToast(
-          closed
-            ? `Closed day: ${dateStr} — ${closed.reason || "No reason"}`
-            : `Selected date: ${dateStr} — ${dayBookings.length} booking(s)`,
-          "info",
-          5000
-        );
-      };
-
-      calendar.appendChild(div);
+      div.addEventListener("click", () => openAdminCalendarDayView(dateStr));
+      wrap.appendChild(div);
     }
+
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+  }
+
+  function renderAdminCalendar() {
+    populateAdminCalendarStaffFilter();
+    syncAdminCalendarViewTabs();
+    applyBusinessVisualTheme();
+
+    const mount = document.getElementById("adminScheduleCalendar");
+    if (mount) {
+      mount.style.setProperty("--admin-schedule-px-per-min", ADMIN_SCHEDULE_PX_PER_MIN + "px");
+    }
+
+    if (adminCalendarView !== "day" && adminCalendarView !== "week") {
+      stopAdminScheduleNowTimer();
+      adminScheduleActiveGrid = null;
+    }
+
+    if (adminCalendarView === "day") renderAdminScheduleDay();
+    else if (adminCalendarView === "month") renderAdminScheduleMonth();
+    else renderAdminScheduleWeek();
+  }
+
+  function openAdminBookingDetailModal(bookingId) {
+    const booking = bookings.find((b) => b.id === bookingId);
+    if (!booking) return;
+    adminBookingDetailModalId = bookingId;
+    const service = services.find((s) => s.id === booking.service_id);
+    const status = getBookingStatus(booking);
+    const range = getBookingTimeRange(booking);
+    const body = document.getElementById("adminBookingDetailBody");
+    const modal = document.getElementById("adminBookingDetailModal");
+    if (body) {
+      body.innerHTML = `
+        <p><strong>${escapeHtml(booking.customer_name || "Customer")}</strong>
+        <span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span></p>
+        <p><strong>When</strong>${escapeHtml(booking.date)} · ${escapeHtml(String(booking.time || "").slice(0, 5))} – ${escapeHtml(minutesToTime(range.endMin))}</p>
+        <p><strong>Service</strong>${escapeHtml(service?.name || booking.service_name || "—")}</p>
+        <p><strong>Staff</strong>${escapeHtml(getStaffName(booking.staff_id))}</p>
+        <p><strong>Phone</strong>${escapeHtml(booking.customer_phone || "—")}</p>
+        <p><strong>Email</strong>${escapeHtml(booking.customer_email || "—")}</p>
+        <p><strong>Notes</strong>${escapeHtml(booking.notes || "—")}</p>
+      `;
+    }
+    if (modal) modal.classList.remove("hidden");
+  }
+
+  function closeAdminBookingDetailModal() {
+    adminBookingDetailModalId = null;
+    document.getElementById("adminBookingDetailModal")?.classList.add("hidden");
+  }
+
+  async function adminModalEditBooking() {
+    const id = adminBookingDetailModalId;
+    if (!id) return;
+    closeAdminBookingDetailModal();
+    setAdminSection("bookings");
+    requestAnimationFrame(() => {
+      editBooking(id);
+    });
+  }
+
+  async function adminModalCancelBooking() {
+    const id = adminBookingDetailModalId;
+    if (!id) return;
+    const ok = await cancelBooking(id);
+    if (!ok) return;
+    closeAdminBookingDetailModal();
+    if (!document.getElementById("adminView")?.classList.contains("hidden")) {
+      renderAdminCalendar();
+    }
+  }
+
+  async function adminModalDeleteBooking() {
+    const id = adminBookingDetailModalId;
+    if (!id) return;
+    const ok = await deleteBooking(id);
+    if (!ok) return;
+    closeAdminBookingDetailModal();
   }
 
   function renderPublicCalendar() {
