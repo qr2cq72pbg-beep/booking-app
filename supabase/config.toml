@@ -1,0 +1,10 @@
+# Project: sdqothuulzeczcncyfqd
+# Deploy:  supabase link --project-ref sdqothuulzeczcncyfqd
+#          supabase functions deploy send-booking-email
+# Secrets: see supabase/secrets.example.env
+
+project_id = "sdqothuulzeczcncyfqd"
+
+[functions.send-booking-email]
+verify_jwt = false
+

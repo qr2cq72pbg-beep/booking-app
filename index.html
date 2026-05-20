@@ -1017,12 +1017,42 @@
       border-top: 4px solid var(--business-accent, #2563eb);
     }
 
+    .manage-booking-cancelled-banner {
+      padding: var(--space-md);
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-md);
+      color: #166534;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1.45;
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+
     #manageBookingRescheduleFields {
       margin-bottom: var(--space-md);
     }
 
     #manageBookingRescheduleFields input {
       margin: 0;
+    }
+
+    #manageBookingSlotsContainer.slot-grid {
+      margin-bottom: var(--space-md);
+    }
+
+    .manage-booking-rescheduled-banner {
+      padding: var(--space-md);
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: var(--radius-md);
+      color: #166534;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 1.45;
+      margin-bottom: var(--space-lg);
+      text-align: center;
     }
 
     #selectedDateTitle {
@@ -1300,6 +1330,10 @@
       padding: var(--space-lg) var(--space-md);
       color: var(--color-muted);
       font-size: 14px;
+    }
+
+    .loading-state.hidden {
+      display: none;
     }
 
     .loading-spinner {
@@ -1878,7 +1912,7 @@
             <div class="booking-flow-icon booking-flow-icon--manage" aria-hidden="true">📋</div>
             <div class="booking-flow-header-text">
               <h2>Manage your booking</h2>
-              <p class="booking-flow-lead">View your booking details or cancel your appointment.</p>
+              <p class="booking-flow-lead">View your booking, pick a new time, or cancel your appointment.</p>
             </div>
           </div>
           <div id="manageBookingLoading" class="loading-state hidden" role="status">
@@ -1887,6 +1921,12 @@
           </div>
           <div id="manageBookingError" class="empty-state hidden"></div>
           <div id="manageBookingBody" class="hidden">
+            <div id="manageBookingCancelledBanner" class="manage-booking-cancelled-banner hidden" role="status">
+              Your booking has been cancelled.
+            </div>
+            <div id="manageBookingRescheduledBanner" class="manage-booking-rescheduled-banner hidden" role="status">
+              Your booking has been rescheduled.
+            </div>
             <div class="booking-detail-block">
               <span class="booking-flow-label">Reference</span>
               <p id="manageBookingRef" class="booking-manage-ref"></p>
@@ -1914,16 +1954,19 @@
             <div id="manageBookingRescheduleSection" class="hidden" aria-hidden="true">
               <span class="booking-flow-label">New date &amp; time</span>
               <div id="manageBookingRescheduleFields" class="row">
-                <input id="manageBookingDate" type="date" aria-label="New date" />
-                <input id="manageBookingTime" type="time" aria-label="New time" />
+                <input id="manageBookingDate" type="date" aria-label="New date" onchange="onManageRescheduleDateChange()" />
               </div>
+              <p id="manageBookingSlotsTitle" class="small">Choose an available time</p>
+              <div id="manageBookingSlotsContainer" class="slot-grid" role="group" aria-label="Available times"></div>
+              <input id="manageBookingTime" type="hidden" />
             </div>
             <div id="manageBookingLinkBox" class="booking-manage-link-box hidden"></div>
             <div class="booking-manage-actions">
               <button type="button" class="success hidden" id="manageBookingRescheduleBtn" onclick="submitManageReschedule()">Save new time</button>
               <button type="button" class="danger" id="manageBookingCancelBtn" onclick="submitManageCancel()">Cancel booking</button>
               <button type="button" class="secondary" onclick="copyManageBookingLink('manageBookingLinkBox')">Copy manage link</button>
-              <button type="button" class="secondary" onclick="showPublicBookingWizard()">Book another</button>
+              <button type="button" class="success hidden" id="manageBookingBookNewBtn" onclick="showPublicBookingWizardFromManage()">Book new appointment</button>
+              <button type="button" class="secondary" id="manageBookingBookAnotherBtn" onclick="showPublicBookingWizard()">Book another</button>
             </div>
           </div>
         </div>
@@ -2505,6 +2548,7 @@
   let selectedDate = null;
   let selectedSlot = null;
   let selectedService = null;
+  let manageRescheduleSelectedTime = null;
   let bookingRealtimeChannel = null;
   let bookingRealtimeRefreshTimer = null;
   let toastHideTimer = null;
@@ -2586,8 +2630,53 @@
     return window.location.origin + window.location.pathname + "?business=" + encodeURIComponent(publicId);
   }
 
+  function getBookingBusinessSlug(booking) {
+    return normalizeBusinessSlug(booking?.business_slug || "");
+  }
+
+  function syncManageUrlParams(businessSlug, manageToken) {
+    const business = normalizeBusinessSlug(businessSlug) || String(businessSlug || "").trim();
+    const manage = String(manageToken || "").trim();
+    if (!business || !manage) return;
+    history.replaceState(
+      null,
+      "",
+      window.location.pathname +
+        "?business=" +
+        encodeURIComponent(business) +
+        "&manage=" +
+        encodeURIComponent(manage)
+    );
+  }
+
+  async function applyBusinessContextFromManageBooking(booking, manageToken) {
+    const slug = getBookingBusinessSlug(booking);
+    if (slug) {
+      businessId = slug;
+    } else if (booking?.business_id) {
+      businessId = booking.business_id;
+    }
+
+    if (!manageToken) return;
+
+    if (slug) {
+      syncManageUrlParams(slug, manageToken);
+      return;
+    }
+
+    if (businessId) {
+      await loadBusinessSettings();
+      const publicId = normalizeBusinessSlug(businessSettings?.business_slug || "") || getBusinessPublicIdentifier();
+      if (publicId) syncManageUrlParams(publicId, manageToken);
+    }
+  }
+
   function buildManageBookingLink(token, identifier = null) {
-    const publicId = identifier || getBusinessPublicIdentifier();
+    const slug =
+      normalizeBusinessSlug(identifier || "") ||
+      getBookingBusinessSlug(manageBookingData) ||
+      normalizeBusinessSlug(businessSettings?.business_slug || "");
+    const publicId = slug || getBusinessPublicIdentifier();
     if (!token) return buildPublicBookingLink(publicId);
     return (
       window.location.origin +
@@ -2618,7 +2707,12 @@
     return match ? match[1] : "";
   }
 
+  function showPublicBookingWizardFromManage() {
+    showPublicBookingWizard();
+  }
+
   function showPublicBookingWizard() {
+    const businessFromManage = normalizeBusinessSlug(manageBookingData?.business_slug || "");
     activeManageToken = null;
     manageBookingData = null;
     setPublicBookingWizardVisible(true);
@@ -2626,6 +2720,7 @@
     document.getElementById("manageBookingCard")?.classList.add("hidden");
 
     const businessParam =
+      businessFromManage ||
       getBusinessPublicIdentifier() ||
       publicBusinessId ||
       normalizeBusinessSlug(businessSettings?.business_slug || "");
@@ -2722,7 +2817,198 @@
     return { data, error: null };
   }
 
-  function renderManageBookingCard(booking) {
+  function resolveManageBookingServiceId(booking) {
+    const directId = booking?.service_id;
+    if (directId && services.some(s => s.id === directId)) return directId;
+    const name = String(booking?.service_name || "").trim().toLowerCase();
+    if (!name) return null;
+    const match = services.find(s => String(s.name || "").trim().toLowerCase() === name);
+    return match?.id || null;
+  }
+
+  function getManageRescheduleValidationError(dateStr, timeStr, serviceId, booking) {
+    const service = services.find(s => s.id === serviceId);
+    if (!service) return "Service not found for this booking.";
+    if (!dateStr || !timeStr) return "Choose a date and available time.";
+
+    if (blockedDays.some(d => d.date === dateStr)) return "This date is blocked / closed.";
+    if (isPastDate(dateStr)) return "Past date is not allowed.";
+    if (isOutsideBookingWindow(dateStr)) return "This date is outside booking window.";
+
+    const dateObj = new Date(dateStr + "T00:00:00");
+    const workingDays = getWorkingDaysArray();
+    if (!workingDays.includes(dateObj.getDay())) return "This is not a working day.";
+
+    const duration = getServiceDurationValue(service);
+    if (isSlotInBreak(timeStr, duration)) return "This time is inside break / pause.";
+
+    const start = timeToMinutes(timeStr);
+    const end = start + Number(duration);
+    const workStart = timeToMinutes(businessSettings?.work_start || "09:00");
+    const workEnd = timeToMinutes(businessSettings?.work_end || "17:00");
+    if (start < workStart || end > workEnd) return "This booking is outside working hours.";
+
+    const staffId = booking?.staff_id || null;
+    const ignoreId = booking?.id || null;
+    if (hasConflict(dateStr, timeStr, serviceId, ignoreId, staffId)) {
+      return "This time conflicts with another booking.";
+    }
+
+    return null;
+  }
+
+  async function ensurePublicAvailabilityForManage() {
+    if (!businessSettings) await loadBusinessSettings();
+    if (!services.length) await loadServices();
+    await checkBookingStaffColumn();
+    if (businessId) {
+      await loadBookings(true);
+      await loadBlockedDays(true);
+    }
+  }
+
+  function onManageRescheduleDateChange() {
+    const dateStr = document.getElementById("manageBookingDate")?.value;
+    if (dateStr) renderManageRescheduleSlots(dateStr);
+  }
+
+  function chooseManageRescheduleSlot(time) {
+    manageRescheduleSelectedTime = time;
+    const timeInput = document.getElementById("manageBookingTime");
+    if (timeInput) timeInput.value = time;
+
+    const saveBtn = document.getElementById("manageBookingRescheduleBtn");
+    if (saveBtn && !saveBtn.classList.contains("hidden")) saveBtn.disabled = false;
+
+    document.querySelectorAll("#manageBookingSlotsContainer .slot.selected").forEach(slot => {
+      slot.classList.remove("selected");
+    });
+    const selectedEl = document.querySelector(
+      `#manageBookingSlotsContainer .slot[data-slot-time="${CSS.escape(time)}"]`
+    );
+    if (selectedEl) selectedEl.classList.add("selected");
+  }
+
+  function renderManageRescheduleSlots(dateStr) {
+    const container = document.getElementById("manageBookingSlotsContainer");
+    if (!container) return;
+
+    container.innerHTML = "";
+    manageRescheduleSelectedTime = null;
+    const timeInput = document.getElementById("manageBookingTime");
+    if (timeInput) timeInput.value = "";
+    const saveBtn = document.getElementById("manageBookingRescheduleBtn");
+    if (saveBtn && !saveBtn.classList.contains("hidden")) saveBtn.disabled = true;
+
+    const booking = manageBookingData;
+    const serviceId = resolveManageBookingServiceId(booking);
+    const service = services.find(s => s.id === serviceId);
+
+    if (!service) {
+      container.innerHTML = emptyStateHtml("Service unavailable", "Unable to load times for this booking.");
+      return;
+    }
+
+    if (!dateStr) {
+      container.innerHTML = emptyStateHtml("Select a date", "Pick a date to see available times.");
+      return;
+    }
+
+    if (blockedDays.some(d => d.date === dateStr)) {
+      container.innerHTML = `<div class="slot closed">Closed</div>`;
+      return;
+    }
+
+    const dateObj = new Date(dateStr + "T00:00:00");
+    const workingDays = getWorkingDaysArray();
+    if (isPastDate(dateStr)) {
+      container.innerHTML = emptyStateHtml("Date not available", "Past date is not allowed.");
+      return;
+    }
+    if (isOutsideBookingWindow(dateStr)) {
+      container.innerHTML = emptyStateHtml("Date not available", "This date is outside booking window.");
+      return;
+    }
+    if (!workingDays.includes(dateObj.getDay())) {
+      container.innerHTML = emptyStateHtml("Date not available", "This is not a working day.");
+      return;
+    }
+
+    const staffId = booking?.staff_id || null;
+    const ignoreBookingId = booking?.id || null;
+    const slots = generateSlots(
+      businessSettings?.work_start || "09:00",
+      businessSettings?.work_end || "17:00",
+      getServiceDurationValue(service)
+    );
+
+    if (!slots.length) {
+      container.innerHTML = emptyStateHtml("No slots available", "Try another date.");
+      return;
+    }
+
+    let hasSelectable = false;
+    slots.forEach(time => {
+      const div = document.createElement("div");
+      const isBreak = isSlotInBreak(time, getServiceDurationValue(service));
+      const conflict = hasConflict(dateStr, time, service.id, ignoreBookingId, staffId);
+      div.className = "slot";
+
+      if (isBreak) {
+        div.classList.add("break");
+        div.innerText = time + " Break";
+      } else if (conflict) {
+        div.classList.add("booked");
+        div.innerText = time + " Booked";
+      } else {
+        hasSelectable = true;
+        div.innerText = time;
+        div.dataset.slotTime = time;
+        div.setAttribute("role", "button");
+        div.setAttribute("tabindex", "0");
+        div.onclick = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          chooseManageRescheduleSlot(time);
+        };
+        div.onkeydown = (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            chooseManageRescheduleSlot(time);
+          }
+        };
+        const currentTime = String(booking?.time || "").trim();
+        const currentDate = normalizeBookingDateForInput(booking?.date) || String(booking?.date || "").trim();
+        if (currentDate === dateStr && currentTime === time) {
+          chooseManageRescheduleSlot(time);
+        }
+      }
+
+      container.appendChild(div);
+    });
+
+    if (!hasSelectable) {
+      container.innerHTML = emptyStateHtml("No times available", "Try another date.");
+    }
+  }
+
+  function initManageReschedulePicker(booking) {
+    const dateInput = document.getElementById("manageBookingDate");
+    if (!dateInput) return;
+
+    const displayDate = normalizeBookingDateForInput(booking?.date) || "";
+    dateInput.min = getTodayDateString();
+
+    const maxDate = new Date();
+    maxDate.setHours(0, 0, 0, 0);
+    maxDate.setDate(maxDate.getDate() + Number(businessSettings?.booking_window_weeks || 4) * 7);
+    dateInput.max = formatDate(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+    dateInput.value = displayDate;
+
+    renderManageRescheduleSlots(displayDate);
+  }
+
+  function renderManageBookingCard(booking, options = {}) {
     manageBookingData = booking;
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
@@ -2733,7 +3019,8 @@
     if (body) body.classList.remove("hidden");
 
     const status = booking?.booking_status || "Pending";
-    const canManage = booking?.can_manage !== false && String(status).toLowerCase() !== "cancelled";
+    const isCancelled = String(status).toLowerCase() === "cancelled";
+    const canManage = booking?.can_manage !== false && !isCancelled;
 
     const displayDate = normalizeBookingDateForInput(booking?.date) || String(booking?.date || "").trim();
 
@@ -2746,11 +3033,6 @@
     document.getElementById("manageBookingStatus").innerHTML =
       `<span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span>`;
 
-    const dateInput = document.getElementById("manageBookingDate");
-    const timeInput = document.getElementById("manageBookingTime");
-    if (dateInput) dateInput.value = displayDate;
-    if (timeInput) timeInput.value = booking?.time || "";
-
     const linkBox = document.getElementById("manageBookingLinkBox");
     if (linkBox && activeManageToken) {
       linkBox.textContent = buildManageBookingLink(activeManageToken, booking?.business_slug || null);
@@ -2759,8 +3041,34 @@
       linkBox.classList.add("hidden");
     }
 
+    const cancelledBanner = document.getElementById("manageBookingCancelledBanner");
+    if (cancelledBanner) cancelledBanner.classList.toggle("hidden", !isCancelled);
+
+    const rescheduledBanner = document.getElementById("manageBookingRescheduledBanner");
+    if (rescheduledBanner) {
+      rescheduledBanner.classList.toggle("hidden", !options.showRescheduledSuccess || isCancelled);
+    }
+
+    const rescheduleSection = document.getElementById("manageBookingRescheduleSection");
+    const rescheduleBtn = document.getElementById("manageBookingRescheduleBtn");
+    if (rescheduleSection) {
+      rescheduleSection.classList.toggle("hidden", !canManage);
+      rescheduleSection.setAttribute("aria-hidden", canManage ? "false" : "true");
+    }
+    if (rescheduleBtn) {
+      rescheduleBtn.classList.toggle("hidden", !canManage);
+      if (canManage) rescheduleBtn.disabled = !manageRescheduleSelectedTime;
+    }
+
     const cancelBtn = document.getElementById("manageBookingCancelBtn");
     if (cancelBtn) cancelBtn.disabled = !canManage;
+
+    const bookNewBtn = document.getElementById("manageBookingBookNewBtn");
+    const bookAnotherBtn = document.getElementById("manageBookingBookAnotherBtn");
+    if (bookNewBtn) bookNewBtn.classList.toggle("hidden", !isCancelled);
+    if (bookAnotherBtn) bookAnotherBtn.classList.toggle("hidden", isCancelled);
+
+    if (canManage) initManageReschedulePicker(booking);
   }
 
   function showManageBookingError(message) {
@@ -2803,34 +3111,73 @@
       return;
     }
 
+    await applyBusinessContextFromManageBooking(data, manageToken);
+    await loadPublicData();
+    await ensurePublicAvailabilityForManage();
     renderManageBookingCard(data);
     card?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   async function submitManageReschedule() {
-    if (!activeManageToken) return;
+    if (!activeManageToken || !manageBookingData) return;
 
+    const saveBtn = document.getElementById("manageBookingRescheduleBtn");
     const newDate = document.getElementById("manageBookingDate")?.value;
-    const newTime = document.getElementById("manageBookingTime")?.value;
+    const newTime = manageRescheduleSelectedTime || document.getElementById("manageBookingTime")?.value;
 
     if (!newDate || !newTime) {
-      showToast("Choose date and time.", "error");
+      showToast("Choose a date and available time.", "error");
       return;
     }
 
-    const { data, error } = await rescheduleBookingByManageToken(activeManageToken, newDate, newTime);
-    if (error) {
-      showToast(error.message, "error");
+    const serviceId = resolveManageBookingServiceId(manageBookingData);
+    if (!serviceId) {
+      showToast("Service not found for this booking.", "error");
       return;
     }
 
-    showToast("Booking rescheduled.", "success");
     await loadBookings(true);
-    renderManageBookingCard(data);
-    await sendBookingEmailNotification("booking_rescheduled", data?.id || manageBookingData?.id, {
-      source: "manage",
-      manageToken: activeManageToken
-    });
+    const validationError = getManageRescheduleValidationError(newDate, newTime, serviceId, manageBookingData);
+    if (validationError) {
+      showToast(validationError, "error");
+      renderManageRescheduleSlots(newDate);
+      return;
+    }
+
+    const previousDate =
+      normalizeBookingDateForInput(manageBookingData?.date) || String(manageBookingData?.date || "").trim();
+    const previousTime = String(manageBookingData?.time || "").trim().slice(0, 5);
+
+    if (saveBtn) saveBtn.disabled = true;
+    try {
+      const { data, error } = await rescheduleBookingByManageToken(activeManageToken, newDate, newTime);
+      if (error) {
+        showToast(error.message, "error");
+        return;
+      }
+
+      const merged =
+        data && typeof data === "object"
+          ? { ...(manageBookingData || {}), ...data, date: data.date || newDate, time: data.time || newTime }
+          : { ...(manageBookingData || {}), date: newDate, time: newTime };
+
+      await loadBookings(true);
+      renderManageBookingCard(merged, { showRescheduledSuccess: true });
+      document.getElementById("manageBookingRescheduledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      await sendBookingEmailNotification(
+        EMAIL_NOTIFICATION_TYPES.RESCHEDULED,
+        resolveManageBookingIdForEmail(merged, data, manageBookingData),
+        {
+          source: "manage",
+          manageToken: activeManageToken,
+          previousDate,
+          previousTime
+        }
+      );
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
   }
 
   async function submitManageCancel() {
@@ -2843,16 +3190,23 @@
       return;
     }
 
-    showToast("Booking cancelled.", "success");
-    await loadBookings(true);
-    const { data: refreshed } = await fetchBookingByManageToken(activeManageToken);
-    if (refreshed) renderManageBookingCard(refreshed);
-    else if (data) renderManageBookingCard({ ...manageBookingData, booking_status: "Cancelled", can_manage: false });
+    const cancelledBooking =
+      data && typeof data === "object"
+        ? { ...(manageBookingData || {}), ...data, booking_status: data.booking_status || "Cancelled", can_manage: false }
+        : { ...(manageBookingData || {}), booking_status: "Cancelled", can_manage: false };
 
-    await sendBookingEmailNotification("booking_cancelled", data?.id || manageBookingData?.id, {
-      source: "manage",
-      manageToken: activeManageToken
-    });
+    renderManageBookingCard(cancelledBooking);
+    document.getElementById("manageBookingCard")?.classList.remove("hidden");
+    document.getElementById("manageBookingCancelledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    await sendBookingEmailNotification(
+      EMAIL_NOTIFICATION_TYPES.CANCELLED,
+      resolveManageBookingIdForEmail(cancelledBooking, data, manageBookingData),
+      {
+        source: "manage",
+        manageToken: activeManageToken
+      }
+    );
   }
 
   function generateFallbackBusinessSlug() {
@@ -3318,17 +3672,18 @@
       return;
     }
 
-    if (publicBusinessId) {
-      businessId = publicBusinessId;
+    if (publicBusinessId || publicManageToken) {
+      if (publicBusinessId) businessId = publicBusinessId;
       if (data?.session?.user) {
         currentUser = data.session.user;
         await loadCurrentUserRole();
       }
       showPublicView(true);
-      await loadPublicData();
       if (publicManageToken) {
         await openManageBookingFromToken(publicManageToken);
+        return;
       }
+      await loadPublicData();
       return;
     }
 
@@ -3859,24 +4214,74 @@
     location.href = window.location.pathname;
   }
 
-  function sendBookingEmailNotification(type, bookingId, extra = {}) {
-    if (!bookingId || !type || !initSupabaseClient()) return;
+  const EMAIL_NOTIFICATION_TYPES = Object.freeze({
+    CREATED: "booking_created",
+    RESCHEDULED: "booking_rescheduled",
+    CANCELLED: "booking_cancelled"
+  });
 
-    void (async () => {
+  function resolveEmailBookingId(...candidates) {
+    for (const value of candidates) {
+      const id = String(value ?? "").trim();
+      if (id && id !== "undefined" && id !== "null") return id;
+    }
+    return "";
+  }
+
+  function resolveManageBookingIdForEmail(...sources) {
+    const ids = sources.flatMap((source) => {
+      if (!source || typeof source !== "object") return [];
+      return [source.id, source.bookingId, source.booking_id];
+    });
+    const resolved = resolveEmailBookingId(...ids);
+    if (resolved) return resolved;
+
+    const token = String(activeManageToken || "").trim();
+    if (token && Array.isArray(bookings)) {
+      const match = bookings.find((b) => String(b.manage_token || "").trim() === token);
+      return resolveEmailBookingId(match?.id);
+    }
+    return "";
+  }
+
+  function sendBookingEmailNotification(type, bookingId, extra = {}) {
+    const normalizedType = String(type || "").trim();
+    const id = resolveEmailBookingId(bookingId, extra.bookingId, extra.id);
+    const manageToken = String(extra.manageToken || activeManageToken || "").trim();
+
+    if (!id || !normalizedType || !initSupabaseClient()) {
+      console.warn("[send-booking-email] skipped — missing type, bookingId, or client", {
+        type: normalizedType,
+        bookingId: id,
+        hasManageToken: Boolean(manageToken)
+      });
+      return Promise.resolve();
+    }
+
+    const payload = {
+      type: normalizedType,
+      bookingId: id
+    };
+    if (extra.source) payload.source = extra.source;
+    if (manageToken) payload.manageToken = manageToken;
+    if (extra.previousDate) payload.previousDate = extra.previousDate;
+    if (extra.previousTime) payload.previousTime = extra.previousTime;
+
+    console.log("[send-booking-email] invoking", payload);
+
+    return (async () => {
       try {
-        const { error } = await sb.functions.invoke("send-booking-email", {
-          body: {
-            type,
-            bookingId,
-            ...extra
-          }
+        const { data, error } = await sb.functions.invoke("send-booking-email", {
+          body: payload
         });
 
         if (error) {
-          console.warn("Email notification skipped:", error.message || error);
+          console.warn("[send-booking-email] invoke error", error.message || error, { payload, data });
+        } else {
+          console.log("[send-booking-email] invoke response", data);
         }
       } catch (err) {
-        console.warn("Email notification failed:", err?.message || err);
+        console.warn("[send-booking-email] invoke failed", err?.message || err, { payload });
       }
     })();
   }
@@ -3924,7 +4329,9 @@
     if (!businessSettings) {
       stopBookingRealtime();
       showToast("Business not found or settings are missing. Check the public link / Business ID.", "error", 6000);
-      showPublicView(false);
+      if (!publicManageToken && !activeManageToken) {
+        showPublicView(false);
+      }
       return;
     }
 
@@ -5235,7 +5642,9 @@
     } else if (slotChanged) {
       await sendBookingEmailNotification("booking_rescheduled", updatedBooking?.id || id, {
         source: "admin",
-        manageToken: originalBooking?.manage_token || null
+        manageToken: originalBooking?.manage_token || null,
+        previousDate: prevDate,
+        previousTime: prevTime
       });
     }
 
