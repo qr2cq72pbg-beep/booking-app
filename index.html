@@ -434,6 +434,129 @@
       align-items: start;
     }
 
+    .admin-dashboard {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      align-items: stretch;
+    }
+
+    @media (min-width: 900px) {
+      .admin-dashboard {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    .admin-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: var(--space-sm);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (min-width: 900px) {
+      .admin-nav {
+        flex: 0 0 200px;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        position: sticky;
+        top: var(--space-md);
+        align-self: flex-start;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+      }
+    }
+
+    .admin-nav-btn {
+      width: auto;
+      min-height: 42px;
+      margin: 0;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: #fff;
+      color: #374151;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    @media (min-width: 900px) {
+      .admin-nav-btn {
+        width: 100%;
+      }
+    }
+
+    .admin-nav-btn:hover {
+      border-color: var(--color-primary);
+      background: #f8fafc;
+    }
+
+    .admin-nav-btn--active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+
+    .admin-dashboard-panels {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section--active {
+      display: block;
+    }
+
+    .admin-section > .card,
+    .admin-section > .card.widget-card {
+      margin-bottom: var(--space-md);
+    }
+
+    .admin-section-title {
+      margin: 0 0 var(--space-sm);
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-customize-save-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      margin: var(--space-md) calc(-1 * var(--space-md)) calc(-1 * var(--space-md));
+      padding: 14px var(--space-md);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, #fff 40%);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .admin-customize-save-bar button {
+      width: 100%;
+      max-width: 360px;
+      min-height: 48px;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    #adminSectionCustomize .widget-content {
+      display: block !important;
+    }
+
+    #adminSectionCustomize .widget-content.collapsed {
+      display: block !important;
+    }
+
     /* —— Fullscreen admin onboarding wizard (premium shell, mobile-first) —— */
     body.wizard-open {
       overflow: hidden;
@@ -1612,85 +1735,143 @@
       border-color: #16a34a;
     }
 
-    /* Public page layout themes (visual only) */
-    #publicBookingContent.public-layout-minimal .public-booking-hero-card {
-      box-shadow: none;
-      border: 1px solid var(--color-border);
-      border-top-width: 3px;
+    /* —— Business visual themes (admin + public booking) —— */
+    body.app-theme-minimal {
+      --admin-bg: #f3f4f6;
+      --admin-surface: #ffffff;
+      --admin-surface-2: #f8fafc;
+      --admin-text: #111827;
+      --admin-muted: #6b7280;
+      --admin-border: #e5e7eb;
+      --public-bg: #f8fafc;
+      --public-surface: #ffffff;
+      --public-surface-2: #f1f5f9;
+      --public-border: #e2e8f0;
+      --public-text: #0f172a;
+      --public-muted: #64748b;
+      --color-bg: var(--admin-bg);
+      --color-surface: var(--admin-surface);
+      --color-border: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-minimal .public-booking-card:not(.public-booking-hero-card) {
-      box-shadow: none;
-      border: 1px solid #e5e7eb;
-      background: #fff;
+    body.app-theme-cards {
+      --admin-bg: #e8eef5;
+      --admin-surface: #ffffff;
+      --admin-surface-2: #f1f5f9;
+      --admin-text: #0f172a;
+      --admin-muted: #64748b;
+      --admin-border: #dbe3ef;
+      --public-bg: #eef2f7;
+      --public-surface: #ffffff;
+      --public-surface-2: #f8fafc;
+      --public-border: rgba(15, 23, 42, 0.1);
+      --public-text: #0f172a;
+      --public-muted: #64748b;
+      --color-bg: var(--admin-bg);
+      --color-surface: var(--admin-surface);
+      --color-border: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-cards {
-      background: #f1f5f9;
-      padding: 4px 0 24px;
-      border-radius: var(--radius-lg);
+    body.app-theme-dark {
+      --admin-bg: #0f172a;
+      --admin-surface: #1e293b;
+      --admin-surface-2: #151d2e;
+      --admin-text: #f1f5f9;
+      --admin-muted: #94a3b8;
+      --admin-border: #334155;
+      --public-bg: #0b1120;
+      --public-surface: #151d2e;
+      --public-surface-2: #1a2438;
+      --public-border: rgba(148, 163, 184, 0.18);
+      --public-text: #f1f5f9;
+      --public-muted: #94a3b8;
+      --color-bg: var(--admin-bg);
+      --color-surface: var(--admin-surface);
+      --color-border: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-cards .public-booking-card {
-      border-radius: 18px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      border: 1px solid rgba(15, 23, 42, 0.06);
+    body.app-theme-minimal,
+    body.app-theme-cards,
+    body.app-theme-dark {
+      background: var(--admin-bg);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-dark {
-      background: #0f172a;
-      padding: 8px 12px 28px;
-      border-radius: var(--radius-lg);
-      color: #e2e8f0;
+    body.app-theme-minimal .topbar,
+    body.app-theme-cards .topbar,
+    body.app-theme-dark .topbar {
+      background: var(--admin-surface);
+      border-bottom: 1px solid var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-dark .public-booking-card {
-      background: #1e293b;
-      border-color: #334155;
-      color: #e2e8f0;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    body.app-theme-minimal #adminView .card,
+    body.app-theme-cards #adminView .card,
+    body.app-theme-dark #adminView .card,
+    body.app-theme-minimal .container > .card,
+    body.app-theme-cards .container > .card,
+    body.app-theme-dark .container > .card {
+      background: var(--admin-surface);
+      border-color: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-dark .public-booking-hero-card {
-      border-top-color: var(--business-accent, #38bdf8);
+    body.app-theme-dark #adminView input,
+    body.app-theme-dark #adminView select,
+    body.app-theme-dark #adminView textarea,
+    body.app-theme-dark .container input,
+    body.app-theme-dark .container select,
+    body.app-theme-dark .container textarea {
+      background: var(--admin-surface-2);
+      border-color: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-dark #publicBusinessName,
-    #publicBookingContent.public-layout-dark h2,
-    #publicBookingContent.public-layout-dark h3 {
-      color: #f8fafc;
+    body.app-theme-dark #adminView .small,
+    body.app-theme-dark .container .small {
+      color: var(--admin-muted);
     }
 
-    #publicBookingContent.public-layout-dark .public-booking-tagline,
-    #publicBookingContent.public-layout-dark .public-booking-intro,
-    #publicBookingContent.public-layout-dark .public-business-meta,
-    #publicBookingContent.public-layout-dark .small {
-      color: #94a3b8;
+    body.app-theme-dark .admin-nav {
+      background: var(--admin-surface);
+      border-color: var(--admin-border);
     }
 
-    #publicBookingContent.public-layout-dark .public-booking-about {
-      color: #cbd5e1;
+    body.app-theme-dark .admin-nav-btn {
+      background: var(--admin-surface-2);
+      border-color: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    #publicBookingContent.public-layout-dark .public-booking-intro {
-      border-bottom-color: #334155;
+    body.app-theme-dark .admin-nav-btn:hover {
+      background: #243044;
+      border-color: var(--business-accent, #38bdf8);
     }
 
-    #publicBookingContent.public-layout-dark select,
-    #publicBookingContent.public-layout-dark input,
-    #publicBookingContent.public-layout-dark textarea {
-      background: #0f172a;
-      border-color: #475569;
-      color: #f8fafc;
+    body.app-theme-dark .stat-card {
+      background: var(--admin-surface-2);
+      border-color: var(--admin-border);
     }
 
-    #publicBookingContent.public-layout-dark .slot:not(.booked):not(.break):not(.closed) {
-      background: #334155;
-      color: #f8fafc;
-      border-color: #475569;
+    body.app-theme-dark .public-link-box {
+      background: var(--admin-surface-2);
+      border-color: var(--admin-border);
+      color: var(--admin-text);
     }
 
-    /* —— Premium public booking page (dark barber/salon) —— */
+    body.app-theme-cards #adminView .card,
+    body.app-theme-cards .container > .card {
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    body.app-theme-cards .admin-nav-btn--active {
+      box-shadow: 0 4px 14px color-mix(in srgb, var(--business-accent, #2563eb) 35%, transparent);
+    }
+
+    /* Public booking page uses same theme tokens */
     #publicBookingContent {
       --public-bg: #0b1120;
       --public-surface: #151d2e;
@@ -1698,13 +1879,150 @@
       --public-border: rgba(148, 163, 184, 0.18);
       --public-text: #f1f5f9;
       --public-muted: #94a3b8;
-      --business-accent: #38bdf8;
       box-sizing: border-box;
       width: 100%;
       max-width: 1180px;
       margin: 0 auto;
       padding: 16px 16px 32px;
       color: var(--public-text);
+    }
+
+    body.app-theme-minimal #publicBookingContent {
+      --public-bg: #f8fafc;
+      --public-surface: #ffffff;
+      --public-surface-2: #f1f5f9;
+      --public-border: #e2e8f0;
+      --public-text: #0f172a;
+      --public-muted: #64748b;
+    }
+
+    body.app-theme-cards #publicBookingContent {
+      --public-bg: #eef2f7;
+      --public-surface: #ffffff;
+      --public-surface-2: #f8fafc;
+      --public-border: rgba(15, 23, 42, 0.1);
+      --public-text: #0f172a;
+      --public-muted: #64748b;
+    }
+
+    body.app-theme-dark #publicBookingContent {
+      --public-bg: #0b1120;
+      --public-surface: #151d2e;
+      --public-surface-2: #1a2438;
+      --public-border: rgba(148, 163, 184, 0.18);
+      --public-text: #f1f5f9;
+      --public-muted: #94a3b8;
+    }
+
+    body.app-theme-minimal .public-hero-bg,
+    body.app-theme-cards .public-hero-bg {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 45%, #cbd5e1 100%);
+    }
+
+    body.app-theme-minimal .public-hero-tagline,
+    body.app-theme-cards .public-hero-tagline {
+      color: #475569;
+    }
+
+    body.app-theme-minimal #publicBusinessName,
+    body.app-theme-cards #publicBusinessName,
+    body.app-theme-minimal .public-panel-title,
+    body.app-theme-cards .public-panel-title,
+    body.app-theme-minimal .public-success-title,
+    body.app-theme-cards .public-success-title,
+    body.app-theme-minimal .public-booking-step-heading,
+    body.app-theme-cards .public-booking-step-heading {
+      color: #0f172a;
+    }
+
+    body.app-theme-minimal .public-booking-success-inner,
+    body.app-theme-cards .public-booking-success-inner {
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    body.app-theme-minimal .public-panel,
+    body.app-theme-cards .public-panel {
+      background: var(--public-surface);
+      border-color: var(--public-border);
+    }
+
+    body.app-theme-minimal .public-staff-card,
+    body.app-theme-minimal .public-service-card,
+    body.app-theme-cards .public-staff-card,
+    body.app-theme-cards .public-service-card {
+      background: var(--public-surface-2);
+      border-color: var(--public-border);
+      color: var(--public-text);
+    }
+
+    body.app-theme-minimal #publicBookingContent .public-time-slots .slot:not(.booked):not(.break):not(.closed),
+    body.app-theme-cards #publicBookingContent .public-time-slots .slot:not(.booked):not(.break):not(.closed) {
+      background: var(--public-surface-2);
+      border-color: var(--public-border);
+      color: var(--public-text);
+    }
+
+    body.app-theme-minimal #publicBookingContent .public-time-slots .slot.selected,
+    body.app-theme-cards #publicBookingContent .public-time-slots .slot.selected {
+      color: #0f172a;
+    }
+
+    body.app-theme-minimal .public-cal-nav,
+    body.app-theme-cards .public-cal-nav {
+      background: var(--public-surface-2);
+      color: var(--public-text);
+      border-color: var(--public-border);
+    }
+
+    body.app-theme-minimal .public-calendar-grid .calendar-day,
+    body.app-theme-cards .public-calendar-grid .calendar-day {
+      background: var(--public-surface-2);
+      border-color: var(--public-border);
+      color: var(--public-text);
+    }
+
+    body.app-theme-cards .public-booking-shell {
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    body.app-theme-minimal .public-booking-shell {
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Layout accents on public page */
+    #publicBookingContent.public-layout-minimal .public-booking-shell {
+      border-width: 1px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    #publicBookingContent.public-layout-cards .public-booking-shell {
+      border-radius: 22px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    #publicBookingContent.public-layout-dark .public-booking-shell {
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Live preview mirrors active theme */
+    body.app-theme-minimal .booking-page-hero-preview__hero:not(.booking-page-hero-preview__hero--cover) {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    body.app-theme-minimal .booking-page-hero-preview__text strong,
+    body.app-theme-cards .booking-page-hero-preview__text strong {
+      color: #0f172a;
+    }
+
+    body.app-theme-minimal .booking-page-hero-preview__text span,
+    body.app-theme-cards .booking-page-hero-preview__text span {
+      color: #475569;
+    }
+
+    body.app-theme-minimal .booking-page-hero-preview__meta,
+    body.app-theme-cards .booking-page-hero-preview__meta {
+      background: #f1f5f9;
+      color: #64748b;
     }
 
     .public-booking-shell {
@@ -3777,6 +4095,259 @@
       background: #fff;
     }
 
+    .customize-section {
+      margin: 0 0 var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .customize-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .customize-section h3 {
+      margin: 0 0 var(--space-sm);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .customize-section .small {
+      margin-top: 0;
+    }
+
+    .customize-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: var(--space-sm) 0;
+    }
+
+    @media (min-width: 640px) {
+      .customize-layout-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .customize-layout-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface, #fff);
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .customize-layout-card--selected {
+      border-color: var(--business-accent, #2563eb);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #2563eb) 20%, transparent);
+    }
+
+    .customize-layout-card-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .customize-layout-card-desc {
+      margin: 0;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.35;
+    }
+
+    .theme-toggle-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: var(--space-sm) 0 0;
+    }
+
+    .theme-toggle-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      cursor: pointer;
+    }
+
+    .theme-toggle-input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+
+    .theme-toggle-switch {
+      position: relative;
+      flex-shrink: 0;
+      width: 44px;
+      height: 26px;
+      margin-top: 2px;
+      border-radius: 999px;
+      background: #cbd5e1;
+      transition: background 0.2s;
+    }
+
+    .theme-toggle-switch::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .theme-toggle-input:checked + .theme-toggle-switch {
+      background: var(--business-accent, #2563eb);
+    }
+
+    .theme-toggle-input:checked + .theme-toggle-switch::after {
+      transform: translateX(18px);
+    }
+
+    .theme-toggle-input:focus-visible + .theme-toggle-switch {
+      outline: 2px solid var(--business-accent, #2563eb);
+      outline-offset: 2px;
+    }
+
+    .theme-toggle-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .theme-toggle-copy strong {
+      font-size: 14px;
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .theme-toggle-copy span {
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.4;
+    }
+
+    body.app-theme-dark .theme-toggle-row {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark .theme-toggle-copy span {
+      color: var(--admin-muted, #94a3b8);
+    }
+
+    .booking-page-hero-preview {
+      margin: var(--space-sm) 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .booking-page-hero-preview__hero {
+      position: relative;
+      min-height: 120px;
+      padding: 16px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 45%, #0c4a6e 100%);
+    }
+
+    .booking-page-hero-preview__hero--cover {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .booking-page-hero-preview__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.35) 0%, rgba(11, 17, 32, 0.88) 100%);
+      pointer-events: none;
+    }
+
+    .booking-page-hero-preview__inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .booking-page-hero-preview__avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 800;
+      color: #93c5fd;
+    }
+
+    .booking-page-hero-preview__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .booking-page-hero-preview__text strong {
+      display: block;
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .booking-page-hero-preview__text span {
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .booking-page-hero-preview__meta {
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--color-muted);
+      background: #f8fafc;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .customize-save-row {
+      margin-top: var(--space-md);
+    }
+
+    .customize-save-row button {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    @media (min-width: 640px) {
+      .customize-save-row button {
+        width: auto;
+      }
+    }
+
     .logo-upload-row {
       display: flex;
       flex-wrap: wrap;
@@ -4380,7 +4951,7 @@
   </style>
 </head>
 
-<body>
+<body class="app-theme-minimal">
 
   <div class="topbar">
     <div class="topbar-inner">
@@ -4436,10 +5007,22 @@
     </div>
 
     <div id="adminView" class="hidden">
-<div class="admin-grid">
+      <div class="admin-dashboard">
+        <nav id="adminNav" class="admin-nav" aria-label="Admin dashboard sections">
+          <button type="button" class="admin-nav-btn admin-nav-btn--active" data-admin-section="overview" aria-current="page">Overview</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="customize">Customize Page</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="services">Services</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="staff">Staff</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="availability">Availability</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="calendar">Calendar</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="bookings">Bookings</button>
+          <button type="button" class="admin-nav-btn" data-admin-section="manual">Add Booking</button>
+        </nav>
 
+        <div class="admin-dashboard-panels">
+          <section id="adminSectionOverview" class="admin-section admin-section--active" data-admin-section="overview" aria-label="Overview">
       <div class="card widget-card">
-        <h1>Admin Dashboard</h1>
+        <h1 class="admin-section-title">Overview</h1>
         <p id="adminEmail" class="small"></p>
 
         <div class="business-profile-preview">
@@ -4495,80 +5078,150 @@
           <strong>Next Booking:</strong>
           <div id="statNextBooking" class="small">No upcoming booking.</div>
         </div>
-      </div>
 
-      <div class="card widget-card">
-        <div class="widget-header">
-<h2>Business Settings</h2>
-<button type="button" onclick="toggleWidget('widgetSettings')">Open / Close</button>
-</div>
-<div id="widgetSettings" class="widget-content">
-
-        <input id="businessName" placeholder="Business name" oninput="previewBusinessPublicLink(); previewBusinessBranding()" />
-
-
+        <h3 class="small" style="margin-top:18px;margin-bottom:4px;font-weight:800">Business profile</h3>
         <label class="small"><strong>Business ID / Public Slug</strong></label>
         <div class="business-id-row">
           <input id="businessSlug" placeholder="e.g. barber-shop-skopje" oninput="previewBusinessPublicLink()" />
           <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
         </div>
-        <p class="small">Користи мали букви, бројки и - . Пример: <strong>barber-shop-skopje</strong>. Customer може да го внесе ова наместо долгиот UUID.</p>
-
-        <h3>Public Booking QR</h3>
-        <div class="booking-qr-section">
-          <div class="booking-qr-details">
-            <div id="bookingQrLink" class="public-link-box small"></div>
-            <div class="booking-qr-actions">
-              <button type="button" class="success" onclick="copyPublicBookingLink()">Copy Link</button>
-              <button type="button" class="secondary" onclick="downloadBookingQr()">Download QR</button>
-            </div>
-          </div>
-          <div class="booking-qr-canvas-wrap">
-            <div id="bookingQrHost" aria-label="Public booking QR code"></div>
-          </div>
-        </div>
-
-        <h3>Branding</h3>
-        <p class="small">Shown on your public booking page.</p>
-        <label class="small"><strong>Business logo</strong></label>
-        <div class="logo-upload-row">
-          <button type="button" class="secondary" id="businessLogoUploadBtn" onclick="triggerBusinessLogoUpload()">Upload Logo</button>
-          <button type="button" class="secondary hidden" id="businessLogoRemoveBtn" onclick="removeBusinessLogo()">Remove Logo</button>
-          <input type="file" id="businessLogoFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessLogoFileSelected(event)" />
-        </div>
-        <input type="hidden" id="businessLogoUrl" />
-        <div id="logoUploadStatus" class="hidden"></div>
-        <label class="small"><strong>Cover / background image</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
-        <p class="small">Shown behind your public booking hero. JPG, PNG or WebP, max 3 MB.</p>
-        <div class="logo-upload-row">
-          <button type="button" class="secondary" id="businessCoverUploadBtn" onclick="triggerBusinessCoverUpload()">Upload cover</button>
-          <button type="button" class="secondary hidden" id="businessCoverRemoveBtn" onclick="removeBusinessCover()">Remove cover</button>
-          <input type="file" id="businessCoverFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessCoverFileSelected(event)" />
-        </div>
-        <input type="hidden" id="businessCoverUrl" />
-        <div id="coverUploadStatus" class="hidden"></div>
-        <textarea id="businessDescription" placeholder="About your business (shown to customers)" oninput="previewBusinessBranding()"></textarea>
-        <label class="small"><strong>Accent color</strong></label>
-        <div class="branding-color-row">
-          <input id="businessAccentColorPicker" type="color" value="#2563eb" oninput="syncBusinessAccentFromPicker()" />
-          <input id="businessAccentColor" placeholder="#2563eb" oninput="syncBusinessAccentFromText(); previewBusinessBranding()" />
-        </div>
-        <div class="business-profile-preview">
-          <strong>Booking page preview</strong>
-          <div id="brandingPreview" class="branding-preview small"></div>
-        </div>
-
+        <p class="small">Lowercase letters, numbers and hyphens. Used in your public booking link.</p>
+        <textarea id="businessDescription" placeholder="About your business (optional, shown on booking page)" oninput="previewBookingPageHero()"></textarea>
         <div class="business-profile-grid">
-          <input id="businessPhone" placeholder="Business phone optional" oninput="previewBusinessBranding()" />
-          <input id="businessAddress" placeholder="Business address optional" oninput="previewBusinessBranding()" />
+          <input id="businessPhone" placeholder="Business phone optional" />
+          <input id="businessAddress" placeholder="Business address optional" />
         </div>
-
         <div class="business-profile-preview">
           <strong>Public Link Preview</strong>
           <div id="businessPublicLinkPreview" class="small"></div>
         </div>
 
-        <h3 class="small" style="margin-top:18px;margin-bottom:4px;font-weight:800">Working hours</h3>
+      </div>
+          </section>
+
+          <section id="adminSectionCustomize" class="admin-section" data-admin-section="customize" hidden aria-label="Customize booking page">
+      <div class="card widget-card">
+        <h2 class="admin-section-title">Customize booking page</h2>
+        <div id="widgetCustomizeBooking" class="widget-content">
+          <p class="small">Edit how your public booking page looks. Customers only see the live page — not this editor.</p>
+
+          <section class="customize-section" aria-labelledby="customizeTextHeading">
+            <h3 id="customizeTextHeading">Page text</h3>
+            <label class="small"><strong>Business name</strong></label>
+            <input id="businessName" placeholder="Business name" oninput="previewBookingPageHero(); previewBusinessPublicLink()" />
+            <label class="small" style="margin-top:12px"><strong>Subtitle</strong></label>
+            <input id="customizePublicTagline" type="text" maxlength="120" placeholder="Book your appointment online" oninput="previewBookingPageHero()" />
+            <p class="small">Shown below your business name on the booking page.</p>
+          </section>
+
+          <section class="customize-section" aria-labelledby="customizeLogoHeading">
+            <h3 id="customizeLogoHeading">Profile logo</h3>
+            <p class="small">Appears on your booking page hero. JPG, PNG or WebP, max 3 MB.</p>
+            <div class="logo-upload-row">
+              <button type="button" class="secondary" id="businessLogoUploadBtn" onclick="triggerBusinessLogoUpload()">Upload logo</button>
+              <button type="button" class="secondary hidden" id="businessLogoRemoveBtn" onclick="removeBusinessLogo()">Remove logo</button>
+              <input type="file" id="businessLogoFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessLogoFileSelected(event)" />
+            </div>
+            <input type="hidden" id="businessLogoUrl" />
+            <div id="logoUploadStatus" class="hidden"></div>
+          </section>
+
+          <section class="customize-section" aria-labelledby="customizeCoverHeading">
+            <h3 id="customizeCoverHeading">Cover image <span style="font-weight:500;color:#64748b">(optional)</span></h3>
+            <p class="small">Recommended: 16:9 wide image. This appears as the background of your booking page.</p>
+            <p class="small">JPG, PNG or WebP, max 3 MB. If empty, a premium gradient is used.</p>
+            <div class="logo-upload-row">
+              <button type="button" class="secondary" id="businessCoverUploadBtn" onclick="triggerBusinessCoverUpload()">Upload cover</button>
+              <button type="button" class="secondary hidden" id="businessCoverRemoveBtn" onclick="removeBusinessCover()">Remove cover</button>
+              <input type="file" id="businessCoverFile" class="hidden" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" onchange="handleBusinessCoverFileSelected(event)" />
+            </div>
+            <input type="hidden" id="businessCoverUrl" />
+            <div id="coverUploadStatus" class="hidden"></div>
+          </section>
+
+          <section class="customize-section" aria-labelledby="customizeThemeHeading">
+            <h3 id="customizeThemeHeading">Theme &amp; appearance</h3>
+            <label class="small"><strong>Accent color</strong></label>
+            <div class="branding-color-row">
+              <input id="businessAccentColorPicker" type="color" value="#2563eb" oninput="syncBusinessAccentFromPicker()" />
+              <input id="businessAccentColor" placeholder="#2563eb" oninput="syncBusinessAccentFromText(); previewBookingPageHero()" />
+            </div>
+            <label class="small" style="margin-top:14px"><strong>Site theme</strong></label>
+            <p class="small" style="margin:4px 0 10px">Applies to your admin dashboard and public booking page after you save.</p>
+            <div id="adminCustomizeLayoutGrid" class="customize-layout-grid" role="radiogroup" aria-label="Site theme">
+              <button type="button" class="customize-layout-card customize-layout-card--selected" data-layout="minimal" role="radio" aria-checked="true">
+                <span class="customize-layout-card-title">Light / Soft</span>
+                <span class="customize-layout-card-desc">Bright admin and booking experience.</span>
+              </button>
+              <button type="button" class="customize-layout-card" data-layout="cards" role="radio" aria-checked="false">
+                <span class="customize-layout-card-title">Modern Cards</span>
+                <span class="customize-layout-card-desc">Layered cards on admin and public pages.</span>
+              </button>
+              <button type="button" class="customize-layout-card" data-layout="dark" role="radio" aria-checked="false">
+                <span class="customize-layout-card-title">Dark Premium</span>
+                <span class="customize-layout-card-desc">Dark admin dashboard and booking flow.</span>
+              </button>
+            </div>
+            <div class="theme-toggle-list" role="group" aria-label="Booking page visibility">
+              <label class="theme-toggle-row">
+                <input class="theme-toggle-input" type="checkbox" id="customizeShowLogo" checked />
+                <span class="theme-toggle-switch" aria-hidden="true"></span>
+                <span class="theme-toggle-copy">
+                  <strong>Show logo on booking page</strong>
+                  <span>Display your logo in the public hero when a logo URL is set.</span>
+                </span>
+              </label>
+              <label class="theme-toggle-row">
+                <input class="theme-toggle-input" type="checkbox" id="customizeShowStaff" checked />
+                <span class="theme-toggle-switch" aria-hidden="true"></span>
+                <span class="theme-toggle-copy">
+                  <strong>Show staff picker</strong>
+                  <span>Let customers choose a team member when staff exist.</span>
+                </span>
+              </label>
+              <label class="theme-toggle-row">
+                <input class="theme-toggle-input" type="checkbox" id="customizeShowPrices" checked />
+                <span class="theme-toggle-switch" aria-hidden="true"></span>
+                <span class="theme-toggle-copy">
+                  <strong>Show service prices</strong>
+                  <span>Display prices on service cards in the booking wizard.</span>
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <section class="customize-section" aria-labelledby="customizePreviewHeading">
+            <h3 id="customizePreviewHeading">Live preview</h3>
+            <p class="small">Hero preview updates as you edit. Full booking flow is on your public link.</p>
+            <div id="bookingPageHeroPreview" class="booking-page-hero-preview" aria-live="polite"></div>
+          </section>
+
+          <section class="customize-section" aria-labelledby="customizeShareHeading">
+            <h3 id="customizeShareHeading">Share your booking page</h3>
+            <div id="bookingQrLink" class="public-link-box small"></div>
+            <div class="booking-qr-actions" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0">
+              <button type="button" class="success" onclick="copyPublicBookingLink()">Copy link</button>
+              <button type="button" class="secondary" onclick="openPublicLink()">Open booking page</button>
+              <button type="button" class="secondary" onclick="downloadBookingQr()">Download QR</button>
+            </div>
+            <div class="booking-qr-canvas-wrap">
+              <div id="bookingQrHost" aria-label="Public booking QR code"></div>
+            </div>
+          </section>
+
+          <div class="admin-customize-save-bar">
+            <button type="button" class="success" id="saveCustomizeBookingPageBtn" onclick="saveCustomizeBookingPage()">Save changes</button>
+          </div>
+        </div>
+      </div>
+          </section>
+
+          <section id="adminSectionAvailability" class="admin-section" data-admin-section="availability" hidden aria-label="Availability">
+      <div class="card widget-card">
+        <h2 class="admin-section-title">Availability</h2>
+<div id="widgetSettings" class="widget-content">
+
+        <h3 class="small" style="margin-top:0;margin-bottom:4px;font-weight:800">Working hours</h3>
         <p class="small">Default opening hours for each working day (15-minute increments).</p>
         <div class="settings-time-row-labeled row">
           <div>
@@ -4633,15 +5286,30 @@
 
         <div class="row">
           <input id="bookingWindowWeeks" type="number" min="1" max="52" value="4" placeholder="Booking window weeks" />
-          <button onclick="saveBusinessSettings()">Save Settings</button>
+          <button type="button" class="success" onclick="saveBusinessSettings()">Save availability settings</button>
         </div>
       </div>
 
       <div class="card widget-card">
-        <div class="widget-header">
-<h2>Services</h2>
-<button type="button" onclick="toggleWidget('widgetServices')">Open / Close</button>
-</div>
+        <h3>Blocked / closed days</h3>
+<div id="widgetBlocked" class="widget-content">
+        <p class="small">Add days when your business is closed — holidays, time off, etc.</p>
+
+        <div class="row">
+          <input id="blockedDate" type="date" />
+          <input id="blockedReason" placeholder="Reason optional, e.g. Holiday" />
+        </div>
+
+        <button class="danger" onclick="addBlockedDay()">Add Closed Day</button>
+
+        <h3>Closed Days List</h3>
+        <div id="blockedDaysList"></div></div>
+      </div>
+          </section>
+
+          <section id="adminSectionServices" class="admin-section" data-admin-section="services" hidden aria-label="Services">
+      <div class="card widget-card">
+        <h2 class="admin-section-title">Services</h2>
 <div id="widgetServices" class="widget-content">
         <div class="three">
           <input id="serviceName" placeholder="Service name" />
@@ -4669,9 +5337,11 @@
           <p class="small">Ако стар service нема duration, системот ќе користи 30 min како fallback.</p>
         </div>
       </div>
+          </section>
 
+          <section id="adminSectionStaff" class="admin-section" data-admin-section="staff" hidden aria-label="Staff">
       <div class="card widget-card">
-        <h2>Staff / Employees</h2>
+        <h2 class="admin-section-title">Staff</h2>
         <p class="small">Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.</p>
         <div id="staffSetupNotice" class="small"></div>
 
@@ -4697,31 +5367,11 @@
         <button class="success" onclick="addStaffMember()">Add Staff</button>
         <div id="staffList"></div>
       </div>
+          </section>
 
+          <section id="adminSectionCalendar" class="admin-section" data-admin-section="calendar" hidden aria-label="Calendar">
       <div class="card widget-card">
-        <div class="widget-header">
-<h2>Blocked / Closed Days</h2>
-<button type="button" onclick="toggleWidget('widgetBlocked')">Open / Close</button>
-</div>
-<div id="widgetBlocked" class="widget-content">
-        <p class="small">Овде додаваш денови кога бизнисот не работи — празник, одмор, приватна причина итн.</p>
-
-        <div class="row">
-          <input id="blockedDate" type="date" />
-          <input id="blockedReason" placeholder="Reason optional, e.g. Holiday" />
-        </div>
-
-        <button class="danger" onclick="addBlockedDay()">Add Closed Day</button>
-
-        <h3>Closed Days List</h3>
-        <div id="blockedDaysList"></div></div>
-      </div>
-
-      <div class="card widget-card">
-        <div class="widget-header">
-<h2>Admin Calendar</h2>
-<button type="button" onclick="toggleWidget('widgetCalendar')">Open / Close</button>
-</div>
+        <h2 class="admin-section-title">Calendar</h2>
 <div id="widgetCalendar" class="widget-content">
         <div class="row">
           <button class="secondary" onclick="changeMonth(-1)">Previous Month</button>
@@ -4730,9 +5380,11 @@
         <h3 id="calendarTitle"></h3>
         <div id="calendar" class="calendar"></div></div>
       </div>
+          </section>
 
+          <section id="adminSectionManual" class="admin-section" data-admin-section="manual" hidden aria-label="Add booking">
       <div class="card widget-card">
-        <h2>Admin Add Booking</h2>
+        <h2 class="admin-section-title">Add booking</h2>
         <p class="small">За термин што клиент го договорил преку телефон, Instagram, Viber или директно со тебе.</p>
 
         <div class="row">
@@ -4766,7 +5418,9 @@
 
         <p class="small">Системот проверува working days, break/pause, closed days, booking window и дали терминот се судира со друг booking.</p>
       </div>
+          </section>
 
+          <section id="adminSectionBookings" class="admin-section" data-admin-section="bookings" hidden aria-label="Bookings">
       <div id="editBookingCard" class="card edit-box hidden">
         <h2>Edit Booking</h2>
         <input id="editBookingId" type="hidden" />
@@ -4807,11 +5461,8 @@
         </p>
       </div>
 
-      <div class="card">
-        <div class="widget-header">
-<h2>Bookings</h2>
-<button type="button" onclick="toggleWidget('widgetBookings')">Open / Close</button>
-</div>
+      <div class="card widget-card">
+        <h2 class="admin-section-title">Bookings</h2>
 <div id="widgetBookings" class="widget-content">
 
         <div class="filter-box">
@@ -4835,11 +5486,10 @@
 
         <div id="bookingsList"></div></div>
       </div>
+          </section>
 
-    </div>
-
-</div>
-
+        </div>
+      </div>
     </div>
 
     <div id="adminOnboardingView" class="wizard-fs hidden">
@@ -7887,7 +8537,11 @@
     const picker = document.getElementById("businessAccentColorPicker");
     const text = document.getElementById("businessAccentColor");
     if (picker && text) text.value = picker.value;
-    previewBusinessBranding();
+    applyBusinessVisualTheme({
+      layout: getAdminCustomizeSelectedLayout(),
+      accent: getBusinessAccentColorFromForm()
+    });
+    previewBookingPageHero();
   }
 
   function syncBusinessAccentFromText() {
@@ -7895,37 +8549,79 @@
     const picker = document.getElementById("businessAccentColorPicker");
     if (!text || !picker) return;
     picker.value = normalizeAccentColor(text.value);
+    applyBusinessVisualTheme({
+      layout: getAdminCustomizeSelectedLayout(),
+      accent: getBusinessAccentColorFromForm()
+    });
   }
+
+  const BUSINESS_THEME_LAYOUTS = ["minimal", "cards", "dark"];
 
   function normalizePublicLayout(value) {
     const v = String(value || "").trim().toLowerCase();
-    if (v === "cards" || v === "modern-cards" || v === "modern_cards") return "cards";
-    if (v === "dark" || v === "premium-dark" || v === "premium_dark") return "dark";
-    if (v === "minimal" || v === "clean-minimal" || v === "clean_minimal" || v === "default" || !v) {
+    if (v === "cards" || v === "modern-cards" || v === "modern_cards" || v === "modern cards") return "cards";
+    if (
+      v === "dark" ||
+      v === "premium-dark" ||
+      v === "premium_dark" ||
+      v === "dark premium" ||
+      v === "dark-premium"
+    ) {
+      return "dark";
+    }
+    if (
+      v === "minimal" ||
+      v === "clean-minimal" ||
+      v === "clean_minimal" ||
+      v === "light" ||
+      v === "soft" ||
+      v === "light-soft" ||
+      v === "light_soft" ||
+      v === "light / soft" ||
+      v === "default" ||
+      !v
+    ) {
       return "minimal";
     }
     return "minimal";
   }
 
-  function applyPublicLayoutTheme() {
-    const root = document.getElementById("publicBookingContent");
-    if (!root) return;
-    const layout = normalizePublicLayout(businessSettings?.public_layout);
-    root.classList.remove("public-layout-minimal", "public-layout-cards", "public-layout-dark");
-    root.classList.add("public-layout-" + layout);
+  function getBusinessThemeAccent(opts = {}) {
+    if (opts.accent != null) return normalizeAccentColor(opts.accent);
+    const adminOpen =
+      document.getElementById("adminView") &&
+      !document.getElementById("adminView").classList.contains("hidden");
+    if (adminOpen && document.getElementById("businessAccentColor")) {
+      return getBusinessAccentColorFromForm();
+    }
+    return normalizeAccentColor(businessSettings?.business_accent_color);
+  }
+
+  function applyBusinessVisualTheme(opts = {}) {
+    const layout = normalizePublicLayout(opts.layout ?? businessSettings?.public_layout ?? "minimal");
+    const accent = getBusinessThemeAccent(opts);
+
+    BUSINESS_THEME_LAYOUTS.forEach((themeId) => {
+      document.body.classList.toggle("app-theme-" + themeId, themeId === layout);
+    });
+
+    document.body.style.setProperty("--business-accent", accent);
+    document.documentElement.style.setProperty("--business-accent", accent);
+
+    const publicRoot = document.getElementById("publicBookingContent");
+    if (publicRoot) {
+      BUSINESS_THEME_LAYOUTS.forEach((themeId) => {
+        publicRoot.classList.toggle("public-layout-" + themeId, themeId === layout);
+      });
+      publicRoot.style.setProperty("--business-accent", accent);
+    }
+
+    const preview = document.getElementById("bookingPageHeroPreview");
+    if (preview) preview.style.setProperty("--business-accent", accent);
   }
 
   function applyPublicBusinessBranding() {
-    const root = document.getElementById("publicBookingContent");
-    if (!root) return;
-
-    const accent = normalizeAccentColor(businessSettings?.business_accent_color);
-    root.style.setProperty("--business-accent", accent);
-
-    const preview = document.getElementById("brandingPreview");
-    if (preview) preview.style.setProperty("--business-accent", accent);
-
-    applyPublicLayoutTheme();
+    applyBusinessVisualTheme();
   }
 
   function getOnboardingPublicBookingLink() {
@@ -8174,7 +8870,7 @@
     }
 
     updateLogoUploadUi();
-    previewBusinessBranding();
+    previewBookingPageHero();
     if (!document.getElementById("publicView").classList.contains("hidden")) {
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
@@ -8328,6 +9024,7 @@
     }
 
     updateCoverUploadUi();
+    previewBookingPageHero();
     if (!document.getElementById("publicView").classList.contains("hidden")) {
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
@@ -8438,42 +9135,199 @@
     }
   }
 
-  function previewBusinessBranding() {
-    const preview = document.getElementById("brandingPreview");
+  let adminCustomizeListenersBound = false;
+
+  function getAdminCustomizeSelectedLayout() {
+    const selected = document.querySelector("#adminCustomizeLayoutGrid .customize-layout-card.customize-layout-card--selected");
+    return normalizePublicLayout(selected?.dataset?.layout || businessSettings?.public_layout);
+  }
+
+  function setAdminCustomizeSelectedLayout(layoutValue) {
+    const layout = normalizePublicLayout(layoutValue);
+    document.querySelectorAll("#adminCustomizeLayoutGrid .customize-layout-card").forEach((btn) => {
+      const on = normalizePublicLayout(btn.dataset.layout) === layout;
+      btn.classList.toggle("customize-layout-card--selected", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    applyBusinessVisualTheme({
+      layout,
+      accent: getBusinessAccentColorFromForm()
+    });
+    previewBookingPageHero();
+  }
+
+  function bindAdminCustomizeListeners() {
+    if (adminCustomizeListenersBound) return;
+    adminCustomizeListenersBound = true;
+
+    document.getElementById("adminCustomizeLayoutGrid")?.addEventListener("click", (e) => {
+      const card = e.target.closest(".customize-layout-card");
+      if (!card || !document.getElementById("adminCustomizeLayoutGrid")?.contains(card)) return;
+      setAdminCustomizeSelectedLayout(card.dataset.layout);
+    });
+
+    ["customizeShowLogo", "customizeShowStaff", "customizeShowPrices"].forEach((id) => {
+      document.getElementById(id)?.addEventListener("change", () => previewBookingPageHero());
+    });
+  }
+
+  function getCustomizePublicTaglineValue() {
+    const raw = document.getElementById("customizePublicTagline")?.value.trim();
+    if (raw) return raw;
+    return (businessSettings?.public_tagline || "").trim() || "Book your appointment online";
+  }
+
+  function getPublicLayoutLabel(layout) {
+    const map = { minimal: "Light / Soft", cards: "Modern Cards", dark: "Dark Premium" };
+    return map[normalizePublicLayout(layout)] || "Light / Soft";
+  }
+
+  function previewBookingPageHero() {
+    const preview = document.getElementById("bookingPageHeroPreview");
     if (!preview) return;
 
     const name =
       document.getElementById("businessName")?.value.trim() ||
       businessSettings?.business_name ||
       "My Business";
-    const logo = getBusinessLogoUrl();
-    const description = document.getElementById("businessDescription")?.value.trim() || "";
-    const address = document.getElementById("businessAddress")?.value.trim() || "";
-    const phone = document.getElementById("businessPhone")?.value.trim() || "";
+    const tagline = getCustomizePublicTaglineValue();
+    const showLogo = document.getElementById("customizeShowLogo")?.checked !== false;
+    const logo = showLogo ? getBusinessLogoUrl() : "";
+    const cover = getBusinessCoverUrl();
     const accent = getBusinessAccentColorFromForm();
+    const layout = getAdminCustomizeSelectedLayout();
+    const initials = staffMemberInitials(name);
 
     preview.style.setProperty("--business-accent", accent);
 
-    const logoHtml = logo
-      ? `<img src="${escapeHtml(logo)}" alt="" onerror="this.style.display='none'" />`
+    const heroStyle = cover
+      ? `background-image:url(${JSON.stringify(cover)});`
       : "";
+    const heroClass = cover
+      ? "booking-page-hero-preview__hero booking-page-hero-preview__hero--cover"
+      : "booking-page-hero-preview__hero";
 
-    const metaParts = [];
-    if (address) metaParts.push(`<span><strong>Address:</strong> ${escapeHtml(address)}</span>`);
-    if (phone) metaParts.push(`<span><strong>Phone:</strong> ${escapeHtml(phone)}</span>`);
+    const avatarInner = logo
+      ? `<img src="${escapeHtml(logo)}" alt="" onerror="this.parentElement.textContent='${escapeHtml(initials)}'" />`
+      : escapeHtml(initials);
 
     preview.innerHTML = `
-      <div class="branding-preview-hero">
-        ${logoHtml}
-        <div>
-          <strong style="font-size:1.1rem;display:block;margin-bottom:4px;">${escapeHtml(name)}</strong>
-          <span style="color:#6b7280;">Book your appointment online</span>
-          ${description ? `<div style="margin-top:8px;color:#374151;">${escapeHtml(description)}</div>` : ""}
+      <div class="${heroClass}" style="${heroStyle}">
+        <div class="booking-page-hero-preview__overlay" aria-hidden="true"></div>
+        <div class="booking-page-hero-preview__inner">
+          <div class="booking-page-hero-preview__avatar">${avatarInner}</div>
+          <div class="booking-page-hero-preview__text">
+            <strong>${escapeHtml(name)}</strong>
+            <span>${escapeHtml(tagline)}</span>
+          </div>
         </div>
       </div>
-      ${metaParts.length ? `<div class="public-business-meta" style="margin-top:10px;">${metaParts.join("")}</div>` : ""}
+      <div class="booking-page-hero-preview__meta">
+        Layout: <strong>${escapeHtml(getPublicLayoutLabel(layout))}</strong>
+        · Accent <span style="display:inline-block;width:12px;height:12px;border-radius:999px;vertical-align:middle;background:${escapeHtml(accent)};border:1px solid #cbd5e1"></span>
+      </div>
     `;
     updateLogoUploadUi();
+    updateCoverUploadUi();
+  }
+
+  function previewBusinessBranding() {
+    previewBookingPageHero();
+  }
+
+  function fillCustomizeBookingPageForm() {
+    bindAdminCustomizeListeners();
+
+    if (document.getElementById("businessName")) {
+      document.getElementById("businessName").value = businessSettings?.business_name || "";
+    }
+    if (document.getElementById("customizePublicTagline")) {
+      document.getElementById("customizePublicTagline").value = businessSettings?.public_tagline || "";
+    }
+    if (document.getElementById("businessLogoUrl")) {
+      document.getElementById("businessLogoUrl").value = businessSettings?.business_logo_url || "";
+    }
+    if (document.getElementById("businessCoverUrl")) {
+      document.getElementById("businessCoverUrl").value = businessSettings?.business_cover_url || "";
+    }
+
+    const accent = normalizeAccentColor(businessSettings?.business_accent_color);
+    if (document.getElementById("businessAccentColor")) {
+      document.getElementById("businessAccentColor").value = accent;
+    }
+    if (document.getElementById("businessAccentColorPicker")) {
+      document.getElementById("businessAccentColorPicker").value = accent;
+    }
+
+    setAdminCustomizeSelectedLayout(businessSettings?.public_layout);
+
+    const showLogo = document.getElementById("customizeShowLogo");
+    const showStaff = document.getElementById("customizeShowStaff");
+    const showPrices = document.getElementById("customizeShowPrices");
+    if (showLogo) showLogo.checked = businessSettings?.public_show_logo !== false;
+    if (showStaff) showStaff.checked = businessSettings?.public_show_staff !== false;
+    if (showPrices) showPrices.checked = businessSettings?.public_show_prices !== false;
+
+    updateLogoUploadUi();
+    updateCoverUploadUi();
+    previewBusinessPublicLink();
+    applyBusinessVisualTheme();
+    previewBookingPageHero();
+  }
+
+  async function saveCustomizeBookingPage() {
+    if (!businessId || !isValidUuid(businessId)) {
+      showToast("Business not loaded.", "error");
+      return;
+    }
+
+    const businessNameValue = document.getElementById("businessName")?.value.trim() || "";
+    if (!businessNameValue) {
+      showToast("Business name is required.", "error");
+      return;
+    }
+
+    const updates = {
+      business_name: businessNameValue,
+      public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || null,
+      business_logo_url: getBusinessLogoUrl() || null,
+      business_cover_url: getBusinessCoverUrl() || null,
+      business_accent_color: getBusinessAccentColorFromForm(),
+      public_layout: getAdminCustomizeSelectedLayout(),
+      public_show_logo: document.getElementById("customizeShowLogo")?.checked !== false,
+      public_show_staff: document.getElementById("customizeShowStaff")?.checked !== false,
+      public_show_prices: document.getElementById("customizeShowPrices")?.checked !== false
+    };
+
+    const { error } = await sb.from("business_settings").update(updates).eq("business_id", businessId);
+
+    if (error) {
+      const hint = /public_tagline/i.test(error.message)
+        ? " Run supabase-public-tagline.sql in Supabase, then try again."
+        : "";
+      showToast("Could not save: " + error.message + hint, "error", 8000);
+      return;
+    }
+
+    if (businessSettings) {
+      Object.assign(businessSettings, updates);
+    }
+
+    applyBusinessVisualTheme();
+    renderPublicBusinessProfileInfo();
+    previewBookingPageHero();
+    previewBusinessPublicLink();
+
+    const publicView = document.getElementById("publicView");
+    const publicOpen = publicView && !publicView.classList.contains("hidden");
+    if (publicOpen) {
+      renderPublicServices();
+      renderPublicStaffOptions();
+      initPublicBookingWizardStep();
+    }
+
+    showToast("Theme and booking page settings saved.", "success");
+    await loadAdminData();
   }
 
   function setPublicBusinessLogo(url, businessName) {
@@ -8609,11 +9463,77 @@
     document.getElementById("homeBtn").classList.remove("hidden");
   }
 
+  const ADMIN_SECTION_PANEL_IDS = {
+    overview: "adminSectionOverview",
+    customize: "adminSectionCustomize",
+    services: "adminSectionServices",
+    staff: "adminSectionStaff",
+    availability: "adminSectionAvailability",
+    calendar: "adminSectionCalendar",
+    bookings: "adminSectionBookings",
+    manual: "adminSectionManual"
+  };
+
+  let adminDashboardNavBound = false;
+  let adminActiveSection = "overview";
+
+  function setAdminSection(sectionKey, opts = {}) {
+    const key = ADMIN_SECTION_PANEL_IDS[sectionKey] ? sectionKey : "overview";
+    adminActiveSection = key;
+
+    document.querySelectorAll(".admin-nav-btn").forEach((btn) => {
+      const on = btn.dataset.adminSection === key;
+      btn.classList.toggle("admin-nav-btn--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+
+    Object.entries(ADMIN_SECTION_PANEL_IDS).forEach(([id, panelId]) => {
+      const panel = document.getElementById(panelId);
+      if (!panel) return;
+      const active = id === key;
+      panel.classList.toggle("admin-section--active", active);
+      panel.classList.toggle("hidden", !active);
+    });
+
+    if (key === "calendar" && !opts.skipRender) {
+      renderAdminCalendar();
+    }
+    if (key === "bookings" && !opts.skipRender) {
+      renderBookings();
+    }
+    if (key === "services" && !opts.skipRender) {
+      renderServices();
+    }
+    if (key === "staff" && !opts.skipRender) {
+      renderStaffMembers();
+    }
+
+    const panel = document.getElementById(ADMIN_SECTION_PANEL_IDS[key]);
+    panel?.scrollIntoView({ behavior: opts.silent ? "auto" : "smooth", block: "start" });
+  }
+
+  function bindAdminDashboardNav() {
+    if (adminDashboardNavBound) return;
+    adminDashboardNavBound = true;
+
+    document.getElementById("adminNav")?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".admin-nav-btn");
+      if (!btn || !btn.dataset.adminSection) return;
+      setAdminSection(btn.dataset.adminSection);
+    });
+  }
+
+  function initAdminDashboard() {
+    bindAdminDashboardNav();
+    setAdminSection(adminActiveSection || "overview", { silent: true, skipRender: false });
+  }
+
   function showAdminView() {
     hideAllViews();
     document.getElementById("adminView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.remove("hidden");
     document.getElementById("homeBtn").classList.add("hidden");
+    initAdminDashboard();
   }
 
   function showPublicView(hasBusiness) {
@@ -11098,6 +12018,12 @@
     const titleEl = document.getElementById("publicBusinessName");
     if (titleEl) titleEl.innerText = name;
 
+    const taglineEl = document.getElementById("publicBusinessTagline");
+    if (taglineEl) {
+      taglineEl.textContent =
+        (businessSettings?.public_tagline || "").trim() || "Book your appointment online";
+    }
+
     const heroBg = document.getElementById("publicHeroBg");
     if (heroBg) {
       if (cover) {
@@ -11193,6 +12119,7 @@
         business_address: null,
         business_phone: null,
         business_description: null,
+        public_tagline: null,
         business_accent_color: null,
         work_start: "09:00",
         work_end: "17:00",
@@ -11250,6 +12177,9 @@
     }
 
     businessSettings = data;
+    if (businessSettings) {
+      applyBusinessVisualTheme();
+    }
 
     // After loading by slug, switch internal businessId to the real owner UUID for bookings/services.
     if (data?.business_id) {
@@ -11260,24 +12190,13 @@
   function fillBusinessSettingsForm() {
     if (!businessSettings) return;
 
-    document.getElementById("businessName").value = businessSettings.business_name || "";
+    fillCustomizeBookingPageForm();
+
     if (document.getElementById("businessSlug")) document.getElementById("businessSlug").value = businessSettings.business_slug || generateFallbackBusinessSlug();
-    if (document.getElementById("businessLogoUrl")) {
-      document.getElementById("businessLogoUrl").value = businessSettings.business_logo_url || "";
-    }
-    if (document.getElementById("businessCoverUrl")) {
-      document.getElementById("businessCoverUrl").value = businessSettings.business_cover_url || "";
-    }
-    updateLogoUploadUi();
-    updateCoverUploadUi();
     if (document.getElementById("businessPhone")) document.getElementById("businessPhone").value = businessSettings.business_phone || "";
     if (document.getElementById("businessAddress")) document.getElementById("businessAddress").value = businessSettings.business_address || "";
     if (document.getElementById("businessDescription")) document.getElementById("businessDescription").value = businessSettings.business_description || "";
-    const accent = normalizeAccentColor(businessSettings.business_accent_color);
-    if (document.getElementById("businessAccentColor")) document.getElementById("businessAccentColor").value = accent;
-    if (document.getElementById("businessAccentColorPicker")) document.getElementById("businessAccentColorPicker").value = accent;
     previewBusinessPublicLink();
-    previewBusinessBranding();
     const wS = document.getElementById("workStart");
     const wE = document.getElementById("workEnd");
     if (wS) wS.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
@@ -11335,14 +12254,19 @@
     }
 
     const updates = {
-      business_name: businessNameValue,
+      business_name: document.getElementById("businessName")?.value.trim() || businessNameValue,
       business_slug: slugValue,
+      public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || null,
       business_logo_url: getBusinessLogoUrl() || null,
       business_cover_url: getBusinessCoverUrl() || null,
       business_address: document.getElementById("businessAddress")?.value.trim() || null,
       business_phone: document.getElementById("businessPhone")?.value.trim() || null,
       business_description: document.getElementById("businessDescription")?.value.trim() || null,
       business_accent_color: getBusinessAccentColorFromForm(),
+      public_layout: getAdminCustomizeSelectedLayout(),
+      public_show_logo: document.getElementById("customizeShowLogo")?.checked !== false,
+      public_show_staff: document.getElementById("customizeShowStaff")?.checked !== false,
+      public_show_prices: document.getElementById("customizeShowPrices")?.checked !== false,
       work_start: snapTimeStringToQuarterHour(String(document.getElementById("workStart").value || "").trim()),
       work_end: snapTimeStringToQuarterHour(String(document.getElementById("workEnd").value || "").trim()),
       working_days: workingDays,
