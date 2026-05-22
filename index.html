@@ -5451,6 +5451,153 @@
       display: none;
     }
 
+    #publicBookingContent .public-mobile-schedule.hidden {
+      display: none;
+    }
+
+    #publicBookingContent .public-mobile-schedule:not(.hidden) {
+      margin-top: 4px;
+    }
+
+    #publicBookingContent .public-mobile-schedule:not(.hidden) .public-mobile-day-status {
+      margin-top: 16px;
+    }
+
+    #publicBookingContent .public-mobile-week-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    #publicBookingContent .public-mobile-week-strip {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    #publicBookingContent .public-mobile-day-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 64px;
+      padding: 8px 4px;
+      margin: 0;
+      border: 1px solid var(--public-border, #e2e8f0);
+      border-radius: 12px;
+      background: var(--public-surface-2, #f8fafc);
+      color: var(--public-text, #0f172a);
+      font: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #publicBookingContent .public-mobile-day-pill__dow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--public-muted, #64748b);
+    }
+
+    #publicBookingContent .public-mobile-day-pill__num {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    #publicBookingContent .public-mobile-day-pill__meta {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--public-muted, #64748b);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    #publicBookingContent .public-mobile-day-pill--selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 14%, #fff);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 25%, transparent);
+    }
+
+    #publicBookingContent .public-mobile-day-pill--today:not(.public-mobile-day-pill--selected) {
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 40%, var(--public-border, #e2e8f0));
+    }
+
+    #publicBookingContent .public-mobile-day-pill--closed,
+    #publicBookingContent .public-mobile-day-pill--off,
+    #publicBookingContent .public-mobile-day-pill--past,
+    #publicBookingContent .public-mobile-day-pill--unavailable {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    #publicBookingContent .public-mobile-day-pill--busy .public-mobile-day-pill__meta {
+      color: #b45309;
+    }
+
+    #publicBookingContent .public-mobile-day-status {
+      margin: 0 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--public-text, #0f172a);
+    }
+
+    #publicBookingContent .public-mobile-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 420px) {
+      #publicBookingContent .public-mobile-slots-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #publicBookingContent .public-mobile-slot-btn {
+      width: 100%;
+      min-height: 52px;
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--public-border, #e2e8f0);
+      border-radius: 12px;
+      background: var(--public-surface, #fff);
+      color: var(--public-text, #0f172a);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #publicBookingContent .public-mobile-slot-btn:hover,
+    #publicBookingContent .public-mobile-slot-btn:focus-visible {
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 55%, transparent);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 8%, #fff);
+    }
+
+    #publicBookingContent .public-mobile-slot-btn--selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 16%, #fff);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 28%, transparent);
+    }
+
+    #publicBookingContent .public-mobile-slots-hint {
+      margin: 12px 0 0;
+      font-size: 13px;
+      color: var(--public-muted, #64748b);
+      text-align: center;
+    }
+
+    #publicBookingContent .public-mobile-slots-hint.hidden {
+      display: none;
+    }
+
     #publicBookingContent .public-schedule-week {
       display: flex;
       flex-direction: column;
@@ -5479,8 +5626,18 @@
     }
 
     #publicBookingContent .public-schedule-week-header .public-schedule-gutter {
-      background: var(--public-surface-2, #f8fafc);
+      position: sticky;
+      left: 0;
+      z-index: 10;
+      flex-shrink: 0;
+      min-width: 64px;
+      max-width: 64px;
       min-height: 52px;
+      background: color-mix(in srgb, var(--public-surface-2, #f8fafc) 96%, #fff);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-right: 1px solid var(--public-border, #e2e8f0);
+      box-shadow: 4px 0 14px color-mix(in srgb, #0f172a 7%, transparent);
     }
 
     #publicBookingContent .public-schedule-day-head {
@@ -5529,8 +5686,19 @@
     }
 
     #publicBookingContent .public-schedule-time-labels {
-      background: var(--public-surface-2, #f8fafc);
+      position: sticky;
+      left: 0;
+      z-index: 7;
+      align-self: start;
+      width: 64px;
+      min-width: 64px;
+      max-width: 64px;
+      flex-shrink: 0;
+      background: color-mix(in srgb, var(--public-surface-2, #f8fafc) 96%, #fff);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-right: 1px solid var(--public-border, #e2e8f0);
+      box-shadow: 4px 0 14px color-mix(in srgb, #0f172a 7%, transparent);
       padding-top: 2px;
     }
 
@@ -5550,6 +5718,7 @@
 
     #publicBookingContent .public-schedule-cols-area {
       position: relative;
+      z-index: 1;
       display: grid;
       grid-column: 2 / -1;
       grid-template-columns: repeat(7, minmax(84px, 1fr));
@@ -5868,27 +6037,34 @@
       display: none;
     }
 
-    @media (max-width: 767px) {
-      #publicBookingContent .public-schedule-week {
-        max-height: min(58vh, 520px);
+    /* Mobile customer booking: calendar + time buttons only (no week timeline). */
+    #publicBookingContent.public-booking--mobile-schedule .public-timeline-shell,
+    #publicBookingContent.public-booking--mobile-schedule #publicTimelineMount,
+    #publicBookingContent.public-booking--mobile-schedule .public-schedule-week {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    #publicBookingContent.public-booking--mobile-schedule .public-mobile-slot-picker {
+      display: block !important;
+    }
+
+    /* Final override: force mobile picker, hide week timeline (viewport <= 768px). */
+    @media (max-width: 768px) {
+      #publicBookingContent .public-timeline-shell,
+      #publicBookingContent .public-schedule-week,
+      #publicBookingContent #publicTimelineMount {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        height: 0 !important;
+        overflow: hidden !important;
       }
 
-      #publicBookingContent .public-schedule-week-header,
-      #publicBookingContent .public-schedule-week-body {
-        min-width: 700px;
-      }
-
-      #publicBookingContent .public-week-nav {
-        min-height: 44px;
-        padding: 10px 12px;
-      }
-
-      #publicBookingContent .public-schedule-day-head {
-        padding: 10px 4px;
-      }
-
-      #publicBookingContent .public-schedule-slot-preview__time {
-        font-size: 9px;
+      #publicBookingContent .public-mobile-slot-picker {
+        display: block !important;
+        visibility: visible !important;
       }
     }
 
@@ -7047,9 +7223,27 @@
     }
 
     .public-calendar-grid .calendar-day.closed,
-    .public-calendar-grid .calendar-day.off-day {
+    .public-calendar-grid .calendar-day.off-day,
+    .public-calendar-grid .calendar-day.past,
+    .public-calendar-grid .calendar-day.outside-window {
       opacity: 0.45;
       cursor: not-allowed;
+      background: color-mix(in srgb, var(--public-muted, #64748b) 10%, var(--public-surface-2, #f8fafc));
+    }
+
+    .public-calendar-grid .calendar-day.past strong,
+    .public-calendar-grid .calendar-day.outside-window strong,
+    .public-calendar-grid .calendar-day.closed strong,
+    .public-calendar-grid .calendar-day.off-day strong {
+      color: var(--public-muted, #64748b);
+    }
+
+    .public-calendar-grid .calendar-day:not(.empty):not(.past):not(.closed):not(.off-day):not(.outside-window) strong {
+      color: var(--public-text, #0f172a);
+    }
+
+    .public-calendar-grid .calendar-day.calendar-day--has-open:not(.selected) {
+      border-color: color-mix(in srgb, #0d9488 35%, var(--public-border));
     }
 
     .public-calendar-grid .calendar-day.empty {
@@ -7065,6 +7259,22 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       line-height: 1.1;
+    }
+
+    .public-calendar-grid .cal-badge--open {
+      color: #0d9488;
+    }
+
+    .public-calendar-grid .cal-badge--busy {
+      color: #b45309;
+    }
+
+    .public-calendar-grid .cal-badge--muted {
+      color: var(--public-muted, #64748b);
+    }
+
+    .public-calendar-grid .calendar-day.calendar-day--busy:not(.selected) {
+      border-color: color-mix(in srgb, #b45309 35%, var(--public-border));
     }
 
     @media (min-width: 768px) {
@@ -10819,6 +11029,11 @@
                           <div id="publicTimelineMount" class="public-timeline-mount" aria-label="Week schedule timeline"></div>
                           <p id="publicTimelineHint" class="public-timeline-hint hidden">Choose a service to see the weekly schedule.</p>
                         </div>
+                        <div id="publicMobileScheduleShell" class="public-mobile-schedule public-mobile-slot-picker hidden" hidden>
+                          <p id="publicMobileDayStatus" class="public-mobile-day-status" aria-live="polite"></p>
+                          <div id="publicMobileSlotsMount" class="public-mobile-slots-grid" role="group" aria-label="Available times"></div>
+                          <p id="publicMobileSlotsHint" class="public-mobile-slots-hint hidden"></p>
+                        </div>
                         <div id="slotsContainer" class="public-time-slots public-time-slots--legacy hidden" role="group" aria-label="Available times (fallback)"></div>
                       </div>
                     </section>
@@ -11683,6 +11898,14 @@
   let customerMyBookingsViewOpen = false;
   let publicScheduleHoverRaf = null;
   let publicScheduleHoverState = null;
+  let publicTouchPendingDate = null;
+  let publicTouchPendingSlot = null;
+  let publicTouchPendingAvailable = false;
+  let publicTouchIsDragging = false;
+  let publicTouchActivePointerId = null;
+  let publicTouchPreviewCol = null;
+  let publicTouchTimelineSuppressClickUntil = 0;
+  let publicTouchDownHandledAt = 0;
   let selectedDate = null;
   let selectedSlot = null;
   let selectedService = null;
@@ -18800,7 +19023,13 @@
     updatePublicTimesPanelMeta();
     updatePublicBookingSummaryVisibility();
     if (opts.refreshCalendar !== false) renderPublicCalendar();
+    ensurePublicScheduleModeListener();
     if (publicTimelineRenderFailed) {
+      if (window.innerWidth <= 768) {
+        setPublicScheduleShellVisibility(true);
+        renderPublicMobileDateSlotPicker();
+        return;
+      }
       if (selectedDate && selectedService) {
         renderSlots(selectedDate, selectedService.id);
       } else if (selectedDate && !selectedService) {
@@ -18827,6 +19056,7 @@
 
     if (serviceChanged || opts.forceRefresh) {
       selectedSlot = null;
+      clearPublicTouchTimelinePending();
     }
 
     refreshPublicAvailability({
@@ -21861,8 +22091,173 @@
     const keepLocked = opts.keepLocked !== false;
     colsArea.querySelectorAll(".public-schedule-slot-preview").forEach((el) => {
       if (keepLocked && el.classList.contains("public-schedule-slot-preview--locked")) return;
-      if (el.classList.contains("public-schedule-slot-preview--hover")) el.remove();
+      if (
+        el.classList.contains("public-schedule-slot-preview--hover") ||
+        el.classList.contains("public-schedule-slot-preview--touch-pending")
+      ) {
+        el.remove();
+      }
     });
+  }
+
+  /** Customer public booking: calendar + time buttons when viewport <= 768px. */
+  function isPublicMobileBookingUi() {
+    return window.innerWidth <= 768;
+  }
+
+  function isPublicTimelineCoarsePointer() {
+    return isPublicMobileBookingUi();
+  }
+
+  let publicScheduleModeListenerAttached = false;
+
+  function ensurePublicScheduleModeListener() {
+    if (publicScheduleModeListenerAttached) return;
+    publicScheduleModeListenerAttached = true;
+    window.addEventListener("resize", () => {
+      const scheduleStep = document.getElementById("publicBookingStepSchedule");
+      if (!scheduleStep || scheduleStep.hidden) return;
+      setPublicScheduleShellVisibility(isPublicMobileBookingUi());
+      renderPublicTimelineScheduler();
+    });
+  }
+
+  function clearPublicWeekTimelineMount() {
+    const mount = document.getElementById("publicTimelineMount");
+    if (mount) mount.innerHTML = "";
+    stopPublicScheduleNowTimer();
+    publicScheduleActiveGrid = null;
+    clearPublicTouchTimelinePending();
+  }
+
+  function armPublicTimelineClickSuppression() {
+    publicTouchTimelineSuppressClickUntil = Date.now() + 700;
+  }
+
+  function shouldSuppressPublicTimelineClick() {
+    if (Date.now() < publicTouchTimelineSuppressClickUntil) return true;
+    if (isPublicTimelineCoarsePointer()) return true;
+    return false;
+  }
+
+  function formatPublicTouchSelectedLabel(dateStr, timeStr) {
+    const d = new Date(dateStr + "T12:00:00");
+    const day = d.toLocaleDateString(undefined, {
+      weekday: "short",
+      day: "numeric",
+      month: "short"
+    });
+    return "Selected: " + day + " at " + timeStr;
+  }
+
+  function clearPublicTouchTimelinePending() {
+    publicTouchPendingDate = null;
+    publicTouchPendingSlot = null;
+    publicTouchPendingAvailable = false;
+    publicTouchIsDragging = false;
+    publicTouchActivePointerId = null;
+    publicTouchPreviewCol = null;
+
+    const bar = document.getElementById("publicTimelineMobileConfirm");
+    if (bar) {
+      bar.classList.add("hidden");
+      bar.setAttribute("hidden", "");
+    }
+    const btn = document.getElementById("publicTimelineMobileConfirmBtn");
+    if (btn) btn.disabled = true;
+
+    const mount = document.getElementById("publicTimelineMount");
+    const colsArea = mount?.querySelector(".public-schedule-cols-area");
+    if (colsArea) clearPublicScheduleSlotPreviews(colsArea, { keepLocked: true });
+  }
+
+  function updatePublicTimelineMobileConfirmBar() {
+    const bar = document.getElementById("publicTimelineMobileConfirm");
+    const label = document.getElementById("publicTimelineMobileSelectedLabel");
+    const btn = document.getElementById("publicTimelineMobileConfirmBtn");
+    if (!bar) return;
+
+    if (!isPublicTimelineCoarsePointer() || !publicTouchPendingDate || !publicTouchPendingSlot) {
+      bar.classList.add("hidden");
+      bar.setAttribute("hidden", "");
+      if (btn) btn.disabled = true;
+      return;
+    }
+
+    bar.classList.remove("hidden");
+    bar.removeAttribute("hidden");
+    if (label) {
+      label.textContent = formatPublicTouchSelectedLabel(
+        publicTouchPendingDate,
+        publicTouchPendingSlot
+      );
+    }
+    if (btn) btn.disabled = !publicTouchPendingAvailable;
+  }
+
+  function getPublicTimelineSlotFromPointerEvent(e, colsArea, grid) {
+    if (!colsArea || !grid) return null;
+    const col = getPublicScheduleColumnFromEvent(e, colsArea);
+    if (!col || !col.classList.contains("public-schedule-col--bookable")) return null;
+
+    const rect = colsArea.getBoundingClientRect();
+    const y = e.clientY - rect.top;
+    if (y < 0 || y > rect.height) return null;
+
+    const mins = snapPublicScheduleMinutesFromY(y, grid);
+    const snapped = snapMinutesToQuarterHour(mins);
+    const timeStr = minutesToTime(snapped);
+    const dateStr = col.dataset.date || "";
+    const staffId = getSelectedPublicStaffId();
+    const available =
+      !!selectedService && isPublicScheduleSlotAvailable(dateStr, snapped, staffId, selectedService);
+
+    return { col, snapped, timeStr, dateStr, available, top: publicScheduleTopFromMinutes(snapped, grid) };
+  }
+
+  function applyPublicTouchTimelineSlot(slotInfo, grid) {
+    if (!slotInfo || !selectedService) return;
+
+    const { col, snapped, timeStr, dateStr, available } = slotInfo;
+    publicTouchPendingDate = dateStr;
+    publicTouchPendingSlot = timeStr;
+    publicTouchPendingAvailable = available;
+    publicTouchPreviewCol = col;
+
+    hideBookingSuccessCard();
+    selectedDate = dateStr;
+
+    const colsArea = col.parentElement;
+    clearPublicScheduleSlotPreviews(colsArea, { keepLocked: false });
+    const preview = createPublicScheduleSlotPreviewElement(col, grid, snapped, {
+      mode: "touch-pending"
+    });
+    if (preview) col.appendChild(preview);
+
+    clearPublicScheduleColumnHover(colsArea);
+    col.classList.add("public-schedule-col--hover-target");
+    if (!available) col.classList.add("public-schedule-col--reject");
+
+    highlightPublicWeekSelection(document.getElementById("publicTimelineMount"));
+    updatePublicTimelineMobileConfirmBar();
+    console.log("[mobile-timeline] touch pending selected", dateStr, timeStr, available);
+  }
+
+  async function confirmPublicTimelineTouchSlot() {
+    if (!publicTouchPendingAvailable || !publicTouchPendingSlot || !publicTouchPendingDate) {
+      showToast("This time is not available.", "error");
+      return;
+    }
+    if (!selectedService) {
+      showToast("Choose a service first.", "error");
+      return;
+    }
+
+    hideBookingSuccessCard();
+    selectedDate = publicTouchPendingDate;
+    highlightPublicWeekSelection(document.getElementById("publicTimelineMount"));
+    console.log("[mobile-timeline] confirm time", publicTouchPendingDate, publicTouchPendingSlot);
+    await chooseSlot(publicTouchPendingSlot, { fromTimeline: true });
   }
 
   function clearPublicScheduleColumnHover(colsArea) {
@@ -21899,6 +22294,7 @@
         ? "public-schedule-slot-preview--available"
         : "public-schedule-slot-preview--unavailable");
     if (mode === "hover") preview.classList.add("public-schedule-slot-preview--hover");
+    if (mode === "touch-pending") preview.classList.add("public-schedule-slot-preview--touch-pending");
     if (isLocked) {
       preview.classList.add("public-schedule-slot-preview--locked");
       preview.setAttribute("aria-label", "Selected appointment time");
@@ -22083,10 +22479,134 @@
     return buildPublicTimelineDayColumn(dateStr, grid, gridHeight, dayBookings);
   }
 
+  function handlePublicTimelineTouchStart(e, colsArea, grid) {
+    if (e.pointerType === "mouse") return;
+    if (typeof e.button === "number" && e.button !== 0) return;
+    if (e.target.closest(".public-schedule-block--booked")) return;
+    if (!selectedService) {
+      showToast("Choose a service first.", "error");
+      return;
+    }
+
+    const now = Date.now();
+    if (now - publicTouchDownHandledAt < 80) return;
+    publicTouchDownHandledAt = now;
+
+    e.preventDefault();
+    e.stopPropagation();
+    armPublicTimelineClickSuppression();
+
+    const slotInfo = getPublicTimelineSlotFromPointerEvent(e, colsArea, grid);
+    if (!slotInfo) return;
+
+    publicTouchIsDragging = true;
+    publicTouchActivePointerId = e.pointerId != null ? e.pointerId : 0;
+    try {
+      if (typeof colsArea.setPointerCapture === "function" && e.pointerId != null) {
+        colsArea.setPointerCapture(e.pointerId);
+      }
+    } catch (err) {
+      /* ignore */
+    }
+    applyPublicTouchTimelineSlot(slotInfo, grid);
+  }
+
+  function bindPublicTimelineTouchPointerInteraction(colsArea, grid) {
+    colsArea.classList.add("public-schedule-cols-area--touch");
+
+    const endTouchPointer = (e) => {
+      if (e.pointerType === "mouse") return;
+      if (
+        publicTouchActivePointerId !== null &&
+        e.pointerId != null &&
+        e.pointerId !== publicTouchActivePointerId
+      ) {
+        return;
+      }
+      publicTouchIsDragging = false;
+      publicTouchActivePointerId = null;
+      armPublicTimelineClickSuppression();
+      try {
+        if (typeof colsArea.releasePointerCapture === "function" && e.pointerId != null) {
+          colsArea.releasePointerCapture(e.pointerId);
+        }
+      } catch (err) {
+        /* ignore */
+      }
+    };
+
+    const endTouchDrag = () => {
+      if (!publicTouchIsDragging) return;
+      publicTouchIsDragging = false;
+      publicTouchActivePointerId = null;
+      armPublicTimelineClickSuppression();
+    };
+
+    colsArea.addEventListener("pointerdown", (e) => handlePublicTimelineTouchStart(e, colsArea, grid));
+    colsArea.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!e.touches || !e.touches.length) return;
+        const touch = e.touches[0];
+        handlePublicTimelineTouchStart(
+          {
+            pointerType: "touch",
+            button: 0,
+            pointerId: touch.identifier,
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+            target: e.target,
+            preventDefault: () => e.preventDefault(),
+            stopPropagation: () => e.stopPropagation()
+          },
+          colsArea,
+          grid
+        );
+      },
+      { passive: false }
+    );
+
+    colsArea.addEventListener(
+      "pointermove",
+      (e) => {
+        if (e.pointerType === "mouse") return;
+        if (!publicTouchIsDragging || publicTouchActivePointerId !== e.pointerId) return;
+        e.preventDefault();
+        const slotInfo = getPublicTimelineSlotFromPointerEvent(e, colsArea, grid);
+        if (!slotInfo) return;
+        applyPublicTouchTimelineSlot(slotInfo, grid);
+      },
+      { passive: false }
+    );
+
+    colsArea.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!publicTouchIsDragging || !e.touches || !e.touches.length) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const slotInfo = getPublicTimelineSlotFromPointerEvent(
+          { clientX: touch.clientX, clientY: touch.clientY, target: e.target },
+          colsArea,
+          grid
+        );
+        if (!slotInfo) return;
+        applyPublicTouchTimelineSlot(slotInfo, grid);
+      },
+      { passive: false }
+    );
+
+    colsArea.addEventListener("pointerup", endTouchPointer);
+    colsArea.addEventListener("pointercancel", endTouchPointer);
+    colsArea.addEventListener("touchend", endTouchDrag);
+    colsArea.addEventListener("touchcancel", endTouchDrag);
+  }
+
   function bindPublicScheduleColsAreaInteraction(colsArea, grid, hoverRefs) {
     const line = hoverRefs.line;
     const shine = hoverRefs.shine;
     const label = hoverRefs.label;
+    const touchMode = isPublicTimelineCoarsePointer();
     colsArea.classList.add("public-schedule-cols-area--interactive");
 
     const applyHover = () => {
@@ -22150,40 +22670,59 @@
       }
     };
 
-    colsArea.addEventListener("mousemove", updateHover);
-    colsArea.addEventListener("mouseleave", () => {
-      cancelPublicScheduleHoverRaf();
-      hidePublicScheduleHoverUi(line, shine, label, colsArea);
-    });
+    if (!touchMode) {
+      colsArea.addEventListener("mousemove", updateHover);
+      colsArea.addEventListener("mouseleave", () => {
+        cancelPublicScheduleHoverRaf();
+        hidePublicScheduleHoverUi(line, shine, label, colsArea);
+      });
+    }
 
-    colsArea.addEventListener("click", (e) => {
-      if (e.target.closest(".public-schedule-block--booked")) return;
+    if (touchMode) {
+      bindPublicTimelineTouchPointerInteraction(colsArea, grid);
+    }
 
-      const col = getPublicScheduleColumnFromEvent(e, colsArea);
-      if (!col || !col.classList.contains("public-schedule-col--bookable")) return;
-      if (!selectedService) {
-        showToast("Choose a service first.", "error");
-        return;
-      }
+    colsArea.addEventListener(
+      "click",
+      (e) => {
+        if (shouldSuppressPublicTimelineClick()) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (Date.now() < publicTouchTimelineSuppressClickUntil) {
+            console.log("[mobile-timeline] suppress synthetic click");
+          }
+          return;
+        }
 
-      const rect = colsArea.getBoundingClientRect();
-      const y = e.clientY - rect.top;
-      const mins = snapPublicScheduleMinutesFromY(y, grid);
-      const snapped = snapMinutesToQuarterHour(mins);
-      const timeStr = minutesToTime(snapped);
-      const staffId = getSelectedPublicStaffId();
+        if (e.target.closest(".public-schedule-block--booked")) return;
 
-      const slotDate = col.dataset.date || "";
-      if (!isPublicScheduleSlotAvailable(slotDate, snapped, staffId, selectedService)) {
-        showToast("This time is not available.", "error");
-        return;
-      }
+        const col = getPublicScheduleColumnFromEvent(e, colsArea);
+        if (!col || !col.classList.contains("public-schedule-col--bookable")) return;
+        if (!selectedService) {
+          showToast("Choose a service first.", "error");
+          return;
+        }
 
-      hideBookingSuccessCard();
-      selectedDate = slotDate;
-      highlightPublicWeekSelection(document.getElementById("publicTimelineMount"));
-      chooseSlot(timeStr, { fromTimeline: true });
-    });
+        const rect = colsArea.getBoundingClientRect();
+        const y = e.clientY - rect.top;
+        const mins = snapPublicScheduleMinutesFromY(y, grid);
+        const snapped = snapMinutesToQuarterHour(mins);
+        const timeStr = minutesToTime(snapped);
+        const staffId = getSelectedPublicStaffId();
+
+        const slotDate = col.dataset.date || "";
+        if (!isPublicScheduleSlotAvailable(slotDate, snapped, staffId, selectedService)) {
+          showToast("This time is not available.", "error");
+          return;
+        }
+
+        hideBookingSuccessCard();
+        selectedDate = slotDate;
+        highlightPublicWeekSelection(document.getElementById("publicTimelineMount"));
+        chooseSlot(timeStr, { fromTimeline: true });
+      },
+      true
+    );
   }
 
   function buildPublicScheduleTimeLabels(grid, gridHeight) {
@@ -22241,6 +22780,7 @@
   }
 
   function syncPublicTimelineSelectedPreview() {
+    if (isPublicTimelineCoarsePointer()) return;
     const mount = document.getElementById("publicTimelineMount");
     if (!mount || !selectedDate || !selectedSlot || !selectedService) return;
 
@@ -22257,6 +22797,11 @@
   }
 
   function renderPublicWeekTimeline() {
+    if (window.innerWidth <= 768) {
+      clearPublicWeekTimelineMount();
+      return renderPublicMobileDateSlotPicker();
+    }
+
     const mount = document.getElementById("publicTimelineMount");
     const legacy = document.getElementById("slotsContainer");
     const hint = document.getElementById("publicTimelineHint");
@@ -22269,6 +22814,7 @@
 
     try {
       mount.innerHTML = "";
+      clearPublicTouchTimelinePending();
       stopPublicScheduleNowTimer();
       publicTimelineRenderFailed = false;
       legacy?.classList.add("hidden");
@@ -22353,7 +22899,252 @@
     }
   }
 
+  function setPublicScheduleShellVisibility(useMobilePicker) {
+    const timelineShell = document.getElementById("publicTimelineShell");
+    const mobileShell = document.getElementById("publicMobileScheduleShell");
+    const hint = document.getElementById("publicTimesHint");
+    const bookingContent = document.getElementById("publicBookingContent");
+
+    bookingContent?.classList.toggle("public-booking--mobile-schedule", useMobilePicker);
+
+    if (timelineShell) {
+      timelineShell.classList.toggle("hidden", useMobilePicker);
+      timelineShell.classList.toggle("public-timeline-shell--desktop-only", !useMobilePicker);
+      if (useMobilePicker) timelineShell.setAttribute("hidden", "");
+      else timelineShell.removeAttribute("hidden");
+    }
+    if (mobileShell) {
+      mobileShell.classList.toggle("hidden", !useMobilePicker);
+      if (useMobilePicker) mobileShell.removeAttribute("hidden");
+      else mobileShell.setAttribute("hidden", "");
+    }
+    if (hint) {
+      hint.textContent = useMobilePicker
+        ? "Choose a date in the calendar, then tap an available time."
+        : "Pick a day and time on the week view (07:00–21:00). Only open slots match your salon hours.";
+    }
+    if (useMobilePicker) {
+      clearPublicWeekTimelineMount();
+    }
+  }
+
+  function getPublicMobileDayMeta(dateStr) {
+    if (isAdminScheduleDayClosed(dateStr)) {
+      return { state: "closed", availableCount: 0, hasBookings: false, label: "Closed" };
+    }
+    if (!isAdminScheduleDayWorking(dateStr)) {
+      return { state: "off", availableCount: 0, hasBookings: false, label: "Not a working day" };
+    }
+    if (isPastDate(dateStr)) {
+      return { state: "past", availableCount: 0, hasBookings: false, label: "Past date" };
+    }
+    if (isOutsideBookingWindow(dateStr)) {
+      return {
+        state: "unavailable",
+        availableCount: 0,
+        hasBookings: false,
+        label: "Outside booking window"
+      };
+    }
+
+    const dayBookings = getPublicScheduleFilteredBookings().filter((b) => b.date === dateStr);
+    const hasBookings = dayBookings.length > 0;
+    const availableTimes = enumeratePublicAvailableSlotTimes(dateStr, selectedService);
+    const availableCount = availableTimes.length;
+
+    if (availableCount === 0) {
+      return {
+        state: hasBookings ? "busy" : "none",
+        availableCount: 0,
+        hasBookings,
+        label: hasBookings ? "Fully booked on this day" : "No open times"
+      };
+    }
+
+    return {
+      state: hasBookings ? "limited" : "open",
+      availableCount,
+      hasBookings,
+      label:
+        availableCount +
+        " available time" +
+        (availableCount === 1 ? "" : "s") +
+        (hasBookings ? " · some periods busy" : "")
+    };
+  }
+
+  function isPublicMobileDayBlockedForSlots(dateStr) {
+    if (!dateStr) return true;
+    if (isAdminScheduleDayClosed(dateStr)) return true;
+    if (!isAdminScheduleDayWorking(dateStr)) return true;
+    if (isPastDate(dateStr)) return true;
+    if (isOutsideBookingWindow(dateStr)) return true;
+    return false;
+  }
+
+  function enumeratePublicAvailableSlotTimes(dateStr, service) {
+    if (!service || !dateStr) return [];
+    if (isPublicMobileDayBlockedForSlots(dateStr)) return [];
+
+    const selectedStaffId = getSelectedPublicStaffId();
+    const dowSlot = dayOfWeekFromDateStr(dateStr);
+    const winSlot = getWorkWindowForDayOfWeek(dowSlot);
+    const duration = getServiceDurationValue(service);
+    const slotTimes = generateSlots(winSlot.start, winSlot.end, duration, PUBLIC_SLOT_STEP_MINUTES);
+    const available = [];
+
+    slotTimes.forEach((time) => {
+      const timeStr = snapTimeStringToQuarterHour(time);
+      const startMins = timeToMinutes(timeStr);
+      if (!isPublicScheduleSlotAvailable(dateStr, startMins, selectedStaffId, service)) return;
+      available.push(timeStr);
+    });
+
+    return available;
+  }
+
+  function renderPublicMobileSlotButtons(container, dateStr) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    if (!selectedService) {
+      container.innerHTML = emptyStateHtml("No service selected", "Choose a service to see available times.");
+      return;
+    }
+
+    const meta = getPublicMobileDayMeta(dateStr);
+    const times = enumeratePublicAvailableSlotTimes(dateStr, selectedService);
+
+    if (meta.state === "closed") {
+      container.innerHTML = emptyStateHtml("Closed", "This day is not available for booking.");
+      return;
+    }
+    if (meta.state === "off") {
+      container.innerHTML = emptyStateHtml("Day off", "Pick another working day.");
+      return;
+    }
+    if (meta.state === "past") {
+      container.innerHTML = emptyStateHtml("Past date", "Choose a future day.");
+      return;
+    }
+    if (meta.state === "unavailable") {
+      container.innerHTML = emptyStateHtml("Unavailable", "This date is outside the booking window.");
+      return;
+    }
+    if (!times.length) {
+      container.innerHTML = emptyStateHtml(
+        "No available times",
+        "No available times for this date. Please choose another day."
+      );
+      return;
+    }
+
+    times.forEach((time) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "public-mobile-slot-btn";
+      btn.textContent = time;
+      btn.setAttribute("aria-label", "Book at " + time);
+      if (selectedSlot === time && selectedDate === dateStr) {
+        btn.classList.add("public-mobile-slot-btn--selected");
+        btn.setAttribute("aria-pressed", "true");
+      } else {
+        btn.setAttribute("aria-pressed", "false");
+      }
+      btn.addEventListener("click", () => {
+        void selectPublicMobileSlot(time);
+      });
+      container.appendChild(btn);
+    });
+  }
+
+  function renderPublicMobileDateSlotPicker() {
+    console.log("[mobile-scheduler]", window.innerWidth, "mobile picker forced");
+    publicTimelineRenderFailed = false;
+    setPublicScheduleShellVisibility(true);
+    clearPublicWeekTimelineMount();
+    document.getElementById("slotsContainer")?.classList.add("hidden");
+    document.getElementById("publicTimelineHint")?.classList.add("hidden");
+
+    const statusEl = document.getElementById("publicMobileDayStatus");
+    const slotsMount = document.getElementById("publicMobileSlotsMount");
+    const slotsHint = document.getElementById("publicMobileSlotsHint");
+
+    if (!selectedService) {
+      if (statusEl) statusEl.textContent = "Choose a service to see available dates and times.";
+      if (slotsMount) {
+        slotsMount.innerHTML = emptyStateHtml(
+          "No service selected",
+          "Choose a service first."
+        );
+      }
+      if (slotsHint) slotsHint.classList.add("hidden");
+      return;
+    }
+
+    if (!selectedDate) {
+      if (statusEl) statusEl.textContent = "Select a date in the calendar above.";
+      if (slotsMount) slotsMount.innerHTML = "";
+      if (slotsHint) {
+        slotsHint.textContent = "Tap a date to see available times.";
+        slotsHint.classList.remove("hidden");
+      }
+      return;
+    }
+
+    const meta = getPublicMobileDayMeta(selectedDate);
+    const dateLabel = new Date(selectedDate + "T12:00:00").toLocaleDateString(undefined, {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    });
+
+    if (statusEl) {
+      statusEl.textContent = dateLabel + " · " + meta.label;
+    }
+    renderPublicMobileSlotButtons(slotsMount, selectedDate);
+
+    if (slotsHint) {
+      if (meta.availableCount > 0) {
+        slotsHint.textContent = "Tap a time to continue to your details.";
+        slotsHint.classList.remove("hidden");
+      } else {
+        slotsHint.classList.add("hidden");
+      }
+    }
+  }
+
+  async function selectPublicMobileSlot(time) {
+    if (!selectedDate || !selectedService) {
+      showToast("Choose a day and service first.", "error");
+      return;
+    }
+
+    const timeStr = snapTimeStringToQuarterHour(String(time || "").trim());
+    if (!/^\d{2}:\d{2}$/.test(timeStr)) return;
+
+    const staffId = getSelectedPublicStaffId();
+    const snapped = timeToMinutes(timeStr);
+    if (!isPublicScheduleSlotAvailable(selectedDate, snapped, staffId, selectedService)) {
+      showToast("This time is not available.", "error");
+      renderPublicMobileDateSlotPicker();
+      return;
+    }
+
+    hideBookingSuccessCard();
+    await chooseSlot(timeStr, { fromTimeline: false });
+  }
+
   function renderPublicTimelineScheduler() {
+    if (window.innerWidth <= 768) {
+      console.log("[mobile-scheduler]", window.innerWidth, "mobile picker forced");
+      setPublicScheduleShellVisibility(true);
+      clearPublicWeekTimelineMount();
+      return renderPublicMobileDateSlotPicker();
+    }
+
+    ensurePublicScheduleModeListener();
+    setPublicScheduleShellVisibility(false);
     return renderPublicWeekTimeline();
   }
 
@@ -22410,10 +23201,31 @@
       if (selectedDate === dateStr) div.classList.add("selected");
       if (isClosed) div.classList.add("closed");
       if (!isClosed && !isWorkingDay) div.classList.add("off-day");
+      if (isPast) div.classList.add("past");
+      if (outsideWindow) div.classList.add("outside-window");
 
       let badge = "";
-      if (isClosed) badge = `<span class="cal-badge">Closed</span>`;
+      if (isPast) badge = `<span class="cal-badge cal-badge--muted">Past</span>`;
+      else if (isClosed) badge = `<span class="cal-badge">Closed</span>`;
       else if (!isWorkingDay) badge = `<span class="cal-badge">Off</span>`;
+      else if (outsideWindow) badge = `<span class="cal-badge cal-badge--muted">—</span>`;
+      else if (
+        isPublicMobileBookingUi() &&
+        selectedService &&
+        !isPast &&
+        !outsideWindow
+      ) {
+        const meta = getPublicMobileDayMeta(dateStr);
+        if (meta.state === "open" || meta.state === "limited") {
+          div.classList.add("calendar-day--has-open");
+          badge = `<span class="cal-badge cal-badge--open">${meta.availableCount} open</span>`;
+        } else if (meta.state === "busy") {
+          div.classList.add("calendar-day--busy");
+          badge = `<span class="cal-badge cal-badge--busy">Busy</span>`;
+        } else if (meta.state === "none") {
+          badge = `<span class="cal-badge cal-badge--muted">Full</span>`;
+        }
+      }
 
       div.innerHTML = `<strong>${day}</strong>${badge}`;
 
@@ -22436,20 +23248,21 @@
     hideBookingSuccessCard();
     selectedDate = dateStr;
     selectedSlot = null;
+    clearPublicTouchTimelinePending();
     publicWeekAnchorDate = new Date(dateStr + "T12:00:00");
 
     const titleEl = document.getElementById("selectedDateTitle");
     if (titleEl) titleEl.innerText = "Available times";
     const hintEl = document.getElementById("publicTimesHint");
     if (hintEl) {
-      hintEl.textContent =
-        "Week view · " +
-        new Date(dateStr + "T12:00:00").toLocaleDateString(undefined, {
-          weekday: "long",
-          month: "long",
-          day: "numeric"
-        }) +
-        " — click a time slot or pick another day in the grid.";
+      const dateLabel = new Date(dateStr + "T12:00:00").toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      });
+      hintEl.textContent = isPublicMobileBookingUi()
+        ? dateLabel + " — tap an available time below."
+        : "Week view · " + dateLabel + " — click a time slot or pick another day in the grid.";
     }
     if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
       selectedSlot = null;
