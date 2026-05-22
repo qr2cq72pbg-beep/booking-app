@@ -10036,6 +10036,84 @@
         line-height: 1.45;
       }
 
+      #publicView.public-view--mobile-shell .customer-mobile-guest-title {
+        margin: 0 0 8px;
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.25;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-auth-overlay:not(.hidden) {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: #f8fafc;
+        overflow-y: auto;
+        padding: 12px 14px calc(80px + env(safe-area-inset-bottom, 0px));
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-auth-back {
+        align-self: flex-start;
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #fff;
+        color: #334155;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-auth-host {
+        flex: 1;
+        min-height: 0;
+      }
+
+      #customerStartCard.customer-hub-card--mobile-shell-auth {
+        margin: 0;
+        max-width: 100%;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+      }
+
+      #customerStartCard.customer-hub-card--mobile-shell-auth .customer-hub-header,
+      #customerStartCard.customer-hub-card--mobile-shell-auth #customerBusinessContext,
+      #customerStartCard.customer-hub-card--mobile-shell-auth #customerLoggedInBox,
+      #customerStartCard.customer-hub-card--mobile-shell-auth #customerManualBusinessSection,
+      #customerStartCard.customer-hub-card--mobile-shell-auth #customerAuthDivider,
+      #customerStartCard.customer-hub-card--mobile-shell-auth .customer-hub-footer {
+        display: none !important;
+      }
+
+      #publicView.public-view--mobile-shell .public-success-account {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      #publicView.public-view--mobile-shell .public-success-account-lead {
+        margin: 0 0 12px;
+        font-size: 14px;
+        color: #475569;
+        line-height: 1.45;
+      }
+
+      #publicView.public-view--mobile-shell .public-success-account-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      #publicView.public-view--mobile-shell .public-success-account-actions .success,
+      #publicView.public-view--mobile-shell .public-success-account-actions .secondary {
+        width: 100%;
+      }
+
       #publicView.public-view--mobile-shell .customer-mobile-home-cta {
         width: 100%;
         min-height: 48px;
@@ -11710,6 +11788,16 @@
         <div id="customerMyBookingsListFallback" class="customer-my-list-fallback hidden" role="list" aria-label="Your bookings list"></div>
       </div>
 
+      <section id="customerMobileTabBookingsGuest" class="customer-mobile-tab-panel hidden" aria-label="Your bookings">
+        <div class="customer-mobile-placeholder-card">
+          <h3 class="customer-mobile-guest-title">Your bookings</h3>
+          <p class="customer-mobile-placeholder-lead">Sign in to see all your upcoming appointments.</p>
+          <button type="button" class="success" style="width:100%;margin-top:12px" onclick="openCustomerMobileAuthFromShell({ returnTab: 'bookings', panel: 'login' })">Customer Login</button>
+          <button type="button" class="secondary" style="width:100%;margin-top:8px" onclick="openCustomerMobileAuthFromShell({ returnTab: 'bookings', panel: 'signup' })">Create account</button>
+          <p class="customer-mobile-placeholder-note" style="margin-top:14px">If you booked as a guest, use the Manage booking link from your confirmation.</p>
+        </div>
+      </section>
+
       <section id="customerMobileTabHome" class="customer-mobile-tab-panel hidden" aria-label="Home">
         <div class="customer-mobile-home-card">
           <div class="customer-mobile-home-hero">
@@ -11745,14 +11833,21 @@
           <p class="customer-mobile-section-title">Profile</p>
           <div id="customerMobileProfileLoggedIn" class="hidden">
             <div class="customer-mobile-profile-row">
+              <span>Name</span>
+              <strong id="customerMobileProfileName">—</strong>
+            </div>
+            <div class="customer-mobile-profile-row">
               <span>Email</span>
               <strong id="customerMobileProfileEmail">—</strong>
             </div>
-            <button type="button" class="danger" style="width:100%;margin-top:12px" onclick="customerLogout()">Log out</button>
+            <button type="button" class="success" style="width:100%;margin-top:12px" onclick="openCustomerMyBookingsView()">My Bookings</button>
+            <button type="button" class="danger" style="width:100%;margin-top:8px" onclick="customerLogout()">Log out</button>
           </div>
           <div id="customerMobileProfileGuest">
-            <p class="customer-mobile-placeholder-lead">Sign in to save your details and view bookings.</p>
-            <button type="button" class="success" style="width:100%;margin-top:12px" onclick="setCustomerMobileTab('book')">Continue to booking</button>
+            <h3 class="customer-mobile-guest-title">Manage your appointments</h3>
+            <p class="customer-mobile-placeholder-lead">Sign in to view your bookings, reschedule appointments, and manage your profile.</p>
+            <button type="button" class="success" style="width:100%;margin-top:12px" onclick="openCustomerMobileAuthFromShell({ returnTab: 'profile', panel: 'login' })">Customer Login</button>
+            <button type="button" class="secondary" style="width:100%;margin-top:8px" onclick="openCustomerMobileAuthFromShell({ returnTab: 'profile', panel: 'signup' })">Create account</button>
           </div>
           <p class="customer-mobile-section-title" style="margin-top:20px">Preferences</p>
           <div class="customer-mobile-profile-row">
@@ -12040,8 +12135,8 @@
               <div class="public-success-check" aria-hidden="true">
                 <svg viewBox="0 0 52 52" width="52" height="52"><circle class="public-success-check-circle" cx="26" cy="26" r="24" fill="none"/><path class="public-success-check-mark" fill="none" d="M14 27l8 8 16-18"/></svg>
               </div>
-              <h2 class="public-success-title">Appointment confirmed</h2>
-              <p class="public-success-lead">You're all set. We've saved your booking details below.</p>
+              <h2 class="public-success-title">Appointment booked</h2>
+              <p class="public-success-lead">Your appointment is confirmed. Details are below.</p>
             </div>
 
             <div id="bookingSuccessDetails" class="public-success-details"></div>
@@ -12075,6 +12170,17 @@
               <p>Confirmation sent successfully</p>
               <p>You can reschedule or cancel anytime from your email</p>
               <p>Your booking is secured</p>
+            </div>
+
+            <div id="bookingSuccessAccountSection" class="public-success-account hidden">
+              <p id="bookingSuccessGuestLead" class="public-success-account-lead hidden">Create an account to keep all your bookings in one place.</p>
+              <div id="bookingSuccessGuestActions" class="public-success-account-actions hidden">
+                <button type="button" class="success" onclick="openCustomerMobileAuthFromShell({ returnTab: 'book', panel: 'signup', fromSuccess: true })">Create account</button>
+                <button type="button" class="secondary" onclick="openCustomerMobileAuthFromShell({ returnTab: 'book', panel: 'login', fromSuccess: true })">Customer Login</button>
+              </div>
+              <div id="bookingSuccessLoggedInActions" class="public-success-account-actions hidden">
+                <button type="button" class="success" onclick="openCustomerMyBookingsView()">View My Bookings</button>
+              </div>
             </div>
 
             <button type="button" class="secondary public-success-book-another" onclick="showPublicBookingWizard()">Book another appointment</button>
@@ -12144,6 +12250,11 @@
             </div>
           </div>
         </div>
+
+      <div id="customerMobileAuthOverlay" class="customer-mobile-auth-overlay hidden" role="dialog" aria-modal="true" aria-label="Customer sign in">
+        <button type="button" class="customer-mobile-auth-back" onclick="closeCustomerMobileAuthFromShell()">← Back</button>
+        <div id="customerMobileAuthHost" class="customer-mobile-auth-host"></div>
+      </div>
 
       <nav id="customerMobileBottomNav" class="customer-mobile-bottom-nav hidden" aria-label="Customer app navigation">
         <button type="button" class="customer-mobile-nav-item" data-mobile-tab="home" aria-current="false" onclick="setCustomerMobileTab('home')">
@@ -12854,7 +12965,7 @@
       el.setAttribute("hidden", "");
       el.classList.remove("public-booking-step--active", "public-booking-step--exit");
     });
-    document.getElementById("publicBookingContent")?.classList.add("hidden");
+    document.getElementById("publicBookingContent")?.classList.remove("hidden");
   }
 
   function shouldSuppressPublicBookingWizard(caller) {
@@ -12896,6 +13007,114 @@
   });
   let customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
   let customerMobileShellBound = false;
+  /** @type {{ returnTab: string, panel: string, fromSuccess?: boolean } | null} */
+  let customerMobileAuthReturn = null;
+  let customerStartCardHomeParent = null;
+  let publicMobileSlotsLoading = false;
+
+  function isCustomerMobileAuthOverlayOpen() {
+    const overlay = document.getElementById("customerMobileAuthOverlay");
+    return !!(overlay && !overlay.classList.contains("hidden"));
+  }
+
+  function mountCustomerStartCardInMobileAuthOverlay() {
+    const card = document.getElementById("customerStartCard");
+    const host = document.getElementById("customerMobileAuthHost");
+    if (!card || !host) return;
+    if (!customerStartCardHomeParent) {
+      customerStartCardHomeParent = card.parentElement;
+    }
+    host.appendChild(card);
+  }
+
+  function restoreCustomerStartCardFromMobileAuthOverlay() {
+    const card = document.getElementById("customerStartCard");
+    if (card && customerStartCardHomeParent) {
+      customerStartCardHomeParent.insertBefore(card, customerStartCardHomeParent.firstChild);
+    }
+  }
+
+  function openCustomerMobileAuthFromShell(opts = {}) {
+    const returnTab = opts.returnTab || CUSTOMER_MOBILE_TAB.PROFILE;
+    customerMobileAuthReturn = {
+      returnTab: Object.values(CUSTOMER_MOBILE_TAB).includes(returnTab)
+        ? returnTab
+        : CUSTOMER_MOBILE_TAB.PROFILE,
+      panel: opts.panel === "signup" ? "signup" : "login",
+      fromSuccess: opts.fromSuccess === true
+    };
+    setCustomerAuthPanel(customerMobileAuthReturn.panel);
+
+    if (isCustomerMobileShellEnabled()) {
+      mountCustomerStartCardInMobileAuthOverlay();
+      document.getElementById("customerMobileAuthOverlay")?.classList.remove("hidden");
+      const card = document.getElementById("customerStartCard");
+      card?.classList.add("customer-hub-card--mobile-shell-auth");
+      card?.classList.remove("hidden");
+      return;
+    }
+
+    showPublicView(false);
+    document.getElementById("customerStartCard")?.classList.remove("hidden");
+    document.getElementById("publicBookingContent")?.classList.add("hidden");
+  }
+
+  function closeCustomerMobileAuthFromShell() {
+    customerMobileAuthReturn = null;
+    document.getElementById("customerMobileAuthOverlay")?.classList.add("hidden");
+    const card = document.getElementById("customerStartCard");
+    card?.classList.remove("customer-hub-card--mobile-shell-auth");
+    card?.classList.add("hidden");
+    restoreCustomerStartCardFromMobileAuthOverlay();
+    applyCustomerMobileTabVisibility();
+    syncCustomerMobileShell();
+  }
+
+  async function completeCustomerAuthReturnFlow() {
+    const ret = customerMobileAuthReturn;
+    const overlayOpen = isCustomerMobileAuthOverlayOpen();
+    if (overlayOpen) {
+      document.getElementById("customerMobileAuthOverlay")?.classList.add("hidden");
+      const card = document.getElementById("customerStartCard");
+      card?.classList.remove("customer-hub-card--mobile-shell-auth");
+      card?.classList.add("hidden");
+      restoreCustomerStartCardFromMobileAuthOverlay();
+    }
+    customerMobileAuthReturn = null;
+
+    if (isCustomerMobileShellEnabled() && currentUser && currentUserRole === "customer") {
+      showPublicView(true);
+      renderCustomerMobileProfileTab();
+      renderBookingSuccessAccountSection();
+
+      if (ret?.fromSuccess && isBookingSuccessCardVisible()) {
+        enterPublicManageMode("booking-success");
+        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
+        syncCustomerMobileShell();
+        return;
+      }
+
+      if (ret?.returnTab === CUSTOMER_MOBILE_TAB.BOOKINGS) {
+        await openCustomerMyBookingsView();
+        return;
+      }
+
+      if (ret?.returnTab) {
+        setCustomerMobileTab(ret.returnTab, { skipWizardInit: true });
+        if (ret.returnTab === CUSTOMER_MOBILE_TAB.BOOKINGS) {
+          await loadCustomerMyBookings();
+        }
+        syncCustomerMobileShell();
+        return;
+      }
+
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.PROFILE);
+      syncCustomerMobileShell();
+      return;
+    }
+
+    await continueCustomerBookingAfterAuth();
+  }
 
   function isCustomerMobileShellEnabled() {
     const publicView = document.getElementById("publicView");
@@ -12982,15 +13201,40 @@
     const logged = document.getElementById("customerMobileProfileLoggedIn");
     const guest = document.getElementById("customerMobileProfileGuest");
     const emailEl = document.getElementById("customerMobileProfileEmail");
+    const nameEl = document.getElementById("customerMobileProfileName");
     const isCustomer = !!(currentUser && currentUserRole === "customer");
 
     if (logged && guest) {
       logged.classList.toggle("hidden", !isCustomer);
       guest.classList.toggle("hidden", isCustomer);
     }
-    if (emailEl && isCustomer) {
-      emailEl.textContent = currentUser.email || "—";
+    if (isCustomer) {
+      const metaName =
+        currentUser.user_metadata?.full_name ||
+        currentUser.user_metadata?.name ||
+        "";
+      if (nameEl) nameEl.textContent = metaName || "—";
+      if (emailEl) emailEl.textContent = currentUser.email || "—";
     }
+  }
+
+  function renderBookingSuccessAccountSection() {
+    const section = document.getElementById("bookingSuccessAccountSection");
+    const guestLead = document.getElementById("bookingSuccessGuestLead");
+    const guestActions = document.getElementById("bookingSuccessGuestActions");
+    const loggedActions = document.getElementById("bookingSuccessLoggedInActions");
+    const isCustomer = !!(currentUser && currentUserRole === "customer");
+
+    if (!section) return;
+    if (!isBookingSuccessCardVisible()) {
+      section.classList.add("hidden");
+      return;
+    }
+
+    section.classList.remove("hidden");
+    guestLead?.classList.toggle("hidden", isCustomer);
+    guestActions?.classList.toggle("hidden", isCustomer);
+    loggedActions?.classList.toggle("hidden", !isCustomer);
   }
 
   function applyCustomerMobileTabVisibility() {
@@ -12999,17 +13243,30 @@
     const home = document.getElementById("customerMobileTabHome");
     const notifications = document.getElementById("customerMobileTabNotifications");
     const profile = document.getElementById("customerMobileTabProfile");
+    const bookingsGuest = document.getElementById("customerMobileTabBookingsGuest");
     const bookContent = document.getElementById("publicBookingContent");
     const bookings = document.getElementById("customerMyBookingsCard");
     const success = document.getElementById("bookingSuccessCard");
     const manage = document.getElementById("manageBookingCard");
+    const isCustomer = !!(currentUser && currentUserRole === "customer");
 
     if (!enabled) {
       home?.classList.add("hidden");
       notifications?.classList.add("hidden");
       profile?.classList.add("hidden");
+      bookingsGuest?.classList.add("hidden");
       bookContent?.classList.remove("customer-mobile-tab-book-active");
       bookings?.classList.remove("customer-my-bookings-card--shell");
+      return;
+    }
+
+    if (isCustomerMobileAuthOverlayOpen()) {
+      home?.classList.add("hidden");
+      notifications?.classList.add("hidden");
+      profile?.classList.add("hidden");
+      bookingsGuest?.classList.add("hidden");
+      bookContent?.classList.add("hidden");
+      bookings?.classList.add("hidden");
       return;
     }
 
@@ -13026,19 +13283,34 @@
     const manageFlowActive = isPublicManageFlowActive();
 
     if (manageFlowActive) {
-      bookContent?.classList.add("hidden");
-      bookContent?.classList.remove("customer-mobile-tab-book-active");
+      if (isBookingSuccessCardVisible() || isManageBookingCardVisible()) {
+        bookContent?.classList.remove("hidden");
+        bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
+      } else {
+        bookContent?.classList.add("hidden");
+        bookContent?.classList.remove("customer-mobile-tab-book-active");
+      }
     } else {
       bookContent?.classList.toggle("hidden", !showBook);
       bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
     }
 
     if (showBookings) {
-      bookings?.classList.remove("hidden");
-      bookings?.classList.add("customer-my-bookings-card--shell");
-    } else if (!customerMyBookingsViewOpen) {
-      bookings?.classList.add("hidden");
-      bookings?.classList.remove("customer-my-bookings-card--shell");
+      if (isCustomer) {
+        bookingsGuest?.classList.add("hidden");
+        bookings?.classList.remove("hidden");
+        bookings?.classList.add("customer-my-bookings-card--shell");
+      } else {
+        bookingsGuest?.classList.remove("hidden");
+        bookings?.classList.add("hidden");
+        bookings?.classList.remove("customer-my-bookings-card--shell");
+      }
+    } else {
+      bookingsGuest?.classList.add("hidden");
+      if (!customerMyBookingsViewOpen) {
+        bookings?.classList.add("hidden");
+        bookings?.classList.remove("customer-my-bookings-card--shell");
+      }
     }
 
     if (!showBook) {
@@ -13059,14 +13331,6 @@
   function setCustomerMobileTab(tab, opts = {}) {
     const allowed = Object.values(CUSTOMER_MOBILE_TAB);
     if (!allowed.includes(tab)) tab = CUSTOMER_MOBILE_TAB.BOOK;
-
-    if (
-      tab === CUSTOMER_MOBILE_TAB.BOOKINGS &&
-      (!currentUser || currentUserRole !== "customer")
-    ) {
-      showToast("Sign in as a customer to view your bookings.", "error");
-      tab = CUSTOMER_MOBILE_TAB.PROFILE;
-    }
 
     customerMobileTab = tab;
     if (tab !== CUSTOMER_MOBILE_TAB.BOOKINGS) {
@@ -13820,6 +14084,8 @@
     enterPublicManageMode("booking-success");
     hidePublicBookingWizardForManageFlow("finishPublicBookingSuccessUi");
     showBookingSuccessCard(insertedBooking);
+    document.getElementById("publicBookingContent")?.classList.remove("hidden");
+    renderBookingSuccessAccountSection();
     setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
     syncCustomerMobileShell();
     const recurringTotal = Number(lastPublicBookingSuccess?.recurringTotal || 1);
@@ -14176,6 +14442,7 @@
       if (linkEl) linkEl.textContent = link;
 
       renderBookingSuccessDetails(snapshot);
+      renderBookingSuccessAccountSection();
 
       const card = document.getElementById("bookingSuccessCard");
       if (card) {
@@ -16231,7 +16498,9 @@
       if (!publicManageMode && !isBookingSuccessCardVisible()) {
         hideBookingSuccessCard();
       }
-      document.getElementById("customerStartCard").classList.add("hidden");
+      if (!isCustomerMobileAuthOverlayOpen()) {
+        document.getElementById("customerStartCard").classList.add("hidden");
+      }
       document.getElementById("publicBookingContent").classList.remove("hidden");
       const serviceListMount = document.getElementById("publicServiceList");
       if (serviceListMount && (publicDataLoading || !services.length) && !shouldSuppressPublicBookingWizard("showPublicView-services")) {
@@ -18791,8 +19060,11 @@
 
   async function openCustomerMyBookingsView() {
     if (!currentUser || currentUserRole !== "customer") {
+      if (isCustomerMobileShellEnabled()) {
+        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOKINGS);
+        return;
+      }
       showToast("Sign in as a customer to view My Bookings.", "error");
-      if (isCustomerMobileShellEnabled()) setCustomerMobileTab(CUSTOMER_MOBILE_TAB.PROFILE);
       return;
     }
 
@@ -19160,7 +19432,10 @@
     if (document.getElementById("customerAuthEmail")) document.getElementById("customerAuthEmail").value = email;
     updateCustomerAuthUI();
 
-    await continueCustomerBookingAfterAuth();
+    if (data?.session) {
+      currentUserRole = await loadCurrentUserRole();
+      await completeCustomerAuthReturnFlow();
+    }
   }
 
   async function customerLogin() {
@@ -19204,7 +19479,7 @@
     showToast("Customer login success.", "success");
     updateCustomerAuthUI();
 
-    await continueCustomerBookingAfterAuth();
+    await completeCustomerAuthReturnFlow();
   }
 
   async function customerLogout() {
@@ -19218,6 +19493,13 @@
     customerMyBookingsViewOpen = false;
     customerMyBookingsCalendarFailed = false;
     updateCustomerAuthUI();
+    if (isCustomerMobileShellEnabled()) {
+      closeCustomerMobileAuthFromShell();
+      renderCustomerMobileProfileTab();
+      renderBookingSuccessAccountSection();
+      applyCustomerMobileTabVisibility();
+      syncCustomerMobileShell();
+    }
   }
 
   async function sendPasswordResetEmail() {
@@ -19450,6 +19732,10 @@
 
   async function loadPublicData() {
     publicDataLoading = true;
+    publicMobileSlotsLoading = true;
+    if (window.innerWidth <= 768 && selectedService) {
+      renderPublicMobileDateSlotPicker();
+    }
     logPublicRouting("loadPublicData start", { publicManageMode, publicDataLoading });
     try {
     if (!publicManageMode && !isBookingSuccessCardVisible()) {
@@ -19513,6 +19799,10 @@
     startBookingRealtime();
     } finally {
       publicDataLoading = false;
+      publicMobileSlotsLoading = false;
+      if (window.innerWidth <= 768 && selectedService) {
+        renderPublicMobileDateSlotPicker();
+      }
       logPublicRouting("loadPublicData end", { publicManageMode });
     }
   }
@@ -24517,12 +24807,21 @@
     }
 
     if (!selectedDate) {
-      if (statusEl) statusEl.textContent = "Select a date in the calendar above.";
+      if (statusEl) statusEl.textContent = "Choose a date to see available times.";
       if (slotsMount) slotsMount.innerHTML = "";
       if (slotsHint) {
-        slotsHint.textContent = "Tap a date to see available times.";
+        slotsHint.textContent = "Choose a date to see available times.";
         slotsHint.classList.remove("hidden");
       }
+      return;
+    }
+
+    if (publicMobileSlotsLoading || publicDataLoading) {
+      if (statusEl) statusEl.textContent = "Loading available times…";
+      if (slotsMount) {
+        slotsMount.innerHTML = loadingStateHtml("Loading available times…", "Checking open slots for this day.");
+      }
+      if (slotsHint) slotsHint.classList.add("hidden");
       return;
     }
 
