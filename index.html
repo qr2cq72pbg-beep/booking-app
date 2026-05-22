@@ -5284,7 +5284,7 @@
     #publicBookingContent .public-confirm-appointment-title,
     #publicBookingContent .public-confirm-appointment-grid span,
     #publicBookingContent .public-field-label,
-    #publicBookingContent .public-booking-step--details label,
+    #publicBookingContent .public-booking-step--details label:not(.public-recurring-option):not(.public-recurring-count-option),
     #publicBookingContent .public-booking-step--details .public-field-label {
       color: var(--public-muted, #64748b);
     }
@@ -6084,34 +6084,66 @@
       margin: 0 0 10px;
       font-size: 14px;
       font-weight: 700;
+      color: var(--public-text, #0f172a);
     }
 
     .public-recurring-options {
       display: flex;
       flex-wrap: wrap;
       gap: 8px 14px;
+      align-items: stretch;
     }
 
     .public-recurring-option {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-size: 13px;
+      font-weight: 600;
+      color: var(--public-text, #0f172a);
       cursor: pointer;
+      margin: 0;
+    }
+
+    .public-recurring-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      flex: 0 0 18px;
+      accent-color: var(--business-accent, #38bdf8);
+      cursor: pointer;
+    }
+
+    .public-recurring-option span {
+      line-height: 1.3;
     }
 
     .public-recurring-count {
       margin-top: 12px;
     }
 
-    .public-recurring-count label {
+    .public-recurring-count > label[for="publicRecurringCount"] {
       display: block;
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      color: var(--public-text, #0f172a);
     }
 
-    .public-recurring-count select {
+    .public-recurring-counts {
+      display: none;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+
+    .public-recurring-count-option {
+      display: none;
+    }
+
+    .public-recurring-count-select {
       width: 100%;
       max-width: 220px;
       min-height: 40px;
@@ -6119,7 +6151,128 @@
       border: 1px solid var(--public-border);
       padding: 8px 10px;
       font-size: 14px;
-      background: var(--public-bg, #fff);
+      background: var(--public-surface-2, #f8fafc);
+      color: var(--public-text, #0f172a);
+    }
+
+    /* Override booking-flow-card global input tint inside recurring panel */
+    #publicBookingContent .public-recurring-panel input[type="radio"] {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: inherit;
+      min-height: 0;
+      padding: 0;
+    }
+
+    @media (max-width: 768px) {
+      #publicBookingContent .public-recurring-panel {
+        padding: 14px 14px 16px;
+      }
+
+      #publicBookingContent .public-recurring-panel__title {
+        margin-bottom: 12px;
+        font-size: 15px;
+      }
+
+      #publicBookingContent .public-recurring-options {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 10px;
+        width: 100%;
+      }
+
+      #publicBookingContent .public-recurring-option {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 48px;
+        padding: 12px 14px;
+        border: 1px solid var(--public-border, #e2e8f0);
+        border-radius: 12px;
+        background: var(--public-surface-2, #f8fafc);
+        gap: 12px;
+      }
+
+      #publicBookingContent .public-recurring-option input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 20px;
+      }
+
+      #publicBookingContent .public-recurring-option span {
+        flex: 1;
+        min-width: 0;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      #publicBookingContent .public-recurring-option:has(input:checked) {
+        border-color: var(--business-accent, #38bdf8);
+        background: color-mix(in srgb, var(--business-accent, #38bdf8) 12%, var(--public-surface-2, #f8fafc));
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 22%, transparent);
+      }
+
+      #publicBookingContent .public-recurring-count > label[for="publicRecurringCount"] {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      #publicBookingContent .public-recurring-count-select {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      }
+
+      #publicBookingContent .public-recurring-counts {
+        display: grid;
+      }
+
+      #publicBookingContent .public-recurring-count-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        margin: 0;
+        padding: 10px 8px;
+        border: 1px solid var(--public-border, #e2e8f0);
+        border-radius: 12px;
+        background: var(--public-surface-2, #f8fafc);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--public-text, #0f172a);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #publicBookingContent .public-recurring-count-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        margin: 0;
+        pointer-events: none;
+      }
+
+      #publicBookingContent .public-recurring-count-option span {
+        pointer-events: none;
+      }
+
+      #publicBookingContent .public-recurring-count-option:has(input:checked) {
+        border-color: var(--business-accent, #38bdf8);
+        background: color-mix(in srgb, var(--business-accent, #38bdf8) 16%, var(--public-surface-2, #f8fafc));
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 25%, transparent);
+        color: var(--public-text, #0f172a);
+      }
+    }
+
+    @media (max-width: 380px) {
+      #publicBookingContent .public-recurring-counts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 767px) {
@@ -7379,8 +7532,9 @@
       color: var(--public-text);
     }
 
-    #publicBookingContent .public-booking-card.booking-flow-card input,
-    #publicBookingContent .public-booking-card.booking-flow-card textarea {
+    #publicBookingContent .public-booking-card.booking-flow-card input:not([type="radio"]),
+    #publicBookingContent .public-booking-card.booking-flow-card textarea,
+    #publicBookingContent .public-booking-card.booking-flow-card select {
       background: var(--public-surface-2);
       border-color: var(--public-border);
       color: #fff;
@@ -9350,6 +9504,239 @@
       border: 1px solid #bfdbfe;
       color: #1e40af;
     }
+
+    /* ========================================================================
+       Recurring booking UI — FINAL mobile override (end of stylesheet).
+       Scoped to #publicRecurringBookingSection to beat .booking-flow-card input
+       and .public-booking-step--details label rules above.
+       ======================================================================== */
+
+    #publicBookingContent #publicRecurringBookingSection.public-recurring-panel {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-panel__title {
+      display: block;
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--public-text, #0f172a);
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection label.public-recurring-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--public-text, #0f172a);
+      cursor: pointer;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection label.public-recurring-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      min-height: 18px;
+      margin: 0;
+      padding: 0;
+      flex: 0 0 18px;
+      position: static;
+      transform: none;
+      opacity: 1;
+      accent-color: var(--business-accent, #38bdf8);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: inherit;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection label.public-recurring-option > span {
+      display: block;
+      line-height: 1.3;
+      color: var(--public-text, #0f172a);
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-count {
+      width: 100%;
+      margin-top: 14px;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-count > label[for="publicRecurringCount"] {
+      display: block;
+      width: 100%;
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--public-text, #0f172a);
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-counts {
+      display: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection label.public-recurring-count-option {
+      display: none;
+    }
+
+    #publicBookingContent #publicRecurringBookingSection .public-recurring-count-select {
+      width: 100%;
+      max-width: 220px;
+      min-height: 40px;
+    }
+
+    @media (max-width: 768px) {
+      #publicRecurringBookingSection .public-recurring-options {
+        display: flex !important;
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        width: 100% !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-option {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        display: grid !important;
+        grid-template-columns: 28px 1fr !important;
+        grid-template-areas: "radio label" !important;
+        align-items: center !important;
+        gap: 12px !important;
+        min-height: 52px !important;
+        padding: 12px 14px !important;
+        border: 1px solid var(--public-border, #dbe3ef) !important;
+        border-radius: 16px !important;
+        background: var(--public-surface, #fff) !important;
+        color: var(--public-text, #0f172a) !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-option:has(input:checked) {
+        border-color: var(--business-accent, #38bdf8) !important;
+        background: color-mix(in srgb, var(--business-accent, #38bdf8) 12%, var(--public-surface, #fff)) !important;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 22%, transparent) !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-option input[type="radio"] {
+        grid-area: radio !important;
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: static !important;
+        transform: none !important;
+        opacity: 1 !important;
+        align-self: center !important;
+        justify-self: center !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: inherit !important;
+        -webkit-appearance: radio !important;
+        appearance: radio !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-option > span {
+        grid-area: label !important;
+        display: block !important;
+        white-space: normal !important;
+        line-height: 1.25 !important;
+        color: var(--public-text, #0f172a) !important;
+        text-align: left !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+      }
+
+      #publicRecurringBookingSection .public-recurring-count > label[for="publicRecurringCount"] {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 0 10px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        color: var(--public-text, #0f172a) !important;
+      }
+
+      #publicRecurringBookingSection .public-recurring-count-select {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        border: 0 !important;
+      }
+
+      #publicRecurringBookingSection .public-recurring-counts {
+        display: grid !important;
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-count-option {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 48px !important;
+        margin: 0 !important;
+        padding: 10px 6px !important;
+        border: 1px solid var(--public-border, #dbe3ef) !important;
+        border-radius: 12px !important;
+        background: var(--public-surface-2, #f8fafc) !important;
+        box-sizing: border-box !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: transparent !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-count-option:has(input:checked) {
+        border-color: var(--business-accent, #38bdf8) !important;
+        background: color-mix(in srgb, var(--business-accent, #38bdf8) 14%, var(--public-surface-2, #f8fafc)) !important;
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 24%, transparent) !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-count-option input[type="radio"] {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      #publicRecurringBookingSection label.public-recurring-count-option > span {
+        display: block !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        color: var(--public-text, #0f172a) !important;
+        text-align: center !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      #publicRecurringBookingSection .public-recurring-counts {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+    }
   </style>
 </head>
 
@@ -11077,7 +11464,29 @@
                         </div>
                         <div id="publicRecurringCountWrap" class="public-recurring-count hidden" hidden>
                           <label for="publicRecurringCount">How many appointments?</label>
-                          <select id="publicRecurringCount" aria-label="Number of appointments in series">
+                          <div class="public-recurring-counts" role="radiogroup" aria-label="Number of appointments in series">
+                            <label class="public-recurring-count-option">
+                              <input type="radio" name="publicRecurringCountUi" value="2" onchange="document.getElementById('publicRecurringCount').value='2'" />
+                              <span>2</span>
+                            </label>
+                            <label class="public-recurring-count-option">
+                              <input type="radio" name="publicRecurringCountUi" value="3" checked onchange="document.getElementById('publicRecurringCount').value='3'" />
+                              <span>3</span>
+                            </label>
+                            <label class="public-recurring-count-option">
+                              <input type="radio" name="publicRecurringCountUi" value="4" onchange="document.getElementById('publicRecurringCount').value='4'" />
+                              <span>4</span>
+                            </label>
+                            <label class="public-recurring-count-option">
+                              <input type="radio" name="publicRecurringCountUi" value="5" onchange="document.getElementById('publicRecurringCount').value='5'" />
+                              <span>5</span>
+                            </label>
+                            <label class="public-recurring-count-option">
+                              <input type="radio" name="publicRecurringCountUi" value="6" onchange="document.getElementById('publicRecurringCount').value='6'" />
+                              <span>6</span>
+                            </label>
+                          </div>
+                          <select id="publicRecurringCount" class="public-recurring-count-select" aria-label="Number of appointments in series">
                             <option value="2">2</option>
                             <option value="3" selected>3</option>
                             <option value="4">4</option>
@@ -20212,6 +20621,13 @@
       countWrap.classList.toggle("hidden", !showCount);
       if (showCount) countWrap.removeAttribute("hidden");
       else countWrap.setAttribute("hidden", "");
+    }
+
+    if (showCount) {
+      const countVal = document.getElementById("publicRecurringCount")?.value || "3";
+      document.querySelectorAll('input[name="publicRecurringCountUi"]').forEach((el) => {
+        el.checked = el.value === countVal;
+      });
     }
   }
 
