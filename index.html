@@ -6906,27 +6906,7 @@
       }
     }
 
-    @media (max-width: 479px) {
-      .public-hero-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-      }
-
-      .public-hero-avatar-wrap {
-        width: 72px;
-        height: 72px;
-      }
-
-      #publicBusinessName {
-        font-size: 1.35rem;
-      }
-
-      .public-hero-meta,
-      .public-hero-social {
-        margin-top: 12px;
-      }
-    }
+    /* Mobile hero layout: see end-of-stylesheet block (max-width: 768px) */
 
     .public-hero-bg {
       position: absolute;
@@ -6976,6 +6956,19 @@
       gap: 18px;
     }
 
+    .public-hero-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .public-hero-extra {
+      position: relative;
+      z-index: 1;
+    }
+
     .public-hero-avatar-wrap {
       flex-shrink: 0;
       width: 88px;
@@ -6986,28 +6979,48 @@
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
     }
 
+    .public-hero-avatar-slot {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #1e293b;
+    }
+
     .public-hero-avatar {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       border-radius: 999px;
       object-fit: cover;
-      border: 3px solid #0f172a;
+      border: none;
       background: #1e293b;
       display: block;
+      margin: 0;
     }
 
     .public-hero-avatar-fallback {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       border-radius: 999px;
       background: #1e293b;
-      border: 3px solid #0f172a;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 28px;
       font-weight: 800;
       color: #93c5fd;
+      margin: 0;
+    }
+
+    .public-hero-avatar.hidden,
+    .public-hero-avatar-fallback.hidden {
+      display: none;
     }
 
     .public-hero-text {
@@ -9737,6 +9750,379 @@
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
       }
     }
+
+    /* ========================================================================
+       Mobile public hero — FINAL polish (end of stylesheet, desktop unchanged)
+       ======================================================================== */
+
+    @media (max-width: 768px) {
+      #publicView #publicBookingContent {
+        padding: 10px 12px 20px;
+      }
+
+      #publicView #publicBookingContent .public-booking-shell {
+        border-radius: 16px;
+        box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
+      }
+
+      #publicView #publicHero.public-hero {
+        min-height: 0;
+        padding: 14px 16px 12px;
+        overflow: visible;
+        border-bottom: 1px solid var(--public-border, rgba(148, 163, 184, 0.2));
+      }
+
+      #publicView #publicHero .public-hero-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(11, 17, 32, 0.12) 0%,
+          rgba(11, 17, 32, 0.55) 55%,
+          rgba(11, 17, 32, 0.82) 100%
+        );
+      }
+
+      body.app-theme-minimal #publicView #publicHero .public-hero-overlay,
+      body.app-theme-cards #publicView #publicHero .public-hero-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(248, 250, 252, 0.88) 100%
+        );
+      }
+
+      #publicView #publicHero .public-hero-inner {
+        display: block;
+        width: 100%;
+      }
+
+      #publicView #publicHero .public-hero-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      #publicView #publicHero .public-hero-avatar-wrap {
+        width: 64px;
+        height: 64px;
+        padding: 2px;
+        margin: 0;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.22);
+      }
+
+      #publicView #publicHero .public-hero-avatar-slot {
+        background: var(--public-surface-2, #1e293b);
+      }
+
+      #publicView #publicHero .public-hero-avatar-fallback {
+        font-size: 22px;
+      }
+
+      #publicView #publicHero .public-hero-text {
+        width: 100%;
+        max-width: 100%;
+        flex: none;
+      }
+
+      #publicView #publicHero #publicBusinessName {
+        margin: 0 0 4px;
+        font-size: 1.28rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      #publicView #publicHero .public-hero-tagline {
+        font-size: 14px;
+        line-height: 1.35;
+        margin: 0;
+      }
+
+      #publicView #publicHero .public-hero-about {
+        margin: 6px 0 0;
+        font-size: 13px;
+        line-height: 1.4;
+        max-width: 32em;
+      }
+
+      #publicView #publicHero .public-hero-extra {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+      }
+
+      #publicView #publicHero .public-hero-meta,
+      #publicView #publicHero .public-hero-social {
+        margin-top: 0;
+        justify-content: center;
+        width: 100%;
+        gap: 6px 10px;
+        font-size: 12px;
+      }
+
+      #publicView #publicHero .public-hero-social {
+        flex-wrap: wrap;
+      }
+
+      #publicView #publicHero .public-hero-social-link {
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      #publicView #publicBookingContent .public-booking-wizard {
+        padding: 0 12px 12px;
+      }
+
+      #publicView #publicBookingContent .public-booking-progress {
+        padding: 14px 4px 16px;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #publicView #publicHero .public-hero-brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 18px;
+        flex: 1;
+      }
+
+      #publicView #publicHero .public-hero-extra {
+        display: block;
+      }
+    }
+
+    /* ========================================================================
+       Customer mobile app shell — bottom nav (≤768px only)
+       ======================================================================== */
+
+    .customer-mobile-bottom-nav,
+    .customer-mobile-tab-panel {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      #publicView.public-view--mobile-shell {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-bottom-nav:not(.hidden) {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 120;
+        align-items: stretch;
+        justify-content: space-around;
+        gap: 2px;
+        padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
+        background: rgba(255, 255, 255, 0.97);
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(12px);
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-height: 48px;
+        padding: 4px 2px;
+        border: none;
+        border-radius: 12px;
+        background: transparent;
+        color: #64748b;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-nav-item--active {
+        color: var(--business-accent, #2563eb);
+        background: color-mix(in srgb, var(--business-accent, #2563eb) 12%, transparent);
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-nav-icon {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-tab-panel:not(.hidden) {
+        display: block;
+        padding: 12px 14px 8px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-card,
+      #publicView.public-view--mobile-shell .customer-mobile-placeholder-card,
+      #publicView.public-view--mobile-shell .customer-mobile-profile-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 18px 16px;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        margin-bottom: 12px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-section-title {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #64748b;
+        margin: 0 0 10px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-hero {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border: 2px solid color-mix(in srgb, var(--business-accent, #2563eb) 35%, #e2e8f0);
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-avatar-fallback {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+        color: #fff;
+        background: var(--business-accent, #2563eb);
+        flex-shrink: 0;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-name {
+        margin: 0 0 4px;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-tagline {
+        margin: 0;
+        font-size: 14px;
+        color: #64748b;
+        line-height: 1.4;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-meta {
+        margin: 0 0 16px;
+        font-size: 14px;
+        color: #475569;
+        line-height: 1.45;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-home-cta {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 14px;
+        margin-bottom: 12px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-upcoming-card {
+        border-radius: 14px;
+        padding: 14px;
+        background: color-mix(in srgb, var(--business-accent, #2563eb) 8%, #f8fafc);
+        border: 1px solid color-mix(in srgb, var(--business-accent, #2563eb) 22%, #e2e8f0);
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-upcoming-label {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+        margin: 0 0 6px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-upcoming-title {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-upcoming-meta {
+        margin: 0;
+        font-size: 14px;
+        color: #475569;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-placeholder-lead {
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: #334155;
+        line-height: 1.45;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-placeholder-note {
+        margin: 0;
+        font-size: 13px;
+        color: #94a3b8;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-profile-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 15px;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-profile-row:last-child {
+        border-bottom: none;
+      }
+
+      #publicView.public-view--mobile-shell .customer-my-bookings-card.customer-my-bookings-card--shell {
+        margin: 0;
+        border-radius: 16px 16px 0 0;
+        box-shadow: none;
+        border: none;
+      }
+
+      #publicView.public-view--mobile-shell .customer-my-bookings-card--shell .customer-my-bookings-header-actions {
+        display: none;
+      }
+
+      #publicView.public-view--mobile-shell #publicBookingContent.customer-mobile-tab-book-active {
+        padding-top: 0;
+      }
+    }
+
+    @media (min-width: 769px) {
+      #publicView .customer-mobile-bottom-nav,
+      #publicView .customer-mobile-tab-panel {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -11324,6 +11710,67 @@
         <div id="customerMyBookingsListFallback" class="customer-my-list-fallback hidden" role="list" aria-label="Your bookings list"></div>
       </div>
 
+      <section id="customerMobileTabHome" class="customer-mobile-tab-panel hidden" aria-label="Home">
+        <div class="customer-mobile-home-card">
+          <div class="customer-mobile-home-hero">
+            <img id="customerMobileHomeLogo" class="customer-mobile-home-avatar hidden" alt="" />
+            <div id="customerMobileHomeLogoFallback" class="customer-mobile-home-avatar-fallback hidden" aria-hidden="true"></div>
+            <div>
+              <h2 id="customerMobileHomeName" class="customer-mobile-home-name">Book Appointment</h2>
+              <p id="customerMobileHomeTagline" class="customer-mobile-home-tagline">Book your appointment online</p>
+            </div>
+          </div>
+          <p id="customerMobileHomeMeta" class="customer-mobile-home-meta hidden"></p>
+          <button type="button" class="success customer-mobile-home-cta" onclick="setCustomerMobileTab('book')">Book appointment</button>
+          <div id="customerMobileUpcomingCard" class="customer-mobile-upcoming-card hidden">
+            <p class="customer-mobile-upcoming-label">Your next appointment</p>
+            <p id="customerMobileUpcomingTitle" class="customer-mobile-upcoming-title"></p>
+            <p id="customerMobileUpcomingMeta" class="customer-mobile-upcoming-meta"></p>
+            <button type="button" class="secondary" style="margin-top:12px;width:100%" onclick="setCustomerMobileTab('bookings')">View all bookings</button>
+          </div>
+          <p id="customerMobileHomeGuestHint" class="customer-mobile-placeholder-note">Sign in from Profile to see appointments across businesses.</p>
+        </div>
+      </section>
+
+      <section id="customerMobileTabNotifications" class="customer-mobile-tab-panel hidden" aria-label="Notifications">
+        <div class="customer-mobile-placeholder-card">
+          <p class="customer-mobile-section-title">Notifications</p>
+          <p class="customer-mobile-placeholder-lead">Notifications coming soon</p>
+          <p class="customer-mobile-placeholder-note">Push alerts for confirmations and reminders are not enabled yet.</p>
+        </div>
+      </section>
+
+      <section id="customerMobileTabProfile" class="customer-mobile-tab-panel hidden" aria-label="Profile">
+        <div class="customer-mobile-profile-card">
+          <p class="customer-mobile-section-title">Profile</p>
+          <div id="customerMobileProfileLoggedIn" class="hidden">
+            <div class="customer-mobile-profile-row">
+              <span>Email</span>
+              <strong id="customerMobileProfileEmail">—</strong>
+            </div>
+            <button type="button" class="danger" style="width:100%;margin-top:12px" onclick="customerLogout()">Log out</button>
+          </div>
+          <div id="customerMobileProfileGuest">
+            <p class="customer-mobile-placeholder-lead">Sign in to save your details and view bookings.</p>
+            <button type="button" class="success" style="width:100%;margin-top:12px" onclick="setCustomerMobileTab('book')">Continue to booking</button>
+          </div>
+          <p class="customer-mobile-section-title" style="margin-top:20px">Preferences</p>
+          <div class="customer-mobile-profile-row">
+            <span>Language</span>
+            <span style="color:#94a3b8">Coming soon</span>
+          </div>
+          <p class="customer-mobile-section-title" style="margin-top:16px">Support</p>
+          <div class="customer-mobile-profile-row">
+            <span>Help &amp; support</span>
+            <span style="color:#94a3b8">Coming soon</span>
+          </div>
+          <div class="customer-mobile-profile-row">
+            <span>About</span>
+            <span style="color:#94a3b8">Coming soon</span>
+          </div>
+        </div>
+      </section>
+
       <div id="publicBookingContent" class="hidden public-layout-minimal">
 
         <div class="public-booking-shell">
@@ -11331,18 +11778,24 @@
             <div class="public-hero-bg" id="publicHeroBg" aria-hidden="true"></div>
             <div class="public-hero-overlay" aria-hidden="true"></div>
             <div class="public-hero-inner">
-              <div class="public-hero-avatar-wrap">
-                <img id="publicBusinessLogo" class="public-hero-avatar hidden" alt="" />
-                <div id="publicBusinessLogoFallback" class="public-hero-avatar-fallback hidden" aria-hidden="true"></div>
-              </div>
-              <div class="public-hero-text">
-                <h1 id="publicBusinessName">Book Appointment</h1>
-                <p id="publicBusinessTagline" class="public-hero-tagline">Book your appointment online</p>
-                <p id="publicBusinessAbout" class="public-hero-about hidden"></p>
+              <div class="public-hero-brand">
+                <div class="public-hero-avatar-wrap">
+                  <div class="public-hero-avatar-slot">
+                    <img id="publicBusinessLogo" class="public-hero-avatar hidden" alt="" />
+                    <div id="publicBusinessLogoFallback" class="public-hero-avatar-fallback hidden" aria-hidden="true"></div>
+                  </div>
+                </div>
+                <div class="public-hero-text">
+                  <h1 id="publicBusinessName">Book Appointment</h1>
+                  <p id="publicBusinessTagline" class="public-hero-tagline">Book your appointment online</p>
+                  <p id="publicBusinessAbout" class="public-hero-about hidden"></p>
+                </div>
               </div>
             </div>
-            <div id="publicBusinessInfo" class="public-hero-meta hidden"></div>
-            <div id="publicBusinessSocial" class="public-hero-social hidden" aria-label="Social links"></div>
+            <div class="public-hero-extra">
+              <div id="publicBusinessInfo" class="public-hero-meta hidden"></div>
+              <div id="publicBusinessSocial" class="public-hero-social hidden" aria-label="Social links"></div>
+            </div>
           </header>
 
           <div class="public-booking-body">
@@ -11605,7 +12058,7 @@
             </div>
 
             <div class="public-success-actions booking-manage-actions">
-              <button type="button" class="success" onclick="openManageBookingFromToken(activeManageToken)">Manage booking</button>
+              <button type="button" class="success" onclick="openManageBookingFromConfirmation()">Manage booking</button>
               <button type="button" class="secondary" onclick="copyManageBookingLink('bookingSuccessLink')">Copy booking link</button>
             </div>
 
@@ -11691,6 +12144,31 @@
             </div>
           </div>
         </div>
+
+      <nav id="customerMobileBottomNav" class="customer-mobile-bottom-nav hidden" aria-label="Customer app navigation">
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="home" aria-current="false" onclick="setCustomerMobileTab('home')">
+          <span class="customer-mobile-nav-icon" aria-hidden="true">⌂</span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item customer-mobile-nav-item--active" data-mobile-tab="book" aria-current="page" onclick="setCustomerMobileTab('book')">
+          <span class="customer-mobile-nav-icon" aria-hidden="true">📅</span>
+          <span>Book</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="bookings" aria-current="false" onclick="setCustomerMobileTab('bookings')">
+          <span class="customer-mobile-nav-icon" aria-hidden="true">📋</span>
+          <span>Bookings</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="notifications" aria-current="false" onclick="setCustomerMobileTab('notifications')">
+          <span class="customer-mobile-nav-icon" aria-hidden="true">🔔</span>
+          <span>Alerts</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="profile" aria-current="false" onclick="setCustomerMobileTab('profile')">
+          <span class="customer-mobile-nav-icon" aria-hidden="true">👤</span>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+    </div>
 
 <div id="appToast" class="app-toast hidden" role="status" aria-live="polite"></div>
 
@@ -12331,6 +12809,332 @@
   let publicBookingStepAnimTimer = null;
   let publicBookingCreateInFlight = false;
   let lastPublicBookingSuccess = null;
+  let publicDataLoading = false;
+  let publicManageMode = false;
+
+  function logManageNav(...args) {
+    console.log("[manage-nav]", ...args);
+  }
+
+  function logWizardReset(blocked, fn, detail) {
+    const payload = detail !== undefined ? detail : "";
+    if (blocked) console.warn("[wizard-reset] BLOCKED", fn, payload);
+    else console.log("[wizard-reset]", fn, payload);
+  }
+
+  function logPublicRouting(...args) {
+    console.log("[public-routing]", ...args);
+  }
+
+  function logManageLoad(...args) {
+    console.log("[manage-load]", ...args);
+  }
+
+  function isBookingSuccessCardVisible() {
+    const card = document.getElementById("bookingSuccessCard");
+    if (!card) return false;
+    return !card.classList.contains("hidden") && !card.hasAttribute("hidden");
+  }
+
+  function isManageBookingCardVisible() {
+    const card = document.getElementById("manageBookingCard");
+    if (!card) return false;
+    return !card.classList.contains("hidden");
+  }
+
+  function isPublicManageFlowActive() {
+    return publicManageMode || isManageBookingCardVisible() || isBookingSuccessCardVisible();
+  }
+
+  function hidePublicBookingWizardForManageFlow(caller) {
+    logManageNav("hidePublicBookingWizardForManageFlow", caller);
+    setPublicBookingWizardVisible(false, { hideShell: true, resetStep: false });
+    document.querySelectorAll("#publicView .public-booking-step").forEach((el) => {
+      el.hidden = true;
+      el.setAttribute("hidden", "");
+      el.classList.remove("public-booking-step--active", "public-booking-step--exit");
+    });
+    document.getElementById("publicBookingContent")?.classList.add("hidden");
+  }
+
+  function shouldSuppressPublicBookingWizard(caller) {
+    if (publicManageMode) {
+      logWizardReset(true, caller, "publicManageMode");
+      return true;
+    }
+    if (customerMyBookingsViewOpen) {
+      logWizardReset(true, caller, "customerMyBookingsViewOpen");
+      return true;
+    }
+    if (isBookingSuccessCardVisible()) {
+      logWizardReset(true, caller, "bookingSuccessVisible");
+      return true;
+    }
+    if (isManageBookingCardVisible()) {
+      logWizardReset(true, caller, "manageCardVisible");
+      return true;
+    }
+    return false;
+  }
+
+  function enterPublicManageMode(source) {
+    publicManageMode = true;
+    logManageNav("enterPublicManageMode", source);
+  }
+
+  function exitPublicManageMode(source) {
+    publicManageMode = false;
+    logManageNav("exitPublicManageMode", source);
+  }
+
+  const CUSTOMER_MOBILE_TAB = Object.freeze({
+    HOME: "home",
+    BOOK: "book",
+    BOOKINGS: "bookings",
+    NOTIFICATIONS: "notifications",
+    PROFILE: "profile"
+  });
+  let customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+  let customerMobileShellBound = false;
+
+  function isCustomerMobileShellEnabled() {
+    const publicView = document.getElementById("publicView");
+    if (!publicView || publicView.classList.contains("hidden")) return false;
+    if (!getActivePublicBusinessSlug() && !businessId) return false;
+    return window.innerWidth <= 768;
+  }
+
+  function bindCustomerMobileShellListeners() {
+    if (customerMobileShellBound) return;
+    customerMobileShellBound = true;
+    window.addEventListener("resize", () => syncCustomerMobileShell());
+  }
+
+  function renderCustomerMobileHomeTab() {
+    const name = businessSettings?.business_name || "Book Appointment";
+    const tagline = businessSettings?.public_tagline || businessSettings?.business_description || "Book your appointment online";
+    const showLogo = businessSettings?.public_show_logo !== false;
+    const logoUrl = showLogo ? businessSettings?.business_logo_url || "" : "";
+    const showAddress = businessSettings?.public_show_address !== false;
+    const address = showAddress ? businessSettings?.business_address || "" : "";
+    const phone = businessSettings?.business_phone || "";
+
+    const nameEl = document.getElementById("customerMobileHomeName");
+    const tagEl = document.getElementById("customerMobileHomeTagline");
+    const metaEl = document.getElementById("customerMobileHomeMeta");
+    const imgEl = document.getElementById("customerMobileHomeLogo");
+    const fbEl = document.getElementById("customerMobileHomeLogoFallback");
+    const upcomingWrap = document.getElementById("customerMobileUpcomingCard");
+    const guestHint = document.getElementById("customerMobileHomeGuestHint");
+
+    if (nameEl) nameEl.textContent = name;
+    if (tagEl) tagEl.textContent = tagline;
+
+    const metaParts = [address, phone].filter(Boolean);
+    if (metaEl) {
+      if (metaParts.length) {
+        metaEl.textContent = metaParts.join(" · ");
+        metaEl.classList.remove("hidden");
+      } else {
+        metaEl.textContent = "";
+        metaEl.classList.add("hidden");
+      }
+    }
+
+    const initials = staffMemberInitials(name);
+    if (imgEl && fbEl) {
+      if (logoUrl) {
+        imgEl.src = logoUrl;
+        imgEl.alt = name;
+        imgEl.classList.remove("hidden");
+        fbEl.classList.add("hidden");
+      } else {
+        imgEl.classList.add("hidden");
+        fbEl.textContent = initials;
+        fbEl.classList.remove("hidden");
+      }
+    }
+
+    if (currentUser && currentUserRole === "customer") {
+      guestHint?.classList.add("hidden");
+      const upcoming = (customerMyBookings || [])
+        .filter(isCustomerMyBookingUpcoming)
+        .sort((a, b) => {
+          const da = new Date(`${a.date}T${a.time || "00:00"}:00`);
+          const db = new Date(`${b.date}T${b.time || "00:00"}:00`);
+          return da - db;
+        })[0];
+      if (upcoming && upcomingWrap) {
+        document.getElementById("customerMobileUpcomingTitle").textContent =
+          upcoming.service_name || "Appointment";
+        document.getElementById("customerMobileUpcomingMeta").textContent = formatCustomerMyBookingWhen(upcoming);
+        upcomingWrap.classList.remove("hidden");
+      } else if (upcomingWrap) {
+        upcomingWrap.classList.add("hidden");
+      }
+    } else {
+      upcomingWrap?.classList.add("hidden");
+      guestHint?.classList.remove("hidden");
+    }
+  }
+
+  function renderCustomerMobileProfileTab() {
+    const logged = document.getElementById("customerMobileProfileLoggedIn");
+    const guest = document.getElementById("customerMobileProfileGuest");
+    const emailEl = document.getElementById("customerMobileProfileEmail");
+    const isCustomer = !!(currentUser && currentUserRole === "customer");
+
+    if (logged && guest) {
+      logged.classList.toggle("hidden", !isCustomer);
+      guest.classList.toggle("hidden", isCustomer);
+    }
+    if (emailEl && isCustomer) {
+      emailEl.textContent = currentUser.email || "—";
+    }
+  }
+
+  function applyCustomerMobileTabVisibility() {
+    const enabled = isCustomerMobileShellEnabled();
+    const tab = customerMobileTab;
+    const home = document.getElementById("customerMobileTabHome");
+    const notifications = document.getElementById("customerMobileTabNotifications");
+    const profile = document.getElementById("customerMobileTabProfile");
+    const bookContent = document.getElementById("publicBookingContent");
+    const bookings = document.getElementById("customerMyBookingsCard");
+    const success = document.getElementById("bookingSuccessCard");
+    const manage = document.getElementById("manageBookingCard");
+
+    if (!enabled) {
+      home?.classList.add("hidden");
+      notifications?.classList.add("hidden");
+      profile?.classList.add("hidden");
+      bookContent?.classList.remove("customer-mobile-tab-book-active");
+      bookings?.classList.remove("customer-my-bookings-card--shell");
+      return;
+    }
+
+    const forceBookFlow =
+      isBookingSuccessCardVisible() || isManageBookingCardVisible() || publicManageMode;
+    const effectiveTab = forceBookFlow ? CUSTOMER_MOBILE_TAB.BOOK : tab;
+
+    home?.classList.toggle("hidden", effectiveTab !== CUSTOMER_MOBILE_TAB.HOME);
+    notifications?.classList.toggle("hidden", effectiveTab !== CUSTOMER_MOBILE_TAB.NOTIFICATIONS);
+    profile?.classList.toggle("hidden", effectiveTab !== CUSTOMER_MOBILE_TAB.PROFILE);
+
+    const showBook = effectiveTab === CUSTOMER_MOBILE_TAB.BOOK;
+    const showBookings = effectiveTab === CUSTOMER_MOBILE_TAB.BOOKINGS;
+    const manageFlowActive = isPublicManageFlowActive();
+
+    if (manageFlowActive) {
+      bookContent?.classList.add("hidden");
+      bookContent?.classList.remove("customer-mobile-tab-book-active");
+    } else {
+      bookContent?.classList.toggle("hidden", !showBook);
+      bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
+    }
+
+    if (showBookings) {
+      bookings?.classList.remove("hidden");
+      bookings?.classList.add("customer-my-bookings-card--shell");
+    } else if (!customerMyBookingsViewOpen) {
+      bookings?.classList.add("hidden");
+      bookings?.classList.remove("customer-my-bookings-card--shell");
+    }
+
+    if (!showBook) {
+      if (success && !isBookingSuccessCardVisible()) success.classList.add("hidden");
+    }
+    if (!showBook && manage && !isManageBookingCardVisible()) {
+      manage.classList.add("hidden");
+    }
+
+    if (effectiveTab === CUSTOMER_MOBILE_TAB.HOME) {
+      renderCustomerMobileHomeTab();
+    }
+    if (effectiveTab === CUSTOMER_MOBILE_TAB.PROFILE) {
+      renderCustomerMobileProfileTab();
+    }
+  }
+
+  function setCustomerMobileTab(tab, opts = {}) {
+    const allowed = Object.values(CUSTOMER_MOBILE_TAB);
+    if (!allowed.includes(tab)) tab = CUSTOMER_MOBILE_TAB.BOOK;
+
+    if (
+      tab === CUSTOMER_MOBILE_TAB.BOOKINGS &&
+      (!currentUser || currentUserRole !== "customer")
+    ) {
+      showToast("Sign in as a customer to view your bookings.", "error");
+      tab = CUSTOMER_MOBILE_TAB.PROFILE;
+    }
+
+    customerMobileTab = tab;
+    if (tab !== CUSTOMER_MOBILE_TAB.BOOKINGS) {
+      customerMyBookingsViewOpen = false;
+    }
+
+    document.querySelectorAll("#customerMobileBottomNav .customer-mobile-nav-item").forEach((btn) => {
+      const on = btn.dataset.mobileTab === tab;
+      btn.classList.toggle("customer-mobile-nav-item--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+
+    if (tab === CUSTOMER_MOBILE_TAB.BOOK && !opts.skipWizardInit && isCustomerMobileShellEnabled()) {
+      if (!publicManageMode && !isBookingSuccessCardVisible() && !isManageBookingCardVisible()) {
+        if (!shouldSuppressPublicBookingWizard("setCustomerMobileTab-book")) {
+          setPublicBookingWizardVisible(true);
+        }
+      }
+    }
+
+    if (tab === CUSTOMER_MOBILE_TAB.BOOKINGS && currentUser && currentUserRole === "customer") {
+      customerMyBookingsViewOpen = true;
+      void loadCustomerMyBookings().then(() => {
+        renderCustomerMobileHomeTab();
+      });
+    }
+
+    if (tab === CUSTOMER_MOBILE_TAB.HOME && currentUser && currentUserRole === "customer" && !customerMyBookings.length) {
+      void loadCustomerMyBookings().then(() => renderCustomerMobileHomeTab());
+    }
+
+    applyCustomerMobileTabVisibility();
+    renderCustomerMobileProfileTab();
+  }
+
+  function syncCustomerMobileShell() {
+    bindCustomerMobileShellListeners();
+    const publicView = document.getElementById("publicView");
+    const nav = document.getElementById("customerMobileBottomNav");
+    const enabled = isCustomerMobileShellEnabled();
+
+    publicView?.classList.toggle("public-view--mobile-shell", enabled);
+    nav?.classList.toggle("hidden", !enabled);
+
+    if (!enabled) {
+      document.getElementById("customerMobileTabHome")?.classList.add("hidden");
+      document.getElementById("customerMobileTabNotifications")?.classList.add("hidden");
+      document.getElementById("customerMobileTabProfile")?.classList.add("hidden");
+      document.getElementById("customerMyBookingsCard")?.classList.remove("customer-my-bookings-card--shell");
+      return;
+    }
+
+    if (
+      (isBookingSuccessCardVisible() || isManageBookingCardVisible()) &&
+      customerMobileTab !== CUSTOMER_MOBILE_TAB.BOOK
+    ) {
+      customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+      document.querySelectorAll("#customerMobileBottomNav .customer-mobile-nav-item").forEach((btn) => {
+        const on = btn.dataset.mobileTab === CUSTOMER_MOBILE_TAB.BOOK;
+        btn.classList.toggle("customer-mobile-nav-item--active", on);
+        btn.setAttribute("aria-current", on ? "page" : "false");
+      });
+    }
+
+    applyCustomerMobileTabVisibility();
+    renderCustomerMobileProfileTab();
+  }
+
   let manageRescheduleSelectedTime = null;
   let bookingRealtimeChannel = null;
   let bookingRealtimeRefreshTimer = null;
@@ -12419,6 +13223,11 @@
 
   function customerHubBookAppointment() {
     if (hasKnownPublicBusinessFromUrl()) {
+      if (isCustomerMobileShellEnabled()) {
+        showPublicView(true);
+        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK);
+        return;
+      }
       continueCustomerToBooking();
       return;
     }
@@ -12778,6 +13587,11 @@
   }
 
   function goToPublicBookingStep(step, opts = {}) {
+    if (publicManageMode) {
+      logWizardReset(true, "goToPublicBookingStep", "publicManageMode hard guard");
+      return;
+    }
+    if (shouldSuppressPublicBookingWizard("goToPublicBookingStep")) return;
     if (!isPublicBookingWizardMounted() || !isPublicBookingViewVisible()) return;
     const first = getPublicBookingFirstStep();
     if (step < first) step = first;
@@ -13003,8 +13817,11 @@
   function finishPublicBookingSuccessUi(insertedBooking) {
     publicBookingCreateInFlight = false;
     setPublicBookingSubmitting(false);
-    setPublicBookingWizardVisible(false, { hideShell: true });
+    enterPublicManageMode("booking-success");
+    hidePublicBookingWizardForManageFlow("finishPublicBookingSuccessUi");
     showBookingSuccessCard(insertedBooking);
+    setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
+    syncCustomerMobileShell();
     const recurringTotal = Number(lastPublicBookingSuccess?.recurringTotal || 1);
     showToast(
       recurringTotal > 1
@@ -13144,7 +13961,13 @@
   }
 
   function initPublicBookingWizardStep() {
+    if (publicManageMode) {
+      logWizardReset(true, "initPublicBookingWizardStep", "publicManageMode hard guard");
+      return;
+    }
     if (!isPublicBookingWizardMounted()) return;
+    if (shouldSuppressPublicBookingWizard("initPublicBookingWizardStep")) return;
+    logWizardReset(false, "initPublicBookingWizardStep", "running");
     try {
       hideBookingSuccessCard();
       setPublicBookingWizardVisible(true);
@@ -13196,11 +14019,18 @@
   }
 
   function setPublicBookingWizardVisible(visible, opts = {}) {
+    if (visible && publicManageMode) {
+      logWizardReset(true, "setPublicBookingWizardVisible", "publicManageMode hard guard");
+      return;
+    }
+    if (visible && shouldSuppressPublicBookingWizard("setPublicBookingWizardVisible")) return;
+    logWizardReset(false, "setPublicBookingWizardVisible", { visible, opts });
     const content = document.getElementById("publicBookingContent");
     if (!content) return;
     const shell = content.querySelector(".public-booking-shell");
     const body = shell?.querySelector(".public-booking-body");
     const hideEntireShell = opts.hideShell === true;
+    const resetStep = opts.resetStep !== false;
 
     if (shell) {
       if (visible) {
@@ -13213,7 +14043,7 @@
       }
     }
 
-    if (!visible) {
+    if (!visible && resetStep) {
       publicBookingStep = PUBLIC_BOOKING_STEP.SERVICE;
     }
 
@@ -13238,12 +14068,21 @@
   }
 
   function showPublicBookingWizard() {
+    if (publicManageMode) {
+      logWizardReset(true, "showPublicBookingWizard", "blocked — use Book another only");
+    }
+    exitPublicManageMode("showPublicBookingWizard");
+    logWizardReset(false, "showPublicBookingWizard", "explicit book-another");
+    if (isCustomerMobileShellEnabled()) {
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK);
+    }
     const businessFromManage = normalizeBusinessSlug(manageBookingData?.business_slug || "");
     activeManageToken = null;
     manageBookingData = null;
     setPublicBookingSubmitting(false);
     document.getElementById("publicBookingSummary")?.classList.remove("public-booking-summary--expanded");
     hideBookingSuccessCard();
+    document.getElementById("publicBookingContent")?.classList.remove("hidden");
     setPublicBookingWizardVisible(true);
     document.getElementById("manageBookingCard")?.classList.add("hidden");
 
@@ -13299,24 +14138,17 @@
 
   function showBookingSuccessCard(booking) {
     try {
-      const token = booking?.manage_token ? String(booking.manage_token).trim() : "";
+      const token = String(
+        booking?.manage_token || lastPublicBookingSuccess?.token || activeManageToken || ""
+      ).trim();
       const ref = booking?.booking_ref || lastPublicBookingSuccess?.ref || "—";
 
       document.getElementById("manageBookingCard")?.classList.add("hidden");
 
-      if (!token) {
-        const card = document.getElementById("bookingSuccessCard");
-        if (card) {
-          const refEl = document.getElementById("bookingSuccessRef");
-          if (refEl) refEl.textContent = ref;
-          card.classList.remove("hidden");
-          card.removeAttribute("hidden");
-          card.setAttribute("aria-hidden", "false");
-        }
-        return;
+      if (token) {
+        activeManageToken = token;
+        if (lastPublicBookingSuccess) lastPublicBookingSuccess.token = token;
       }
-
-      activeManageToken = token;
       const link = buildManageBookingLink(token);
 
       const snapshot =
@@ -13334,6 +14166,7 @@
         };
 
       snapshot.ref = ref;
+      snapshot.token = token || snapshot.token || null;
       snapshot.manageLink = link;
       lastPublicBookingSuccess = snapshot;
 
@@ -13419,12 +14252,16 @@
     return msg;
   }
 
-  function manageBookingErrorHtml(message) {
+  function manageBookingErrorHtml(message, opts = {}) {
     const friendly = friendlyManageBookingErrorMessage(message);
+    const showMyBookings = opts.showMyBookingsButton === true;
     const businessParam =
       getActivePublicBusinessSlug() ||
       getBookingBusinessSlug(manageBookingData) ||
       normalizeBusinessSlug(businessSettings?.business_slug || "");
+    const myBookingsBtn = showMyBookings
+      ? `<button type="button" class="success" style="margin-top:12px;width:100%" onclick="openCustomerMyBookingsFromManageError()">Open My Bookings</button>`
+      : "";
     const returnAction = businessParam
       ? `<button type="button" class="secondary" onclick="openManageBookingPublicReturn()">Book an appointment</button>`
       : `<button type="button" class="secondary" onclick="goHome()">Go to home</button>`;
@@ -13433,12 +14270,20 @@
       <div class="empty-state manage-booking-error">
         <span class="empty-state-title">Unable to open this booking</span>
         <span>${escapeHtml(friendly)}</span>
+        ${myBookingsBtn}
         <p style="margin-top:16px;">${returnAction}</p>
       </div>
     `;
   }
 
+  function openCustomerMyBookingsFromManageError() {
+    logManageNav("openCustomerMyBookingsFromManageError");
+    exitPublicManageMode("manage-error-my-bookings");
+    void openCustomerMyBookingsView();
+  }
+
   function openManageBookingPublicReturn() {
+    exitPublicManageMode("openManageBookingPublicReturn");
     const slug =
       getActivePublicBusinessSlug() ||
       getBookingBusinessSlug(manageBookingData) ||
@@ -13447,6 +14292,7 @@
     if (slug) {
       businessId = slug;
       showPublicView(true);
+      document.getElementById("publicBookingContent")?.classList.remove("hidden");
       setPublicBookingWizardVisible(true);
       history.replaceState(null, "", window.location.pathname + "?business=" + encodeURIComponent(slug));
       loadPublicData();
@@ -13467,21 +14313,44 @@
     }
 
     await loadBookings(true);
-    setPublicBookingWizardVisible(false);
+    hidePublicBookingWizardForManageFlow("refreshManageBookingFromToken");
     hideBookingSuccessCard();
     document.getElementById("manageBookingCard")?.classList.remove("hidden");
     renderManageBookingCard(data, renderOptions);
     return data;
   }
 
+  function normalizeManageBookingRpcData(data) {
+    if (data == null) return null;
+    let row = data;
+    if (typeof row === "string") {
+      try {
+        row = JSON.parse(row);
+      } catch (parseErr) {
+        console.warn("[manage-load] JSON parse failed", parseErr?.message || parseErr);
+        return null;
+      }
+    }
+    if (Array.isArray(row)) return row[0] || null;
+    return row && typeof row === "object" ? row : null;
+  }
+
   async function fetchBookingByManageToken(token) {
+    logManageLoad("start token fetch");
     const { data, error } = await sb.rpc("get_booking_by_manage_token", {
       p_manage_token: token
     });
     if (error) {
+      logManageLoad("fetch failed", error?.message || error);
       return { data: null, error: { message: formatManageRpcError(error) } };
     }
-    return { data, error: null };
+    const normalized = normalizeManageBookingRpcData(data);
+    if (!normalized) {
+      logManageLoad("fetch failed", "empty normalized payload");
+      return { data: null, error: { message: "Booking not found." } };
+    }
+    logManageLoad("fetch success", { ref: normalized.booking_ref || null });
+    return { data: normalized, error: null };
   }
 
   async function cancelBookingByManageToken(token) {
@@ -13551,6 +14420,7 @@
   async function ensurePublicAvailabilityForManage() {
     if (!businessSettings) await loadBusinessSettings();
     if (!services.length) await loadServices();
+    if (!staffMembers.length) await loadStaffMembers();
     await checkBookingStaffColumn();
     if (businessId) {
       await loadBookings(true);
@@ -13698,6 +14568,7 @@
   }
 
   function renderManageBookingCard(booking, options = {}) {
+    logManageLoad("render start", { ref: booking?.booking_ref || null });
     manageBookingData = booking;
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
@@ -13760,10 +14631,17 @@
     if (bookNewBtn) bookNewBtn.classList.toggle("hidden", !isCancelled);
     if (bookAnotherBtn) bookAnotherBtn.classList.toggle("hidden", isCancelled);
 
-    if (canManage) initManageReschedulePicker(booking);
+    if (canManage) {
+      try {
+        initManageReschedulePicker(booking);
+      } catch (pickerErr) {
+        console.warn("[manage-render] reschedule picker failed", pickerErr?.message || pickerErr);
+      }
+    }
+    logManageLoad("render complete", { canManage, ref: booking?.booking_ref || null });
   }
 
-  function showManageBookingError(message) {
+  function showManageBookingError(message, opts = {}) {
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
     const body = document.getElementById("manageBookingBody");
@@ -13772,17 +14650,59 @@
     if (body) body.classList.add("hidden");
     if (errorBox) {
       errorBox.classList.remove("hidden");
-      errorBox.innerHTML = manageBookingErrorHtml(message);
+      errorBox.innerHTML = manageBookingErrorHtml(message, opts);
     }
     document.getElementById("manageBookingCard")?.classList.remove("hidden");
+    hidePublicBookingWizardForManageFlow("showManageBookingError");
+    logManageLoad("show error", message);
+  }
+
+  function getLatestPublicBookingManageToken() {
+    return String(
+      activeManageToken || lastPublicBookingSuccess?.token || ""
+    ).trim();
+  }
+
+  async function openManageBookingFromConfirmation() {
+    enterPublicManageMode("confirmation-button");
+    logManageNav("clicked confirmation manage");
+    hidePublicBookingWizardForManageFlow("openManageBookingFromConfirmation");
+    hideBookingSuccessCard();
+
+    const token = getLatestPublicBookingManageToken();
+    const isCustomer = !!(currentUser && currentUserRole === "customer");
+
+    if (!token) {
+      if (isCustomer) {
+        logManageNav("no token — show My Bookings button in manage error");
+        showManageBookingError(
+          "We could not load this booking. Please open My Bookings or use the link from your email.",
+          { showMyBookingsButton: true }
+        );
+        return;
+      }
+      showManageBookingError(
+        "We could not load this booking. Please use the link from your confirmation email."
+      );
+      return;
+    }
+
+    await openManageBookingFromToken(token);
   }
 
   async function openManageBookingFromToken(token) {
-    const manageToken = String(token || activeManageToken || "").trim();
+    if (!publicManageMode) enterPublicManageMode("manage-token-open");
+    logManageNav("openManageBookingFromToken", { token: !!(token || getLatestPublicBookingManageToken()) });
+
+    const manageToken = String(token || getLatestPublicBookingManageToken() || "").trim();
     const card = document.getElementById("manageBookingCard");
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
     const body = document.getElementById("manageBookingBody");
+    const isCustomer = !!(currentUser && currentUserRole === "customer");
+
+    hidePublicBookingWizardForManageFlow("openManageBookingFromToken");
+    hideBookingSuccessCard();
 
     card?.classList.remove("hidden");
     loading?.classList.remove("hidden");
@@ -13790,29 +14710,51 @@
     body?.classList.add("hidden");
 
     if (!manageToken) {
-      showManageBookingError("Manage link is missing.");
+      showManageBookingError(
+        "We could not load this booking. Please use the link from your confirmation email.",
+        { showMyBookingsButton: isCustomer }
+      );
       return;
     }
 
     activeManageToken = manageToken;
-    setPublicBookingWizardVisible(false);
-    hideBookingSuccessCard();
+    if (lastPublicBookingSuccess) lastPublicBookingSuccess.token = manageToken;
 
     try {
       const { data, error } = await fetchBookingByManageToken(manageToken);
       if (error || !data) {
-        showManageBookingError(error?.message || "Booking not found.");
+        showManageBookingError(
+          "We could not load this booking. Please open My Bookings or use the link from your email.",
+          { showMyBookingsButton: isCustomer }
+        );
         return;
       }
 
-      await applyBusinessContextFromManageBooking(data, manageToken);
-      await loadPublicData();
-      await ensurePublicAvailabilityForManage();
       renderManageBookingCard(data);
+      logManageLoad("manage UI rendered");
+
+      try {
+        await applyBusinessContextFromManageBooking(data, manageToken);
+        await ensurePublicAvailabilityForManage();
+        renderManageBookingCard(data);
+      } catch (availErr) {
+        console.warn("[manage-load] availability refresh failed", availErr?.message || availErr);
+      }
+
+      if (isCustomerMobileShellEnabled()) {
+        customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+        syncCustomerMobileShell();
+      }
+
       card?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
       console.warn("[manage-booking] load failed", err?.message || err);
-      showManageBookingError("Unable to load this booking right now. Please try again.");
+      showManageBookingError(
+        "We could not load this booking. Please open My Bookings or use the link from your email.",
+        { showMyBookingsButton: isCustomer }
+      );
+    } finally {
+      loading?.classList.add("hidden");
     }
   }
 
@@ -15088,6 +16030,7 @@
   async function init() {
     try {
     bindDocumentTimeStepperHandlerOnce();
+    bindCustomerMobileShellListeners();
     populateCountryPhoneDropdown();
     if (!initSupabaseClient()) {
       showModeView();
@@ -15269,6 +16212,13 @@
   }
 
   function showPublicView(hasBusiness) {
+    logPublicRouting("showPublicView", {
+      hasBusiness,
+      publicManageMode,
+      customerMyBookingsViewOpen,
+      successVisible: isBookingSuccessCardVisible(),
+      manageVisible: isManageBookingCardVisible()
+    });
     hideAllViews();
     document.getElementById("publicView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.add("hidden");
@@ -15278,10 +16228,20 @@
     const openBooking = !!hasBusiness || !!urlBiz;
 
     if (openBooking) {
-      hideBookingSuccessCard();
+      if (!publicManageMode && !isBookingSuccessCardVisible()) {
+        hideBookingSuccessCard();
+      }
       document.getElementById("customerStartCard").classList.add("hidden");
       document.getElementById("publicBookingContent").classList.remove("hidden");
-      setPublicBookingWizardVisible(true);
+      const serviceListMount = document.getElementById("publicServiceList");
+      if (serviceListMount && (publicDataLoading || !services.length) && !shouldSuppressPublicBookingWizard("showPublicView-services")) {
+        serviceListMount.innerHTML = loadingStateHtml("Loading services…");
+      }
+      if (publicManageMode || shouldSuppressPublicBookingWizard("showPublicView")) {
+        hidePublicBookingWizardForManageFlow("showPublicView");
+      } else {
+        setPublicBookingWizardVisible(true);
+      }
     } else {
       document.getElementById("customerStartCard").classList.remove("hidden");
       document.getElementById("publicBookingContent").classList.add("hidden");
@@ -15289,6 +16249,10 @@
     }
 
     updateCustomerAuthUI();
+    syncCustomerMobileShell();
+    if (isCustomerMobileShellEnabled() && openBooking) {
+      setCustomerMobileTab(customerMobileTab || CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: publicManageMode });
+    }
   }
 
 
@@ -17292,6 +18256,8 @@
     if (!authBox || !loggedBox || !textBox) return;
 
     updateCustomerHubBusinessContextUi();
+    renderCustomerMobileProfileTab();
+    renderCustomerMobileHomeTab();
 
     if (currentUser && currentUserRole === "customer") {
       authBox.classList.add("hidden");
@@ -17826,9 +18792,24 @@
   async function openCustomerMyBookingsView() {
     if (!currentUser || currentUserRole !== "customer") {
       showToast("Sign in as a customer to view My Bookings.", "error");
+      if (isCustomerMobileShellEnabled()) setCustomerMobileTab(CUSTOMER_MOBILE_TAB.PROFILE);
       return;
     }
 
+    if (isCustomerMobileShellEnabled()) {
+      customerMyBookingsViewOpen = true;
+      hideBookingSuccessCard();
+      document.getElementById("manageBookingCard")?.classList.add("hidden");
+      document.getElementById("customerStartCard")?.classList.add("hidden");
+      document.getElementById("publicView")?.classList.remove("hidden");
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOKINGS);
+      await loadCustomerMyBookings();
+      renderCustomerMobileHomeTab();
+      return;
+    }
+
+    enterPublicManageMode("customer-my-bookings");
+    logManageNav("openCustomerMyBookingsView");
     hideAllViews();
     customerMyBookingsViewOpen = true;
     hideBookingSuccessCard();
@@ -17851,7 +18832,13 @@
 
   function closeCustomerMyBookingsView() {
     customerMyBookingsViewOpen = false;
+    exitPublicManageMode("closeCustomerMyBookingsView");
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    if (isCustomerMobileShellEnabled() && hasKnownPublicBusinessFromUrl()) {
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME);
+      syncCustomerMobileShell();
+      return;
+    }
     showPublicView(false);
   }
 
@@ -17861,6 +18848,7 @@
       showToast("Manage link is not available for this booking.", "error");
       return;
     }
+    enterPublicManageMode("customer-my-booking-manage");
     customerMyBookingsViewOpen = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
     const slug = booking.business_slug || "";
@@ -17875,7 +18863,9 @@
     activeManageToken = token;
     if (slug) businessId = slug;
     showPublicView(true);
-    setPublicBookingWizardVisible(false);
+    setPublicBookingWizardVisible(false, { resetStep: false, hideShell: true });
+    setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
+    syncCustomerMobileShell();
     await openManageBookingFromToken(token);
   }
 
@@ -17931,6 +18921,7 @@
   }
 
   function goHome() {
+    exitPublicManageMode("goHome");
     stopBookingRealtime();
     businessId = null;
     businessSettings = null;
@@ -18458,7 +19449,14 @@
   }
 
   async function loadPublicData() {
-    hideBookingSuccessCard();
+    publicDataLoading = true;
+    logPublicRouting("loadPublicData start", { publicManageMode, publicDataLoading });
+    try {
+    if (!publicManageMode && !isBookingSuccessCardVisible()) {
+      hideBookingSuccessCard();
+    } else {
+      logPublicRouting("loadPublicData skipped hideBookingSuccessCard");
+    }
     await loadBusinessSettings();
 
     // IMPORTANT:
@@ -18482,7 +19480,7 @@
     }
 
     const serviceListMount = document.getElementById("publicServiceList");
-    if (serviceListMount) {
+    if (serviceListMount && !publicManageMode) {
       serviceListMount.innerHTML = loadingStateHtml("Loading services…");
     }
 
@@ -18495,14 +19493,28 @@
     renderPublicBusinessProfileInfo();
     updateCustomerHubBusinessContextUi();
     applyPublicBusinessBranding();
+    renderCustomerMobileHomeTab();
+    syncCustomerMobileShell();
 
-    initPublicBookingWizardStep();
-    syncPublicRecurringBookingUi();
-    console.log(
-      "[recurring] loaded public setting",
-      readAllowRecurringAppointmentsSetting(businessSettings)
-    );
+    if (publicManageMode || shouldSuppressPublicBookingWizard("loadPublicData-end")) {
+      logPublicRouting("loadPublicData skipped initPublicBookingWizardStep", { publicManageMode });
+      syncPublicRecurringBookingUi();
+      if (publicManageMode) {
+        hidePublicBookingWizardForManageFlow("loadPublicData-end");
+      }
+    } else {
+      initPublicBookingWizardStep();
+      syncPublicRecurringBookingUi();
+      console.log(
+        "[recurring] loaded public setting",
+        readAllowRecurringAppointmentsSetting(businessSettings)
+      );
+    }
     startBookingRealtime();
+    } finally {
+      publicDataLoading = false;
+      logPublicRouting("loadPublicData end", { publicManageMode });
+    }
   }
 
 
@@ -19313,6 +20325,12 @@
       const serviceRows = Array.isArray(services) ? services : [];
 
       if (!serviceRows.length) {
+        if (publicDataLoading) {
+          list.innerHTML = loadingStateHtml("Loading services…");
+          if (hidden) hidden.value = "";
+          selectedService = null;
+          return;
+        }
         list.innerHTML = emptyStateHtml(
           "No services yet",
           "This business has not published services."
@@ -20348,7 +21366,7 @@
           hasConflict(selectedDate, selectedSlot, serviceId, null, getSelectedPublicStaffId())
         ) {
           selectedSlot = null;
-          if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+          if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS && !shouldSuppressPublicBookingWizard("refreshBookingsAfterChange")) {
             goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, { silent: true });
           }
         }
@@ -23954,9 +24972,12 @@
       });
 
       const resolvedStaffId = staffId || insertedBooking?.staff_id || null;
+      const manageToken = String(insertedBooking?.manage_token || "").trim() || null;
+      if (manageToken) activeManageToken = manageToken;
+
       lastPublicBookingSuccess = {
         ref: insertedBooking?.booking_ref || "—",
-        token: insertedBooking?.manage_token || null,
+        token: manageToken,
         staffName: resolvedStaffId ? getStaffName(resolvedStaffId) : summarySnap.staffLabel,
         serviceName: selectedService.name,
         date: selectedDate,
