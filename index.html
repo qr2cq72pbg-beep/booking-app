@@ -10996,10 +10996,144 @@
         transition: none;
       }
     }
+
+    /* Native Capacitor app shell (iOS/Android WebView) — Safari/PWA unchanged */
+    body.native-app-shell .pwa-install-hint {
+      display: none !important;
+    }
+
+    body.native-app-shell {
+      background: linear-gradient(180deg, #f1f5f9 0%, #f8fafc 42%, var(--color-bg) 100%);
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    body.native-app-shell .topbar {
+      display: none;
+    }
+
+    body.native-app-shell .container {
+      padding-top: max(16px, env(safe-area-inset-top, 0px));
+      padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom, 0px));
+    }
+
+    body.native-app-shell.customer-mobile-shell-active #publicView.public-view--mobile-shell {
+      padding-top: max(12px, env(safe-area-inset-top, 0px));
+      padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.native-app-shell #customerMobileBottomNav:not(.hidden) {
+      padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.native-app-shell .app-splash {
+      background: linear-gradient(165deg, #f8fafc 0%, #eef2ff 48%, #f1f5f9 100%);
+    }
+
+    body.native-app-shell .app-splash-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+    }
+
+    body.native-app-shell .app-splash-title {
+      font-size: 1.2rem;
+    }
+
+    body.native-app-shell #modeView.mode-entry-card {
+      max-width: 380px;
+      margin-top: clamp(12px, 6vh, 48px);
+      padding: 28px 22px 24px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 20px;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.85) inset,
+        0 16px 40px rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    body.native-app-shell #modeView .mode-entry-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    body.native-app-shell #modeView .mode-entry-app-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(37, 99, 235, 0.22);
+    }
+
+    body.native-app-shell #modeView .mode-entry-title {
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    body.native-app-shell #modeView .mode-entry-subtitle {
+      max-width: 280px;
+      font-size: 15px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    body.native-app-shell #modeView .mode-entry-actions {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 0;
+    }
+
+    body.native-app-shell #modeView .mode-entry-btn {
+      min-height: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    body.native-app-shell #modeView .mode-entry-btn--customer {
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
+    }
+
+    #modeView .mode-entry-app-icon,
+    #modeView .mode-entry-title-native,
+    #modeView .mode-entry-subtitle-native {
+      display: none;
+    }
+
+    body.native-app-shell #modeView .mode-entry-app-icon,
+    body.native-app-shell #modeView .mode-entry-title-native,
+    body.native-app-shell #modeView .mode-entry-subtitle-native {
+      display: block;
+    }
+
+    body.native-app-shell #modeView .mode-entry-title-web,
+    body.native-app-shell #modeView .mode-entry-subtitle-web {
+      display: none;
+    }
   </style>
 </head>
 
 <body class="app-theme-minimal">
+  <script>
+    (function applyNativeAppShellClassEarly() {
+      try {
+        var cap = window.Capacitor;
+        if (!cap) return;
+        var native =
+          typeof cap.isNativePlatform === "function"
+            ? cap.isNativePlatform()
+            : /^(ios|android)$/i.test(
+                String((cap.getPlatform && cap.getPlatform()) || cap.platform || "")
+              );
+        if (native) document.body.classList.add("native-app-shell");
+      } catch (e) {
+        /* ignore */
+      }
+    })();
+  </script>
 
   <div id="appSplash" class="app-splash is-hidden" aria-hidden="true">
     <div class="app-splash-inner">
@@ -11029,12 +11163,21 @@
   <div class="container">
 
     <div id="modeView" class="card mode-entry-card hidden">
-      <h1 class="auth-card-title">Welcome</h1>
-      <p class="auth-card-lead">Choose how you want to use the app.</p>
+      <div class="mode-entry-hero">
+        <img class="mode-entry-app-icon" src="icons/icon-192.png" alt="" width="64" height="64" decoding="async" />
+        <h1 class="auth-card-title mode-entry-title">
+          <span class="mode-entry-title-web">Welcome</span>
+          <span class="mode-entry-title-native">Booking</span>
+        </h1>
+        <p class="auth-card-lead mode-entry-subtitle">
+          <span class="mode-entry-subtitle-web">Choose how you want to use the app.</span>
+          <span class="mode-entry-subtitle-native">Run your business or book your next appointment.</span>
+        </p>
+      </div>
 
-      <div class="mode-buttons">
-        <button type="button" class="auth-btn auth-btn--secondary" onclick="chooseAdmin()">Admin</button>
-        <button type="button" class="auth-btn auth-btn--primary" onclick="chooseCustomer()">Customer</button>
+      <div class="mode-buttons mode-entry-actions">
+        <button type="button" class="auth-btn auth-btn--secondary mode-entry-btn mode-entry-btn--admin" onclick="chooseAdmin()">Admin</button>
+        <button type="button" class="auth-btn auth-btn--primary mode-entry-btn mode-entry-btn--customer" onclick="chooseCustomer()">Customer</button>
       </div>
     </div>
 
@@ -12620,7 +12763,7 @@
             </div>
           </div>
           <p id="customerMobileHomeMeta" class="customer-mobile-home-meta hidden"></p>
-          <button type="button" class="success customer-mobile-home-cta" onclick="setCustomerMobileTab('book')">Book appointment</button>
+          <button type="button" class="success customer-mobile-home-cta" onclick="startNewPublicBookingFromHome()">Book appointment</button>
           <div id="customerMobileUpcomingCard" class="customer-mobile-upcoming-card hidden">
             <p class="customer-mobile-upcoming-label">Your next appointment</p>
             <p id="customerMobileUpcomingTitle" class="customer-mobile-upcoming-title"></p>
@@ -13731,7 +13874,6 @@
     DETAILS: 4
   });
   let publicBookingStep = PUBLIC_BOOKING_STEP.SERVICE;
-  let publicBookingStepAnimTimer = null;
   let publicBookingCreateInFlight = false;
   let lastPublicBookingSuccess = null;
   let publicDataLoading = false;
@@ -13774,11 +13916,7 @@
   function hidePublicBookingWizardForManageFlow(caller) {
     logManageNav("hidePublicBookingWizardForManageFlow", caller);
     setPublicBookingWizardVisible(false, { hideShell: true, resetStep: false });
-    document.querySelectorAll("#publicView .public-booking-step").forEach((el) => {
-      el.hidden = true;
-      el.setAttribute("hidden", "");
-      el.classList.remove("public-booking-step--active", "public-booking-step--exit");
-    });
+    hideAllPublicBookingWizardPanels();
     document.getElementById("publicBookingContent")?.classList.remove("hidden");
   }
 
@@ -13940,11 +14078,33 @@
     return window.innerWidth <= 768;
   }
 
+  function isNativeCapacitorApp() {
+    try {
+      const cap = window.Capacitor;
+      if (!cap) return false;
+      if (typeof cap.isNativePlatform === "function") return !!cap.isNativePlatform();
+      if (typeof cap.getPlatform === "function") {
+        const platform = String(cap.getPlatform() || "").toLowerCase();
+        return platform === "ios" || platform === "android";
+      }
+      const platform = String(cap.platform || "").toLowerCase();
+      return platform === "ios" || platform === "android";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function applyNativeAppShellClass() {
+    if (!isNativeCapacitorApp()) return;
+    document.body.classList.add("native-app-shell");
+    document.getElementById("pwaInstallHint")?.classList.add("hidden");
+  }
+
   function isMobilePublicShellPresentation() {
     const publicView = document.getElementById("publicView");
     if (!publicView || publicView.classList.contains("hidden")) return false;
     if (window.innerWidth > 768) return false;
-    return isCustomerMobileShellEnabled() || isStandaloneDisplayMode();
+    return isCustomerMobileShellEnabled() || isStandaloneDisplayMode() || isNativeCapacitorApp();
   }
 
   function shouldSuppressManualBusinessEntryToast() {
@@ -14505,11 +14665,48 @@
     }
   }
 
+  function forceStartPublicBookingAtServiceStep(reason) {
+    renderPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE, {
+      forceFresh: true,
+      reason: reason || "force-start",
+      skipManageGuard: true,
+      skipSuppressGuard: true
+    });
+  }
+
+  function startNewPublicBookingFromHome() {
+    if (!hasKnownPublicBusinessFromUrl() && !businessId) {
+      customerHubBookAppointment();
+      return;
+    }
+
+    syncPublicBusinessFromUrl();
+    showPublicView(true);
+
+    if (isCustomerMobileShellEnabled()) {
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
+    }
+
+    renderPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE, {
+      forceFresh: true,
+      reason: "home-cta",
+      skipManageGuard: true,
+      skipSuppressGuard: true
+    });
+
+    if (isCustomerMobileShellEnabled()) {
+      applyCustomerMobileTabVisibility();
+    }
+
+    if (!services.length && businessId) {
+      void loadPublicData();
+    }
+  }
+
   function customerHubBookAppointment() {
     if (hasKnownPublicBusinessFromUrl()) {
       if (isCustomerMobileShellEnabled()) {
-        showPublicView(true);
-        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK);
+        startNewPublicBookingFromHome();
         return;
       }
       continueCustomerToBooking();
@@ -14812,17 +15009,180 @@
     return steps;
   }
 
-  function renderPublicBookingProgress() {
+  function getPublicBookingStepPanelName(step) {
+    switch (step) {
+      case PUBLIC_BOOKING_STEP.SERVICE:
+        return "service";
+      case PUBLIC_BOOKING_STEP.STAFF:
+        return "staff";
+      case PUBLIC_BOOKING_STEP.SCHEDULE:
+        return "schedule";
+      case PUBLIC_BOOKING_STEP.DETAILS:
+        return "details";
+      default:
+        return "unknown";
+    }
+  }
+
+  function getPublicBookingStepPanelElement(step) {
+    switch (step) {
+      case PUBLIC_BOOKING_STEP.SERVICE:
+        return document.getElementById("publicBookingStepService");
+      case PUBLIC_BOOKING_STEP.STAFF:
+        return document.getElementById("publicBookingStepStaff");
+      case PUBLIC_BOOKING_STEP.SCHEDULE:
+        return document.getElementById("publicBookingStepSchedule");
+      case PUBLIC_BOOKING_STEP.DETAILS:
+        return document.getElementById("publicBookingStepDetails");
+      default:
+        return null;
+    }
+  }
+
+  function hideAllPublicBookingWizardPanels() {
+    document.querySelectorAll("#publicView .public-booking-step").forEach((el) => {
+      el.hidden = true;
+      el.setAttribute("hidden", "");
+      el.classList.remove("public-booking-step--active", "public-booking-step--exit");
+    });
+  }
+
+  function applyPublicBookingFreshStartReset() {
+    hideBookingSuccessCard();
+    exitPublicManageMode("booking-render-fresh");
+    activeManageToken = null;
+    manageBookingData = null;
+    publicBookingCreateInFlight = false;
+    setPublicBookingSubmitting(false);
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    document.getElementById("publicBookingSummary")?.classList.remove("public-booking-summary--expanded");
+
+    selectedDate = null;
+    selectedSlot = null;
+    selectedService = null;
+    selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+
+    const publicServiceEl = document.getElementById("publicService");
+    if (publicServiceEl) publicServiceEl.value = "";
+    const publicStaffEl = document.getElementById("publicStaff");
+    if (publicStaffEl) publicStaffEl.value = "";
+
+    clearPublicTouchTimelinePending();
+    clearPublicSlotsMount();
+    updatePublicTimesPanelMeta();
+  }
+
+  function renderPublicBookingStepPanelContent(step, opts = {}) {
+    if (step === PUBLIC_BOOKING_STEP.SERVICE) {
+      renderPublicServices();
+      return;
+    }
+    if (step === PUBLIC_BOOKING_STEP.STAFF) {
+      renderPublicStaffOptions();
+      return;
+    }
+    if (step === PUBLIC_BOOKING_STEP.SCHEDULE) {
+      refreshPublicAvailability({ refreshCalendar: opts.refreshCalendar !== false });
+      return;
+    }
+    if (step === PUBLIC_BOOKING_STEP.DETAILS) {
+      updatePublicBookingDetailsSummary();
+      syncPublicRecurringBookingUi();
+    }
+  }
+
+  function normalizePublicBookingRenderStep(step) {
+    const first = getPublicBookingFirstStep();
+    let normalized = Math.max(first, Math.min(PUBLIC_BOOKING_STEP.DETAILS, Number(step) || first));
+    if (
+      normalized === PUBLIC_BOOKING_STEP.DETAILS &&
+      (!selectedService || !selectedDate || !selectedSlot)
+    ) {
+      console.log("[booking-render] details invalid — redirect to service");
+      normalized = PUBLIC_BOOKING_STEP.SERVICE;
+    }
+    return normalized;
+  }
+
+  function renderPublicBookingStep(step, opts = {}) {
+    if (!isPublicBookingWizardMounted()) return null;
+
+    if (opts.forceFresh) {
+      applyPublicBookingFreshStartReset();
+    }
+
+    if (!opts.skipManageGuard && publicManageMode) {
+      logWizardReset(true, "renderPublicBookingStep", "publicManageMode");
+      return null;
+    }
+    if (!opts.skipSuppressGuard && shouldSuppressPublicBookingWizard("renderPublicBookingStep")) {
+      return null;
+    }
+
+    const targetStep = normalizePublicBookingRenderStep(step);
+    console.log("[booking-render] render step", targetStep, opts.reason || "");
+
+    hideAllPublicBookingWizardPanels();
+
+    const panel = getPublicBookingStepPanelElement(targetStep);
+    if (panel) {
+      panel.hidden = false;
+      panel.removeAttribute("hidden");
+      panel.classList.add("public-booking-step--active");
+    }
+
+    publicBookingStep = targetStep;
+    console.log("[booking-render] visible panel:", getPublicBookingStepPanelName(targetStep));
+
+    if (opts.showWizard !== false) {
+      setPublicBookingWizardVisible(true, { resetStep: false });
+      const content = document.getElementById("publicBookingContent");
+      content?.classList.remove("hidden");
+      const shell = content?.querySelector(".public-booking-shell");
+      const body = shell?.querySelector(".public-booking-body");
+      shell?.classList.remove("hidden");
+      body?.classList.remove("hidden");
+      content?.querySelectorAll(".public-booking-card").forEach((el) => {
+        if (el.id === "bookingSuccessCard" || el.id === "manageBookingCard") return;
+        el.classList.remove("hidden");
+      });
+      document
+        .querySelector("#publicView .public-booking-wizard-footer")
+        ?.classList.remove("public-booking-wizard-footer--sticky-confirm");
+    }
+
+    renderPublicBookingProgress(targetStep);
+    updatePublicBookingBackButton(targetStep);
+    renderPublicBookingStepPanelContent(targetStep, opts);
+    updatePublicBookingSummaryVisibility();
+    hideBookingSuccessCard();
+
+    if (opts.scrollTop !== false) {
+      const scrollTarget =
+        document.getElementById("publicBookingStepsViewport") ||
+        document.getElementById("publicBookingContent");
+      if (scrollTarget) {
+        scrollTarget.scrollTop = 0;
+        scrollTarget.scrollTo?.({ top: 0, behavior: "auto" });
+      }
+    }
+
+    return targetStep;
+  }
+
+  function renderPublicBookingProgress(activeStep) {
     if (!isPublicBookingWizardMounted()) return;
     const nav = document.getElementById("publicBookingProgress");
     if (!nav) return;
 
+    const stepForUi =
+      typeof activeStep === "number" ? activeStep : publicBookingStep;
     const steps = getPublicBookingProgressSteps();
     const parts = [];
 
     steps.forEach((step, index) => {
-      const isActive = publicBookingStep === step.id;
-      const isDone = publicBookingStep > step.id;
+      const isActive = stepForUi === step.id;
+      const isDone = stepForUi > step.id;
       const stateClass = isActive
         ? "public-booking-progress-item--active"
         : isDone
@@ -14844,17 +15204,19 @@
     nav.innerHTML = parts.join("");
   }
 
-  function updatePublicBookingBackButton() {
+  function updatePublicBookingBackButton(activeStep) {
     if (!isPublicBookingWizardMounted()) return;
     const backBtn = document.getElementById("publicBookingBackBtn");
     const footer = document.querySelector("#publicView .public-booking-wizard-footer");
     if (!backBtn) return;
 
+    const stepForUi =
+      typeof activeStep === "number" ? activeStep : publicBookingStep;
     const first = getPublicBookingFirstStep();
-    const showBack = publicBookingStep > first;
+    const showBack = stepForUi > first;
     backBtn.classList.toggle("hidden", !showBack);
 
-    if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+    if (stepForUi === PUBLIC_BOOKING_STEP.DETAILS) {
       footer?.classList.add("public-booking-wizard-footer--sticky-confirm");
     } else {
       footer?.classList.remove("public-booking-wizard-footer--sticky-confirm");
@@ -14886,41 +15248,6 @@
     updatePublicTimesPanelMeta();
   }
 
-  function activatePublicBookingStepPanel(step, direction = "forward") {
-    if (!isPublicBookingWizardMounted()) return;
-    const stepEls = document.querySelectorAll("#publicView .public-booking-step");
-    if (publicBookingStepAnimTimer) {
-      clearTimeout(publicBookingStepAnimTimer);
-      publicBookingStepAnimTimer = null;
-    }
-
-    stepEls.forEach((el) => {
-      const stepNum = Number(el.dataset.step);
-      const isTarget = stepNum === step;
-
-      if (isTarget) {
-        el.hidden = false;
-        el.removeAttribute("hidden");
-        el.classList.remove("public-booking-step--exit");
-        el.classList.add("public-booking-step--active");
-        return;
-      }
-
-      if (el.classList.contains("public-booking-step--active")) {
-        el.classList.remove("public-booking-step--active");
-        el.classList.add("public-booking-step--exit");
-        publicBookingStepAnimTimer = setTimeout(() => {
-          el.hidden = true;
-          el.classList.remove("public-booking-step--exit");
-          publicBookingStepAnimTimer = null;
-        }, 260);
-      } else {
-        el.hidden = true;
-        el.classList.remove("public-booking-step--active", "public-booking-step--exit");
-      }
-    });
-  }
-
   function goToPublicBookingStep(step, opts = {}) {
     if (publicManageMode) {
       logWizardReset(true, "goToPublicBookingStep", "publicManageMode hard guard");
@@ -14928,41 +15255,25 @@
     }
     if (shouldSuppressPublicBookingWizard("goToPublicBookingStep")) return;
     if (!isPublicBookingWizardMounted() || !isPublicBookingViewVisible()) return;
+
+    let targetStep = Number(step);
     const first = getPublicBookingFirstStep();
-    if (step < first) step = first;
-    if (step > PUBLIC_BOOKING_STEP.DETAILS) step = PUBLIC_BOOKING_STEP.DETAILS;
-    if (step === PUBLIC_BOOKING_STEP.STAFF && !isPublicStaffStepEnabled()) {
-      step =
+    if (targetStep < first) targetStep = first;
+    if (targetStep > PUBLIC_BOOKING_STEP.DETAILS) targetStep = PUBLIC_BOOKING_STEP.DETAILS;
+    if (targetStep === PUBLIC_BOOKING_STEP.STAFF && !isPublicStaffStepEnabled()) {
+      targetStep =
         publicBookingStep < PUBLIC_BOOKING_STEP.STAFF
           ? PUBLIC_BOOKING_STEP.SCHEDULE
           : PUBLIC_BOOKING_STEP.SERVICE;
     }
 
-    const prev = publicBookingStep;
-    const direction = step < prev ? "back" : "forward";
-    publicBookingStep = step;
-
-    activatePublicBookingStepPanel(step, direction);
-    renderPublicBookingProgress();
-    updatePublicBookingBackButton();
-
-    if (step === PUBLIC_BOOKING_STEP.SERVICE) {
-      renderPublicServices();
-    } else if (step === PUBLIC_BOOKING_STEP.STAFF) {
-      renderPublicStaffOptions();
-    }
-
-    if (step === PUBLIC_BOOKING_STEP.SCHEDULE) {
-      refreshPublicAvailability({ refreshCalendar: opts.refreshCalendar !== false });
-    }
-
-    if (step === PUBLIC_BOOKING_STEP.DETAILS) {
-      updatePublicBookingDetailsSummary();
-      syncPublicRecurringBookingUi();
-    }
-
-    updatePublicBookingSummaryVisibility();
-    hideBookingSuccessCard();
+    renderPublicBookingStep(targetStep, {
+      ...opts,
+      reason: opts.reason || "goTo",
+      skipManageGuard: true,
+      skipSuppressGuard: true,
+      scrollTop: opts.silent ? false : opts.scrollTop
+    });
 
     if (!opts.silent) {
       const viewport = document.getElementById("publicBookingStepsViewport");
@@ -15307,16 +15618,11 @@
     logWizardReset(false, "initPublicBookingWizardStep", "running");
     try {
       hideBookingSuccessCard();
-      setPublicBookingWizardVisible(true);
-
-      publicBookingStep = PUBLIC_BOOKING_STEP.SERVICE;
-      activatePublicBookingStepPanel(PUBLIC_BOOKING_STEP.SERVICE);
-      renderPublicBookingProgress();
-      updatePublicBookingBackButton();
-
-      renderPublicServices();
-      renderPublicStaffOptions();
-      updatePublicBookingSummaryVisibility();
+      renderPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE, {
+        reason: "init",
+        skipManageGuard: true,
+        skipSuppressGuard: true
+      });
     } catch (err) {
       console.error("[public-booking-wizard] init failed", err);
       const list = document.getElementById("publicServiceList");
@@ -17372,17 +17678,24 @@
     );
   }
 
+  function shouldShowAppLaunchSplash() {
+    return isStandaloneDisplayMode() || isNativeCapacitorApp();
+  }
+
   function initPwaAppShell() {
+    applyNativeAppShellClass();
+
     const splash = document.getElementById("appSplash");
-    if (splash && isStandaloneDisplayMode()) {
+    if (splash && shouldShowAppLaunchSplash()) {
       splash.classList.remove("is-hidden");
       splash.removeAttribute("aria-hidden");
+      const splashMs = isNativeCapacitorApp() ? 420 : 320;
       requestAnimationFrame(() => {
         window.setTimeout(() => {
           splash.classList.add("is-hidden");
           splash.setAttribute("aria-hidden", "true");
           window.setTimeout(() => splash.classList.add("is-removed"), 280);
-        }, 320);
+        }, splashMs);
       });
     } else if (splash) {
       splash.classList.add("is-removed");
@@ -17395,7 +17708,7 @@
     const hint = document.getElementById("pwaInstallHint");
     const textEl = document.getElementById("pwaInstallHintText");
     if (!hint || !textEl) return;
-    if (isStandaloneDisplayMode()) return;
+    if (isStandaloneDisplayMode() || isNativeCapacitorApp()) return;
     if (window.innerWidth > 768) return;
     try {
       if (localStorage.getItem(PWA_INSTALL_HINT_KEY) === "1") return;
