@@ -9908,17 +9908,21 @@
     }
 
     @media (max-width: 768px) {
+      body.customer-mobile-shell-active #publicView.public-view--mobile-shell,
       #publicView.public-view--mobile-shell {
         padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
       }
 
+      body.customer-mobile-shell-active #customerMobileBottomNav:not(.hidden),
       #publicView.public-view--mobile-shell .customer-mobile-bottom-nav:not(.hidden) {
         display: flex;
         position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 120;
+        z-index: 9999;
+        pointer-events: auto;
+        touch-action: manipulation;
         align-items: stretch;
         justify-content: space-around;
         gap: 2px;
@@ -9929,6 +9933,7 @@
         backdrop-filter: blur(12px);
       }
 
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-item,
       #publicView.public-view--mobile-shell .customer-mobile-nav-item {
         flex: 1;
         display: flex;
@@ -9946,17 +9951,26 @@
         font-weight: 700;
         letter-spacing: 0.02em;
         cursor: pointer;
+        pointer-events: auto;
+        touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
       }
 
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-item--active,
       #publicView.public-view--mobile-shell .customer-mobile-nav-item--active {
         color: var(--business-accent, #2563eb);
         background: color-mix(in srgb, var(--business-accent, #2563eb) 12%, transparent);
       }
 
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-icon,
       #publicView.public-view--mobile-shell .customer-mobile-nav-icon {
         font-size: 18px;
         line-height: 1;
+      }
+
+      body.customer-mobile-shell-active #publicBookingContent.hidden {
+        display: none !important;
+        pointer-events: none !important;
       }
 
       #publicView.public-view--mobile-shell .customer-mobile-tab-panel:not(.hidden) {
@@ -12251,29 +12265,31 @@
           </div>
         </div>
 
+      </div>
+
       <div id="customerMobileAuthOverlay" class="customer-mobile-auth-overlay hidden" role="dialog" aria-modal="true" aria-label="Customer sign in">
         <button type="button" class="customer-mobile-auth-back" onclick="closeCustomerMobileAuthFromShell()">← Back</button>
         <div id="customerMobileAuthHost" class="customer-mobile-auth-host"></div>
       </div>
 
       <nav id="customerMobileBottomNav" class="customer-mobile-bottom-nav hidden" aria-label="Customer app navigation">
-        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="home" aria-current="false" onclick="setCustomerMobileTab('home')">
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="home" aria-current="false">
           <span class="customer-mobile-nav-icon" aria-hidden="true">⌂</span>
           <span>Home</span>
         </button>
-        <button type="button" class="customer-mobile-nav-item customer-mobile-nav-item--active" data-mobile-tab="book" aria-current="page" onclick="setCustomerMobileTab('book')">
+        <button type="button" class="customer-mobile-nav-item customer-mobile-nav-item--active" data-mobile-tab="book" aria-current="page">
           <span class="customer-mobile-nav-icon" aria-hidden="true">📅</span>
           <span>Book</span>
         </button>
-        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="bookings" aria-current="false" onclick="setCustomerMobileTab('bookings')">
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="bookings" aria-current="false">
           <span class="customer-mobile-nav-icon" aria-hidden="true">📋</span>
           <span>Bookings</span>
         </button>
-        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="notifications" aria-current="false" onclick="setCustomerMobileTab('notifications')">
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="notifications" aria-current="false">
           <span class="customer-mobile-nav-icon" aria-hidden="true">🔔</span>
           <span>Alerts</span>
         </button>
-        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="profile" aria-current="false" onclick="setCustomerMobileTab('profile')">
+        <button type="button" class="customer-mobile-nav-item" data-mobile-tab="profile" aria-current="false">
           <span class="customer-mobile-nav-icon" aria-hidden="true">👤</span>
           <span>Profile</span>
         </button>
@@ -13007,6 +13023,8 @@
   });
   let customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
   let customerMobileShellBound = false;
+  let customerMobileNavHomeParent = null;
+  let customerMobileNavLastTapAt = 0;
   /** @type {{ returnTab: string, panel: string, fromSuccess?: boolean } | null} */
   let customerMobileAuthReturn = null;
   let customerStartCardHomeParent = null;
@@ -13123,10 +13141,55 @@
     return window.innerWidth <= 768;
   }
 
+  function ensureCustomerMobileNavPortaled() {
+    const nav = document.getElementById("customerMobileBottomNav");
+    if (!nav) return;
+    if (!customerMobileNavHomeParent) {
+      customerMobileNavHomeParent = nav.parentElement;
+    }
+    if (nav.parentElement !== document.body) {
+      document.body.appendChild(nav);
+    }
+  }
+
+  function restoreCustomerMobileNavFromPortal() {
+    const nav = document.getElementById("customerMobileBottomNav");
+    if (nav && customerMobileNavHomeParent && nav.parentElement !== customerMobileNavHomeParent) {
+      customerMobileNavHomeParent.appendChild(nav);
+    }
+  }
+
+  function handleCustomerMobileNavInteraction(event) {
+    const navRoot = document.getElementById("customerMobileBottomNav");
+    if (!navRoot || navRoot.classList.contains("hidden")) return;
+
+    const btn = event.target?.closest?.("#customerMobileBottomNav .customer-mobile-nav-item[data-mobile-tab]");
+    if (!btn) return;
+
+    const tab = btn.dataset.mobileTab;
+    if (!tab) return;
+
+    const now = Date.now();
+    if (now - customerMobileNavLastTapAt < 350) return;
+    customerMobileNavLastTapAt = now;
+
+    if (event.type === "touchend" && event.cancelable) {
+      event.preventDefault();
+    }
+
+    console.log("[mobile-shell] tab clicked:", tab);
+    setCustomerMobileTab(tab);
+  }
+
   function bindCustomerMobileShellListeners() {
     if (customerMobileShellBound) return;
     customerMobileShellBound = true;
+    window.setCustomerMobileTab = setCustomerMobileTab;
     window.addEventListener("resize", () => syncCustomerMobileShell());
+
+    document.addEventListener("click", handleCustomerMobileNavInteraction, true);
+    document.addEventListener("touchend", handleCustomerMobileNavInteraction, true);
+    document.addEventListener("pointerup", handleCustomerMobileNavInteraction, true);
   }
 
   function renderCustomerMobileHomeTab() {
@@ -13271,7 +13334,7 @@
     }
 
     const forceBookFlow =
-      isBookingSuccessCardVisible() || isManageBookingCardVisible() || publicManageMode;
+      isBookingSuccessCardVisible() || isManageBookingCardVisible();
     const effectiveTab = forceBookFlow ? CUSTOMER_MOBILE_TAB.BOOK : tab;
 
     home?.classList.toggle("hidden", effectiveTab !== CUSTOMER_MOBILE_TAB.HOME);
@@ -13280,7 +13343,8 @@
 
     const showBook = effectiveTab === CUSTOMER_MOBILE_TAB.BOOK;
     const showBookings = effectiveTab === CUSTOMER_MOBILE_TAB.BOOKINGS;
-    const manageFlowActive = isPublicManageFlowActive();
+    const manageFlowActive =
+      isBookingSuccessCardVisible() || isManageBookingCardVisible();
 
     if (manageFlowActive) {
       if (isBookingSuccessCardVisible() || isManageBookingCardVisible()) {
@@ -13328,10 +13392,23 @@
     }
   }
 
+  function dismissMobileShellFlowPanelsForTabSwitch(tab) {
+    if (tab === CUSTOMER_MOBILE_TAB.BOOK) return;
+    if (isBookingSuccessCardVisible()) {
+      hideBookingSuccessCard();
+      exitPublicManageMode("mobile-shell-tab");
+    }
+    if (isManageBookingCardVisible()) {
+      document.getElementById("manageBookingCard")?.classList.add("hidden");
+      exitPublicManageMode("mobile-shell-tab");
+    }
+  }
+
   function setCustomerMobileTab(tab, opts = {}) {
     const allowed = Object.values(CUSTOMER_MOBILE_TAB);
     if (!allowed.includes(tab)) tab = CUSTOMER_MOBILE_TAB.BOOK;
 
+    dismissMobileShellFlowPanelsForTabSwitch(tab);
     customerMobileTab = tab;
     if (tab !== CUSTOMER_MOBILE_TAB.BOOKINGS) {
       customerMyBookingsViewOpen = false;
@@ -13365,6 +13442,7 @@
     applyCustomerMobileTabVisibility();
     renderCustomerMobileProfileTab();
   }
+  window.setCustomerMobileTab = setCustomerMobileTab;
 
   function syncCustomerMobileShell() {
     bindCustomerMobileShellListeners();
@@ -13372,16 +13450,20 @@
     const nav = document.getElementById("customerMobileBottomNav");
     const enabled = isCustomerMobileShellEnabled();
 
+    document.body.classList.toggle("customer-mobile-shell-active", enabled);
     publicView?.classList.toggle("public-view--mobile-shell", enabled);
     nav?.classList.toggle("hidden", !enabled);
 
     if (!enabled) {
+      restoreCustomerMobileNavFromPortal();
       document.getElementById("customerMobileTabHome")?.classList.add("hidden");
       document.getElementById("customerMobileTabNotifications")?.classList.add("hidden");
       document.getElementById("customerMobileTabProfile")?.classList.add("hidden");
       document.getElementById("customerMyBookingsCard")?.classList.remove("customer-my-bookings-card--shell");
       return;
     }
+
+    ensureCustomerMobileNavPortaled();
 
     if (
       (isBookingSuccessCardVisible() || isManageBookingCardVisible()) &&
