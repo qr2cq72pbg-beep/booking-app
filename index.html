@@ -12477,6 +12477,10 @@
             </div>
           </div>
 
+          <p id="customerManualEntryPrompt" class="customer-hub-manual-prompt hidden">
+            <button type="button" class="auth-btn auth-btn--ghost customer-hub-manual-toggle" onclick="showCustomerManualBusinessEntryExplicit()">Use a different business ID</button>
+          </p>
+
           <div id="customerManualBusinessSection" class="customer-hub-panel customer-hub-panel--manual">
             <h2 class="auth-card-title" style="font-size: 1.05rem; margin-bottom: 6px">Book without a link</h2>
             <p class="auth-card-lead" style="margin-bottom: 12px">Enter a business ID if you do not have a QR code or booking link.</p>
@@ -13823,6 +13827,7 @@
   let customerMobileAuthReturn = null;
   let customerStartCardHomeParent = null;
   let publicMobileSlotsLoading = false;
+  let customerPreferManualBusinessEntry = false;
 
   function isCustomerMobileAuthOverlayOpen() {
     const overlay = document.getElementById("customerMobileAuthOverlay");
@@ -14341,16 +14346,63 @@
   }
 
   function getActivePublicBusinessSlug() {
-    return getPublicBusinessIdFromUrl() || normalizeBusinessSlug(publicBusinessId) || "";
+    const fromLiveUrl = getPublicBusinessIdFromUrl();
+    if (fromLiveUrl) return fromLiveUrl;
+    return normalizeBusinessSlug(publicBusinessId) || "";
   }
 
   function hasKnownPublicBusinessFromUrl() {
-    return !!getActivePublicBusinessSlug();
+    return !!getPublicBusinessIdFromUrl();
+  }
+
+  function validateManualBusinessIdInput(raw) {
+    const trimmed = String(raw || "").trim();
+    if (!trimmed) {
+      return { ok: false, normalized: "", message: "Enter business ID." };
+    }
+    if (/\s/.test(trimmed)) {
+      return {
+        ok: false,
+        normalized: "",
+        message: `Invalid business ID: "${trimmed}". Business ID cannot contain spaces.`
+      };
+    }
+    const normalized = normalizeBusinessSlug(trimmed);
+    if (!normalized || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(normalized)) {
+      return {
+        ok: false,
+        normalized: "",
+        message: `Invalid business ID: "${trimmed}". Use letters, numbers, and hyphens (e.g. my-business-41784a).`
+      };
+    }
+    return { ok: true, normalized, message: "" };
+  }
+
+  function clearStalePublicBusinessCacheForSlug(slug) {
+    if (!slug) return;
+    const settingsSlug = normalizeBusinessSlug(businessSettings?.business_slug || "");
+    if (businessSettings && settingsSlug && settingsSlug !== slug) {
+      businessSettings = null;
+      services = [];
+      staffMembers = [];
+      bookings = [];
+      blockedDays = [];
+    }
+    if (businessId && !isValidUuid(businessId)) {
+      const activeSlug = normalizeBusinessSlug(businessId);
+      if (activeSlug && activeSlug !== slug) {
+        businessId = slug;
+      }
+    }
   }
 
   function syncPublicBusinessFromUrl() {
     const slug = getActivePublicBusinessSlug();
+    const manual = document.getElementById("manualBusinessId");
+
     if (slug) {
+      clearStalePublicBusinessCacheForSlug(slug);
+
       const settingsSlug = normalizeBusinessSlug(businessSettings?.business_slug || "");
       if (
         businessSettings?.business_id &&
@@ -14361,17 +14413,41 @@
       } else {
         businessId = slug;
       }
-      const manual = document.getElementById("manualBusinessId");
-      if (manual) manual.value = slug;
+
+      if (manual) {
+        const manualNorm = normalizeBusinessSlug(manual.value || "");
+        if (manualNorm !== slug) {
+          manual.value = slug;
+        }
+      }
+
+      if (getPublicBusinessIdFromUrl()) {
+        customerPreferManualBusinessEntry = false;
+      }
     }
+
     updateCustomerHubBusinessContextUi();
     return slug;
+  }
+
+  function showCustomerManualBusinessEntryExplicit() {
+    customerPreferManualBusinessEntry = true;
+    syncPublicBusinessFromUrl();
+    const manualSection = document.getElementById("customerManualBusinessSection");
+    const input = document.getElementById("manualBusinessId");
+    manualSection?.classList.remove("hidden");
+    document.getElementById("customerManualEntryPrompt")?.classList.add("hidden");
+    if (input) {
+      input.scrollIntoView({ behavior: "smooth", block: "center" });
+      window.setTimeout(() => input.focus({ preventScroll: true }), 150);
+    }
   }
 
   function updateCustomerHubBusinessContextUi() {
     const slug = getActivePublicBusinessSlug();
     const ctx = document.getElementById("customerBusinessContext");
     const manualSection = document.getElementById("customerManualBusinessSection");
+    const manualPrompt = document.getElementById("customerManualEntryPrompt");
     const divider = document.getElementById("customerAuthDivider");
     const nameEl = document.getElementById("customerBusinessContextName");
     const slugEl = document.getElementById("customerBusinessContextSlug");
@@ -14381,8 +14457,15 @@
 
     if (slug) {
       ctx?.classList.remove("hidden");
-      manualSection?.classList.add("hidden");
-      divider?.classList.add("hidden");
+      const hideManualPanel =
+        !isCustomerMobileShellEnabled() || !customerPreferManualBusinessEntry;
+      manualSection?.classList.toggle("hidden", hideManualPanel);
+      const showManualPrompt =
+        isCustomerMobileShellEnabled() &&
+        !!getPublicBusinessIdFromUrl() &&
+        hideManualPanel;
+      manualPrompt?.classList.toggle("hidden", !showManualPrompt);
+      divider?.classList.toggle("hidden", hideManualPanel);
       if (slugEl) slugEl.textContent = slug;
       const loadedName =
         businessSettings?.business_name &&
@@ -14410,7 +14493,9 @@
       }
     } else {
       ctx?.classList.add("hidden");
+      customerPreferManualBusinessEntry = false;
       manualSection?.classList.remove("hidden");
+      manualPrompt?.classList.add("hidden");
       divider?.classList.remove("hidden");
       if (nameEl) nameEl.textContent = "";
       if (slugEl) slugEl.textContent = "";
@@ -20313,11 +20398,19 @@
   }
 
   async function loadManualCustomerBusiness() {
-    const id = document.getElementById("manualBusinessId").value.trim();
+    syncPublicBusinessFromUrl();
+    const urlSlug = getPublicBusinessIdFromUrl();
+    let id = urlSlug;
 
     if (!id) {
-      showToast("Enter business ID.", "error")
-      return;
+      const validation = validateManualBusinessIdInput(
+        document.getElementById("manualBusinessId")?.value || ""
+      );
+      if (!validation.ok) {
+        showToast(validation.message, "error");
+        return;
+      }
+      id = validation.normalized;
     }
 
     businessId = id;
@@ -20359,14 +20452,20 @@
 
   async function continueCustomerToBooking() {
     syncPublicBusinessFromUrl();
-    const manualInput = document.getElementById("manualBusinessId");
-    const id = (manualInput?.value || getActivePublicBusinessSlug() || "").trim();
+    const urlSlug = getPublicBusinessIdFromUrl();
+    let id = urlSlug;
 
     if (!id) {
-      if (!shouldSuppressManualBusinessEntryToast()) {
-        showToast("Enter business ID or open a public booking link.", "error");
+      const validation = validateManualBusinessIdInput(
+        document.getElementById("manualBusinessId")?.value || ""
+      );
+      if (!validation.ok) {
+        if (!shouldSuppressManualBusinessEntryToast()) {
+          showToast(validation.message, "error");
+        }
+        return;
       }
-      return;
+      id = validation.normalized;
     }
 
     businessId = id;
