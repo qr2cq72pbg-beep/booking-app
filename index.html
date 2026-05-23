@@ -9964,8 +9964,23 @@
 
       body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-icon,
       #publicView.public-view--mobile-shell .customer-mobile-nav-icon {
-        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
         line-height: 1;
+      }
+
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-icon svg,
+      #publicView.public-view--mobile-shell .customer-mobile-nav-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
       }
 
       body.customer-mobile-shell-active #publicBookingContent.hidden {
@@ -12274,23 +12289,23 @@
 
       <nav id="customerMobileBottomNav" class="customer-mobile-bottom-nav hidden" aria-label="Customer app navigation">
         <button type="button" class="customer-mobile-nav-item" data-mobile-tab="home" aria-current="false">
-          <span class="customer-mobile-nav-icon" aria-hidden="true">⌂</span>
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg></span>
           <span>Home</span>
         </button>
         <button type="button" class="customer-mobile-nav-item customer-mobile-nav-item--active" data-mobile-tab="book" aria-current="page">
-          <span class="customer-mobile-nav-icon" aria-hidden="true">📅</span>
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span>
           <span>Book</span>
         </button>
         <button type="button" class="customer-mobile-nav-item" data-mobile-tab="bookings" aria-current="false">
-          <span class="customer-mobile-nav-icon" aria-hidden="true">📋</span>
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
           <span>Bookings</span>
         </button>
         <button type="button" class="customer-mobile-nav-item" data-mobile-tab="notifications" aria-current="false">
-          <span class="customer-mobile-nav-icon" aria-hidden="true">🔔</span>
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M18 16H6l-1.2 2.4A1 1 0 0 0 5.7 20h12.6a1 1 0 0 0 .9-1.6L18 16z"/><path d="M12 4a4 4 0 0 1 4 4v5H8V8a4 4 0 0 1 4-4z"/></svg></span>
           <span>Alerts</span>
         </button>
         <button type="button" class="customer-mobile-nav-item" data-mobile-tab="profile" aria-current="false">
-          <span class="customer-mobile-nav-icon" aria-hidden="true">👤</span>
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span>
           <span>Profile</span>
         </button>
       </nav>
@@ -13507,7 +13522,16 @@
   function syncPublicBusinessFromUrl() {
     const slug = getActivePublicBusinessSlug();
     if (slug) {
-      businessId = slug;
+      const settingsSlug = normalizeBusinessSlug(businessSettings?.business_slug || "");
+      if (
+        businessSettings?.business_id &&
+        isValidUuid(businessSettings.business_id) &&
+        settingsSlug === slug
+      ) {
+        businessId = businessSettings.business_id;
+      } else {
+        businessId = slug;
+      }
       const manual = document.getElementById("manualBusinessId");
       if (manual) manual.value = slug;
     }
@@ -13657,6 +13681,22 @@
 
   function isValidUuid(value) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(value || "").trim());
+  }
+
+  /** UUID for RPC/queries — never the public URL slug. */
+  function getResolvedBusinessUuidForRpc() {
+    const fromSettings = businessSettings?.business_id;
+    if (fromSettings && isValidUuid(fromSettings)) return fromSettings;
+    if (isValidUuid(businessId)) return businessId;
+    return null;
+  }
+
+  async function ensureBusinessUuidForRpc() {
+    let uuid = getResolvedBusinessUuidForRpc();
+    if (uuid) return uuid;
+    if (!businessId || !initSupabaseClient()) return null;
+    await loadBusinessSettings();
+    return getResolvedBusinessUuidForRpc();
   }
 
   function normalizeBusinessSlug(value) {
@@ -25310,8 +25350,15 @@
       const summarySnap = getPublicBookingSummarySnapshot();
       const durationMinutes = getServiceDurationValue(selectedService);
 
+      const rpcBusinessId = await ensureBusinessUuidForRpc();
+      if (!rpcBusinessId) {
+        showToast("Business not found. Check your booking link.", "error");
+        return;
+      }
+      businessId = rpcBusinessId;
+
       const bookingParams = {
-        businessId,
+        businessId: rpcBusinessId,
         serviceId: selectedService.id,
         date: selectedDate,
         time: selectedSlot,
