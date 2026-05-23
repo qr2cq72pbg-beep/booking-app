@@ -6763,6 +6763,10 @@
       line-height: 1.45;
     }
 
+    .public-success-eyebrow {
+      display: none;
+    }
+
     .public-success-details {
       display: grid;
       gap: 10px;
@@ -10143,6 +10147,201 @@
         width: 100%;
       }
 
+      /* Mobile booking success — premium confirmation layout */
+      #bookingSuccessCard.public-booking-success:not(.hidden) {
+        min-height: auto;
+        padding: 10px 10px calc(76px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(165deg, #f8fafc 0%, #eef2ff 42%, #f1f5f9 100%);
+      }
+
+      #bookingSuccessCard .public-booking-success-inner {
+        max-width: 100%;
+        padding: 18px 14px 16px;
+        border-radius: 22px;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        box-shadow:
+          0 1px 2px rgba(15, 23, 42, 0.04),
+          0 16px 40px rgba(15, 23, 42, 0.1);
+      }
+
+      #bookingSuccessCard .public-success-hero {
+        margin-bottom: 16px;
+      }
+
+      #bookingSuccessCard .public-success-check svg {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 10px;
+      }
+
+      #bookingSuccessCard .public-success-eyebrow {
+        display: inline-block;
+        margin: 0 0 8px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: #166534;
+        background: #dcfce7;
+      }
+
+      #bookingSuccessCard .public-success-title {
+        margin-bottom: 6px;
+        font-size: 1.55rem;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.03em;
+      }
+
+      #bookingSuccessCard .public-success-lead {
+        font-size: 14px;
+        color: #64748b;
+        line-height: 1.45;
+      }
+
+      #bookingSuccessCard .public-success-summary-card {
+        margin-bottom: 14px;
+        padding: 14px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+        border: 1px solid #e2e8f0;
+        gap: 11px;
+      }
+
+      #bookingSuccessCard .public-success-detail-row {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      #bookingSuccessCard .public-success-detail-row:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      #bookingSuccessCard .public-success-detail-row span:first-child {
+        color: #64748b;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      #bookingSuccessCard .public-success-detail-row span:last-child {
+        color: #0f172a;
+        font-size: 15px;
+      }
+
+      #bookingSuccessCard .public-success-section {
+        margin-bottom: 12px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+
+      #bookingSuccessCard .public-success-ref {
+        font-size: 1.25rem;
+        color: #0f172a;
+      }
+
+      #bookingSuccessCard .public-success-qr-block {
+        text-align: center;
+      }
+
+      #bookingSuccessCard .public-success-qr-host {
+        padding: 12px;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+      }
+
+      #bookingSuccessCard .public-success-link-text {
+        margin-top: 8px;
+        padding: 10px 12px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #475569;
+        word-break: break-word;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+      }
+
+      #bookingSuccessCard .public-success-primary-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      #bookingSuccessCard .public-success-primary-actions .success {
+        width: 100%;
+        min-height: 50px;
+        margin: 0;
+        border-radius: 14px;
+        font-size: 16px;
+        font-weight: 700;
+        box-shadow: 0 10px 24px color-mix(in srgb, var(--business-accent, #2563eb) 32%, transparent);
+      }
+
+      #bookingSuccessCard .public-success-primary-actions .secondary {
+        width: 100%;
+        min-height: 46px;
+        margin: 0;
+        border-radius: 12px;
+        font-weight: 600;
+      }
+
+      #bookingSuccessCard .public-success-calendar-card {
+        margin-bottom: 12px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+
+      #bookingSuccessCard .public-success-calendar-card .public-success-label {
+        margin-bottom: 10px;
+      }
+
+      #bookingSuccessCard .public-success-calendar-btns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      #bookingSuccessCard .public-success-calendar-btns button {
+        min-width: 0;
+        min-height: 44px;
+        margin: 0;
+        padding: 8px 4px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      #bookingSuccessCard .public-success-trust {
+        margin-bottom: 12px;
+        padding: 12px;
+        font-size: 12px;
+        color: #475569;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 12px;
+      }
+
+      #bookingSuccessCard .public-success-book-another {
+        min-height: 48px;
+        border-radius: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        border: 1.5px solid #e2e8f0;
+        background: #fff;
+        color: #334155;
+      }
+
       #publicView.public-view--mobile-shell .customer-mobile-home-cta {
         width: 100%;
         min-height: 48px;
@@ -12164,29 +12363,30 @@
               <div class="public-success-check" aria-hidden="true">
                 <svg viewBox="0 0 52 52" width="52" height="52"><circle class="public-success-check-circle" cx="26" cy="26" r="24" fill="none"/><path class="public-success-check-mark" fill="none" d="M14 27l8 8 16-18"/></svg>
               </div>
+              <p class="public-success-eyebrow">Confirmed</p>
               <h2 class="public-success-title">Appointment booked</h2>
-              <p class="public-success-lead">Your appointment is confirmed. Details are below.</p>
+              <p class="public-success-lead">You’re all set. Save the details below or manage anytime.</p>
             </div>
 
-            <div id="bookingSuccessDetails" class="public-success-details"></div>
+            <div id="bookingSuccessDetails" class="public-success-details public-success-summary-card"></div>
 
-            <div class="public-success-ref-block">
+            <div class="public-success-section public-success-ref-block">
               <span class="public-success-label">Booking reference</span>
               <p id="bookingSuccessRef" class="public-success-ref"></p>
             </div>
 
-            <div class="public-success-qr-block">
-              <span class="public-success-label">Manage booking</span>
+            <div class="public-success-section public-success-qr-block">
+              <span class="public-success-label">Scan or share</span>
               <div id="bookingSuccessQrHost" class="public-success-qr-host"></div>
               <p id="bookingSuccessLink" class="public-success-link-text"></p>
             </div>
 
-            <div class="public-success-actions booking-manage-actions">
+            <div class="public-success-actions public-success-primary-actions booking-manage-actions">
               <button type="button" class="success" onclick="openManageBookingFromConfirmation()">Manage booking</button>
               <button type="button" class="secondary" onclick="copyManageBookingLink('bookingSuccessLink')">Copy booking link</button>
             </div>
 
-            <div class="public-success-calendar">
+            <div class="public-success-calendar public-success-calendar-card">
               <span class="public-success-label">Add to calendar</span>
               <div class="public-success-calendar-btns">
                 <button type="button" class="secondary" onclick="openBookingGoogleCalendar()">Google</button>
