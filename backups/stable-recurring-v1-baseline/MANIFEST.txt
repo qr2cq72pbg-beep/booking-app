@@ -1,0 +1,42 @@
+stable-recurring-v1-baseline
+PRODUCTION-CANDIDATE BASELINE V1
+Generated: 2026-05-20
+
+PRIMARY APPLICATION
+  index.html
+
+SQL MIGRATIONS (root)
+  supabase-bookings-admin-delete.sql
+  supabase-business-accent-color.sql
+  supabase-business-branding-social.sql
+  supabase-business-cover-url.sql
+  supabase-business-logos-storage.sql
+  supabase-create-booking-full-fix.sql
+  supabase-customer-my-bookings.sql
+  supabase-fix-reschedule-assert.sql
+  supabase-fix-working-days.sql
+  supabase-onboarding-phase-a.sql
+  supabase-public-tagline.sql
+  supabase-recurring-bookings-v1.sql
+  supabase-reschedule-booking-by-manage-token.sql
+  supabase-staff-photo-url.sql
+  supabase-working-hours-overrides.sql
+
+SUPABASE EDGE / CONFIG
+  supabase/config.toml
+  supabase/deploy-send-booking-email.sh
+  supabase/verify-email-live.sh
+  supabase/secrets.example.env
+  supabase/functions/send-booking-email/index.ts
+  supabase/functions/send-booking-email/deno.json
+
+BASELINE DOCUMENTATION (this folder)
+  backups/stable-recurring-v1-baseline/STABLE-RECURRING-V1-BASELINE.md
+  backups/stable-recurring-v1-baseline/SQL-MIGRATIONS-ORDER.md
+  backups/stable-recurring-v1-baseline/FUTURE-ROADMAP.md
+  backups/stable-recurring-v1-baseline/DEBUG-LOGS-TO-REMOVE.md
+  backups/stable-recurring-v1-baseline/MANIFEST.txt
+
+EXCLUDED FROM ZIP (local/dev only)
+  .git/
+  supabase/.temp/

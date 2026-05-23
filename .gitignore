@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+
+# Generated web bundle for Capacitor (source of truth remains repo root files)
+www/*
+!www/.gitkeep
+
+# Native projects (regenerate: npm install && npx cap add ios android && npm run cap:sync)
+# Uncomment to commit ios/android to git:
+# ios/
+# android/

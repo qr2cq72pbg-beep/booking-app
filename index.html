@@ -11113,6 +11113,136 @@
     body.native-app-shell #modeView .mode-entry-subtitle-web {
       display: none;
     }
+
+    /* App shell — session restore, offline, error */
+    .app-shell-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 25000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+      background: linear-gradient(165deg, #f8fafc 0%, #eef2ff 48%, #f1f5f9 100%);
+    }
+
+    .app-shell-overlay.hidden {
+      display: none;
+      pointer-events: none;
+    }
+
+    .app-shell-overlay-card {
+      width: min(100%, 320px);
+      padding: 28px 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+      text-align: center;
+    }
+
+    .app-shell-spinner {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 16px;
+      border: 3px solid #e2e8f0;
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: app-shell-spin 0.75s linear infinite;
+    }
+
+    .app-shell-spinner.hidden {
+      display: none;
+    }
+
+    @keyframes app-shell-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .app-shell-title {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .app-shell-message {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    .app-shell-message:empty {
+      display: none;
+    }
+
+    .app-shell-retry {
+      width: 100%;
+      min-height: 46px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+
+    .app-shell-retry.hidden {
+      display: none;
+    }
+
+    .app-shell-offline-banner {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 24000;
+      padding: 10px 14px calc(10px + env(safe-area-inset-top, 0px));
+      background: #fef3c7;
+      border-bottom: 1px solid #fcd34d;
+      color: #92400e;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    body.app-shell-offline-banner-visible .app-shell-offline-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    body.app-shell-offline-banner-visible.native-app-shell {
+      padding-top: calc(44px + env(safe-area-inset-top, 0px));
+    }
+
+    body.app-shell-offline-banner-visible.customer-mobile-shell-active #publicView.public-view--mobile-shell {
+      padding-top: calc(12px + 44px + env(safe-area-inset-top, 0px));
+    }
+
+    .app-shell-offline-banner button {
+      flex-shrink: 0;
+      min-height: 32px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      background: #f59e0b;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    body.app-shell-blocking .container,
+    body.app-shell-blocking .topbar,
+    body.app-shell-blocking .customer-mobile-bottom-nav {
+      visibility: hidden;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -11140,6 +11270,20 @@
       <img class="app-splash-icon" src="icons/icon-192.png" alt="" width="72" height="72" />
       <p class="app-splash-title">Booking</p>
     </div>
+  </div>
+
+  <div id="appShellOverlay" class="app-shell-overlay" role="alertdialog" aria-modal="true" aria-labelledby="appShellTitle" aria-live="assertive">
+    <div class="app-shell-overlay-card">
+      <div id="appShellSpinner" class="app-shell-spinner" aria-hidden="true"></div>
+      <p id="appShellTitle" class="app-shell-title">Restoring session…</p>
+      <p id="appShellMessage" class="app-shell-message"></p>
+      <button type="button" id="appShellRetryBtn" class="success app-shell-retry hidden" onclick="retryAppShell()">Retry</button>
+    </div>
+  </div>
+
+  <div id="appShellOfflineBanner" class="app-shell-offline-banner" role="status" aria-live="polite">
+    <span>No internet connection. Some features may not work.</span>
+    <button type="button" onclick="retryAppShell()">Retry</button>
   </div>
 
   <div id="pwaInstallHint" class="pwa-install-hint hidden" role="status" aria-live="polite">
@@ -13880,7 +14024,31 @@
   let publicManageMode = false;
 
   function logManageNav(...args) {
-    console.log("[manage-nav]", ...args);
+    console.log("[manage-nav]", ...args, {
+      appShell: typeof getAppShellState === "function" ? getAppShellState() : "unknown",
+      appShellReady: typeof isAppShellReady === "function" ? isAppShellReady() : false,
+      publicManageMode,
+      manageCardVisible: isManageBookingCardVisible(),
+      tab: customerMobileTab
+    });
+  }
+
+  function logManageShellSnapshot(label) {
+    const shell = document.querySelector("#publicBookingContent .public-booking-shell");
+    const activeStep = document.querySelector("#publicView .public-booking-step--active");
+    console.log("[manage-shell]", label, {
+      appShell: typeof getAppShellState === "function" ? getAppShellState() : "unknown",
+      appShellReady: typeof isAppShellReady === "function" ? isAppShellReady() : false,
+      publicManageMode,
+      publicViewHidden: document.getElementById("publicView")?.classList.contains("hidden"),
+      bookContentHidden: document.getElementById("publicBookingContent")?.classList.contains("hidden"),
+      shellHidden: shell?.classList.contains("hidden"),
+      manageCardHidden: document.getElementById("manageBookingCard")?.classList.contains("hidden"),
+      manageBodyHidden: document.getElementById("manageBookingBody")?.classList.contains("hidden"),
+      manageLoadingHidden: document.getElementById("manageBookingLoading")?.classList.contains("hidden"),
+      activeWizardPanel: activeStep?.id || null,
+      tab: customerMobileTab
+    });
   }
 
   function logWizardReset(blocked, fn, detail) {
@@ -13920,6 +14088,30 @@
     document.getElementById("publicBookingContent")?.classList.remove("hidden");
   }
 
+  /** Mount manage flow chrome before async token fetch (mobile shell + wizard cleanup). */
+  function ensureManageBookingFlowVisible(caller) {
+    if (!publicManageMode) enterPublicManageMode(caller || "ensure-visible");
+    logManageShellSnapshot(caller || "ensureManageBookingFlowVisible");
+
+    document.getElementById("publicView")?.classList.remove("hidden");
+    document.getElementById("publicBookingContent")?.classList.remove("hidden");
+    hidePublicBookingWizardForManageFlow(caller || "ensureManageBookingFlowVisible");
+    hideBookingSuccessCard();
+    document.getElementById("manageBookingCard")?.classList.remove("hidden");
+
+    if (isCustomerMobileShellEnabled()) {
+      customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+      document.querySelectorAll("#customerMobileBottomNav .customer-mobile-nav-item").forEach((btn) => {
+        const on = btn.dataset.mobileTab === CUSTOMER_MOBILE_TAB.BOOK;
+        btn.classList.toggle("customer-mobile-nav-item--active", on);
+        btn.setAttribute("aria-current", on ? "page" : "false");
+      });
+      applyCustomerMobileTabVisibility();
+    }
+
+    logManageNav("ensureManageBookingFlowVisible done", caller);
+  }
+
   function shouldSuppressPublicBookingWizard(caller) {
     if (publicManageMode) {
       logWizardReset(true, caller, "publicManageMode");
@@ -13942,7 +14134,9 @@
 
   function enterPublicManageMode(source) {
     publicManageMode = true;
+    appShellPendingReadyCallbacks = [];
     logManageNav("enterPublicManageMode", source);
+    logManageShellSnapshot("enterPublicManageMode");
   }
 
   function exitPublicManageMode(source) {
@@ -14341,7 +14535,9 @@
     }
 
     const forceBookFlow =
-      isBookingSuccessCardVisible() || isManageBookingCardVisible();
+      publicManageMode ||
+      isBookingSuccessCardVisible() ||
+      isManageBookingCardVisible();
     const effectiveTab = forceBookFlow ? CUSTOMER_MOBILE_TAB.BOOK : tab;
 
     home?.classList.toggle("hidden", effectiveTab !== CUSTOMER_MOBILE_TAB.HOME);
@@ -14351,7 +14547,9 @@
     const showBook = effectiveTab === CUSTOMER_MOBILE_TAB.BOOK;
     const showBookings = effectiveTab === CUSTOMER_MOBILE_TAB.BOOKINGS;
     const manageFlowActive =
-      isBookingSuccessCardVisible() || isManageBookingCardVisible();
+      publicManageMode ||
+      isBookingSuccessCardVisible() ||
+      isManageBookingCardVisible();
 
     if (manageFlowActive) {
       if (isBookingSuccessCardVisible() || isManageBookingCardVisible()) {
@@ -14387,7 +14585,7 @@
     if (!showBook) {
       if (success && !isBookingSuccessCardVisible()) success.classList.add("hidden");
     }
-    if (!showBook && manage && !isManageBookingCardVisible()) {
+    if (!showBook && manage && !isManageBookingCardVisible() && !publicManageMode) {
       manage.classList.add("hidden");
     }
 
@@ -14430,10 +14628,17 @@
     });
 
     if (tab === CUSTOMER_MOBILE_TAB.BOOK && !opts.skipWizardInit && isCustomerMobileShellEnabled()) {
-      if (!publicManageMode && !isBookingSuccessCardVisible() && !isManageBookingCardVisible()) {
-        if (!shouldSuppressPublicBookingWizard("setCustomerMobileTab-book")) {
-          setPublicBookingWizardVisible(true);
+      const showBookWizard = () => {
+        if (!publicManageMode && !isBookingSuccessCardVisible() && !isManageBookingCardVisible()) {
+          if (!shouldSuppressPublicBookingWizard("setCustomerMobileTab-book")) {
+            setPublicBookingWizardVisible(true);
+          }
         }
+      };
+      if (!isAppShellReady()) {
+        deferUntilAppShellReady(showBookWizard);
+      } else {
+        showBookWizard();
       }
     }
 
@@ -14475,7 +14680,7 @@
     ensureCustomerMobileNavPortaled();
 
     if (
-      (isBookingSuccessCardVisible() || isManageBookingCardVisible()) &&
+      (publicManageMode || isBookingSuccessCardVisible() || isManageBookingCardVisible()) &&
       customerMobileTab !== CUSTOMER_MOBILE_TAB.BOOK
     ) {
       customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
@@ -14675,32 +14880,40 @@
   }
 
   function startNewPublicBookingFromHome() {
-    if (!hasKnownPublicBusinessFromUrl() && !businessId) {
-      customerHubBookAppointment();
+    const run = () => {
+      if (!hasKnownPublicBusinessFromUrl() && !businessId) {
+        customerHubBookAppointment();
+        return;
+      }
+
+      syncPublicBusinessFromUrl();
+      showPublicView(true);
+
+      if (isCustomerMobileShellEnabled()) {
+        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
+      }
+
+      renderPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE, {
+        forceFresh: true,
+        reason: "home-cta",
+        skipManageGuard: true,
+        skipSuppressGuard: true
+      });
+
+      if (isCustomerMobileShellEnabled()) {
+        applyCustomerMobileTabVisibility();
+      }
+
+      if (!services.length && businessId && isBrowserOnline()) {
+        void loadPublicData();
+      }
+    };
+
+    if (!isAppShellReady()) {
+      deferUntilAppShellReady(run);
       return;
     }
-
-    syncPublicBusinessFromUrl();
-    showPublicView(true);
-
-    if (isCustomerMobileShellEnabled()) {
-      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
-    }
-
-    renderPublicBookingStep(PUBLIC_BOOKING_STEP.SERVICE, {
-      forceFresh: true,
-      reason: "home-cta",
-      skipManageGuard: true,
-      skipSuppressGuard: true
-    });
-
-    if (isCustomerMobileShellEnabled()) {
-      applyCustomerMobileTabVisibility();
-    }
-
-    if (!services.length && businessId) {
-      void loadPublicData();
-    }
+    run();
   }
 
   function customerHubBookAppointment() {
@@ -15048,6 +15261,10 @@
   }
 
   function applyPublicBookingFreshStartReset() {
+    if (publicManageMode) {
+      logWizardReset(true, "applyPublicBookingFreshStartReset", "publicManageMode");
+      return;
+    }
     hideBookingSuccessCard();
     exitPublicManageMode("booking-render-fresh");
     activeManageToken = null;
@@ -15106,6 +15323,17 @@
 
   function renderPublicBookingStep(step, opts = {}) {
     if (!isPublicBookingWizardMounted()) return null;
+
+    if (!isAppShellReady()) {
+      deferUntilAppShellReady(() => {
+        if (publicManageMode && !opts.skipManageGuard) {
+          logWizardReset(true, "renderPublicBookingStep-deferred", "publicManageMode");
+          return;
+        }
+        renderPublicBookingStep(step, opts);
+      });
+      return null;
+    }
 
     if (opts.forceFresh) {
       applyPublicBookingFreshStartReset();
@@ -16337,6 +16565,7 @@
   async function openManageBookingFromToken(token) {
     if (!publicManageMode) enterPublicManageMode("manage-token-open");
     logManageNav("openManageBookingFromToken", { token: !!(token || getLatestPublicBookingManageToken()) });
+    logManageLoad("token load start");
 
     const manageToken = String(token || getLatestPublicBookingManageToken() || "").trim();
     const card = document.getElementById("manageBookingCard");
@@ -16345,10 +16574,7 @@
     const body = document.getElementById("manageBookingBody");
     const isCustomer = !!(currentUser && currentUserRole === "customer");
 
-    hidePublicBookingWizardForManageFlow("openManageBookingFromToken");
-    hideBookingSuccessCard();
-
-    card?.classList.remove("hidden");
+    ensureManageBookingFlowVisible("openManageBookingFromToken");
     loading?.classList.remove("hidden");
     errorBox?.classList.add("hidden");
     body?.classList.add("hidden");
@@ -16375,7 +16601,8 @@
       }
 
       renderManageBookingCard(data);
-      logManageLoad("manage UI rendered");
+      logManageLoad("manage UI rendered — renderer mounted");
+      logManageShellSnapshot("after-renderManageBookingCard");
 
       try {
         await applyBusinessContextFromManageBooking(data, manageToken);
@@ -17742,19 +17969,168 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  const APP_SHELL_STATE = Object.freeze({
+    LOADING: "loading",
+    READY: "ready",
+    OFFLINE: "offline",
+    ERROR: "error"
+  });
 
-  async function init() {
-    try {
-    initPwaAppShell();
-    bindDocumentTimeStepperHandlerOnce();
-    bindCustomerMobileShellListeners();
-    populateCountryPhoneDropdown();
-    if (!initSupabaseClient()) {
-      showModeView();
+  let appShellState = APP_SHELL_STATE.LOADING;
+  let appShellListenersBound = false;
+  let appShellRestoreInFlight = false;
+  /** @type {Array<() => void>} */
+  let appShellPendingReadyCallbacks = [];
+
+  function isAppShellReady() {
+    return appShellState === APP_SHELL_STATE.READY;
+  }
+
+  function getAppShellState() {
+    return appShellState;
+  }
+
+  function isBrowserOnline() {
+    return typeof navigator === "undefined" || navigator.onLine !== false;
+  }
+
+  function syncAppShellOfflineBanner() {
+    const showBanner = appShellState === APP_SHELL_STATE.READY && !isBrowserOnline();
+    document.body.classList.toggle("app-shell-offline-banner-visible", showBanner);
+  }
+
+  function updateAppShellOverlayUi(opts = {}) {
+    const overlay = document.getElementById("appShellOverlay");
+    const spinner = document.getElementById("appShellSpinner");
+    const titleEl = document.getElementById("appShellTitle");
+    const messageEl = document.getElementById("appShellMessage");
+    const retryBtn = document.getElementById("appShellRetryBtn");
+    if (!overlay) return;
+
+    const blocking =
+      appShellState === APP_SHELL_STATE.LOADING ||
+      appShellState === APP_SHELL_STATE.OFFLINE ||
+      appShellState === APP_SHELL_STATE.ERROR;
+
+    document.body.classList.toggle("app-shell-blocking", blocking);
+    overlay.classList.toggle("hidden", !blocking);
+    overlay.setAttribute("aria-hidden", blocking ? "false" : "true");
+
+    if (appShellState === APP_SHELL_STATE.LOADING) {
+      spinner?.classList.remove("hidden");
+      if (titleEl) titleEl.textContent = opts.title || "Restoring session…";
+      if (messageEl) messageEl.textContent = opts.message || "";
+      retryBtn?.classList.add("hidden");
       return;
     }
 
+    spinner?.classList.add("hidden");
+
+    if (appShellState === APP_SHELL_STATE.OFFLINE) {
+      if (titleEl) titleEl.textContent = "You're offline";
+      if (messageEl) {
+        messageEl.textContent =
+          opts.message || "Check your connection and try again.";
+      }
+      retryBtn?.classList.remove("hidden");
+      return;
+    }
+
+    if (appShellState === APP_SHELL_STATE.ERROR) {
+      if (titleEl) titleEl.textContent = "Something went wrong";
+      if (messageEl) {
+        messageEl.textContent = opts.message || "We couldn't load the app. Please try again.";
+      }
+      retryBtn?.classList.remove("hidden");
+      return;
+    }
+  }
+
+  function setAppShellState(state, opts = {}) {
+    appShellState = state;
+    console.log("[app-shell] state →", state, opts.reason || "");
+    updateAppShellOverlayUi(opts);
+    syncAppShellOfflineBanner();
+
+    if (state === APP_SHELL_STATE.READY) {
+      flushAppShellPendingReadyCallbacks();
+    }
+  }
+
+  function deferUntilAppShellReady(fn) {
+    if (typeof fn !== "function") return;
+    if (publicManageMode) {
+      console.log("[app-shell] defer skipped — manage mode active");
+      return;
+    }
+    if (isAppShellReady()) {
+      fn();
+      return;
+    }
+    appShellPendingReadyCallbacks.push(fn);
+  }
+
+  function flushAppShellPendingReadyCallbacks() {
+    if (!isAppShellReady()) return;
+    const pending = appShellPendingReadyCallbacks.slice();
+    appShellPendingReadyCallbacks = [];
+    pending.forEach((fn) => {
+      try {
+        fn();
+      } catch (err) {
+        console.warn("[app-shell] pending callback failed:", err);
+      }
+    });
+  }
+
+  function clearAuthenticatedUiState() {
+    currentUser = null;
+    currentUserRole = null;
+    customerMyBookings = [];
+    customerMyBookingsSelectedDate = null;
+    customerMyBookingsSelectedId = null;
+    customerMyBookingsViewOpen = false;
+    customerMyBookingsCalendarFailed = false;
+    customerPreferManualBusinessEntry = false;
+    customerMobileAuthReturn = null;
+
+    hideBookingSuccessCard();
+    exitPublicManageMode("logout-cleanup");
+    activeManageToken = null;
+    manageBookingData = null;
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    document.getElementById("customerStartCard")?.classList.add("hidden");
+
+    updateCustomerAuthUI();
+    renderCustomerMobileProfileTab();
+    renderBookingSuccessAccountSection();
+    if (isCustomerMobileShellEnabled()) {
+      closeCustomerMobileAuthFromShell();
+      applyCustomerMobileTabVisibility();
+      syncCustomerMobileShell();
+    }
+  }
+
+  async function applyAuthenticatedSession(session) {
+    currentUser = session.user;
+    const role = await loadCurrentUserRole();
+
+    if (role === "customer") {
+      syncPublicBusinessFromUrl();
+      if (hasKnownPublicBusinessFromUrl()) {
+        await continueCustomerToBooking();
+        return;
+      }
+      showPublicView(false);
+      updateCustomerAuthUI();
+      return;
+    }
+
+    await restoreAdminSession();
+  }
+
+  async function routeAppShellAfterSession(session, opts = {}) {
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
     const queryParams = new URLSearchParams(window.location.search);
     const isRecoveryLink =
@@ -17763,31 +18139,16 @@
       hashParams.get("type") === "recovery" ||
       window.location.href.includes("type=recovery");
 
-    sb.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY") {
-        currentUser = session?.user || null;
-        showResetPasswordView();
-      }
-    });
-
-    const { data, error } = await sb.auth.getSession();
-
-    if (error) {
-      alert("Session error: " + error.message);
-      showModeView();
-      return;
-    }
-
     if (isRecoveryLink) {
-      currentUser = data?.session?.user || null;
+      currentUser = session?.user || null;
       showResetPasswordView();
       return;
     }
 
     if (publicBusinessId || publicManageToken || getPublicBusinessIdFromUrl()) {
       syncPublicBusinessFromUrl();
-      if (data?.session?.user) {
-        currentUser = data.session.user;
+      if (session?.user) {
+        currentUser = session.user;
         await loadCurrentUserRole();
       }
       if (publicManageToken) {
@@ -17795,23 +18156,200 @@
         await openManageBookingFromToken(publicManageToken);
         return;
       }
-      if (data?.session?.user && currentUserRole === "customer") {
+      if (session?.user && currentUserRole === "customer") {
         await continueCustomerToBooking();
         return;
       }
       showPublicView(true);
-      await loadPublicData();
+      if (isBrowserOnline()) {
+        await loadPublicData();
+      }
       return;
     }
 
-    if (data?.session) {
-      await restoreAuthenticatedSession(data.session);
+    if (session?.user) {
+      await applyAuthenticatedSession(session);
       return;
     }
 
     showModeView();
+  }
+
+  async function restoreAppSession(opts = {}) {
+    const reason = opts.reason || "restore";
+    if (!initSupabaseClient()) {
+      setAppShellState(APP_SHELL_STATE.ERROR, {
+        reason,
+        message: "Could not connect to the app services."
+      });
+      showModeView();
+      return;
+    }
+
+    if (appShellRestoreInFlight) return;
+    appShellRestoreInFlight = true;
+
+    try {
+      if (reason === "resume" && isAppShellReady()) {
+        if (!isBrowserOnline()) {
+          syncAppShellOfflineBanner();
+          return;
+        }
+        const { data, error } = await sb.auth.getSession();
+        if (error) {
+          console.warn("[app-shell] resume session check failed:", error.message);
+          return;
+        }
+        if (!data?.session && currentUser) {
+          clearAuthenticatedUiState();
+          showModeView();
+          return;
+        }
+        if (data?.session && !currentUser) {
+          await routeAppShellAfterSession(data.session, { reason });
+        }
+        return;
+      }
+
+      const online = isBrowserOnline();
+      if (!online) {
+        const { data } = await sb.auth.getSession();
+        if (data?.session?.user) {
+          setAppShellState(APP_SHELL_STATE.LOADING, {
+            reason,
+            title: "Restoring session…"
+          });
+          currentUser = data.session.user;
+          await loadCurrentUserRole();
+          await routeAppShellAfterSession(data.session, { reason });
+          setAppShellState(APP_SHELL_STATE.READY, { reason: reason + "-offline-cached" });
+          syncAppShellOfflineBanner();
+        } else {
+          setAppShellState(APP_SHELL_STATE.OFFLINE, {
+            reason,
+            message: "Connect to the internet to sign in, or retry when you're back online."
+          });
+        }
+        return;
+      }
+
+      setAppShellState(APP_SHELL_STATE.LOADING, { reason, title: "Restoring session…" });
+
+      const { data, error } = await sb.auth.getSession();
+
+      if (error) {
+        setAppShellState(APP_SHELL_STATE.ERROR, {
+          reason,
+          message: error.message
+        });
+        showModeView();
+        return;
+      }
+
+      await routeAppShellAfterSession(data?.session || null, { reason });
+      setAppShellState(APP_SHELL_STATE.READY, { reason });
+    } catch (err) {
+      console.error("[app-shell] restore failed", err);
+      setAppShellState(APP_SHELL_STATE.ERROR, {
+        reason,
+        message: err?.message || "Could not restore your session."
+      });
+      showModeView();
+    } finally {
+      appShellRestoreInFlight = false;
+    }
+  }
+
+  async function retryAppShell() {
+    if (!isBrowserOnline()) {
+      setAppShellState(APP_SHELL_STATE.OFFLINE, {
+        reason: "retry",
+        message: "Still offline. Check Wi‑Fi or cellular data and try again."
+      });
+      return;
+    }
+    await restoreAppSession({ reason: "retry" });
+  }
+
+  function onAppShellNetworkChange() {
+    syncAppShellOfflineBanner();
+    if (isBrowserOnline() && appShellState === APP_SHELL_STATE.OFFLINE) {
+      void restoreAppSession({ reason: "network-online" });
+    }
+  }
+
+  function bindAppShellListeners() {
+    if (appShellListenersBound) return;
+    appShellListenersBound = true;
+
+    if (sb && !window.__bookingAuthStateListenerBound) {
+      window.__bookingAuthStateListenerBound = true;
+      sb.auth.onAuthStateChange((event, session) => {
+        if (event === "PASSWORD_RECOVERY") {
+          currentUser = session?.user || null;
+          showResetPasswordView();
+          setAppShellState(APP_SHELL_STATE.READY, { reason: "password-recovery" });
+        }
+      });
+    }
+
+    window.addEventListener("online", onAppShellNetworkChange);
+    window.addEventListener("offline", onAppShellNetworkChange);
+
+    if (isNativeCapacitorApp()) {
+      const AppPlugin = window.Capacitor?.Plugins?.App;
+      if (AppPlugin && typeof AppPlugin.addListener === "function") {
+        AppPlugin.addListener("appStateChange", ({ isActive }) => {
+          if (isActive) void restoreAppSession({ reason: "resume" });
+        });
+      } else {
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            void restoreAppSession({ reason: "resume" });
+          }
+        });
+      }
+
+      const NetworkPlugin = window.Capacitor?.Plugins?.Network;
+      if (NetworkPlugin && typeof NetworkPlugin.addListener === "function") {
+        NetworkPlugin.addListener("networkStatusChange", (status) => {
+          if (status && typeof status.connected === "boolean") {
+            if (status.connected) {
+              onAppShellNetworkChange();
+            } else {
+              window.dispatchEvent(new Event("offline"));
+            }
+          }
+        });
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+
+  async function init() {
+    try {
+      initPwaAppShell();
+      bindDocumentTimeStepperHandlerOnce();
+      bindCustomerMobileShellListeners();
+      populateCountryPhoneDropdown();
+      if (!initSupabaseClient()) {
+        setAppShellState(APP_SHELL_STATE.ERROR, {
+          reason: "cold-start",
+          message: "Could not connect to the app services."
+        });
+        showModeView();
+        return;
+      }
+      bindAppShellListeners();
+      setAppShellState(APP_SHELL_STATE.LOADING, { reason: "cold-start", title: "Restoring session…" });
+      await restoreAppSession({ reason: "cold-start" });
     } catch (err) {
       console.error("[init] startup failed", err);
+      setAppShellState(APP_SHELL_STATE.ERROR, {
+        reason: "cold-start",
+        message: err?.message || "Could not start the app."
+      });
       showModeView();
     }
   }
@@ -19913,21 +20451,7 @@
   }
 
   async function restoreAuthenticatedSession(session) {
-    currentUser = session.user;
-    const role = await loadCurrentUserRole();
-
-    if (role === "customer") {
-      syncPublicBusinessFromUrl();
-      if (hasKnownPublicBusinessFromUrl()) {
-        await continueCustomerToBooking();
-        return;
-      }
-      showPublicView(false);
-      updateCustomerAuthUI();
-      return;
-    }
-
-    await restoreAdminSession();
+    await applyAuthenticatedSession(session);
   }
 
   async function loadCurrentUserRole() {
@@ -20577,6 +21101,7 @@
       showToast("Manage link is not available for this booking.", "error");
       return;
     }
+    logManageNav("openCustomerMyBookingManage click", { ref: booking?.booking_ref || null });
     enterPublicManageMode("customer-my-booking-manage");
     customerMyBookingsViewOpen = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
@@ -20588,13 +21113,10 @@
       "&manage=" +
       encodeURIComponent(token);
     history.replaceState(null, "", path);
-    publicManageToken = token;
     activeManageToken = token;
     if (slug) businessId = slug;
     showPublicView(true);
-    setPublicBookingWizardVisible(false, { resetStep: false, hideShell: true });
-    setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: true });
-    syncCustomerMobileShell();
+    ensureManageBookingFlowVisible("openCustomerMyBookingManage");
     await openManageBookingFromToken(token);
   }
 
@@ -20958,21 +21480,14 @@
   async function customerLogout() {
     if (!initSupabaseClient()) return;
     await sb.auth.signOut();
-    currentUser = null;
-    currentUserRole = null;
-    customerMyBookings = [];
-    customerMyBookingsSelectedDate = null;
-    customerMyBookingsSelectedId = null;
-    customerMyBookingsViewOpen = false;
-    customerMyBookingsCalendarFailed = false;
-    updateCustomerAuthUI();
+    clearAuthenticatedUiState();
+    showPublicView(false);
     if (isCustomerMobileShellEnabled()) {
-      closeCustomerMobileAuthFromShell();
-      renderCustomerMobileProfileTab();
-      renderBookingSuccessAccountSection();
-      applyCustomerMobileTabVisibility();
-      syncCustomerMobileShell();
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+    } else {
+      showModeView();
     }
+    setAppShellState(APP_SHELL_STATE.READY, { reason: "customer-logout" });
   }
 
   async function sendPasswordResetEmail() {
@@ -21087,8 +21602,9 @@
     if (!initSupabaseClient()) return;
 
     await sb.auth.signOut();
-    currentUser = null;
-    currentUserRole = null;
+    clearAuthenticatedUiState();
+    appShellPendingReadyCallbacks = [];
+    setAppShellState(APP_SHELL_STATE.LOADING, { reason: "admin-logout", title: "Restoring session…" });
     location.href = window.location.pathname;
   }
 
