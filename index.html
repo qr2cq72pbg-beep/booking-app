@@ -10332,6 +10332,22 @@
     }
 
     @media (max-width: 768px) {
+      body.customer-mobile-shell-active .topbar {
+        display: none;
+      }
+
+      body.customer-mobile-shell-active .container {
+        padding-top: max(12px, env(safe-area-inset-top, 0px));
+      }
+
+      body.customer-mobile-shell-active #publicView.public-view--mobile-shell {
+        padding-top: max(8px, env(safe-area-inset-top, 0px));
+      }
+
+      body.customer-mobile-shell-active #customerMyBookingsCard .customer-my-bookings-header-actions {
+        display: none;
+      }
+
       body.customer-mobile-shell-active #publicView.public-view--mobile-shell,
       #publicView.public-view--mobile-shell {
         padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
@@ -10950,11 +10966,15 @@
     }
 
     @media (display-mode: standalone) {
-      body.app-theme-minimal {
+      body.app-theme-minimal:not(.customer-mobile-shell-active) {
         padding-top: var(--safe-top);
       }
 
-      .topbar {
+      body:not(.customer-mobile-shell-active) .topbar {
+        padding-top: max(12px, var(--safe-top));
+      }
+
+      body.customer-mobile-shell-active #publicView.public-view--mobile-shell {
         padding-top: max(12px, var(--safe-top));
       }
 
@@ -13913,6 +13933,54 @@
     if (!publicView || publicView.classList.contains("hidden")) return false;
     if (!getActivePublicBusinessSlug() && !businessId) return false;
     return window.innerWidth <= 768;
+  }
+
+  function isMobilePublicShellPresentation() {
+    const publicView = document.getElementById("publicView");
+    if (!publicView || publicView.classList.contains("hidden")) return false;
+    if (window.innerWidth > 768) return false;
+    return isCustomerMobileShellEnabled() || isStandaloneDisplayMode();
+  }
+
+  function shouldSuppressManualBusinessEntryToast() {
+    if (!isMobilePublicShellPresentation()) return false;
+    if (currentUser && currentUserRole === "customer") return true;
+    const tab = customerMobileTab;
+    return (
+      tab === CUSTOMER_MOBILE_TAB.HOME ||
+      tab === CUSTOMER_MOBILE_TAB.BOOKINGS ||
+      tab === CUSTOMER_MOBILE_TAB.PROFILE ||
+      tab === CUSTOMER_MOBILE_TAB.NOTIFICATIONS
+    );
+  }
+
+  function syncPublicBookingSelectionFromUi() {
+    const hiddenServiceId = document.getElementById("publicService")?.value?.trim() || "";
+    const serviceId = selectedService?.id || hiddenServiceId;
+    if (serviceId && Array.isArray(services) && services.length) {
+      const match = services.find((s) => s.id === serviceId);
+      if (match) {
+        selectedService = match;
+        const hidden = document.getElementById("publicService");
+        if (hidden) hidden.value = match.id;
+      }
+    }
+
+    if (selectedSlot) {
+      const normalized = snapTimeStringToQuarterHour(String(selectedSlot));
+      if (/^\d{2}:\d{2}$/.test(normalized)) selectedSlot = normalized;
+    }
+
+    if (!selectedSlot) {
+      const selectedBtn = document.querySelector(
+        "#publicMobileSlotsMount .public-mobile-slot-btn--selected, #slotsContainer .slot.selected"
+      );
+      const fromDom = selectedBtn?.dataset?.slotTime || selectedBtn?.textContent?.trim() || "";
+      if (fromDom) {
+        const normalized = snapTimeStringToQuarterHour(fromDom);
+        if (/^\d{2}:\d{2}$/.test(normalized)) selectedSlot = normalized;
+      }
+    }
   }
 
   function ensureCustomerMobileNavPortaled() {
@@ -17474,10 +17542,16 @@
     hideAllViews();
     document.getElementById("publicView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.add("hidden");
-    document.getElementById("homeBtn")?.classList.remove("hidden");
 
     const urlBiz = syncPublicBusinessFromUrl();
     const openBooking = !!hasBusiness || !!urlBiz;
+    const hideGlobalTopChrome = openBooking && isMobilePublicShellPresentation();
+    const homeBtn = document.getElementById("homeBtn");
+    if (hideGlobalTopChrome) {
+      homeBtn?.classList.add("hidden");
+    } else {
+      homeBtn?.classList.toggle("hidden", !openBooking);
+    }
 
     if (openBooking) {
       if (!publicManageMode && !isBookingSuccessCardVisible()) {
@@ -20289,7 +20363,9 @@
     const id = (manualInput?.value || getActivePublicBusinessSlug() || "").trim();
 
     if (!id) {
-      showToast("Enter business ID or open a public booking link.", "error")
+      if (!shouldSuppressManualBusinessEntryToast()) {
+        showToast("Enter business ID or open a public booking link.", "error");
+      }
       return;
     }
 
@@ -22647,7 +22723,7 @@
           hasConflict(selectedDate, selectedSlot, serviceId, null, getSelectedPublicStaffId())
         ) {
           selectedSlot = null;
-          if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS && !shouldSuppressPublicBookingWizard("refreshBookingsAfterChange")) {
+          if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
             goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, { silent: true });
           }
         }
@@ -26144,6 +26220,8 @@
   async function createPublicBooking() {
     if (publicBookingCreateInFlight) return;
 
+    syncPublicBookingSelectionFromUi();
+
     const name = document.getElementById("customerName").value.trim();
     const phone = document.getElementById("customerPhone").value.trim();
     const email = document.getElementById("customerEmail").value.trim();
@@ -26151,7 +26229,18 @@
     let staffId = getSelectedPublicStaffId();
 
     if (!selectedDate || !selectedSlot || !selectedService) {
-      showToast("Choose date, slot and service.", "error")
+      if (!selectedService) {
+        showToast("Choose a service.", "error");
+      } else if (!selectedDate) {
+        showToast("Choose a date.", "error");
+      } else if (!selectedSlot) {
+        showToast("Choose a time slot.", "error");
+        if (publicBookingStep === PUBLIC_BOOKING_STEP.DETAILS) {
+          goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE, { silent: true });
+        }
+      } else {
+        showToast("Choose date, slot and service.", "error");
+      }
       return;
     }
 
