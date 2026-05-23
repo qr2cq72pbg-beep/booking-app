@@ -2,14 +2,28 @@
 <html lang="mk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Supabase Booking App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Booking" />
+  <meta name="application-name" content="Booking" />
+  <meta name="description" content="Book appointments online" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <title>Book Appointment</title>
   <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 + robust slot click fix -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
     :root {
+      --pwa-theme: #2563eb;
+      --pwa-bg: #f8fafc;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
       --color-primary: #2563eb;
       --color-primary-hover: #1d4ed8;
       --color-success: #16a34a;
@@ -10835,10 +10849,149 @@
         display: none !important;
       }
     }
+
+    /* PWA app shell — splash, install hint, standalone safe areas */
+    .app-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--pwa-bg);
+      transition: opacity 0.28s ease, visibility 0.28s ease;
+    }
+
+    .app-splash.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .app-splash.is-removed {
+      display: none;
+    }
+
+    .app-splash-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 24px;
+    }
+
+    .app-splash-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      box-shadow: 0 12px 32px rgba(37, 99, 235, 0.28);
+    }
+
+    .app-splash-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    .pwa-install-hint {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+      z-index: 150;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: public-content-in 0.25s ease both;
+    }
+
+    .pwa-install-hint:not(.hidden) {
+      display: flex;
+    }
+
+    .pwa-install-hint-text {
+      flex: 1;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #334155;
+    }
+
+    .pwa-install-hint-dismiss {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @media (min-width: 769px) {
+      .pwa-install-hint {
+        display: none !important;
+      }
+    }
+
+    @media (display-mode: standalone) {
+      body.app-theme-minimal {
+        padding-top: var(--safe-top);
+      }
+
+      .topbar {
+        padding-top: max(12px, var(--safe-top));
+      }
+
+      #publicView.public-view--mobile-shell {
+        padding-bottom: calc(72px + var(--safe-bottom));
+      }
+
+      body.customer-mobile-shell-active #customerMobileBottomNav:not(.hidden) {
+        padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .pwa-install-hint {
+        display: none !important;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .app-splash {
+        transition: none;
+      }
+    }
   </style>
 </head>
 
 <body class="app-theme-minimal">
+
+  <div id="appSplash" class="app-splash is-hidden" aria-hidden="true">
+    <div class="app-splash-inner">
+      <img class="app-splash-icon" src="icons/icon-192.png" alt="" width="72" height="72" />
+      <p class="app-splash-title">Booking</p>
+    </div>
+  </div>
+
+  <div id="pwaInstallHint" class="pwa-install-hint hidden" role="status" aria-live="polite">
+    <p id="pwaInstallHintText" class="pwa-install-hint-text">Add to Home Screen for the best experience.</p>
+    <button type="button" class="pwa-install-hint-dismiss" onclick="dismissPwaInstallHint()" aria-label="Dismiss install tip">×</button>
+  </div>
 
   <div class="topbar">
     <div class="topbar-inner">
@@ -17057,10 +17210,77 @@
     }
   }
 
+  const PWA_INSTALL_HINT_KEY = "pwaInstallHintDismissed";
+
+  function isStandaloneDisplayMode() {
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    );
+  }
+
+  function initPwaAppShell() {
+    const splash = document.getElementById("appSplash");
+    if (splash && isStandaloneDisplayMode()) {
+      splash.classList.remove("is-hidden");
+      splash.removeAttribute("aria-hidden");
+      requestAnimationFrame(() => {
+        window.setTimeout(() => {
+          splash.classList.add("is-hidden");
+          splash.setAttribute("aria-hidden", "true");
+          window.setTimeout(() => splash.classList.add("is-removed"), 280);
+        }, 320);
+      });
+    } else if (splash) {
+      splash.classList.add("is-removed");
+    }
+
+    initPwaInstallHint();
+  }
+
+  function initPwaInstallHint() {
+    const hint = document.getElementById("pwaInstallHint");
+    const textEl = document.getElementById("pwaInstallHintText");
+    if (!hint || !textEl) return;
+    if (isStandaloneDisplayMode()) return;
+    if (window.innerWidth > 768) return;
+    try {
+      if (localStorage.getItem(PWA_INSTALL_HINT_KEY) === "1") return;
+    } catch (e) {
+      /* ignore */
+    }
+
+    const isIos =
+      /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isAndroid = /android/i.test(navigator.userAgent);
+
+    if (isIos) {
+      textEl.textContent = "Add to Home Screen for the best experience (Share → Add to Home Screen).";
+    } else if (isAndroid) {
+      textEl.textContent = "Install the app for the best experience (menu → Install app).";
+    } else {
+      textEl.textContent = "Add to Home Screen for the best experience.";
+    }
+
+    hint.classList.remove("hidden");
+  }
+
+  function dismissPwaInstallHint() {
+    const hint = document.getElementById("pwaInstallHint");
+    hint?.classList.add("hidden");
+    try {
+      localStorage.setItem(PWA_INSTALL_HINT_KEY, "1");
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", init);
 
   async function init() {
     try {
+    initPwaAppShell();
     bindDocumentTimeStepperHandlerOnce();
     bindCustomerMobileShellListeners();
     populateCountryPhoneDropdown();
