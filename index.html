@@ -6314,6 +6314,164 @@
         border-radius: var(--pub-m-radius-sm);
         font-weight: 700;
       }
+
+      /* Micro-interactions — mobile public flow */
+      #publicView.public-view--mobile-shell {
+        scroll-behavior: smooth;
+      }
+
+      #publicView.public-view--mobile-shell #publicBookingContent {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-tab-panel {
+        animation: none;
+      }
+
+      #publicView.public-view--mobile-shell .customer-mobile-tab-panel:not(.hidden).customer-mobile-tab-panel--enter {
+        animation: public-mobile-tab-in 0.22s ease both;
+      }
+
+      @keyframes public-mobile-tab-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #publicView .public-booking-step {
+        transition: opacity 0.18s ease, transform 0.18s ease;
+      }
+
+      #publicBookingContent #publicServiceList:not(:empty),
+      #publicBookingContent #publicStaffCards:not(:empty),
+      #publicBookingContent .public-mobile-slots-grid:not(:empty) {
+        animation: public-content-in 0.2s ease both;
+      }
+
+      @keyframes public-content-in {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #publicBookingContent .public-skeleton-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 4px 0 8px;
+      }
+
+      #publicBookingContent .public-skeleton-stack--slots {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      #publicBookingContent .public-skeleton-item {
+        border-radius: var(--pub-m-radius, 16px);
+        background: linear-gradient(
+          90deg,
+          #f1f5f9 0%,
+          #e8eef5 45%,
+          #f8fafc 55%,
+          #f1f5f9 100%
+        );
+        background-size: 200% 100%;
+        animation: public-shimmer 1.1s ease-in-out infinite;
+      }
+
+      #publicBookingContent .public-skeleton-service {
+        min-height: 68px;
+        border-radius: var(--pub-m-radius, 16px);
+      }
+
+      #publicBookingContent .public-skeleton-staff {
+        min-height: 72px;
+      }
+
+      #publicBookingContent .public-skeleton-slot {
+        min-height: 50px;
+        border-radius: var(--pub-m-radius-sm, 12px);
+      }
+
+      @keyframes public-shimmer {
+        0% {
+          background-position: 100% 0;
+        }
+        100% {
+          background-position: -100% 0;
+        }
+      }
+
+      #publicBookingContent .loading-state {
+        padding: 16px 14px;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        font-size: 13px;
+        font-weight: 600;
+        color: #64748b;
+        animation: public-content-in 0.18s ease both;
+      }
+
+      #publicBookingContent .empty-state {
+        animation: public-content-in 0.2s ease both;
+        border-radius: 14px;
+        padding: 18px 14px;
+      }
+
+      #publicBookingContent .public-booking-wizard-footer--sticky-confirm {
+        z-index: 40;
+        margin: 0 -14px;
+        padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(226, 232, 240, 0.95);
+        box-shadow: 0 -6px 28px rgba(15, 23, 42, 0.1);
+        animation: public-sticky-cta-in 0.24s ease both;
+      }
+
+      @keyframes public-sticky-cta-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      #publicBookingContent .public-confirm-form-wrap--loading .public-confirm-loading:not(.hidden) {
+        animation: public-content-in 0.15s ease both;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #publicView.public-view--mobile-shell .customer-mobile-tab-panel--enter,
+        #publicBookingContent #publicServiceList:not(:empty),
+        #publicBookingContent #publicStaffCards:not(:empty),
+        #publicBookingContent .public-mobile-slots-grid:not(:empty),
+        #publicBookingContent .public-skeleton-item,
+        #publicBookingContent .public-booking-wizard-footer--sticky-confirm {
+          animation: none !important;
+        }
+
+        #publicView .public-booking-step {
+          transition: none !important;
+        }
+      }
     }
 
     #publicBookingStepDetails .public-confirm-panel {
@@ -13853,6 +14011,8 @@
     if (effectiveTab === CUSTOMER_MOBILE_TAB.PROFILE) {
       renderCustomerMobileProfileTab();
     }
+
+    animateCustomerMobileTabPanels();
   }
 
   function dismissMobileShellFlowPanelsForTabSwitch(tab) {
@@ -14125,6 +14285,41 @@
         <span>${escapeHtml(message)}</span>
       </div>
     `;
+  }
+
+  function publicSkeletonHtml(kind = "services") {
+    const count = kind === "slots" ? 4 : kind === "staff" ? 3 : 3;
+    const itemClass =
+      kind === "slots"
+        ? "public-skeleton-slot"
+        : kind === "staff"
+          ? "public-skeleton-staff"
+          : "public-skeleton-service";
+    const items = Array.from({ length: count })
+      .map(() => `<div class="public-skeleton-item ${itemClass}"></div>`)
+      .join("");
+    return `<div class="public-skeleton-stack public-skeleton-stack--${kind}" role="status" aria-live="polite" aria-busy="true"><span class="visually-hidden">Loading</span>${items}</div>`;
+  }
+
+  function publicLoadingPlaceholder(kind = "services") {
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      return publicSkeletonHtml(kind);
+    }
+    if (kind === "slots") return loadingStateHtml("Loading available times…");
+    if (kind === "staff") return loadingStateHtml("Loading team…");
+    return loadingStateHtml("Loading services…");
+  }
+
+  function animateCustomerMobileTabPanels() {
+    if (!isCustomerMobileShellEnabled()) return;
+    document
+      .querySelectorAll(".customer-mobile-tab-panel:not(.hidden)")
+      .forEach((panel) => {
+        panel.classList.remove("customer-mobile-tab-panel--enter");
+        requestAnimationFrame(() => {
+          panel.classList.add("customer-mobile-tab-panel--enter");
+        });
+      });
   }
 
   function isValidUuid(value) {
@@ -17074,7 +17269,7 @@
       document.getElementById("publicBookingContent").classList.remove("hidden");
       const serviceListMount = document.getElementById("publicServiceList");
       if (serviceListMount && (publicDataLoading || !services.length) && !shouldSuppressPublicBookingWizard("showPublicView-services")) {
-        serviceListMount.innerHTML = loadingStateHtml("Loading services…");
+        serviceListMount.innerHTML = publicLoadingPlaceholder("services");
       }
       if (publicManageMode || shouldSuppressPublicBookingWizard("showPublicView")) {
         hidePublicBookingWizardForManageFlow("showPublicView");
@@ -20337,7 +20532,7 @@
 
     const serviceListMount = document.getElementById("publicServiceList");
     if (serviceListMount && !publicManageMode) {
-      serviceListMount.innerHTML = loadingStateHtml("Loading services…");
+      serviceListMount.innerHTML = publicLoadingPlaceholder("services");
     }
 
     await loadServices();
@@ -21186,7 +21381,7 @@
 
       if (!serviceRows.length) {
         if (publicDataLoading) {
-          list.innerHTML = loadingStateHtml("Loading services…");
+          list.innerHTML = publicLoadingPlaceholder("services");
           if (hidden) hidden.value = "";
           selectedService = null;
           return;
@@ -22006,6 +22201,12 @@
     if (!mount) return;
 
     try {
+      if (publicDataLoading && !getActiveStaffMembers().length) {
+        mount.innerHTML = publicLoadingPlaceholder("staff");
+        panel?.classList.remove("hidden");
+        return;
+      }
+
       if (
         !staffFeatureAvailable ||
         !bookingStaffColumnAvailable ||
@@ -25389,7 +25590,7 @@
     if (publicMobileSlotsLoading || publicDataLoading) {
       if (statusEl) statusEl.textContent = "Loading available times…";
       if (slotsMount) {
-        slotsMount.innerHTML = loadingStateHtml("Loading available times…", "Checking open slots for this day.");
+        slotsMount.innerHTML = publicLoadingPlaceholder("slots");
       }
       if (slotsHint) slotsHint.classList.add("hidden");
       return;
