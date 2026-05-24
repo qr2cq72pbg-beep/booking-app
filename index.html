@@ -9245,6 +9245,11 @@
       border-top: 4px solid var(--business-accent, #2563eb);
     }
 
+    #manageBookingCard:not(.hidden) #manageBookingLoading:not(.hidden) {
+      display: flex;
+      min-height: 140px;
+    }
+
     .manage-booking-cancelled-banner {
       padding: var(--space-md);
       background: #f0fdf4;
@@ -10841,6 +10846,31 @@
 
       #publicView.public-view--mobile-shell .customer-mobile-profile-row:last-child {
         border-bottom: none;
+      }
+
+      .customer-notif-reminder-list {
+        margin-top: 8px;
+      }
+
+      .customer-notif-reminder-item {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+      }
+
+      .customer-notif-reminder-item:last-child {
+        border-bottom: none;
+      }
+
+      .customer-notif-reminder-item strong {
+        display: block;
+        font-size: 14px;
+        color: var(--color-text, #111827);
+        margin-bottom: 2px;
+      }
+
+      .customer-notif-reminder-item span {
+        font-size: 13px;
+        color: #64748b;
       }
 
       #publicView.public-view--mobile-shell .customer-my-bookings-card.customer-my-bookings-card--shell {
@@ -12920,9 +12950,20 @@
 
       <section id="customerMobileTabNotifications" class="customer-mobile-tab-panel hidden" aria-label="Notifications">
         <div class="customer-mobile-placeholder-card">
-          <p class="customer-mobile-section-title">Notifications</p>
-          <p class="customer-mobile-placeholder-lead">Notifications coming soon</p>
-          <p class="customer-mobile-placeholder-note">Push alerts for confirmations and reminders are not enabled yet.</p>
+          <p class="customer-mobile-section-title">Alerts</p>
+          <p class="customer-mobile-placeholder-lead">App reminders for your appointments (local notifications only — no SMS).</p>
+          <div class="customer-mobile-profile-row">
+            <span>Notifications</span>
+            <strong id="customerNotifStatus">Checking…</strong>
+          </div>
+          <p id="customerNotifStatusHint" class="customer-mobile-placeholder-note"></p>
+          <button type="button" id="customerNotifEnableBtn" class="success" style="width:100%;margin-top:12px" onclick="onCustomerNotifEnableClick()">Enable notifications</button>
+          <button type="button" id="customerNotifTestBtn" class="secondary hidden" style="width:100%;margin-top:8px" onclick="onCustomerNotifTestClick()">Send test notification</button>
+          <p class="customer-mobile-section-title" style="margin-top:20px">Upcoming reminders</p>
+          <div id="customerNotifRemindersList" class="customer-notif-reminder-list">
+            <p class="customer-mobile-placeholder-note">No scheduled reminders yet.</p>
+          </div>
+          <p class="customer-mobile-placeholder-note" style="margin-top:14px">Email confirmations are still sent as backup. Remote push is not enabled yet.</p>
         </div>
       </section>
 
@@ -12948,6 +12989,10 @@
             <button type="button" class="secondary" style="width:100%;margin-top:8px" onclick="openCustomerMobileAuthFromShell({ returnTab: 'profile', panel: 'signup' })">Create account</button>
           </div>
           <p class="customer-mobile-section-title" style="margin-top:20px">Preferences</p>
+          <div class="customer-mobile-profile-row">
+            <span>Notifications</span>
+            <button type="button" class="secondary" style="padding:6px 12px;font-size:13px" onclick="setCustomerMobileTab('notifications')">Alerts</button>
+          </div>
           <div class="customer-mobile-profile-row">
             <span>Language</span>
             <span style="color:#94a3b8">Coming soon</span>
@@ -13294,9 +13339,9 @@
               <p class="booking-flow-lead">View your booking, pick a new time, or cancel your appointment.</p>
             </div>
           </div>
-          <div id="manageBookingLoading" class="loading-state hidden" role="status">
+          <div id="manageBookingLoading" class="loading-state hidden" role="status" aria-live="polite">
             <span class="loading-spinner" aria-hidden="true"></span>
-            <span>Loading booking…</span>
+            <span id="manageBookingLoadingLabel">Loading manage booking...</span>
           </div>
           <div id="manageBookingError" class="empty-state hidden"></div>
           <div id="manageBookingBody" class="hidden">
@@ -14065,6 +14110,77 @@
     console.log("[manage-load]", ...args);
   }
 
+  function logManageContainerState(tag) {
+    const card = document.getElementById("manageBookingCard");
+    const bookContent = document.getElementById("publicBookingContent");
+    const publicView = document.getElementById("publicView");
+    const parent = card?.parentElement;
+    const csCard = card ? getComputedStyle(card) : null;
+    const csContent = bookContent ? getComputedStyle(bookContent) : null;
+    console.log("[manage-container-state]", tag, {
+      manageBookingCardHidden: card?.classList.contains("hidden"),
+      manageBookingCardDisplay: csCard?.display,
+      manageBookingCardVisibility: csCard?.visibility,
+      manageBookingCardOpacity: csCard?.opacity,
+      parentId: parent?.id || null,
+      parentHidden: parent?.classList?.contains("hidden"),
+      publicBookingContentHidden: bookContent?.classList.contains("hidden"),
+      publicBookingContentDisplay: csContent?.display,
+      publicBookingContentVisibility: csContent?.visibility,
+      publicViewHidden: publicView?.classList.contains("hidden"),
+      customerMobileTab,
+      publicManageMode,
+      appShellState: typeof getAppShellState === "function" ? getAppShellState() : "unknown",
+      appShellReady: typeof isAppShellReady === "function" ? isAppShellReady() : false,
+      activeManageToken: activeManageToken ? "(set)" : "(none)",
+      bookingId: manageBookingData?.id || null,
+      manageLoadingHidden: document.getElementById("manageBookingLoading")?.classList.contains("hidden"),
+      manageBodyHidden: document.getElementById("manageBookingBody")?.classList.contains("hidden"),
+      manageErrorHidden: document.getElementById("manageBookingError")?.classList.contains("hidden")
+    });
+  }
+
+  /** Synchronous manage shell — must run before any await (never blank). */
+  function mountManageBookingShellImmediate(caller) {
+    if (!publicManageMode) enterPublicManageMode(caller || "mount-immediate");
+
+    document.getElementById("publicView")?.classList.remove("hidden");
+    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    customerMyBookingsViewOpen = false;
+    document.getElementById("publicBookingContent")?.classList.remove("hidden");
+
+    hidePublicBookingWizardForManageFlow(caller || "mountManageBookingShellImmediate");
+    hideBookingSuccessCard();
+
+    const card = document.getElementById("manageBookingCard");
+    const loading = document.getElementById("manageBookingLoading");
+    const loadingLabel = document.getElementById("manageBookingLoadingLabel");
+    const errorBox = document.getElementById("manageBookingError");
+    const body = document.getElementById("manageBookingBody");
+
+    card?.classList.remove("hidden");
+    card?.removeAttribute("hidden");
+    card?.setAttribute("aria-hidden", "false");
+
+    if (loadingLabel) loadingLabel.textContent = "Loading manage booking...";
+    loading?.classList.remove("hidden");
+    errorBox?.classList.add("hidden");
+    body?.classList.add("hidden");
+
+    if (isCustomerMobileShellEnabled()) {
+      customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+      document.querySelectorAll("#customerMobileBottomNav .customer-mobile-nav-item").forEach((btn) => {
+        const on = btn.dataset.mobileTab === CUSTOMER_MOBILE_TAB.BOOK;
+        btn.classList.toggle("customer-mobile-nav-item--active", on);
+        btn.setAttribute("aria-current", on ? "page" : "false");
+      });
+    }
+
+    applyCustomerMobileTabVisibility();
+    console.log("[manage-shell-visible]", caller || "mountManageBookingShellImmediate");
+    logManageContainerState(caller || "mountManageBookingShellImmediate");
+  }
+
   function isBookingSuccessCardVisible() {
     const card = document.getElementById("bookingSuccessCard");
     if (!card) return false;
@@ -14088,27 +14204,8 @@
     document.getElementById("publicBookingContent")?.classList.remove("hidden");
   }
 
-  /** Mount manage flow chrome before async token fetch (mobile shell + wizard cleanup). */
   function ensureManageBookingFlowVisible(caller) {
-    if (!publicManageMode) enterPublicManageMode(caller || "ensure-visible");
-    logManageShellSnapshot(caller || "ensureManageBookingFlowVisible");
-
-    document.getElementById("publicView")?.classList.remove("hidden");
-    document.getElementById("publicBookingContent")?.classList.remove("hidden");
-    hidePublicBookingWizardForManageFlow(caller || "ensureManageBookingFlowVisible");
-    hideBookingSuccessCard();
-    document.getElementById("manageBookingCard")?.classList.remove("hidden");
-
-    if (isCustomerMobileShellEnabled()) {
-      customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
-      document.querySelectorAll("#customerMobileBottomNav .customer-mobile-nav-item").forEach((btn) => {
-        const on = btn.dataset.mobileTab === CUSTOMER_MOBILE_TAB.BOOK;
-        btn.classList.toggle("customer-mobile-nav-item--active", on);
-        btn.setAttribute("aria-current", on ? "page" : "false");
-      });
-      applyCustomerMobileTabVisibility();
-    }
-
+    mountManageBookingShellImmediate(caller || "ensureManageBookingFlowVisible");
     logManageNav("ensureManageBookingFlowVisible done", caller);
   }
 
@@ -14292,6 +14389,494 @@
     if (!isNativeCapacitorApp()) return;
     document.body.classList.add("native-app-shell");
     document.getElementById("pwaInstallHint")?.classList.add("hidden");
+  }
+
+  /* ========================================================================
+     Local notifications (Capacitor native — Phase 1, no remote push)
+     ======================================================================== */
+
+  const NOTIF_STORAGE_REMINDERS = "bookingAppScheduledReminders";
+  const NOTIF_STORAGE_PROMPT_AFTER_BOOKING = "bookingAppNotifPromptAfterBooking";
+  const BOOKING_REMINDER_OFFSETS = Object.freeze([
+    { key: "24h", ms: 24 * 60 * 60 * 1000, label: "24 hours before" },
+    { key: "2h", ms: 2 * 60 * 60 * 1000, label: "2 hours before" }
+  ]);
+  let localNotificationListenersBound = false;
+  /** @type {Set<string>} */
+  const adminRecentlyCreatedBookingIds = new Set();
+
+  function logNotifications(...args) {
+    console.log("[notifications]", ...args);
+  }
+
+  function isLocalNotificationsSupported() {
+    return isNativeCapacitorApp() && !!getLocalNotificationsPlugin();
+  }
+
+  function getLocalNotificationsPlugin() {
+    try {
+      const plugin = window.Capacitor?.Plugins?.LocalNotifications;
+      if (!plugin || typeof plugin.schedule !== "function") return null;
+      return plugin;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hashNotificationId(seed) {
+    const s = String(seed || "notif");
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = (h << 5) - h + s.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h) % 2147483646 || 1;
+  }
+
+  function parseBookingAppointmentDate(booking) {
+    const dateStr = normalizeBookingDateForInput(booking?.date) || String(booking?.date || "").trim();
+    const timeStr = String(booking?.time || "09:00").trim().slice(0, 5);
+    if (!dateStr) return null;
+    const parts = dateStr.split("-").map(Number);
+    const tparts = timeStr.split(":").map(Number);
+    if (parts.length < 3) return null;
+    const dt = new Date(parts[0], parts[1] - 1, parts[2], tparts[0] || 0, tparts[1] || 0, 0);
+    return Number.isNaN(dt.getTime()) ? null : dt;
+  }
+
+  function loadStoredReminderRecords() {
+    try {
+      const raw = localStorage.getItem(NOTIF_STORAGE_REMINDERS);
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveStoredReminderRecords(list) {
+    try {
+      localStorage.setItem(NOTIF_STORAGE_REMINDERS, JSON.stringify(list.slice(-50)));
+    } catch (e) {
+      console.warn("[notifications] could not persist reminders", e);
+    }
+  }
+
+  function upsertStoredReminderRecord(record) {
+    const list = loadStoredReminderRecords().filter((r) => r.id !== record.id);
+    list.push(record);
+    saveStoredReminderRecords(list);
+  }
+
+  function removeStoredRemindersForBooking(bookingId) {
+    if (!bookingId) return;
+    const prefix = String(bookingId);
+    const list = loadStoredReminderRecords().filter((r) => String(r.bookingId || "") !== prefix);
+    saveStoredReminderRecords(list);
+  }
+
+  async function getNotificationPermissionStatus() {
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin) return "unsupported";
+    try {
+      const result = await plugin.checkPermissions();
+      return result?.display || "prompt";
+    } catch (err) {
+      console.warn("[notification-permission]", "check failed", err?.message || err);
+      return "unsupported";
+    }
+  }
+
+  async function requestNotificationPermission(opts = {}) {
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin) {
+      console.log("[notification-permission]", "unsupported", opts.reason || "");
+      return { granted: false, status: "unsupported" };
+    }
+
+    console.log("[notification-permission]", "request", opts.reason || "general");
+    try {
+      const current = await plugin.checkPermissions();
+      if (current?.display === "granted") {
+        console.log("[notification-permission]", "already granted");
+        return { granted: true, status: "granted" };
+      }
+      if (current?.display === "denied") {
+        console.log("[notification-permission]", "denied");
+        return { granted: false, status: "denied" };
+      }
+      const result = await plugin.requestPermissions();
+      const granted = result?.display === "granted";
+      console.log("[notification-permission]", "result", result?.display || "unknown");
+      return { granted, status: result?.display || "prompt" };
+    } catch (err) {
+      console.warn("[notification-permission]", "request failed", err?.message || err);
+      return { granted: false, status: "error" };
+    }
+  }
+
+  async function scheduleLocalNotification(opts = {}) {
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin) {
+      console.log("[notification-skipped]", "unsupported platform", opts.title || "");
+      return false;
+    }
+
+    const scheduleAt = opts.scheduleAt instanceof Date ? opts.scheduleAt : new Date(opts.scheduleAt || Date.now());
+    if (Number.isNaN(scheduleAt.getTime()) || scheduleAt.getTime() <= Date.now() + 5000) {
+      console.log("[notification-skipped]", "schedule in past or too soon", opts.title || "", scheduleAt.toISOString());
+      return false;
+    }
+
+    const perm = await getNotificationPermissionStatus();
+    if (perm !== "granted") {
+      console.log("[notification-skipped]", "permission not granted", perm, opts.title || "");
+      return false;
+    }
+
+    const id = Number(opts.id) || hashNotificationId(String(opts.idSeed || opts.title || Date.now()));
+    try {
+      await plugin.schedule({
+        notifications: [
+          {
+            id,
+            title: String(opts.title || "Booking reminder"),
+            body: String(opts.body || ""),
+            schedule: { at: scheduleAt },
+            extra: opts.extra || {}
+          }
+        ]
+      });
+      console.log("[notification-scheduled]", {
+        id,
+        title: opts.title,
+        at: scheduleAt.toISOString()
+      });
+      if (opts.storeRecord) upsertStoredReminderRecord(opts.storeRecord);
+      return true;
+    } catch (err) {
+      console.warn("[notification-skipped]", "schedule failed", err?.message || err);
+      return false;
+    }
+  }
+
+  async function cancelLocalNotification(id) {
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin) return;
+    const nid = Number(id);
+    if (!nid) return;
+    try {
+      await plugin.cancel({ notifications: [{ id: nid }] });
+      logNotifications("cancelled", nid);
+    } catch (err) {
+      console.warn("[notifications]", "cancel failed", err?.message || err);
+    }
+  }
+
+  async function clearLocalNotifications() {
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin) return;
+    try {
+      const pending = await plugin.getPending();
+      const ids = (pending?.notifications || []).map((n) => ({ id: n.id }));
+      if (ids.length) await plugin.cancel({ notifications: ids });
+      saveStoredReminderRecords([]);
+      logNotifications("cleared all pending");
+    } catch (err) {
+      console.warn("[notifications]", "clear failed", err?.message || err);
+    }
+  }
+
+  async function cancelLocalNotificationsForBooking(bookingId) {
+    if (!bookingId) return;
+    const records = loadStoredReminderRecords().filter((r) => String(r.bookingId) === String(bookingId));
+    for (const rec of records) {
+      await cancelLocalNotification(rec.id);
+    }
+    removeStoredRemindersForBooking(bookingId);
+  }
+
+  function formatNotificationWhenLabel(iso) {
+    try {
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return iso;
+      return d.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    } catch (e) {
+      return String(iso || "");
+    }
+  }
+
+  async function scheduleBookingReminderNotification(booking, context = {}) {
+    if (!isLocalNotificationsSupported()) {
+      console.log("[notification-skipped]", "native plugin unavailable");
+      return { scheduled: 0, skipped: BOOKING_REMINDER_OFFSETS.length };
+    }
+
+    const appointmentAt = parseBookingAppointmentDate(booking);
+    if (!appointmentAt) {
+      console.log("[notification-skipped]", "invalid appointment date", booking?.id || booking?.booking_ref);
+      return { scheduled: 0, skipped: BOOKING_REMINDER_OFFSETS.length };
+    }
+
+    const bookingId = String(booking?.id || booking?.booking_ref || "").trim();
+    if (bookingId) await cancelLocalNotificationsForBooking(bookingId);
+
+    const serviceName =
+      context.serviceName ||
+      booking?.service_name ||
+      selectedService?.name ||
+      "your appointment";
+    const ref = booking?.booking_ref || context.ref || "";
+    let scheduled = 0;
+    let skipped = 0;
+
+    for (const offset of BOOKING_REMINDER_OFFSETS) {
+      const remindAt = new Date(appointmentAt.getTime() - offset.ms);
+      const id = hashNotificationId(`${bookingId}-${offset.key}`);
+      const title = offset.key === "24h" ? "Appointment tomorrow" : "Appointment in 2 hours";
+      const body = ref
+        ? `${serviceName} (${ref}) — ${formatNotificationWhenLabel(appointmentAt.toISOString())}`
+        : `${serviceName} — ${formatNotificationWhenLabel(appointmentAt.toISOString())}`;
+
+      const ok = await scheduleLocalNotification({
+        id,
+        title,
+        body,
+        scheduleAt: remindAt,
+        extra: { bookingId, offset: offset.key, type: "booking-reminder" },
+        storeRecord: {
+          id,
+          bookingId,
+          ref,
+          serviceName,
+          offsetLabel: offset.label,
+          appointmentAt: appointmentAt.toISOString(),
+          remindAt: remindAt.toISOString()
+        }
+      });
+      if (ok) scheduled += 1;
+      else skipped += 1;
+    }
+
+    logNotifications("booking reminders", { bookingId, scheduled, skipped });
+    return { scheduled, skipped };
+  }
+
+  function maybeSoftPromptNotificationsAfterBooking() {
+    if (!isLocalNotificationsSupported()) return;
+    try {
+      if (localStorage.getItem(NOTIF_STORAGE_PROMPT_AFTER_BOOKING)) return;
+      localStorage.setItem(NOTIF_STORAGE_PROMPT_AFTER_BOOKING, "1");
+    } catch (e) {
+      return;
+    }
+    showToast("Enable appointment reminders in the Alerts tab.", "info", 6500);
+  }
+
+  async function handleCustomerBookingConfirmedNotifications(booking, context = {}) {
+    if (!isLocalNotificationsSupported()) return;
+    const status = await getNotificationPermissionStatus();
+    if (status === "granted") {
+      await scheduleBookingReminderNotification(booking, context);
+      return;
+    }
+    if (status === "denied") {
+      console.log("[notification-skipped]", "permission denied after booking");
+      return;
+    }
+    maybeSoftPromptNotificationsAfterBooking();
+  }
+
+  function markAdminSelfCreatedBooking(bookingId) {
+    if (!bookingId) return;
+    adminRecentlyCreatedBookingIds.add(String(bookingId));
+    window.setTimeout(() => adminRecentlyCreatedBookingIds.delete(String(bookingId)), 8000);
+  }
+
+  async function notifyAdminNewBookingLocal(booking, opts = {}) {
+    const customerName = booking?.customer_name || "Customer";
+    const serviceName =
+      booking?.service_name ||
+      services.find((s) => s.id === booking?.service_id)?.name ||
+      "Appointment";
+    const when = booking?.date && booking?.time ? `${booking.date} ${String(booking.time).slice(0, 5)}` : "";
+
+    showToast("New booking received", "info", 4500);
+
+    if (!isLocalNotificationsSupported()) return;
+
+    const perm = await getNotificationPermissionStatus();
+    if (perm !== "granted") {
+      console.log("[notification-skipped]", "admin new booking — permission", perm);
+      return;
+    }
+
+    await scheduleLocalNotification({
+      id: hashNotificationId("admin-new-" + (booking?.id || Date.now())),
+      title: "New booking received",
+      body: when ? `${customerName} — ${serviceName} · ${when}` : `${customerName} — ${serviceName}`,
+      scheduleAt: new Date(Date.now() + 1500),
+      extra: { type: "admin-new-booking", bookingId: booking?.id || null, source: opts.source || "unknown" }
+    });
+  }
+
+  function handleBookingRealtimeChange(payload) {
+    scheduleBookingRealtimeRefresh();
+    if (!payload || payload.eventType !== "INSERT") return;
+    const row = payload.new;
+    if (!row?.id) return;
+    if (adminRecentlyCreatedBookingIds.has(String(row.id))) return;
+
+    const adminView = document.getElementById("adminView");
+    if (!adminView || adminView.classList.contains("hidden")) return;
+    if (currentUserRole !== "admin") return;
+
+    void notifyAdminNewBookingLocal(row, { source: "realtime" });
+  }
+
+  async function renderCustomerMobileNotificationsTab() {
+    const statusEl = document.getElementById("customerNotifStatus");
+    const hintEl = document.getElementById("customerNotifStatusHint");
+    const enableBtn = document.getElementById("customerNotifEnableBtn");
+    const testBtn = document.getElementById("customerNotifTestBtn");
+    const listEl = document.getElementById("customerNotifRemindersList");
+
+    if (!statusEl) return;
+
+    if (!isLocalNotificationsSupported()) {
+      statusEl.textContent = "Web only";
+      if (hintEl) {
+        hintEl.textContent = "Local notifications work in the iOS/Android app. Email confirmations still apply.";
+      }
+      enableBtn?.classList.add("hidden");
+      testBtn?.classList.add("hidden");
+      if (listEl) {
+        listEl.innerHTML = '<p class="customer-mobile-placeholder-note">Install the native app to use reminders.</p>';
+      }
+      return;
+    }
+
+    const status = await getNotificationPermissionStatus();
+    if (status === "granted") {
+      statusEl.textContent = "Allowed";
+      if (hintEl) hintEl.textContent = "You will receive local reminders before appointments booked in this app.";
+      enableBtn?.classList.add("hidden");
+      testBtn?.classList.remove("hidden");
+    } else if (status === "denied") {
+      statusEl.textContent = "Not allowed";
+      if (hintEl) {
+        hintEl.textContent = "Notifications are off. Enable them in iOS/Android Settings for this app.";
+      }
+      enableBtn?.classList.remove("hidden");
+      enableBtn.textContent = "Open Settings to enable";
+      testBtn?.classList.add("hidden");
+    } else {
+      statusEl.textContent = "Not allowed";
+      if (hintEl) hintEl.textContent = "Enable notifications to get appointment reminders on this device.";
+      enableBtn?.classList.remove("hidden");
+      enableBtn.textContent = "Enable notifications";
+      testBtn?.classList.add("hidden");
+    }
+
+    if (listEl) {
+      const now = Date.now();
+      const upcoming = loadStoredReminderRecords()
+        .filter((r) => new Date(r.remindAt).getTime() > now)
+        .sort((a, b) => new Date(a.remindAt) - new Date(b.remindAt));
+
+      if (!upcoming.length) {
+        listEl.innerHTML = '<p class="customer-mobile-placeholder-note">No scheduled reminders yet. Book an appointment to schedule reminders.</p>';
+      } else {
+        listEl.innerHTML = upcoming
+          .map(
+            (r) => `
+          <div class="customer-notif-reminder-item">
+            <strong>${escapeHtml(r.serviceName || "Appointment")}${r.ref ? " · " + escapeHtml(r.ref) : ""}</strong>
+            <span>${escapeHtml(r.offsetLabel || "Reminder")} · ${escapeHtml(formatNotificationWhenLabel(r.remindAt))}</span>
+          </div>`
+          )
+          .join("");
+      }
+    }
+  }
+
+  async function onCustomerNotifEnableClick() {
+    const status = await getNotificationPermissionStatus();
+    if (status === "denied") {
+      showToast("Enable notifications in your device Settings for this app.", "info", 6000);
+      return;
+    }
+    const result = await requestNotificationPermission({ reason: "alerts-tab" });
+    if (result.granted) {
+      showToast("Notifications enabled.", "success");
+      if (lastPublicBookingSuccess?.date && lastPublicBookingSuccess?.time) {
+        await scheduleBookingReminderNotification(
+          {
+            id: lastPublicBookingSuccess.ref,
+            booking_ref: lastPublicBookingSuccess.ref,
+            date: lastPublicBookingSuccess.date,
+            time: lastPublicBookingSuccess.time,
+            service_name: lastPublicBookingSuccess.serviceName
+          },
+          { serviceName: lastPublicBookingSuccess.serviceName, ref: lastPublicBookingSuccess.ref }
+        );
+      }
+    } else if (result.status === "denied") {
+      showToast("Notifications were not allowed.", "error");
+    }
+    await renderCustomerMobileNotificationsTab();
+  }
+  window.onCustomerNotifEnableClick = onCustomerNotifEnableClick;
+
+  async function onCustomerNotifTestClick() {
+    const result = await requestNotificationPermission({ reason: "test" });
+    if (!result.granted) {
+      showToast("Allow notifications to send a test.", "error");
+      await renderCustomerMobileNotificationsTab();
+      return;
+    }
+    const ok = await scheduleLocalNotification({
+      id: hashNotificationId("test-" + Date.now()),
+      title: "Test notification",
+      body: "Local reminders are working on this device.",
+      scheduleAt: new Date(Date.now() + 2000),
+      extra: { type: "test" }
+    });
+    showToast(ok ? "Test notification scheduled." : "Could not schedule test notification.", ok ? "success" : "error");
+  }
+  window.onCustomerNotifTestClick = onCustomerNotifTestClick;
+
+  function bindLocalNotificationListeners() {
+    if (localNotificationListenersBound) return;
+    const plugin = getLocalNotificationsPlugin();
+    if (!plugin || typeof plugin.addListener !== "function") return;
+    localNotificationListenersBound = true;
+
+    plugin.addListener("localNotificationReceived", (event) => {
+      console.log("[notification-click]", "received", event?.notification?.id || null);
+    });
+
+    plugin.addListener("localNotificationActionPerformed", (action) => {
+      console.log("[notification-click]", "action", action?.notification?.id || null, action?.actionId || null);
+      const extra = action?.notification?.extra || {};
+      if (extra.type === "booking-reminder" && isCustomerMobileShellEnabled()) {
+        setCustomerMobileTab(CUSTOMER_MOBILE_TAB.BOOKINGS);
+      }
+      if (extra.type === "admin-new-booking") {
+        const adminView = document.getElementById("adminView");
+        if (adminView && !adminView.classList.contains("hidden")) {
+          setAdminSection("bookings");
+        }
+      }
+    });
+
+    logNotifications("listeners bound");
   }
 
   function isMobilePublicShellPresentation() {
@@ -14552,13 +15137,8 @@
       isManageBookingCardVisible();
 
     if (manageFlowActive) {
-      if (isBookingSuccessCardVisible() || isManageBookingCardVisible()) {
-        bookContent?.classList.remove("hidden");
-        bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
-      } else {
-        bookContent?.classList.add("hidden");
-        bookContent?.classList.remove("customer-mobile-tab-book-active");
-      }
+      bookContent?.classList.remove("hidden");
+      bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
     } else {
       bookContent?.classList.toggle("hidden", !showBook);
       bookContent?.classList.toggle("customer-mobile-tab-book-active", showBook);
@@ -14594,6 +15174,9 @@
     }
     if (effectiveTab === CUSTOMER_MOBILE_TAB.PROFILE) {
       renderCustomerMobileProfileTab();
+    }
+    if (effectiveTab === CUSTOMER_MOBILE_TAB.NOTIFICATIONS) {
+      void renderCustomerMobileNotificationsTab();
     }
 
     animateCustomerMobileTabPanels();
@@ -15705,6 +16288,10 @@
         : "Appointment booked successfully",
       "success"
     );
+    void handleCustomerBookingConfirmedNotifications(insertedBooking, {
+      serviceName: lastPublicBookingSuccess?.serviceName,
+      ref: lastPublicBookingSuccess?.ref
+    });
   }
 
   function runPublicBookingPostSuccessTasks() {
@@ -16440,7 +17027,7 @@
   }
 
   function renderManageBookingCard(booking, options = {}) {
-    logManageLoad("render start", { ref: booking?.booking_ref || null });
+    console.log("[manage-render-start]", { ref: booking?.booking_ref || null });
     manageBookingData = booking;
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
@@ -16510,10 +17097,12 @@
         console.warn("[manage-render] reschedule picker failed", pickerErr?.message || pickerErr);
       }
     }
-    logManageLoad("render complete", { canManage, ref: booking?.booking_ref || null });
+    console.log("[manage-render-done]", { canManage, ref: booking?.booking_ref || null });
+    logManageContainerState("renderManageBookingCard");
   }
 
   function showManageBookingError(message, opts = {}) {
+    mountManageBookingShellImmediate("showManageBookingError");
     const loading = document.getElementById("manageBookingLoading");
     const errorBox = document.getElementById("manageBookingError");
     const body = document.getElementById("manageBookingBody");
@@ -16524,9 +17113,9 @@
       errorBox.classList.remove("hidden");
       errorBox.innerHTML = manageBookingErrorHtml(message, opts);
     }
-    document.getElementById("manageBookingCard")?.classList.remove("hidden");
     hidePublicBookingWizardForManageFlow("showManageBookingError");
-    logManageLoad("show error", message);
+    console.log("[manage-fetch-error]", message);
+    logManageContainerState("showManageBookingError");
   }
 
   function getLatestPublicBookingManageToken() {
@@ -16564,26 +17153,17 @@
 
   async function openManageBookingFromToken(token) {
     if (!publicManageMode) enterPublicManageMode("manage-token-open");
-    logManageNav("openManageBookingFromToken", { token: !!(token || getLatestPublicBookingManageToken()) });
-    logManageLoad("token load start");
+    mountManageBookingShellImmediate("openManageBookingFromToken");
 
     const manageToken = String(token || getLatestPublicBookingManageToken() || "").trim();
     const card = document.getElementById("manageBookingCard");
     const loading = document.getElementById("manageBookingLoading");
-    const errorBox = document.getElementById("manageBookingError");
-    const body = document.getElementById("manageBookingBody");
     const isCustomer = !!(currentUser && currentUserRole === "customer");
 
-    ensureManageBookingFlowVisible("openManageBookingFromToken");
-    loading?.classList.remove("hidden");
-    errorBox?.classList.add("hidden");
-    body?.classList.add("hidden");
+    console.log("[manage-token]", manageToken ? "present" : "missing");
 
     if (!manageToken) {
-      showManageBookingError(
-        "We could not load this booking. Please use the link from your confirmation email.",
-        { showMyBookingsButton: isCustomer }
-      );
+      showManageBookingError("Missing booking token", { showMyBookingsButton: isCustomer });
       return;
     }
 
@@ -16591,25 +17171,36 @@
     if (lastPublicBookingSuccess) lastPublicBookingSuccess.token = manageToken;
 
     try {
+      console.log("[manage-fetch-start]", { token: "set" });
       const { data, error } = await fetchBookingByManageToken(manageToken);
       if (error || !data) {
+        console.log("[manage-fetch-error]", error?.message || "empty payload");
         showManageBookingError(
-          "We could not load this booking. Please open My Bookings or use the link from your email.",
+          error?.message ||
+            "We could not load this booking. Please open My Bookings or use the link from your email.",
           { showMyBookingsButton: isCustomer }
         );
         return;
       }
 
-      renderManageBookingCard(data);
-      logManageLoad("manage UI rendered — renderer mounted");
-      logManageShellSnapshot("after-renderManageBookingCard");
+      console.log("[manage-fetch-success]", { ref: data?.booking_ref || null });
+      try {
+        renderManageBookingCard(data);
+      } catch (renderErr) {
+        console.log("[manage-fetch-error]", renderErr?.message || renderErr);
+        showManageBookingError(
+          "Could not display this booking. Please try again.",
+          { showMyBookingsButton: isCustomer }
+        );
+        return;
+      }
 
       try {
         await applyBusinessContextFromManageBooking(data, manageToken);
         await ensurePublicAvailabilityForManage();
         renderManageBookingCard(data);
       } catch (availErr) {
-        console.warn("[manage-load] availability refresh failed", availErr?.message || availErr);
+        console.warn("[manage-fetch-error] availability refresh failed", availErr?.message || availErr);
       }
 
       if (isCustomerMobileShellEnabled()) {
@@ -16617,15 +17208,18 @@
         syncCustomerMobileShell();
       }
 
+      logManageContainerState("openManageBookingFromToken-success");
       card?.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
-      console.warn("[manage-booking] load failed", err?.message || err);
+      console.log("[manage-fetch-error]", err?.message || err);
       showManageBookingError(
-        "We could not load this booking. Please open My Bookings or use the link from your email.",
+        err?.message ||
+          "We could not load this booking. Please open My Bookings or use the link from your email.",
         { showMyBookingsButton: isCustomer }
       );
     } finally {
       loading?.classList.add("hidden");
+      logManageContainerState("openManageBookingFromToken-finally");
     }
   }
 
@@ -18322,6 +18916,8 @@
           }
         });
       }
+
+      bindLocalNotificationListeners();
     }
   }
 
@@ -18515,7 +19111,12 @@
     updateCustomerAuthUI();
     syncCustomerMobileShell();
     if (isCustomerMobileShellEnabled() && openBooking) {
-      setCustomerMobileTab(customerMobileTab || CUSTOMER_MOBILE_TAB.BOOK, { skipWizardInit: publicManageMode });
+      const tab = publicManageMode
+        ? CUSTOMER_MOBILE_TAB.BOOK
+        : customerMobileTab || CUSTOMER_MOBILE_TAB.BOOK;
+      if (publicManageMode) customerMobileTab = CUSTOMER_MOBILE_TAB.BOOK;
+      setCustomerMobileTab(tab, { skipWizardInit: publicManageMode });
+      if (publicManageMode) mountManageBookingShellImmediate("showPublicView-manage");
     }
   }
 
@@ -20798,7 +21399,7 @@
     `;
 
     document.getElementById("customerMyManageBtn")?.addEventListener("click", () => {
-      openCustomerMyBookingManage(booking);
+      void openCustomerMyBookingManage(booking);
     });
     document.getElementById("customerMyBookAgainBtn")?.addEventListener("click", () => {
       if (!booking.business_slug) return;
@@ -21096,28 +21697,46 @@
   }
 
   async function openCustomerMyBookingManage(booking) {
+    console.log("[manage-click]", {
+      ref: booking?.booking_ref || null,
+      id: booking?.id || null,
+      hasToken: !!String(booking?.manage_token || "").trim()
+    });
+
+    enterPublicManageMode("customer-my-booking-manage");
+    mountManageBookingShellImmediate("openCustomerMyBookingManage-click");
+
     const token = String(booking?.manage_token || "").trim();
     if (!token) {
-      showToast("Manage link is not available for this booking.", "error");
+      console.log("[manage-token]", "missing");
+      showManageBookingError("Missing booking token");
       return;
     }
-    logManageNav("openCustomerMyBookingManage click", { ref: booking?.booking_ref || null });
-    enterPublicManageMode("customer-my-booking-manage");
-    customerMyBookingsViewOpen = false;
-    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    console.log("[manage-token]", "present");
+
     const slug = booking.business_slug || "";
-    const path =
+    history.replaceState(
+      null,
+      "",
       window.location.pathname +
-      "?business=" +
-      encodeURIComponent(slug || businessId || "") +
-      "&manage=" +
-      encodeURIComponent(token);
-    history.replaceState(null, "", path);
+        "?business=" +
+        encodeURIComponent(slug || businessId || "") +
+        "&manage=" +
+        encodeURIComponent(token)
+    );
     activeManageToken = token;
     if (slug) businessId = slug;
+
     showPublicView(true);
-    ensureManageBookingFlowVisible("openCustomerMyBookingManage");
-    await openManageBookingFromToken(token);
+    mountManageBookingShellImmediate("openCustomerMyBookingManage-after-showPublicView");
+    logManageContainerState("openCustomerMyBookingManage-pre-fetch");
+
+    try {
+      await openManageBookingFromToken(token);
+    } catch (err) {
+      console.log("[manage-fetch-error]", err?.message || err);
+      showManageBookingError(err?.message || "Could not open manage booking.");
+    }
   }
 
   async function chooseAdmin() {
@@ -23694,7 +24313,7 @@
           table: "bookings",
           filter: "business_id=eq." + businessId
         },
-        () => scheduleBookingRealtimeRefresh()
+        (payload) => handleBookingRealtimeChange(payload)
       )
       .on(
         "postgres_changes",
@@ -24133,6 +24752,11 @@
     });
 
     showToast("Booking added successfully.", "success")
+
+    if (insertedBooking?.id) {
+      markAdminSelfCreatedBooking(insertedBooking.id);
+      void notifyAdminNewBookingLocal(insertedBooking, { source: "admin-create" });
+    }
 
     document.getElementById("adminAddCustomerName").value = "";
     document.getElementById("adminAddCustomerPhone").value = "";

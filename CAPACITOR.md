@@ -89,9 +89,32 @@ npm run cap:sync && npx cap open android
 | `CAPACITOR.md` | This guide |
 | `.gitignore` | `node_modules`, generated `www/` |
 
+## Local notifications (Phase 1)
+
+Native **local** reminders only — no SMS, no remote APNs/FCM yet. Email (Resend) unchanged.
+
+| Plugin | `@capacitor/local-notifications` |
+|--------|----------------------------------|
+| Customer | 24h + 2h reminders after in-app booking (if permission granted) |
+| Admin | “New booking received” when a booking arrives while admin view is open |
+| Alerts tab | Permission status, enable, test notification, upcoming reminders list |
+
+After pulling changes:
+
+```bash
+npm install
+npm run cap:sync
+```
+
+**iOS:** Allow notifications when prompted (Alerts tab or after first booking tip).  
+**Android 13+:** `POST_NOTIFICATIONS` permission is declared in the manifest.
+
+Debug console tags: `[notifications]`, `[notification-permission]`, `[notification-scheduled]`, `[notification-skipped]`, `[notification-click]`.
+
 ## Not in this phase
 
-- Push notifications
+- Remote push (APNs / FCM server)
+- SMS notifications
 - App Store / Play Store submission
 - UI refactor of the web app
 - Custom native plugins
