@@ -3246,10 +3246,49 @@
       padding-right: calc(16px + env(safe-area-inset-right, 0px));
     }
 
+    #adminOnboardingView .wizard-main {
+      padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+    }
+
     .wizard-inner {
       width: 100%;
       max-width: 520px;
       margin: 0 auto;
+    }
+
+    .wizard-step-skeleton {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 4px 0 12px;
+    }
+
+    .wizard-step-skeleton.hidden {
+      display: none;
+    }
+
+    .wizard-card.wizard-card--loading .wizard-card-body {
+      min-height: 180px;
+    }
+
+    .wizard-card.wizard-card--loading .wizard-card-body > :not(#adminOnboardingStepSkeleton) {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .wizard-panel--enter {
+      animation: wizard-panel-enter 0.32s ease-out;
+    }
+
+    @keyframes wizard-panel-enter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .wizard-step-counter {
@@ -3520,16 +3559,16 @@
         padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
       }
 
+      #adminOnboardingView .wizard-main {
+        padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
+      }
+
       .wizard-card {
         padding: 22px 16px;
       }
 
       .wizard-step-headline {
         font-size: 1.35rem;
-      }
-
-      .wizard-footer {
-        padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
       }
     }
 
@@ -8274,44 +8313,89 @@
 
     .wizard-footer {
       flex-shrink: 0;
-      padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+      padding: 14px 16px calc(env(safe-area-inset-bottom, 0px) + 12px);
       padding-left: calc(16px + env(safe-area-inset-left, 0px));
       padding-right: calc(16px + env(safe-area-inset-right, 0px));
       background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(248, 250, 252, 0.97) 22%, #f8fafc 100%);
       border-top: 1px solid #e2e8f0;
     }
 
+    #adminOnboardingView .wizard-footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding-top: 12px;
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+      will-change: transform;
+    }
+
     .wizard-footer-inner {
       max-width: 520px;
       margin: 0 auto;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
     }
 
     .wizard-footer-actions {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      width: 100%;
+      min-width: 0;
     }
 
     .wizard-footer-row {
       display: flex;
-      gap: 12px;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      gap: 10px;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .wizard-footer-row button {
-      flex: 1;
+      width: auto;
+      flex: none;
+      margin: 0;
+      min-width: 0;
       min-height: 52px;
-      font-size: 16px;
+      height: auto;
+      padding: 12px 14px;
+      font-size: 15px;
       font-weight: 600;
       border-radius: 12px;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .wizard-footer-row .wizard-btn-back {
-      flex: 0 0 auto;
-      min-width: 100px;
+    #adminOnboardingView .wizard-footer-row .wizard-btn-back {
+      flex: 0 1 auto;
+      max-width: 42%;
+      min-width: 88px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .wizard-footer-row .wizard-btn-continue {
-      flex: 1;
+    #adminOnboardingView .wizard-footer-row .wizard-btn-continue {
+      flex: 1 1 0;
+      min-width: 0;
+      white-space: normal;
+      line-height: 1.25;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-left: 12px;
+      padding-right: 12px;
     }
 
     .wizard-skip-btn {
@@ -8326,28 +8410,31 @@
       text-decoration: underline;
       text-underline-offset: 3px;
       cursor: pointer;
+      margin: 0;
     }
 
     .wizard-footer-hint {
       text-align: center;
       font-size: 13px;
       color: #94a3b8;
-      margin: 12px 0 0;
+      margin: 0;
       line-height: 1.45;
     }
 
-    @media (min-width: 480px) {
-      .wizard-footer-actions {
-        flex-direction: column;
+    @media (max-height: 500px) and (orientation: landscape) {
+      #adminOnboardingView .wizard-footer-row button {
+        min-height: 44px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 14px;
       }
 
-      .wizard-footer-row {
-        flex-direction: row;
+      #adminOnboardingView .wizard-footer-row {
+        gap: 8px;
       }
 
-      .wizard-footer-row .wizard-btn-back {
-        flex: 1;
-        max-width: 140px;
+      #adminOnboardingView .wizard-main {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
       }
     }
 
@@ -10873,6 +10960,130 @@
         color: #64748b;
       }
 
+      /* Mobile skeleton loaders */
+      .mobile-skeleton-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 4px 0;
+      }
+
+      .mobile-skeleton-block {
+        border-radius: 12px;
+        background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+        background-size: 200% 100%;
+        animation: mobile-skeleton-shimmer 1.2s ease-in-out infinite;
+      }
+
+      .mobile-skeleton-block--hero {
+        height: 72px;
+      }
+
+      .mobile-skeleton-block--line {
+        height: 14px;
+        width: 70%;
+      }
+
+      .mobile-skeleton-block--card {
+        height: 88px;
+      }
+
+      .mobile-skeleton-block--manage {
+        height: 120px;
+      }
+
+      @keyframes mobile-skeleton-shimmer {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+      }
+
+      .customer-offline-snapshot-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #fff7ed;
+        border: 1px solid #fdba74;
+        color: #9a3412;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      /* Bottom nav active spring */
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-item,
+      #publicView.public-view--mobile-shell .customer-mobile-nav-item {
+        transition: color 0.2s ease, background 0.2s ease, transform 0.22s cubic-bezier(0.34, 1.3, 0.64, 1);
+      }
+
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-item--active,
+      #publicView.public-view--mobile-shell .customer-mobile-nav-item--active {
+        transform: translateY(-1px);
+      }
+
+      body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-item--active .customer-mobile-nav-icon,
+      #publicView.public-view--mobile-shell .customer-mobile-nav-item--active .customer-mobile-nav-icon {
+        transform: scale(1.1);
+        transition: transform 0.22s cubic-bezier(0.34, 1.3, 0.64, 1);
+      }
+
+      /* Wizard step transitions */
+      #publicView .public-booking-step.public-booking-step--active {
+        animation: wizard-step-in 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      @keyframes wizard-step-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Pull to refresh */
+      .mobile-ptr-host {
+        position: relative;
+      }
+
+      .mobile-ptr-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 0;
+        overflow: hidden;
+        color: #64748b;
+        font-size: 13px;
+        font-weight: 600;
+        transition: height 0.18s ease;
+      }
+
+      .mobile-ptr-indicator.mobile-ptr-indicator--visible {
+        height: 44px;
+      }
+
+      .mobile-ptr-indicator.mobile-ptr-indicator--loading .mobile-ptr-spinner {
+        animation: app-spin 0.7s linear infinite;
+      }
+
+      .mobile-ptr-spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #e2e8f0;
+        border-top-color: var(--business-accent, #2563eb);
+        border-radius: 50%;
+      }
+
+      #manageBookingLoading.mobile-manage-loading-skeleton {
+        display: block;
+        min-height: 160px;
+        padding: 16px 0;
+      }
+
       #publicView.public-view--mobile-shell .customer-my-bookings-card.customer-my-bookings-card--shell {
         margin: 0;
         border-radius: 16px 16px 0 0;
@@ -11228,22 +11439,51 @@
       right: 0;
       top: 0;
       z-index: 24000;
-      padding: 10px 14px calc(10px + env(safe-area-inset-top, 0px));
-      background: #fef3c7;
-      border-bottom: 1px solid #fcd34d;
-      color: #92400e;
+      padding: 12px 16px calc(12px + env(safe-area-inset-top, 0px));
+      background: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%);
+      border-bottom: 1px solid #fdba74;
+      color: #9a3412;
       font-size: 13px;
       font-weight: 600;
-      text-align: center;
-      line-height: 1.35;
+      line-height: 1.4;
+      box-shadow: 0 4px 16px rgba(154, 52, 18, 0.08);
     }
 
     body.app-shell-offline-banner-visible .app-shell-offline-banner {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .app-shell-offline-banner__row {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .app-shell-offline-banner__text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .app-shell-offline-banner button {
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      background: #ea580c;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+    }
+
+    body.app-shell-offline-banner-visible .app-shell-offline-banner {
+      flex-wrap: nowrap;
     }
 
     body.app-shell-offline-banner-visible.native-app-shell {
@@ -11251,20 +11491,11 @@
     }
 
     body.app-shell-offline-banner-visible.customer-mobile-shell-active #publicView.public-view--mobile-shell {
-      padding-top: calc(12px + 44px + env(safe-area-inset-top, 0px));
+      padding-top: calc(12px + 56px + env(safe-area-inset-top, 0px));
     }
 
-    .app-shell-offline-banner button {
-      flex-shrink: 0;
-      min-height: 32px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      border-radius: 8px;
-      border: none;
-      background: #f59e0b;
-      color: #fff;
-      cursor: pointer;
+    .app-shell-offline-banner button:active {
+      transform: scale(0.98);
     }
 
     body.app-shell-blocking .container,
@@ -11272,6 +11503,93 @@
     body.app-shell-blocking .customer-mobile-bottom-nav {
       visibility: hidden;
       pointer-events: none;
+    }
+
+    /*
+     * Admin onboarding footer — force layout (beats global button { width: 100% }).
+     * DOM: #adminOnboardingView > footer.wizard-footer > .wizard-footer-inner >
+     *       .wizard-footer-actions > .wizard-footer-row > Back + Continue buttons.
+     */
+    #adminOnboardingView .wizard-footer {
+      position: sticky !important;
+      bottom: 0 !important;
+      z-index: 50 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+      padding-left: calc(16px + env(safe-area-inset-left, 0px)) !important;
+      padding-right: calc(16px + env(safe-area-inset-right, 0px)) !important;
+      overflow-x: hidden !important;
+      flex-shrink: 0 !important;
+    }
+
+    #adminOnboardingView .wizard-footer-inner,
+    #adminOnboardingView .wizard-footer-actions {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+    }
+
+    #adminOnboardingView .wizard-footer-row {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
+
+    #adminOnboardingView .wizard-footer-row > button,
+    #adminOnboardingView #adminOnboardingBackBtn,
+    #adminOnboardingView #adminOnboardingContinueBtn {
+      width: auto !important;
+      max-width: none !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+      min-height: 52px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    #adminOnboardingView .wizard-footer-row > button:first-child,
+    #adminOnboardingView #adminOnboardingBackBtn {
+      flex: 0 0 auto !important;
+      min-width: 88px !important;
+      max-width: 42% !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    #adminOnboardingView .wizard-footer-row > button:last-child,
+    #adminOnboardingView #adminOnboardingContinueBtn {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      line-height: 1.15 !important;
+      overflow: hidden !important;
+    }
+
+    #adminOnboardingView .wizard-skip-btn {
+      width: 100% !important;
+      flex: none !important;
+      display: block !important;
+    }
+
+    #adminOnboardingView {
+      overflow-x: hidden !important;
+    }
+
+    #adminOnboardingView .wizard-main {
+      padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important;
     }
   </style>
 </head>
@@ -11312,8 +11630,10 @@
   </div>
 
   <div id="appShellOfflineBanner" class="app-shell-offline-banner" role="status" aria-live="polite">
-    <span>No internet connection. Some features may not work.</span>
-    <button type="button" onclick="retryAppShell()">Retry</button>
+    <div class="app-shell-offline-banner__row">
+      <span class="app-shell-offline-banner__text">You're offline. Showing saved data where available.</span>
+      <button type="button" onclick="retryAppShell()">Retry connection</button>
+    </div>
   </div>
 
   <div id="pwaInstallHint" class="pwa-install-hint hidden" role="status" aria-live="polite">
@@ -12228,11 +12548,19 @@
               <p id="adminOnboardingNextStepText" class="wizard-next-callout-text"></p>
             </div>
 
+            <div class="wizard-card-body">
+            <div id="adminOnboardingStepSkeleton" class="wizard-step-skeleton hidden" role="status" aria-busy="false" aria-label="Loading setup step">
+              <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+              <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+              <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+            </div>
+
             <div id="adminOnboardingStep1Panel" class="hidden">
               <div class="wizard-step-intro" aria-labelledby="onboardingStep1IntroTitle">
                 <p id="onboardingStep1IntroTitle" class="wizard-step-intro-title">In this step you will</p>
                 <ul class="wizard-step-intro-list">
                   <li>Name your business (customers see this on your page)</li>
+                  <li>Add phone and address for your public page</li>
                   <li>Choose your public booking link</li>
                   <li>Optionally add a logo and business type</li>
                 </ul>
@@ -12270,6 +12598,31 @@
               <div class="wizard-link-preview-card" aria-live="polite">
                 <span class="wizard-link-preview-label">Public link preview</span>
                 <code id="onboardingPublicLinkPreview" class="wizard-link-preview-url"></code>
+              </div>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingBusinessPhone">Business phone</label>
+                <input
+                  id="onboardingBusinessPhone"
+                  type="tel"
+                  name="onboardingBusinessPhone"
+                  autocomplete="tel"
+                  inputmode="tel"
+                  placeholder="+389 70 123 456"
+                />
+                <p class="wizard-field-hint">Optional — shown on your public booking page when enabled.</p>
+              </div>
+
+              <div class="wizard-field">
+                <label class="wizard-field-label" for="onboardingBusinessAddress">Business address</label>
+                <input
+                  id="onboardingBusinessAddress"
+                  type="text"
+                  name="onboardingBusinessAddress"
+                  autocomplete="street-address"
+                  placeholder="123 Main Street, Skopje"
+                />
+                <p class="wizard-field-hint">Optional — helps customers find you.</p>
               </div>
 
               <div class="wizard-field wizard-logo-field">
@@ -12723,6 +13076,7 @@
             </div>
 
             <div id="adminOnboardingPlaceholder" class="wizard-step-placeholder"></div>
+            </div>
           </article>
         </div>
       </main>
@@ -12864,11 +13218,12 @@
         </div>
       </div>
 
-      <div id="customerMyBookingsCard" class="card public-booking-card customer-my-bookings-card hidden">
+      <div id="customerMyBookingsCard" class="card public-booking-card customer-my-bookings-card hidden mobile-ptr-host">
         <div class="customer-my-bookings-header">
           <div class="customer-my-bookings-header-text">
             <h2>My Bookings</h2>
             <p class="small">Your appointments across businesses — only visible to you.</p>
+            <p id="customerMyBookingsOfflineBadge" class="customer-offline-snapshot-badge hidden" role="status">Offline snapshot</p>
           </div>
           <div class="customer-my-bookings-header-actions">
             <button type="button" class="secondary" onclick="closeCustomerMyBookingsView()">Back</button>
@@ -12876,9 +13231,10 @@
           </div>
         </div>
 
-        <div id="customerMyBookingsLoading" class="loading-state" role="status">
-          <span class="loading-spinner" aria-hidden="true"></span>
-          <span>Loading your bookings…</span>
+        <div id="customerMyBookingsLoading" class="mobile-skeleton-stack" role="status" aria-busy="true">
+          <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+          <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+          <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
         </div>
         <div id="customerMyBookingsError" class="empty-state hidden"></div>
 
@@ -12926,8 +13282,17 @@
         </div>
       </section>
 
-      <section id="customerMobileTabHome" class="customer-mobile-tab-panel hidden" aria-label="Home">
-        <div class="customer-mobile-home-card">
+      <section id="customerMobileTabHome" class="customer-mobile-tab-panel hidden mobile-ptr-host" aria-label="Home">
+        <div id="customerMobileHomePtrIndicator" class="mobile-ptr-indicator hidden" aria-hidden="true">
+          <span class="mobile-ptr-spinner"></span>
+          <span>Refreshing…</span>
+        </div>
+        <div id="customerMobileHomeSkeleton" class="mobile-skeleton-stack hidden" aria-busy="true" role="status">
+          <div class="mobile-skeleton-block mobile-skeleton-block--hero"></div>
+          <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+          <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+        </div>
+        <div id="customerMobileHomeContent" class="customer-mobile-home-card">
           <div class="customer-mobile-home-hero">
             <img id="customerMobileHomeLogo" class="customer-mobile-home-avatar hidden" alt="" />
             <div id="customerMobileHomeLogoFallback" class="customer-mobile-home-avatar-fallback hidden" aria-hidden="true"></div>
@@ -13339,9 +13704,14 @@
               <p class="booking-flow-lead">View your booking, pick a new time, or cancel your appointment.</p>
             </div>
           </div>
-          <div id="manageBookingLoading" class="loading-state hidden" role="status" aria-live="polite">
-            <span class="loading-spinner" aria-hidden="true"></span>
-            <span id="manageBookingLoadingLabel">Loading manage booking...</span>
+          <div id="manageBookingLoading" class="loading-state mobile-manage-loading-skeleton hidden" role="status" aria-live="polite">
+            <span class="visually-hidden" id="manageBookingLoadingLabel">Loading manage booking...</span>
+            <div class="mobile-skeleton-stack" aria-hidden="true">
+              <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+              <div class="mobile-skeleton-block mobile-skeleton-block--manage"></div>
+              <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+            </div>
+            <p class="small" style="text-align:center;margin-top:12px;color:#64748b">Loading manage booking…</p>
           </div>
           <div id="manageBookingError" class="empty-state hidden"></div>
           <div id="manageBookingBody" class="hidden">
@@ -14068,6 +14438,39 @@
   let publicDataLoading = false;
   let publicManageMode = false;
 
+  /** Grouped debug flags — set false to silence logs in production builds. */
+  const APP_DEBUG = Object.freeze({
+    notifications: true,
+    manage: true,
+    shell: true,
+    wizard: false,
+    perf: false,
+    haptics: false,
+    onboarding: true,
+    setup: true,
+    businessInit: true
+  });
+
+  function debugLog(channel, ...args) {
+    if (APP_DEBUG[channel] === false) return;
+    console.log(`[${channel}]`, ...args);
+  }
+
+  function logOnboarding(...args) {
+    if (APP_DEBUG.onboarding === false) return;
+    console.log("[onboarding]", ...args);
+  }
+
+  function logSetup(...args) {
+    if (APP_DEBUG.setup === false) return;
+    console.log("[setup]", ...args);
+  }
+
+  function logBusinessInit(...args) {
+    if (APP_DEBUG.businessInit === false) return;
+    console.log("[business-init]", ...args);
+  }
+
   function logManageNav(...args) {
     console.log("[manage-nav]", ...args, {
       appShell: typeof getAppShellState === "function" ? getAppShellState() : "unknown",
@@ -14392,6 +14795,181 @@
   }
 
   /* ========================================================================
+     Native mobile UX — haptics, skeletons, pull-to-refresh, offline cache
+     ======================================================================== */
+
+  const CUSTOMER_BOOKINGS_CACHE_KEY = "bookingAppCustomerBookingsCache";
+  let customerMyBookingsFromCache = false;
+  let lastManageFetchToken = null;
+  let mobilePullRefreshBound = false;
+  let renderCustomerMobileHomeTabTimer = null;
+
+  function triggerHaptic(kind) {
+    if (!isNativeCapacitorApp()) return;
+    try {
+      const Haptics = window.Capacitor?.Plugins?.Haptics;
+      if (!Haptics) return;
+      if (kind === "success") {
+        Haptics.notification({ type: "SUCCESS" });
+      } else if (kind === "warning") {
+        Haptics.notification({ type: "WARNING" });
+      } else if (kind === "destructive") {
+        Haptics.impact({ style: "HEAVY" });
+      } else if (kind === "medium") {
+        Haptics.impact({ style: "MEDIUM" });
+      } else {
+        Haptics.impact({ style: "LIGHT" });
+      }
+      if (APP_DEBUG.haptics) debugLog("haptics", kind);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function mobileSkeletonHtml(variant, count = 3) {
+    const cls =
+      variant === "hero"
+        ? "mobile-skeleton-block--hero"
+        : variant === "line"
+          ? "mobile-skeleton-block--line"
+          : variant === "manage"
+            ? "mobile-skeleton-block--manage"
+            : "mobile-skeleton-block--card";
+    const items = Array.from({ length: count })
+      .map(() => `<div class="mobile-skeleton-block ${cls}"></div>`)
+      .join("");
+    return `<div class="mobile-skeleton-stack" role="status" aria-busy="true">${items}</div>`;
+  }
+
+  function setCustomerMobileHomeLoading(loading) {
+    document.getElementById("customerMobileHomeSkeleton")?.classList.toggle("hidden", !loading);
+    document.getElementById("customerMobileHomeContent")?.classList.toggle("hidden", !!loading);
+  }
+
+  function renderCustomerMyBookingsOfflineBadge(fromCache) {
+    const badge = document.getElementById("customerMyBookingsOfflineBadge");
+    if (!badge) return;
+    badge.classList.toggle("hidden", !fromCache);
+  }
+
+  function saveCustomerBookingsCache(rows) {
+    try {
+      localStorage.setItem(
+        CUSTOMER_BOOKINGS_CACHE_KEY,
+        JSON.stringify({ savedAt: Date.now(), rows: rows || [] })
+      );
+    } catch (e) {
+      debugLog("shell", "bookings cache save failed", e?.message);
+    }
+  }
+
+  function loadCustomerBookingsCache() {
+    try {
+      const raw = localStorage.getItem(CUSTOMER_BOOKINGS_CACHE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.rows)) return null;
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function bindMobilePullToRefresh() {
+    if (mobilePullRefreshBound || !isCustomerMobileShellEnabled()) return;
+    mobilePullRefreshBound = true;
+
+    bindPullToRefreshOnElement(document.getElementById("customerMobileTabHome"), async () => {
+      if (hasKnownPublicBusinessFromUrl() || businessId) {
+        await loadPublicData();
+      }
+      if (currentUser && currentUserRole === "customer") {
+        await loadCustomerMyBookings();
+      }
+      renderCustomerMobileHomeTab();
+    });
+
+    bindPullToRefreshOnElement(document.getElementById("customerMyBookingsCard"), async () => {
+      await loadCustomerMyBookings();
+    });
+  }
+
+  function bindPullToRefreshOnElement(el, onRefresh) {
+    if (!el || el.dataset.ptrBound === "1") return;
+    el.dataset.ptrBound = "1";
+    let startY = 0;
+    let pulling = false;
+    let refreshing = false;
+    const indicator =
+      el.querySelector(".mobile-ptr-indicator") ||
+      (() => {
+        const node = document.createElement("div");
+        node.className = "mobile-ptr-indicator";
+        node.innerHTML = '<span class="mobile-ptr-spinner"></span><span>Pull to refresh</span>';
+        el.prepend(node);
+        return node;
+      })();
+
+    el.addEventListener(
+      "touchstart",
+      (e) => {
+        if (refreshing || el.scrollTop > 0) return;
+        startY = e.touches[0]?.clientY || 0;
+        pulling = true;
+      },
+      { passive: true }
+    );
+
+    el.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!pulling || refreshing) return;
+        const dy = (e.touches[0]?.clientY || 0) - startY;
+        if (dy > 48 && el.scrollTop <= 0) {
+          indicator.classList.add("mobile-ptr-indicator--visible");
+        } else {
+          indicator.classList.remove("mobile-ptr-indicator--visible");
+        }
+      },
+      { passive: true }
+    );
+
+    el.addEventListener(
+      "touchend",
+      async () => {
+        if (!pulling || refreshing) return;
+        pulling = false;
+        if (!indicator.classList.contains("mobile-ptr-indicator--visible")) return;
+        refreshing = true;
+        indicator.classList.add("mobile-ptr-indicator--loading");
+        indicator.querySelector("span:last-child").textContent = "Refreshing…";
+        try {
+          triggerHaptic("light");
+          await onRefresh();
+        } catch (err) {
+          console.warn("[mobile-ptr] refresh failed", err?.message || err);
+        } finally {
+          indicator.classList.remove("mobile-ptr-indicator--visible", "mobile-ptr-indicator--loading");
+          indicator.querySelector("span:last-child").textContent = "Pull to refresh";
+          refreshing = false;
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  async function retryManageBookingFromToken() {
+    const token = String(lastManageFetchToken || activeManageToken || "").trim();
+    if (!token) {
+      showManageBookingError("Missing booking token");
+      return;
+    }
+    mountManageBookingShellImmediate("retryManageBookingFromToken");
+    await openManageBookingFromToken(token);
+  }
+  window.retryManageBookingFromToken = retryManageBookingFromToken;
+
+  /* ========================================================================
      Local notifications (Capacitor native — Phase 1, no remote push)
      ======================================================================== */
 
@@ -14560,6 +15138,69 @@
     }
   }
 
+  async function hasActivePendingRemindersForBooking(bookingId) {
+    if (!bookingId || !isLocalNotificationsSupported()) return false;
+    const plugin = getLocalNotificationsPlugin();
+    try {
+      const pending = await plugin.getPending();
+      const pendingIds = new Set((pending?.notifications || []).map((n) => n.id));
+      return BOOKING_REMINDER_OFFSETS.every((offset) => {
+        const id = hashNotificationId(`${bookingId}-${offset.key}`);
+        return pendingIds.has(id);
+      });
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function restoreLocalNotificationsOnLaunch(reason) {
+    if (!isLocalNotificationsSupported()) return;
+    const plugin = getLocalNotificationsPlugin();
+    console.log("[notification-restore]", "start", reason);
+    try {
+      const perm = await getNotificationPermissionStatus();
+      if (perm !== "granted") {
+        console.log("[notification-restore]", "skipped — permission", perm);
+        return;
+      }
+      const pending = await plugin.getPending();
+      const pendingIds = new Set((pending?.notifications || []).map((n) => n.id));
+      const now = Date.now();
+      const allRecords = loadStoredReminderRecords();
+      const futureRecords = allRecords.filter((r) => new Date(r.remindAt).getTime() > now);
+      const expired = allRecords.length - futureRecords.length;
+      if (expired > 0) saveStoredReminderRecords(futureRecords);
+
+      let verified = 0;
+      let restored = 0;
+      for (const rec of futureRecords) {
+        if (pendingIds.has(rec.id)) {
+          verified++;
+          continue;
+        }
+        const title =
+          rec.offsetLabel === "24 hours before" ? "Appointment tomorrow" : "Appointment in 2 hours";
+        const ok = await scheduleLocalNotification({
+          id: rec.id,
+          title,
+          body: `${rec.serviceName || "Appointment"}${rec.ref ? " (" + rec.ref + ")" : ""} — ${formatNotificationWhenLabel(rec.appointmentAt)}`,
+          scheduleAt: new Date(rec.remindAt),
+          extra: { bookingId: rec.bookingId, type: "booking-reminder" }
+        });
+        if (ok) restored++;
+      }
+      console.log("[notification-restore]", "done", {
+        reason,
+        verified,
+        restored,
+        expired,
+        pending: pendingIds.size
+      });
+    } catch (err) {
+      console.warn("[notification-restore]", "failed", err?.message || err);
+    }
+  }
+
   async function cancelLocalNotification(id) {
     const plugin = getLocalNotificationsPlugin();
     if (!plugin) return;
@@ -14625,6 +15266,15 @@
     }
 
     const bookingId = String(booking?.id || booking?.booking_ref || "").trim();
+    if (bookingId && (await hasActivePendingRemindersForBooking(bookingId))) {
+      const storedFuture = loadStoredReminderRecords().filter(
+        (r) => String(r.bookingId) === bookingId && new Date(r.remindAt).getTime() > Date.now()
+      );
+      if (storedFuture.length >= BOOKING_REMINDER_OFFSETS.length) {
+        console.log("[notification-skipped]", "duplicate — already pending", bookingId);
+        return { scheduled: 0, skipped: BOOKING_REMINDER_OFFSETS.length, duplicate: true };
+      }
+    }
     if (bookingId) await cancelLocalNotificationsForBooking(bookingId);
 
     const serviceName =
@@ -14877,6 +15527,7 @@
     });
 
     logNotifications("listeners bound");
+    void restoreLocalNotificationsOnLaunch("listeners-bound");
   }
 
   function isMobilePublicShellPresentation() {
@@ -14979,6 +15630,14 @@
   }
 
   function renderCustomerMobileHomeTab() {
+    if (renderCustomerMobileHomeTabTimer) clearTimeout(renderCustomerMobileHomeTabTimer);
+    renderCustomerMobileHomeTabTimer = setTimeout(() => renderCustomerMobileHomeTabNow(), 16);
+  }
+
+  function renderCustomerMobileHomeTabNow() {
+    const isLoading = publicDataLoading && (hasKnownPublicBusinessFromUrl() || businessId);
+    setCustomerMobileHomeLoading(!!isLoading);
+    if (isLoading) return;
     const name = businessSettings?.business_name || "Book Appointment";
     const tagline = businessSettings?.public_tagline || businessSettings?.business_description || "Book your appointment online";
     const showLogo = businessSettings?.public_show_logo !== false;
@@ -15198,8 +15857,10 @@
     const allowed = Object.values(CUSTOMER_MOBILE_TAB);
     if (!allowed.includes(tab)) tab = CUSTOMER_MOBILE_TAB.BOOK;
 
+    const prevTab = customerMobileTab;
     dismissMobileShellFlowPanelsForTabSwitch(tab);
     customerMobileTab = tab;
+    if (prevTab !== tab && !opts.skipHaptic) triggerHaptic("light");
     if (tab !== CUSTOMER_MOBILE_TAB.BOOKINGS) {
       customerMyBookingsViewOpen = false;
     }
@@ -15276,6 +15937,7 @@
 
     applyCustomerMobileTabVisibility();
     renderCustomerMobileProfileTab();
+    bindMobilePullToRefresh();
   }
 
   let manageRescheduleSelectedTime = null;
@@ -16292,6 +16954,7 @@
       serviceName: lastPublicBookingSuccess?.serviceName,
       ref: lastPublicBookingSuccess?.ref
     });
+    triggerHaptic("success");
   }
 
   function runPublicBookingPostSuccessTasks() {
@@ -16714,12 +17377,16 @@
   function manageBookingErrorHtml(message, opts = {}) {
     const friendly = friendlyManageBookingErrorMessage(message);
     const showMyBookings = opts.showMyBookingsButton === true;
+    const showRetry = opts.showRetry !== false;
     const businessParam =
       getActivePublicBusinessSlug() ||
       getBookingBusinessSlug(manageBookingData) ||
       normalizeBusinessSlug(businessSettings?.business_slug || "");
     const myBookingsBtn = showMyBookings
       ? `<button type="button" class="success" style="margin-top:12px;width:100%" onclick="openCustomerMyBookingsFromManageError()">Open My Bookings</button>`
+      : "";
+    const retryBtn = showRetry
+      ? `<button type="button" class="secondary" style="margin-top:12px;width:100%" onclick="retryManageBookingFromToken()">Try again</button>`
       : "";
     const returnAction = businessParam
       ? `<button type="button" class="secondary" onclick="openManageBookingPublicReturn()">Book an appointment</button>`
@@ -16729,6 +17396,7 @@
       <div class="empty-state manage-booking-error">
         <span class="empty-state-title">Unable to open this booking</span>
         <span>${escapeHtml(friendly)}</span>
+        ${retryBtn}
         ${myBookingsBtn}
         <p style="margin-top:16px;">${returnAction}</p>
       </div>
@@ -17169,6 +17837,7 @@
 
     activeManageToken = manageToken;
     if (lastPublicBookingSuccess) lastPublicBookingSuccess.token = manageToken;
+    lastManageFetchToken = manageToken;
 
     try {
       console.log("[manage-fetch-start]", { token: "set" });
@@ -17178,7 +17847,7 @@
         showManageBookingError(
           error?.message ||
             "We could not load this booking. Please open My Bookings or use the link from your email.",
-          { showMyBookingsButton: isCustomer }
+          { showMyBookingsButton: isCustomer, showRetry: true }
         );
         return;
       }
@@ -17190,7 +17859,7 @@
         console.log("[manage-fetch-error]", renderErr?.message || renderErr);
         showManageBookingError(
           "Could not display this booking. Please try again.",
-          { showMyBookingsButton: isCustomer }
+          { showMyBookingsButton: isCustomer, showRetry: true }
         );
         return;
       }
@@ -17215,7 +17884,7 @@
       showManageBookingError(
         err?.message ||
           "We could not load this booking. Please open My Bookings or use the link from your email.",
-        { showMyBookingsButton: isCustomer }
+        { showMyBookingsButton: isCustomer, showRetry: true }
       );
     } finally {
       loading?.classList.add("hidden");
@@ -17271,6 +17940,11 @@
       if (!refreshed) return;
 
       showToast("Your appointment has been rescheduled.", "success");
+      triggerHaptic("success");
+      void scheduleBookingReminderNotification(refreshed, {
+        serviceName: refreshed?.service_name,
+        ref: refreshed?.booking_ref
+      });
       document.getElementById("manageBookingRescheduledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
       await sendBookingEmailNotification(
@@ -17300,6 +17974,7 @@
       return;
     }
     if (!confirm("Cancel this booking?")) return;
+    triggerHaptic("destructive");
 
     const cancelBtn = document.getElementById("manageBookingCancelBtn");
     manageBookingActionInFlight = true;
@@ -17323,6 +17998,8 @@
       }
 
       showToast("Your booking has been cancelled.", "success");
+      triggerHaptic("warning");
+      if (manageBookingData?.id) void cancelLocalNotificationsForBooking(manageBookingData.id);
       document.getElementById("manageBookingCancelledBanner")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
       await sendBookingEmailNotification(
@@ -18648,6 +19325,9 @@
 
     if (state === APP_SHELL_STATE.READY) {
       flushAppShellPendingReadyCallbacks();
+      if (isNativeCapacitorApp()) {
+        void restoreLocalNotificationsOnLaunch(opts.reason || "shell-ready");
+      }
     }
   }
 
@@ -18802,6 +19482,9 @@
         if (data?.session && !currentUser) {
           await routeAppShellAfterSession(data.session, { reason });
         }
+        if (data?.session && currentUser) {
+          await resumeAdminOnboardingIfNeeded(reason);
+        }
         return;
       }
 
@@ -18894,7 +19577,10 @@
       const AppPlugin = window.Capacitor?.Plugins?.App;
       if (AppPlugin && typeof AppPlugin.addListener === "function") {
         AppPlugin.addListener("appStateChange", ({ isActive }) => {
-          if (isActive) void restoreAppSession({ reason: "resume" });
+          if (isActive) {
+            void restoreAppSession({ reason: "resume" });
+            void restoreLocalNotificationsOnLaunch("app-resume");
+          }
         });
       } else {
         document.addEventListener("visibilitychange", () => {
@@ -19056,7 +19742,14 @@
   }
 
   function showAdminView() {
+    if (isAdminOnboardingRequired()) {
+      logOnboarding("dashboard blocked — onboarding incomplete");
+      showAdminOnboardingView();
+      void renderAdminOnboardingShell();
+      return;
+    }
     hideAllViews();
+    document.body.classList.remove("wizard-open");
     document.getElementById("adminView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.remove("hidden");
     document.getElementById("homeBtn")?.classList.add("hidden");
@@ -19127,6 +19820,7 @@
   }
 
   async function bootstrapAdminAfterLogin() {
+    logBusinessInit("bootstrapAdminAfterLogin", { businessId: currentUser?.id });
     await ensureBusinessSettings();
     await loadBusinessSettings();
 
@@ -19136,14 +19830,193 @@
       return;
     }
 
+    await loadServices();
+    onboardingEstablishedBypass = await computeEstablishedBusinessBypass();
+
     if (isAdminOnboardingRequired()) {
+      logOnboarding("redirect to wizard", { step: getAdminOnboardingStep() });
       showAdminOnboardingView();
       await renderAdminOnboardingShell();
       return;
     }
 
+    logOnboarding("complete — opening dashboard");
     showAdminView();
     await loadAdminData();
+  }
+
+  let onboardingEstablishedBypass = false;
+  let onboardingDraftSaveTimer = null;
+  const ONBOARDING_DRAFT_DEBOUNCE_MS = 450;
+
+  function getOnboardingLocalCompleteKey() {
+    return businessId ? `bookingAppOnboardingComplete_${businessId}` : "bookingAppOnboardingComplete";
+  }
+
+  function getOnboardingDraftStorageKey() {
+    return businessId ? `bookingAppOnboardingDraft_${businessId}` : "bookingAppOnboardingDraft";
+  }
+
+  function markOnboardingCompleteLocal() {
+    if (!businessId) return;
+    try {
+      localStorage.setItem(getOnboardingLocalCompleteKey(), "1");
+      localStorage.removeItem(getOnboardingDraftStorageKey());
+      logSetup("onboarding marked complete locally");
+    } catch (e) {
+      logSetup("local complete flag failed", e?.message);
+    }
+  }
+
+  function collectOnboardingStep1DraftFromDom() {
+    return {
+      name: String(document.getElementById("onboardingBusinessName")?.value || ""),
+      slug: String(document.getElementById("onboardingBusinessSlug")?.value || ""),
+      phone: String(document.getElementById("onboardingBusinessPhone")?.value || ""),
+      address: String(document.getElementById("onboardingBusinessAddress")?.value || ""),
+      category: getSelectedWizardBusinessCategory() || "",
+      timezone: document.getElementById("onboardingTimezone")?.value || ""
+    };
+  }
+
+  function scheduleOnboardingDraftSave() {
+    if (!businessId) return;
+    clearTimeout(onboardingDraftSaveTimer);
+    onboardingDraftSaveTimer = setTimeout(saveOnboardingDraftLocal, ONBOARDING_DRAFT_DEBOUNCE_MS);
+  }
+
+  function saveOnboardingDraftLocal() {
+    if (!businessId) return;
+    try {
+      const draft = {
+        step: getAdminOnboardingStep(),
+        step1: collectOnboardingStep1DraftFromDom(),
+        savedAt: Date.now()
+      };
+      localStorage.setItem(getOnboardingDraftStorageKey(), JSON.stringify(draft));
+      logSetup("draft autosaved", { step: draft.step });
+    } catch (e) {
+      logSetup("draft autosave failed", e?.message);
+    }
+  }
+
+  function readOnboardingDraftLocal() {
+    try {
+      const raw = localStorage.getItem(getOnboardingDraftStorageKey());
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function applyOnboardingDraftToStep1IfNeeded() {
+    const draft = readOnboardingDraftLocal();
+    if (!draft) return;
+
+    const draftStep = Number(draft.step);
+    if (Number.isFinite(draftStep) && draftStep >= 1 && draftStep <= 5) {
+      const dbStep = Number(businessSettings?.onboarding_step);
+      if (!Number.isFinite(dbStep) || dbStep < draftStep) {
+        businessSettings = { ...(businessSettings || {}), onboarding_step: draftStep };
+        logOnboarding("resume step from draft", { step: draftStep });
+      }
+    }
+
+    if (getAdminOnboardingStep() !== 1 || !draft.step1) return;
+
+    const s1 = draft.step1;
+    const nameEl = document.getElementById("onboardingBusinessName");
+    const slugEl = document.getElementById("onboardingBusinessSlug");
+    const phoneEl = document.getElementById("onboardingBusinessPhone");
+    const addressEl = document.getElementById("onboardingBusinessAddress");
+
+    if (nameEl && s1.name && (!nameEl.value || nameEl.value === "My Business")) nameEl.value = s1.name;
+    if (slugEl && s1.slug && (!slugEl.value || !onboardingSlugUserEdited)) slugEl.value = s1.slug;
+    if (phoneEl && s1.phone && !phoneEl.value) phoneEl.value = s1.phone;
+    if (addressEl && s1.address && !addressEl.value) addressEl.value = s1.address;
+    if (s1.category) setWizardCategorySelection(s1.category);
+    if (s1.timezone) {
+      const tzEl = document.getElementById("onboardingTimezone");
+      if (tzEl) tzEl.value = s1.timezone;
+    }
+  }
+
+  async function computeEstablishedBusinessBypass() {
+    if (localStorage.getItem(getOnboardingLocalCompleteKey()) === "1") {
+      logOnboarding("bypass — local complete flag");
+      return true;
+    }
+
+    const completed = businessSettings?.onboarding_completed_at;
+    if (completed !== null && completed !== undefined && String(completed).trim() !== "") {
+      return true;
+    }
+
+    if (services.length > 0) {
+      logOnboarding("bypass — has services", { count: services.length });
+      return true;
+    }
+
+    const name = String(businessSettings?.business_name || "").trim();
+    const slug = normalizeBusinessSlug(businessSettings?.business_slug || "");
+    if (!name || name === "My Business" || !slug) return false;
+
+    if (!businessId || !initSupabaseClient()) return false;
+
+    try {
+      const { count, error } = await sb
+        .from("bookings")
+        .select("id", { count: "exact", head: true })
+        .eq("business_id", businessId);
+      if (!error && (count || 0) > 0) {
+        logOnboarding("bypass — has bookings", { count });
+        return true;
+      }
+    } catch (e) {
+      logOnboarding("bypass check failed", e?.message);
+    }
+
+    return false;
+  }
+
+  function setOnboardingStepLoading(loading) {
+    const sk = document.getElementById("adminOnboardingStepSkeleton");
+    const card = document.querySelector("#adminOnboardingView .wizard-card");
+    if (sk) {
+      sk.classList.toggle("hidden", !loading);
+      sk.setAttribute("aria-busy", loading ? "true" : "false");
+    }
+    if (card) card.classList.toggle("wizard-card--loading", loading);
+  }
+
+  function applyWizardPanelEnterTransition(panelEl) {
+    if (!panelEl) return;
+    panelEl.classList.remove("wizard-panel--enter");
+    void panelEl.offsetWidth;
+    panelEl.classList.add("wizard-panel--enter");
+  }
+
+  async function resumeAdminOnboardingIfNeeded(reason) {
+    if (!currentUser || currentUserRole === "customer") return;
+    businessId = currentUser.id;
+    await loadBusinessSettings();
+    await loadServices();
+    onboardingEstablishedBypass = await computeEstablishedBusinessBypass();
+    if (!isAdminOnboardingRequired()) return;
+
+    const adminVisible = !document.getElementById("adminView")?.classList.contains("hidden");
+    const onboardingVisible = !document.getElementById("adminOnboardingView")?.classList.contains("hidden");
+    if (adminVisible && !onboardingVisible) {
+      logOnboarding("resume redirect to wizard", { reason, step: getAdminOnboardingStep() });
+      showAdminOnboardingView();
+      await renderAdminOnboardingShell();
+      return;
+    }
+    if (onboardingVisible) {
+      logOnboarding("resume refresh wizard", { reason, step: getAdminOnboardingStep() });
+      await renderAdminOnboardingShell();
+    }
   }
 
   function isAdminOnboardingMigrationPresent(settings) {
@@ -19156,12 +20029,25 @@
 
   function isAdminOnboardingRequired() {
     if (!businessSettings || !businessId) return false;
-    if (!isAdminOnboardingMigrationPresent(businessSettings)) return false;
 
-    /* PostgREST often omits null keys; missing property means "not completed" */
-    const v = businessSettings.onboarding_completed_at;
-    if (v === null || typeof v === "undefined" || String(v).trim() === "") return true;
-    return false;
+    const completed = businessSettings.onboarding_completed_at;
+    if (completed !== null && completed !== undefined && String(completed).trim() !== "") {
+      return false;
+    }
+
+    if (localStorage.getItem(getOnboardingLocalCompleteKey()) === "1") {
+      return false;
+    }
+
+    if (onboardingEstablishedBypass) {
+      return false;
+    }
+
+    if (!isAdminOnboardingMigrationPresent(businessSettings)) {
+      logOnboarding("required — migration columns absent");
+    }
+
+    return true;
   }
 
   function showAdminOnboardingView() {
@@ -19171,6 +20057,62 @@
     document.getElementById("adminOnboardingView").classList.remove("hidden");
     document.getElementById("logoutBtn").classList.remove("hidden");
     document.getElementById("homeBtn").classList.add("hidden");
+    bindAdminOnboardingFooterKeyboardGuard();
+    logOnboarding("wizard visible");
+  }
+
+  function bindAdminOnboardingFooterKeyboardGuard() {
+    if (window.__adminOnboardingFooterKbBound) return;
+    window.__adminOnboardingFooterKbBound = true;
+
+    const footer = document.querySelector("#adminOnboardingView .wizard-footer");
+    const main = document.querySelector("#adminOnboardingView .wizard-main");
+    if (!footer) return;
+
+    const syncFooterForKeyboard = () => {
+      const onboardingOpen = !document.getElementById("adminOnboardingView")?.classList.contains("hidden");
+      if (!onboardingOpen || footer.classList.contains("hidden")) {
+        footer.style.transform = "";
+        return;
+      }
+
+      const vv = window.visualViewport;
+      if (!vv) {
+        footer.style.transform = "";
+        return;
+      }
+
+      const layoutBottom = window.innerHeight;
+      const visibleBottom = vv.offsetTop + vv.height;
+      const overlap = Math.max(0, layoutBottom - visibleBottom);
+      const keyboardLikelyOpen = overlap > 80;
+
+      if (keyboardLikelyOpen) {
+        footer.style.transform = `translateY(-${Math.round(overlap)}px)`;
+        if (main) {
+          main.style.paddingBottom = `calc(${Math.round(overlap + 132)}px + env(safe-area-inset-bottom, 0px))`;
+        }
+      } else {
+        footer.style.transform = "";
+        if (main) main.style.paddingBottom = "";
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", syncFooterForKeyboard);
+      window.visualViewport.addEventListener("scroll", syncFooterForKeyboard);
+    }
+
+    document.getElementById("adminOnboardingView")?.addEventListener("focusin", (e) => {
+      if (e.target?.matches?.("input, select, textarea")) {
+        setTimeout(syncFooterForKeyboard, 120);
+        setTimeout(() => e.target?.scrollIntoView?.({ block: "center", behavior: "smooth" }), 180);
+      }
+    });
+
+    document.getElementById("adminOnboardingView")?.addEventListener("focusout", () => {
+      setTimeout(syncFooterForKeyboard, 120);
+    });
   }
 
   let onboardingSlugUserEdited = false;
@@ -19183,7 +20125,13 @@
 
     const nameEl = document.getElementById("onboardingBusinessName");
     const slugEl = document.getElementById("onboardingBusinessSlug");
+    const phoneEl = document.getElementById("onboardingBusinessPhone");
+    const addressEl = document.getElementById("onboardingBusinessAddress");
     const tzEl = document.getElementById("onboardingTimezone");
+
+    const onStep1DraftInput = () => {
+      scheduleOnboardingDraftSave();
+    };
 
     if (nameEl && slugEl) {
       nameEl.addEventListener("input", () => {
@@ -19193,6 +20141,7 @@
         refreshOnboardingPublicLinkPreview();
         clearOnboardingSlugConflictError();
         updateWizardStep1Validation();
+        onStep1DraftInput();
       });
     }
 
@@ -19203,6 +20152,7 @@
         refreshOnboardingPublicLinkPreview();
         clearOnboardingSlugConflictError();
         updateWizardStep1Validation();
+        onStep1DraftInput();
       });
 
       slugEl.addEventListener("blur", () => {
@@ -19210,11 +20160,18 @@
         slugEl.value = n;
         refreshOnboardingPublicLinkPreview();
         updateWizardStep1Validation();
+        onStep1DraftInput();
       });
     }
 
+    phoneEl?.addEventListener("input", onStep1DraftInput);
+    addressEl?.addEventListener("input", onStep1DraftInput);
+
     if (tzEl) {
-      tzEl.addEventListener("change", () => updateWizardStep1Validation());
+      tzEl.addEventListener("change", () => {
+        updateWizardStep1Validation();
+        onStep1DraftInput();
+      });
     }
 
     document.getElementById("adminOnboardingView")?.addEventListener("click", (e) => {
@@ -19227,6 +20184,7 @@
       pill.classList.add("wizard-category-pill--selected");
       pill.setAttribute("aria-pressed", "true");
       updateWizardStep1Validation();
+      onStep1DraftInput();
     });
   }
 
@@ -19280,6 +20238,8 @@
 
     const nameEl = document.getElementById("onboardingBusinessName");
     const slugEl = document.getElementById("onboardingBusinessSlug");
+    const phoneEl = document.getElementById("onboardingBusinessPhone");
+    const addressEl = document.getElementById("onboardingBusinessAddress");
     const tzEl = document.getElementById("onboardingTimezone");
 
     if (!nameEl || !slugEl) return;
@@ -19289,6 +20249,9 @@
     nameEl.value = nameVal;
     slugEl.value = slugStored;
     onboardingSlugUserEdited = slugStored !== normalizeBusinessSlug(nameVal);
+
+    if (phoneEl) phoneEl.value = String(businessSettings?.business_phone ?? "").trim();
+    if (addressEl) addressEl.value = String(businessSettings?.business_address ?? "").trim();
 
     clearOnboardingSlugConflictError();
     slugEl.setAttribute("aria-invalid", "false");
@@ -19315,8 +20278,11 @@
     }
     updateLogoUploadUi();
 
+    applyOnboardingDraftToStep1IfNeeded();
+
     refreshOnboardingPublicLinkPreview();
     updateWizardStep1Validation();
+    logSetup("step1 hydrated");
   }
 
   function isWizardStep1FormValid() {
@@ -19356,6 +20322,8 @@
   async function saveAdminOnboardingStep1AndAdvance() {
     const name = String(document.getElementById("onboardingBusinessName")?.value || "").trim();
     const slug = normalizeBusinessSlug(document.getElementById("onboardingBusinessSlug")?.value || "");
+    const phone = String(document.getElementById("onboardingBusinessPhone")?.value || "").trim();
+    const address = String(document.getElementById("onboardingBusinessAddress")?.value || "").trim();
     const category = getSelectedWizardBusinessCategory();
     const timezone =
       document.getElementById("onboardingTimezone")?.value || businessSettings?.timezone || "Europe/Skopje";
@@ -19393,11 +20361,15 @@
     if (contBtn) contBtn.textContent = "Saving…";
     if (backBtn) backBtn.disabled = true;
 
+    logSetup("step1 save", { slug, category });
+
     const { error } = await sb
       .from("business_settings")
       .update({
         business_name: name,
         business_slug: slug,
+        business_phone: phone || null,
+        business_address: address || null,
         business_category: category,
         timezone,
         onboarding_step: 2
@@ -19418,9 +20390,20 @@
       return false;
     }
 
-    businessSettings = { ...(businessSettings || {}), business_name: name, business_slug: slug, business_category: category, timezone, onboarding_step: 2 };
+    businessSettings = {
+      ...(businessSettings || {}),
+      business_name: name,
+      business_slug: slug,
+      business_phone: phone || null,
+      business_address: address || null,
+      business_category: category,
+      timezone,
+      onboarding_step: 2
+    };
+    saveOnboardingDraftLocal();
     await loadBusinessSettings();
     updateWizardStep1Validation();
+    logOnboarding("step1 complete");
     return true;
   }
 
@@ -20631,12 +21614,18 @@
     }
 
     businessSettings = { ...(businessSettings || {}), ...payload };
+    markOnboardingCompleteLocal();
+    logOnboarding("step5 saved — launch screen", { link: getOnboardingPublicBookingLink() });
+    triggerHaptic("success");
     showAdminOnboardingLaunchScreen();
     return true;
   }
 
   async function dismissAdminOnboardingLaunchToDashboard() {
     hideAdminOnboardingLaunchScreen();
+    markOnboardingCompleteLocal();
+    logOnboarding("launch dismissed — dashboard");
+    triggerHaptic("success");
     showAdminView();
     document.body.classList.remove("wizard-open");
     await loadAdminData();
@@ -20677,7 +21666,7 @@
       shortLabel: "Business",
       title: "Set up your business",
       guidance:
-        "Add your name, public booking link, and optional logo. This is what customers see first.",
+        "Add your name, phone, address, public booking link, and optional logo. This is what customers see first.",
       helper: "Tip: keep your link short and easy to spell — you’ll share it on Instagram, Google, and SMS.",
       nextStep: "Next you’ll add the services customers can book (haircut, consultation, class, etc.).",
       placeholder: ""
@@ -20756,6 +21745,11 @@
 
   function getAdminOnboardingStep() {
     let s = Number(businessSettings?.onboarding_step);
+    if (!Number.isFinite(s) || s < 1) {
+      const draft = readOnboardingDraftLocal();
+      const ds = Number(draft?.step);
+      if (Number.isFinite(ds) && ds >= 1) s = ds;
+    }
     if (!Number.isFinite(s) || s < 1) s = 1;
     if (s > 5) s = 5;
     return s;
@@ -20763,6 +21757,7 @@
 
   async function renderAdminOnboardingShell() {
     const step = getAdminOnboardingStep();
+    logOnboarding("render shell", { step });
     const idx = step - 1;
     const meta = ADMIN_ONBOARDING_UI_STEPS[idx] || ADMIN_ONBOARDING_UI_STEPS[0];
 
@@ -20796,73 +21791,88 @@
     const step4Panel = document.getElementById("adminOnboardingStep4Panel");
     const step5Panel = document.getElementById("adminOnboardingStep5Panel");
     const placeholderEl = document.getElementById("adminOnboardingPlaceholder");
+    const needsAsyncLoad = step === 2 || step === 4;
+    let activePanel = null;
 
-    if (step === 1) {
-      if (step1Panel) step1Panel.classList.remove("hidden");
-      if (step2Panel) step2Panel.classList.add("hidden");
-      if (step3Panel) step3Panel.classList.add("hidden");
-      if (step4Panel) step4Panel.classList.add("hidden");
-      if (step5Panel) step5Panel.classList.add("hidden");
-      if (placeholderEl) {
-        placeholderEl.textContent = "";
-        placeholderEl.classList.add("hidden");
+    if (needsAsyncLoad) setOnboardingStepLoading(true);
+
+    try {
+      if (step === 1) {
+        if (step1Panel) step1Panel.classList.remove("hidden");
+        if (step2Panel) step2Panel.classList.add("hidden");
+        if (step3Panel) step3Panel.classList.add("hidden");
+        if (step4Panel) step4Panel.classList.add("hidden");
+        if (step5Panel) step5Panel.classList.add("hidden");
+        if (placeholderEl) {
+          placeholderEl.textContent = "";
+          placeholderEl.classList.add("hidden");
+        }
+        hydrateOnboardingStep1FromSettings();
+        activePanel = step1Panel;
+      } else if (step === 2) {
+        if (step1Panel) step1Panel.classList.add("hidden");
+        if (step2Panel) step2Panel.classList.remove("hidden");
+        if (step3Panel) step3Panel.classList.add("hidden");
+        if (step4Panel) step4Panel.classList.add("hidden");
+        if (step5Panel) step5Panel.classList.add("hidden");
+        if (placeholderEl) {
+          placeholderEl.textContent = "";
+          placeholderEl.classList.add("hidden");
+        }
+        await hydrateOnboardingStep2();
+        activePanel = step2Panel;
+      } else if (step === 3) {
+        if (step1Panel) step1Panel.classList.add("hidden");
+        if (step2Panel) step2Panel.classList.add("hidden");
+        if (step3Panel) step3Panel.classList.remove("hidden");
+        if (step4Panel) step4Panel.classList.add("hidden");
+        if (step5Panel) step5Panel.classList.add("hidden");
+        if (placeholderEl) {
+          placeholderEl.textContent = "";
+          placeholderEl.classList.add("hidden");
+        }
+        hydrateOnboardingStep3();
+        activePanel = step3Panel;
+      } else if (step === 4) {
+        if (step1Panel) step1Panel.classList.add("hidden");
+        if (step2Panel) step2Panel.classList.add("hidden");
+        if (step3Panel) step3Panel.classList.add("hidden");
+        if (step4Panel) step4Panel.classList.remove("hidden");
+        if (step5Panel) step5Panel.classList.add("hidden");
+        if (placeholderEl) {
+          placeholderEl.textContent = "";
+          placeholderEl.classList.add("hidden");
+        }
+        await hydrateOnboardingStep4();
+        activePanel = step4Panel;
+      } else if (step === 5) {
+        if (step1Panel) step1Panel.classList.add("hidden");
+        if (step2Panel) step2Panel.classList.add("hidden");
+        if (step3Panel) step3Panel.classList.add("hidden");
+        if (step4Panel) step4Panel.classList.add("hidden");
+        if (step5Panel) step5Panel.classList.remove("hidden");
+        if (placeholderEl) {
+          placeholderEl.textContent = "";
+          placeholderEl.classList.add("hidden");
+        }
+        hydrateOnboardingStep5();
+        activePanel = step5Panel;
+      } else {
+        if (step1Panel) step1Panel.classList.add("hidden");
+        if (step2Panel) step2Panel.classList.add("hidden");
+        if (step3Panel) step3Panel.classList.add("hidden");
+        if (step4Panel) step4Panel.classList.add("hidden");
+        if (step5Panel) step5Panel.classList.add("hidden");
+        if (placeholderEl) {
+          placeholderEl.classList.remove("hidden");
+          placeholderEl.textContent = meta.placeholder;
+        }
       }
-      hydrateOnboardingStep1FromSettings();
-    } else if (step === 2) {
-      if (step1Panel) step1Panel.classList.add("hidden");
-      if (step2Panel) step2Panel.classList.remove("hidden");
-      if (step3Panel) step3Panel.classList.add("hidden");
-      if (step4Panel) step4Panel.classList.add("hidden");
-      if (step5Panel) step5Panel.classList.add("hidden");
-      if (placeholderEl) {
-        placeholderEl.textContent = "";
-        placeholderEl.classList.add("hidden");
-      }
-      await hydrateOnboardingStep2();
-    } else if (step === 3) {
-      if (step1Panel) step1Panel.classList.add("hidden");
-      if (step2Panel) step2Panel.classList.add("hidden");
-      if (step3Panel) step3Panel.classList.remove("hidden");
-      if (step4Panel) step4Panel.classList.add("hidden");
-      if (step5Panel) step5Panel.classList.add("hidden");
-      if (placeholderEl) {
-        placeholderEl.textContent = "";
-        placeholderEl.classList.add("hidden");
-      }
-      hydrateOnboardingStep3();
-    } else if (step === 4) {
-      if (step1Panel) step1Panel.classList.add("hidden");
-      if (step2Panel) step2Panel.classList.add("hidden");
-      if (step3Panel) step3Panel.classList.add("hidden");
-      if (step4Panel) step4Panel.classList.remove("hidden");
-      if (step5Panel) step5Panel.classList.add("hidden");
-      if (placeholderEl) {
-        placeholderEl.textContent = "";
-        placeholderEl.classList.add("hidden");
-      }
-      await hydrateOnboardingStep4();
-    } else if (step === 5) {
-      if (step1Panel) step1Panel.classList.add("hidden");
-      if (step2Panel) step2Panel.classList.add("hidden");
-      if (step3Panel) step3Panel.classList.add("hidden");
-      if (step4Panel) step4Panel.classList.add("hidden");
-      if (step5Panel) step5Panel.classList.remove("hidden");
-      if (placeholderEl) {
-        placeholderEl.textContent = "";
-        placeholderEl.classList.add("hidden");
-      }
-      hydrateOnboardingStep5();
-    } else {
-      if (step1Panel) step1Panel.classList.add("hidden");
-      if (step2Panel) step2Panel.classList.add("hidden");
-      if (step3Panel) step3Panel.classList.add("hidden");
-      if (step4Panel) step4Panel.classList.add("hidden");
-      if (step5Panel) step5Panel.classList.add("hidden");
-      if (placeholderEl) {
-        placeholderEl.classList.remove("hidden");
-        placeholderEl.textContent = meta.placeholder;
-      }
+    } finally {
+      if (needsAsyncLoad) setOnboardingStepLoading(false);
     }
+
+    applyWizardPanelEnterTransition(activePanel);
 
     const backBtn = document.getElementById("adminOnboardingBackBtn");
     if (backBtn) {
@@ -20912,14 +21922,20 @@
     }
 
     businessSettings.onboarding_step = s;
+    saveOnboardingDraftLocal();
+    logSetup("step persisted", { step: s });
     return true;
   }
 
   async function adminOnboardingContinue() {
+    triggerHaptic("light");
     const step = getAdminOnboardingStep();
     if (step === 1) {
       const ok = await saveAdminOnboardingStep1AndAdvance();
-      if (ok) await renderAdminOnboardingShell();
+      if (ok) {
+        triggerHaptic("success");
+        await renderAdminOnboardingShell();
+      }
       return;
     }
     if (step === 2) {
@@ -21005,6 +22021,7 @@
   }
 
   async function adminOnboardingBack() {
+    triggerHaptic("light");
     onboardingStep2Advancing = false;
     onboardingStep3Advancing = false;
     onboardingStep4Advancing = false;
@@ -21019,6 +22036,7 @@
   async function completeAdminOnboardingPhaseA() {
     if (!businessId || !initSupabaseClient()) return false;
     const nowIso = new Date().toISOString();
+    logSetup("complete onboarding (skip path)");
     const { error } = await sb
       .from("business_settings")
       .update({
@@ -21034,6 +22052,9 @@
 
     businessSettings.onboarding_completed_at = nowIso;
     businessSettings.onboarding_step = 5;
+    markOnboardingCompleteLocal();
+    logOnboarding("complete — skip to dashboard");
+    triggerHaptic("success");
     showAdminView();
     await loadAdminData();
     showToast("Your dashboard is ready. Finish branding anytime in Settings.", "success");
@@ -21593,12 +22614,38 @@
     body?.classList.add("hidden");
     fallback?.classList.add("hidden");
 
+    if (!isBrowserOnline()) {
+      const cached = loadCustomerBookingsCache();
+      if (cached?.rows?.length) {
+        customerMyBookings = cached.rows;
+        customerMyBookingsFromCache = true;
+        customerMyBookingsCalendarFailed = false;
+        loading?.classList.add("hidden");
+        renderCustomerMyBookingsOfflineBadge(true);
+        renderCustomerMyBookingsView();
+        debugLog("shell", "bookings loaded from offline cache", cached.rows.length);
+        return;
+      }
+    }
+
     try {
       const { rows, error } = await fetchCustomerMyBookingsRows();
       if (error) {
+        const cached = loadCustomerBookingsCache();
+        if (cached?.rows?.length) {
+          customerMyBookings = cached.rows;
+          customerMyBookingsFromCache = true;
+          customerMyBookingsCalendarFailed = false;
+          loading?.classList.add("hidden");
+          renderCustomerMyBookingsOfflineBadge(true);
+          renderCustomerMyBookingsView();
+          return;
+        }
         customerMyBookings = [];
+        customerMyBookingsFromCache = false;
         customerMyBookingsCalendarFailed = true;
         loading?.classList.add("hidden");
+        renderCustomerMyBookingsOfflineBadge(false);
         if (errorBox) {
           errorBox.classList.remove("hidden");
           errorBox.innerHTML = emptyStateHtml("Could not load calendar", error.message || "Try again later.");
@@ -21608,7 +22655,10 @@
       }
 
       customerMyBookings = rows;
+      customerMyBookingsFromCache = false;
       customerMyBookingsCalendarFailed = false;
+      saveCustomerBookingsCache(rows);
+      renderCustomerMyBookingsOfflineBadge(false);
       customerMyBookingsMonth = new Date();
       if (!customerMyBookingsSelectedId && customerMyBookings.length) {
         const next = customerMyBookings.filter(isCustomerMyBookingUpcoming).sort(
@@ -22561,6 +23611,7 @@
 
     if (!businessSettings) {
       const fallbackSlug = generateFallbackBusinessSlug();
+      logBusinessInit("creating default business_settings", { businessId, fallbackSlug });
       const defaultSettings = {
         business_id: businessId,
         business_slug: fallbackSlug,
@@ -22604,6 +23655,7 @@
         return;
       }
 
+      logBusinessInit("default business_settings created");
       await loadBusinessSettings();
     }
   }

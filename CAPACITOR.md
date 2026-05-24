@@ -94,6 +94,7 @@ npm run cap:sync && npx cap open android
 Native **local** reminders only — no SMS, no remote APNs/FCM yet. Email (Resend) unchanged.
 
 | Plugin | `@capacitor/local-notifications` |
+| Haptics | `@capacitor/haptics` (booking success, tab switch, destructive actions) |
 |--------|----------------------------------|
 | Customer | 24h + 2h reminders after in-app booking (if permission granted) |
 | Admin | “New booking received” when a booking arrives while admin view is open |
