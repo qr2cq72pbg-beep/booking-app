@@ -17,6 +17,8 @@
   <!-- Business profile + public Business ID / slug + customer continue booking + email confirmations v2 + robust slot click fix -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/css/intlTelInput.css" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js" crossorigin="anonymous"></script>
 
   <style>
     :root {
@@ -1363,6 +1365,286 @@
       #adminSectionCalendar .admin-schedule-week {
         overflow-x: auto;
       }
+    }
+
+    @media (max-width: 768px) {
+      #adminSectionCalendar .admin-schedule-mount {
+        overflow: visible;
+        min-height: 0;
+      }
+
+      #adminSectionCalendar .admin-schedule-toolbar__title {
+        min-width: 0;
+        flex: 1;
+        font-size: 0.9375rem;
+      }
+
+      #adminSectionCalendar .admin-saas-subsection__hint {
+        display: none;
+      }
+
+      #adminSectionCalendar .admin-mobile-agenda {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-strip {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        padding: 2px 2px 10px;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        scrollbar-width: none;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-strip::-webkit-scrollbar {
+        display: none;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill {
+        width: auto !important;
+        max-width: none !important;
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        min-width: 88px;
+        min-height: 64px;
+        padding: 8px 10px;
+        margin: 0;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        background: var(--admin-surface-2, #f8fafc);
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill__dow {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        letter-spacing: 0.02em;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill__num {
+        font-size: 17px;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill__meta {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--color-muted);
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill--selected {
+        border-color: var(--business-accent, var(--color-primary));
+        background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 14%, var(--color-surface, #fff));
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, var(--color-primary)) 22%, transparent);
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill--today:not(.admin-mobile-day-pill--selected) {
+        border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 40%, var(--color-border));
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill--closed,
+      #adminSectionCalendar .admin-mobile-day-pill--off {
+        opacity: 0.55;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill--busy .admin-mobile-day-pill__meta {
+        color: #b45309;
+      }
+
+      #adminSectionCalendar .admin-mobile-day-pill:active:not(.admin-mobile-day-pill--selected) {
+        transform: scale(0.98);
+      }
+
+      #adminSectionCalendar .admin-mobile-day-heading {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      #adminSectionCalendar .admin-mobile-slots {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 32px);
+      }
+
+      #adminSectionCalendar .admin-mobile-slot {
+        width: 100%;
+        min-height: 52px;
+        margin: 0;
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface, #fff);
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot__time {
+        flex: 0 0 52px;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        font-variant-numeric: tabular-nums;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot__label {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot__detail {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot__name {
+        font-size: 15px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot__service {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--available {
+        border-color: color-mix(in srgb, var(--business-accent, #22c55e) 35%, var(--color-border));
+        background: color-mix(in srgb, var(--business-accent, #22c55e) 8%, var(--color-surface, #fff));
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--available:active {
+        transform: scale(0.99);
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--booked:active {
+        transform: scale(0.99);
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--available .admin-mobile-slot__label {
+        color: color-mix(in srgb, var(--business-accent, #16a34a) 80%, #0f172a);
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--booked {
+        border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 45%, var(--color-border));
+        background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 12%, var(--color-surface, #fff));
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--cancelled {
+        opacity: 0.72;
+        border-style: dashed;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--break,
+      #adminSectionCalendar .admin-mobile-slot--unavailable {
+        border-color: var(--color-border);
+        background: var(--admin-surface-2, #f1f5f9);
+        color: var(--color-muted);
+        cursor: default;
+        pointer-events: none;
+      }
+
+      #adminSectionCalendar .admin-mobile-slot--break .admin-mobile-slot__time,
+      #adminSectionCalendar .admin-mobile-slot--unavailable .admin-mobile-slot__time {
+        color: var(--color-muted);
+      }
+
+      #adminSectionCalendar .admin-mobile-empty {
+        margin: 8px 0 0;
+        padding: 20px 16px;
+        border-radius: 12px;
+        border: 1px dashed var(--color-border);
+        background: var(--admin-surface-2, #f8fafc);
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-muted);
+        line-height: 1.45;
+      }
+
+      #adminSectionCalendar .admin-mobile-empty strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+        color: inherit;
+      }
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-day-pill {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-day-pill--selected {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 18%, var(--admin-surface, #1e293b));
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-slot {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-slot--available {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 12%, var(--admin-surface, #1e293b));
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 35%, var(--admin-border, #334155));
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-slot--booked {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 16%, var(--admin-surface, #1e293b));
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 40%, var(--admin-border, #334155));
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-slot--break,
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-slot--unavailable {
+      background: var(--admin-surface-2, #151d2e);
+      color: var(--admin-text-muted, #94a3b8);
+    }
+
+    body.app-theme-dark #adminSectionCalendar .admin-mobile-empty {
+      background: var(--admin-surface-2, #151d2e);
+      border-color: var(--admin-border, #334155);
+      color: var(--admin-text-muted, #94a3b8);
     }
 
     .badge {
@@ -2931,6 +3213,156 @@
       }
     }
 
+    #adminSectionManual .admin-add-mobile-slots-wrap {
+      display: none;
+      grid-column: 1 / -1;
+      min-width: 0;
+      max-width: 100%;
+      width: 100%;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    #adminSectionManual .admin-add-mobile-slots-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      gap: 8px;
+      margin-top: 6px;
+      padding: 2px 0 4px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      touch-action: pan-x;
+    }
+
+    #adminSectionManual .admin-add-mobile-slots-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    #adminSectionManual .admin-add-mobile-slot-btn {
+      width: auto !important;
+      flex: 0 0 auto !important;
+      min-width: 86px;
+      height: 44px;
+      min-height: 44px;
+      margin: 0;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      border-radius: 999px;
+      background: var(--color-surface);
+      color: var(--color-text);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      scroll-snap-align: center;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #adminSectionManual .admin-add-mobile-slot-btn:hover,
+    #adminSectionManual .admin-add-mobile-slot-btn:focus-visible {
+      border-color: color-mix(in srgb, var(--color-accent, #38bdf8) 55%, transparent);
+      background: color-mix(in srgb, var(--color-accent, #38bdf8) 8%, var(--color-surface));
+    }
+
+    #adminSectionManual .admin-add-mobile-slot-btn--selected {
+      border-color: var(--color-accent, #38bdf8);
+      background: color-mix(in srgb, var(--color-accent, #38bdf8) 18%, var(--color-surface));
+      color: var(--color-accent, #0284c7);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent, #38bdf8) 32%, transparent);
+    }
+
+    #adminSectionManual .admin-add-mobile-slots-hint {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--color-muted);
+      line-height: 1.35;
+    }
+
+    #adminSectionManual .admin-add-mobile-slots-hint.hidden {
+      display: none;
+    }
+
+    #adminSectionManual .admin-add-mobile-slots-grid .empty-state {
+      flex: 1 1 100%;
+      width: 100%;
+      text-align: center;
+      padding: 14px 12px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-saas__intro {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-saas-field--time {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-mobile-slots-wrap {
+      display: block;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-saas-field--status {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual.admin-add-single-staff .admin-saas-field--staff {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-booking-summary-panel [data-admin-add-summary-status] {
+      display: none;
+    }
+
+    html:has(body.admin-mobile-shell-active) {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    body.admin-mobile-shell-active {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
+
+    body.admin-mobile-shell-active .container,
+    body.admin-mobile-shell-active #adminView,
+    body.admin-mobile-shell-active .admin-dashboard,
+    body.admin-mobile-shell-active .admin-dashboard-panels,
+    body.admin-mobile-shell-active #adminSectionManual,
+    body.admin-mobile-shell-active #adminSectionManual > .card,
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-booking-shell,
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-booking-form-layout,
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-booking-form-main,
+    body.admin-mobile-shell-active #adminSectionManual .admin-saas-subsection-card,
+    body.admin-mobile-shell-active #adminSectionManual .admin-saas-add-grid,
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-mobile-slots-wrap {
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    body.admin-mobile-shell-active #adminSectionManual .admin-add-mobile-slots-grid {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+    }
+
     /* Availability — compact SaaS subsections */
     #adminSectionAvailability .admin-saas-availability {
       gap: 14px;
@@ -3608,6 +4040,7 @@
     }
 
     .wizard-field input[type="text"],
+    .wizard-field input[type="tel"],
     .wizard-field select {
       width: 100%;
       box-sizing: border-box;
@@ -4796,6 +5229,7 @@
       margin: 0 auto;
       padding: 16px 16px 32px;
       color: var(--public-text);
+      overflow-x: hidden;
     }
 
     body.app-theme-minimal #publicBookingContent {
@@ -4970,8 +5404,22 @@
       border-color: color-mix(in srgb, var(--business-accent, #2563eb) 35%, #e2e8f0);
     }
 
+    body.app-preset-premium-dark .public-hero-bg:not(.public-hero-bg--image) {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 48%, #2563eb 100%);
+    }
+
+    body.app-preset-premium-dark #publicBusinessName,
+    body.app-preset-premium-dark .public-hero-tagline,
+    body.app-preset-premium-dark .public-hero-about {
+      color: #f8fafc;
+    }
+
+    body.app-preset-premium-dark .public-hero-overlay {
+      background: linear-gradient(180deg, rgba(11, 17, 32, 0.2) 0%, rgba(11, 17, 32, 0.92) 100%);
+    }
+
     body.app-preset-barber-classic .public-hero-bg:not(.public-hero-bg--image) {
-      background: linear-gradient(145deg, #1c1917 0%, #44403c 40%, #78350f 100%);
+      background: linear-gradient(135deg, #111827 0%, #3b2f2f 45%, #b45309 100%);
     }
 
     body.app-preset-barber-classic .public-hero-avatar-wrap {
@@ -5649,6 +6097,112 @@
 
     #publicBookingContent .public-mobile-slots-hint.hidden {
       display: none;
+    }
+
+    #publicBookingContent .public-schedule-staff-hint {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--public-muted, #64748b);
+    }
+
+    #publicBookingContent .public-schedule-staff-hint.hidden {
+      display: none;
+    }
+
+    #publicBookingContent .public-schedule-staff-optional {
+      margin: 0 0 12px;
+      border: 1px solid var(--public-border, #e2e8f0);
+      border-radius: 12px;
+      background: var(--public-surface, #fff);
+      overflow: hidden;
+    }
+
+    #publicBookingContent .public-schedule-staff-optional summary {
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #publicBookingContent .public-schedule-staff-optional summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #publicBookingContent .public-schedule-staff-optional__tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--public-muted, #64748b);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    #publicBookingContent .public-schedule-staff-optional .public-staff-cards--compact {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 12px 12px;
+      min-width: 0;
+    }
+
+    #publicBookingContent .public-staff-cards--compact .public-staff-card {
+      min-height: 48px;
+      padding: 10px 12px;
+    }
+
+    #publicBookingContent .public-details-more-options {
+      margin: 0 0 var(--space-md);
+      border: 1px solid var(--public-border, #e2e8f0);
+      border-radius: 12px;
+      background: #f8fafc;
+    }
+
+    #publicBookingContent .public-details-more-options summary {
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--public-muted, #64748b);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    #publicBookingContent .public-details-more-options summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #publicBookingContent .public-details-more-options__body {
+      padding: 0 14px 14px;
+    }
+
+    #publicBookingContent .public-field--notes textarea {
+      min-height: 64px;
+      font-size: 15px;
+    }
+
+    #publicBookingContent .public-time-slots--legacy {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+      gap: 8px;
+      min-width: 0;
+    }
+
+    #publicBookingContent .public-time-slots--legacy .slot {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid var(--public-border, #e2e8f0);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #publicBookingContent .public-time-slots--legacy .slot.selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 16%, #fff);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 28%, transparent);
     }
 
     #publicBookingContent .public-schedule-week {
@@ -7350,18 +7904,51 @@
       margin: 0;
     }
 
-    .public-hero {
+    #publicBookingContent .public-booking-hero,
+    #publicBookingContent .public-hero {
       position: relative;
-      min-height: 168px;
-      padding: 20px 18px 18px;
+      min-height: 220px;
+      padding: 22px 18px 12px;
       overflow: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
       border-bottom: 1px solid color-mix(in srgb, var(--business-accent, #38bdf8) 25%, transparent);
     }
 
+    #publicBookingContent .public-booking-hero__hint,
+    #publicBookingContent .public-hero-hint {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      padding: 4px 16px 14px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.02em;
+    }
+
+    body.app-preset-minimal-white #publicBookingContent .public-hero-hint,
+    body.app-preset-beauty-soft #publicBookingContent .public-hero-hint,
+    body.app-theme-minimal #publicBookingContent .public-hero-hint,
+    body.app-theme-cards #publicBookingContent .public-hero-hint {
+      color: #64748b;
+    }
+
+    .public-hero-bg.public-hero-bg--image + .public-hero-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(11, 17, 32, 0.35) 0%,
+        rgba(11, 17, 32, 0.72) 50%,
+        rgba(11, 17, 32, 0.94) 100%
+      );
+    }
+
     @media (min-width: 768px) {
-      .public-hero {
-        min-height: 152px;
-        padding: 28px 32px 22px;
+      #publicBookingContent .public-booking-hero,
+      #publicBookingContent .public-hero {
+        min-height: 168px;
+        padding: 28px 32px 10px;
       }
 
       .public-hero-inner {
@@ -9286,6 +9873,72 @@
       line-height: 1.55;
     }
 
+    .booking-detail-block .booking-manage-summary {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    #manageBookingCard .manage-reschedule-panel {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: #fff;
+    }
+
+    #manageBookingCard .manage-reschedule-panel__title {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    #manageBookingCard .manage-reschedule-panel__hint,
+    #manageBookingCard .manage-reschedule-panel__slots-label {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    #manageBookingCard .manage-reschedule-slots {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      min-width: 0;
+      margin-bottom: var(--space-md);
+    }
+
+    #manageBookingCard .manage-reschedule-slot-btn {
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      background: #fff;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #manageBookingCard .manage-reschedule-slot-btn--selected {
+      border-color: var(--business-accent, #2563eb);
+      background: color-mix(in srgb, var(--business-accent, #2563eb) 12%, #fff);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #2563eb) 24%, transparent);
+    }
+
+    #manageBookingCard .booking-manage-actions .success#manageBookingRescheduleBtn {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
     .booking-manage-summary strong {
       font-size: 1.05rem;
       color: #111827;
@@ -9419,6 +10072,24 @@
       width: auto;
       min-height: 44px;
       margin: 0;
+    }
+
+    #customerMyBookingsCard .customer-my-bookings-loading {
+      padding: var(--space-lg) var(--space-md);
+      text-align: center;
+    }
+
+    #customerMyBookingsCard .customer-my-bookings-loading__label {
+      margin: 0 0 var(--space-md);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-muted);
+    }
+
+    #customerMyBookingsCard .customer-my-bookings-loading .mobile-skeleton-stack {
+      max-width: 360px;
+      margin: 0 auto;
+      opacity: 0.65;
     }
 
     #customerMyBookingsCard .customer-my-bookings-body {
@@ -10281,11 +10952,17 @@
         box-shadow: 0 12px 40px rgba(15, 23, 42, 0.18);
       }
 
-      #publicView #publicHero.public-hero {
-        min-height: 0;
-        padding: 14px 16px 12px;
-        overflow: visible;
+      #publicView #publicHero.public-hero,
+      #publicView #publicHero.public-booking-hero {
+        min-height: 228px;
+        padding: 16px 16px 6px;
+        overflow: hidden;
         border-bottom: 1px solid var(--public-border, rgba(148, 163, 184, 0.2));
+      }
+
+      #publicView #publicBookingContent .public-hero-hint {
+        padding-bottom: 12px;
+        font-size: 12px;
       }
 
       #publicView #publicHero .public-hero-overlay {
@@ -10322,11 +10999,11 @@
       }
 
       #publicView #publicHero .public-hero-avatar-wrap {
-        width: 64px;
-        height: 64px;
-        padding: 2px;
-        margin: 0;
-        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.22);
+        width: 72px;
+        height: 72px;
+        padding: 3px;
+        margin: 0 auto 10px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.28);
       }
 
       #publicView #publicHero .public-hero-avatar-slot {
@@ -11338,6 +12015,411 @@
       box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
     }
 
+    .admin-native-toolbar {
+      display: none;
+    }
+
+    body.native-app-shell #adminView:not(.hidden) > .admin-native-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 12px;
+      padding: 10px 14px;
+      padding-top: max(10px, env(safe-area-inset-top, 0px));
+      border: 1px solid var(--color-border);
+      border-radius: 14px;
+      background: var(--color-surface, #fff);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    body.native-app-shell .admin-native-toolbar__info {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    body.native-app-shell .admin-native-toolbar__label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    body.native-app-shell .admin-native-toolbar__email {
+      font-size: 14px;
+      font-weight: 600;
+      color: inherit;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body.native-app-shell .admin-native-toolbar__logout {
+      width: auto !important;
+      max-width: none !important;
+      flex: 0 0 auto;
+      min-height: 48px;
+      margin: 0 !important;
+      padding: 0 16px !important;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    body.native-app-shell .admin-native-toolbar__logout-icon {
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    body.app-theme-dark.native-app-shell #adminView:not(.hidden) > .admin-native-toolbar {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
+    /* Admin mobile app shell — bottom nav (native + ≤768px) */
+    .admin-mobile-bottom-nav {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminNav {
+      display: none !important;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) > .admin-native-toolbar {
+      display: none !important;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard-panels {
+      padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.admin-mobile-shell-active .admin-mobile-setup-back:not(.hidden) {
+      display: flex;
+      margin: 0 0 10px;
+    }
+
+    body.admin-mobile-shell-active .admin-mobile-setup-back__btn {
+      width: auto !important;
+      max-width: none !important;
+      min-height: 44px;
+      margin: 0 !important;
+      padding: 10px 14px !important;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface, #fff);
+      color: inherit;
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav:not(.hidden) {
+      display: flex;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      align-items: stretch;
+      justify-content: space-around;
+      gap: 2px;
+      padding: 6px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+      background: rgba(255, 255, 255, 0.97);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 48px;
+      padding: 4px 2px;
+      margin: 0;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--color-muted);
+      font-size: 9px;
+      font-weight: 700;
+      width: auto !important;
+      max-width: none;
+      min-width: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item span:last-child {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item--active {
+      color: var(--business-accent, var(--color-primary));
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 12%, transparent);
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @supports (overflow: clip) {
+      body.admin-mobile-shell-active .container,
+      body.admin-mobile-shell-active #adminView,
+      body.admin-mobile-shell-active .admin-dashboard,
+      body.admin-mobile-shell-active .admin-dashboard-panels {
+        overflow-x: clip;
+      }
+    }
+
+    .admin-mobile-screen {
+      padding: 4px 2px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .admin-mobile-card {
+      border: 1px solid var(--color-border);
+      border-radius: 18px;
+      background: var(--color-surface, #fff);
+      box-shadow: var(--shadow-sm);
+      padding: 16px 18px;
+    }
+
+    .admin-mobile-card--greeting {
+      background: linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--business-accent, var(--color-primary)) 12%, #fff) 0%,
+        var(--color-surface, #fff) 55%
+      );
+    }
+
+    .admin-mobile-card__eyebrow {
+      margin: 0 0 4px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    .admin-mobile-card__title {
+      margin: 0 0 6px;
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .admin-mobile-card__subtitle {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: inherit;
+      line-height: 1.35;
+    }
+
+    .admin-mobile-card__hint {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--color-muted);
+      line-height: 1.4;
+    }
+
+    .admin-mobile-summary__stat {
+      margin: 0 0 12px;
+      font-size: 15px;
+      font-weight: 700;
+      color: inherit;
+    }
+
+    .admin-mobile-summary__next-label {
+      margin: 0 0 4px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-muted);
+    }
+
+    .admin-mobile-summary__next-time {
+      margin: 0 0 2px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-mobile-summary__next-service {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-muted);
+    }
+
+    .admin-mobile-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .admin-mobile-home-card,
+    .admin-mobile-hub-card {
+      width: 100%;
+      margin: 0;
+      min-height: 72px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      text-align: left;
+      border: 1px solid var(--color-border);
+      border-radius: 16px;
+      background: var(--color-surface, #fff);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+    }
+
+    .admin-mobile-home-card:active {
+      transform: scale(0.99);
+    }
+
+    .admin-mobile-home-card--primary {
+      border-color: color-mix(in srgb, var(--business-accent, var(--color-primary)) 40%, var(--color-border));
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 10%, var(--color-surface, #fff));
+    }
+
+    .admin-mobile-home-card__label {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .admin-mobile-home-card__desc {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-muted);
+      line-height: 1.35;
+    }
+
+    .admin-mobile-profile__btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .admin-mobile-profile__btn-row .admin-mobile-profile__btn--inline {
+      width: auto !important;
+      flex: 1 1 calc(50% - 4px);
+      min-width: 120px;
+    }
+
+    .admin-mobile-profile__btn {
+      width: 100% !important;
+      min-height: 48px;
+      margin: 0 !important;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionProfile .admin-mobile-profile {
+      padding-bottom: calc(12px + 88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.admin-mobile-shell-active .admin-mobile-profile__logout-card {
+      margin-top: 4px;
+      padding: 14px 16px;
+    }
+
+    body.admin-mobile-shell-active .admin-mobile-profile__btn--logout {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      width: 100% !important;
+      min-height: 52px !important;
+      margin: 0 !important;
+      padding: 14px 16px !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #b91c1c !important;
+      background: #fff !important;
+      border: 1px solid #fecaca !important;
+      border-radius: 12px !important;
+      box-shadow: 0 1px 3px rgba(185, 28, 28, 0.1) !important;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body.admin-mobile-shell-active .admin-mobile-profile__btn--logout:hover,
+    body.admin-mobile-shell-active .admin-mobile-profile__btn--logout:active {
+      background: #fef2f2 !important;
+      color: #991b1b !important;
+    }
+
+    body.app-theme-dark.admin-mobile-shell-active .admin-mobile-profile__btn--logout {
+      color: #fca5a5 !important;
+      background: rgba(127, 29, 29, 0.2) !important;
+      border-color: #7f1d1d !important;
+    }
+
+    .admin-mobile-profile__link {
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: break-all;
+      margin: 0;
+    }
+
+    body.app-theme-dark.admin-mobile-shell-active #adminMobileBottomNav:not(.hidden) {
+      background: rgba(30, 41, 59, 0.97);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark .admin-mobile-card,
+    body.app-theme-dark .admin-mobile-home-card,
+    body.app-theme-dark .admin-mobile-hub-card {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
+    body.app-theme-dark .admin-mobile-card--greeting {
+      background: linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--business-accent, #38bdf8) 18%, var(--admin-surface, #1e293b)) 0%,
+        var(--admin-surface, #1e293b) 60%
+      );
+    }
+
+    body.app-theme-dark.admin-mobile-shell-active .admin-mobile-setup-back__btn {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--admin-border, #334155);
+    }
+
     #modeView .mode-entry-app-icon,
     #modeView .mode-entry-title-native,
     #modeView .mode-entry-subtitle-native {
@@ -11591,6 +12673,86 @@
     #adminOnboardingView .wizard-main {
       padding-bottom: calc(96px + env(safe-area-inset-bottom)) !important;
     }
+
+    /* Onboarding business phone — intl-tel-input */
+    #adminOnboardingView .onboarding-phone-intl-wrap {
+      width: 100%;
+      min-width: 0;
+      margin: var(--space-xs) 0 0;
+    }
+
+    #adminOnboardingView .onboarding-phone-intl-wrap .iti {
+      width: 100%;
+      display: block;
+    }
+
+    #adminOnboardingView .onboarding-phone-intl-wrap .iti__flag-container,
+    #adminOnboardingView .onboarding-phone-intl-wrap .iti__selected-country {
+      border-radius: 12px 0 0 12px;
+    }
+
+    #adminOnboardingView .onboarding-phone-intl-wrap input[type="tel"] {
+      width: 100% !important;
+      margin: 0 !important;
+      min-height: 52px;
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+      box-sizing: border-box;
+    }
+
+    #adminOnboardingView .iti--separate-dial-code .onboarding-phone-intl-wrap input[type="tel"],
+    #adminOnboardingView .iti--separate-dial-code input#onboardingBusinessPhone {
+      padding-left: 96px;
+    }
+
+    #adminOnboardingView .iti--separate-dial-code .iti__selected-dial-code {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f172a;
+      padding-left: 8px;
+    }
+
+    body.app-theme-dark #adminOnboardingView .onboarding-phone-intl-wrap input[type="tel"] {
+      background: #1e293b;
+      color: #f1f5f9;
+      border-color: #334155;
+    }
+
+    body.app-theme-dark #adminOnboardingView .iti--separate-dial-code .iti__selected-dial-code {
+      color: #f1f5f9;
+    }
+
+    .iti__dropdown-content {
+      z-index: 9999 !important;
+      max-height: min(280px, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 120px)) !important;
+      border-radius: 12px !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18) !important;
+      overflow: hidden;
+    }
+
+    .iti__search-input {
+      font-size: 16px !important;
+      padding: 10px 12px !important;
+      margin: 8px !important;
+      width: calc(100% - 16px) !important;
+      border-radius: 10px !important;
+      border: 1px solid #cbd5e1 !important;
+      box-sizing: border-box !important;
+    }
+
+    .iti__country-list {
+      max-height: min(220px, calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 180px)) !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .iti__country.iti__highlight {
+      background: #eef2ff !important;
+    }
   </style>
 </head>
 
@@ -11729,6 +12891,21 @@
     </div>
 
     <div id="adminView" class="hidden">
+      <header id="adminNativeToolbar" class="admin-native-toolbar" aria-label="Admin account">
+        <div class="admin-native-toolbar__info">
+          <span class="admin-native-toolbar__label">Signed in</span>
+          <span id="adminNativeEmail" class="admin-native-toolbar__email">—</span>
+        </div>
+        <button
+          type="button"
+          id="adminNativeLogoutBtn"
+          class="auth-btn auth-btn--ghost auth-btn--logout admin-native-toolbar__logout"
+          onclick="logout()"
+          aria-label="Log out of admin account"
+        >
+          <span class="admin-native-toolbar__logout-icon" aria-hidden="true">⎋</span>Logout
+        </button>
+      </header>
       <div class="admin-dashboard">
         <nav id="adminNav" class="admin-nav" aria-label="Admin dashboard sections">
           <button type="button" class="admin-nav-btn admin-nav-btn--active" data-admin-section="overview" aria-current="page">Overview</button>
@@ -11741,7 +12918,88 @@
           <button type="button" class="admin-nav-btn" data-admin-section="manual">Add Booking</button>
         </nav>
 
+        <div id="adminMobileSetupBackBar" class="admin-mobile-setup-back hidden" aria-hidden="true">
+          <button type="button" class="admin-mobile-setup-back__btn" onclick="adminMobileBackToSetup()">← Back to Setup</button>
+        </div>
+
         <div class="admin-dashboard-panels">
+          <section id="adminSectionHome" class="admin-section" data-admin-section="home" hidden aria-label="Home">
+            <div class="admin-mobile-screen admin-mobile-home">
+              <div class="admin-mobile-card admin-mobile-card--greeting">
+                <p class="admin-mobile-card__eyebrow">Today</p>
+                <h1 id="adminMobileHomeBusinessName" class="admin-mobile-card__title">Your business</h1>
+                <p class="admin-mobile-card__hint">Quick actions for your business</p>
+              </div>
+
+              <div class="admin-mobile-card admin-mobile-summary">
+                <p id="adminMobileHomeTodayStat" class="admin-mobile-summary__stat">Today’s schedule</p>
+                <p id="adminMobileHomeNextLabel" class="admin-mobile-summary__next-label hidden">Next booking</p>
+                <p id="adminMobileHomeNextTime" class="admin-mobile-summary__next-time hidden">—</p>
+                <p id="adminMobileHomeNextService" class="admin-mobile-summary__next-service hidden">—</p>
+              </div>
+
+              <button type="button" class="admin-mobile-home-card admin-mobile-home-card--primary" onclick="adminMobileOpenNewBooking()">
+                <span class="admin-mobile-home-card__label">+ New booking</span>
+                <span class="admin-mobile-home-card__desc">Add a booking for a customer</span>
+              </button>
+
+              <div class="admin-mobile-stack">
+                <button type="button" class="admin-mobile-home-card" onclick="adminMobileOpenCalendar()">
+                  <span class="admin-mobile-home-card__label">Calendar</span>
+                  <span class="admin-mobile-home-card__desc">View your schedule</span>
+                </button>
+                <button type="button" class="admin-mobile-home-card" onclick="adminMobileOpenBookings()">
+                  <span class="admin-mobile-home-card__label">Bookings</span>
+                  <span class="admin-mobile-home-card__desc">Manage appointments</span>
+                </button>
+                <button type="button" class="admin-mobile-home-card" onclick="adminMobileShareBookingLink()">
+                  <span class="admin-mobile-home-card__label">Share link</span>
+                  <span class="admin-mobile-home-card__desc">Send booking page</span>
+                </button>
+                <button type="button" class="admin-mobile-home-card" onclick="adminMobileOpenSetup()">
+                  <span class="admin-mobile-home-card__label">Setup business</span>
+                  <span class="admin-mobile-home-card__desc">Services, staff and availability</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section id="adminSectionSetup" class="admin-section" data-admin-section="setup" hidden aria-label="Setup">
+            <div class="admin-mobile-screen admin-mobile-setup">
+              <div class="admin-mobile-card admin-mobile-card--greeting">
+                <p class="admin-mobile-card__eyebrow">Setup</p>
+                <h1 class="admin-mobile-card__title">Setup</h1>
+                <p class="admin-mobile-card__hint">Manage your business settings</p>
+              </div>
+              <div class="admin-mobile-stack">
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('overview')">
+                  <span class="admin-mobile-home-card__label">Business info</span>
+                  <span class="admin-mobile-home-card__desc">Name, phone, address and details</span>
+                </button>
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('services')">
+                  <span class="admin-mobile-home-card__label">Services</span>
+                  <span class="admin-mobile-home-card__desc">Add and edit services</span>
+                </button>
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('staff')">
+                  <span class="admin-mobile-home-card__label">Staff</span>
+                  <span class="admin-mobile-home-card__desc">Manage team members</span>
+                </button>
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('availability')">
+                  <span class="admin-mobile-home-card__label">Availability</span>
+                  <span class="admin-mobile-home-card__desc">Working days, hours and breaks</span>
+                </button>
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('customize')">
+                  <span class="admin-mobile-home-card__label">Booking page</span>
+                  <span class="admin-mobile-home-card__desc">Logo, cover, colors and customer page</span>
+                </button>
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenPublicLink()">
+                  <span class="admin-mobile-home-card__label">Public link &amp; QR</span>
+                  <span class="admin-mobile-home-card__desc">Share your booking page</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
           <section id="adminSectionOverview" class="admin-section admin-section--active" data-admin-section="overview" aria-label="Overview">
       <div class="card widget-card">
         <h1 class="admin-section-title">Overview</h1>
@@ -12336,7 +13594,7 @@
                   </span>
                 </label>
                 <label class="admin-saas-field">
-                  <span class="admin-saas-field__label">Phone</span>
+                  <span class="admin-saas-field__label" id="adminAddPhoneLabel">Phone <span style="font-weight:500;text-transform:none;letter-spacing:0">(optional)</span></span>
                   <span class="admin-saas-input-wrap">
                     <span class="admin-saas-input-icon admin-saas-input-icon--phone" aria-hidden="true"></span>
                     <input id="adminAddCustomerPhone" type="tel" placeholder="Phone number" autocomplete="tel" />
@@ -12359,7 +13617,7 @@
                   <span class="admin-saas-field__label">Service</span>
                   <select id="adminAddService"></select>
                 </label>
-                <label class="admin-saas-field">
+                <label class="admin-saas-field admin-saas-field--staff">
                   <span class="admin-saas-field__label">Staff</span>
                   <select id="adminAddStaff"></select>
                 </label>
@@ -12367,7 +13625,12 @@
                   <span class="admin-saas-field__label">Date</span>
                   <input id="adminAddDate" type="date" />
                 </label>
-                <label class="admin-saas-field">
+                <div id="adminAddMobileSlotsWrap" class="admin-add-mobile-slots-wrap" aria-live="polite">
+                  <span class="admin-saas-field__label">Time</span>
+                  <div id="adminAddMobileSlotsMount" class="admin-add-mobile-slots-grid" role="group" aria-label="Available times"></div>
+                  <p id="adminAddMobileSlotsHint" class="admin-add-mobile-slots-hint hidden">Swipe to see more times</p>
+                </div>
+                <label class="admin-saas-field admin-saas-field--time">
                   <span class="admin-saas-field__label">Time</span>
                   <input id="adminAddTime" type="time" step="900" value="" autocomplete="off" />
                 </label>
@@ -12414,7 +13677,7 @@
                   <dt>Duration</dt>
                   <dd id="adminAddSummaryDuration">—</dd>
                 </div>
-                <div>
+                <div data-admin-add-summary-status>
                   <dt>Status</dt>
                   <dd id="adminAddSummaryStatus">—</dd>
                 </div>
@@ -12507,8 +13770,58 @@
       </div>
           </section>
 
+          <section id="adminSectionProfile" class="admin-section" data-admin-section="profile" hidden aria-label="Profile">
+            <div class="admin-mobile-screen admin-mobile-profile">
+              <div class="admin-mobile-card">
+                <p class="admin-mobile-card__eyebrow">Account</p>
+                <p id="adminProfileEmail" class="admin-mobile-card__subtitle">—</p>
+                <p id="adminProfileBusinessName" class="admin-mobile-card__hint">—</p>
+              </div>
+              <div class="admin-mobile-card">
+                <p class="admin-mobile-card__eyebrow">Booking link</p>
+                <div id="adminProfilePublicLink" class="public-link-box admin-mobile-profile__link">—</div>
+                <div class="admin-mobile-profile__btn-row">
+                  <button type="button" class="secondary admin-mobile-profile__btn admin-mobile-profile__btn--inline" onclick="copyPublicLink()">Copy link</button>
+                  <button type="button" class="secondary admin-mobile-profile__btn admin-mobile-profile__btn--inline" onclick="adminMobileShareBookingLink()">Share link</button>
+                </div>
+              </div>
+              <button type="button" class="secondary admin-mobile-profile__btn" onclick="adminMobileOpenSetup()">Setup business</button>
+              <div class="admin-mobile-card admin-mobile-profile__logout-card">
+                <button
+                  type="button"
+                  class="admin-mobile-profile__btn admin-mobile-profile__btn--logout"
+                  onclick="logout()"
+                  aria-label="Log out of admin account"
+                >Logout</button>
+              </div>
+            </div>
+          </section>
+
         </div>
       </div>
+
+      <nav id="adminMobileBottomNav" class="admin-mobile-bottom-nav hidden" aria-label="Admin app navigation">
+        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-admin-mobile-tab="home" aria-current="page">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg></span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="calendar" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span>
+          <span>Calendar</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="bookings" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
+          <span>Bookings</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="setup" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span>Setup</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="profile" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span>
+          <span>Profile</span>
+        </button>
+      </nav>
     </div>
 
     <div id="adminOnboardingView" class="wizard-fs hidden">
@@ -12600,17 +13913,20 @@
                 <code id="onboardingPublicLinkPreview" class="wizard-link-preview-url"></code>
               </div>
 
-              <div class="wizard-field">
+              <div class="wizard-field onboarding-phone-field">
                 <label class="wizard-field-label" for="onboardingBusinessPhone">Business phone</label>
-                <input
-                  id="onboardingBusinessPhone"
-                  type="tel"
-                  name="onboardingBusinessPhone"
-                  autocomplete="tel"
-                  inputmode="tel"
-                  placeholder="+389 70 123 456"
-                />
-                <p class="wizard-field-hint">Optional — shown on your public booking page when enabled.</p>
+                <div class="onboarding-phone-intl-wrap" id="onboardingBusinessPhoneWrap">
+                  <input
+                    id="onboardingBusinessPhone"
+                    type="tel"
+                    name="onboardingBusinessPhone"
+                    autocomplete="tel"
+                    inputmode="tel"
+                    placeholder=""
+                    aria-describedby="onboardingBusinessPhoneHint"
+                  />
+                </div>
+                <p id="onboardingBusinessPhoneHint" class="wizard-field-hint">Optional — enter your mobile number; country code is added automatically.</p>
               </div>
 
               <div class="wizard-field">
@@ -13231,10 +14547,12 @@
           </div>
         </div>
 
-        <div id="customerMyBookingsLoading" class="mobile-skeleton-stack" role="status" aria-busy="true">
-          <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
-          <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
-          <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
+        <div id="customerMyBookingsLoading" class="customer-my-bookings-loading" role="status" aria-busy="true" aria-live="polite">
+          <p class="customer-my-bookings-loading__label">Loading your bookings…</p>
+          <div class="mobile-skeleton-stack" aria-hidden="true">
+            <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+            <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+          </div>
         </div>
         <div id="customerMyBookingsError" class="empty-state hidden"></div>
 
@@ -13377,19 +14695,19 @@
       <div id="publicBookingContent" class="hidden public-layout-minimal">
 
         <div class="public-booking-shell">
-          <header class="public-hero" id="publicHero">
-            <div class="public-hero-bg" id="publicHeroBg" aria-hidden="true"></div>
-            <div class="public-hero-overlay" aria-hidden="true"></div>
+          <header class="public-hero public-booking-hero" id="publicHero" aria-label="Business">
+            <div class="public-booking-hero__cover public-hero-bg" id="publicHeroBg" aria-hidden="true"></div>
+            <div class="public-booking-hero__overlay public-hero-overlay" aria-hidden="true"></div>
             <div class="public-hero-inner">
               <div class="public-hero-brand">
-                <div class="public-hero-avatar-wrap">
+                <div class="public-booking-hero__logo public-hero-avatar-wrap">
                   <div class="public-hero-avatar-slot">
                     <img id="publicBusinessLogo" class="public-hero-avatar hidden" alt="" />
                     <div id="publicBusinessLogoFallback" class="public-hero-avatar-fallback hidden" aria-hidden="true"></div>
                   </div>
                 </div>
                 <div class="public-hero-text">
-                  <h1 id="publicBusinessName">Book Appointment</h1>
+                  <h1 id="publicBusinessName" class="public-booking-hero__name">Book Appointment</h1>
                   <p id="publicBusinessTagline" class="public-hero-tagline">Book your appointment online</p>
                   <p id="publicBusinessAbout" class="public-hero-about hidden"></p>
                 </div>
@@ -13399,6 +14717,7 @@
               <div id="publicBusinessInfo" class="public-hero-meta hidden"></div>
               <div id="publicBusinessSocial" class="public-hero-social hidden" aria-label="Social links"></div>
             </div>
+            <p id="publicHeroScrollHint" class="public-booking-hero__hint public-hero-hint">Choose a service below</p>
           </header>
 
           <div class="public-booking-body">
@@ -13462,7 +14781,12 @@
 
                       <div class="public-times-block">
                         <h2 id="selectedDateTitle" class="public-panel-title public-booking-step-heading">Choose date &amp; time</h2>
-                        <p class="public-panel-hint public-booking-step-subtitle" id="publicTimesHint">Pick a day and time on the week view (07:00–21:00). Only open slots match your salon hours.</p>
+                        <p id="publicScheduleStaffHint" class="public-schedule-staff-hint hidden" aria-live="polite"></p>
+                        <p class="public-panel-hint public-booking-step-subtitle" id="publicTimesHint">Pick a day, then choose an available time.</p>
+                        <details id="publicScheduleStaffOptional" class="public-schedule-staff-optional hidden">
+                          <summary>Prefer a stylist <span class="public-schedule-staff-optional__tag">optional</span></summary>
+                          <div id="publicScheduleStaffCards" class="public-staff-cards public-staff-cards--compact" role="radiogroup" aria-label="Preferred stylist"></div>
+                        </details>
                         <div id="publicTimelineShell" class="public-timeline-shell">
                           <div class="public-week-toolbar">
                             <button type="button" class="public-week-nav" onclick="changePublicWeek(-1)" aria-label="Previous week">‹ Week</button>
@@ -13502,6 +14826,9 @@
                       <h2 id="publicDetailsStepTitle" class="public-confirm-heading">Complete your booking</h2>
                       <p class="public-confirm-subheading">We only need a few details to confirm your appointment</p>
 
+                      <details id="publicDetailsMoreOptions" class="public-details-more-options">
+                        <summary>More options</summary>
+                        <div class="public-details-more-options__body">
                       <div id="publicRecurringBookingSection" class="public-recurring-panel hidden" hidden aria-labelledby="publicRecurringTitle">
                         <p id="publicRecurringTitle" class="public-recurring-panel__title">Repeat this appointment?</p>
                         <div class="public-recurring-options" role="radiogroup" aria-labelledby="publicRecurringTitle">
@@ -13551,6 +14878,8 @@
                           </select>
                         </div>
                       </div>
+                        </div>
+                      </details>
 
                       <div id="publicConfirmFormWrap" class="public-confirm-form-wrap">
                         <div id="publicBookingSubmitting" class="public-confirm-loading hidden" role="status" aria-live="polite">
@@ -13571,9 +14900,9 @@
                             <span class="public-field-label">Email <span class="public-field-optional">optional</span></span>
                             <input id="customerEmail" type="email" placeholder="For confirmation email" autocomplete="email" />
                           </label>
-                          <label class="public-field">
+                          <label class="public-field public-field--notes">
                             <span class="public-field-label">Notes <span class="public-field-optional">optional</span></span>
-                            <textarea id="customerNotes" placeholder="Anything we should know?" rows="3"></textarea>
+                            <textarea id="customerNotes" placeholder="Anything we should know?" rows="2"></textarea>
                           </label>
                         </div>
 
@@ -13733,6 +15062,10 @@
               <span class="booking-flow-label">Service</span>
               <p id="manageBookingService" class="booking-manage-summary"></p>
             </div>
+            <div id="manageBookingStaffBlock" class="booking-detail-block hidden">
+              <span class="booking-flow-label">Stylist</span>
+              <p id="manageBookingStaff" class="booking-manage-summary"></p>
+            </div>
             <div class="booking-detail-block">
               <span class="booking-flow-label">Date</span>
               <p id="manageBookingDateDisplay" class="booking-manage-summary"></p>
@@ -13745,18 +15078,20 @@
               <span class="booking-flow-label">Status</span>
               <p id="manageBookingStatus" class="booking-manage-status-row small"></p>
             </div>
-            <div id="manageBookingRescheduleSection" class="hidden" aria-hidden="true">
-              <span class="booking-flow-label">New date &amp; time</span>
-              <div id="manageBookingRescheduleFields" class="row">
+            <div id="manageBookingRescheduleSection" class="manage-reschedule-panel hidden" aria-hidden="true">
+              <h3 class="manage-reschedule-panel__title">Reschedule</h3>
+              <p class="manage-reschedule-panel__hint">Pick a new date and available time.</p>
+              <label class="public-field">
+                <span class="public-field-label">New date</span>
                 <input id="manageBookingDate" type="date" aria-label="New date" onchange="onManageRescheduleDateChange()" />
-              </div>
-              <p id="manageBookingSlotsTitle" class="small">Choose an available time</p>
-              <div id="manageBookingSlotsContainer" class="slot-grid" role="group" aria-label="Available times"></div>
+              </label>
+              <p id="manageBookingSlotsTitle" class="manage-reschedule-panel__slots-label">Available times</p>
+              <div id="manageBookingSlotsContainer" class="manage-reschedule-slots" role="group" aria-label="Available times"></div>
               <input id="manageBookingTime" type="hidden" />
             </div>
             <div id="manageBookingLinkBox" class="booking-manage-link-box hidden"></div>
             <div class="booking-manage-actions">
-              <button type="button" class="success hidden" id="manageBookingRescheduleBtn" onclick="submitManageReschedule()">Save new time</button>
+              <button type="button" class="success hidden" id="manageBookingRescheduleBtn" onclick="submitManageReschedule()">Confirm reschedule</button>
               <button type="button" class="danger" id="manageBookingCancelBtn" onclick="submitManageCancel()">Cancel booking</button>
               <button type="button" class="secondary" onclick="copyManageBookingLink('manageBookingLinkBox')">Copy manage link</button>
               <button type="button" class="success hidden" id="manageBookingBookNewBtn" onclick="showPublicBookingWizardFromManage()">Book new appointment</button>
@@ -14392,6 +15727,9 @@
   let adminScheduleNowTimer = null;
   let adminScheduleActiveGrid = null;
   let adminScheduleDragState = null;
+  let adminCalendarMobileSelectedDate = null;
+  let adminCalendarMobileWeekResetPending = false;
+  let adminCalendarMobileResizeAttached = false;
   let adminAddSelectedSlotTime = "";
   const ADMIN_SCHEDULE_PX_PER_HOUR = 52;
   const ADMIN_SCHEDULE_DRAG_THRESHOLD_PX = 6;
@@ -14425,6 +15763,8 @@
   let selectedService = null;
   const PUBLIC_STAFF_ANY = "__any__";
   let selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+  /** Set when a single eligible stylist is auto-selected (picker hidden). */
+  let publicStaffAutoSelectedId = null;
   const PUBLIC_SLOT_STEP_MINUTES = 15;
   const PUBLIC_BOOKING_STEP = Object.freeze({
     SERVICE: 1,
@@ -15521,7 +16861,11 @@
       if (extra.type === "admin-new-booking") {
         const adminView = document.getElementById("adminView");
         if (adminView && !adminView.classList.contains("hidden")) {
-          setAdminSection("bookings");
+          if (document.body.classList.contains("admin-mobile-shell-active")) {
+            setAdminMobileTab("bookings");
+          } else {
+            setAdminSection("bookings");
+          }
         }
       }
     });
@@ -16433,9 +17777,89 @@
     }
   }
 
+  function getEligiblePublicStaffForService(service) {
+    if (!service) return [];
+    if (!staffFeatureAvailable || !bookingStaffColumnAvailable) return [];
+    if (businessSettings?.public_show_staff === false) return [];
+    return getActiveStaffMembers();
+  }
+
   function isPublicStaffStepEnabled() {
-    const panel = document.getElementById("publicStaffPanel");
-    return !!(panel && !panel.classList.contains("hidden"));
+    return false;
+  }
+
+  function syncPublicStaffSelectionForService(service, opts = {}) {
+    const eligible = getEligiblePublicStaffForService(service);
+    const hidden = document.getElementById("publicStaff");
+    publicStaffAutoSelectedId = null;
+
+    if (!eligible.length) {
+      selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+      if (hidden) hidden.value = "";
+      updatePublicScheduleStaffUi();
+      return;
+    }
+
+    if (eligible.length === 1) {
+      publicStaffAutoSelectedId = eligible[0].id;
+      selectedPublicStaffChoice = eligible[0].id;
+      if (hidden) hidden.value = eligible[0].id;
+      updatePublicScheduleStaffUi();
+      return;
+    }
+
+    const preserve = opts.preserveChoice === true;
+    const current =
+      preserve && selectedPublicStaffChoice && selectedPublicStaffChoice !== PUBLIC_STAFF_ANY
+        ? selectedPublicStaffChoice
+        : PUBLIC_STAFF_ANY;
+    if (
+      current !== PUBLIC_STAFF_ANY &&
+      !eligible.some((s) => s.id === current)
+    ) {
+      selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+    } else {
+      selectedPublicStaffChoice = current;
+    }
+    if (hidden) {
+      hidden.value =
+        selectedPublicStaffChoice === PUBLIC_STAFF_ANY ? "" : selectedPublicStaffChoice;
+    }
+    updatePublicScheduleStaffUi();
+  }
+
+  function updatePublicScheduleStaffUi() {
+    const hint = document.getElementById("publicScheduleStaffHint");
+    const optional = document.getElementById("publicScheduleStaffOptional");
+    const eligible = getEligiblePublicStaffForService(selectedService);
+
+    if (!hint) return;
+
+    if (!selectedService || !eligible.length) {
+      hint.classList.add("hidden");
+      hint.textContent = "";
+      optional?.classList.add("hidden");
+      return;
+    }
+
+    if (publicStaffAutoSelectedId) {
+      const name = getStaffName(publicStaffAutoSelectedId);
+      hint.textContent = "With " + name;
+      hint.classList.remove("hidden");
+      optional?.classList.add("hidden");
+      return;
+    }
+
+    if (eligible.length > 1) {
+      hint.textContent = "Any available stylist";
+      hint.classList.remove("hidden");
+      optional?.classList.remove("hidden");
+      renderPublicStaffOptions(selectedPublicStaffChoice);
+      return;
+    }
+
+    hint.classList.add("hidden");
+    optional?.classList.add("hidden");
   }
 
   function isPublicBookingWizardMounted() {
@@ -16452,7 +17876,7 @@
   }
 
   function getPublicBookingStepAfterService() {
-    return isPublicStaffStepEnabled() ? PUBLIC_BOOKING_STEP.STAFF : PUBLIC_BOOKING_STEP.SCHEDULE;
+    return PUBLIC_BOOKING_STEP.SCHEDULE;
   }
 
   function getPublicBookingProgressSteps() {
@@ -16523,6 +17947,7 @@
     selectedSlot = null;
     selectedService = null;
     selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
+    publicStaffAutoSelectedId = null;
 
     const publicServiceEl = document.getElementById("publicService");
     if (publicServiceEl) publicServiceEl.value = "";
@@ -16544,12 +17969,14 @@
       return;
     }
     if (step === PUBLIC_BOOKING_STEP.SCHEDULE) {
+      updatePublicScheduleStaffUi();
       refreshPublicAvailability({ refreshCalendar: opts.refreshCalendar !== false });
       return;
     }
     if (step === PUBLIC_BOOKING_STEP.DETAILS) {
       updatePublicBookingDetailsSummary();
       syncPublicRecurringBookingUi();
+      syncPublicDetailsMoreOptionsUi();
     }
   }
 
@@ -17568,13 +18995,21 @@
     const saveBtn = document.getElementById("manageBookingRescheduleBtn");
     if (saveBtn && !saveBtn.classList.contains("hidden")) saveBtn.disabled = false;
 
-    document.querySelectorAll("#manageBookingSlotsContainer .slot.selected").forEach(slot => {
-      slot.classList.remove("selected");
-    });
+    document
+      .querySelectorAll(
+        "#manageBookingSlotsContainer .manage-reschedule-slot-btn--selected, #manageBookingSlotsContainer .slot.selected"
+      )
+      .forEach((slot) => {
+        slot.classList.remove("manage-reschedule-slot-btn--selected", "selected");
+        slot.setAttribute("aria-pressed", "false");
+      });
     const selectedEl = document.querySelector(
-      `#manageBookingSlotsContainer .slot[data-slot-time="${CSS.escape(time)}"]`
+      `#manageBookingSlotsContainer .manage-reschedule-slot-btn[data-slot-time="${CSS.escape(time)}"]`
     );
-    if (selectedEl) selectedEl.classList.add("selected");
+    if (selectedEl) {
+      selectedEl.classList.add("manage-reschedule-slot-btn--selected");
+      selectedEl.setAttribute("aria-pressed", "true");
+    }
   }
 
   function renderManageRescheduleSlots(dateStr) {
@@ -17590,7 +19025,7 @@
 
     const booking = manageBookingData;
     const serviceId = resolveManageBookingServiceId(booking);
-    const service = services.find(s => s.id === serviceId);
+    const service = services.find((s) => s.id === serviceId);
 
     if (!service) {
       container.innerHTML = emptyStateHtml("Service unavailable", "Unable to load times for this booking.");
@@ -17598,27 +19033,27 @@
     }
 
     if (!dateStr) {
-      container.innerHTML = emptyStateHtml("Select a date", "Pick a date to see available times.");
+      container.innerHTML = emptyStateHtml("Select a date", "Choose a date to see available times.");
       return;
     }
 
-    if (blockedDays.some(d => d.date === dateStr)) {
-      container.innerHTML = `<div class="slot closed">Closed</div>`;
+    if (blockedDays.some((d) => d.date === dateStr)) {
+      container.innerHTML = emptyStateHtml("Closed", "Try another day.");
       return;
     }
 
     const dateObj = new Date(dateStr + "T00:00:00");
     const workingDays = getWorkingDaysArray();
     if (isPastDate(dateStr)) {
-      container.innerHTML = emptyStateHtml("Date not available", "Past date is not allowed.");
+      container.innerHTML = emptyStateHtml("Past date", "Try another day.");
       return;
     }
     if (isOutsideBookingWindow(dateStr)) {
-      container.innerHTML = emptyStateHtml("Date not available", "This date is outside booking window.");
+      container.innerHTML = emptyStateHtml("Unavailable", "Try another day.");
       return;
     }
     if (!workingDays.includes(dateObj.getDay())) {
-      container.innerHTML = emptyStateHtml("Date not available", "This is not a working day.");
+      container.innerHTML = emptyStateHtml("Day off", "Try another day.");
       return;
     }
 
@@ -17626,56 +19061,45 @@
     const ignoreBookingId = booking?.id || null;
     const dowSlot = dayOfWeekFromDateStr(dateStr);
     const winSlot = getWorkWindowForDayOfWeek(dowSlot);
-    const slots = generateSlots(winSlot.start, winSlot.end, getServiceDurationValue(service));
+    const duration = getServiceDurationValue(service);
+    const slotTimes = generateSlots(winSlot.start, winSlot.end, duration, PUBLIC_SLOT_STEP_MINUTES);
+    const available = [];
 
-    if (!slots.length) {
-      container.innerHTML = emptyStateHtml("No slots available", "Try another date.");
+    slotTimes.forEach((time) => {
+      const timeStr = snapTimeStringToQuarterHour(time);
+      const startMins = timeToMinutes(timeStr);
+      if (isSlotInBreak(timeStr, duration)) return;
+      if (hasConflict(dateStr, timeStr, service.id, ignoreBookingId, staffId)) return;
+      available.push(timeStr);
+    });
+
+    if (!available.length) {
+      container.innerHTML = emptyStateHtml("No available times", "Try another day.");
       return;
     }
 
-    let hasSelectable = false;
-    slots.forEach(time => {
-      const div = document.createElement("div");
-      const isBreak = isSlotInBreak(time, getServiceDurationValue(service));
-      const conflict = hasConflict(dateStr, time, service.id, ignoreBookingId, staffId);
-      div.className = "slot";
+    const currentTime = snapTimeStringToQuarterHour(
+      String(booking?.time || "").trim().slice(0, 5)
+    );
+    const currentDate = normalizeBookingDateForInput(booking?.date) || String(booking?.date || "").trim();
 
-      if (isBreak) {
-        div.classList.add("break");
-        div.innerText = time + " Break";
-      } else if (conflict) {
-        div.classList.add("booked");
-        div.innerText = time + " Booked";
+    available.forEach((time) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "manage-reschedule-slot-btn";
+      btn.textContent = time;
+      btn.dataset.slotTime = time;
+      btn.setAttribute("aria-label", "Reschedule at " + time);
+      if (currentDate === dateStr && currentTime === time) {
+        btn.classList.add("manage-reschedule-slot-btn--selected");
+        btn.setAttribute("aria-pressed", "true");
+        chooseManageRescheduleSlot(time);
       } else {
-        hasSelectable = true;
-        div.innerText = time;
-        div.dataset.slotTime = time;
-        div.setAttribute("role", "button");
-        div.setAttribute("tabindex", "0");
-        div.onclick = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          chooseManageRescheduleSlot(time);
-        };
-        div.onkeydown = (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            chooseManageRescheduleSlot(time);
-          }
-        };
-        const currentTime = String(booking?.time || "").trim();
-        const currentDate = normalizeBookingDateForInput(booking?.date) || String(booking?.date || "").trim();
-        if (currentDate === dateStr && currentTime === time) {
-          chooseManageRescheduleSlot(time);
-        }
+        btn.setAttribute("aria-pressed", "false");
       }
-
-      container.appendChild(div);
+      btn.addEventListener("click", () => chooseManageRescheduleSlot(time));
+      container.appendChild(btn);
     });
-
-    if (!hasSelectable) {
-      container.innerHTML = emptyStateHtml("No times available", "Try another date.");
-    }
   }
 
   function initManageReschedulePicker(booking) {
@@ -17714,6 +19138,19 @@
     document.getElementById("manageBookingRef").textContent = booking?.booking_ref || "—";
     document.getElementById("manageBookingCustomer").textContent = booking?.customer_name || "Customer";
     document.getElementById("manageBookingService").textContent = booking?.service_name || "—";
+    const staffBlock = document.getElementById("manageBookingStaffBlock");
+    const staffEl = document.getElementById("manageBookingStaff");
+    const staffName =
+      booking?.staff_name || (booking?.staff_id ? getStaffName(booking.staff_id) : "");
+    if (staffBlock && staffEl) {
+      if (staffName && staffName !== "Any staff" && staffName !== "Unknown staff") {
+        staffEl.textContent = staffName;
+        staffBlock.classList.remove("hidden");
+      } else {
+        staffEl.textContent = "";
+        staffBlock.classList.add("hidden");
+      }
+    }
     document.getElementById("manageBookingDateDisplay").textContent = displayDate || "—";
     document.getElementById("manageBookingTimeDisplay").textContent = String(booking?.time || "").trim() || "—";
 
@@ -19128,7 +20565,7 @@
     const img = document.getElementById("publicBusinessLogo");
     const fallback = document.getElementById("publicBusinessLogoFallback");
     const displayName = businessName || businessSettings?.business_name || "Business";
-    const initials = staffMemberInitials(displayName);
+    const initials = getBusinessInitials(displayName);
 
     const logoUrl = String(url || "").trim();
     if (!logoUrl) {
@@ -19638,6 +21075,8 @@
 
   function hideAllViews() {
     document.body.classList.remove("wizard-open");
+    document.body.classList.remove("admin-mobile-shell-active");
+    document.getElementById("adminMobileBottomNav")?.classList.add("hidden");
     document.getElementById("modeView")?.classList.add("hidden");
     document.getElementById("authView")?.classList.add("hidden");
     document.getElementById("resetPasswordView")?.classList.add("hidden");
@@ -19671,6 +21110,8 @@
   }
 
   const ADMIN_SECTION_PANEL_IDS = {
+    home: "adminSectionHome",
+    setup: "adminSectionSetup",
     overview: "adminSectionOverview",
     customize: "adminSectionCustomize",
     services: "adminSectionServices",
@@ -19678,11 +21119,31 @@
     availability: "adminSectionAvailability",
     calendar: "adminSectionCalendar",
     bookings: "adminSectionBookings",
-    manual: "adminSectionManual"
+    manual: "adminSectionManual",
+    profile: "adminSectionProfile"
   };
 
+  const ADMIN_MOBILE_TAB_SECTIONS = Object.freeze({
+    home: "home",
+    calendar: "calendar",
+    bookings: "bookings",
+    setup: "setup",
+    profile: "profile"
+  });
+
+  const ADMIN_MOBILE_SETUP_CHILD_SECTIONS = new Set([
+    "overview",
+    "customize",
+    "services",
+    "staff",
+    "availability"
+  ]);
+
   let adminDashboardNavBound = false;
+  let adminMobileShellListenersBound = false;
+  let adminMobileFromSetup = false;
   let adminActiveSection = "overview";
+  let adminActiveMobileTab = "home";
 
   function setAdminSection(sectionKey, opts = {}) {
     const key = ADMIN_SECTION_PANEL_IDS[sectionKey] ? sectionKey : "overview";
@@ -19717,12 +21178,263 @@
     if (key === "manual") {
       if (!opts.fromCalendar) adminAddOpenedFromCalendar = false;
       bindAdminAddBookingSummaryEvents();
+      syncAdminAddMobileShellFields();
       updateAdminAddBookingSummary();
+      renderAdminAddMobileSlots();
       autoResizeAdminAddNotes();
+    }
+    if (key === "home") {
+      renderAdminMobileHome();
+    }
+    if (key === "profile") {
+      syncAdminNativeToolbar();
+    }
+
+    if (document.body.classList.contains("admin-mobile-shell-active")) {
+      syncAdminMobileTabHighlightFromSection(key);
+      updateAdminMobileSetupBackBar();
     }
 
     const panel = document.getElementById(ADMIN_SECTION_PANEL_IDS[key]);
     panel?.scrollIntoView({ behavior: opts.silent ? "auto" : "smooth", block: "start" });
+  }
+
+  function shouldUseAdminMobileShell() {
+    if (isNativeCapacitorApp()) return true;
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  function syncAdminMobileTabHighlightFromSection(sectionKey) {
+    let tab = null;
+    if (ADMIN_MOBILE_SETUP_CHILD_SECTIONS.has(sectionKey)) {
+      tab = "setup";
+    } else {
+      const tabBySection = {
+        home: "home",
+        setup: "setup",
+        calendar: "calendar",
+        bookings: "bookings",
+        profile: "profile"
+      };
+      tab = tabBySection[sectionKey] || null;
+    }
+    if (!tab) return;
+    adminActiveMobileTab = tab;
+    document.querySelectorAll("#adminMobileBottomNav .admin-mobile-nav-item").forEach((btn) => {
+      const on = btn.dataset.adminMobileTab === tab;
+      btn.classList.toggle("admin-mobile-nav-item--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+  }
+
+  function setAdminMobileTab(tab, opts = {}) {
+    const key = ADMIN_MOBILE_TAB_SECTIONS[tab] ? tab : "home";
+    adminActiveMobileTab = key;
+    adminMobileFromSetup = false;
+    document.querySelectorAll("#adminMobileBottomNav .admin-mobile-nav-item").forEach((btn) => {
+      const on = btn.dataset.adminMobileTab === key;
+      btn.classList.toggle("admin-mobile-nav-item--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+    if (!opts.skipSection) {
+      setAdminSection(ADMIN_MOBILE_TAB_SECTIONS[key], { silent: !!opts.silent, skipRender: !!opts.skipRender });
+    }
+  }
+
+  function applyAdminMobileShellUi() {
+    const useShell = shouldUseAdminMobileShell();
+    document.body.classList.toggle("admin-mobile-shell-active", useShell);
+    const nav = document.getElementById("adminMobileBottomNav");
+    if (nav) nav.classList.toggle("hidden", !useShell);
+    return useShell;
+  }
+
+  function bindAdminMobileShellListeners() {
+    if (adminMobileShellListenersBound) return;
+    adminMobileShellListenersBound = true;
+
+    document.getElementById("adminMobileBottomNav")?.addEventListener("click", (e) => {
+      const btn = e.target.closest(".admin-mobile-nav-item[data-admin-mobile-tab]");
+      if (!btn) return;
+      setAdminMobileTab(btn.dataset.adminMobileTab);
+    });
+
+    window.addEventListener("resize", () => {
+      const adminView = document.getElementById("adminView");
+      if (!adminView || adminView.classList.contains("hidden")) return;
+      const wasShell = document.body.classList.contains("admin-mobile-shell-active");
+      const useShell = applyAdminMobileShellUi();
+      if (useShell && !wasShell) {
+        setAdminMobileTab("home", { silent: true });
+      } else if (!useShell && wasShell) {
+        setAdminSection(adminActiveSection || "overview", { silent: true });
+      }
+      if (document.getElementById("adminSectionManual")?.classList.contains("admin-section--active")) {
+        syncAdminAddMobileShellFields();
+        renderAdminAddMobileSlots();
+      }
+    });
+  }
+
+  function getAdminMobileBusinessName() {
+    return (
+      businessSettings?.business_name ||
+      document.getElementById("businessName")?.value?.trim() ||
+      ""
+    );
+  }
+
+  function renderAdminMobileHome() {
+    const businessNameEl = document.getElementById("adminMobileHomeBusinessName");
+    if (businessNameEl) {
+      const name = getAdminMobileBusinessName();
+      businessNameEl.textContent = name || "Manage your bookings";
+    }
+
+    const todayStr = getTodayDateString();
+    const todayActive = bookings.filter(
+      (b) => b.date === todayStr && getBookingStatus(b) !== "Cancelled"
+    );
+    const statEl = document.getElementById("adminMobileHomeTodayStat");
+    if (statEl) {
+      if (!todayActive.length) {
+        statEl.textContent = "No bookings today";
+      } else if (todayActive.length === 1) {
+        statEl.textContent = "1 booking today";
+      } else {
+        statEl.textContent = todayActive.length + " bookings today";
+      }
+    }
+
+    const now = new Date();
+    const upcomingToday = todayActive
+      .filter((b) => {
+        const timeStr = String(b.time || "00:00").trim().slice(0, 5);
+        const dt = new Date(todayStr + "T" + timeStr + ":00");
+        return !Number.isNaN(dt.getTime()) && dt >= now;
+      })
+      .sort((a, b) => {
+        const ta = String(a.time || "00:00").slice(0, 5);
+        const tb = String(b.time || "00:00").slice(0, 5);
+        return ta.localeCompare(tb);
+      });
+
+    const nextLabel = document.getElementById("adminMobileHomeNextLabel");
+    const nextTime = document.getElementById("adminMobileHomeNextTime");
+    const nextService = document.getElementById("adminMobileHomeNextService");
+
+    if (upcomingToday.length && nextLabel && nextTime && nextService) {
+      const next = upcomingToday[0];
+      const service = services.find((s) => s.id === next.service_id);
+      const serviceName = service?.name || next.service_name || "Service";
+      const timeStr = String(next.time || "").trim().slice(0, 5);
+      nextLabel.classList.remove("hidden");
+      nextTime.classList.remove("hidden");
+      nextService.classList.remove("hidden");
+      nextTime.textContent = timeStr + " · " + (next.customer_name || "Customer");
+      nextService.textContent = serviceName;
+    } else if (nextLabel && nextTime && nextService) {
+      nextLabel.classList.add("hidden");
+      nextTime.classList.add("hidden");
+      nextService.classList.add("hidden");
+      if (!todayActive.length && statEl) {
+        statEl.textContent = "Open Calendar to view your day";
+      }
+    }
+  }
+
+  function updateAdminMobileSetupBackBar() {
+    const bar = document.getElementById("adminMobileSetupBackBar");
+    if (!bar) return;
+    const show =
+      document.body.classList.contains("admin-mobile-shell-active") &&
+      adminMobileFromSetup &&
+      ADMIN_MOBILE_SETUP_CHILD_SECTIONS.has(adminActiveSection);
+    bar.classList.toggle("hidden", !show);
+    bar.setAttribute("aria-hidden", show ? "false" : "true");
+  }
+
+  function adminMobileBackToSetup() {
+    adminMobileFromSetup = false;
+    setAdminMobileTab("setup");
+  }
+
+  function adminMobileSetupOpenSection(sectionKey) {
+    if (!ADMIN_SECTION_PANEL_IDS[sectionKey]) return;
+    adminMobileFromSetup = true;
+    setAdminSection(sectionKey);
+  }
+
+  function adminMobileSetupOpenPublicLink() {
+    adminMobileSetupOpenSection("customize");
+    requestAnimationFrame(() => {
+      updatePublicBookingQrSection();
+      const target =
+        document.getElementById("customizeShareHeading") ||
+        document.getElementById("bookingQrHost");
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function adminMobileOpenSetup() {
+    adminMobileFromSetup = false;
+    setAdminMobileTab("setup");
+  }
+
+  function adminMobileOpenNewBooking() {
+    adminMobileFromSetup = false;
+    setAdminSection("manual");
+  }
+
+  function adminMobileOpenCalendar() {
+    adminMobileFromSetup = false;
+    setAdminMobileTab("calendar");
+  }
+
+  function adminMobileOpenBookings() {
+    adminMobileFromSetup = false;
+    setAdminMobileTab("bookings");
+  }
+
+  function adminMobileOpenTodaysBookings() {
+    const filter = document.getElementById("bookingDateFilter");
+    if (filter) filter.value = getTodayDateString();
+    adminMobileFromSetup = false;
+    setAdminMobileTab("bookings");
+    renderBookings();
+  }
+
+  function adminMobileOpenCustomize() {
+    adminMobileOpenSetup();
+  }
+
+  async function adminMobileShareBookingLink() {
+    const link =
+      getPublicBookingLinkForSettings() ||
+      buildPublicBookingLink(getBusinessPublicIdentifier()) ||
+      document.getElementById("publicLink")?.innerText.trim() ||
+      "";
+
+    if (!link || !/^https?:\/\//i.test(link)) {
+      showToast("Set business slug to share your booking link.", "error");
+      adminMobileOpenSetup();
+      return;
+    }
+
+    if (typeof navigator.share === "function") {
+      try {
+        await navigator.share({
+          title: "Book online",
+          text: "Book an appointment",
+          url: link
+        });
+        return;
+      } catch (err) {
+        if (err?.name === "AbortError") return;
+      }
+    }
+
+    await copyPublicLink();
   }
 
   function bindAdminDashboardNav() {
@@ -19738,6 +21450,15 @@
 
   function initAdminDashboard() {
     bindAdminDashboardNav();
+    bindAdminMobileShellListeners();
+
+    if (applyAdminMobileShellUi()) {
+      adminActiveSection = "home";
+      setAdminMobileTab("home", { silent: true });
+      renderAdminMobileHome();
+      return;
+    }
+
     setAdminSection(adminActiveSection || "overview", { silent: true, skipRender: false });
   }
 
@@ -19753,6 +21474,7 @@
     document.getElementById("adminView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.remove("hidden");
     document.getElementById("homeBtn")?.classList.add("hidden");
+    syncAdminNativeToolbar();
     initAdminDashboard();
   }
 
@@ -19872,11 +21594,78 @@
     return {
       name: String(document.getElementById("onboardingBusinessName")?.value || ""),
       slug: String(document.getElementById("onboardingBusinessSlug")?.value || ""),
-      phone: String(document.getElementById("onboardingBusinessPhone")?.value || ""),
+      phone: getOnboardingBusinessPhoneE164() || "",
       address: String(document.getElementById("onboardingBusinessAddress")?.value || ""),
       category: getSelectedWizardBusinessCategory() || "",
       timezone: document.getElementById("onboardingTimezone")?.value || ""
     };
+  }
+
+  const ONBOARDING_PHONE_INTL_UTILS =
+    "https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/utils.js";
+
+  function initOnboardingBusinessPhoneIntl() {
+    const input = document.getElementById("onboardingBusinessPhone");
+    if (!input || typeof window.intlTelInput !== "function") return null;
+    if (input._onboardingPhoneIti) return input._onboardingPhoneIti;
+
+    const iti = window.intlTelInput(input, {
+      initialCountry: "mk",
+      separateDialCode: true,
+      nationalMode: true,
+      autoPlaceholder: "aggressive",
+      countrySearch: true,
+      dropdownContainer: document.body,
+      utilsScript: ONBOARDING_PHONE_INTL_UTILS
+    });
+
+    input._onboardingPhoneIti = iti;
+    input.addEventListener("countrychange", () => scheduleOnboardingDraftSave());
+    return iti;
+  }
+
+  function hydrateOnboardingBusinessPhoneValue(rawPhone) {
+    const val = String(rawPhone || "").trim();
+    initOnboardingBusinessPhoneIntl();
+    const input = document.getElementById("onboardingBusinessPhone");
+    const iti = input?._onboardingPhoneIti;
+    if (!input) return;
+
+    if (!val) {
+      if (iti) iti.setNumber("");
+      else input.value = "";
+      return;
+    }
+
+    if (iti) iti.setNumber(val);
+    else input.value = val;
+  }
+
+  function getOnboardingBusinessPhoneE164() {
+    const input = document.getElementById("onboardingBusinessPhone");
+    if (!input) return "";
+
+    const nationalRaw = String(input.value || "").trim();
+    if (!nationalRaw) return "";
+
+    const iti = input._onboardingPhoneIti;
+    if (iti && typeof iti.getNumber === "function") {
+      try {
+        const utils = window.intlTelInputUtils;
+        if (utils && typeof iti.isValidNumber === "function" && iti.isValidNumber()) {
+          return iti.getNumber(utils.numberFormat.E164).replace(/\s/g, "");
+        }
+        const loose = iti.getNumber();
+        if (loose) return loose.replace(/\s/g, "");
+      } catch (e) {
+        logSetup("phone E164 parse failed", e?.message);
+      }
+    }
+
+    const dial = iti?.getSelectedCountryData?.()?.dialCode || "389";
+    if (nationalRaw.startsWith("+")) return nationalRaw.replace(/[^\d+]/g, "");
+    const digits = nationalRaw.replace(/\D/g, "").replace(/^0+/, "");
+    return digits ? `+${dial}${digits}` : "";
   }
 
   function scheduleOnboardingDraftSave() {
@@ -19933,7 +21722,7 @@
 
     if (nameEl && s1.name && (!nameEl.value || nameEl.value === "My Business")) nameEl.value = s1.name;
     if (slugEl && s1.slug && (!slugEl.value || !onboardingSlugUserEdited)) slugEl.value = s1.slug;
-    if (phoneEl && s1.phone && !phoneEl.value) phoneEl.value = s1.phone;
+    if (phoneEl && s1.phone && !getOnboardingBusinessPhoneE164()) hydrateOnboardingBusinessPhoneValue(s1.phone);
     if (addressEl && s1.address && !addressEl.value) addressEl.value = s1.address;
     if (s1.category) setWizardCategorySelection(s1.category);
     if (s1.timezone) {
@@ -20238,7 +22027,6 @@
 
     const nameEl = document.getElementById("onboardingBusinessName");
     const slugEl = document.getElementById("onboardingBusinessSlug");
-    const phoneEl = document.getElementById("onboardingBusinessPhone");
     const addressEl = document.getElementById("onboardingBusinessAddress");
     const tzEl = document.getElementById("onboardingTimezone");
 
@@ -20250,7 +22038,8 @@
     slugEl.value = slugStored;
     onboardingSlugUserEdited = slugStored !== normalizeBusinessSlug(nameVal);
 
-    if (phoneEl) phoneEl.value = String(businessSettings?.business_phone ?? "").trim();
+    initOnboardingBusinessPhoneIntl();
+    hydrateOnboardingBusinessPhoneValue(businessSettings?.business_phone);
     if (addressEl) addressEl.value = String(businessSettings?.business_address ?? "").trim();
 
     clearOnboardingSlugConflictError();
@@ -20322,7 +22111,7 @@
   async function saveAdminOnboardingStep1AndAdvance() {
     const name = String(document.getElementById("onboardingBusinessName")?.value || "").trim();
     const slug = normalizeBusinessSlug(document.getElementById("onboardingBusinessSlug")?.value || "");
-    const phone = String(document.getElementById("onboardingBusinessPhone")?.value || "").trim();
+    const phone = getOnboardingBusinessPhoneE164();
     const address = String(document.getElementById("onboardingBusinessAddress")?.value || "").trim();
     const category = getSelectedWizardBusinessCategory();
     const timezone =
@@ -22350,7 +24139,7 @@
       .sort((a, b) => getCustomerMyBookingDateTimeMs(a) - getCustomerMyBookingDateTimeMs(b));
 
     if (!upcoming.length) {
-      mount.innerHTML = emptyStateHtml("No upcoming bookings", "Book a new appointment when you are ready.");
+      mount.innerHTML = emptyStateHtml("No bookings yet", "Your appointments will appear here.");
       return;
     }
 
@@ -23349,11 +25138,39 @@
     })();
   }
 
+  function syncAdminNativeToolbar() {
+    const email = currentUser?.email || "";
+    const nativeEmailEl = document.getElementById("adminNativeEmail");
+    if (nativeEmailEl) {
+      nativeEmailEl.textContent = email || "Admin account";
+    }
+    const profileEmailEl = document.getElementById("adminProfileEmail");
+    if (profileEmailEl) {
+      profileEmailEl.textContent = email || "Admin account";
+    }
+    const profileBizEl = document.getElementById("adminProfileBusinessName");
+    if (profileBizEl) {
+      const name = getAdminMobileBusinessName();
+      profileBizEl.textContent = name ? name : "";
+      profileBizEl.classList.toggle("hidden", !name);
+    }
+    const profileLinkEl = document.getElementById("adminProfilePublicLink");
+    if (profileLinkEl) {
+      const link =
+        getPublicBookingLinkForSettings() ||
+        buildPublicBookingLink(getBusinessPublicIdentifier()) ||
+        document.getElementById("publicLink")?.innerText.trim() ||
+        "";
+      profileLinkEl.textContent = link || "Set up your booking link in Customize";
+    }
+  }
+
   async function loadAdminData() {
     const adminEmailEl = document.getElementById("adminEmail");
     if (adminEmailEl && currentUser?.email) {
       adminEmailEl.innerText = "Logged in as: " + currentUser.email;
     }
+    syncAdminNativeToolbar();
 
     const bookingsListEl = document.getElementById("bookingsList");
     if (bookingsListEl) bookingsListEl.innerHTML = loadingStateHtml("Loading bookings…");
@@ -23381,6 +25198,7 @@
     renderEditStaffOptions();
     renderBookings();
     renderAdminStats();
+    renderAdminMobileHome();
     bindAdminAddBookingSummaryEvents();
     if (document.getElementById("adminSectionManual")?.classList.contains("admin-section--active")) {
       updateAdminAddBookingSummary();
@@ -23477,15 +25295,59 @@
     return s;
   }
 
+  function getBusinessInitials(name) {
+    return staffMemberInitials(name);
+  }
+
+  function getPublicHeroFallbackGradient() {
+    const preset = normalizePublicLayout(businessSettings?.public_layout ?? "modern-light");
+    const accent = getBusinessThemeAccent();
+    const gradients = {
+      "premium-dark": "linear-gradient(135deg, #0f172a 0%, #1e293b 48%, " + accent + " 100%)",
+      "barber-classic": "linear-gradient(135deg, #111827 0%, #3b2f2f 45%, #b45309 100%)",
+      "beauty-soft": "linear-gradient(135deg, #fdf2f8 0%, #fce7f3 45%, #fae8ff 100%)",
+      "minimal-white": "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
+      "modern-light":
+        "linear-gradient(135deg, " +
+        "color-mix(in srgb, " +
+        accent +
+        " 22%, #f8fafc) 0%, #e2e8f0 55%, #f1f5f9 100%)"
+    };
+    return gradients[preset] || gradients["modern-light"];
+  }
+
+  function applyPublicHeroCoverBackground() {
+    const heroBg = document.getElementById("publicHeroBg");
+    if (!heroBg) return;
+    const cover = String(businessSettings?.business_cover_url || "").trim();
+    if (cover) {
+      heroBg.style.background = "";
+      heroBg.style.backgroundImage = "url(" + JSON.stringify(cover) + ")";
+      heroBg.style.backgroundSize = "cover";
+      heroBg.style.backgroundPosition = "center";
+      heroBg.classList.add("public-hero-bg--image");
+      return;
+    }
+    heroBg.style.backgroundImage = "";
+    heroBg.style.background = getPublicHeroFallbackGradient();
+    heroBg.style.backgroundSize = "cover";
+    heroBg.style.backgroundPosition = "center";
+    heroBg.classList.remove("public-hero-bg--image");
+  }
+
+  function renderPublicBookingHero() {
+    renderPublicBusinessProfileInfo();
+  }
+
   function renderPublicBusinessProfileInfo() {
-    const name = businessSettings?.business_name || "Book Appointment";
+    const name = (businessSettings?.business_name || "").trim() || "Book Appointment";
     const showLogo = businessSettings?.public_show_logo !== false;
     const logo = showLogo ? businessSettings?.business_logo_url || "" : "";
-    const cover = businessSettings?.business_cover_url || "";
     const showAddress = businessSettings?.public_show_address !== false;
     const showAbout = businessSettings?.public_show_about !== false;
     const address = showAddress ? businessSettings?.business_address || "" : "";
     const phone = businessSettings?.business_phone || "";
+    const welcomeTagline = (businessSettings?.public_tagline || "").trim();
     const description = showAbout ? businessSettings?.business_description || "" : "";
     const instagram = normalizeSocialUrl(businessSettings?.business_instagram_url, "instagram");
     const facebook = normalizeSocialUrl(businessSettings?.business_facebook_url, "facebook");
@@ -23495,22 +25357,24 @@
 
     const taglineEl = document.getElementById("publicBusinessTagline");
     if (taglineEl) {
-      taglineEl.textContent =
-        (businessSettings?.public_tagline || "").trim() || "Book your appointment online";
+      taglineEl.textContent = welcomeTagline || "Book your appointment online";
+      taglineEl.classList.remove("hidden");
     }
 
-    const heroBg = document.getElementById("publicHeroBg");
-    if (heroBg) {
-      if (cover) {
-        heroBg.style.backgroundImage = "url(" + JSON.stringify(cover) + ")";
-        heroBg.classList.add("public-hero-bg--image");
-      } else {
-        heroBg.style.backgroundImage = "";
-        heroBg.classList.remove("public-hero-bg--image");
-      }
-    }
-
+    applyPublicHeroCoverBackground();
     setPublicBusinessLogo(logo, name);
+
+    const hintEl = document.getElementById("publicHeroScrollHint");
+    if (hintEl) {
+      const bookContent = document.getElementById("publicBookingContent");
+      const successCard = document.getElementById("bookingSuccessCard");
+      const hideHint =
+        publicManageMode ||
+        !bookContent ||
+        bookContent.classList.contains("hidden") ||
+        (successCard && !successCard.classList.contains("hidden"));
+      hintEl.classList.toggle("hidden", !!hideHint);
+    }
 
     const aboutEl = document.getElementById("publicBusinessAbout");
     if (aboutEl) {
@@ -24333,6 +26197,7 @@
       if (currentId) {
         selectedService = serviceRows.find((s) => s.id === currentId) || null;
         if (hidden && selectedService) hidden.value = currentId;
+        syncPublicStaffSelectionForService(selectedService, { preserveChoice: true });
       } else if (!selectedService) {
         selectedService = null;
         if (hidden) hidden.value = "";
@@ -24440,6 +26305,8 @@
       refreshCalendar: opts.refreshCalendar !== false && (serviceChanged || opts.forceRefresh)
     });
 
+    syncPublicStaffSelectionForService(service, { preserveChoice: !serviceChanged });
+
     if (!opts.silent) {
       hideBookingSuccessCard();
       goToPublicBookingStep(getPublicBookingStepAfterService(), {
@@ -24502,6 +26369,10 @@
       if (selectedId && s.id === selectedId) option.selected = true;
       select.appendChild(option);
     });
+    if (document.getElementById("adminSectionManual")?.classList.contains("admin-section--active")) {
+      clearAdminAddMobileSlotIfInvalid();
+      renderAdminAddMobileSlots();
+    }
   }
 
 
@@ -25066,6 +26937,10 @@
       if (selectedId && selectedId === staff.id) option.selected = true;
       select.appendChild(option);
     });
+    syncAdminAddMobileStaffUi();
+    if (document.getElementById("adminSectionManual")?.classList.contains("admin-section--active")) {
+      renderAdminAddMobileSlots();
+    }
   }
 
   function renderEditStaffOptions(selectedId) {
@@ -25091,35 +26966,37 @@
 
   function renderPublicStaffOptions(selectedId) {
     const panel = document.getElementById("publicStaffPanel");
-    const mount = document.getElementById("publicStaffCards");
+    const legacyMount = document.getElementById("publicStaffCards");
+    const scheduleMount = document.getElementById("publicScheduleStaffCards");
     const hidden = document.getElementById("publicStaff");
-    if (!mount) return;
+    const eligible = getEligiblePublicStaffForService(selectedService);
+    const mount =
+      eligible.length > 1 && scheduleMount ? scheduleMount : legacyMount;
+    if (!mount) {
+      updatePublicScheduleStaffUi();
+      return;
+    }
 
     try {
       if (publicDataLoading && !getActiveStaffMembers().length) {
         mount.innerHTML = publicLoadingPlaceholder("staff");
-        panel?.classList.remove("hidden");
-        return;
-      }
-
-      if (
-        !staffFeatureAvailable ||
-        !bookingStaffColumnAvailable ||
-        businessSettings?.public_show_staff === false ||
-        !getActiveStaffMembers().length
-      ) {
-        mount.innerHTML = "";
         panel?.classList.add("hidden");
-        selectedPublicStaffChoice = PUBLIC_STAFF_ANY;
-        if (hidden) hidden.value = "";
         return;
       }
 
-      panel?.classList.remove("hidden");
+      if (!eligible.length || eligible.length === 1) {
+        if (legacyMount) legacyMount.innerHTML = "";
+        if (scheduleMount) scheduleMount.innerHTML = "";
+        panel?.classList.add("hidden");
+        updatePublicScheduleStaffUi();
+        return;
+      }
+
+      panel?.classList.add("hidden");
       mount.innerHTML = "";
 
       let choice = selectedId || selectedPublicStaffChoice || PUBLIC_STAFF_ANY;
-      if (choice !== PUBLIC_STAFF_ANY && !getActiveStaffMembers().some((s) => s.id === choice)) {
+      if (choice !== PUBLIC_STAFF_ANY && !eligible.some((s) => s.id === choice)) {
         choice = PUBLIC_STAFF_ANY;
       }
 
@@ -25140,7 +27017,7 @@
       anyBtn.addEventListener("click", () => pickPublicStaff(PUBLIC_STAFF_ANY));
       mount.appendChild(anyBtn);
 
-      getActiveStaffMembers().forEach((staff) => {
+      eligible.forEach((staff) => {
         const photo = String(staff.photo_url || "").trim();
         const initials = escapeHtml(staffMemberInitials(staff.name));
         const avatarInner = photo
@@ -25167,9 +27044,9 @@
       });
 
       pickPublicStaff(choice, { silent: true });
+      updatePublicScheduleStaffUi();
     } catch (err) {
       console.error("[public-staff] render failed", err);
-      panel?.classList.remove("hidden");
       mount.innerHTML = emptyStateHtml(
         "Could not load stylists",
         err?.message || "Please refresh and try again."
@@ -25181,11 +27058,14 @@
     const prevChoice = selectedPublicStaffChoice;
     const staffChanged = prevChoice !== staffChoice;
 
+    publicStaffAutoSelectedId = null;
     selectedPublicStaffChoice = staffChoice;
     const hidden = document.getElementById("publicStaff");
     if (hidden) hidden.value = staffChoice === PUBLIC_STAFF_ANY ? "" : staffChoice;
 
-    document.querySelectorAll(".public-staff-card").forEach((el) => {
+    document
+      .querySelectorAll("#publicScheduleStaffCards .public-staff-card, #publicStaffCards .public-staff-card")
+      .forEach((el) => {
       const on = el.dataset.staffId === staffChoice;
       el.classList.toggle("public-staff-card--selected", on);
       el.setAttribute("aria-checked", on ? "true" : "false");
@@ -25199,16 +27079,33 @@
         selectedSlot = null;
       }
       refreshPublicAvailability({ refreshCalendar: true });
-      goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE);
+      updatePublicScheduleStaffUi();
+      if (!opts.stayOnSchedule) {
+        goToPublicBookingStep(PUBLIC_BOOKING_STEP.SCHEDULE);
+      }
     }
   }
 
   /** null = any available staff; string = specific staff id */
   function getSelectedPublicStaffId() {
-    const panel = document.getElementById("publicStaffPanel");
-    if (!panel || panel.classList.contains("hidden")) return null;
+    if (publicStaffAutoSelectedId) return publicStaffAutoSelectedId;
     if (selectedPublicStaffChoice === PUBLIC_STAFF_ANY) return null;
     return selectedPublicStaffChoice || null;
+  }
+
+  function isPublicSlotBookableAtTime(dateStr, startMins, service) {
+    if (!dateStr || !service) return false;
+    const staffId = getSelectedPublicStaffId();
+    if (staffId) {
+      return isPublicScheduleSlotAvailable(dateStr, startMins, staffId, service);
+    }
+    const eligible = getEligiblePublicStaffForService(service);
+    if (!eligible.length) {
+      return isPublicScheduleSlotAvailable(dateStr, startMins, null, service);
+    }
+    return eligible.some((staff) =>
+      isPublicScheduleSlotAvailable(dateStr, startMins, staff.id, service)
+    );
   }
 
   function handlePublicStaffChange() {
@@ -25273,6 +27170,40 @@
     return true;
   }
 
+  /** create_booking RPC rejects empty phone; admin Add Booking treats phone as optional. */
+  const ADMIN_ADD_OPTIONAL_PHONE_PLACEHOLDER = "\u2014";
+
+  function customerPhoneForAdminAddBookingRpc(rawPhone) {
+    const phone = String(rawPhone || "").trim();
+    return phone || ADMIN_ADD_OPTIONAL_PHONE_PLACEHOLDER;
+  }
+
+  function mergeBookingIntoLocalCache(booking) {
+    if (!booking?.id) return;
+    const row = { ...booking };
+    const idx = bookings.findIndex((b) => b.id === row.id);
+    if (idx >= 0) bookings[idx] = { ...bookings[idx], ...row };
+    else bookings.push(row);
+  }
+
+  function adminAddTimeOverlapsAnyActiveBooking(dateStr, timeStr, serviceId) {
+    return bookings.some((b) => {
+      if (b.date !== dateStr) return false;
+      if (getBookingStatus(b) === "Cancelled") return false;
+      return bookingOverlapsTime(b, dateStr, timeStr, serviceId);
+    });
+  }
+
+  function isAdminAddSlotAvailableForChips(dateStr, startMins, staffId, service) {
+    if (!isAdminScheduleSlotAvailable(dateStr, startMins, staffId, service)) return false;
+    const staffPick = String(staffId || "").trim();
+    if (staffPick) return true;
+    const active = getActiveStaffMembers();
+    if (!bookingStaffColumnAvailable || !active.length) return true;
+    const timeStr = minutesToTime(snapMinutesToQuarterHour(startMins));
+    return !adminAddTimeOverlapsAnyActiveBooking(dateStr, timeStr, service.id);
+  }
+
   function stopBookingRealtime() {
     if (bookingRealtimeRefreshTimer) {
       clearTimeout(bookingRealtimeRefreshTimer);
@@ -25334,6 +27265,9 @@
       renderAdminCalendar();
       renderBookings();
       renderAdminStats();
+      if (document.getElementById("adminSectionManual")?.classList.contains("admin-section--active")) {
+        renderAdminAddMobileSlots();
+      }
     }
 
     return true;
@@ -25562,7 +27496,17 @@
     return readAllowRecurringAppointmentsSetting(businessSettings);
   }
 
+  function syncPublicDetailsMoreOptionsUi() {
+    const wrap = document.getElementById("publicDetailsMoreOptions");
+    if (!wrap) return;
+    const showMore = isRecurringAppointmentsEnabled();
+    wrap.classList.toggle("hidden", !showMore);
+    if (!showMore) wrap.setAttribute("hidden", "");
+    else wrap.removeAttribute("hidden");
+  }
+
   function syncPublicRecurringBookingUi() {
+    syncPublicDetailsMoreOptionsUi();
     const section = document.getElementById("publicRecurringBookingSection");
     const countWrap = document.getElementById("publicRecurringCountWrap");
     const enabled = isRecurringAppointmentsEnabled();
@@ -25720,8 +27664,8 @@
     const bookingStatus = document.getElementById("adminAddStatus")?.value || "Confirmed";
     const notes = document.getElementById("adminAddNotes").value.trim();
 
-    if (!customerName || !customerPhone || !serviceId || !date || !time || !/^\d{2}:\d{2}$/.test(time)) {
-      showToast("Name, phone, service, date and time are required.", "error")
+    if (!customerName || !serviceId || !date || !time || !/^\d{2}:\d{2}$/.test(time)) {
+      showToast("Name, service, date and time are required.", "error");
       return;
     }
 
@@ -25786,7 +27730,7 @@
       date,
       time,
       customerName,
-      customerPhone,
+      customerPhone: customerPhoneForAdminAddBookingRpc(customerPhone),
       customerEmail: customerEmail || null,
       notes: notes || null,
       staffId,
@@ -25805,20 +27749,29 @@
 
     showToast("Booking added successfully.", "success")
 
-    if (insertedBooking?.id) {
-      markAdminSelfCreatedBooking(insertedBooking.id);
-      void notifyAdminNewBookingLocal(insertedBooking, { source: "admin-create" });
+    const normalizedBooking = normalizeCreateBookingResult(insertedBooking);
+    if (normalizedBooking?.id) {
+      markAdminSelfCreatedBooking(normalizedBooking.id);
+      mergeBookingIntoLocalCache(normalizedBooking);
+      void notifyAdminNewBookingLocal(normalizedBooking, { source: "admin-create" });
     }
+
+    const preserveAddContext = shouldUseAdminMobileShell();
+    const preservedDate = preserveAddContext ? date : "";
+    const preservedServiceId = preserveAddContext ? serviceId : "";
+    const preservedStaffId = preserveAddContext ? staffId || "" : "";
 
     document.getElementById("adminAddCustomerName").value = "";
     document.getElementById("adminAddCustomerPhone").value = "";
     document.getElementById("adminAddCustomerEmail").value = "";
-    document.getElementById("adminAddDate").value = "";
+    if (!preserveAddContext) document.getElementById("adminAddDate").value = "";
     const addTimeEl = document.getElementById("adminAddTime");
     if (addTimeEl) addTimeEl.value = "";
     adminAddSelectedSlotTime = "";
     document.getElementById("adminAddNotes").value = "";
-    if (document.getElementById("adminAddStaff")) document.getElementById("adminAddStaff").value = "";
+    if (!preserveAddContext && document.getElementById("adminAddStaff")) {
+      document.getElementById("adminAddStaff").value = "";
+    }
     if (document.getElementById("adminAddStatus")) document.getElementById("adminAddStatus").value = "Confirmed";
     const hintEl = document.getElementById("adminAddDurationHint");
     if (hintEl) {
@@ -25833,12 +27786,26 @@
       ctxBanner.classList.add("hidden");
     }
 
+    await loadBookings(true);
+    clearAdminAddMobileSlotIfInvalid();
+    renderAdminAddMobileSlots();
+
     await loadAdminData();
 
     if (returnToCalendar) {
       setAdminSection("calendar");
     } else {
       initAdminAddBookingForm();
+      if (preserveAddContext) {
+        if (preservedDate) document.getElementById("adminAddDate").value = preservedDate;
+        if (preservedServiceId) document.getElementById("adminAddService").value = preservedServiceId;
+        if (preservedStaffId && document.getElementById("adminAddStaff")) {
+          document.getElementById("adminAddStaff").value = preservedStaffId;
+        }
+        syncAdminAddMobileShellFields();
+      }
+      clearAdminAddMobileSlotIfInvalid();
+      renderAdminAddMobileSlots();
     }
     autoResizeAdminAddNotes();
   }
@@ -26287,8 +28254,60 @@
   }
 
   function getAdminCalendarSelectedService() {
-    if (!adminCalendarServiceFilter) return null;
-    return services.find((s) => s.id === adminCalendarServiceFilter) || null;
+    const serviceId =
+      adminCalendarServiceFilter ||
+      document.getElementById("adminCalendarServiceFilter")?.value ||
+      "";
+    if (!serviceId) return null;
+    return services.find((s) => String(s.id) === String(serviceId)) || null;
+  }
+
+  function syncAdminCalendarFiltersFromDom() {
+    const serviceSel = document.getElementById("adminCalendarServiceFilter");
+    if (serviceSel) adminCalendarServiceFilter = serviceSel.value || "";
+    const staffSel = document.getElementById("adminCalendarStaffFilter");
+    if (staffSel) adminCalendarStaffFilter = staffSel.value || "";
+  }
+
+  function enumerateAdminMobileAgendaTimes(dateStr, service) {
+    if (!dateStr || !service) return [];
+    const dow = dayOfWeekFromDateStr(dateStr);
+    const win = getWorkWindowForDayOfWeek(dow);
+    const duration = getServiceDurationValue(service);
+    return generateSlots(win.start, win.end, duration, PUBLIC_SLOT_STEP_MINUTES).map((time) =>
+      snapTimeStringToQuarterHour(time)
+    );
+  }
+
+  function classifyAdminMobileAgendaSlot(dateStr, timeStr, service, staffId, dayBookings) {
+    const startMins = timeToMinutes(timeStr);
+
+    const insideBooking = dayBookings.find((b) => {
+      if (getBookingStatus(b) === "Cancelled") return false;
+      const range = getBookingTimeRange(b);
+      return startMins > range.startMin && startMins < range.endMin;
+    });
+    if (insideBooking) return null;
+
+    const booking = dayBookings.find((b) => getBookingTimeRange(b).startMin === startMins);
+    if (booking) {
+      const status = getBookingStatus(booking);
+      return {
+        type: status === "Cancelled" ? "cancelled" : "booked",
+        time: timeStr,
+        booking
+      };
+    }
+
+    if (isAdminScheduleMinuteInBreak(startMins)) {
+      return { type: "break", time: timeStr };
+    }
+
+    if (isAdminScheduleSlotAvailable(dateStr, startMins, staffId, service)) {
+      return { type: "available", time: timeStr };
+    }
+
+    return { type: "unavailable", time: timeStr };
   }
 
   function isAdminScheduleSlotAvailable(dateStr, startMins, staffId, service) {
@@ -26344,6 +28363,9 @@
   function adminCalendarGoToday() {
     adminCalendarAnchorDate = new Date();
     currentDate = new Date(adminCalendarAnchorDate);
+    if (isAdminCalendarMobileViewport() && adminCalendarView === "week") {
+      adminCalendarMobileWeekResetPending = true;
+    }
     renderAdminCalendar();
   }
 
@@ -26360,6 +28382,9 @@
       d.setDate(d.getDate() + offset * 7);
       adminCalendarAnchorDate = d;
       currentDate = new Date(d);
+      if (isAdminCalendarMobileViewport() && adminCalendarView === "week") {
+        adminCalendarMobileWeekResetPending = true;
+      }
     }
     renderAdminCalendar();
   }
@@ -26420,21 +28445,212 @@
     }
     syncAdminAddCalendarContextBanner();
     updateAdminAddBookingSummary();
+    renderAdminAddMobileSlots();
+  }
+
+  function syncAdminAddMobileStaffUi() {
+    const section = document.getElementById("adminSectionManual");
+    const staffEl = document.getElementById("adminAddStaff");
+    if (!section || !staffEl) return;
+
+    const active = getActiveStaffMembers();
+    const canPickStaff = staffFeatureAvailable && bookingStaffColumnAvailable && active.length > 0;
+    if (canPickStaff && active.length === 1) {
+      staffEl.value = active[0].id;
+      section.classList.add("admin-add-single-staff");
+    } else {
+      section.classList.remove("admin-add-single-staff");
+    }
+  }
+
+  function syncAdminAddMobileShellFields() {
+    syncAdminAddMobileStaffUi();
+    const useMobile = shouldUseAdminMobileShell();
+    const phoneLabel = document.getElementById("adminAddPhoneLabel");
+    if (phoneLabel) {
+      phoneLabel.innerHTML =
+        'Phone <span style="font-weight:500;text-transform:none;letter-spacing:0">(optional)</span>';
+    }
+    const statusEl = document.getElementById("adminAddStatus");
+    if (statusEl && useMobile) statusEl.value = "Confirmed";
+  }
+
+  function clearAdminAddMobileSlotIfInvalid() {
+    if (!shouldUseAdminMobileShell()) return;
+    const dateStr = document.getElementById("adminAddDate")?.value || "";
+    const raw = String(adminAddSelectedSlotTime || document.getElementById("adminAddTime")?.value || "")
+      .trim()
+      .slice(0, 5);
+    if (!dateStr || !/^\d{2}:\d{2}$/.test(raw)) return;
+    const snapped = snapTimeStringToQuarterHour(raw);
+    const times = enumerateAdminAddAvailableSlotTimes(dateStr);
+    if (times.includes(snapped)) return;
+    adminAddSelectedSlotTime = "";
+    const timeEl = document.getElementById("adminAddTime");
+    if (timeEl) timeEl.value = "";
+  }
+
+  function isAdminAddDayBlockedForSlots(dateStr) {
+    if (!dateStr) return true;
+    if (isAdminScheduleDayClosed(dateStr)) return true;
+    if (!isAdminScheduleDayWorking(dateStr)) return true;
+    if (isPastDate(dateStr)) return true;
+    if (isOutsideBookingWindow(dateStr)) return true;
+    return false;
+  }
+
+  function isAdminAddSlotStartInPast(dateStr, startMins) {
+    if (dateStr !== getTodayDateString()) return false;
+    const now = new Date();
+    return startMins < now.getHours() * 60 + now.getMinutes();
+  }
+
+  function enumerateAdminAddAvailableSlotTimes(dateStr) {
+    const serviceId = document.getElementById("adminAddService")?.value || "";
+    const service = services.find((s) => s.id === serviceId);
+    if (!service || !dateStr || isAdminAddDayBlockedForSlots(dateStr)) return [];
+
+    const staffId = document.getElementById("adminAddStaff")?.value || "";
+    const slotTimes = enumerateAdminMobileAgendaTimes(dateStr, service);
+    const available = [];
+    const seen = new Set();
+
+    slotTimes.forEach((timeStr) => {
+      if (seen.has(timeStr)) return;
+      seen.add(timeStr);
+      const startMins = timeToMinutes(timeStr);
+      if (isAdminAddSlotStartInPast(dateStr, startMins)) return;
+      if (isAdminAddSlotAvailableForChips(dateStr, startMins, staffId, service)) {
+        available.push(timeStr);
+      }
+    });
+
+    return available;
+  }
+
+  function chooseAdminAddMobileSlot(time) {
+    const timeStr = snapTimeStringToQuarterHour(String(time || "").trim().slice(0, 5));
+    if (!/^\d{2}:\d{2}$/.test(timeStr)) return;
+    adminAddSelectedSlotTime = timeStr;
+    const timeEl = document.getElementById("adminAddTime");
+    if (timeEl) timeEl.value = timeStr;
+    updateAdminAddBookingSummary();
+    renderAdminAddMobileSlots();
+  }
+
+  function syncAdminAddMobileSlotsHint(slotCount) {
+    const hint = document.getElementById("adminAddMobileSlotsHint");
+    if (!hint) return;
+    const show = shouldUseAdminMobileShell() && slotCount > 4;
+    hint.classList.toggle("hidden", !show);
+  }
+
+  function scrollAdminAddMobileSlotIntoView(mount) {
+    if (!mount) return;
+    requestAnimationFrame(() => {
+      const selected = mount.querySelector(".admin-add-mobile-slot-btn--selected");
+      if (selected && typeof selected.scrollIntoView === "function") {
+        selected.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+      }
+    });
+  }
+
+  function renderAdminAddMobileSlots() {
+    const mount = document.getElementById("adminAddMobileSlotsMount");
+    const wrap = document.getElementById("adminAddMobileSlotsWrap");
+    if (!mount || !wrap) return;
+
+    if (!shouldUseAdminMobileShell()) {
+      mount.innerHTML = "";
+      syncAdminAddMobileSlotsHint(0);
+      return;
+    }
+
+    const dateStr = document.getElementById("adminAddDate")?.value || "";
+    const serviceId = document.getElementById("adminAddService")?.value || "";
+    const selectedTime = String(adminAddSelectedSlotTime || document.getElementById("adminAddTime")?.value || "")
+      .trim()
+      .slice(0, 5);
+
+    mount.innerHTML = "";
+    syncAdminAddMobileSlotsHint(0);
+
+    if (!serviceId) {
+      mount.innerHTML = emptyStateHtml("Select a service", "Choose a service to see available times.");
+      return;
+    }
+
+    if (!dateStr) {
+      mount.innerHTML = emptyStateHtml("Select a date", "Choose a date to see available times.");
+      return;
+    }
+
+    const dayMeta = getAdminMobileDayMeta(dateStr);
+    if (dayMeta.state === "closed") {
+      mount.innerHTML = emptyStateHtml("Closed", "Try another day.");
+      return;
+    }
+    if (dayMeta.state === "off") {
+      mount.innerHTML = emptyStateHtml("Day off", "Try another day.");
+      return;
+    }
+    if (isPastDate(dateStr)) {
+      mount.innerHTML = emptyStateHtml("Past date", "Try another day.");
+      return;
+    }
+    if (isOutsideBookingWindow(dateStr)) {
+      mount.innerHTML = emptyStateHtml("Unavailable", "Try another day.");
+      return;
+    }
+
+    const times = enumerateAdminAddAvailableSlotTimes(dateStr);
+    if (!times.length) {
+      mount.innerHTML = emptyStateHtml("No available times", "Try another day.");
+      return;
+    }
+
+    times.forEach((time) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "admin-add-mobile-slot-btn";
+      btn.textContent = time;
+      btn.setAttribute("aria-label", "Book at " + time);
+      const selected = snapTimeStringToQuarterHour(selectedTime) === time;
+      if (selected) {
+        btn.classList.add("admin-add-mobile-slot-btn--selected");
+        btn.setAttribute("aria-pressed", "true");
+      } else {
+        btn.setAttribute("aria-pressed", "false");
+      }
+      btn.addEventListener("click", () => chooseAdminAddMobileSlot(time));
+      mount.appendChild(btn);
+    });
+
+    syncAdminAddMobileSlotsHint(times.length);
+    scrollAdminAddMobileSlotIntoView(mount);
   }
 
   function initAdminAddBookingForm() {
     const dateInput = document.getElementById("adminAddDate");
     const timeInput = document.getElementById("adminAddTime");
+    syncAdminAddMobileShellFields();
     if (dateInput && !dateInput.value) dateInput.value = getTodayDateString();
-    if (timeInput && !timeInput.value) {
+    const useMobilePicker = shouldUseAdminMobileShell();
+    if (!useMobilePicker && timeInput && !timeInput.value) {
       const dateStr = dateInput?.value || getTodayDateString();
       const dow = dayOfWeekFromDateStr(dateStr);
       const win = getWorkWindowForDayOfWeek(dow);
       timeInput.value = snapTimeStringToQuarterHour(win.start);
     }
-    adminAddSelectedSlotTime = String(timeInput?.value || "").trim().slice(0, 5) || "";
+    if (useMobilePicker) {
+      adminAddSelectedSlotTime = "";
+      if (timeInput) timeInput.value = "";
+    } else {
+      adminAddSelectedSlotTime = String(timeInput?.value || "").trim().slice(0, 5) || "";
+    }
     syncAdminAddCalendarContextBanner();
     updateAdminAddBookingSummary();
+    renderAdminAddMobileSlots();
     autoResizeAdminAddNotes();
   }
 
@@ -26515,7 +28731,16 @@
 
     const bottomHint = document.getElementById("adminAddBottomHint");
     if (bottomHint) {
-      if (time && date && service) {
+      if (shouldUseAdminMobileShell()) {
+        if (time && date && service) {
+          bottomHint.textContent =
+            "Ready: " + formatAdminAddSummaryDate(date) + " at " + time + ". Tap Create booking.";
+        } else if (date && service) {
+          bottomHint.textContent = "Choose an available time.";
+        } else {
+          bottomHint.textContent = "Select service and date to see available times.";
+        }
+      } else if (time && date && service) {
         bottomHint.textContent =
           "Ready: " +
           formatAdminAddSummaryDate(date) +
@@ -26537,7 +28762,11 @@
     if (!root || root.dataset.summaryBound === "1") return;
     root.dataset.summaryBound = "1";
 
-    const onAddBookingFieldChange = () => updateAdminAddBookingSummary();
+    const onAddBookingFieldChange = () => {
+      clearAdminAddMobileSlotIfInvalid();
+      updateAdminAddBookingSummary();
+      renderAdminAddMobileSlots();
+    };
 
     ["adminAddService", "adminAddStaff", "adminAddDate", "adminAddTime", "adminAddStatus"].forEach((id) => {
       const el = document.getElementById(id);
@@ -27083,6 +29312,309 @@
     return col;
   }
 
+  function isAdminCalendarMobileViewport() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+
+  function ensureAdminCalendarMobileResizeListener() {
+    if (adminCalendarMobileResizeAttached) return;
+    adminCalendarMobileResizeAttached = true;
+    window.addEventListener("resize", () => {
+      const section = document.getElementById("adminSectionCalendar");
+      if (!section || section.hidden) return;
+      renderAdminCalendar();
+    });
+  }
+
+  function pickDefaultAdminCalendarMobileDay(weekDates) {
+    if (!weekDates?.length) return "";
+    const openDay = weekDates.find((dateStr) => getAdminMobileDayMeta(dateStr).state === "open");
+    return openDay || weekDates[0];
+  }
+
+  function syncAdminCalendarMobileSelectedDate(weekDates, forceWeekReset) {
+    const todayStr = getTodayDateString();
+    const selectedStillInWeek =
+      adminCalendarMobileSelectedDate && weekDates.includes(adminCalendarMobileSelectedDate);
+
+    if (forceWeekReset || !selectedStillInWeek) {
+      if (!forceWeekReset && weekDates.includes(todayStr) && getAdminMobileDayMeta(todayStr).state === "open") {
+        adminCalendarMobileSelectedDate = todayStr;
+      } else {
+        adminCalendarMobileSelectedDate = pickDefaultAdminCalendarMobileDay(weekDates);
+      }
+    }
+  }
+
+  function selectAdminCalendarMobileDay(dateStr) {
+    if (!dateStr) return;
+    adminCalendarMobileSelectedDate = dateStr;
+
+    const mount = document.getElementById("adminScheduleCalendar");
+    const strip = mount?.querySelector(".admin-mobile-day-strip");
+    const slots = mount?.querySelector(".admin-mobile-slots");
+    if (
+      strip &&
+      slots &&
+      adminCalendarView === "week" &&
+      isAdminCalendarMobileViewport()
+    ) {
+      strip.querySelectorAll(".admin-mobile-day-pill").forEach((pill) => {
+        const on = pill.dataset.date === dateStr;
+        pill.classList.toggle("admin-mobile-day-pill--selected", on);
+        pill.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      renderAdminMobileAgendaSlots(slots, dateStr);
+      return;
+    }
+
+    renderAdminCalendar();
+  }
+
+  function getAdminMobileDayMeta(dateStr) {
+    if (isAdminScheduleDayClosed(dateStr)) return { state: "closed", title: "Closed", detail: "This day is blocked." };
+    if (!isAdminScheduleDayWorking(dateStr)) return { state: "off", title: "Day off", detail: "Not a working day." };
+    return { state: "open", title: "", detail: "" };
+  }
+
+  function buildAdminMobileAgendaEntries(dateStr) {
+    syncAdminCalendarFiltersFromDom();
+
+    const meta = getAdminMobileDayMeta(dateStr);
+    if (meta.state !== "open") return { meta, entries: [], needsService: false };
+
+    const service = getAdminCalendarSelectedService();
+    if (!service) return { meta, entries: [], needsService: true };
+
+    const staffId = adminCalendarStaffFilter || "";
+    const dayBookings = getAdminCalendarFilteredBookings().filter((b) => b.date === dateStr);
+    const slotTimes = enumerateAdminMobileAgendaTimes(dateStr, service);
+    const entries = [];
+    const seenTimes = new Set();
+
+    slotTimes.forEach((timeStr) => {
+      if (seenTimes.has(timeStr)) return;
+      seenTimes.add(timeStr);
+      const entry = classifyAdminMobileAgendaSlot(dateStr, timeStr, service, staffId, dayBookings);
+      if (entry) entries.push(entry);
+    });
+
+    dayBookings.forEach((booking) => {
+      const timeStr = snapTimeStringToQuarterHour(String(booking.time || "").trim().slice(0, 5));
+      if (!/^\d{2}:\d{2}$/.test(timeStr) || seenTimes.has(timeStr)) return;
+      seenTimes.add(timeStr);
+      const entry = classifyAdminMobileAgendaSlot(dateStr, timeStr, service, staffId, dayBookings);
+      if (entry) entries.push(entry);
+    });
+
+    entries.sort((a, b) => timeToMinutes(a.time) - timeToMinutes(b.time));
+
+    return { meta, entries, needsService: false };
+  }
+
+  function renderAdminMobileAgendaSlots(container, dateStr) {
+    if (!container) return;
+    container.innerHTML = "";
+
+    const { meta, entries, needsService } = buildAdminMobileAgendaEntries(dateStr);
+    if (needsService) {
+      container.innerHTML =
+        '<p class="admin-mobile-empty"><strong>Select a service</strong>Choose a service in the toolbar above to preview which slots are available.</p>';
+      return;
+    }
+
+    if (meta.state !== "open") {
+      container.innerHTML =
+        '<p class="admin-mobile-empty"><strong>' +
+        escapeHtml(meta.title) +
+        "</strong>" +
+        escapeHtml(meta.detail) +
+        "</p>";
+      return;
+    }
+
+    if (!entries.length) {
+      container.innerHTML =
+        '<p class="admin-mobile-empty"><strong>No slots</strong>No times in the schedule for this day.</p>';
+      return;
+    }
+
+    const grid = getAdminScheduleGridBounds();
+    entries.forEach((entry) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "admin-mobile-slot admin-mobile-slot--" + entry.type;
+
+      const timeEl = document.createElement("span");
+      timeEl.className = "admin-mobile-slot__time";
+      timeEl.textContent = entry.time;
+      btn.appendChild(timeEl);
+
+      if (entry.type === "booked" || entry.type === "cancelled") {
+        const b = entry.booking;
+        const service = services.find((s) => s.id === b.service_id);
+        const serviceName = service?.name || b.service_name || "Service";
+        const detail = document.createElement("span");
+        detail.className = "admin-mobile-slot__detail";
+        const nameEl = document.createElement("span");
+        nameEl.className = "admin-mobile-slot__name";
+        nameEl.textContent = (b.customer_name || "Customer") + (entry.type === "cancelled" ? " · Cancelled" : "");
+        const serviceEl = document.createElement("span");
+        serviceEl.className = "admin-mobile-slot__service";
+        serviceEl.textContent = serviceName;
+        detail.appendChild(nameEl);
+        detail.appendChild(serviceEl);
+        btn.appendChild(detail);
+        btn.addEventListener("click", () => openAdminBookingDetailModal(b.id));
+      } else if (entry.type === "available") {
+        const label = document.createElement("span");
+        label.className = "admin-mobile-slot__label";
+        label.textContent = "Available";
+        btn.appendChild(label);
+        btn.addEventListener("click", () => {
+          const mins = timeToMinutes(entry.time);
+          adminScheduleOpenQuickAddAt(dateStr, grid, mins, getServiceDurationValue(getAdminCalendarSelectedService()));
+        });
+      } else if (entry.type === "break") {
+        const label = document.createElement("span");
+        label.className = "admin-mobile-slot__label";
+        label.textContent = "Break / unavailable";
+        btn.disabled = true;
+        btn.appendChild(label);
+      } else {
+        const label = document.createElement("span");
+        label.className = "admin-mobile-slot__label";
+        label.textContent = "Unavailable";
+        btn.disabled = true;
+        btn.appendChild(label);
+      }
+
+      container.appendChild(btn);
+    });
+  }
+
+  function renderAdminScheduleMobileAgenda() {
+    const mount = document.getElementById("adminScheduleCalendar");
+    const title = document.getElementById("adminCalendarTitle");
+    if (!mount) return;
+
+    stopAdminScheduleNowTimer();
+    adminScheduleActiveGrid = null;
+    ensureAdminCalendarMobileResizeListener();
+
+    const anchor = adminCalendarAnchorDate || currentDate;
+    const todayStr = getTodayDateString();
+    const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const filtered = getAdminCalendarFilteredBookings();
+    let selectedDate = "";
+
+    const wrap = document.createElement("div");
+    wrap.className = "admin-mobile-agenda";
+
+    if (adminCalendarView === "day") {
+      selectedDate = formatDate(anchor.getFullYear(), anchor.getMonth(), anchor.getDate());
+      adminCalendarMobileSelectedDate = selectedDate;
+      if (title) {
+        title.textContent = anchor.toLocaleDateString(undefined, {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        });
+      }
+
+      const heading = document.createElement("p");
+      heading.className = "admin-mobile-day-heading";
+      heading.textContent = anchor.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "short",
+        day: "numeric"
+      });
+      wrap.appendChild(heading);
+    } else {
+      const weekStart = getAdminWeekStartMonday(anchor);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      if (title) {
+        title.textContent =
+          weekStart.toLocaleDateString(undefined, { month: "short", day: "numeric" }) +
+          " – " +
+          weekEnd.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+      }
+
+      const weekDates = [];
+      const strip = document.createElement("div");
+      strip.className = "admin-mobile-day-strip";
+      strip.setAttribute("role", "tablist");
+      strip.setAttribute("aria-label", "Week days");
+
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(weekStart);
+        d.setDate(weekStart.getDate() + i);
+        const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+        weekDates.push(dateStr);
+
+        const dayMeta = getAdminMobileDayMeta(dateStr);
+        const dayCount = filtered.filter((b) => b.date === dateStr && getBookingStatus(b) !== "Cancelled").length;
+        const pill = document.createElement("button");
+        pill.type = "button";
+        pill.className = "admin-mobile-day-pill";
+        pill.setAttribute("role", "tab");
+        pill.dataset.date = dateStr;
+        if (dateStr === todayStr) pill.classList.add("admin-mobile-day-pill--today");
+        if (dayMeta.state === "closed") pill.classList.add("admin-mobile-day-pill--closed");
+        else if (dayMeta.state === "off") pill.classList.add("admin-mobile-day-pill--off");
+        else if (dayCount) pill.classList.add("admin-mobile-day-pill--busy");
+
+        pill.innerHTML =
+          '<span class="admin-mobile-day-pill__dow">' +
+          dayNames[i] +
+          '</span><span class="admin-mobile-day-pill__num">' +
+          d.getDate() +
+          "</span>" +
+          (dayCount
+            ? '<span class="admin-mobile-day-pill__meta">' + dayCount + " appt" + (dayCount === 1 ? "" : "s") + "</span>"
+            : dayMeta.state === "closed"
+              ? '<span class="admin-mobile-day-pill__meta">Closed</span>'
+              : dayMeta.state === "off"
+                ? '<span class="admin-mobile-day-pill__meta">Off</span>'
+                : "");
+
+        pill.addEventListener("click", () => selectAdminCalendarMobileDay(dateStr));
+        strip.appendChild(pill);
+      }
+
+      const forceWeekReset = adminCalendarMobileWeekResetPending;
+      adminCalendarMobileWeekResetPending = false;
+      syncAdminCalendarMobileSelectedDate(weekDates, forceWeekReset);
+      selectedDate = adminCalendarMobileSelectedDate;
+
+      strip.querySelectorAll(".admin-mobile-day-pill").forEach((pill) => {
+        const on = pill.dataset.date === selectedDate;
+        pill.classList.toggle("admin-mobile-day-pill--selected", on);
+        pill.setAttribute("aria-selected", on ? "true" : "false");
+      });
+
+      wrap.appendChild(strip);
+
+      requestAnimationFrame(() => {
+        const active = strip.querySelector(".admin-mobile-day-pill--selected");
+        if (active && typeof active.scrollIntoView === "function") {
+          active.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "auto" });
+        }
+      });
+    }
+
+    const slots = document.createElement("div");
+    slots.className = "admin-mobile-slots";
+    slots.setAttribute("role", "list");
+    renderAdminMobileAgendaSlots(slots, selectedDate);
+    wrap.appendChild(slots);
+
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+  }
+
   function renderAdminScheduleWeek() {
     const mount = document.getElementById("adminScheduleCalendar");
     const title = document.getElementById("adminCalendarTitle");
@@ -27275,8 +29807,10 @@
       adminScheduleActiveGrid = null;
     }
 
-    if (adminCalendarView === "day") renderAdminScheduleDay();
-    else if (adminCalendarView === "month") renderAdminScheduleMonth();
+    if (adminCalendarView === "month") renderAdminScheduleMonth();
+    else if (isAdminCalendarMobileViewport() && (adminCalendarView === "day" || adminCalendarView === "week")) {
+      renderAdminScheduleMobileAgenda();
+    } else if (adminCalendarView === "day") renderAdminScheduleDay();
     else renderAdminScheduleWeek();
   }
 
@@ -28381,7 +30915,6 @@
     if (!service || !dateStr) return [];
     if (isPublicMobileDayBlockedForSlots(dateStr)) return [];
 
-    const selectedStaffId = getSelectedPublicStaffId();
     const dowSlot = dayOfWeekFromDateStr(dateStr);
     const winSlot = getWorkWindowForDayOfWeek(dowSlot);
     const duration = getServiceDurationValue(service);
@@ -28391,7 +30924,7 @@
     slotTimes.forEach((time) => {
       const timeStr = snapTimeStringToQuarterHour(time);
       const startMins = timeToMinutes(timeStr);
-      if (!isPublicScheduleSlotAvailable(dateStr, startMins, selectedStaffId, service)) return;
+      if (!isPublicSlotBookableAtTime(dateStr, startMins, service)) return;
       available.push(timeStr);
     });
 
@@ -28427,10 +30960,7 @@
       return;
     }
     if (!times.length) {
-      container.innerHTML = emptyStateHtml(
-        "No available times",
-        "No available times for this date. Please choose another day."
-      );
+      container.innerHTML = emptyStateHtml("No available times", "Try another day.");
       return;
     }
 
@@ -28527,9 +31057,8 @@
     const timeStr = snapTimeStringToQuarterHour(String(time || "").trim());
     if (!/^\d{2}:\d{2}$/.test(timeStr)) return;
 
-    const staffId = getSelectedPublicStaffId();
     const snapped = timeToMinutes(timeStr);
-    if (!isPublicScheduleSlotAvailable(selectedDate, snapped, staffId, selectedService)) {
+    if (!isPublicSlotBookableAtTime(selectedDate, snapped, selectedService)) {
       showToast("This time is not available.", "error");
       renderPublicMobileDateSlotPicker();
       return;
@@ -28694,77 +31223,59 @@
     if (hidden && serviceId) hidden.value = serviceId;
 
     if (!selectedService) {
-      container.innerHTML = emptyStateHtml("No service selected", "Choose a service to see available times.");
+      container.innerHTML = emptyStateHtml("Choose a service first", "Pick a service to see available times.");
       return;
     }
 
-    const closed = blockedDays.some(d => d.date === dateStr);
-    if (closed) {
-      container.innerHTML = `<div class="slot closed">Closed</div>`;
+    if (!dateStr) {
+      container.innerHTML = emptyStateHtml(
+        "Choose a date to see available times",
+        "Select a day on the calendar."
+      );
       return;
     }
 
-    const selectedStaffId = getSelectedPublicStaffId();
-
-    const dowSlot = dayOfWeekFromDateStr(dateStr);
-    const winSlot = getWorkWindowForDayOfWeek(dowSlot);
-    const duration = getServiceDurationValue(selectedService);
-    const slots = generateSlots(winSlot.start, winSlot.end, duration, PUBLIC_SLOT_STEP_MINUTES);
-
-    if (!slots.length) {
-      container.innerHTML = emptyStateHtml("No slots available", "Try another date or service.");
-      return;
-    }
-
-    let availableCount = 0;
-
-    slots.forEach((time) => {
-      const div = document.createElement("div");
-      const isBreak = isSlotInBreak(time, duration);
-      const conflict = hasConflict(dateStr, time, selectedService.id, null, selectedStaffId);
-
-      div.className = "slot";
-
-      if (isBreak) {
-        div.classList.add("break");
-        div.innerText = time;
-        div.setAttribute("aria-disabled", "true");
-      } else if (conflict) {
-        div.classList.add("booked");
-        div.innerText = time;
-        div.setAttribute("aria-disabled", "true");
+    if (isPublicMobileDayBlockedForSlots(dateStr)) {
+      if (isAdminScheduleDayClosed(dateStr)) {
+        container.innerHTML = emptyStateHtml("Closed", "This day is not available for booking.");
+      } else if (!isAdminScheduleDayWorking(dateStr)) {
+        container.innerHTML = emptyStateHtml("Day off", "Try another day.");
+      } else if (isPastDate(dateStr)) {
+        container.innerHTML = emptyStateHtml("Past date", "Choose a future day.");
       } else {
-        availableCount += 1;
-        div.innerText = time;
-        div.dataset.slotTime = time;
-        div.setAttribute("role", "button");
-        div.setAttribute("tabindex", "0");
-        div.setAttribute("aria-pressed", selectedSlot === time ? "true" : "false");
-        if (selectedSlot === time) div.classList.add("selected");
-        div.onclick = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          chooseSlot(time);
-        };
-        div.onkeydown = (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            chooseSlot(time);
-          }
-        };
+        container.innerHTML = emptyStateHtml("Unavailable", "This date is outside the booking window.");
       }
+      return;
+    }
 
+    const times = enumeratePublicAvailableSlotTimes(dateStr, selectedService);
+    if (!times.length) {
+      container.innerHTML = emptyStateHtml("No available times", "Try another day.");
+      return;
+    }
+
+    times.forEach((time) => {
+      const div = document.createElement("div");
+      div.className = "slot";
+      div.innerText = time;
+      div.dataset.slotTime = time;
+      div.setAttribute("role", "button");
+      div.setAttribute("tabindex", "0");
+      div.setAttribute("aria-pressed", selectedSlot === time ? "true" : "false");
+      if (selectedSlot === time) div.classList.add("selected");
+      div.onclick = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        chooseSlot(time);
+      };
+      div.onkeydown = (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          chooseSlot(time);
+        }
+      };
       container.appendChild(div);
     });
-
-    if (availableCount === 0) {
-      container.innerHTML = emptyStateHtml(
-        "Fully booked",
-        selectedStaffId
-          ? "This stylist has no open times on this day. Try another date or stylist."
-          : "No stylists are free on this day. Try another date."
-      );
-    }
   }
 
 
