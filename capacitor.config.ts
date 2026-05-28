@@ -8,7 +8,8 @@ import type { CapacitorConfig } from "@capacitor/cli";
  *   CAPACITOR_USE_REMOTE=false npm run cap:sync
  */
 const PRODUCTION_APP_URL = "https://booking-app-fawn-five.vercel.app";
-const useRemote = process.env.CAPACITOR_USE_REMOTE !== "false";
+// Local device testing: force bundled www/ instead of remote server.url.
+const useRemote = false;
 const remoteUrl = (process.env.CAPACITOR_SERVER_URL || PRODUCTION_APP_URL).trim();
 
 const config: CapacitorConfig = {

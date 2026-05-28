@@ -32,15 +32,16 @@
       --color-success-hover: #15803d;
       --color-danger: #dc2626;
       --color-danger-hover: #b91c1c;
-      --color-muted: #6b7280;
-      --color-border: #e5e7eb;
+      --color-muted: #64748b;
+      --color-border: rgba(148, 163, 184, 0.35);
       --color-surface: #ffffff;
-      --color-bg: #f3f4f6;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 14px;
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+      --color-bg: var(--pwa-bg);
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 1px 0 rgba(15, 23, 42, 0.02), 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.12);
       --space-xs: 6px;
       --space-sm: 10px;
       --space-md: 16px;
@@ -59,6 +60,7 @@
       color: #111827;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       overflow-x: hidden;
     }
 
@@ -145,10 +147,16 @@
     }
 
     .topbar {
-      background: #111827;
-      color: white;
-      padding: 14px var(--space-md);
-      border-bottom: 1px solid #1f2937;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0f172a;
+      padding: 12px var(--space-md);
+      padding-top: calc(12px + var(--safe-top));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
     }
 
     .topbar-inner {
@@ -170,12 +178,13 @@
 
     .topbar-title {
       font-size: 1.05rem;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
+      font-weight: 800;
     }
 
     .topbar-tagline {
       font-size: 12px;
-      color: #9ca3af;
+      color: #64748b;
       font-weight: 400;
     }
 
@@ -185,19 +194,73 @@
       gap: 8px;
       align-items: center;
       justify-content: flex-end;
+      overflow: visible;
+      min-width: 0;
     }
 
     .topbar button {
       width: auto;
-      padding: 9px 14px;
+      padding: 8px 12px;
       margin: 0;
-      min-height: 40px;
-      background: #374151;
+      min-height: 44px;
+      background: rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+      border: 1px solid rgba(148, 163, 184, 0.35);
       font-size: 14px;
+      font-weight: 700;
+      border-radius: 12px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+      white-space: nowrap;
     }
 
     .topbar button:hover {
-      background: #4b5563;
+      background: rgba(15, 23, 42, 0.1);
+    }
+
+    /* Make admin logout subtly prominent (topbar only). */
+    .topbar #logoutBtn:not(.hidden) {
+      background: rgba(254, 242, 242, 0.9);
+      border-color: rgba(239, 68, 68, 0.28);
+      color: #b91c1c;
+    }
+
+    .topbar #logoutBtn:not(.hidden):hover {
+      background: rgba(254, 226, 226, 0.95);
+      border-color: rgba(239, 68, 68, 0.38);
+      color: #991b1b;
+    }
+
+    body.app-theme-dark .topbar #logoutBtn:not(.hidden) {
+      background: rgba(127, 29, 29, 0.2);
+      border-color: rgba(239, 68, 68, 0.28);
+      color: #fecaca;
+    }
+
+    body.app-theme-dark .topbar #logoutBtn:not(.hidden):hover {
+      background: rgba(127, 29, 29, 0.28);
+      border-color: rgba(239, 68, 68, 0.38);
+      color: #fee2e2;
+    }
+
+    body.app-theme-dark .topbar {
+      background: rgba(15, 23, 42, 0.78);
+      color: #e2e8f0;
+      border-bottom-color: rgba(148, 163, 184, 0.18);
+    }
+
+    body.app-theme-dark .topbar-tagline {
+      color: rgba(226, 232, 240, 0.7);
+    }
+
+    body.app-theme-dark .topbar button {
+      background: rgba(226, 232, 240, 0.08);
+      color: #e2e8f0;
+      border-color: rgba(148, 163, 184, 0.22);
+      box-shadow: none;
+    }
+
+    body.app-theme-dark .topbar button:hover {
+      background: rgba(226, 232, 240, 0.14);
     }
 
     #modeView {
@@ -310,6 +373,10 @@
       gap: 0;
     }
 
+    #authView .auth-panel .admin-auth-oauth {
+      margin-top: 0;
+    }
+
     .auth-panel.hidden {
       display: none !important;
     }
@@ -385,6 +452,159 @@
     .auth-btn--logout:hover {
       background: #fef2f2;
       color: #991b1b;
+    }
+
+    #authView .admin-auth-oauth {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 0 4px;
+      width: 100%;
+    }
+
+    #authView .auth-btn--oauth,
+    #authView button.auth-btn--oauth-google,
+    #authView button.auth-btn--oauth-apple {
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+    }
+
+    #authView button.auth-btn--oauth-google {
+      background: #fff !important;
+      color: #1f2937 !important;
+      border: 1px solid #dadce0 !important;
+    }
+
+    #authView button.auth-btn--oauth-apple {
+      background: #000 !important;
+      color: #fff !important;
+      border: 1px solid #000 !important;
+    }
+
+    #authView button.auth-btn--oauth-google:hover {
+      background: #f8fafc !important;
+      border-color: #c4c7c5 !important;
+    }
+
+    #authView button.auth-btn--oauth-apple:hover {
+      background: #1a1a1a !important;
+      border-color: #1a1a1a !important;
+    }
+
+    #authView .auth-divider {
+      margin: 4px 0 12px;
+    }
+
+    #customerStartCard .customer-auth-oauth {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 0 4px;
+      width: 100%;
+    }
+
+    #customerStartCard .auth-btn--oauth,
+    #customerStartCard button.auth-btn--oauth-google,
+    #customerStartCard button.auth-btn--oauth-apple {
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+    }
+
+    #customerStartCard button.auth-btn--oauth-google {
+      background: #fff !important;
+      color: #1f2937 !important;
+      border: 1px solid #dadce0 !important;
+    }
+
+    #customerStartCard button.auth-btn--oauth-apple {
+      background: #000 !important;
+      color: #fff !important;
+      border: 1px solid #000 !important;
+    }
+
+    #customerStartCard button.auth-btn--oauth-google:hover {
+      background: #f8fafc !important;
+      border-color: #c4c7c5 !important;
+    }
+
+    #customerStartCard button.auth-btn--oauth-apple:hover {
+      background: #1a1a1a !important;
+      border-color: #1a1a1a !important;
+    }
+
+    #customerStartCard .auth-panel .auth-divider {
+      margin: 4px 0 12px;
+    }
+
+    .auth-btn--oauth {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: none;
+    }
+
+    .auth-btn--oauth-google {
+      background: #fff;
+      color: #1f2937;
+      border: 1px solid #dadce0;
+      box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
+    }
+
+    .auth-btn--oauth-google:hover {
+      background: #f8fafc;
+      border-color: #c4c7c5;
+    }
+
+    .auth-btn--oauth-apple {
+      background: #000;
+      color: #fff;
+      border: 1px solid #000;
+    }
+
+    .auth-btn--oauth-apple:hover {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+    }
+
+    .auth-oauth-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .auth-oauth-icon svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 2px 0 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: lowercase;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
     }
 
     .auth-link-btn {
@@ -475,8 +695,44 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
-    #customerManualBusinessSection.hidden {
+    #customerManualBusinessSection.hidden,
+    #customerNoLinkFallback.hidden {
       display: none !important;
+    }
+
+    .customer-hub-panel--no-link {
+      background: #fff;
+      text-align: center;
+    }
+
+    .customer-hub-panel--no-link .auth-card-title {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .customer-hub-panel--no-link .auth-card-lead {
+      margin-bottom: 14px;
+    }
+
+    .customer-hub-manual-code-toggle {
+      display: inline-block;
+      margin: 0;
+      padding: 8px 0;
+      border: none;
+      background: none;
+      color: var(--color-primary);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      width: auto;
+      min-height: auto;
+    }
+
+    .customer-hub-manual-code-toggle:hover {
+      color: var(--color-primary-hover);
+      background: none;
     }
 
     .customer-hub-greeting {
@@ -1779,6 +2035,37 @@
       flex-direction: column;
       gap: var(--space-md);
       align-items: stretch;
+    }
+
+    /* Admin inline toolbar (iPhone-safe logout entrypoint; not the global topbar) */
+    .admin-inline-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 8px 2px 0;
+    }
+
+    .admin-inline-toolbar__logout {
+      width: auto !important;
+      max-width: none !important;
+      min-height: 44px;
+      margin: 0 !important;
+      padding: 10px 14px !important;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(239, 68, 68, 0.28);
+      color: #b91c1c;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+    }
+
+    .admin-inline-toolbar__logout:hover {
+      background: rgba(254, 242, 242, 0.95);
+      border-color: rgba(239, 68, 68, 0.38);
+      color: #991b1b;
     }
 
     @media (min-width: 900px) {
@@ -6110,46 +6397,122 @@
       display: none;
     }
 
-    #publicBookingContent .public-schedule-staff-optional {
-      margin: 0 0 12px;
-      border: 1px solid var(--public-border, #e2e8f0);
-      border-radius: 12px;
-      background: var(--public-surface, #fff);
+    #publicBookingContent .public-schedule-staff-picker {
+      margin: 0 0 14px;
+      min-width: 0;
+      max-width: 100%;
       overflow: hidden;
     }
 
-    #publicBookingContent .public-schedule-staff-optional summary {
-      padding: 12px 14px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      list-style: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    #publicBookingContent .public-schedule-staff-optional summary::-webkit-details-marker {
+    #publicBookingContent .public-schedule-staff-picker.hidden {
       display: none;
     }
 
-    #publicBookingContent .public-schedule-staff-optional__tag {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--public-muted, #64748b);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    #publicBookingContent .public-schedule-staff-picker__title {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--public-text, #0f172a);
     }
 
-    #publicBookingContent .public-schedule-staff-optional .public-staff-cards--compact {
+    #publicBookingContent .public-schedule-staff-chips {
       display: flex;
-      flex-direction: column;
+      flex-wrap: nowrap;
       gap: 8px;
-      padding: 0 12px 12px;
       min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
     }
 
-    #publicBookingContent .public-staff-cards--compact .public-staff-card {
-      min-height: 48px;
-      padding: 10px 12px;
+    #publicBookingContent .public-schedule-staff-chip {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 8px;
+      width: auto;
+      min-height: 44px;
+      margin: 0;
+      padding: 6px 14px 6px 6px;
+      border: 1px solid var(--public-border, #e2e8f0);
+      border-radius: 999px;
+      background: var(--public-surface, #fff);
+      color: var(--public-text, #0f172a);
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #publicBookingContent .public-schedule-staff-chip__avatar {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--public-surface-2, #e2e8f0);
+      color: var(--public-text, #0f172a);
+    }
+
+    #publicBookingContent .public-schedule-staff-chip__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #publicBookingContent .public-schedule-staff-chip__initials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      color: inherit;
+    }
+
+    #publicBookingContent .public-schedule-staff-chip__avatar--any {
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 18%, var(--public-surface-2, #e2e8f0));
+      color: var(--business-accent, #2563eb);
+    }
+
+    #publicBookingContent .public-schedule-staff-chip__label {
+      line-height: 1.2;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #publicBookingContent .public-schedule-staff-chip:hover,
+    #publicBookingContent .public-schedule-staff-chip:focus-visible {
+      border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 55%, transparent);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 8%, #fff);
+    }
+
+    #publicBookingContent .public-schedule-staff-chip--selected {
+      border-color: var(--business-accent, #38bdf8);
+      background: color-mix(in srgb, var(--business-accent, #38bdf8) 16%, #fff);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--business-accent, #38bdf8) 28%, transparent);
+    }
+
+    #publicBookingContent .public-times-block {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     #publicBookingContent .public-details-more-options {
@@ -7308,6 +7671,16 @@
       .public-booking-wizard--with-summary .public-booking-wizard-main {
         padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
       }
+    }
+
+    .public-booking-honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .visually-hidden {
@@ -10080,16 +10453,34 @@
     }
 
     #customerMyBookingsCard .customer-my-bookings-loading__label {
-      margin: 0 0 var(--space-md);
+      margin: 0 0 12px;
       font-size: 14px;
       font-weight: 600;
       color: var(--color-muted);
     }
 
-    #customerMyBookingsCard .customer-my-bookings-loading .mobile-skeleton-stack {
-      max-width: 360px;
+    #customerMyBookingsCard .customer-my-bookings-loading__spinner {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 14px;
+      border: 2px solid #e2e8f0;
+      border-top-color: var(--business-accent, #2563eb);
+      border-radius: 50%;
+      animation: customer-my-bookings-spin 0.75s linear infinite;
+    }
+
+    @keyframes customer-my-bookings-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #customerMyBookingsCard .customer-my-bookings-loading__skeleton {
+      max-width: 280px;
       margin: 0 auto;
-      opacity: 0.65;
+      opacity: 0.55;
+    }
+
+    #customerMyBookingsCard .customer-my-bookings-loading__skeleton .mobile-skeleton-block--card {
+      height: 72px;
     }
 
     #customerMyBookingsCard .customer-my-bookings-body {
@@ -10668,19 +11059,27 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes app-toast-in {
+      from { transform: translateX(-50%) translateY(10px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
     .app-toast {
       position: fixed;
-      bottom: 20px;
+      bottom: calc(18px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
       z-index: 10000;
       max-width: min(420px, calc(100vw - 32px));
       padding: 12px 16px;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
       font-size: 14px;
       font-weight: 500;
       line-height: 1.4;
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+      animation: app-toast-in 0.18s ease-out;
     }
 
     .app-toast.hidden {
@@ -10688,20 +11087,20 @@
     }
 
     .app-toast.success {
-      background: #ecfdf5;
-      border: 1px solid #86efac;
+      background: rgba(236, 253, 245, 0.92);
+      border: 1px solid rgba(34, 197, 94, 0.35);
       color: #166534;
     }
 
     .app-toast.error {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
+      background: rgba(254, 242, 242, 0.92);
+      border: 1px solid rgba(239, 68, 68, 0.3);
       color: #991b1b;
     }
 
     .app-toast.info {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: rgba(239, 246, 255, 0.92);
+      border: 1px solid rgba(59, 130, 246, 0.28);
       color: #1e40af;
     }
 
@@ -11322,6 +11721,7 @@
       #customerStartCard.customer-hub-card--mobile-shell-auth .customer-hub-header,
       #customerStartCard.customer-hub-card--mobile-shell-auth #customerBusinessContext,
       #customerStartCard.customer-hub-card--mobile-shell-auth #customerLoggedInBox,
+      #customerStartCard.customer-hub-card--mobile-shell-auth #customerNoLinkFallback,
       #customerStartCard.customer-hub-card--mobile-shell-auth #customerManualBusinessSection,
       #customerStartCard.customer-hub-card--mobile-shell-auth #customerAuthDivider,
       #customerStartCard.customer-hub-card--mobile-shell-auth .customer-hub-footer {
@@ -12015,6 +12415,28 @@
       box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28);
     }
 
+    body.native-app-shell #authView.auth-card {
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: clamp(8px, 4vh, 32px);
+      padding: 24px 20px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.85) inset,
+        0 16px 40px rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    body.native-app-shell #authView .auth-card-inner {
+      gap: 14px;
+    }
+
+    body.native-app-shell #authView .admin-auth-oauth {
+      display: flex !important;
+    }
+
     .admin-native-toolbar {
       display: none;
     }
@@ -12090,11 +12512,58 @@
       display: none;
     }
 
+    /* ======================================================================
+       NATIVE iOS (Capacitor) ADMIN — FORCE bottom tabs visible (DEBUG)
+       - Do NOT rely on body.admin-mobile-shell-active (can fail on iOS WebView)
+       - Hide the old top admin nav grid on native small screens
+       - Force the bottom nav to render even if it still has `.hidden`
+       ====================================================================== */
+    @media (max-width: 900px) {
+      body.native-app-shell #adminView:not(.hidden) #adminNav {
+        display: none !important;
+      }
+
+      body.native-app-shell #adminView:not(.hidden) .admin-inline-toolbar {
+        display: none !important;
+      }
+
+      /* Show bottom tabs even if `.hidden` is still present. */
+      body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav,
+      body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav.hidden {
+        display: flex !important;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        align-items: stretch;
+        justify-content: space-around;
+        gap: 2px;
+        padding: 6px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+
+        /* TEMP DEBUG: confirm rendering on real device */
+        background: red !important;
+
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(12px);
+      }
+
+      body.native-app-shell #adminView:not(.hidden) .admin-dashboard-panels {
+        padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+      }
+    }
+
     body.admin-mobile-shell-active #adminNav {
       display: none !important;
     }
 
     body.admin-mobile-shell-active #adminView:not(.hidden) > .admin-native-toolbar {
+      display: none !important;
+    }
+
+    /* Hide the desktop-style admin inline toolbar on mobile shell. */
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-inline-toolbar {
       display: none !important;
     }
 
@@ -12181,6 +12650,16 @@
       stroke-width: 1.75;
       stroke-linecap: round;
       stroke-linejoin: round;
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-icon--emoji {
+      display: inline-flex;
+      width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      line-height: 1;
     }
 
     @supports (overflow: clip) {
@@ -12842,6 +13321,21 @@
         <h1 class="auth-card-title">Admin</h1>
 
         <div id="adminAuthLoginPanel" class="auth-panel">
+          <div class="admin-auth-oauth" aria-label="Social sign in">
+            <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-google" onclick="signInWithGoogle()">
+              <span class="auth-oauth-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              </span>
+              Continue with Google
+            </button>
+            <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-apple" onclick="signInWithApple()">
+              <span class="auth-oauth-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              </span>
+              Continue with Apple
+            </button>
+          </div>
+          <div class="auth-divider" role="separator"><span>or</span></div>
           <p class="auth-card-lead">Sign in to your business dashboard.</p>
           <label class="auth-field-label" for="authEmail">Email</label>
           <input id="authEmail" type="email" autocomplete="email" placeholder="you@business.com" />
@@ -12856,6 +13350,21 @@
         </div>
 
         <div id="adminAuthSignupPanel" class="auth-panel hidden">
+          <div class="admin-auth-oauth" aria-label="Social sign in">
+            <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-google" onclick="signInWithGoogle()">
+              <span class="auth-oauth-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              </span>
+              Continue with Google
+            </button>
+            <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-apple" onclick="signInWithApple()">
+              <span class="auth-oauth-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              </span>
+              Continue with Apple
+            </button>
+          </div>
+          <div class="auth-divider" role="separator"><span>or</span></div>
           <p class="auth-card-lead">Create your admin account to manage bookings.</p>
           <label class="auth-field-label" for="authSignupEmail">Email</label>
           <input id="authSignupEmail" type="email" autocomplete="email" placeholder="you@business.com" />
@@ -12907,6 +13416,21 @@
         </button>
       </header>
       <div class="admin-dashboard">
+        <div style="padding:12px 14px;margin:0 0 10px;border:2px solid #dc2626;border-radius:14px;background:#fff;color:#dc2626;font-weight:900;font-size:16px;letter-spacing:-0.02em;">
+          LOCAL BUILD TEST - SETTINGS LOGOUT
+        </div>
+        <div style="font-size:12px;color:#94a3b8;margin:-2px 2px 8px;">IOS BUILD MARKER 2026</div>
+        <div class="admin-inline-toolbar" aria-label="Admin actions">
+          <button
+            type="button"
+            id="adminInlineLogoutBtn"
+            class="admin-inline-toolbar__logout"
+            onclick="logout()"
+            aria-label="Log out"
+          >
+            Logout
+          </button>
+        </div>
         <nav id="adminNav" class="admin-nav" aria-label="Admin dashboard sections">
           <button type="button" class="admin-nav-btn admin-nav-btn--active" data-admin-section="overview" aria-current="page">Overview</button>
           <button type="button" class="admin-nav-btn" data-admin-section="customize">Customize Page</button>
@@ -13778,6 +14302,16 @@
                 <p id="adminProfileBusinessName" class="admin-mobile-card__hint">—</p>
               </div>
               <div class="admin-mobile-card">
+                <p class="admin-mobile-card__eyebrow">Security</p>
+                <button
+                  type="button"
+                  id="adminSettingsLogoutBtn"
+                  class="admin-mobile-profile__btn admin-mobile-profile__btn--logout"
+                  onclick="logout()"
+                  aria-label="Log out of admin account"
+                >Logout</button>
+              </div>
+              <div class="admin-mobile-card">
                 <p class="admin-mobile-card__eyebrow">Booking link</p>
                 <div id="adminProfilePublicLink" class="public-link-box admin-mobile-profile__link">—</div>
                 <div class="admin-mobile-profile__btn-row">
@@ -13801,25 +14335,29 @@
       </div>
 
       <nav id="adminMobileBottomNav" class="admin-mobile-bottom-nav hidden" aria-label="Admin app navigation">
-        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-admin-mobile-tab="home" aria-current="page">
-          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg></span>
-          <span>Home</span>
+        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-admin-mobile-tab="overview" aria-current="page">
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">🏠</span>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="services" aria-current="false">
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">✂️</span>
+          <span>Services</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="staff" aria-current="false">
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">👤</span>
+          <span>Staff</span>
         </button>
         <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="calendar" aria-current="false">
-          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span>
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">📅</span>
           <span>Calendar</span>
         </button>
         <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="bookings" aria-current="false">
-          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span>
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">📋</span>
           <span>Bookings</span>
         </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="setup" aria-current="false">
-          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
-          <span>Setup</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="profile" aria-current="false">
-          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8" r="3.5"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span>
-          <span>Profile</span>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="settings" aria-current="false">
+          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">⚙️</span>
+          <span>Settings</span>
         </button>
       </nav>
     </div>
@@ -14444,7 +14982,7 @@
       <div id="customerStartCard" class="card customer-hub-card hidden">
         <div class="customer-hub-shell">
           <header class="customer-hub-header">
-            <h1 class="customer-hub-title">Your bookings</h1>
+            <h1 id="customerHubTitle" class="customer-hub-title">Your bookings</h1>
             <p id="customerHubSubtitle" class="customer-hub-subtitle">Sign in to book appointments and view your schedule.</p>
           </header>
 
@@ -14464,13 +15002,19 @@
             </div>
           </div>
 
+          <div id="customerNoLinkFallback" class="customer-hub-panel customer-hub-panel--no-link hidden">
+            <h2 class="auth-card-title">Open a booking link</h2>
+            <p class="auth-card-lead">Use the booking link sent by the business.</p>
+            <button type="button" class="customer-hub-manual-code-toggle" onclick="showCustomerManualBusinessEntryExplicit()">Have a business code?</button>
+          </div>
+
           <p id="customerManualEntryPrompt" class="customer-hub-manual-prompt hidden">
             <button type="button" class="auth-btn auth-btn--ghost customer-hub-manual-toggle" onclick="showCustomerManualBusinessEntryExplicit()">Use a different business ID</button>
           </p>
 
-          <div id="customerManualBusinessSection" class="customer-hub-panel customer-hub-panel--manual">
-            <h2 class="auth-card-title" style="font-size: 1.05rem; margin-bottom: 6px">Book without a link</h2>
-            <p class="auth-card-lead" style="margin-bottom: 12px">Enter a business ID if you do not have a QR code or booking link.</p>
+          <div id="customerManualBusinessSection" class="customer-hub-panel customer-hub-panel--manual hidden">
+            <h2 class="auth-card-title" style="font-size: 1.05rem; margin-bottom: 6px">Enter business code</h2>
+            <p class="auth-card-lead" style="margin-bottom: 12px">Only needed if you do not have a booking link.</p>
             <label class="auth-field-label" for="manualBusinessId">Business ID</label>
             <input id="manualBusinessId" placeholder="e.g. my-business-41784a" autocomplete="off" />
             <button type="button" class="auth-btn auth-btn--primary" onclick="loadManualCustomerBusiness()">Open booking</button>
@@ -14483,6 +15027,21 @@
             <p id="customerHubAuthHint" class="customer-hub-auth-hint hidden"></p>
 
             <div id="customerAuthLoginPanel" class="auth-panel">
+              <div class="customer-auth-oauth" aria-label="Social sign in">
+                <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-google" onclick="signInCustomerWithGoogle()">
+                  <span class="auth-oauth-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                  </span>
+                  Continue with Google
+                </button>
+                <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-apple" onclick="signInCustomerWithApple()">
+                  <span class="auth-oauth-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                  </span>
+                  Continue with Apple
+                </button>
+              </div>
+              <div class="auth-divider" role="separator"><span>or</span></div>
               <p class="auth-card-lead">Sign in to book and manage your appointments.</p>
               <label class="auth-field-label" for="customerAuthEmail">Email</label>
               <input id="customerAuthEmail" type="email" autocomplete="email" placeholder="you@email.com" />
@@ -14496,6 +15055,21 @@
             </div>
 
             <div id="customerAuthSignupPanel" class="auth-panel hidden">
+              <div class="customer-auth-oauth" aria-label="Social sign in">
+                <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-google" onclick="signInCustomerWithGoogle()">
+                  <span class="auth-oauth-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                  </span>
+                  Continue with Google
+                </button>
+                <button type="button" class="auth-btn auth-btn--oauth auth-btn--oauth-apple" onclick="signInCustomerWithApple()">
+                  <span class="auth-oauth-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                  </span>
+                  Continue with Apple
+                </button>
+              </div>
+              <div class="auth-divider" role="separator"><span>or</span></div>
               <p class="auth-card-lead">Create an account to book faster next time.</p>
               <label class="auth-field-label" for="customerAuthName">Full name</label>
               <input id="customerAuthName" autocomplete="name" placeholder="Your full name" />
@@ -14549,8 +15123,8 @@
 
         <div id="customerMyBookingsLoading" class="customer-my-bookings-loading" role="status" aria-busy="true" aria-live="polite">
           <p class="customer-my-bookings-loading__label">Loading your bookings…</p>
-          <div class="mobile-skeleton-stack" aria-hidden="true">
-            <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
+          <div class="customer-my-bookings-loading__spinner" aria-hidden="true"></div>
+          <div class="mobile-skeleton-stack customer-my-bookings-loading__skeleton" aria-hidden="true">
             <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
           </div>
         </div>
@@ -14782,11 +15356,11 @@
                       <div class="public-times-block">
                         <h2 id="selectedDateTitle" class="public-panel-title public-booking-step-heading">Choose date &amp; time</h2>
                         <p id="publicScheduleStaffHint" class="public-schedule-staff-hint hidden" aria-live="polite"></p>
+                        <div id="publicScheduleStaffPicker" class="public-schedule-staff-picker hidden">
+                          <h3 class="public-schedule-staff-picker__title">Choose stylist</h3>
+                          <div id="publicScheduleStaffCards" class="public-schedule-staff-chips" role="radiogroup" aria-label="Choose stylist"></div>
+                        </div>
                         <p class="public-panel-hint public-booking-step-subtitle" id="publicTimesHint">Pick a day, then choose an available time.</p>
-                        <details id="publicScheduleStaffOptional" class="public-schedule-staff-optional hidden">
-                          <summary>Prefer a stylist <span class="public-schedule-staff-optional__tag">optional</span></summary>
-                          <div id="publicScheduleStaffCards" class="public-staff-cards public-staff-cards--compact" role="radiogroup" aria-label="Preferred stylist"></div>
-                        </details>
                         <div id="publicTimelineShell" class="public-timeline-shell">
                           <div class="public-week-toolbar">
                             <button type="button" class="public-week-nav" onclick="changePublicWeek(-1)" aria-label="Previous week">‹ Week</button>
@@ -14897,9 +15471,19 @@
                             <input id="customerPhone" type="tel" placeholder="Phone number" autocomplete="tel" inputmode="tel" />
                           </label>
                           <label class="public-field">
-                            <span class="public-field-label">Email <span class="public-field-optional">optional</span></span>
+                            <span class="public-field-label">Email <span id="customerEmailOptionalTag" class="public-field-optional">optional</span></span>
                             <input id="customerEmail" type="email" placeholder="For confirmation email" autocomplete="email" />
                           </label>
+                          <div class="public-booking-honeypot" aria-hidden="true">
+                            <label for="publicBookingHoneypot">Company website</label>
+                            <input
+                              type="text"
+                              id="publicBookingHoneypot"
+                              name="company_website"
+                              tabindex="-1"
+                              autocomplete="off"
+                            />
+                          </div>
                           <label class="public-field public-field--notes">
                             <span class="public-field-label">Notes <span class="public-field-optional">optional</span></span>
                             <textarea id="customerNotes" placeholder="Anything we should know?" rows="2"></textarea>
@@ -17309,6 +17893,28 @@
     return !!getPublicBusinessIdFromUrl();
   }
 
+  function hasPublicBusinessContext() {
+    return !!getActivePublicBusinessSlug();
+  }
+
+  function ensureBusinessQueryInUrl(slug) {
+    const normalized = normalizeBusinessSlug(slug || "");
+    if (!normalized) return;
+    try {
+      const qs = new URLSearchParams(window.location.search);
+      if (qs.get("business") === normalized) return;
+      qs.set("business", normalized);
+      qs.delete("manage");
+      history.replaceState(null, "", window.location.pathname + "?" + qs.toString());
+    } catch (e) {
+      history.replaceState(
+        null,
+        "",
+        window.location.pathname + "?business=" + encodeURIComponent(normalized)
+      );
+    }
+  }
+
   function validateManualBusinessIdInput(raw) {
     const trimmed = String(raw || "").trim();
     if (!trimmed) {
@@ -17388,9 +17994,12 @@
     customerPreferManualBusinessEntry = true;
     syncPublicBusinessFromUrl();
     const manualSection = document.getElementById("customerManualBusinessSection");
+    const noLinkFallback = document.getElementById("customerNoLinkFallback");
     const input = document.getElementById("manualBusinessId");
+    noLinkFallback?.classList.add("hidden");
     manualSection?.classList.remove("hidden");
     document.getElementById("customerManualEntryPrompt")?.classList.add("hidden");
+    updateCustomerHubBusinessContextUi();
     if (input) {
       input.scrollIntoView({ behavior: "smooth", block: "center" });
       window.setTimeout(() => input.focus({ preventScroll: true }), 150);
@@ -17401,16 +18010,21 @@
     const slug = getActivePublicBusinessSlug();
     const ctx = document.getElementById("customerBusinessContext");
     const manualSection = document.getElementById("customerManualBusinessSection");
+    const noLinkFallback = document.getElementById("customerNoLinkFallback");
     const manualPrompt = document.getElementById("customerManualEntryPrompt");
     const divider = document.getElementById("customerAuthDivider");
     const nameEl = document.getElementById("customerBusinessContextName");
     const slugEl = document.getElementById("customerBusinessContextSlug");
+    const titleEl = document.getElementById("customerHubTitle");
     const subtitle = document.getElementById("customerHubSubtitle");
     const authHint = document.getElementById("customerHubAuthHint");
     const loggedLead = document.getElementById("customerHubLoggedLead");
+    const authBox = document.getElementById("customerAuthBox");
+    const isLoggedInCustomer = !!(currentUser && currentUserRole === "customer");
 
     if (slug) {
       ctx?.classList.remove("hidden");
+      noLinkFallback?.classList.add("hidden");
       const hideManualPanel =
         !isCustomerMobileShellEnabled() || !customerPreferManualBusinessEntry;
       manualSection?.classList.toggle("hidden", hideManualPanel);
@@ -17419,7 +18033,8 @@
         !!getPublicBusinessIdFromUrl() &&
         hideManualPanel;
       manualPrompt?.classList.toggle("hidden", !showManualPrompt);
-      divider?.classList.toggle("hidden", hideManualPanel);
+      divider?.classList.toggle("hidden", hideManualPanel || isLoggedInCustomer);
+      if (titleEl) titleEl.textContent = "Your bookings";
       if (slugEl) slugEl.textContent = slug;
       const loadedName =
         businessSettings?.business_name &&
@@ -17432,7 +18047,7 @@
           ? `You're booking with ${loadedName}. Sign in to continue.`
           : "This business link is ready. Sign in to book your appointment.";
       }
-      if (authHint && !(currentUser && currentUserRole === "customer")) {
+      if (authHint && !isLoggedInCustomer) {
         authHint.textContent = loadedName
           ? `Sign in to book at ${loadedName}.`
           : "Sign in to book at this business.";
@@ -17447,16 +18062,28 @@
       }
     } else {
       ctx?.classList.add("hidden");
-      customerPreferManualBusinessEntry = false;
-      manualSection?.classList.remove("hidden");
       manualPrompt?.classList.add("hidden");
-      divider?.classList.remove("hidden");
+      if (customerPreferManualBusinessEntry) {
+        noLinkFallback?.classList.add("hidden");
+        manualSection?.classList.remove("hidden");
+      } else {
+        noLinkFallback?.classList.remove("hidden");
+        manualSection?.classList.add("hidden");
+      }
+      divider?.classList.toggle("hidden", isLoggedInCustomer);
       if (nameEl) nameEl.textContent = "";
       if (slugEl) slugEl.textContent = "";
-      if (subtitle) subtitle.textContent = "Sign in to book appointments and view your schedule.";
+      if (titleEl) titleEl.textContent = isLoggedInCustomer ? "Your bookings" : "Open a booking link";
+      if (subtitle) {
+        subtitle.textContent = isLoggedInCustomer
+          ? "Manage appointments or book your next visit."
+          : "Use the booking link sent by the business.";
+      }
       authHint?.classList.add("hidden");
       if (loggedLead) loggedLead.textContent = "Manage appointments or book your next visit.";
     }
+
+    authBox?.classList.toggle("hidden", isLoggedInCustomer);
   }
 
   function forceStartPublicBookingAtServiceStep(reason) {
@@ -17470,7 +18097,7 @@
 
   function startNewPublicBookingFromHome() {
     const run = () => {
-      if (!hasKnownPublicBusinessFromUrl() && !businessId) {
+      if (!hasPublicBusinessContext() && !businessId) {
         customerHubBookAppointment();
         return;
       }
@@ -17506,7 +18133,7 @@
   }
 
   function customerHubBookAppointment() {
-    if (hasKnownPublicBusinessFromUrl()) {
+    if (hasPublicBusinessContext()) {
       if (isCustomerMobileShellEnabled()) {
         startNewPublicBookingFromHome();
         return;
@@ -17607,10 +18234,10 @@
   }
 
   function publicLoadingPlaceholder(kind = "services") {
+    if (kind === "slots") return loadingStateHtml("Loading available times…");
     if (typeof window !== "undefined" && window.innerWidth <= 768) {
       return publicSkeletonHtml(kind);
     }
-    if (kind === "slots") return loadingStateHtml("Loading available times…");
     if (kind === "staff") return loadingStateHtml("Loading team…");
     return loadingStateHtml("Loading services…");
   }
@@ -17830,7 +18457,7 @@
 
   function updatePublicScheduleStaffUi() {
     const hint = document.getElementById("publicScheduleStaffHint");
-    const optional = document.getElementById("publicScheduleStaffOptional");
+    const picker = document.getElementById("publicScheduleStaffPicker");
     const eligible = getEligiblePublicStaffForService(selectedService);
 
     if (!hint) return;
@@ -17838,7 +18465,7 @@
     if (!selectedService || !eligible.length) {
       hint.classList.add("hidden");
       hint.textContent = "";
-      optional?.classList.add("hidden");
+      picker?.classList.add("hidden");
       return;
     }
 
@@ -17846,20 +18473,20 @@
       const name = getStaffName(publicStaffAutoSelectedId);
       hint.textContent = "With " + name;
       hint.classList.remove("hidden");
-      optional?.classList.add("hidden");
+      picker?.classList.add("hidden");
       return;
     }
 
     if (eligible.length > 1) {
-      hint.textContent = "Any available stylist";
-      hint.classList.remove("hidden");
-      optional?.classList.remove("hidden");
+      hint.classList.add("hidden");
+      hint.textContent = "";
+      picker?.classList.remove("hidden");
       renderPublicStaffOptions(selectedPublicStaffChoice);
       return;
     }
 
     hint.classList.add("hidden");
-    optional?.classList.add("hidden");
+    picker?.classList.add("hidden");
   }
 
   function isPublicBookingWizardMounted() {
@@ -17977,6 +18604,22 @@
       updatePublicBookingDetailsSummary();
       syncPublicRecurringBookingUi();
       syncPublicDetailsMoreOptionsUi();
+      syncPublicBookingCustomerFieldsUi();
+    }
+  }
+
+  function isGuestPublicBooking() {
+    return !(currentUser && currentUserRole === "customer");
+  }
+
+  function syncPublicBookingCustomerFieldsUi() {
+    const guest = isGuestPublicBooking();
+    document.getElementById("customerEmailOptionalTag")?.classList.toggle("hidden", guest);
+    const hint = document.querySelector(".public-confirm-email-hint");
+    if (hint) {
+      hint.textContent = guest
+        ? "We'll send your confirmation to this email"
+        : "Confirmation sent successfully when email is provided";
     }
   }
 
@@ -20823,11 +21466,225 @@
     }
   }
 
+  function getAdminOAuthRedirectUrl(opts = {}) {
+    try {
+      const url = new URL(window.location.href);
+      url.hash = "";
+      url.searchParams.delete("code");
+      url.searchParams.delete("error");
+      url.searchParams.delete("error_description");
+      if (opts.preserveBusiness) {
+        const slug =
+          normalizeBusinessSlug(getActivePublicBusinessSlug()) ||
+          normalizeBusinessSlug(sessionStorage.getItem("bookingCustomerOAuthBusiness") || "");
+        if (slug) {
+          url.searchParams.set("business", slug);
+        }
+        url.searchParams.delete("manage");
+        url.searchParams.delete("reset_password");
+      }
+      return url.origin + url.pathname + url.search;
+    } catch (e) {
+      if (opts.preserveBusiness) {
+        const slug =
+          normalizeBusinessSlug(getActivePublicBusinessSlug()) ||
+          normalizeBusinessSlug(sessionStorage.getItem("bookingCustomerOAuthBusiness") || "");
+        if (slug) {
+          return (
+            window.location.origin +
+            window.location.pathname +
+            "?business=" +
+            encodeURIComponent(slug)
+          );
+        }
+      }
+      return window.location.origin + window.location.pathname;
+    }
+  }
+
+  function clearOAuthRedirectHashFromUrl() {
+    if (!window.location.hash) return;
+    const hash = window.location.hash.replace(/^#/, "");
+    if (
+      hash.includes("access_token=") ||
+      hash.includes("error=") ||
+      hash.includes("type=recovery")
+    ) {
+      try {
+        const url = new URL(window.location.href);
+        history.replaceState(null, "", url.origin + url.pathname + url.search);
+      } catch (e) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    }
+  }
+
+  let oauthSignInInFlight = false;
+
+  function clearOAuthIntentFlags() {
+    sessionStorage.removeItem("bookingAdminOAuthIntent");
+    sessionStorage.removeItem("bookingCustomerOAuthIntent");
+    sessionStorage.removeItem("bookingCustomerOAuthBusiness");
+  }
+
+  async function signInWithOAuthProvider(provider, opts = {}) {
+    if (!initSupabaseClient()) return;
+    if (oauthSignInInFlight) return;
+    oauthSignInInFlight = true;
+
+    const intent = opts.intent === "customer" ? "customer" : "admin";
+    const label = provider === "apple" ? "Apple" : "Google";
+
+    try {
+      clearOAuthIntentFlags();
+      if (intent === "customer") {
+        sessionStorage.setItem("bookingCustomerOAuthIntent", "customer");
+        const slug = getActivePublicBusinessSlug();
+        if (slug) {
+          sessionStorage.setItem("bookingCustomerOAuthBusiness", slug);
+        } else {
+          sessionStorage.removeItem("bookingCustomerOAuthBusiness");
+        }
+      } else {
+        sessionStorage.setItem("bookingAdminOAuthIntent", "1");
+        sessionStorage.removeItem("bookingCustomerOAuthBusiness");
+      }
+
+      const redirectTo = getAdminOAuthRedirectUrl({
+        preserveBusiness: intent === "customer"
+      });
+
+      // TODO(native-oauth): For Capacitor store builds, register app URL scheme + add redirect URL in Supabase Auth.
+      // Remote WebView currently uses production origin from capacitor.config server.url.
+
+      const { data, error } = await sb.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo }
+      });
+
+      if (error) {
+        clearOAuthIntentFlags();
+        showToast(label + " sign in failed. Please try again.", "error");
+        console.warn("[auth-oauth]", intent, provider, error.message);
+        return;
+      }
+
+      if (data?.url) {
+        window.location.assign(data.url);
+      }
+    } catch (err) {
+      clearOAuthIntentFlags();
+      showToast(label + " sign in failed. Please try again.", "error");
+      console.warn("[auth-oauth]", intent, provider, err?.message || err);
+    } finally {
+      oauthSignInInFlight = false;
+    }
+  }
+
+  function signInWithGoogle() {
+    return signInWithOAuthProvider("google", { intent: "admin" });
+  }
+
+  function signInWithApple() {
+    return signInWithOAuthProvider("apple", { intent: "admin" });
+  }
+
+  function signInCustomerWithGoogle() {
+    return signInWithOAuthProvider("google", { intent: "customer" });
+  }
+
+  function signInCustomerWithApple() {
+    return signInWithOAuthProvider("apple", { intent: "customer" });
+  }
+
+  function getOAuthUserDisplayName(user) {
+    const meta = user?.user_metadata || {};
+    return String(meta.full_name || meta.name || "").trim() || null;
+  }
+
+  async function completeCustomerOAuthSignIn(session) {
+    if (!session?.user) return false;
+
+    const fullName = getOAuthUserDisplayName(session.user);
+    if (fullName && document.getElementById("customerAuthName")) {
+      document.getElementById("customerAuthName").value = fullName;
+    }
+    if (session.user.email && document.getElementById("customerAuthEmail")) {
+      document.getElementById("customerAuthEmail").value = session.user.email;
+    }
+    if (session.user.email && document.getElementById("customerSignupEmail")) {
+      document.getElementById("customerSignupEmail").value = session.user.email;
+    }
+
+    if (currentUserRole !== "customer") {
+      const ok = await upsertUserProfile(session.user, "customer", {
+        email: session.user.email || null,
+        full_name: fullName,
+        phone: null
+      });
+      if (!ok) return false;
+    }
+
+    const savedBusinessSlug = normalizeBusinessSlug(
+      sessionStorage.getItem("bookingCustomerOAuthBusiness") || getActivePublicBusinessSlug()
+    );
+    sessionStorage.removeItem("bookingCustomerOAuthBusiness");
+
+    if (savedBusinessSlug) {
+      ensureBusinessQueryInUrl(savedBusinessSlug);
+      syncPublicBusinessFromUrl();
+    }
+
+    clearOAuthRedirectHashFromUrl();
+    updateCustomerAuthUI();
+    showToast("Signed in successfully.", "success");
+
+    if (hasPublicBusinessContext()) {
+      await continueCustomerToBooking();
+      return true;
+    }
+
+    await completeCustomerAuthReturnFlow();
+    return true;
+  }
+
   async function applyAuthenticatedSession(session) {
     currentUser = session.user;
-    const role = await loadCurrentUserRole();
+    let role = await loadCurrentUserRole();
+
+    const adminOAuthIntent = sessionStorage.getItem("bookingAdminOAuthIntent") === "1";
+    const customerOAuthIntent =
+      sessionStorage.getItem("bookingCustomerOAuthIntent") === "customer";
+    if (adminOAuthIntent) sessionStorage.removeItem("bookingAdminOAuthIntent");
+    if (customerOAuthIntent) sessionStorage.removeItem("bookingCustomerOAuthIntent");
+
+    if (customerOAuthIntent) {
+      if (role === "admin") {
+        showToast("This is an Admin account. Use Admin login instead.", "error");
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        showPublicView(false);
+        updateCustomerAuthUI();
+        return;
+      }
+      const ok = await completeCustomerOAuthSignIn(session);
+      if (!ok) {
+        showPublicView(false);
+        updateCustomerAuthUI();
+      }
+      return;
+    }
 
     if (role === "customer") {
+      if (adminOAuthIntent) {
+        showToast("This is a Customer account. Use Customer login instead.", "error");
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        showAuthView();
+        return;
+      }
       syncPublicBusinessFromUrl();
       if (hasKnownPublicBusinessFromUrl()) {
         await continueCustomerToBooking();
@@ -20838,12 +21695,30 @@
       return;
     }
 
+    if (!role && adminOAuthIntent && session?.user) {
+      const ok = await upsertUserProfile(session.user, "admin", {
+        email: session.user.email || null,
+        full_name: getOAuthUserDisplayName(session.user)
+      });
+      if (!ok) {
+        showAuthView();
+        return;
+      }
+      role = currentUserRole;
+    }
+
+    clearOAuthRedirectHashFromUrl();
     await restoreAdminSession();
   }
 
   async function routeAppShellAfterSession(session, opts = {}) {
     const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
     const queryParams = new URLSearchParams(window.location.search);
+
+    if (session?.user && (hashParams.has("access_token") || queryParams.has("code"))) {
+      clearOAuthRedirectHashFromUrl();
+    }
+
     const isRecoveryLink =
       queryParams.get("reset_password") === "1" ||
       queryParams.get("type") === "recovery" ||
@@ -20858,6 +21733,8 @@
 
     if (publicBusinessId || publicManageToken || getPublicBusinessIdFromUrl()) {
       syncPublicBusinessFromUrl();
+      const urlBiz = getActivePublicBusinessSlug();
+      if (urlBiz) ensureBusinessQueryInUrl(urlBiz);
       if (session?.user) {
         currentUser = session.user;
         await loadCurrentUserRole();
@@ -20868,6 +21745,10 @@
         return;
       }
       if (session?.user && currentUserRole === "customer") {
+        await continueCustomerToBooking();
+        return;
+      }
+      if (urlBiz) {
         await continueCustomerToBooking();
         return;
       }
@@ -21076,6 +21957,12 @@
   function hideAllViews() {
     document.body.classList.remove("wizard-open");
     document.body.classList.remove("admin-mobile-shell-active");
+    const topbar = document.querySelector(".topbar");
+    if (topbar) {
+      topbar.style.removeProperty("display");
+      topbar.style.removeProperty("visibility");
+      topbar.style.removeProperty("opacity");
+    }
     document.getElementById("adminMobileBottomNav")?.classList.add("hidden");
     document.getElementById("modeView")?.classList.add("hidden");
     document.getElementById("authView")?.classList.add("hidden");
@@ -21092,6 +21979,10 @@
     document.getElementById("modeView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.add("hidden");
     document.getElementById("homeBtn")?.classList.add("hidden");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
   }
 
   function showAuthView() {
@@ -21100,6 +21991,10 @@
     document.getElementById("logoutBtn")?.classList.add("hidden");
     document.getElementById("homeBtn")?.classList.remove("hidden");
     setAdminAuthPanel("login");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
   }
 
   function showResetPasswordView() {
@@ -21107,6 +22002,10 @@
     document.getElementById("resetPasswordView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.add("hidden");
     document.getElementById("homeBtn")?.classList.remove("hidden");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
   }
 
   const ADMIN_SECTION_PANEL_IDS = {
@@ -21124,11 +22023,12 @@
   };
 
   const ADMIN_MOBILE_TAB_SECTIONS = Object.freeze({
-    home: "home",
+    overview: "overview",
+    services: "services",
+    staff: "staff",
     calendar: "calendar",
     bookings: "bookings",
-    setup: "setup",
-    profile: "profile"
+    settings: "profile"
   });
 
   const ADMIN_MOBILE_SETUP_CHILD_SECTIONS = new Set([
@@ -21205,19 +22105,15 @@
   }
 
   function syncAdminMobileTabHighlightFromSection(sectionKey) {
-    let tab = null;
-    if (ADMIN_MOBILE_SETUP_CHILD_SECTIONS.has(sectionKey)) {
-      tab = "setup";
-    } else {
-      const tabBySection = {
-        home: "home",
-        setup: "setup",
-        calendar: "calendar",
-        bookings: "bookings",
-        profile: "profile"
-      };
-      tab = tabBySection[sectionKey] || null;
-    }
+    const tabBySection = {
+      overview: "overview",
+      services: "services",
+      staff: "staff",
+      calendar: "calendar",
+      bookings: "bookings",
+      profile: "settings"
+    };
+    const tab = tabBySection[sectionKey] || null;
     if (!tab) return;
     adminActiveMobileTab = tab;
     document.querySelectorAll("#adminMobileBottomNav .admin-mobile-nav-item").forEach((btn) => {
@@ -21228,7 +22124,7 @@
   }
 
   function setAdminMobileTab(tab, opts = {}) {
-    const key = ADMIN_MOBILE_TAB_SECTIONS[tab] ? tab : "home";
+    const key = ADMIN_MOBILE_TAB_SECTIONS[tab] ? tab : "overview";
     adminActiveMobileTab = key;
     adminMobileFromSetup = false;
     document.querySelectorAll("#adminMobileBottomNav .admin-mobile-nav-item").forEach((btn) => {
@@ -21259,13 +22155,23 @@
       setAdminMobileTab(btn.dataset.adminMobileTab);
     });
 
+    /* NATIVE iOS fallback: if the bottom nav is forced visible by CSS but still has
+       the `.hidden` class, remove it once so it behaves normally. */
+    try {
+      if (document.body.classList.contains("native-app-shell")) {
+        document.getElementById("adminMobileBottomNav")?.classList.remove("hidden");
+      }
+    } catch (e) {
+      /* ignore */
+    }
+
     window.addEventListener("resize", () => {
       const adminView = document.getElementById("adminView");
       if (!adminView || adminView.classList.contains("hidden")) return;
       const wasShell = document.body.classList.contains("admin-mobile-shell-active");
       const useShell = applyAdminMobileShellUi();
       if (useShell && !wasShell) {
-        setAdminMobileTab("home", { silent: true });
+        setAdminMobileTab("overview", { silent: true });
       } else if (!useShell && wasShell) {
         setAdminSection(adminActiveSection || "overview", { silent: true });
       }
@@ -21453,9 +22359,8 @@
     bindAdminMobileShellListeners();
 
     if (applyAdminMobileShellUi()) {
-      adminActiveSection = "home";
-      setAdminMobileTab("home", { silent: true });
-      renderAdminMobileHome();
+      adminActiveSection = "overview";
+      setAdminMobileTab("overview", { silent: true });
       return;
     }
 
@@ -21472,7 +22377,19 @@
     hideAllViews();
     document.body.classList.remove("wizard-open");
     document.getElementById("adminView")?.classList.remove("hidden");
-    document.getElementById("logoutBtn")?.classList.remove("hidden");
+    const topbar = document.querySelector(".topbar");
+    if (topbar) {
+      topbar.style.display = "block";
+      topbar.style.visibility = "visible";
+      topbar.style.opacity = "1";
+    }
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn?.classList.remove("hidden");
+    if (logoutBtn) {
+      logoutBtn.style.display = "inline-flex";
+      logoutBtn.style.visibility = "visible";
+      logoutBtn.style.opacity = "1";
+    }
     document.getElementById("homeBtn")?.classList.add("hidden");
     syncAdminNativeToolbar();
     initAdminDashboard();
@@ -21489,6 +22406,10 @@
     hideAllViews();
     document.getElementById("publicView")?.classList.remove("hidden");
     document.getElementById("logoutBtn")?.classList.add("hidden");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
 
     const urlBiz = syncPublicBusinessFromUrl();
     const openBooking = !!hasBusiness || !!urlBiz;
@@ -21844,7 +22765,19 @@
     hideAdminOnboardingLaunchScreen();
     document.body.classList.add("wizard-open");
     document.getElementById("adminOnboardingView").classList.remove("hidden");
-    document.getElementById("logoutBtn").classList.remove("hidden");
+    const topbar = document.querySelector(".topbar");
+    if (topbar) {
+      topbar.style.display = "block";
+      topbar.style.visibility = "visible";
+      topbar.style.opacity = "1";
+    }
+    const logoutBtn = document.getElementById("logoutBtn");
+    logoutBtn?.classList.remove("hidden");
+    if (logoutBtn) {
+      logoutBtn.style.display = "inline-flex";
+      logoutBtn.style.visibility = "visible";
+      logoutBtn.style.opacity = "1";
+    }
     document.getElementById("homeBtn").classList.add("hidden");
     bindAdminOnboardingFooterKeyboardGuard();
     logOnboarding("wizard visible");
@@ -23932,6 +24865,7 @@
       textBox.innerText = "";
       setCustomerAuthPanel("login");
     }
+    syncPublicBookingCustomerFieldsUi();
   }
 
   function normalizeCustomerMyBookingRow(raw, businessMeta) {
@@ -24337,7 +25271,7 @@
 
     mount.innerHTML = "";
     if (!customerMyBookings.length) {
-      mount.innerHTML = emptyStateHtml("No bookings yet", "Your appointments will appear here after you book.");
+      mount.innerHTML = emptyStateHtml("No bookings yet", "Your appointments will appear here.");
       mount.classList.remove("hidden");
       if (calendarPanel) calendarPanel.classList.add("hidden");
       return;
@@ -24609,24 +25543,14 @@
       selectedSlot = null;
       selectedService = null;
       currentDate = new Date();
-    }
-
-    if (urlBiz) {
-      const qs = new URLSearchParams(window.location.search);
-      if (!qs.get("business")) {
-        qs.set("business", urlBiz);
-        history.replaceState(null, "", window.location.pathname + "?" + qs.toString());
-      }
-      if (currentUser && currentUserRole === "customer") {
-        continueCustomerToBooking();
-        return;
-      }
-      showPublicView(true);
-      updateCustomerAuthUI();
+      customerPreferManualBusinessEntry = false;
+      showPublicView(false);
+      updateCustomerHubBusinessContextUi();
       return;
     }
 
-    showPublicView(false);
+    ensureBusinessQueryInUrl(urlBiz);
+    void continueCustomerToBooking();
   }
 
   function goHome() {
@@ -24717,30 +25641,20 @@
   }
 
   function showCustomerManualBusinessBookingEntry() {
-    if (hasKnownPublicBusinessFromUrl()) {
-      continueCustomerToBooking();
+    if (hasPublicBusinessContext()) {
+      void continueCustomerToBooking();
       return;
     }
 
     customerMyBookingsViewOpen = false;
+    customerPreferManualBusinessEntry = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
     document.getElementById("manageBookingCard")?.classList.add("hidden");
     document.getElementById("publicBookingContent")?.classList.add("hidden");
     setPublicBookingWizardVisible(false);
 
     showPublicView(false);
-    updateCustomerAuthUI();
-
-    const card = document.getElementById("customerStartCard");
-    const input = document.getElementById("manualBusinessId");
-    if (card) card.classList.remove("hidden");
-
-    if (input) {
-      input.scrollIntoView({ behavior: "smooth", block: "center" });
-      window.setTimeout(() => {
-        input.focus({ preventScroll: true });
-      }, 150);
-    }
+    updateCustomerHubBusinessContextUi();
   }
 
   async function continueCustomerToBooking() {
@@ -24821,7 +25735,15 @@
       await upsertUserProfile(data.user, "admin", { email });
     }
 
-    showToast("Admin signup success. If Supabase asks email confirmation, confirm first, then login.", "success");
+    if (data?.session) {
+      await sb.auth.signOut();
+      currentUser = null;
+      currentUserRole = null;
+    }
+    showToast(
+      "Account created. Please check your email and confirm your address before logging in.",
+      "success"
+    );
     setAdminAuthPanel("login");
     if (document.getElementById("authEmail")) document.getElementById("authEmail").value = email;
   }
@@ -24867,7 +25789,6 @@
     }
 
     if (data?.user) {
-      currentUser = data.user;
       const ok = await upsertUserProfile(data.user, "customer", {
         email,
         full_name: fullName,
@@ -24880,15 +25801,18 @@
     document.getElementById("customerAuthPassword").value = "";
     document.getElementById("customerSignupPassword").value = "";
     document.getElementById("customerAuthConfirmPassword").value = "";
-    showToast("Customer signup success. If email confirmation is required, confirm the email first, then login.", "success");
+    if (data?.session) {
+      await sb.auth.signOut();
+      currentUser = null;
+      currentUserRole = null;
+    }
+    showToast(
+      "Account created. Please check your email and confirm your address before logging in.",
+      "success"
+    );
     setCustomerAuthPanel("login");
     if (document.getElementById("customerAuthEmail")) document.getElementById("customerAuthEmail").value = email;
     updateCustomerAuthUI();
-
-    if (data?.session) {
-      currentUserRole = await loadCurrentUserRole();
-      await completeCustomerAuthReturnFlow();
-    }
   }
 
   async function customerLogin() {
@@ -24910,6 +25834,15 @@
     }
 
     currentUser = data.user;
+    const emailConfirmedAt = currentUser.email_confirmed_at || currentUser.confirmed_at;
+    if (!emailConfirmedAt) {
+      await sb.auth.signOut();
+      currentUser = null;
+      currentUserRole = null;
+      showToast("Please confirm your email first. Check your inbox.", "error");
+      updateCustomerAuthUI();
+      return;
+    }
     const role = await loadCurrentUserRole();
 
     if (role === "admin") {
@@ -25040,6 +25973,15 @@
       }
 
       currentUser = data.user;
+      const emailConfirmedAt = currentUser.email_confirmed_at || currentUser.confirmed_at;
+      if (!emailConfirmedAt) {
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        showToast("Please confirm your email first. Check your inbox.", "error");
+        showAuthView();
+        return;
+      }
       const role = await loadCurrentUserRole();
 
       if (role === "customer") {
@@ -26964,14 +27906,52 @@
     });
   }
 
+  function publicScheduleStaffChipAvatarHtml(opts = {}) {
+    if (opts.anyAvailable) {
+      return (
+        '<span class="public-schedule-staff-chip__avatar public-schedule-staff-chip__avatar--any" aria-hidden="true">' +
+        '<span class="public-schedule-staff-chip__initials">Any</span></span>'
+      );
+    }
+    const name = String(opts.name || "").trim();
+    const initials = escapeHtml(staffMemberInitials(name));
+    const photo = String(opts.photoUrl || "").trim();
+    if (photo) {
+      return (
+        '<span class="public-schedule-staff-chip__avatar" aria-hidden="true">' +
+        `<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />` +
+        `<span class="public-schedule-staff-chip__initials" style="display:none">${initials}</span></span>`
+      );
+    }
+    return (
+      '<span class="public-schedule-staff-chip__avatar" aria-hidden="true">' +
+      `<span class="public-schedule-staff-chip__initials">${initials}</span></span>`
+    );
+  }
+
+  function appendPublicScheduleStaffChip(mount, staffId, label, choice, avatarOpts = {}) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "public-schedule-staff-chip";
+    btn.dataset.staffId = staffId;
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", choice === staffId ? "true" : "false");
+    btn.setAttribute("aria-label", label);
+    btn.innerHTML =
+      publicScheduleStaffChipAvatarHtml(avatarOpts) +
+      `<span class="public-schedule-staff-chip__label">${escapeHtml(label)}</span>`;
+    if (choice === staffId) btn.classList.add("public-schedule-staff-chip--selected");
+    btn.addEventListener("click", () => pickPublicStaff(staffId));
+    mount.appendChild(btn);
+  }
+
   function renderPublicStaffOptions(selectedId) {
     const panel = document.getElementById("publicStaffPanel");
     const legacyMount = document.getElementById("publicStaffCards");
     const scheduleMount = document.getElementById("publicScheduleStaffCards");
-    const hidden = document.getElementById("publicStaff");
     const eligible = getEligiblePublicStaffForService(selectedService);
-    const mount =
-      eligible.length > 1 && scheduleMount ? scheduleMount : legacyMount;
+    const useScheduleChips = !!(scheduleMount && eligible.length > 1);
+    const mount = useScheduleChips ? scheduleMount : legacyMount;
     if (!mount) {
       updatePublicScheduleStaffUi();
       return;
@@ -27000,51 +27980,63 @@
         choice = PUBLIC_STAFF_ANY;
       }
 
-      const anyBtn = document.createElement("button");
-      anyBtn.type = "button";
-      anyBtn.className = "public-staff-card";
-      anyBtn.dataset.staffId = PUBLIC_STAFF_ANY;
-      anyBtn.setAttribute("role", "radio");
-      anyBtn.setAttribute("aria-checked", choice === PUBLIC_STAFF_ANY ? "true" : "false");
-      if (choice === PUBLIC_STAFF_ANY) anyBtn.classList.add("public-staff-card--selected");
-      anyBtn.innerHTML = `
+      if (useScheduleChips) {
+        appendPublicScheduleStaffChip(mount, PUBLIC_STAFF_ANY, "Any available", choice, {
+          anyAvailable: true
+        });
+        eligible.forEach((staff) => {
+          appendPublicScheduleStaffChip(mount, staff.id, staff.name || "Stylist", choice, {
+            name: staff.name,
+            photoUrl: staff.photo_url
+          });
+        });
+      } else {
+        const anyBtn = document.createElement("button");
+        anyBtn.type = "button";
+        anyBtn.className = "public-staff-card";
+        anyBtn.dataset.staffId = PUBLIC_STAFF_ANY;
+        anyBtn.setAttribute("role", "radio");
+        anyBtn.setAttribute("aria-checked", choice === PUBLIC_STAFF_ANY ? "true" : "false");
+        if (choice === PUBLIC_STAFF_ANY) anyBtn.classList.add("public-staff-card--selected");
+        anyBtn.innerHTML = `
       <div class="public-staff-card-avatar"><span class="public-staff-card-initials">★</span></div>
       <div class="public-staff-card-body">
         <span class="public-staff-card-name">Any available</span>
         <span class="public-staff-card-role">First free stylist at this time</span>
       </div>
     `;
-      anyBtn.addEventListener("click", () => pickPublicStaff(PUBLIC_STAFF_ANY));
-      mount.appendChild(anyBtn);
+        anyBtn.addEventListener("click", () => pickPublicStaff(PUBLIC_STAFF_ANY));
+        mount.appendChild(anyBtn);
 
-      eligible.forEach((staff) => {
-        const photo = String(staff.photo_url || "").trim();
-        const initials = escapeHtml(staffMemberInitials(staff.name));
-        const avatarInner = photo
-          ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="public-staff-card-initials" style="display:none">${initials}</span>`
-          : `<span class="public-staff-card-initials">${initials}</span>`;
+        eligible.forEach((staff) => {
+          const photo = String(staff.photo_url || "").trim();
+          const initials = escapeHtml(staffMemberInitials(staff.name));
+          const avatarInner = photo
+            ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="public-staff-card-initials" style="display:none">${initials}</span>`
+            : `<span class="public-staff-card-initials">${initials}</span>`;
 
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "public-staff-card";
-        btn.dataset.staffId = staff.id;
-        btn.setAttribute("role", "radio");
-        btn.setAttribute("aria-checked", choice === staff.id ? "true" : "false");
-        if (choice === staff.id) btn.classList.add("public-staff-card--selected");
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "public-staff-card";
+          btn.dataset.staffId = staff.id;
+          btn.setAttribute("role", "radio");
+          btn.setAttribute("aria-checked", choice === staff.id ? "true" : "false");
+          if (choice === staff.id) btn.classList.add("public-staff-card--selected");
 
-        btn.innerHTML = `
+          btn.innerHTML = `
         <div class="public-staff-card-avatar">${avatarInner}</div>
         <div class="public-staff-card-body">
           <span class="public-staff-card-name">${escapeHtml(staff.name)}</span>
           <span class="public-staff-card-role">${escapeHtml(staff.role || "Team member")}</span>
         </div>
       `;
-        btn.addEventListener("click", () => pickPublicStaff(staff.id));
-        mount.appendChild(btn);
-      });
+          btn.addEventListener("click", () => pickPublicStaff(staff.id));
+          mount.appendChild(btn);
+        });
+      }
 
       pickPublicStaff(choice, { silent: true });
-      updatePublicScheduleStaffUi();
+      if (!useScheduleChips) updatePublicScheduleStaffUi();
     } catch (err) {
       console.error("[public-staff] render failed", err);
       mount.innerHTML = emptyStateHtml(
@@ -27064,12 +28056,21 @@
     if (hidden) hidden.value = staffChoice === PUBLIC_STAFF_ANY ? "" : staffChoice;
 
     document
-      .querySelectorAll("#publicScheduleStaffCards .public-staff-card, #publicStaffCards .public-staff-card")
+      .querySelectorAll(
+        "#publicScheduleStaffCards .public-schedule-staff-chip, #publicScheduleStaffCards .public-staff-card, #publicStaffCards .public-staff-card"
+      )
       .forEach((el) => {
-      const on = el.dataset.staffId === staffChoice;
-      el.classList.toggle("public-staff-card--selected", on);
-      el.setAttribute("aria-checked", on ? "true" : "false");
-    });
+        const on = el.dataset.staffId === staffChoice;
+        el.classList.remove("public-schedule-staff-chip--selected", "public-staff-card--selected");
+        if (on) {
+          if (el.classList.contains("public-schedule-staff-chip")) {
+            el.classList.add("public-schedule-staff-chip--selected");
+          } else {
+            el.classList.add("public-staff-card--selected");
+          }
+        }
+        el.setAttribute("aria-checked", on ? "true" : "false");
+      });
 
     if (!opts.silent) {
       hideBookingSuccessCard();
@@ -30936,7 +31937,15 @@
     container.innerHTML = "";
 
     if (!selectedService) {
-      container.innerHTML = emptyStateHtml("No service selected", "Choose a service to see available times.");
+      container.innerHTML = emptyStateHtml("Choose a service first", "Pick a service to see available times.");
+      return;
+    }
+
+    if (!dateStr) {
+      container.innerHTML = emptyStateHtml(
+        "Choose a date to see available times",
+        "Select a day on the calendar."
+      );
       return;
     }
 
@@ -30996,11 +32005,11 @@
     const slotsHint = document.getElementById("publicMobileSlotsHint");
 
     if (!selectedService) {
-      if (statusEl) statusEl.textContent = "Choose a service to see available dates and times.";
+      if (statusEl) statusEl.textContent = "Choose a service first.";
       if (slotsMount) {
         slotsMount.innerHTML = emptyStateHtml(
-          "No service selected",
-          "Choose a service first."
+          "Choose a service first",
+          "Pick a service to see available times."
         );
       }
       if (slotsHint) slotsHint.classList.add("hidden");
@@ -31009,11 +32018,13 @@
 
     if (!selectedDate) {
       if (statusEl) statusEl.textContent = "Choose a date to see available times.";
-      if (slotsMount) slotsMount.innerHTML = "";
-      if (slotsHint) {
-        slotsHint.textContent = "Choose a date to see available times.";
-        slotsHint.classList.remove("hidden");
+      if (slotsMount) {
+        slotsMount.innerHTML = emptyStateHtml(
+          "Choose a date to see available times",
+          "Select a day on the calendar."
+        );
       }
+      if (slotsHint) slotsHint.classList.add("hidden");
       return;
     }
 
@@ -31303,6 +32314,99 @@
     }
   }
 
+  const BOOKING_SPAM_GUARD_ATTEMPTS_KEY = "bookingSpamGuardAttempts";
+  const BOOKING_SPAM_GUARD_LAST_BOOKING_KEY = "bookingSpamGuardLastBookingAt";
+  const BOOKING_SPAM_GUARD_MAX_ATTEMPTS = 3;
+  const BOOKING_SPAM_GUARD_WINDOW_MS = 10 * 60 * 1000;
+
+  function readBookingSpamGuardAttempts() {
+    try {
+      const raw = localStorage.getItem(BOOKING_SPAM_GUARD_ATTEMPTS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      const now = Date.now();
+      const recent = (Array.isArray(parsed) ? parsed : []).filter(
+        (ts) => Number(ts) > 0 && now - Number(ts) < BOOKING_SPAM_GUARD_WINDOW_MS
+      );
+      if (recent.length !== (Array.isArray(parsed) ? parsed : []).length) {
+        localStorage.setItem(BOOKING_SPAM_GUARD_ATTEMPTS_KEY, JSON.stringify(recent));
+      }
+      return recent;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function recordBookingSpamGuardAttempt() {
+    const recent = readBookingSpamGuardAttempts();
+    recent.push(Date.now());
+    try {
+      localStorage.setItem(BOOKING_SPAM_GUARD_ATTEMPTS_KEY, JSON.stringify(recent));
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function clearBookingSpamGuardAttempts() {
+    try {
+      localStorage.removeItem(BOOKING_SPAM_GUARD_ATTEMPTS_KEY);
+      localStorage.setItem(BOOKING_SPAM_GUARD_LAST_BOOKING_KEY, String(Date.now()));
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function isBookingSpamGuardExceeded() {
+    return readBookingSpamGuardAttempts().length >= BOOKING_SPAM_GUARD_MAX_ATTEMPTS;
+  }
+
+  function isPublicBookingHoneypotTripped() {
+    const trap = document.getElementById("publicBookingHoneypot");
+    return !!(trap && String(trap.value || "").trim());
+  }
+
+  function validatePublicBookingCustomerFields(name, phone, email) {
+    if (!name) {
+      return { ok: false, message: "Enter your name." };
+    }
+    if (isGuestPublicBooking()) {
+      if (!phone) {
+        return { ok: false, message: "Enter your phone number." };
+      }
+      const emailTrim = String(email || "").trim();
+      if (!emailTrim) {
+        return { ok: false, message: "Enter your email." };
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrim)) {
+        return { ok: false, message: "Enter a valid email address." };
+      }
+    }
+    return { ok: true, message: "" };
+  }
+
+  function hasDuplicatePublicCustomerBooking({ phone, email, date, time, serviceId }) {
+    const phoneNorm = normalizePhoneForCustomerMatch(phone);
+    const emailNorm = String(email || "").trim().toLowerCase();
+    if (!phoneNorm && !emailNorm) return false;
+
+    const timeCompare = snapTimeStringToQuarterHour(String(time || "").trim().slice(0, 5));
+    const serviceKey = String(serviceId || "").trim();
+
+    return bookings.some((b) => {
+      if (getBookingStatus(b) === "Cancelled") return false;
+      if (String(b.date || "") !== String(date || "")) return false;
+      if (snapTimeStringToQuarterHour(String(b.time || "").trim().slice(0, 5)) !== timeCompare) {
+        return false;
+      }
+      if (serviceKey && b.service_id && String(b.service_id) !== serviceKey) return false;
+
+      const rowPhone = normalizePhoneForCustomerMatch(b.customer_phone);
+      const rowEmail = String(b.customer_email || "").trim().toLowerCase();
+      if (emailNorm && rowEmail && emailNorm === rowEmail) return true;
+      if (phoneNorm && rowPhone && phoneNorm === rowPhone) return true;
+      return false;
+    });
+  }
+
   async function chooseSlot(time, opts = {}) {
     selectedSlot = time;
 
@@ -31359,8 +32463,18 @@
       return;
     }
 
-    if (!name || !phone) {
-      showToast("Name and phone are required.", "error")
+    if (isPublicBookingHoneypotTripped()) {
+      return;
+    }
+
+    const fieldCheck = validatePublicBookingCustomerFields(name, phone, email);
+    if (!fieldCheck.ok) {
+      showToast(fieldCheck.message, "error");
+      return;
+    }
+
+    if (isBookingSpamGuardExceeded()) {
+      showToast("Too many booking attempts. Please wait a few minutes and try again.", "error");
       return;
     }
 
@@ -31381,6 +32495,21 @@
       } catch (prefetchErr) {
         console.warn("[createPublicBooking] loadBookings prefetch failed:", prefetchErr?.message || prefetchErr);
       }
+
+      if (
+        hasDuplicatePublicCustomerBooking({
+          phone,
+          email,
+          date: selectedDate,
+          time: selectedSlot,
+          serviceId: selectedService.id
+        })
+      ) {
+        showToast("You already have a booking for this time.", "error");
+        return;
+      }
+
+      recordBookingSpamGuardAttempt();
 
       if (!staffId && bookingStaffColumnAvailable && getActiveStaffMembers().length) {
         staffId = resolveStaffIdForBooking(selectedDate, selectedSlot, selectedService.id, null);
@@ -31430,13 +32559,17 @@
       }
       businessId = rpcBusinessId;
 
+      const phoneForRpc =
+        String(phone || "").trim() ||
+        (!isGuestPublicBooking() ? customerPhoneForAdminAddBookingRpc("") : "");
+
       const bookingParams = {
         businessId: rpcBusinessId,
         serviceId: selectedService.id,
         date: selectedDate,
         time: selectedSlot,
         customerName: name,
-        customerPhone: phone,
+        customerPhone: phoneForRpc,
         customerEmail: email || null,
         notes: notes || null,
         staffId,
@@ -31503,6 +32636,7 @@
       if (noneRadio) noneRadio.checked = true;
       syncPublicRecurringBookingUi();
 
+      clearBookingSpamGuardAttempts();
       finishPublicBookingSuccessUi(insertedBooking);
       runPublicBookingPostSuccessTasks();
     } catch (err) {
