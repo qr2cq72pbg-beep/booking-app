@@ -2,7 +2,7 @@
 <html lang="mk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#2563eb" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -28,37 +28,750 @@
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --color-primary: #2563eb;
       --color-primary-hover: #1d4ed8;
+      --color-primary-soft: rgba(37, 99, 235, 0.1);
       --color-success: #16a34a;
       --color-success-hover: #15803d;
       --color-danger: #dc2626;
       --color-danger-hover: #b91c1c;
+      --color-danger-soft: rgba(220, 38, 38, 0.08);
+      --color-text: #0f172a;
+      --color-text-secondary: #475569;
       --color-muted: #64748b;
-      --color-border: rgba(148, 163, 184, 0.35);
+      --color-border: rgba(148, 163, 184, 0.28);
+      --color-border-input: #e2e8f0;
       --color-surface: #ffffff;
       --color-bg: var(--pwa-bg);
       --radius-sm: 10px;
       --radius-md: 14px;
       --radius-lg: 18px;
-      --shadow-sm: 0 1px 0 rgba(15, 23, 42, 0.02), 0 1px 2px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.12);
+      --radius-btn: 12px;
+      --radius-card: 20px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.03), 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 2px 4px rgba(15, 23, 42, 0.02), 0 12px 32px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 8px 16px rgba(15, 23, 42, 0.04), 0 24px 48px rgba(15, 23, 42, 0.08);
+      --shadow-tab: 0 -6px 28px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(255, 255, 255, 0.65) inset;
+      --surface-soft: #f8fafc;
+      --surface-elevated: #ffffff;
+      --radius-stat: 16px;
       --space-xs: 6px;
       --space-sm: 10px;
       --space-md: 16px;
       --space-lg: 24px;
       --mobile-gutter: 14px;
       --sticky-cta-height: 76px;
-      --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --admin-tabbar-height: 52px;
+      --admin-tabbar-float-gap: 10px;
+      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* —— XBOOK shared premium foundation (global, logic-neutral) —— */
+    h1, h2, h3 {
+      color: var(--color-text);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .small,
+    .auth-card-lead,
+    .customer-hub-subtitle,
+    .wizard-field-hint {
+      color: var(--color-muted);
+      line-height: 1.5;
+    }
+
+    input, select, textarea {
+      border-color: var(--color-border-input);
+      background: var(--color-surface);
+      border-radius: var(--radius-btn);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    button {
+      border-radius: var(--radius-btn);
+    }
+
+    button.secondary {
+      background: var(--color-surface);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border-input);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    button.secondary:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: var(--color-text);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    }
+
+    .card,
+    .widget-card {
+      border-radius: var(--radius-card);
+      border-color: var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .admin-section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      color: var(--color-text);
+    }
+
+    #modeView.mode-entry-card,
+    #authView.auth-card,
+    #resetPasswordView.auth-card,
+    #customerStartCard.customer-hub-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-md);
+      background: var(--color-surface);
+    }
+
+    .auth-card-title,
+    .customer-hub-title {
+      color: var(--color-text);
+    }
+
+    .auth-field-label {
+      color: var(--color-text-secondary);
+    }
+
+    #authView .auth-panel input,
+    #customerStartCard .auth-panel input,
+    #customerStartCard #manualBusinessId {
+      border-color: var(--color-border-input);
+      border-radius: var(--radius-btn);
+    }
+
+    .filter-box {
+      background: #fafbfc;
+      border-color: var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    #publicBookingContent .public-panel,
+    #publicBookingContent .public-details-card,
+    #publicBookingContent .public-confirm-panel,
+    #publicBookingContent .public-booking-summary-card {
+      border-color: var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .admin-mobile-card {
+      border-color: var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #adminSettingsLogoutBtn.admin-mobile-profile__btn--logout {
+      width: 100%;
+      min-height: 48px;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: var(--radius-btn);
+      background: var(--color-surface);
+      border: 1px solid rgba(220, 38, 38, 0.22);
+      color: #b91c1c;
+      box-shadow: none;
+    }
+
+    #adminSettingsLogoutBtn.admin-mobile-profile__btn--logout:hover {
+      background: var(--color-danger-soft);
+      border-color: rgba(220, 38, 38, 0.32);
+      color: #991b1b;
+    }
+
+    /* —— Phase 2B: Premium dashboard refinement (visual only) —— */
+    #adminView .admin-section-title,
+    #adminView .admin-saas__title.admin-section-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin: 0 0 6px;
+    }
+
+    #adminView .admin-dashboard-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #adminView .admin-section > .card.widget-card + .card.widget-card {
+      margin-top: 4px;
+    }
+
+    #adminView .widget-card {
+      padding: calc(var(--space-lg) - 2px) calc(var(--space-md) + 2px) var(--space-lg) !important;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: var(--surface-elevated);
+      box-shadow: var(--shadow-md);
+    }
+
+    #adminView .widget-card > .small {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--color-muted);
+      margin: 4px 0 14px;
+    }
+
+    #adminSectionOverview > .widget-card {
+      padding-top: var(--space-lg) !important;
+    }
+
+    #adminSectionOverview .admin-section-title + .small {
+      margin-bottom: 22px;
+    }
+
+    #adminView .business-profile-preview,
+    #adminView .public-link-box {
+      background: var(--surface-soft);
+      border: none;
+      border-radius: var(--radius-stat);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    #adminView .business-profile-preview {
+      padding: 16px 18px;
+      margin: 18px 0 22px;
+    }
+
+    #adminView .business-profile-preview strong {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    #adminView .public-link-box {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      padding: 14px 16px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    #adminView .copy-link-row {
+      gap: 18px;
+      margin: 10px 0 6px;
+    }
+
+    #adminView .copy-link-row .actions {
+      gap: 10px;
+      margin-top: 0;
+    }
+
+    #adminView .copy-link-row .actions button {
+      min-height: 46px;
+      padding: 12px 20px;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      border-radius: var(--radius-btn);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+    }
+
+    #adminView .copy-link-row .actions button:active {
+      opacity: 0.88;
+    }
+
+    #adminView .copy-link-row .actions button.success {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 6px 16px rgba(37, 99, 235, 0.2);
+    }
+
+    #adminView .copy-link-row .actions button.success:hover {
+      background: var(--color-primary-hover);
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 8px 20px rgba(37, 99, 235, 0.24);
+    }
+
+    #adminView .copy-link-row .actions button:not(.success):not(.secondary):not(.danger) {
+      background: var(--surface-elevated);
+      color: var(--color-primary);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    #adminView .copy-link-row .actions button:not(.success):not(.secondary):not(.danger):hover {
+      background: var(--color-primary-soft);
+      border-color: rgba(37, 99, 235, 0.28);
+    }
+
+    #adminView .stats-grid {
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    #adminView .stat-card {
+      background: var(--surface-elevated);
+      border: none;
+      border-radius: var(--radius-stat);
+      padding: 18px 16px 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 6px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    #adminView .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin: 0 0 10px;
+    }
+
+    #adminView .stat-number {
+      font-size: 2.05rem;
+      font-weight: 750;
+      letter-spacing: -0.045em;
+      line-height: 1.05;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    #adminView .next-booking-box {
+      margin-top: 26px;
+      padding: 18px 20px;
+      background: rgba(37, 99, 235, 0.05);
+      border: none;
+      border-radius: var(--radius-stat);
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.1), 0 2px 10px rgba(37, 99, 235, 0.06);
+    }
+
+    #adminView .next-booking-box strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+
+    #adminView .next-booking-box .small {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    #adminView .widget-card h3.small {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin: 28px 0 10px !important;
+    }
+
+    /* —— Phase 2C/2D: Premium Overview screen (visual + layout only) —— */
+    #adminSectionOverview > .overview-screen.widget-card {
+      padding: 4px 2px 32px !important;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    #adminSectionOverview .overview-identity {
+      margin: 0 0 16px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--surface-elevated);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.03), 0 14px 36px rgba(15, 23, 42, 0.07);
+    }
+
+    #adminSectionOverview .overview-identity__cover {
+      height: 108px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f0f9ff 42%, #f8fafc 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    #adminSectionOverview .overview-identity__cover--image {
+      background-color: #e2e8f0;
+    }
+
+    #adminSectionOverview .overview-identity__body {
+      position: relative;
+      padding: 0 18px 20px;
+      margin-top: -34px;
+    }
+
+    #adminSectionOverview .overview-identity__avatar-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 3px solid var(--surface-elevated);
+      background: linear-gradient(145deg, #dbeafe 0%, #eff6ff 100%);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    #adminSectionOverview .overview-identity__avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #adminSectionOverview .overview-identity__avatar-initial {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--color-primary);
+      line-height: 1;
+    }
+
+    #adminSectionOverview .overview-identity__title {
+      margin: 0 0 6px;
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.12;
+      color: var(--color-text);
+    }
+
+    #adminSectionOverview .overview-identity__subtitle {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--color-text-secondary);
+    }
+
+    #adminSectionOverview .overview-identity__status {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-muted);
+    }
+
+    #adminSectionOverview .overview-hero__slug-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 10px;
+      margin: 0 0 8px;
+    }
+
+    #adminSectionOverview .overview-hero__slug-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    #adminSectionOverview .overview-hero__slug,
+    #adminSectionOverview #businessIdDisplay.overview-hero__slug {
+      display: inline-block;
+      margin: 0;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-primary);
+      background: var(--color-primary-soft);
+      border-radius: 999px;
+      border: none;
+      box-shadow: none;
+      word-break: break-all;
+    }
+
+    #adminSectionOverview .overview-hero__account {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--color-muted);
+    }
+
+    #adminSectionOverview .overview-quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0 0 16px;
+    }
+
+    #adminSectionOverview .overview-quick-actions__btn {
+      width: 100%;
+      min-height: 44px;
+      margin: 0;
+      padding: 10px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 12px;
+      background: var(--surface-elevated);
+      color: var(--color-text-secondary);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    #adminSectionOverview .overview-quick-actions__btn:hover {
+      background: var(--surface-soft);
+      color: var(--color-text);
+    }
+
+    #adminSectionOverview .overview-panel {
+      margin: 0 0 18px;
+      padding: 18px 16px;
+      border-radius: 20px;
+      background: var(--surface-elevated);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    #adminSectionOverview .overview-panel__title {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+    }
+
+    #adminSectionOverview .overview-panel__lead {
+      margin: 0 0 16px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--color-muted);
+    }
+
+    #adminSectionOverview .overview-panel--profile .overview-panel__lead--hint {
+      margin: -8px 0 16px;
+      font-size: 12.5px;
+    }
+
+    #adminSectionOverview .overview-link-card__url,
+    #adminSectionOverview .overview-panel #publicLink.public-link-box {
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--color-text-secondary);
+      background: var(--surface-soft);
+      border-radius: 14px;
+      border: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    #adminSectionOverview .overview-link-card__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 0;
+    }
+
+    #adminSectionOverview .overview-link-card__actions button {
+      min-height: 44px;
+      padding: 11px 14px;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+
+    #adminSectionOverview .overview-stats-grid.stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+    }
+
+    #adminSectionOverview .overview-stats-grid .stat-card {
+      padding: 16px 14px 14px;
+      border-radius: 16px;
+      background: var(--surface-soft);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 2px 10px rgba(15, 23, 42, 0.04);
+    }
+
+    #adminSectionOverview .overview-stats-grid .stat-label {
+      margin: 0 0 8px;
+      font-size: 10px;
+      letter-spacing: 0.07em;
+    }
+
+    #adminSectionOverview .overview-stats-grid .stat-number {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    #adminSectionOverview .overview-next.next-booking-box {
+      margin: 0 0 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+    }
+
+    #adminSectionOverview .overview-panel--edit label.small {
+      display: block;
+      margin: 14px 0 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--color-text-secondary);
+    }
+
+    #adminSectionOverview .overview-panel--edit label.small strong {
+      font-weight: 700;
+    }
+
+    #adminSectionOverview .overview-panel--edit input,
+    #adminSectionOverview .overview-panel--edit textarea {
+      margin: 0 0 4px;
+      font-size: 16px;
+      border-radius: 12px;
+      border-color: rgba(148, 163, 184, 0.35);
+      background: var(--surface-soft);
+    }
+
+    #adminSectionOverview .overview-panel--edit .business-id-row {
+      gap: 8px;
+      margin: 0 0 8px;
+    }
+
+    #adminSectionOverview .overview-panel--edit .business-id-row button {
+      width: auto;
+      min-height: 44px;
+      padding: 10px 14px;
+      margin: 0;
+      font-size: 13px;
+      border-radius: 12px;
+    }
+
+    #adminSectionOverview .overview-panel--edit .business-profile-grid {
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    #adminSectionOverview .overview-panel--edit .business-profile-preview {
+      margin: 16px 0 0;
+      padding: 14px 16px;
+      border-radius: 14px;
+    }
+
+    #adminSectionOverview .admin-section-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 720px) {
+      #adminSectionOverview .overview-stats-grid.stats-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      #adminSectionOverview .overview-identity__title {
+        font-size: 2rem;
+      }
+
+      #adminSectionOverview .overview-identity__cover {
+        height: 124px;
+      }
+    }
+
+    #adminView button.primary-premium,
+    #adminView .widget-card > .actions button,
+    #adminView .admin-saas .auth-btn:not(.auth-btn--ghost) {
+      min-height: 46px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 14px rgba(37, 99, 235, 0.14);
+    }
+
+    #adminView .admin-mobile-card,
+    #customerStartCard.customer-hub-card,
+    #customerView .card {
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: var(--shadow-md);
+    }
+
+    .admin-mobile-card {
+      background: var(--surface-elevated);
+    }
+
+    .customer-hub-title {
+      letter-spacing: -0.03em;
+    }
+
+    .customer-hub-subtitle {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    html {
+      background-color: var(--color-bg, #f8fafc);
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    /* —— Phase 2D: iOS zoom / scale stability —— */
+    body.native-app-shell,
+    body.admin-mobile-shell-active {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body.native-app-shell input,
+    body.native-app-shell select,
+    body.native-app-shell textarea,
+    body.admin-mobile-shell-active input,
+    body.admin-mobile-shell-active select,
+    body.admin-mobile-shell-active textarea {
+      font-size: 16px;
+    }
+
+    body.native-app-shell button:active,
+    body.admin-mobile-shell-active button:active,
+    #adminView button:active,
+    #adminSectionOverview button:active {
+      transform: none;
+      opacity: 0.88;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
 
     body {
       font-family: var(--font-display);
-      background: var(--color-bg);
       margin: 0;
-      color: #111827;
       line-height: 1.5;
+      color: var(--color-text);
+      background: var(--color-bg);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       overflow-x: hidden;
@@ -72,17 +785,15 @@
     }
 
     .card {
-      background: var(--color-surface);
+      background: var(--surface-elevated);
       border-radius: var(--radius-lg);
       padding: var(--space-lg);
       margin-bottom: var(--space-md);
-      border: 1px solid var(--color-border);
+      border: 1px solid rgba(148, 163, 184, 0.18);
       box-shadow: var(--shadow-sm);
     }
 
     h1, h2, h3 { margin-top: 0; line-height: 1.25; }
-    h1 { font-size: 1.65rem; letter-spacing: -0.02em; }
-    h2 { font-size: 1.2rem; }
 
     input, select, textarea, button {
       width: 100%;
@@ -108,10 +819,20 @@
       color: white;
       border: none;
       font-weight: 600;
-      min-height: 44px;
+      min-height: 46px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(37, 99, 235, 0.14);
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
     }
 
-    button:hover { background: var(--color-primary-hover); }
+    button:hover {
+      background: var(--color-primary-hover);
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06), 0 6px 16px rgba(37, 99, 235, 0.18);
+    }
+
+    button:active {
+      opacity: 0.9;
+    }
     button:focus-visible {
       outline: none;
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.35);
@@ -143,7 +864,6 @@
 
     .small {
       font-size: 13px;
-      color: #6b7280;
     }
 
     .topbar {
@@ -215,31 +935,6 @@
 
     .topbar button:hover {
       background: rgba(15, 23, 42, 0.1);
-    }
-
-    /* Make admin logout subtly prominent (topbar only). */
-    .topbar #logoutBtn:not(.hidden) {
-      background: rgba(254, 242, 242, 0.9);
-      border-color: rgba(239, 68, 68, 0.28);
-      color: #b91c1c;
-    }
-
-    .topbar #logoutBtn:not(.hidden):hover {
-      background: rgba(254, 226, 226, 0.95);
-      border-color: rgba(239, 68, 68, 0.38);
-      color: #991b1b;
-    }
-
-    body.app-theme-dark .topbar #logoutBtn:not(.hidden) {
-      background: rgba(127, 29, 29, 0.2);
-      border-color: rgba(239, 68, 68, 0.28);
-      color: #fecaca;
-    }
-
-    body.app-theme-dark .topbar #logoutBtn:not(.hidden):hover {
-      background: rgba(127, 29, 29, 0.28);
-      border-color: rgba(239, 68, 68, 0.38);
-      color: #fee2e2;
     }
 
     body.app-theme-dark .topbar {
@@ -856,34 +1551,38 @@
     }
 
     .stat-card {
-      background: #f9fafb;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: var(--space-md);
+      background: var(--surface-elevated);
+      border: none;
+      border-radius: var(--radius-stat);
+      padding: 18px 16px 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 6px 20px rgba(15, 23, 42, 0.05);
     }
 
     .stat-number {
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin: 4px 0 2px;
-      color: #111827;
-      line-height: 1.1;
+      font-size: 2rem;
+      font-weight: 750;
+      margin: 0;
+      color: var(--color-text);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
     }
 
     .stat-label {
-      font-size: 12px;
-      color: var(--color-muted);
+      font-size: 11px;
+      color: #94a3b8;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.055em;
+      margin: 0 0 10px;
     }
 
     .next-booking-box {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: var(--radius-stat);
+      background: rgba(37, 99, 235, 0.05);
+      border: none;
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.1), 0 2px 10px rgba(37, 99, 235, 0.06);
     }
 
     .calendar {
@@ -2035,37 +2734,6 @@
       flex-direction: column;
       gap: var(--space-md);
       align-items: stretch;
-    }
-
-    /* Admin inline toolbar (iPhone-safe logout entrypoint; not the global topbar) */
-    .admin-inline-toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
-      padding: 8px 2px 0;
-    }
-
-    .admin-inline-toolbar__logout {
-      width: auto !important;
-      max-width: none !important;
-      min-height: 44px;
-      margin: 0 !important;
-      padding: 10px 14px !important;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(239, 68, 68, 0.28);
-      color: #b91c1c;
-      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
-    }
-
-    .admin-inline-toolbar__logout:hover {
-      background: rgba(254, 242, 242, 0.95);
-      border-color: rgba(239, 68, 68, 0.38);
-      color: #991b1b;
     }
 
     @media (min-width: 900px) {
@@ -9399,7 +10067,7 @@
     }
 
     .widget-card {
-      padding: var(--space-md) !important;
+      padding: calc(var(--space-md) + 2px) !important;
       margin-bottom: 0;
     }
 
@@ -12512,45 +13180,64 @@
       display: none;
     }
 
-    /* ======================================================================
-       NATIVE iOS (Capacitor) ADMIN — FORCE bottom tabs visible (DEBUG)
-       - Do NOT rely on body.admin-mobile-shell-active (can fail on iOS WebView)
-       - Hide the old top admin nav grid on native small screens
-       - Force the bottom nav to render even if it still has `.hidden`
-       ====================================================================== */
+    /* Native iOS: hide desktop admin nav; show premium bottom tab bar */
     @media (max-width: 900px) {
       body.native-app-shell #adminView:not(.hidden) #adminNav {
         display: none !important;
       }
 
-      body.native-app-shell #adminView:not(.hidden) .admin-inline-toolbar {
-        display: none !important;
-      }
-
-      /* Show bottom tabs even if `.hidden` is still present. */
       body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav,
       body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav.hidden {
         display: flex !important;
         position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        left: 12px;
+        right: 12px;
+        bottom: calc(var(--admin-tabbar-float-gap) + env(safe-area-inset-bottom, 0px));
         z-index: 9999;
         align-items: stretch;
         justify-content: space-around;
         gap: 2px;
-        padding: 6px 6px calc(8px + env(safe-area-inset-bottom, 0px));
-
-        /* TEMP DEBUG: confirm rendering on real device */
-        background: red !important;
-
-        border-top: 1px solid var(--color-border);
-        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
-        backdrop-filter: blur(12px);
+        padding: 8px 6px;
+        min-height: var(--admin-tabbar-height);
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: var(--shadow-tab);
+        -webkit-backdrop-filter: saturate(190%) blur(22px);
+        backdrop-filter: saturate(190%) blur(22px);
       }
 
       body.native-app-shell #adminView:not(.hidden) .admin-dashboard-panels {
-        padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+        padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+        padding-bottom: calc(var(--admin-tabbar-height) + env(safe-area-inset-bottom, 0px) + var(--admin-tabbar-float-gap) + 24px);
+      }
+
+      body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav .admin-mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        min-height: 38px;
+        padding: 7px 6px 5px;
+        margin: 0 1px;
+        border: none;
+        border-radius: 12px;
+        background: transparent;
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        width: auto !important;
+        box-shadow: none;
+      }
+
+      body.native-app-shell #adminView:not(.hidden) #adminMobileBottomNav .admin-mobile-nav-item--active {
+        color: var(--color-primary);
+        background: rgba(37, 99, 235, 0.1);
+        font-weight: 700;
       }
     }
 
@@ -12562,13 +13249,106 @@
       display: none !important;
     }
 
-    /* Hide the desktop-style admin inline toolbar on mobile shell. */
-    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-inline-toolbar {
-      display: none !important;
+    /* Admin mobile: stable shell — no document scroll / layout collapse on tab switch */
+    body.admin-mobile-shell-active {
+      background: var(--color-bg, #f8fafc);
+    }
+
+    body.admin-mobile-shell-active.native-app-shell {
+      padding-top: 0;
+      overflow: hidden;
+      overscroll-behavior: none;
+      min-height: 100dvh;
+      min-height: 100svh;
+      max-height: 100dvh;
+      max-height: 100svh;
+    }
+
+    body.admin-mobile-shell-active.native-app-shell .container,
+    body.admin-mobile-shell-active .container {
+      padding-top: 0;
+      padding-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    body.admin-mobile-shell-active.native-app-shell .container {
+      min-height: 100dvh;
+      min-height: 100svh;
+      max-height: 100dvh;
+      max-height: 100svh;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      width: 100%;
+      background: var(--color-bg, #f8fafc);
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard-panels {
-      padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      grid-template: 1fr / 1fr;
+      overflow: hidden;
+      position: relative;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+      padding-bottom: calc(var(--admin-tabbar-height) + env(safe-area-inset-bottom, 0px) + var(--admin-tabbar-float-gap) + 24px);
+      background: var(--color-bg, #f8fafc);
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard-panels > .admin-section {
+      grid-area: 1 / 1;
+      display: block !important;
+      min-height: 0;
+      max-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: none;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard-panels > .admin-section.admin-section--active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden) .admin-dashboard-panels > .admin-section.hidden {
+      display: none !important;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    body.admin-mobile-shell-active #adminMobileBottomNav:not(.hidden) {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
+    /* Bottom-tab sections: tab label is the page title on mobile */
+    body.admin-mobile-shell-active #adminView:not(.hidden) #adminSectionOverview.admin-section--active > .card > .admin-section-title,
+    body.admin-mobile-shell-active #adminView:not(.hidden) #adminSectionServices.admin-section--active > .card > .admin-saas__title,
+    body.admin-mobile-shell-active #adminView:not(.hidden) #adminSectionStaff.admin-section--active > .card > .admin-saas__title,
+    body.admin-mobile-shell-active #adminView:not(.hidden) #adminSectionCalendar.admin-section--active > .card > .admin-saas__title,
+    body.admin-mobile-shell-active #adminView:not(.hidden) #adminSectionBookings.admin-section--active > .card > .admin-saas__title {
+      display: none;
     }
 
     body.admin-mobile-shell-active .admin-mobile-setup-back:not(.hidden) {
@@ -12593,18 +13373,21 @@
     body.admin-mobile-shell-active #adminMobileBottomNav:not(.hidden) {
       display: flex;
       position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: 12px;
+      right: 12px;
+      bottom: calc(var(--admin-tabbar-float-gap) + env(safe-area-inset-bottom, 0px));
       z-index: 9999;
       align-items: stretch;
       justify-content: space-around;
       gap: 2px;
-      padding: 6px 6px calc(8px + env(safe-area-inset-bottom, 0px));
-      background: rgba(255, 255, 255, 0.97);
-      border-top: 1px solid var(--color-border);
-      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
-      backdrop-filter: blur(12px);
+      padding: 8px 6px;
+      min-height: var(--admin-tabbar-height);
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow-tab);
+      -webkit-backdrop-filter: saturate(190%) blur(22px);
+      backdrop-filter: saturate(190%) blur(22px);
     }
 
     body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item {
@@ -12613,21 +13396,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      min-height: 48px;
-      padding: 4px 2px;
-      margin: 0;
+      gap: 0;
+      min-height: 38px;
+      padding: 7px 6px 5px;
+      margin: 0 1px;
       border: none;
       border-radius: 12px;
       background: transparent;
-      color: var(--color-muted);
-      font-size: 9px;
-      font-weight: 700;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
       width: auto !important;
       max-width: none;
       min-width: 0;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      box-shadow: none;
     }
 
     body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item span:last-child {
@@ -12638,28 +13424,9 @@
     }
 
     body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item--active {
-      color: var(--business-accent, var(--color-primary));
-      background: color-mix(in srgb, var(--business-accent, var(--color-primary)) 12%, transparent);
-    }
-
-    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    body.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-icon--emoji {
-      display: inline-flex;
-      width: 22px;
-      height: 22px;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      line-height: 1;
+      color: var(--color-primary);
+      background: rgba(37, 99, 235, 0.1);
+      font-weight: 700;
     }
 
     @supports (overflow: clip) {
@@ -12875,8 +13642,13 @@
     }
 
     body.app-theme-dark.admin-mobile-shell-active #adminMobileBottomNav:not(.hidden) {
-      background: rgba(30, 41, 59, 0.97);
-      border-color: var(--admin-border, #334155);
+      background: rgba(30, 41, 59, 0.88);
+      border-color: rgba(51, 65, 85, 0.65);
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+    }
+
+    body.app-theme-dark.admin-mobile-shell-active #adminMobileBottomNav .admin-mobile-nav-item--active {
+      background: rgba(56, 189, 248, 0.14);
     }
 
     body.app-theme-dark .admin-mobile-card,
@@ -13405,32 +14177,8 @@
           <span class="admin-native-toolbar__label">Signed in</span>
           <span id="adminNativeEmail" class="admin-native-toolbar__email">—</span>
         </div>
-        <button
-          type="button"
-          id="adminNativeLogoutBtn"
-          class="auth-btn auth-btn--ghost auth-btn--logout admin-native-toolbar__logout"
-          onclick="logout()"
-          aria-label="Log out of admin account"
-        >
-          <span class="admin-native-toolbar__logout-icon" aria-hidden="true">⎋</span>Logout
-        </button>
       </header>
       <div class="admin-dashboard">
-        <div style="padding:12px 14px;margin:0 0 10px;border:2px solid #dc2626;border-radius:14px;background:#fff;color:#dc2626;font-weight:900;font-size:16px;letter-spacing:-0.02em;">
-          LOCAL BUILD TEST - SETTINGS LOGOUT
-        </div>
-        <div style="font-size:12px;color:#94a3b8;margin:-2px 2px 8px;">IOS BUILD MARKER 2026</div>
-        <div class="admin-inline-toolbar" aria-label="Admin actions">
-          <button
-            type="button"
-            id="adminInlineLogoutBtn"
-            class="admin-inline-toolbar__logout"
-            onclick="logout()"
-            aria-label="Log out"
-          >
-            Logout
-          </button>
-        </div>
         <nav id="adminNav" class="admin-nav" aria-label="Admin dashboard sections">
           <button type="button" class="admin-nav-btn admin-nav-btn--active" data-admin-section="overview" aria-current="page">Overview</button>
           <button type="button" class="admin-nav-btn" data-admin-section="customize">Customize Page</button>
@@ -13525,80 +14273,100 @@
           </section>
 
           <section id="adminSectionOverview" class="admin-section admin-section--active" data-admin-section="overview" aria-label="Overview">
-      <div class="card widget-card">
+      <div class="card widget-card overview-screen">
         <h1 class="admin-section-title">Overview</h1>
-        <p id="adminEmail" class="small"></p>
 
-        <div class="business-profile-preview">
-          <strong>Business Profile</strong>
-          <div class="small">Business ID / slug:</div>
-          <div id="businessIdDisplay" class="public-link-box"></div>
-          <p class="small">Ова е friendly ID што customer може рачно да го внесе, а public link го користи автоматски.</p>
-        </div>
-
-        <p class="small">Public booking link:</p>
-        <div class="copy-link-row">
-          <div id="publicLink" class="public-link-box"></div>
-
-          <div class="actions">
-            <button class="success" onclick="copyPublicLink()">Copy Link</button>
-            <button onclick="openPublicLink()">Open Link</button>
+        <div class="overview-identity" aria-label="Business identity">
+          <div id="overviewIdentityCover" class="overview-identity__cover" role="img" aria-label="Business cover"></div>
+          <div class="overview-identity__body">
+            <div class="overview-identity__avatar-wrap">
+              <img id="overviewIdentityAvatarImg" class="overview-identity__avatar-img hidden" alt="" width="72" height="72" decoding="async" />
+              <span id="overviewIdentityAvatarInitial" class="overview-identity__avatar-initial" aria-hidden="true">X</span>
+            </div>
+            <h2 class="overview-identity__title" id="overviewHeroBusinessName">Your business</h2>
+            <p id="overviewHeroSubtitle" class="overview-identity__subtitle">Your booking dashboard</p>
+            <p id="overviewHeroStatus" class="overview-identity__status"></p>
+            <div class="overview-hero__slug-wrap">
+              <span class="overview-hero__slug-label">Public ID</span>
+              <span id="businessIdDisplay" class="overview-hero__slug"></span>
+            </div>
+            <p id="adminEmail" class="overview-hero__account"></p>
           </div>
         </div>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">Total Bookings</div>
-            <div id="statTotalBookings" class="stat-number">0</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Today Bookings</div>
-            <div id="statTodayBookings" class="stat-number">0</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Upcoming Bookings</div>
-            <div id="statUpcomingBookings" class="stat-number">0</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Total Services</div>
-            <div id="statTotalServices" class="stat-number">0</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">Closed Days</div>
-            <div id="statClosedDays" class="stat-number">0</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-label">This Month Bookings</div>
-            <div id="statMonthBookings" class="stat-number">0</div>
-          </div>
+        <div class="overview-quick-actions" aria-label="Quick actions">
+          <button type="button" class="overview-quick-actions__btn" onclick="copyPublicLink()">Copy link</button>
+          <button type="button" class="overview-quick-actions__btn" onclick="openPublicLink()">Open page</button>
+          <button type="button" class="overview-quick-actions__btn" onclick="setAdminSection('calendar')">Calendar</button>
         </div>
 
-        <div class="next-booking-box">
-          <strong>Next Booking:</strong>
+        <section class="overview-panel overview-panel--link" aria-labelledby="overviewLinkHeading">
+          <h2 id="overviewLinkHeading" class="overview-panel__title">Public booking link</h2>
+          <p class="overview-panel__lead">Share this link so customers can book online.</p>
+          <div class="overview-link-card">
+            <div id="publicLink" class="public-link-box overview-link-card__url"></div>
+            <div class="actions overview-link-card__actions">
+              <button type="button" class="success" onclick="copyPublicLink()">Copy Link</button>
+              <button type="button" onclick="openPublicLink()">Open Link</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="next-booking-box overview-next">
+          <strong>Next booking</strong>
           <div id="statNextBooking" class="small">No upcoming booking.</div>
         </div>
 
-        <h3 class="small" style="margin-top:18px;margin-bottom:4px;font-weight:800">Business profile</h3>
-        <label class="small"><strong>Business ID / Public Slug</strong></label>
-        <div class="business-id-row">
-          <input id="businessSlug" placeholder="e.g. barber-shop-skopje" oninput="previewBusinessPublicLink()" />
-          <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
-        </div>
-        <p class="small">Lowercase letters, numbers and hyphens. Used in your public booking link.</p>
-        <textarea id="businessDescription" placeholder="About your business (optional, shown on booking page)" oninput="previewBookingPageHero()"></textarea>
-        <div class="business-profile-grid">
-          <input id="businessPhone" placeholder="Business phone optional" />
-          <input id="businessAddress" placeholder="Business address optional" />
-        </div>
-        <div class="business-profile-preview">
-          <strong>Public Link Preview</strong>
-          <div id="businessPublicLinkPreview" class="small"></div>
-        </div>
+        <section class="overview-panel overview-panel--stats" aria-labelledby="overviewStatsHeading">
+          <h2 id="overviewStatsHeading" class="overview-panel__title">At a glance</h2>
+          <div class="stats-grid overview-stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Total Bookings</div>
+              <div id="statTotalBookings" class="stat-number">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Today Bookings</div>
+              <div id="statTodayBookings" class="stat-number">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Upcoming Bookings</div>
+              <div id="statUpcomingBookings" class="stat-number">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Services</div>
+              <div id="statTotalServices" class="stat-number">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Closed Days</div>
+              <div id="statClosedDays" class="stat-number">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">This Month Bookings</div>
+              <div id="statMonthBookings" class="stat-number">0</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="overview-panel overview-panel--edit" aria-labelledby="overviewProfileHeading">
+          <h2 id="overviewProfileHeading" class="overview-panel__title">Business profile</h2>
+          <p class="overview-panel__lead overview-panel__lead--hint">Customers can enter your public ID manually; your booking link uses it automatically.</p>
+          <label class="small" for="businessSlug"><strong>Business ID / public slug</strong></label>
+          <div class="business-id-row">
+            <input id="businessSlug" placeholder="e.g. barber-shop-skopje" oninput="previewBusinessPublicLink()" />
+            <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
+          </div>
+          <p class="small">Lowercase letters, numbers and hyphens. Used in your public booking link.</p>
+          <label class="small" for="businessDescription"><strong>About your business</strong></label>
+          <textarea id="businessDescription" placeholder="About your business (optional, shown on booking page)" oninput="previewBookingPageHero()"></textarea>
+          <div class="business-profile-grid">
+            <input id="businessPhone" placeholder="Business phone optional" />
+            <input id="businessAddress" placeholder="Business address optional" />
+          </div>
+          <div class="business-profile-preview">
+            <strong>Public link preview</strong>
+            <div id="businessPublicLinkPreview" class="small"></div>
+          </div>
+        </section>
 
       </div>
           </section>
@@ -14320,14 +15088,6 @@
                 </div>
               </div>
               <button type="button" class="secondary admin-mobile-profile__btn" onclick="adminMobileOpenSetup()">Setup business</button>
-              <div class="admin-mobile-card admin-mobile-profile__logout-card">
-                <button
-                  type="button"
-                  class="admin-mobile-profile__btn admin-mobile-profile__btn--logout"
-                  onclick="logout()"
-                  aria-label="Log out of admin account"
-                >Logout</button>
-              </div>
             </div>
           </section>
 
@@ -14335,30 +15095,12 @@
       </div>
 
       <nav id="adminMobileBottomNav" class="admin-mobile-bottom-nav hidden" aria-label="Admin app navigation">
-        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-admin-mobile-tab="overview" aria-current="page">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">🏠</span>
-          <span>Overview</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="services" aria-current="false">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">✂️</span>
-          <span>Services</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="staff" aria-current="false">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">👤</span>
-          <span>Staff</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="calendar" aria-current="false">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">📅</span>
-          <span>Calendar</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="bookings" aria-current="false">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">📋</span>
-          <span>Bookings</span>
-        </button>
-        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="settings" aria-current="false">
-          <span class="admin-mobile-nav-icon admin-mobile-nav-icon--emoji" aria-hidden="true">⚙️</span>
-          <span>Settings</span>
-        </button>
+        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-admin-mobile-tab="overview" aria-current="page">Overview</button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="services" aria-current="false">Services</button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="staff" aria-current="false">Staff</button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="calendar" aria-current="false">Calendar</button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="bookings" aria-current="false">Bookings</button>
+        <button type="button" class="admin-mobile-nav-item" data-admin-mobile-tab="settings" aria-current="false">Settings</button>
       </nav>
     </div>
 
@@ -20666,6 +21408,7 @@
 
     updateLogoUploadUi();
     previewBookingPageHero();
+    syncOverviewHeroUi();
     if (isPublicBookingViewVisible()) {
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
@@ -20820,6 +21563,7 @@
 
     updateCoverUploadUi();
     previewBookingPageHero();
+    syncOverviewHeroUi();
     if (isPublicBookingViewVisible()) {
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
@@ -22031,6 +22775,16 @@
     settings: "profile"
   });
 
+  /** Bottom-tab sections kept in a layered stack (no display:none collapse on switch). */
+  const ADMIN_MOBILE_LAYER_SECTIONS = new Set([
+    "overview",
+    "services",
+    "staff",
+    "calendar",
+    "bookings",
+    "profile"
+  ]);
+
   const ADMIN_MOBILE_SETUP_CHILD_SECTIONS = new Set([
     "overview",
     "customize",
@@ -22045,9 +22799,23 @@
   let adminActiveSection = "overview";
   let adminActiveMobileTab = "home";
 
+  function scrollAdminSectionIntoView(panel, opts = {}) {
+    const mobileShell = document.body.classList.contains("admin-mobile-shell-active");
+    if (mobileShell) {
+      if (panel) panel.scrollTop = 0;
+      return;
+    }
+    if (!panel) return;
+    panel.scrollIntoView({
+      behavior: opts.silent ? "auto" : "smooth",
+      block: "start"
+    });
+  }
+
   function setAdminSection(sectionKey, opts = {}) {
     const key = ADMIN_SECTION_PANEL_IDS[sectionKey] ? sectionKey : "overview";
     adminActiveSection = key;
+    const mobileShell = document.body.classList.contains("admin-mobile-shell-active");
 
     document.querySelectorAll(".admin-nav-btn").forEach((btn) => {
       const on = btn.dataset.adminSection === key;
@@ -22060,7 +22828,17 @@
       if (!panel) return;
       const active = id === key;
       panel.classList.toggle("admin-section--active", active);
-      panel.classList.toggle("hidden", !active);
+      if (mobileShell) {
+        if (active) {
+          panel.classList.remove("hidden");
+        } else if (ADMIN_MOBILE_LAYER_SECTIONS.has(id)) {
+          panel.classList.remove("hidden");
+        } else {
+          panel.classList.add("hidden");
+        }
+      } else {
+        panel.classList.toggle("hidden", !active);
+      }
     });
 
     if (key === "calendar" && !opts.skipRender) {
@@ -22096,7 +22874,7 @@
     }
 
     const panel = document.getElementById(ADMIN_SECTION_PANEL_IDS[key]);
-    panel?.scrollIntoView({ behavior: opts.silent ? "auto" : "smooth", block: "start" });
+    scrollAdminSectionIntoView(panel, { silent: mobileShell || !!opts.silent });
   }
 
   function shouldUseAdminMobileShell() {
@@ -22133,7 +22911,10 @@
       btn.setAttribute("aria-current", on ? "page" : "false");
     });
     if (!opts.skipSection) {
-      setAdminSection(ADMIN_MOBILE_TAB_SECTIONS[key], { silent: !!opts.silent, skipRender: !!opts.skipRender });
+      setAdminSection(ADMIN_MOBILE_TAB_SECTIONS[key], {
+        silent: true,
+        skipRender: !!opts.skipRender
+      });
     }
   }
 
@@ -22377,19 +23158,7 @@
     hideAllViews();
     document.body.classList.remove("wizard-open");
     document.getElementById("adminView")?.classList.remove("hidden");
-    const topbar = document.querySelector(".topbar");
-    if (topbar) {
-      topbar.style.display = "block";
-      topbar.style.visibility = "visible";
-      topbar.style.opacity = "1";
-    }
-    const logoutBtn = document.getElementById("logoutBtn");
-    logoutBtn?.classList.remove("hidden");
-    if (logoutBtn) {
-      logoutBtn.style.display = "inline-flex";
-      logoutBtn.style.visibility = "visible";
-      logoutBtn.style.opacity = "1";
-    }
+    document.getElementById("logoutBtn")?.classList.add("hidden");
     document.getElementById("homeBtn")?.classList.add("hidden");
     syncAdminNativeToolbar();
     initAdminDashboard();
@@ -22765,20 +23534,8 @@
     hideAdminOnboardingLaunchScreen();
     document.body.classList.add("wizard-open");
     document.getElementById("adminOnboardingView").classList.remove("hidden");
-    const topbar = document.querySelector(".topbar");
-    if (topbar) {
-      topbar.style.display = "block";
-      topbar.style.visibility = "visible";
-      topbar.style.opacity = "1";
-    }
-    const logoutBtn = document.getElementById("logoutBtn");
-    logoutBtn?.classList.remove("hidden");
-    if (logoutBtn) {
-      logoutBtn.style.display = "inline-flex";
-      logoutBtn.style.visibility = "visible";
-      logoutBtn.style.opacity = "1";
-    }
-    document.getElementById("homeBtn").classList.add("hidden");
+    document.getElementById("logoutBtn")?.classList.add("hidden");
+    document.getElementById("homeBtn")?.classList.add("hidden");
     bindAdminOnboardingFooterKeyboardGuard();
     logOnboarding("wizard visible");
   }
@@ -26107,11 +26864,75 @@
     }
   }
 
-  async function loadAdminData() {
-    const adminEmailEl = document.getElementById("adminEmail");
-    if (adminEmailEl && currentUser?.email) {
-      adminEmailEl.innerText = "Logged in as: " + currentUser.email;
+  function syncOverviewHeroUi() {
+    const nameEl = document.getElementById("overviewHeroBusinessName");
+    const emailEl = document.getElementById("adminEmail");
+    const subtitleEl = document.getElementById("overviewHeroSubtitle");
+    const statusEl = document.getElementById("overviewHeroStatus");
+    const coverEl = document.getElementById("overviewIdentityCover");
+    const avatarImg = document.getElementById("overviewIdentityAvatarImg");
+    const avatarInitial = document.getElementById("overviewIdentityAvatarInitial");
+    const name =
+      businessSettings?.business_name ||
+      document.getElementById("businessName")?.value?.trim() ||
+      "";
+    const displayName = name || "Your business";
+    if (nameEl) nameEl.textContent = displayName;
+
+    let publicIdentifier = "";
+    try {
+      publicIdentifier = getBusinessPublicIdentifier() || "";
+    } catch (e) {
+      publicIdentifier = "";
     }
+    const tagline = (businessSettings?.public_tagline || "").trim();
+    const about = (businessSettings?.business_description || "").trim();
+    if (subtitleEl) {
+      subtitleEl.textContent = tagline || about || "Book appointments online";
+    }
+    if (statusEl) {
+      statusEl.textContent = publicIdentifier
+        ? "Signed in · " + (currentUser?.email || "Admin")
+        : currentUser?.email
+          ? "Signed in · " + currentUser.email
+          : "";
+      statusEl.classList.toggle("hidden", !statusEl.textContent);
+    }
+    if (emailEl) {
+      emailEl.textContent = publicIdentifier ? "@" + publicIdentifier : "";
+      emailEl.classList.toggle("hidden", !publicIdentifier);
+    }
+
+    const coverUrl = String(businessSettings?.business_cover_url || "").trim();
+    if (coverEl) {
+      if (coverUrl) {
+        coverEl.style.backgroundImage = "url(" + JSON.stringify(coverUrl) + ")";
+        coverEl.classList.add("overview-identity__cover--image");
+      } else {
+        coverEl.style.backgroundImage = "";
+        coverEl.classList.remove("overview-identity__cover--image");
+      }
+    }
+
+    const logoUrl = String(businessSettings?.business_logo_url || "").trim();
+    const initial = displayName.trim().charAt(0).toUpperCase() || "X";
+    if (avatarImg && avatarInitial) {
+      if (logoUrl) {
+        avatarImg.src = logoUrl;
+        avatarImg.alt = displayName + " logo";
+        avatarImg.classList.remove("hidden");
+        avatarInitial.classList.add("hidden");
+      } else {
+        avatarImg.classList.add("hidden");
+        avatarImg.removeAttribute("src");
+        avatarInitial.textContent = initial;
+        avatarInitial.classList.remove("hidden");
+      }
+    }
+  }
+
+  async function loadAdminData() {
+    syncOverviewHeroUi();
     syncAdminNativeToolbar();
 
     const bookingsListEl = document.getElementById("bookingsList");
@@ -26130,6 +26951,7 @@
     await loadBlockedDays();
 
     fillBusinessSettingsForm();
+    syncOverviewHeroUi();
     renderServices();
     renderStaffMembers();
     renderBlockedDays();
