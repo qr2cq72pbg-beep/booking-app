@@ -621,6 +621,180 @@
       margin: 0 0 12px;
     }
 
+    #adminSectionOverview .overview-kpi-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    #adminSectionOverview .overview-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    #adminSectionOverview .overview-kpi {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      padding: 11px 12px;
+      border-radius: 14px;
+      background: var(--surface-elevated);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: var(--shadow-sm);
+      box-sizing: border-box;
+    }
+
+    #adminSectionOverview .overview-kpi__icon {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 17px 17px;
+    }
+
+    #adminSectionOverview .overview-kpi__icon--calendar {
+      background-color: #f3f0ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionOverview .overview-kpi__icon--upcoming {
+      background-color: #eff6ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionOverview .overview-kpi__icon--total {
+      background-color: #ecfdf5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2316a34a' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M8 6h13M8 12h13M8 18h13'/%3E%3Cpath stroke-linecap='round' d='M3 6h.01M3 12h.01M3 18h.01'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionOverview .overview-kpi__icon--closed {
+      background-color: #fff7ed;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ea580c' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionOverview .overview-kpi__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #adminSectionOverview .overview-kpi__label {
+      display: block;
+      margin: 0 0 2px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      line-height: 1.2;
+    }
+
+    #adminSectionOverview .overview-kpi__value {
+      margin: 0;
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--color-text);
+    }
+
+    #adminSectionOverview .overview-next-card {
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--surface-elevated);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #adminSectionOverview .overview-next-card__title {
+      margin: 0 0 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+    }
+
+    #adminSectionOverview .overview-next-card__body {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--color-text-secondary);
+    }
+
+    #adminSectionOverview .overview-actions--compact {
+      margin: 0 0 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--surface-elevated);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #adminSectionOverview .overview-share-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin: 0 0 10px;
+      padding: 11px 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.14);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    #adminSectionOverview .overview-share-row__icon {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #ede9fe center / 18px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.193-9.193a4.5 4.5 0 0 0-6.364 0l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionOverview .overview-share-row__copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    #adminSectionOverview .overview-share-row__title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.25;
+    }
+
+    #adminSectionOverview .overview-share-row__hint {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-muted);
+      line-height: 1.3;
+    }
+
+    #adminSectionOverview .overview-share-row__action {
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
     #adminSectionOverview .overview-metrics__title {
       margin: 0 0 10px;
       padding: 0 4px;
@@ -3436,8 +3610,43 @@
       align-items: end;
     }
 
-    #adminSectionStaff .admin-saas-form__fields--staff {
+    #adminSectionStaff .admin-saas-form__fields--staff:not(.staff-add-card__fields) {
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) auto;
+    }
+
+    #adminSectionStaff .staff-add-card .admin-saas-form__fields {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      width: 100%;
+    }
+
+    #adminSectionStaff .staff-add-card .admin-saas-field {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    #adminSectionStaff .staff-add-card .admin-saas-field__label {
+      text-align: left;
+      align-self: flex-start;
+      width: 100%;
+    }
+
+    #adminSectionStaff .staff-add-card .staff-input-wrap,
+    #adminSectionStaff .staff-add-card .staff-upload-zone,
+    #adminSectionStaff .staff-add-card .staff-upload-clear {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      transform: none;
+    }
+
+    #adminSectionStaff .staff-add-card .admin-saas-form__actions {
+      width: 100%;
+      justify-content: flex-start;
     }
 
     #adminSectionServices .admin-saas-field,
@@ -13728,20 +13937,6 @@
       box-shadow: 0 10px 32px rgba(15, 23, 42, 0.14);
     }
 
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden) {
-      border-radius: 0 0 20px 20px;
-      box-shadow: 0 10px 32px rgba(15, 23, 42, 0.14);
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__inner {
-      padding: 8px 14px 8px;
-      min-height: 152px;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact {
-      min-height: calc(152px + var(--cb-header-safe-top));
-    }
-
     body.customer-mobile-shell-active:has(#customerMobileTabHome:not(.hidden))
       #customerBrandedHeader.customer-branded-header--expanded:not(.hidden)
       .public-hero-bg.public-hero-bg--image {
@@ -13813,18 +14008,7 @@
     body.customer-mobile-shell-active:has(#customerMobileTabHome:not(.hidden))
       #customerBrandedHeader.customer-branded-header--expanded:not(.hidden)
       .customer-branded-header__headline-main {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      align-self: start;
-      margin: 0;
-      padding: 8px 0 0 8px;
-      max-width: 14ch;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.2rem, 4.5vw, 1.55rem);
-      font-weight: 700;
-      line-height: 1.14;
-      letter-spacing: -0.02em;
-      z-index: 1;
+      display: none !important;
     }
 
     body.customer-mobile-shell-active:has(#customerMobileTabHome:not(.hidden))
@@ -14038,7 +14222,7 @@
       display: none !important;
     }
 
-    /* —— Compact: Book, Bookings, Alerts, Profile (Home-style, ~152px) —— */
+    /* —— Compact header: one shared style (Book, Bookings, Alerts, Profile) —— */
     #customerBrandedHeader.customer-branded-header--compact {
       min-height: calc(152px + var(--cb-header-safe-top));
       height: auto;
@@ -14077,10 +14261,31 @@
       );
     }
 
-    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__inner {
+    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__headline-main,
+    #customerBrandedHeader.customer-branded-header--compact #publicBusinessTagline,
+    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__subtitle,
+    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__meta,
+    #customerBrandedHeader.customer-branded-header--compact .public-hero-social,
+    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__hint,
+    #customerBrandedHeader.customer-branded-header--compact #publicBusinessAbout {
+      display: none !important;
+    }
+
+    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden) {
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 10px 32px rgba(15, 23, 42, 0.14);
+    }
+
+    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
+      .customer-branded-header__identity {
+      display: contents;
+    }
+
+    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
+      .customer-branded-header__inner {
       display: grid;
       grid-template-columns: 44px 1fr;
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto auto;
       align-content: end;
       align-items: center;
       column-gap: 8px;
@@ -14089,25 +14294,15 @@
       min-height: 152px;
       height: auto;
       max-height: none;
-      padding: 8px 14px 8px;
+      padding: 6px 14px 6px;
       box-sizing: border-box;
-    }
-
-    #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__hint {
-      display: none;
-    }
-
-    /* Compact on mobile shell — mirror Home hero (shorter) */
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .public-hero-bg.public-hero-bg--image {
-      background-position: center top;
     }
 
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       .customer-branded-header__inner::after {
       content: "";
       grid-column: 1 / -1;
-      grid-row: 2 / span 2;
+      grid-row: 1 / span 2;
       z-index: 0;
       margin-top: 0;
       border-radius: 14px;
@@ -14122,43 +14317,9 @@
     }
 
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__headline-main {
-      display: block;
-      grid-column: 1 / -1;
-      grid-row: 1;
-      align-self: start;
-      margin: 0;
-      padding-top: 2px;
-      max-width: 14ch;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.1rem, 4.2vw, 1.28rem);
-      font-weight: 700;
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      text-align: left;
-      z-index: 1;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__identity {
-      display: contents;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__inner {
-      grid-template-rows: auto auto auto auto;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__inner::after {
-      grid-row: 2 / span 3;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       .customer-branded-header__avatar-wrap {
       grid-column: 1;
-      grid-row: 2 / span 3;
+      grid-row: 1 / span 2;
       width: 44px;
       height: 44px;
       margin: 0 0 0 7px;
@@ -14166,6 +14327,7 @@
       align-self: center;
       z-index: 2;
       padding: 2px;
+      position: relative;
       background: linear-gradient(145deg, rgba(255, 236, 190, 0.98), rgba(198, 152, 58, 0.94));
       box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.5),
@@ -14187,6 +14349,9 @@
       .public-hero-avatar-slot {
       position: relative;
       overflow: hidden;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       background: radial-gradient(
         circle at 50% 42%,
         rgba(255, 255, 255, 0.98) 0%,
@@ -14235,15 +14400,7 @@
     }
 
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__headline-main,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__avatar-wrap,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       #publicBusinessName,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      #publicBusinessTagline,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__subtitle,
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       .customer-branded-header__verified {
       position: relative;
@@ -14253,10 +14410,10 @@
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       #publicBusinessName {
       grid-column: 2;
-      grid-row: 2;
+      grid-row: 1;
       align-self: end;
       margin: 0;
-      padding: 5px 8px 3px 0;
+      padding: 5px 8px 2px 0;
       font-size: 1.08rem;
       font-weight: 800;
       letter-spacing: -0.03em;
@@ -14274,33 +14431,14 @@
     }
 
     body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      #publicBusinessTagline,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__subtitle {
-      display: block;
-      grid-column: 2;
-      grid-row: 3;
-      align-self: start;
-      margin: 0;
-      padding: 6px 8px 2px 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: left;
-      background: none;
-      border: none;
-      box-shadow: none;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
       .customer-branded-header__verified {
       display: inline-flex;
       grid-column: 2;
-      grid-row: 4;
+      grid-row: 2;
       align-self: start;
       justify-content: flex-start;
       margin: 0;
-      padding: 0 8px 4px 0;
+      padding: 0 8px 5px 0;
       font-size: 10px;
       font-weight: 600;
       color: #7dd3fc;
@@ -14315,13 +14453,6 @@
       width: 12px;
       height: 12px;
       background-size: 8px;
-    }
-
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .customer-branded-header__meta,
-    body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact:not(.hidden)
-      .public-hero-social {
-      display: none !important;
     }
 
     body.customer-mobile-shell-active #publicView.public-view--mobile-shell {
@@ -14702,7 +14833,255 @@
       opacity: 0.88;
     }
 
-    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-actions {
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row--rich {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+    }
+
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row__icon {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #eef2ff;
+      color: #475569;
+    }
+
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row__icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row__copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row__title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row__sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 12000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet:not(.hidden) {
+      pointer-events: auto;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet.hidden {
+      display: none !important;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.42);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet__panel {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      max-height: min(78vh, 620px);
+      margin: 0;
+      padding: 8px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+      border-radius: 20px 20px 0 0;
+      background: #fff;
+      box-shadow: 0 -12px 40px rgba(15, 23, 42, 0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0 14px;
+      border-bottom: 1px solid #eef2f7;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet__header h2 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-sheet__close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin: 0 0 8px;
+      padding: 12px;
+      border: 1px solid #e8edf4;
+      border-radius: 14px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item:active {
+      background: #f8fafc;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item--current {
+      border-color: #bfdbfe;
+      background: linear-gradient(180deg, #f8fbff 0%, #fff 100%);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__avatar {
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: linear-gradient(165deg, #2a2234 0%, #121018 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #f0d78c;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 4px;
+      background: #faf6ee;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__name {
+      margin: 0 0 2px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__slug {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 500;
+      color: #94a3b8;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__meta {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-item__remove {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-add {
+      width: 100%;
+      margin: 8px 0 0;
+      padding: 14px 16px;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 14px;
+      background: #f8fafc;
+      color: #2563eb;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    body.customer-mobile-shell-active .customer-business-switcher-add:active {
+      background: #f1f5f9;
+    }
+
+    body.customer-mobile-shell-active .customer-mobile-profile-actions {
       padding: 14px 0 8px;
     }
 
@@ -15264,6 +15643,93 @@
       font-weight: 700;
     }
 
+    body.customer-mobile-shell-active .customer-premium-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 22px 16px 20px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+      border: 1px dashed #dbe3ee;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    body.customer-mobile-shell-active .customer-premium-empty__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: #eef2ff;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    body.customer-mobile-shell-active .customer-premium-empty__title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    body.customer-mobile-shell-active .customer-premium-empty__sub {
+      margin: 0;
+      max-width: 26ch;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #94a3b8;
+    }
+
+    body.customer-mobile-shell-active.customer-shell-business-picker .customer-mobile-tab-panel,
+    body.customer-mobile-shell-active.customer-shell-business-picker #customerMyBookingsCard,
+    body.customer-mobile-shell-active.customer-shell-business-picker #publicBookingContent,
+    body.customer-mobile-shell-active.customer-shell-business-picker #customerBrandedHeader {
+      display: none !important;
+    }
+
+    body.customer-mobile-shell-active.customer-shell-business-picker #customerStartCard:not(.hidden) {
+      display: block !important;
+      margin: 12px 16px 16px;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+    }
+
+    body.customer-mobile-shell-active #customerMyBookingsCard .customer-my-bookings-loading {
+      padding: 20px 16px;
+    }
+
+    body.customer-mobile-shell-active #customerMyBookingsCard .customer-my-bookings-loading__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    body.customer-mobile-shell-active #customerMyBookingsCard .customer-my-bookings-loading__spinner {
+      display: none;
+    }
+
+    body.customer-mobile-shell-active #customerMyBookingsCard .customer-my-bookings-loading__skeleton {
+      max-width: 100%;
+      opacity: 1;
+    }
+
+    body.customer-mobile-shell-active #publicBookingContent .public-skeleton-item {
+      border-radius: 14px;
+      background: linear-gradient(90deg, #eef2f7 0%, #f8fafc 45%, #eef2f7 100%);
+      background-size: 200% 100%;
+      animation: customer-skeleton-shimmer 1.1s ease-in-out infinite;
+    }
+
+    @keyframes customer-skeleton-shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
     body.customer-mobile-shell-active #customerMobileTabNotifications .customer-alerts-footnote {
       margin: 12px 0 0;
       font-size: 12px;
@@ -15403,7 +15869,7 @@
 
       body.customer-mobile-shell-active #customerBrandedHeader.customer-branded-header--compact .customer-branded-header__inner {
         min-height: 152px;
-        padding: 8px 14px 8px;
+        padding: 6px 14px 6px;
       }
     }
 
@@ -16940,7 +17406,7 @@
     body.admin-mobile-shell-active #adminSectionOverview > .overview-screen.widget-card {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 12px;
       padding: 0 0 12px !important;
       background: transparent !important;
       box-shadow: none !important;
@@ -17533,8 +17999,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 8px;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-header__brand {
@@ -17610,10 +18076,10 @@
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-greeting {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 4px;
+      gap: 10px;
+      margin-bottom: 2px;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-greeting__copy {
@@ -17622,54 +18088,50 @@
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-greeting__title {
-      margin: 0 0 4px;
-      font-size: 1.5rem;
+      margin: 0;
+      font-size: 1.125rem;
       font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.15;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
       color: #0f172a;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-greeting__sub {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 500;
-      color: #94a3b8;
-      line-height: 1.4;
+      display: none;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-date-pill {
       flex: 0 0 auto;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      max-width: 46%;
-      margin-top: 4px;
-      padding: 8px 12px;
-      border-radius: 12px;
+      gap: 5px;
+      max-width: 42%;
+      margin-top: 0;
+      padding: 6px 10px;
+      border-radius: 10px;
       background: #ffffff;
-      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.08), inset 0 0 0 1px rgba(99, 102, 241, 0.06);
+      box-shadow: 0 1px 8px rgba(99, 102, 241, 0.07), inset 0 0 0 1px rgba(99, 102, 241, 0.06);
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-date-pill__icon {
-      flex: 0 0 16px;
-      width: 16px;
-      height: 16px;
-      background: center / 16px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.75'%3E%3Cpath stroke-linecap='round' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+      flex: 0 0 14px;
+      width: 14px;
+      height: 14px;
+      background: center / 14px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.75'%3E%3Cpath stroke-linecap='round' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-date-pill__text {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: #475569;
+      color: #64748b;
       white-space: nowrap;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-header__foot {
-      margin-top: 10px;
+      margin-top: 6px;
       padding-top: 0;
       border-top: none;
-      gap: 8px;
+      gap: 6px;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-header__foot .overview-hero__slug {
@@ -17691,16 +18153,116 @@
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-metrics--premium .overview-metrics__title {
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       padding: 0 2px;
-      font-size: 1.125rem;
+      font-size: 0.9375rem;
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
       text-transform: none;
       color: #0f172a;
     }
 
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      padding: 11px 12px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
+      border: none;
+      box-sizing: border-box;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__icon {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 17px 17px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__icon--calendar {
+      background-color: #f3f0ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__icon--upcoming {
+      background-color: #eff6ff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z'/%3E%3C/svg%3E");
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__icon--total {
+      background-color: #ecfdf5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2316a34a' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M8 6h13M8 12h13M8 18h13'/%3E%3Cpath stroke-linecap='round' d='M3 6h.01M3 12h.01M3 18h.01'/%3E%3C/svg%3E");
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__icon--closed {
+      background-color: #fff7ed;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ea580c' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636'/%3E%3C/svg%3E");
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__label {
+      display: block;
+      margin: 0 0 2px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-kpi__value {
+      margin: 0;
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #0f172a;
+    }
+
     body.admin-mobile-shell-active #adminSectionOverview .overview-dash-stats {
+      display: none !important;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-metrics__grid--secondary {
+      display: none !important;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-dash-stats--legacy {
       display: flex;
       flex-wrap: nowrap;
       gap: 12px;
@@ -17826,16 +18388,16 @@
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-next-card {
       margin: 0;
-      padding: 16px 18px;
-      border-radius: 22px;
+      padding: 12px 14px;
+      border-radius: 16px;
       background: #ffffff;
       border: none;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-next-card__title {
-      margin: 0 0 8px;
-      font-size: 1rem;
+      margin: 0 0 6px;
+      font-size: 0.875rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #0f172a;
@@ -17843,10 +18405,117 @@
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-next-card__body {
       margin: 0;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
-      line-height: 1.45;
+      line-height: 1.4;
       color: #64748b;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact {
+      margin: 0;
+      padding: 14px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__label {
+      margin: 0 0 10px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: none;
+      color: #0f172a;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin: 0 0 10px;
+      padding: 11px 12px;
+      border: none;
+      border-radius: 14px;
+      background: #f8f9fe;
+      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.08);
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row:active {
+      opacity: 0.92;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row__icon {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: #ede9fe center / 18px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' d='M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.193-9.193a4.5 4.5 0 0 0-6.364 0l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244'/%3E%3C/svg%3E");
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row__copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row__title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      line-height: 1.25;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row__hint {
+      font-size: 11px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-share-row__action {
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6366f1;
+      letter-spacing: -0.01em;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__row {
+      margin-bottom: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__chip {
+      min-height: 40px;
+      padding: 8px 6px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 11px;
+      background: #f8f9fe;
+      color: #475569;
+      border: none;
+      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.08);
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__link {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 11px;
+      background: #f8fafc;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.06);
+      word-break: break-all;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-actions--premium {
@@ -17921,10 +18590,10 @@
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-secondary {
       margin: 0;
-      padding: 18px;
-      border-radius: 22px;
+      padding: 14px;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-secondary__title {
@@ -17970,10 +18639,10 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card {
-      padding: 20px;
-      border-radius: 26px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8f9ff 100%);
-      box-shadow: var(--brand-shadow-card);
+      padding: 14px;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.07), inset 0 0 0 1px rgba(99, 102, 241, 0.06);
       border: none;
       overflow: hidden;
     }
@@ -17990,23 +18659,20 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__hint {
-      margin: 0 0 18px;
-      font-size: 14px;
-      line-height: 1.45;
-      color: #6b7280;
+      display: none;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__fields {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 10px;
       margin: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-form-duo {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 8px;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card .admin-saas-field__label {
@@ -18019,9 +18685,9 @@
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card input,
     body.admin-mobile-shell-active #adminSectionServices .services-edit-card input {
-      min-height: 50px;
-      font-size: 16px;
-      border-radius: 14px;
+      min-height: 44px;
+      font-size: 15px;
+      border-radius: 12px;
       border: none;
       background: #f4f6fc;
       box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.1);
@@ -18034,103 +18700,65 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__actions {
-      margin-top: 18px;
+      margin-top: 12px;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__submit {
       width: 100%;
-      min-height: 52px;
-      font-size: 16px;
+      min-height: 44px;
+      font-size: 15px;
       font-weight: 700;
-      border-radius: 14px;
+      border-radius: 12px;
       background: var(--brand-gradient-primary-btn) !important;
       box-shadow: var(--brand-shadow-glow) !important;
       border: none !important;
     }
 
-    body.admin-mobile-shell-active #adminSectionServices .services-list-section__title {
-      margin-bottom: 12px;
-      color: #6366f1;
-      font-weight: 700;
-    }
-
     body.admin-mobile-shell-active #adminSectionServices .services-premium-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       margin: 0;
       padding: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service {
       position: relative;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto;
-      gap: 4px 14px;
-      align-items: start;
-      padding: 16px 16px 14px 16px;
-      border: none;
-      border-radius: 22px;
-      background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
-      box-shadow: var(--brand-shadow-card);
-      border-left: none;
       overflow: hidden;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-row__accent {
-      grid-row: 1 / span 2;
-      width: 40px;
-      height: 40px;
-      margin-top: 2px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, #eef2ff 0%, #ede9fe 100%) center / cover no-repeat;
-      box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.12);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234f46e5' stroke-width='1.75'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: center;
-      background-size: 20px;
+      background-size: 18px;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-row__main {
-      grid-column: 2;
       min-width: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-row__title {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
       color: #0f172a;
       line-height: 1.25;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-row__meta {
-      margin-top: 4px;
-      font-size: 14px;
+      margin-top: 2px;
+      font-size: 12px;
       font-weight: 500;
-      color: #6366f1;
-      letter-spacing: -0.01em;
-    }
-
-    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-row__actions {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(99, 102, 241, 0.08);
+      color: #64748b;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row--service .admin-saas-btn {
-      min-height: 44px;
+      min-height: 0;
       margin: 0;
-      padding: 10px 12px;
-      font-size: 14px;
+      padding: 5px 10px;
+      font-size: 11px;
       font-weight: 600;
-      border-radius: 12px;
-      width: 100%;
+      border-radius: 999px;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-btn--service-edit {
@@ -18289,25 +18917,25 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .services-add-card {
-      padding: 18px;
-      border-radius: 22px;
+      padding: 14px;
+      border-radius: 18px;
       background: #ffffff;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.07), inset 0 0 0 1px rgba(99, 102, 241, 0.06);
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__head {
       display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 18px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-add-card__icon,
     body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__accent {
-      flex: 0 0 40px;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       background-color: #f3f0ff;
       background-repeat: no-repeat;
       background-position: center;
@@ -18478,15 +19106,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       width: 100%;
-      min-height: 52px !important;
+      min-height: 44px !important;
       margin: 0;
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 600 !important;
-      border-radius: 14px !important;
+      border-radius: 12px !important;
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.28) !important;
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.22) !important;
       border: none !important;
     }
 
@@ -18498,18 +19126,33 @@
 
     body.admin-mobile-shell-active #adminSectionServices .services-list-section__head {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionServices .services-list-section__title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionServices .services-list-section__count {
+      font-size: 12px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.3;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .services-list-section__title {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 0.9375rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #0f172a;
+      text-transform: uppercase;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .services-list-section__sort {
@@ -18521,24 +19164,21 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row--service {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding: 16px;
-      border-radius: 22px;
+      padding: 11px 12px;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__top {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      align-items: center;
+      gap: 10px;
       width: 100%;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__accent {
-      margin-top: 2px;
+      margin-top: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__main {
@@ -18547,7 +19187,7 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #0f172a;
@@ -18555,90 +19195,55 @@
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-      margin-top: 4px;
-      font-size: 13px;
+      margin-top: 2px;
+      font-size: 12px;
       font-weight: 500;
       color: #64748b;
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__meta-part--duration {
-      padding-left: 20px;
-      background: left center / 14px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l2 1.5'/%3E%3C/svg%3E");
+    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__actions--inline {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0;
+      border: none;
     }
 
-    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__meta-part--price {
-      padding-left: 20px;
-      background: left center / 14px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round'%3E%3Crect x='2' y='6' width='20' height='12' rx='2'/%3E%3Cpath d='M6 10h.01M10 10h.01'/%3E%3C/svg%3E");
-    }
-
-    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__meta-dot {
-      color: #cbd5e1;
-    }
-
-    body.admin-mobile-shell-active #adminSectionServices .admin-saas-row__menu {
-      flex: 0 0 20px;
-      width: 20px;
-      height: 20px;
-      margin-top: 4px;
-      background: center / 18px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2394a3b8' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='1.5'/%3E%3Ccircle cx='12' cy='12' r='1.5'/%3E%3Ccircle cx='19' cy='12' r='1.5'/%3E%3C/svg%3E");
-      opacity: 0.7;
-    }
-
-    body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-row__actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(99, 102, 241, 0.08);
+    body.admin-mobile-shell-active #adminSectionServices .admin-saas-btn--compact {
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 5px 10px !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      line-height: 1.2 !important;
+      border-radius: 999px !important;
+      white-space: nowrap;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-btn--service-edit {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 42px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      border-radius: 12px !important;
       background: #f3f0ff !important;
       color: #6d28d9 !important;
       border: none !important;
       box-shadow: none !important;
     }
 
-    body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-btn--service-edit::before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236d28d9' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z'/%3E%3C/svg%3E");
-    }
-
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-btn--service-delete {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-height: 42px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      border-radius: 12px !important;
       background: #fef2f2 !important;
       color: #dc2626 !important;
       border: none !important;
       box-shadow: none !important;
     }
 
+    body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-btn--service-edit::before,
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .admin-saas-btn--service-delete::before {
-      content: "";
-      width: 16px;
-      height: 16px;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23dc2626' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6'/%3E%3C/svg%3E");
+      content: none;
     }
 
     body.admin-mobile-shell-active #adminSectionServices .admin-native-screen--services-ref .services-edit-card {
@@ -18658,16 +19263,16 @@
     body.admin-mobile-shell-active #adminSectionStaff > .admin-native-screen--staff-ref {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 12px;
       padding: 0 2px 8px;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-screen-header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding: 4px 2px 2px;
+      gap: 10px;
+      padding: 2px 2px 0;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-screen-header__copy {
@@ -18677,11 +19282,11 @@
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-screen-header__title,
     body.admin-mobile-shell-active #adminSectionStaff .admin-native-screen--staff-ref .admin-native-screen__title {
-      margin: 0 0 6px;
-      font-size: 1.75rem;
+      margin: 0 0 3px;
+      font-size: 1.375rem;
       font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
       color: #0f172a;
       background: none;
       -webkit-background-clip: unset;
@@ -18690,16 +19295,16 @@
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-native-screen--staff-ref .admin-native-screen__subtitle {
       margin: 0;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: #94a3b8;
-      line-height: 1.45;
+      line-height: 1.35;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-screen-header__add {
-      flex: 0 0 44px;
-      width: 44px;
-      height: 44px;
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
       margin: 0;
       padding: 0;
       display: flex;
@@ -18726,21 +19331,21 @@
     body.admin-mobile-shell-active #adminSectionStaff .staff-status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 6px;
+      padding: 6px 12px;
       border-radius: 999px;
       background: rgba(220, 252, 231, 0.85);
       box-shadow: inset 0 0 0 1px rgba(34, 197, 94, 0.15);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #15803d;
       line-height: 1.2;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-status-pill__dot {
-      flex: 0 0 8px;
-      width: 8px;
-      height: 8px;
+      flex: 0 0 7px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: #22c55e;
       box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
@@ -18759,25 +19364,25 @@
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card {
       margin: 0;
-      padding: 18px;
-      border-radius: 22px;
+      padding: 14px;
+      border-radius: 18px;
       background: #ffffff;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.07), inset 0 0 0 1px rgba(99, 102, 241, 0.06);
       border: none;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__head {
       display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 18px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__icon {
-      flex: 0 0 40px;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       background: #f3f0ff center / 22px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='3.5'/%3E%3Cpath d='M22 11h-4M19 8v6M16 8v6'/%3E%3C/svg%3E");
       box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.08);
     }
@@ -18791,10 +19396,48 @@
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__hint {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .staff-add-card__fields,
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .admin-saas-form__fields {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      width: 100%;
       margin: 0;
-      font-size: 13px;
-      line-height: 1.45;
-      color: #94a3b8;
+      grid-template-columns: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .admin-saas-field {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      align-self: stretch;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .admin-saas-field__label {
+      align-self: flex-start;
+      text-align: left;
+      width: 100%;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .staff-input-wrap,
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .staff-upload-zone,
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .staff-upload-clear {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      transform: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__actions {
+      margin-top: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-field-optional {
@@ -18805,7 +19448,7 @@
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card .admin-saas-field__label {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -18843,9 +19486,9 @@
 
     body.admin-mobile-shell-active #adminView #adminSectionStaff .staff-input-wrap input {
       width: 100%;
-      min-height: 50px !important;
-      padding: 12px 14px 12px 44px !important;
-      font-size: 16px !important;
+      min-height: 44px !important;
+      padding: 10px 14px 10px 42px !important;
+      font-size: 15px !important;
       font-weight: 500;
       color: #0f172a;
       border: none !important;
@@ -18856,19 +19499,19 @@
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-upload-zone {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      min-height: 88px;
+      min-height: 52px;
       margin: 0;
-      padding: 16px;
-      border: 1.5px dashed rgba(99, 102, 241, 0.22);
-      border-radius: 14px;
+      padding: 10px 14px;
+      border: 1.5px dashed rgba(99, 102, 241, 0.2);
+      border-radius: 12px;
       background: #fafbff;
       color: #64748b;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
@@ -18876,33 +19519,34 @@
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-upload-zone__icon {
-      width: 28px;
-      height: 28px;
-      background: center / 28px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4m0 0 7 7m-7-7-7 7'/%3E%3Cpath d='M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2'/%3E%3C/svg%3E");
-      opacity: 0.7;
+      width: 22px;
+      height: 22px;
+      background: center / 22px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4m0 0 7 7m-7-7-7 7'/%3E%3Cpath d='M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2'/%3E%3C/svg%3E");
+      opacity: 0.75;
+      flex-shrink: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-upload-clear {
       width: 100%;
-      margin-top: 8px;
-      min-height: 40px;
-      font-size: 13px;
-      border-radius: 12px;
+      margin-top: 6px;
+      min-height: 36px;
+      font-size: 12px;
+      border-radius: 10px;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__submit {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       width: 100%;
-      min-height: 52px !important;
+      min-height: 44px !important;
       margin: 0;
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 600 !important;
-      border-radius: 14px !important;
+      border-radius: 12px !important;
       background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.28) !important;
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.22) !important;
       border: none !important;
     }
 
@@ -18912,10 +19556,37 @@
       line-height: 1;
     }
 
+    body.admin-mobile-shell-active #adminSectionStaff .staff-list-section__head {
+      margin-bottom: 8px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-list-section__title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-list-section__title {
+      margin: 0;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      text-transform: uppercase;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-list-section__count {
+      font-size: 12px;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.3;
+    }
+
     body.admin-mobile-shell-active #adminSectionStaff .staff-premium-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       margin: 0;
       padding: 0;
     }
@@ -18924,10 +19595,10 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      padding: 16px;
-      border-radius: 22px;
+      padding: 11px 12px;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
       border: none;
       opacity: 1;
     }
@@ -18938,17 +19609,17 @@
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__top {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      align-items: center;
+      gap: 10px;
       width: 100%;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-row__avatar,
     body.admin-mobile-shell-active #adminSectionStaff .staff-list-avatar-slot {
       position: relative;
-      flex: 0 0 52px;
-      width: 52px;
-      height: 52px;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       overflow: visible;
       background: linear-gradient(145deg, #ede9fe 0%, #e0e7ff 100%);
@@ -18988,7 +19659,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: #6d28d9;
       letter-spacing: -0.02em;
@@ -19005,11 +19676,11 @@
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__main {
       flex: 1;
       min-width: 0;
-      padding-top: 4px;
+      padding-top: 0;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #0f172a;
@@ -19020,9 +19691,9 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 6px;
-      margin-top: 4px;
-      font-size: 13px;
+      gap: 4px;
+      margin-top: 2px;
+      font-size: 12px;
       font-weight: 500;
       color: #64748b;
     }
@@ -19045,91 +19716,61 @@
       font-weight: 600;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__menu {
-      flex: 0 0 20px;
-      width: 20px;
-      height: 20px;
-      margin-top: 6px;
-      background: center / 18px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2394a3b8' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='1.5'/%3E%3Ccircle cx='12' cy='12' r='1.5'/%3E%3Ccircle cx='19' cy='12' r='1.5'/%3E%3C/svg%3E");
-      opacity: 0.7;
-    }
-
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 14px;
-      padding-top: 14px;
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions--staff-compact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding-top: 8px;
       border-top: 1px solid rgba(99, 102, 241, 0.08);
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-edit,
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-deactivate,
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate,
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-delete {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      min-height: 40px !important;
-      padding: 8px 6px !important;
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--compact {
+      flex: 1 1 calc(33.333% - 4px);
+      min-width: 0;
+      min-height: 0 !important;
       margin: 0 !important;
-      font-size: 12px !important;
+      padding: 6px 8px !important;
+      font-size: 11px !important;
       font-weight: 600 !important;
-      border-radius: 11px !important;
-      border: none !important;
-      box-shadow: none !important;
-      width: 100%;
+      line-height: 1.2 !important;
+      border-radius: 999px !important;
+      white-space: nowrap;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-edit {
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-edit::before,
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-deactivate::before,
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate::before,
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-delete::before {
+      content: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--staff-edit {
       background: #f3f0ff !important;
       color: #6d28d9 !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-edit::before {
-      content: "";
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236d28d9' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z'/%3E%3C/svg%3E");
-    }
-
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-deactivate,
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate {
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--staff-deactivate {
       background: #fff7ed !important;
       color: #ea580c !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-deactivate::before,
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate::before {
-      content: "";
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ea580c' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M10 9V5a2 2 0 0 1 4 0v4'/%3E%3Crect x='6' y='11' width='12' height='9' rx='2'/%3E%3C/svg%3E");
-    }
-
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate::before {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2316a34a' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M8 11V7a4 4 0 1 1 8 0v4'/%3E%3Crect x='6' y='11' width='12' height='9' rx='2'/%3E%3C/svg%3E");
-    }
-
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-activate {
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--staff-activate {
       background: #ecfdf5 !important;
       color: #16a34a !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-delete {
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--staff-delete {
       background: #fef2f2 !important;
       color: #dc2626 !important;
-    }
-
-    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-delete::before {
-      content: "";
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23dc2626' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6'/%3E%3C/svg%3E");
+      border: none !important;
+      box-shadow: none !important;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-premium-empty {
@@ -21876,7 +22517,6 @@
           <div class="overview-dash-greeting">
             <div class="overview-dash-greeting__copy">
               <h3 id="overviewGreetingTitle" class="overview-dash-greeting__title">Good morning</h3>
-              <p class="overview-dash-greeting__sub">Here's what's happening today.</p>
             </div>
             <div class="overview-dash-date-pill" aria-label="Today's date">
               <span class="overview-dash-date-pill__icon" aria-hidden="true"></span>
@@ -21892,61 +22532,57 @@
 
         <section class="overview-metrics overview-metrics--premium" aria-labelledby="overviewMetricsHeading">
           <h2 id="overviewMetricsHeading" class="overview-metrics__title">At a glance</h2>
-          <div class="overview-dash-stats" role="list" aria-label="Key metrics">
-            <article class="overview-dash-stat overview-dash-stat--purple" role="listitem">
-              <span class="overview-dash-stat__icon overview-dash-stat__icon--calendar" aria-hidden="true"></span>
-              <div class="overview-dash-stat__body">
-                <span class="overview-dash-stat__label">Appointments</span>
-                <div id="statTodayBookings" class="overview-dash-stat__value stat-number">0</div>
-                <span class="overview-dash-stat__tag overview-dash-stat__tag--purple">Today</span>
+          <div class="overview-kpi-grid" role="list" aria-label="Key metrics">
+            <article class="overview-kpi overview-kpi--today" role="listitem">
+              <span class="overview-kpi__icon overview-kpi__icon--calendar" aria-hidden="true"></span>
+              <div class="overview-kpi__body">
+                <span class="overview-kpi__label">Today</span>
+                <div id="statTodayBookings" class="overview-kpi__value stat-number">0</div>
               </div>
             </article>
-            <article class="overview-dash-stat overview-dash-stat--blue" role="listitem">
-              <span class="overview-dash-stat__icon overview-dash-stat__icon--upcoming" aria-hidden="true"></span>
-              <div class="overview-dash-stat__body">
-                <span class="overview-dash-stat__label">Upcoming</span>
-                <div id="statUpcomingBookings" class="overview-dash-stat__value stat-number">0</div>
-                <span class="overview-dash-stat__tag overview-dash-stat__tag--blue">Scheduled</span>
+            <article class="overview-kpi overview-kpi--upcoming" role="listitem">
+              <span class="overview-kpi__icon overview-kpi__icon--upcoming" aria-hidden="true"></span>
+              <div class="overview-kpi__body">
+                <span class="overview-kpi__label">Upcoming</span>
+                <div id="statUpcomingBookings" class="overview-kpi__value stat-number">0</div>
               </div>
             </article>
-            <article class="overview-dash-stat overview-dash-stat--green" role="listitem">
-              <span class="overview-dash-stat__icon overview-dash-stat__icon--month" aria-hidden="true"></span>
-              <div class="overview-dash-stat__body">
-                <span class="overview-dash-stat__label">Bookings</span>
-                <div id="statMonthBookings" class="overview-dash-stat__value stat-number">0</div>
-                <span class="overview-dash-stat__tag overview-dash-stat__tag--green">This month</span>
+            <article class="overview-kpi overview-kpi--total" role="listitem">
+              <span class="overview-kpi__icon overview-kpi__icon--total" aria-hidden="true"></span>
+              <div class="overview-kpi__body">
+                <span class="overview-kpi__label">Total bookings</span>
+                <div id="statTotalBookings" class="overview-kpi__value stat-number">0</div>
               </div>
             </article>
-            <article class="overview-dash-stat overview-dash-stat--orange" role="listitem">
-              <span class="overview-dash-stat__icon overview-dash-stat__icon--services" aria-hidden="true"></span>
-              <div class="overview-dash-stat__body">
-                <span class="overview-dash-stat__label">Services</span>
-                <div id="statTotalServices" class="overview-dash-stat__value stat-number">0</div>
-                <span class="overview-dash-stat__tag overview-dash-stat__tag--orange">Active</span>
+            <article class="overview-kpi overview-kpi--closed" role="listitem">
+              <span class="overview-kpi__icon overview-kpi__icon--closed" aria-hidden="true"></span>
+              <div class="overview-kpi__body">
+                <span class="overview-kpi__label">Closed days</span>
+                <div id="statClosedDays" class="overview-kpi__value stat-number">0</div>
               </div>
             </article>
           </div>
-          <div class="overview-metrics__grid overview-metrics__grid--secondary stats-grid overview-stats-grid" aria-label="Additional metrics">
-            <article class="overview-metric stat-card overview-metric--compact">
-              <div id="statTotalBookings" class="stat-number">0</div>
-              <div class="stat-label">Total bookings</div>
-            </article>
-            <article class="overview-metric stat-card overview-metric--compact">
-              <div id="statClosedDays" class="stat-number">0</div>
-              <div class="stat-label">Closed days</div>
-            </article>
-          </div>
-          <div class="overview-next-card overview-metrics__highlight">
-            <div class="overview-next-card__head">
-              <h3 class="overview-next-card__title">Next booking</h3>
-            </div>
-            <div id="statNextBooking" class="overview-next-card__body small">No upcoming booking.</div>
-          </div>
+          <span id="statMonthBookings" class="overview-kpi-sr-only" aria-hidden="true">0</span>
+          <span id="statTotalServices" class="overview-kpi-sr-only" aria-hidden="true">0</span>
         </section>
 
-        <section class="overview-actions overview-actions--hub overview-actions--premium" aria-label="Quick actions">
+        <div class="overview-next-card overview-metrics__highlight">
+          <div class="overview-next-card__head">
+            <h3 class="overview-next-card__title">Next booking</h3>
+          </div>
+          <div id="statNextBooking" class="overview-next-card__body small">No upcoming booking.</div>
+        </div>
+
+        <section class="overview-actions overview-actions--hub overview-actions--compact" aria-label="Quick actions">
           <h2 class="overview-actions__label">Quick actions</h2>
-          <button type="button" class="overview-actions__primary overview-actions__btn overview-actions__btn--share" onclick="copyPublicLink()">Share booking link</button>
+          <button type="button" class="overview-share-row" onclick="copyPublicLink()">
+            <span class="overview-share-row__icon" aria-hidden="true"></span>
+            <span class="overview-share-row__copy">
+              <span class="overview-share-row__title">Share booking link</span>
+              <span class="overview-share-row__hint">Copy your public booking URL</span>
+            </span>
+            <span class="overview-share-row__action">Copy</span>
+          </button>
           <div class="overview-actions__row">
             <button type="button" class="overview-actions__chip overview-actions__btn overview-actions__btn--open" onclick="openPublicLink()">Open page</button>
             <button type="button" class="overview-actions__chip overview-actions__btn overview-actions__btn--calendar" onclick="setAdminSection('calendar')">Calendar</button>
@@ -22333,7 +22969,10 @@
         </div>
         <div class="admin-native-screen__list-wrap services-list-section">
           <div class="services-list-section__head">
-            <h3 class="admin-native-screen__section-title services-list-section__title">Your services</h3>
+            <div class="services-list-section__title-group">
+              <h3 class="admin-native-screen__section-title services-list-section__title">Your services</h3>
+              <span id="servicesListCount" class="services-list-section__count" aria-live="polite">0 services</span>
+            </div>
             <span class="services-list-section__sort" aria-hidden="true">Newest</span>
           </div>
           <div id="servicesList" class="admin-saas-list services-premium-list" role="list" aria-label="Services"></div>
@@ -22402,7 +23041,7 @@
               <p class="staff-add-card__hint">Add staff who can provide services to your customers.</p>
             </div>
           </div>
-          <div class="admin-saas-form__fields admin-saas-form__fields--staff staff-add-card__fields">
+          <div class="admin-saas-form__fields staff-add-card__fields">
             <label class="admin-saas-field">
               <span class="admin-saas-field__label">Name</span>
               <span class="staff-input-wrap staff-input-wrap--name">
@@ -22440,6 +23079,12 @@
         </div>
 
         <div class="staff-list-section">
+          <div class="staff-list-section__head">
+            <div class="staff-list-section__title-group">
+              <h3 class="staff-list-section__title">Your team</h3>
+              <span id="staffListCount" class="staff-list-section__count" aria-live="polite">0 staff members</span>
+            </div>
+          </div>
           <div id="staffList" class="admin-saas-list staff-premium-list" role="list" aria-label="Staff members"></div>
         </div>
 
@@ -23713,7 +24358,7 @@
         </div>
 
         <div id="customerMyBookingsLoading" class="customer-my-bookings-loading" role="status" aria-busy="true" aria-live="polite">
-          <p class="customer-my-bookings-loading__label">Loading your bookings…</p>
+          <p class="customer-my-bookings-loading__label">Loading bookings…</p>
           <div class="customer-my-bookings-loading__spinner" aria-hidden="true"></div>
           <div class="mobile-skeleton-stack customer-my-bookings-loading__skeleton" aria-hidden="true">
             <div class="mobile-skeleton-block mobile-skeleton-block--card"></div>
@@ -23862,10 +24507,10 @@
           <section class="customer-alerts-reminders-section" aria-labelledby="customerAlertsRemindersHeading">
             <h3 id="customerAlertsRemindersHeading" class="customer-alerts-section-label">Upcoming reminders</h3>
             <div id="customerNotifRemindersList" class="customer-notif-reminder-list">
-              <div class="customer-notif-empty" role="status">
-                <span class="customer-notif-empty__icon" aria-hidden="true">🔔</span>
-                <p class="customer-notif-empty__title">No reminders scheduled yet</p>
-                <p class="customer-notif-empty__sub">We'll notify you before your next appointment.</p>
+              <div class="customer-premium-empty" role="status">
+                <span class="customer-premium-empty__icon" aria-hidden="true">🔔</span>
+                <p class="customer-premium-empty__title">No reminders yet</p>
+                <p class="customer-premium-empty__sub">Your upcoming appointment reminders will appear here.</p>
               </div>
             </div>
           </section>
@@ -23899,6 +24544,21 @@
               <button type="button" class="customer-mobile-profile-btn customer-mobile-profile-btn--secondary" onclick="openCustomerMobileAuthFromShell({ returnTab: 'profile', panel: 'signup' })">Create account</button>
             </div>
           </div>
+          <p id="customerProfileBusinessSectionTitle" class="customer-mobile-section-title hidden" style="margin-top:18px">Business</p>
+          <button type="button" id="customerProfileChangeBusinessRow" class="customer-mobile-profile-row customer-mobile-profile-row--action hidden" onclick="onCustomerChangeBusinessClick()">
+            <span>Change business</span>
+            <span class="customer-mobile-profile-row__value">Enter code<span class="customer-mobile-profile-chevron" aria-hidden="true">›</span></span>
+          </button>
+          <button type="button" id="customerProfileBusinessSwitcherRow" class="customer-mobile-profile-row customer-mobile-profile-row--action customer-mobile-profile-row--rich hidden" onclick="openCustomerBusinessSwitcher()">
+            <span class="customer-mobile-profile-row__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false"><path d="M3 9.5 12 3l9 6.5V20a1.5 1.5 0 0 1-1.5 1.5H15v-7H9v7H4.5A1.5 1.5 0 0 1 3 20V9.5z"/><path d="M9 3h6v4H9z"/></svg>
+            </span>
+            <span class="customer-mobile-profile-row__copy">
+              <span class="customer-mobile-profile-row__title">Business Switcher</span>
+              <span class="customer-mobile-profile-row__sub">Switch between saved businesses</span>
+            </span>
+            <span class="customer-mobile-profile-chevron" aria-hidden="true">›</span>
+          </button>
           <p class="customer-mobile-section-title" style="margin-top:18px">Preferences</p>
           <button type="button" class="customer-mobile-profile-row customer-mobile-profile-row--action" onclick="setCustomerMobileTab('notifications')">
             <span>Notifications</span>
@@ -24319,6 +24979,18 @@
       <div id="customerMobileAuthOverlay" class="customer-mobile-auth-overlay hidden" role="dialog" aria-modal="true" aria-label="Customer sign in">
         <button type="button" class="customer-mobile-auth-back" onclick="closeCustomerMobileAuthFromShell()">← Back</button>
         <div id="customerMobileAuthHost" class="customer-mobile-auth-host"></div>
+      </div>
+
+      <div id="customerBusinessSwitcherSheet" class="customer-business-switcher-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="customerBusinessSwitcherTitle">
+        <div class="customer-business-switcher-sheet__backdrop" onclick="closeCustomerBusinessSwitcher()"></div>
+        <div class="customer-business-switcher-sheet__panel" onclick="event.stopPropagation()">
+          <header class="customer-business-switcher-sheet__header">
+            <h2 id="customerBusinessSwitcherTitle">Saved Businesses</h2>
+            <button type="button" class="customer-business-switcher-sheet__close" onclick="closeCustomerBusinessSwitcher()" aria-label="Close">×</button>
+          </header>
+          <div id="customerBusinessSwitcherList" class="customer-business-switcher-list" role="list"></div>
+          <button type="button" id="customerBusinessSwitcherAddBtn" class="customer-business-switcher-add" onclick="onCustomerAddAnotherBusinessClick()">+ Add another business</button>
+        </div>
       </div>
 
       <nav id="customerMobileBottomNav" class="customer-mobile-bottom-nav hidden" aria-label="Customer app navigation">
@@ -25955,9 +26627,15 @@
 
   function customerNotifEmptyStateHtml(opts = {}) {
     const muted = !!opts.muted;
-    const title = opts.title || "No reminders scheduled yet";
-    const sub =
-      opts.sub || "We'll notify you before your next appointment.";
+    const title = opts.title || "No reminders yet";
+    const sub = opts.sub || "Your upcoming appointment reminders will appear here.";
+    if (isCustomerMobileShellEnabled()) {
+      return `<div class="customer-premium-empty${muted ? " customer-notif-empty--muted" : ""}" role="status">
+        <span class="customer-premium-empty__icon" aria-hidden="true">🔔</span>
+        <p class="customer-premium-empty__title">${escapeHtml(title)}</p>
+        <p class="customer-premium-empty__sub">${escapeHtml(sub)}</p>
+      </div>`;
+    }
     return `<div class="customer-notif-empty${muted ? " customer-notif-empty--muted" : ""}" role="status">
       <span class="customer-notif-empty__icon" aria-hidden="true">🔔</span>
       <p class="customer-notif-empty__title">${escapeHtml(title)}</p>
@@ -26019,9 +26697,30 @@
     }
 
     if (listEl) {
+      if (currentUser && currentUserRole === "customer" && !customerMyBookings.length) {
+        const { slug, id } = getActiveCustomerBusinessFilter();
+        if (slug || id) await loadCustomerMyBookings();
+      }
+
       const now = Date.now();
+      const { slug, id } = getActiveCustomerBusinessFilter();
+      const hasBusinessFilter = !!(slug || id);
+      const scopedBookingIds = new Set();
+      const scopedBookingRefs = new Set();
+      getCustomerMyBookingsForActiveBusiness().forEach((b) => {
+        if (b.id) scopedBookingIds.add(String(b.id));
+        if (b.booking_ref) scopedBookingRefs.add(String(b.booking_ref));
+      });
+
       const upcoming = loadStoredReminderRecords()
         .filter((r) => new Date(r.remindAt).getTime() > now)
+        .filter((r) => {
+          if (!hasBusinessFilter) return true;
+          const bid = String(r.bookingId || "");
+          if (bid && scopedBookingIds.has(bid)) return true;
+          if (r.ref && scopedBookingRefs.has(String(r.ref))) return true;
+          return false;
+        })
         .sort((a, b) => new Date(a.remindAt) - new Date(b.remindAt));
 
       if (!upcoming.length) {
@@ -26247,7 +26946,7 @@
 
     if (currentUser && currentUserRole === "customer") {
       guestHint?.classList.add("hidden");
-      const upcoming = (customerMyBookings || [])
+      const upcoming = getCustomerMyBookingsForActiveBusiness()
         .filter(isCustomerMyBookingUpcoming)
         .sort((a, b) => {
           const da = new Date(`${a.date}T${a.time || "00:00"}:00`);
@@ -26274,6 +26973,16 @@
     const emailEl = document.getElementById("customerMobileProfileEmail");
     const nameEl = document.getElementById("customerMobileProfileName");
     const isCustomer = !!(currentUser && currentUserRole === "customer");
+    const changeRow = document.getElementById("customerProfileChangeBusinessRow");
+    const changeTitle = document.getElementById("customerProfileBusinessSectionTitle");
+    const switcherRow = document.getElementById("customerProfileBusinessSwitcherRow");
+    const showChangeBusiness =
+      isCustomerMobileShellEnabled() && !!(businessId || getActivePublicBusinessSlug());
+    const showSwitcher = isCustomerMobileShellEnabled();
+
+    changeRow?.classList.toggle("hidden", !showChangeBusiness);
+    changeTitle?.classList.toggle("hidden", !showChangeBusiness);
+    switcherRow?.classList.toggle("hidden", !showSwitcher);
 
     if (logged && guest) {
       logged.classList.toggle("hidden", !isCustomer);
@@ -26288,6 +26997,42 @@
       if (emailEl) emailEl.textContent = currentUser.email || "—";
     }
   }
+
+  function onCustomerChangeBusinessClick() {
+    clearSavedCustomerBusinessContext();
+    customerPreferManualBusinessEntry = true;
+    clearBusinessFromUrl();
+    businessId = null;
+    businessSettings = null;
+    customerMyBookingsViewOpen = false;
+    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    document.getElementById("publicBookingContent")?.classList.add("hidden");
+    setPublicBookingWizardVisible(false);
+    syncPublicBusinessFromUrl();
+    showPublicView(false);
+    if (isCustomerMobileShellEnabled()) {
+      document.body.classList.add("customer-shell-business-picker");
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+    }
+    const manualSection = document.getElementById("customerManualBusinessSection");
+    const noLinkFallback = document.getElementById("customerNoLinkFallback");
+    document.getElementById("customerManualEntryPrompt")?.classList.add("hidden");
+    document.getElementById("customerBusinessContext")?.classList.add("hidden");
+    noLinkFallback?.classList.add("hidden");
+    manualSection?.classList.remove("hidden");
+    updateCustomerHubBusinessContextUi();
+    syncCustomerBrandedHeaderMode();
+    const input = document.getElementById("manualBusinessId");
+    if (input) {
+      input.value = "";
+      window.setTimeout(() => {
+        input.scrollIntoView({ behavior: "smooth", block: "center" });
+        input.focus({ preventScroll: true });
+      }, 150);
+    }
+  }
+  window.onCustomerChangeBusinessClick = onCustomerChangeBusinessClick;
 
   function renderBookingSuccessAccountSection() {
     const section = document.getElementById("bookingSuccessAccountSection");
@@ -26519,6 +27264,372 @@
   const XBOOK_CUSTOMER_BUSINESS_ID_KEY = "xbook_customer_business_id";
   const XBOOK_CUSTOMER_BUSINESS_SLUG_KEY = "xbook_customer_business_slug";
   const XBOOK_CUSTOMER_BUSINESS_NAME_KEY = "xbook_customer_business_name";
+  const XBOOK_CUSTOMER_SAVED_BUSINESSES_KEY = "xbook_customer_saved_businesses";
+
+  function normalizeCustomerSavedBusinessEntry(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    const slug = normalizeBusinessSlug(entry.slug || entry.business_slug || "");
+    const id = String(entry.id || entry.business_id || "").trim();
+    if (!slug && !id) return null;
+    return {
+      slug,
+      id,
+      name: String(entry.name || entry.business_name || "").trim(),
+      logoUrl: String(entry.logoUrl || entry.logo_url || entry.business_logo_url || "").trim(),
+      coverUrl: String(entry.coverUrl || entry.cover_url || entry.business_cover_url || "").trim(),
+      savedAt: Number(entry.savedAt) || Date.now()
+    };
+  }
+
+  function loadCustomerSavedBusinesses() {
+    try {
+      const raw = localStorage.getItem(XBOOK_CUSTOMER_SAVED_BUSINESSES_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map(normalizeCustomerSavedBusinessEntry).filter(Boolean);
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCustomerSavedBusinesses(list) {
+    try {
+      const cleaned = (Array.isArray(list) ? list : [])
+        .map(normalizeCustomerSavedBusinessEntry)
+        .filter(Boolean);
+      localStorage.setItem(XBOOK_CUSTOMER_SAVED_BUSINESSES_KEY, JSON.stringify(cleaned));
+    } catch (e) {
+      /* ignore quota / private mode */
+    }
+  }
+
+  function upsertCustomerSavedBusiness(entry) {
+    const normalized = normalizeCustomerSavedBusinessEntry(entry);
+    if (!normalized) return;
+    const list = loadCustomerSavedBusinesses();
+    const idx = list.findIndex((b) => {
+      if (normalized.slug && b.slug && b.slug === normalized.slug) return true;
+      if (normalized.id && b.id && b.id === normalized.id) return true;
+      return false;
+    });
+    const merged = {
+      ...(idx >= 0 ? list[idx] : {}),
+      ...normalized,
+      savedAt: Date.now(),
+      name: normalized.name || (idx >= 0 ? list[idx].name : ""),
+      logoUrl: normalized.logoUrl || (idx >= 0 ? list[idx].logoUrl : ""),
+      coverUrl: normalized.coverUrl || (idx >= 0 ? list[idx].coverUrl : "")
+    };
+    if (idx >= 0) list[idx] = merged;
+    else list.unshift(merged);
+    list.sort((a, b) => (b.savedAt || 0) - (a.savedAt || 0));
+    saveCustomerSavedBusinesses(list);
+  }
+
+  function upsertCustomerSavedBusinessFromSettings() {
+    if (!businessSettings) return;
+    const showLogo = businessSettings.public_show_logo !== false;
+    upsertCustomerSavedBusiness({
+      slug: businessSettings.business_slug || getActivePublicBusinessSlug() || businessId || "",
+      id: businessSettings.business_id || (isValidUuid(businessId) ? businessId : ""),
+      name: businessSettings.business_name || "",
+      logoUrl: showLogo ? businessSettings.business_logo_url || "" : "",
+      coverUrl: businessSettings.business_cover_url || ""
+    });
+  }
+
+  function removeCustomerSavedBusiness(slugOrId) {
+    const slug = normalizeBusinessSlug(slugOrId || "");
+    const id = String(slugOrId || "").trim();
+    const list = loadCustomerSavedBusinesses().filter((b) => {
+      if (slug && b.slug === slug) return false;
+      if (id && b.id === id) return false;
+      return true;
+    });
+    saveCustomerSavedBusinesses(list);
+  }
+
+  function isCustomerSavedBusinessActive(entry) {
+    if (!entry) return false;
+    const activeSlug = normalizeBusinessSlug(
+      getActivePublicBusinessSlug() || businessId || getSavedCustomerBusinessContext()?.slug || ""
+    );
+    const activeId = String(
+      businessSettings?.business_id || getSavedCustomerBusinessContext()?.id || ""
+    ).trim();
+    if (entry.slug && activeSlug && entry.slug === activeSlug) return true;
+    if (entry.id && activeId && entry.id === activeId) return true;
+    return false;
+  }
+
+  function ensureCurrentBusinessInSavedList() {
+    if (businessSettings) {
+      upsertCustomerSavedBusinessFromSettings();
+      return;
+    }
+    const ctx = getSavedCustomerBusinessContext();
+    if (ctx?.slug || ctx?.id) upsertCustomerSavedBusiness(ctx);
+  }
+
+  function getCustomerSavedBusinessInitials(name, slug) {
+    const source = String(name || slug || "B").trim();
+    const parts = source.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return source.slice(0, 2).toUpperCase();
+  }
+
+  function findCustomerSavedBusiness(slugOrId) {
+    const key = String(slugOrId || "").trim();
+    if (!key) return null;
+    const slug = normalizeBusinessSlug(key);
+    return (
+      loadCustomerSavedBusinesses().find(
+        (b) =>
+          (slug && b.slug === slug) ||
+          (key && b.id === key) ||
+          (key && b.slug === key)
+      ) || null
+    );
+  }
+
+  function ensureCustomerBusinessSwitcherListBound() {
+    const mount = document.getElementById("customerBusinessSwitcherList");
+    if (!mount || mount.dataset.switchBound === "1") return;
+    mount.dataset.switchBound = "1";
+    mount.addEventListener("click", (e) => {
+      const removeBtn = e.target.closest(".customer-business-switcher-item__remove");
+      if (removeBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const removeKey = removeBtn.getAttribute("data-remove-key") || "";
+        if (removeKey) removeCustomerSavedBusinessFromSwitcher(e, removeKey);
+        return;
+      }
+      const item = e.target.closest("[data-saved-business-key]");
+      if (!item) return;
+      const key = item.getAttribute("data-saved-business-key") || "";
+      if (key) void switchCustomerSavedBusiness(key);
+    });
+  }
+
+  async function loadActiveCustomerBusiness(identifier) {
+    const explicitRaw = String(identifier || "").trim();
+    const explicitSlug = normalizeBusinessSlug(explicitRaw) || explicitRaw;
+
+    let targetSlug = explicitSlug;
+    if (!targetSlug) {
+      syncPublicBusinessFromUrl();
+      targetSlug =
+        getPublicBusinessIdFromUrl() ||
+        normalizeBusinessSlug(businessId || "") ||
+        String(businessId || "").trim();
+    }
+    if (!targetSlug) return false;
+
+    targetSlug = normalizeBusinessSlug(targetSlug) || targetSlug;
+    const priorSlug = normalizeBusinessSlug(
+      businessSettings?.business_slug || getActivePublicBusinessSlug() || businessId || ""
+    );
+
+    if (priorSlug !== targetSlug) {
+      businessSettings = null;
+      services = [];
+      staffMembers = [];
+      bookings = [];
+      blockedDays = [];
+      customerMyBookings = [];
+      customerMyBookingsSelectedId = null;
+      customerMyBookingsSelectedDate = null;
+      selectedService = null;
+      selectedDate = null;
+      selectedSlot = null;
+    }
+
+    ensureBusinessQueryInUrl(targetSlug);
+    businessId = targetSlug;
+    if (explicitRaw) {
+      clearStalePublicBusinessCacheForSlug(normalizeBusinessSlug(targetSlug) || targetSlug);
+      updateCustomerHubBusinessContextUi();
+    } else {
+      syncPublicBusinessFromUrl();
+    }
+
+    stopBookingRealtime();
+    currentDate = new Date();
+    customerPreferManualBusinessEntry = false;
+    document.body.classList.remove("customer-shell-business-picker");
+    customerMyBookingsViewOpen = false;
+    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+
+    showPublicView(true);
+    await loadPublicData();
+    if (!businessSettings) return false;
+
+    persistCustomerBusinessContextFromCurrent();
+    setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+    syncCustomerMobileShell();
+    renderCustomerMobileProfileTab();
+    renderCustomerMobileHomeTab();
+    if (currentUser && currentUserRole === "customer") {
+      void loadCustomerMyBookings();
+    }
+    return true;
+  }
+
+  function renderCustomerBusinessSwitcherList() {
+    const mount = document.getElementById("customerBusinessSwitcherList");
+    if (!mount) return;
+    ensureCurrentBusinessInSavedList();
+    const list = loadCustomerSavedBusinesses();
+    if (!list.length) {
+      mount.innerHTML = customerPremiumEmptyStateHtml(
+        "🏢",
+        "No saved businesses yet",
+        "Add a business to switch between them instantly."
+      );
+      return;
+    }
+    mount.innerHTML = list
+      .map((entry) => {
+        const isCurrent = isCustomerSavedBusinessActive(entry);
+        const slugLabel = entry.slug ? "@" + escapeHtml(entry.slug) : escapeHtml(entry.id || "");
+        const avatarHtml = entry.logoUrl
+          ? `<img src="${escapeHtml(entry.logoUrl)}" alt="" />`
+          : escapeHtml(getCustomerSavedBusinessInitials(entry.name, entry.slug));
+        const targetKey = entry.slug || entry.id || "";
+        return `<div class="customer-business-switcher-item${isCurrent ? " customer-business-switcher-item--current" : ""}" role="button" tabindex="0" data-saved-business-key="${escapeHtml(targetKey)}">
+          <span class="customer-business-switcher-item__avatar">${avatarHtml}</span>
+          <span class="customer-business-switcher-item__body">
+            <p class="customer-business-switcher-item__name">${escapeHtml(entry.name || entry.slug || "Business")}</p>
+            <p class="customer-business-switcher-item__slug">${slugLabel}</p>
+          </span>
+          <span class="customer-business-switcher-item__meta">
+            ${isCurrent ? '<span class="customer-business-switcher-item__badge">Current</span>' : ""}
+            <button type="button" class="customer-business-switcher-item__remove" data-remove-key="${escapeHtml(targetKey)}">Remove</button>
+          </span>
+        </div>`;
+      })
+      .join("");
+  }
+
+  function openCustomerBusinessSwitcher() {
+    if (!isCustomerMobileShellEnabled()) return;
+    ensureCustomerBusinessSwitcherListBound();
+    ensureCurrentBusinessInSavedList();
+    renderCustomerBusinessSwitcherList();
+    document.getElementById("customerBusinessSwitcherSheet")?.classList.remove("hidden");
+  }
+  window.openCustomerBusinessSwitcher = openCustomerBusinessSwitcher;
+
+  function closeCustomerBusinessSwitcher() {
+    document.getElementById("customerBusinessSwitcherSheet")?.classList.add("hidden");
+  }
+  window.closeCustomerBusinessSwitcher = closeCustomerBusinessSwitcher;
+
+  async function switchCustomerSavedBusiness(slugOrId) {
+    const saved = findCustomerSavedBusiness(slugOrId);
+    const targetSlug =
+      normalizeBusinessSlug(saved?.slug || "") ||
+      normalizeBusinessSlug(String(slugOrId || "").trim()) ||
+      String(saved?.id || slugOrId || "").trim();
+    if (!targetSlug) return;
+
+    if (isCustomerSavedBusinessActive(saved || { slug: targetSlug, id: saved?.id || "" })) {
+      closeCustomerBusinessSwitcher();
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+      syncCustomerMobileShell();
+      return;
+    }
+
+    const prevCtx = getSavedCustomerBusinessContext();
+    const prevBusinessId = businessId;
+    const prevSettings = businessSettings;
+
+    closeCustomerBusinessSwitcher();
+
+    const ok = await loadActiveCustomerBusiness(saved?.slug || targetSlug);
+    if (ok) return;
+
+    if (prevCtx?.slug || prevCtx?.id) {
+      saveCustomerBusinessContext(prevCtx);
+    }
+    businessId = prevBusinessId;
+    businessSettings = prevSettings;
+    if (prevCtx?.slug) {
+      ensureBusinessQueryInUrl(prevCtx.slug);
+      showPublicView(true);
+      await loadPublicData();
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+      syncCustomerMobileShell();
+      renderCustomerMobileHomeTab();
+    }
+
+    removeCustomerSavedBusiness(targetSlug);
+    renderCustomerBusinessSwitcherList();
+    showToast("Could not switch to that business. It may no longer be available.", "error", 5000);
+  }
+  window.switchCustomerSavedBusiness = switchCustomerSavedBusiness;
+
+  function onCustomerAddAnotherBusinessClick() {
+    closeCustomerBusinessSwitcher();
+    customerPreferManualBusinessEntry = true;
+    clearBusinessFromUrl();
+    businessId = null;
+    businessSettings = null;
+    customerMyBookingsViewOpen = false;
+    document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    document.getElementById("manageBookingCard")?.classList.add("hidden");
+    document.getElementById("publicBookingContent")?.classList.add("hidden");
+    setPublicBookingWizardVisible(false);
+    syncPublicBusinessFromUrl();
+    showPublicView(false);
+    if (isCustomerMobileShellEnabled()) {
+      document.body.classList.add("customer-shell-business-picker");
+      setCustomerMobileTab(CUSTOMER_MOBILE_TAB.HOME, { skipWizardInit: true });
+    }
+    const manualSection = document.getElementById("customerManualBusinessSection");
+    const noLinkFallback = document.getElementById("customerNoLinkFallback");
+    document.getElementById("customerManualEntryPrompt")?.classList.add("hidden");
+    document.getElementById("customerBusinessContext")?.classList.add("hidden");
+    noLinkFallback?.classList.add("hidden");
+    manualSection?.classList.remove("hidden");
+    updateCustomerHubBusinessContextUi();
+    syncCustomerBrandedHeaderMode();
+    const input = document.getElementById("manualBusinessId");
+    if (input) {
+      input.value = "";
+      window.setTimeout(() => {
+        input.scrollIntoView({ behavior: "smooth", block: "center" });
+        input.focus({ preventScroll: true });
+      }, 150);
+    }
+  }
+  window.onCustomerAddAnotherBusinessClick = onCustomerAddAnotherBusinessClick;
+
+  function removeCustomerSavedBusinessFromSwitcher(event, slugOrId) {
+    event?.preventDefault();
+    event?.stopPropagation();
+    const entry = loadCustomerSavedBusinesses().find(
+      (b) =>
+        (slugOrId && b.slug === normalizeBusinessSlug(slugOrId)) ||
+        (slugOrId && b.id === slugOrId)
+    );
+    const wasActive = isCustomerSavedBusinessActive(entry || { slug: slugOrId, id: slugOrId });
+    removeCustomerSavedBusiness(slugOrId);
+    renderCustomerBusinessSwitcherList();
+    renderCustomerMobileProfileTab();
+    if (wasActive) {
+      clearSavedCustomerBusinessContext();
+      clearBusinessFromUrl();
+      businessId = null;
+      businessSettings = null;
+      showPublicView(false);
+      onCustomerAddAnotherBusinessClick();
+    }
+  }
+  window.removeCustomerSavedBusinessFromSwitcher = removeCustomerSavedBusinessFromSwitcher;
 
   function getSavedCustomerBusinessContext() {
     try {
@@ -26569,6 +27680,7 @@
       id: businessSettings?.business_id || (isValidUuid(businessId) ? businessId : ""),
       name: businessSettings?.business_name || ""
     });
+    upsertCustomerSavedBusinessFromSettings();
   }
 
   function clearBusinessFromUrl() {
@@ -26943,6 +28055,21 @@
     `;
   }
 
+  function customerPremiumEmptyStateHtml(icon, title, message = "") {
+    return `<div class="customer-premium-empty" role="status">
+      <span class="customer-premium-empty__icon" aria-hidden="true">${icon}</span>
+      <p class="customer-premium-empty__title">${escapeHtml(title)}</p>
+      ${message ? `<p class="customer-premium-empty__sub">${escapeHtml(message)}</p>` : ""}
+    </div>`;
+  }
+
+  function customerEmptyStateHtml(title, message = "", icon = "📋") {
+    if (isCustomerMobileShellEnabled()) {
+      return customerPremiumEmptyStateHtml(icon, title, message);
+    }
+    return emptyStateHtml(title, message);
+  }
+
   function loadingStateHtml(message = "Loading…") {
     return `
       <div class="loading-state" role="status" aria-live="polite">
@@ -26967,10 +28094,10 @@
   }
 
   function publicLoadingPlaceholder(kind = "services") {
-    if (kind === "slots") return loadingStateHtml("Loading available times…");
-    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+    if (isCustomerMobileShellEnabled() || (typeof window !== "undefined" && window.innerWidth <= 768)) {
       return publicSkeletonHtml(kind);
     }
+    if (kind === "slots") return loadingStateHtml("Loading available times…");
     if (kind === "staff") return loadingStateHtml("Loading team…");
     return loadingStateHtml("Loading services…");
   }
@@ -31240,6 +32367,8 @@
       homeBtn?.classList.toggle("hidden", !openBooking);
     }
 
+    document.body.classList.remove("customer-shell-business-picker");
+
     if (openBooking) {
       if (!publicManageMode && !isBookingSuccessCardVisible()) {
         hideBookingSuccessCard();
@@ -33808,6 +34937,32 @@
     return { rows, error: null };
   }
 
+  function getActiveCustomerBusinessFilter() {
+    const ctx = getSavedCustomerBusinessContext();
+    const slug = normalizeBusinessSlug(
+      businessSettings?.business_slug || getActivePublicBusinessSlug() || ctx?.slug || ""
+    );
+    const id = String(
+      businessSettings?.business_id || (isValidUuid(businessId) ? businessId : "") || ctx?.id || ""
+    ).trim();
+    return { slug, id };
+  }
+
+  function isCustomerMyBookingForActiveBusiness(booking) {
+    if (!booking) return false;
+    const { slug, id } = getActiveCustomerBusinessFilter();
+    if (!slug && !id) return true;
+    const bookingSlug = normalizeBusinessSlug(booking.business_slug || "");
+    const bookingId = String(booking.business_id || "").trim();
+    if (id && bookingId && bookingId === id) return true;
+    if (slug && bookingSlug && bookingSlug === slug) return true;
+    return false;
+  }
+
+  function getCustomerMyBookingsForActiveBusiness() {
+    return (customerMyBookings || []).filter(isCustomerMyBookingForActiveBusiness);
+  }
+
   function getCustomerMyBookingDateTimeMs(booking) {
     if (!booking?.date) return 0;
     const time = String(booking.time || "00:00").slice(0, 5);
@@ -33826,7 +34981,7 @@
 
   function groupCustomerMyBookingsByDate() {
     const map = new Map();
-    customerMyBookings.forEach((b) => {
+    getCustomerMyBookingsForActiveBusiness().forEach((b) => {
       const key = b.date || "";
       if (!key) return;
       if (!map.has(key)) map.set(key, []);
@@ -33875,12 +35030,16 @@
     if (!mount) return;
     mount.innerHTML = "";
 
-    const upcoming = customerMyBookings
+    const upcoming = getCustomerMyBookingsForActiveBusiness()
       .filter(isCustomerMyBookingUpcoming)
       .sort((a, b) => getCustomerMyBookingDateTimeMs(a) - getCustomerMyBookingDateTimeMs(b));
 
     if (!upcoming.length) {
-      mount.innerHTML = emptyStateHtml("No bookings yet", "Your appointments will appear here.");
+      mount.innerHTML = customerEmptyStateHtml(
+        "No upcoming bookings",
+        "Your future appointments will appear here.",
+        "📅"
+      );
       return;
     }
 
@@ -33897,7 +35056,7 @@
     mount.innerHTML = "";
     if (!dateStr) {
       if (subtitle) subtitle.textContent = "Tap a highlighted day on the calendar.";
-      mount.innerHTML = emptyStateHtml("No day selected", "Choose a day with appointments.");
+      mount.innerHTML = customerEmptyStateHtml("No day selected", "Choose a day with appointments.", "📅");
       return;
     }
 
@@ -33912,7 +35071,7 @@
     }
 
     if (!dayBookings.length) {
-      mount.innerHTML = emptyStateHtml("No bookings this day", "Try another highlighted day.");
+      mount.innerHTML = customerEmptyStateHtml("No bookings this day", "Try another highlighted day.", "📅");
       return;
     }
 
@@ -33926,7 +35085,11 @@
     if (!mount) return;
 
     if (!booking) {
-      mount.innerHTML = '<p class="customer-my-detail-empty">Select a booking to see details and manage options.</p>';
+      mount.innerHTML = customerEmptyStateHtml(
+        "No booking selected",
+        "Select a booking to see details and manage options.",
+        "📋"
+      );
       return;
     }
 
@@ -33963,7 +35126,7 @@
   }
 
   function selectCustomerMyBooking(bookingId, opts = {}) {
-    const booking = customerMyBookings.find((b) => b.id === bookingId);
+    const booking = getCustomerMyBookingsForActiveBusiness().find((b) => b.id === bookingId);
     if (!booking) return;
     customerMyBookingsSelectedId = bookingId;
     if (opts.dateStr || booking.date) {
@@ -33988,7 +35151,7 @@
     renderCustomerMyBookingsUpcomingList();
     renderCustomerMyBookingsDayList(dateStr);
     renderCustomerMyBookingsDetail(
-      customerMyBookings.find((b) => b.id === customerMyBookingsSelectedId) || null
+      getCustomerMyBookingsForActiveBusiness().find((b) => b.id === customerMyBookingsSelectedId) || null
     );
   }
 
@@ -34077,14 +35240,18 @@
     if (!mount) return;
 
     mount.innerHTML = "";
-    if (!customerMyBookings.length) {
-      mount.innerHTML = emptyStateHtml("No bookings yet", "Your appointments will appear here.");
+    if (!getCustomerMyBookingsForActiveBusiness().length) {
+      mount.innerHTML = customerEmptyStateHtml(
+        "No bookings yet",
+        "When you book an appointment here, it will show up in this list.",
+        "📅"
+      );
       mount.classList.remove("hidden");
       if (calendarPanel) calendarPanel.classList.add("hidden");
       return;
     }
 
-    const sorted = [...customerMyBookings].sort(
+    const sorted = [...getCustomerMyBookingsForActiveBusiness()].sort(
       (a, b) => getCustomerMyBookingDateTimeMs(b) - getCustomerMyBookingDateTimeMs(a)
     );
     sorted.forEach((b) => {
@@ -34102,7 +35269,9 @@
     if (customerMyBookingsCalendarFailed) {
       body?.classList.add("hidden");
       renderCustomerMyBookingsListFallback();
-      const booking = customerMyBookings.find((b) => b.id === customerMyBookingsSelectedId);
+      const booking = getCustomerMyBookingsForActiveBusiness().find(
+        (b) => b.id === customerMyBookingsSelectedId
+      );
       renderCustomerMyBookingsDetail(booking || null);
       return;
     }
@@ -34112,12 +35281,13 @@
     document.getElementById("customerMyBookingsCalendarPanel")?.classList.remove("hidden");
 
     if (!customerMyBookingsSelectedDate) {
-      const nextUpcoming = customerMyBookings.filter(isCustomerMyBookingUpcoming).sort(
+      const scoped = getCustomerMyBookingsForActiveBusiness();
+      const nextUpcoming = scoped.filter(isCustomerMyBookingUpcoming).sort(
         (a, b) => getCustomerMyBookingDateTimeMs(a) - getCustomerMyBookingDateTimeMs(b)
       )[0];
       if (nextUpcoming?.date) customerMyBookingsSelectedDate = nextUpcoming.date;
-      else if (customerMyBookings.length) {
-        customerMyBookingsSelectedDate = [...customerMyBookings].sort(
+      else if (scoped.length) {
+        customerMyBookingsSelectedDate = [...scoped].sort(
           (a, b) => getCustomerMyBookingDateTimeMs(b) - getCustomerMyBookingDateTimeMs(a)
         )[0].date;
       }
@@ -34126,8 +35296,9 @@
     renderCustomerMyBookingsCalendar();
     renderCustomerMyBookingsUpcomingList();
     renderCustomerMyBookingsDayList(customerMyBookingsSelectedDate);
+    const scopedBookings = getCustomerMyBookingsForActiveBusiness();
     const selected =
-      customerMyBookings.find((b) => b.id === customerMyBookingsSelectedId) ||
+      scopedBookings.find((b) => b.id === customerMyBookingsSelectedId) ||
       (groupCustomerMyBookingsByDate().get(customerMyBookingsSelectedDate) || [])[0];
     if (selected && !customerMyBookingsSelectedId) customerMyBookingsSelectedId = selected.id;
     renderCustomerMyBookingsDetail(selected || null);
@@ -34178,7 +35349,11 @@
         renderCustomerMyBookingsOfflineBadge(false);
         if (errorBox) {
           errorBox.classList.remove("hidden");
-          errorBox.innerHTML = emptyStateHtml("Could not load calendar", error.message || "Try again later.");
+          errorBox.innerHTML = customerEmptyStateHtml(
+            "Could not load bookings",
+            "Pull to refresh or try again in a moment.",
+            "📅"
+          );
         }
         renderCustomerMyBookingsListFallback();
         return;
@@ -34190,11 +35365,17 @@
       saveCustomerBookingsCache(rows);
       renderCustomerMyBookingsOfflineBadge(false);
       customerMyBookingsMonth = new Date();
-      if (!customerMyBookingsSelectedId && customerMyBookings.length) {
-        const next = customerMyBookings.filter(isCustomerMyBookingUpcoming).sort(
+      const scoped = getCustomerMyBookingsForActiveBusiness();
+      const selectionStillValid = scoped.some((b) => b.id === customerMyBookingsSelectedId);
+      if (!selectionStillValid) {
+        customerMyBookingsSelectedId = null;
+        customerMyBookingsSelectedDate = null;
+      }
+      if (!customerMyBookingsSelectedId && scoped.length) {
+        const next = scoped.filter(isCustomerMyBookingUpcoming).sort(
           (a, b) => getCustomerMyBookingDateTimeMs(a) - getCustomerMyBookingDateTimeMs(b)
         )[0];
-        const pick = next || customerMyBookings[customerMyBookings.length - 1];
+        const pick = next || scoped[scoped.length - 1];
         customerMyBookingsSelectedId = pick?.id || null;
         customerMyBookingsSelectedDate = pick?.date || null;
         if (pick?.date) {
@@ -34211,9 +35392,10 @@
       loading?.classList.add("hidden");
       if (errorBox) {
         errorBox.classList.remove("hidden");
-        errorBox.innerHTML = emptyStateHtml(
+        errorBox.innerHTML = customerEmptyStateHtml(
           "Could not load bookings",
-          err?.message || "Showing list view is unavailable."
+          "Pull to refresh or try again in a moment.",
+          "📅"
         );
       }
       renderCustomerMyBookingsListFallback();
@@ -34445,15 +35627,7 @@
       id = validation.normalized;
     }
 
-    businessId = id;
-    ensureBusinessQueryInUrl(normalizeBusinessSlug(id));
-    currentDate = new Date();
-    selectedDate = null;
-    selectedSlot = null;
-    selectedService = null;
-
-    showPublicView(true);
-    await loadPublicData();
+    await loadActiveCustomerBusiness(id);
   }
 
   function showCustomerManualBusinessBookingEntry() {
@@ -34491,15 +35665,7 @@
       id = validation.normalized;
     }
 
-    businessId = id;
-    ensureBusinessQueryInUrl(normalizeBusinessSlug(id));
-    currentDate = new Date();
-    selectedDate = null;
-    selectedSlot = null;
-    selectedService = null;
-
-    showPublicView(true);
-    await loadPublicData();
+    await loadActiveCustomerBusiness(id);
   }
 
   function togglePasswordVisibility(inputId, btn) {
@@ -35101,6 +36267,7 @@
         !!activeSlug && normalizeBusinessSlug(saved?.slug || "") === activeSlug;
       if (wasSavedBusiness) {
         clearSavedCustomerBusinessContext();
+        removeCustomerSavedBusiness(activeSlug);
         customerPreferManualBusinessEntry = true;
         clearBusinessFromUrl();
         businessId = null;
@@ -35991,9 +37158,17 @@
     iconEl.className = "services-add-card__icon services-add-card__icon--" + key;
   }
 
+  function syncServicesListCount() {
+    const el = document.getElementById("servicesListCount");
+    if (!el) return;
+    const n = Array.isArray(services) ? services.length : 0;
+    el.textContent = n === 1 ? "1 service" : n + " services";
+  }
+
   function renderServices() {
     const box = document.getElementById("servicesList");
     box.innerHTML = "";
+    syncServicesListCount();
 
     if (!services.length) {
       box.innerHTML = `
@@ -36011,9 +37186,7 @@
       const duration = getServiceDurationValue(s);
       const price = getServicePriceValue(s);
       const iconKey = resolveServiceIconKey(s.name);
-      const priceMeta = price
-        ? `<span class="admin-saas-row__meta-dot" aria-hidden="true">·</span><span class="admin-saas-row__meta-part admin-saas-row__meta-part--price">${escapeHtml(String(price))} MKD</span>`
-        : "";
+      const metaText = price ? `${duration} min • ${price} MKD` : `${duration} min`;
 
       const div = document.createElement("div");
       div.className = "admin-saas-row admin-saas-row--service";
@@ -36023,16 +37196,12 @@
           <div class="admin-saas-row__accent admin-saas-row__accent--${iconKey}" aria-hidden="true"></div>
           <div class="admin-saas-row__main">
             <div class="admin-saas-row__title">${escapeHtml(s.name)}</div>
-            <div class="admin-saas-row__meta">
-              <span class="admin-saas-row__meta-part admin-saas-row__meta-part--duration">${escapeHtml(String(duration))} min</span>
-              ${priceMeta}
-            </div>
+            <div class="admin-saas-row__meta">${escapeHtml(metaText)}</div>
           </div>
-          <span class="admin-saas-row__menu" aria-hidden="true"></span>
-        </div>
-        <div class="admin-saas-row__actions">
-          <button type="button" class="admin-saas-btn admin-saas-btn--ghost admin-saas-btn--service-edit" onclick="editServiceItem('${s.id}')">Edit</button>
-          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger admin-saas-btn--service-delete" onclick="deleteService('${s.id}')">Delete</button>
+          <div class="admin-saas-row__actions admin-saas-row__actions--inline">
+            <button type="button" class="admin-saas-btn admin-saas-btn--ghost admin-saas-btn--service-edit admin-saas-btn--compact" onclick="editServiceItem('${s.id}')">Edit</button>
+            <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger admin-saas-btn--service-delete admin-saas-btn--compact" onclick="deleteService('${s.id}')">Delete</button>
+          </div>
         </div>
       `;
       box.appendChild(div);
@@ -36137,9 +37306,10 @@
           selectedService = null;
           return;
         }
-        list.innerHTML = emptyStateHtml(
-          "No services yet",
-          "This business has not published services."
+        list.innerHTML = customerEmptyStateHtml(
+          "No services available",
+          "This business has not published bookable services yet.",
+          "✨"
         );
         if (hidden) hidden.value = "";
         selectedService = null;
@@ -36401,12 +37571,30 @@
     bookingStaffColumnAvailable = !error;
   }
 
+  function syncStaffListCount() {
+    const el = document.getElementById("staffListCount");
+    if (!el) return;
+    const list = Array.isArray(staffMembers) ? staffMembers : [];
+    const n = list.length;
+    const active = list.filter((s) => s.active !== false).length;
+    if (n === 0) {
+      el.textContent = "0 staff members";
+    } else if (n === 1) {
+      el.textContent = active === 1 ? "1 active staff member" : "1 staff member";
+    } else if (active === n) {
+      el.textContent = active + " active staff";
+    } else {
+      el.textContent = n + " staff members";
+    }
+  }
+
   function renderStaffMembers() {
     const box = document.getElementById("staffList");
     const notice = document.getElementById("staffSetupNotice");
     if (!box) return;
 
     box.innerHTML = "";
+    syncStaffListCount();
 
     if (!staffFeatureAvailable) {
       if (notice) {
@@ -36490,12 +37678,11 @@
               <span class="${statusClass}">${statusLabel}</span>
             </div>
           </div>
-          <span class="admin-saas-row__menu" aria-hidden="true"></span>
         </div>
-        <div class="admin-saas-row__actions">
-          <button type="button" class="admin-saas-btn admin-saas-btn--ghost admin-saas-btn--staff-edit" onclick="openEditStaffMember('${staff.id}')">Edit</button>
-          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-warn ${warnBtnClass}" onclick="toggleStaffActive('${staff.id}', ${isActive ? "false" : "true"})">${toggleLabel}</button>
-          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger admin-saas-btn--staff-delete" onclick="deleteStaffMember('${staff.id}')">Delete</button>
+        <div class="admin-saas-row__actions admin-saas-row__actions--staff-compact">
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost admin-saas-btn--staff-edit admin-saas-btn--compact" onclick="openEditStaffMember('${staff.id}')">Edit</button>
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-warn ${warnBtnClass} admin-saas-btn--compact" onclick="toggleStaffActive('${staff.id}', ${isActive ? "false" : "true"})">${toggleLabel}</button>
+          <button type="button" class="admin-saas-btn admin-saas-btn--ghost-danger admin-saas-btn--staff-delete admin-saas-btn--compact" onclick="deleteStaffMember('${staff.id}')">Delete</button>
         </div>
       `;
       box.appendChild(div);
@@ -41084,14 +42271,19 @@
     container.innerHTML = "";
 
     if (!selectedService) {
-      container.innerHTML = emptyStateHtml("Choose a service first", "Pick a service to see available times.");
+      container.innerHTML = customerEmptyStateHtml(
+        "Choose a service first",
+        "Pick a service to see available times.",
+        "🕐"
+      );
       return;
     }
 
     if (!dateStr) {
-      container.innerHTML = emptyStateHtml(
-        "Choose a date to see available times",
-        "Select a day on the calendar."
+      container.innerHTML = customerEmptyStateHtml(
+        "Choose a date",
+        "Select a day on the calendar to see available times.",
+        "🕐"
       );
       return;
     }
@@ -41100,23 +42292,27 @@
     const times = enumeratePublicAvailableSlotTimes(dateStr, selectedService);
 
     if (meta.state === "closed") {
-      container.innerHTML = emptyStateHtml("Closed", "This day is not available for booking.");
+      container.innerHTML = customerEmptyStateHtml("Closed", "This day is not available for booking.", "🕐");
       return;
     }
     if (meta.state === "off") {
-      container.innerHTML = emptyStateHtml("Day off", "Pick another working day.");
+      container.innerHTML = customerEmptyStateHtml("Day off", "Pick another working day.", "🕐");
       return;
     }
     if (meta.state === "past") {
-      container.innerHTML = emptyStateHtml("Past date", "Choose a future day.");
+      container.innerHTML = customerEmptyStateHtml("Past date", "Choose a future day.", "🕐");
       return;
     }
     if (meta.state === "unavailable") {
-      container.innerHTML = emptyStateHtml("Unavailable", "This date is outside the booking window.");
+      container.innerHTML = customerEmptyStateHtml(
+        "Unavailable",
+        "This date is outside the booking window.",
+        "🕐"
+      );
       return;
     }
     if (!times.length) {
-      container.innerHTML = emptyStateHtml("No available times", "Try another day.");
+      container.innerHTML = customerEmptyStateHtml("No available times", "Try another day.", "🕐");
       return;
     }
 
@@ -41154,9 +42350,10 @@
     if (!selectedService) {
       if (statusEl) statusEl.textContent = "Choose a service first.";
       if (slotsMount) {
-        slotsMount.innerHTML = emptyStateHtml(
+        slotsMount.innerHTML = customerEmptyStateHtml(
           "Choose a service first",
-          "Pick a service to see available times."
+          "Pick a service to see available times.",
+          "🕐"
         );
       }
       if (slotsHint) slotsHint.classList.add("hidden");
@@ -41166,9 +42363,10 @@
     if (!selectedDate) {
       if (statusEl) statusEl.textContent = "Choose a date to see available times.";
       if (slotsMount) {
-        slotsMount.innerHTML = emptyStateHtml(
-          "Choose a date to see available times",
-          "Select a day on the calendar."
+        slotsMount.innerHTML = customerEmptyStateHtml(
+          "Choose a date",
+          "Select a day on the calendar to see available times.",
+          "🕐"
         );
       }
       if (slotsHint) slotsHint.classList.add("hidden");
