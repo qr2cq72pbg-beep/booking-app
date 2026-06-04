@@ -6260,28 +6260,405 @@
       }
     }
 
-    .admin-customize-save-bar {
-      position: sticky;
-      bottom: 0;
-      z-index: 5;
-      margin: var(--space-md) calc(-1 * var(--space-md)) calc(-1 * var(--space-md));
-      padding: 14px var(--space-md);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, #fff 40%);
-      border-top: 1px solid var(--color-border);
-      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
-    }
-
-    .admin-customize-save-bar button {
-      width: 100%;
-      max-width: 360px;
-      min-height: 48px;
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
     #adminSectionCustomize .widget-content {
       display: block !important;
+      padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .widget-content {
+      padding-bottom: calc(148px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #adminSectionCustomize.admin-section--active .admin-customize-save-bar,
+    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .admin-customize-save-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9000;
+      margin: 0;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.92) 24%, #fff 100%);
+      border-top: none;
+      box-shadow: 0 -12px 32px rgba(15, 23, 42, 0.08);
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .admin-customize-save-bar {
+      bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+
+    #adminSectionCustomize .admin-customize-save-bar button,
+    #adminSectionCustomize .admin-customize-save-btn {
+      width: 100%;
+      max-width: 480px;
+      min-height: 52px;
+      margin: 0;
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 52%, #3b82f6 100%);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    #adminSectionCustomize .admin-customize-save-bar button:active,
+    #adminSectionCustomize .admin-customize-save-btn:active {
+      transform: scale(0.98);
+      filter: brightness(0.96);
+    }
+
+    @media (min-width: 769px) {
+      #adminSectionCustomize.admin-section--active .admin-customize-save-bar {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        padding: 14px 0 calc(14px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, #fff 40%);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+        margin: var(--space-md) calc(-1 * var(--space-md)) calc(-1 * var(--space-md));
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+      }
+    }
+
+    /* —— Settings: Working hours & availability (UI only) —— */
+    #customizeHoursSection.customize-hours-block {
+      border-bottom: none;
+      margin-bottom: var(--space-lg);
+      padding-bottom: 0;
+    }
+
+    #customizeHoursSection .customize-hours-card {
+      padding: 18px 16px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface, #fff);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    #customizeHoursSection .customize-hours-card__head {
+      margin-bottom: 18px;
+    }
+
+    #customizeHoursSection .customize-hours-card__head h3 {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+    }
+
+    #customizeHoursSection .customize-hours-card__lead {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    #customizeHoursSection .customize-hours-group {
+      margin-bottom: 18px;
+    }
+
+    #customizeHoursSection .customize-hours-group:last-child {
+      margin-bottom: 0;
+    }
+
+    #customizeHoursSection .customize-hours-label {
+      display: block;
+      margin: 0 0 4px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    #customizeHoursSection .customize-hours-hint {
+      margin: 0 0 10px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #64748b;
+    }
+
+    #customizeHoursSection .customize-weekday-pills {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    @media (max-width: 380px) {
+      #customizeHoursSection .customize-weekday-pills {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    #customizeHoursSection .customize-weekday-pill {
+      position: relative;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    #customizeHoursSection .customize-weekday-pill input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+    }
+
+    #customizeHoursSection .customize-weekday-pill span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 44px;
+      padding: 8px 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #64748b;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #customizeHoursSection .customize-weekday-pill input:checked + span {
+      border-color: color-mix(in srgb, var(--business-accent, #4f46e5) 55%, #818cf8);
+      background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+      color: #4338ca;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.18);
+    }
+
+    #customizeHoursSection .customize-weekday-pill input:checked + span::after {
+      content: "";
+      display: block;
+      width: 14px;
+      height: 14px;
+      background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.2 6.4 11 12.5 5' stroke='%234338ca' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    #customizeHoursSection .customize-weekday-pill input:focus-visible + span {
+      outline: 2px solid var(--business-accent, #4f46e5);
+      outline-offset: 2px;
+    }
+
+    #customizeHoursSection .customize-hours-time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    #customizeHoursSection .customize-time-field__label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    #customizeHoursSection .customize-time-stepper.time-stepper {
+      min-height: 48px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      overflow: hidden;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__btn {
+      flex: 0 0 42px;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f8fafc;
+      border: none;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__btn:first-child {
+      border-right: 1px solid #e2e8f0;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__btn:last-child {
+      border-left: 1px solid #e2e8f0;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__btn:active {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__value {
+      flex: 1;
+      min-height: 48px;
+      font-size: 17px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #0f172a;
+      background: #fff;
+      border: none;
+    }
+
+    #customizeHoursSection .customize-time-stepper .time-stepper__value.time-stepper__value--empty {
+      font-size: 15px;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    #customizeHoursSection .customize-hours-select {
+      width: 100%;
+      margin: 0 0 6px;
+    }
+
+    #customizeHoursSection .customize-hours-override-details {
+      margin: 0 0 16px;
+      padding: 0;
+      border: none;
+      border-radius: 12px;
+      background: transparent;
+    }
+
+    #customizeHoursSection .customize-hours-override-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+    }
+
+    #customizeHoursSection .customize-hours-override-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #customizeHoursSection .customize-hours-override-details[open] > summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-style: solid;
+      margin-bottom: 0;
+    }
+
+    #customizeHoursSection .customize-hours-override-details .wizard-override-list {
+      padding: 12px 14px 14px;
+      border: 1px dashed #cbd5e1;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      background: #f8fafc;
+    }
+
+    #customizeHoursSection .customize-hours-break-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    #customizeHoursSection .customize-hours-break-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #customizeHoursSection .customize-hours-break-details[open] > summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin-bottom: 0;
+    }
+
+    #customizeHoursSection .customize-hours-break-body {
+      padding: 12px 14px 14px;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      background: #fafbfc;
+    }
+
+    #customizeHoursSection .admin-saas-break-status {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    #customizeHoursSection .customize-hours-optional {
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    #customizeHoursSection .customize-hours-override-details .wizard-override-hint {
+      margin: 0;
+      padding: 10px 14px 8px;
+      border: 1px dashed #cbd5e1;
+      border-top: none;
+      background: #f8fafc;
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-hours-card {
+      background: var(--admin-surface, #1e293b);
+      border-color: var(--xbook-on-dark-border, rgba(148, 163, 184, 0.25));
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-hours-card__head h3,
+    body.app-theme-dark #customizeHoursSection .customize-hours-label {
+      color: var(--xbook-on-dark-main, #f8fafc);
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-hours-card__lead,
+    body.app-theme-dark #customizeHoursSection .customize-hours-hint {
+      color: var(--xbook-on-dark-secondary, #94a3b8);
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-weekday-pill span {
+      background: rgba(30, 41, 59, 0.6);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-weekday-pill input:checked + span {
+      background: linear-gradient(180deg, rgba(79, 70, 229, 0.25) 0%, rgba(67, 56, 202, 0.35) 100%);
+      color: #c7d2fe;
+      border-color: rgba(129, 140, 248, 0.55);
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-time-stepper.time-stepper {
+      background: rgba(15, 23, 42, 0.5);
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-time-stepper .time-stepper__btn {
+      background: rgba(30, 41, 59, 0.8);
+      color: #94a3b8;
+    }
+
+    body.app-theme-dark #customizeHoursSection .customize-time-stepper .time-stepper__value {
+      background: transparent;
+      color: #f1f5f9;
+    }
+
+    body.app-theme-dark #adminSectionCustomize .admin-customize-save-bar {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0.94) 28%, var(--admin-surface, #1e293b) 100%);
     }
 
     #adminSectionCustomize .widget-content.collapsed {
@@ -12722,6 +13099,20 @@
       .customize-contact-grid {
         grid-template-columns: 1fr 1fr;
       }
+    }
+
+    .customize-profile-select,
+    #adminSectionCustomize .customize-profile-select,
+    #adminSectionOverview .customize-profile-select {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 48px;
+      padding: 12px 14px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
     }
 
     .customize-inline-toggle {
@@ -25032,11 +25423,11 @@
                   <span class="admin-mobile-home-card__label">Staff</span>
                   <span class="admin-mobile-home-card__desc">Manage team members</span>
                 </button>
-                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('availability')">
+                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenCustomizeHours()">
                   <span class="admin-mobile-home-card__label">Availability</span>
                   <span class="admin-mobile-home-card__desc">Working days, hours and breaks</span>
                 </button>
-                <button type="button" class="admin-mobile-hub-card" onclick="adminMobileSetupOpenSection('customize')">
+                <button type="button" class="admin-mobile-hub-card" onclick="openAdminCustomizePage({ fromSetupHub: true })">
                   <span class="admin-mobile-home-card__label">Booking page</span>
                   <span class="admin-mobile-home-card__desc">Logo, cover, colors and customer page</span>
                 </button>
@@ -25156,11 +25547,15 @@
             <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
           </div>
           <p class="small">Lowercase letters, numbers and hyphens.</p>
-          <label class="small" for="businessDescription"><strong>About</strong></label>
+          <label class="small" for="businessCategory"><strong>Business type</strong></label>
+          <select id="businessCategory" class="customize-profile-select" aria-label="Business type"></select>
+          <label class="small" for="businessDescription" style="margin-top:12px"><strong>About</strong></label>
           <textarea id="businessDescription" placeholder="About your business (optional)" oninput="previewBookingPageHero()"></textarea>
           <div class="business-profile-grid">
-            <input id="businessPhone" placeholder="Phone (optional)" />
+            <input id="businessPhone" type="tel" placeholder="Business phone" />
+            <input id="businessEmail" type="email" inputmode="email" placeholder="Business email (optional)" />
             <input id="businessAddress" placeholder="Address (optional)" />
+            <input id="businessWebsite" type="url" inputmode="url" placeholder="Website (optional)" />
           </div>
           <div class="business-profile-preview">
             <strong>Link preview</strong>
@@ -25173,7 +25568,7 @@
 
           <section id="adminSectionCustomize" class="admin-section" data-admin-section="customize" hidden aria-label="Customize booking page">
       <div class="card widget-card">
-        <h2 class="admin-section-title">Business branding</h2>
+        <h2 class="admin-section-title">Business profile &amp; booking page</h2>
         <div id="widgetCustomizeBooking" class="widget-content">
           <p class="small">Make your booking page feel like <strong>your</strong> app — logo, colors, and contact info. Customers only see the live page, not this editor.</p>
 
@@ -25210,9 +25605,12 @@
           </section>
 
           <section class="customize-section" aria-labelledby="customizeTextHeading">
-            <h3 id="customizeTextHeading">Business identity</h3>
+            <h3 id="customizeTextHeading">Business profile</h3>
+            <p class="small" style="margin: 0 0 12px">Core details from setup — update anytime. Customers see name, phone, and links on your booking page.</p>
             <label class="small"><strong>Business name</strong></label>
             <input id="businessName" placeholder="e.g. Stojan Barber" oninput="previewBookingPageHero(); previewBusinessPublicLink()" />
+            <label class="small" style="margin-top:12px"><strong>Business type / industry</strong></label>
+            <select id="customizeBusinessCategory" class="customize-profile-select" aria-label="Business type"></select>
             <label class="small" style="margin-top:12px"><strong>Subtitle</strong></label>
             <input id="customizePublicTagline" type="text" maxlength="120" placeholder="Book your appointment online" oninput="previewBookingPageHero()" />
             <p class="small">Shown under your name on the booking page — e.g. “Premium cuts in Skopje”.</p>
@@ -25232,12 +25630,20 @@
             <h3 id="customizeContactHeading">Contact &amp; location</h3>
             <div class="customize-contact-grid">
               <div>
-                <label class="small"><strong>Phone</strong></label>
+                <label class="small"><strong>Business phone</strong></label>
                 <input id="customizeBusinessPhone" type="tel" placeholder="+389 70 000 000" oninput="previewBookingPageHero()" />
               </div>
               <div>
-                <label class="small"><strong>Address / location</strong></label>
+                <label class="small"><strong>Business email</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
+                <input id="customizeBusinessEmail" type="email" inputmode="email" autocomplete="email" placeholder="hello@yourbusiness.com" oninput="previewBookingPageHero()" />
+              </div>
+              <div>
+                <label class="small"><strong>Address</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
                 <input id="customizeBusinessAddress" placeholder="Street, city" oninput="previewBookingPageHero()" />
+              </div>
+              <div>
+                <label class="small"><strong>Website</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
+                <input id="customizeBusinessWebsite" type="url" inputmode="url" autocomplete="url" placeholder="https://yourbusiness.com" oninput="previewBookingPageHero()" />
               </div>
             </div>
             <label class="theme-toggle-row customize-inline-toggle" style="margin-top:10px">
@@ -25251,6 +25657,110 @@
             <input id="customizeBusinessInstagram" type="url" inputmode="url" placeholder="https://instagram.com/yourbusiness" oninput="previewBookingPageHero()" />
             <label class="small" style="margin-top:10px"><strong>Facebook</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
             <input id="customizeBusinessFacebook" type="url" inputmode="url" placeholder="https://facebook.com/yourbusiness" oninput="previewBookingPageHero()" />
+          </section>
+
+          <section class="customize-section customize-hours-block" id="customizeHoursSection" aria-labelledby="customizeHoursHeading">
+            <div class="customize-hours-card">
+              <div class="customize-hours-card__head">
+                <h3 id="customizeHoursHeading">Working hours &amp; availability</h3>
+                <p class="customize-hours-card__lead">Set when customers can book. These hours apply to your public page and calendar.</p>
+              </div>
+
+              <div class="customize-hours-group">
+                <span class="customize-hours-label" id="customizeWorkingDaysLabel">Working days</span>
+                <p class="customize-hours-hint">Tap each day your business is open for bookings.</p>
+                <div class="customize-weekday-pills admin-saas-weekday-pills" role="group" aria-labelledby="customizeWorkingDaysLabel">
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="1" /><span>Mon</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="2" /><span>Tue</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="3" /><span>Wed</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="4" /><span>Thu</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="5" /><span>Fri</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="6" /><span>Sat</span></label>
+                  <label class="customize-weekday-pill admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="0" /><span>Sun</span></label>
+                </div>
+              </div>
+
+              <div class="customize-hours-group">
+                <div class="customize-hours-time-row admin-saas-time-grid">
+                  <div class="customize-time-field admin-saas-time-field">
+                    <label class="customize-time-field__label admin-saas-time-field__label" for="workStart">Open time</label>
+                    <div class="time-stepper customize-time-stepper" role="group" aria-label="Default opening time">
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                      <span class="time-stepper__value" aria-live="polite">09:00</span>
+                      <input type="hidden" id="workStart" value="09:00" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                    </div>
+                  </div>
+                  <div class="customize-time-field admin-saas-time-field">
+                    <label class="customize-time-field__label admin-saas-time-field__label" for="workEnd">Close time</label>
+                    <div class="time-stepper customize-time-stepper" role="group" aria-label="Default closing time">
+                      <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                      <span class="time-stepper__value" aria-live="polite">17:00</span>
+                      <input type="hidden" id="workEnd" value="17:00" autocomplete="off" />
+                      <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <details class="customize-hours-override-details admin-saas-override-details wizard-override-details">
+                <summary>Optional overrides for specific weekdays</summary>
+                <p class="wizard-override-hint customize-hours-hint">Use this only if some days have different hours.</p>
+                <div id="settingsDayOverrideRows" data-override-context="settings" class="wizard-override-list"></div>
+              </details>
+
+              <div class="customize-hours-group">
+                <span class="customize-hours-label">Booking window</span>
+                <select id="bookingWindowWeeks" class="customize-profile-select customize-hours-select" aria-describedby="customizeBookingWindowHint" aria-label="Booking window">
+                  <option value="4">1 month</option>
+                  <option value="8">2 months</option>
+                  <option value="12">3 months</option>
+                  <option value="24">6 months</option>
+                </select>
+                <p id="customizeBookingWindowHint" class="customize-hours-hint">Choose how far into the future customers can book appointments.</p>
+              </div>
+
+              <div class="customize-hours-group">
+                <span class="customize-hours-label">Minimum notice</span>
+                <select id="settingsMinimumNoticeMinutes" class="customize-profile-select customize-hours-select" aria-describedby="customizeMinimumNoticeHint" aria-label="Minimum notice before booking">
+                  <option value="0">No minimum</option>
+                  <option value="30">30 minutes</option>
+                  <option value="60">1 hour</option>
+                  <option value="120">2 hours</option>
+                  <option value="360">6 hours</option>
+                  <option value="1440">24 hours</option>
+                </select>
+                <p id="customizeMinimumNoticeHint" class="customize-hours-hint">How much notice customers must give before booking.</p>
+              </div>
+
+              <details class="customize-hours-break-details admin-saas-override-details wizard-override-details">
+                <summary>Break between appointments <span class="customize-hours-optional">(optional)</span></summary>
+                <div class="customize-hours-break-body">
+                  <p id="availabilityBreakStatus" class="admin-saas-break-status admin-saas-break-status--empty" aria-live="polite">No break set</p>
+                  <p class="customize-hours-hint">Extra time between appointments for preparation or cleanup.</p>
+                  <div class="customize-hours-time-row admin-saas-time-grid">
+                    <div class="customize-time-field admin-saas-time-field">
+                      <label class="customize-time-field__label admin-saas-time-field__label" for="breakStart">Break starts</label>
+                      <div class="time-stepper customize-time-stepper" role="group" aria-label="Break start optional" data-allow-empty="true" data-seed-time="12:00">
+                        <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                        <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                        <input type="hidden" id="breakStart" value="" autocomplete="off" />
+                        <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                      </div>
+                    </div>
+                    <div class="customize-time-field admin-saas-time-field">
+                      <label class="customize-time-field__label admin-saas-time-field__label" for="breakEnd">Break ends</label>
+                      <div class="time-stepper customize-time-stepper" role="group" aria-label="Break end optional" data-allow-empty="true" data-seed-time="13:00">
+                        <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
+                        <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
+                        <input type="hidden" id="breakEnd" value="" autocomplete="off" />
+                        <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
           </section>
 
           <section class="customize-section" aria-labelledby="customizeThemeHeading">
@@ -25336,8 +25846,8 @@
             </div>
           </section>
 
-          <div class="admin-customize-save-bar">
-            <button type="button" class="success" id="saveCustomizeBookingPageBtn" onclick="saveCustomizeBookingPage()">Save changes</button>
+          <div class="admin-customize-save-bar" role="region" aria-label="Save settings">
+            <button type="button" class="success admin-customize-save-btn" id="saveCustomizeBookingPageBtn" onclick="saveCustomizeBookingPage()">Save changes</button>
           </div>
         </div>
       </div>
@@ -25348,73 +25858,10 @@
         <h2 class="admin-section-title admin-saas__title">Availability</h2>
         <div id="widgetSettings" class="widget-content admin-saas__body admin-saas-availability">
 
-          <section class="admin-saas-subsection" aria-labelledby="availabilityHoursHeading">
-            <h3 id="availabilityHoursHeading" class="admin-saas-subsection__title">Working hours</h3>
-            <p class="admin-saas-subsection__hint">Default opening hours for each working day (15-minute steps).</p>
-            <div class="admin-saas-time-grid">
-              <div class="admin-saas-time-field">
-                <label class="admin-saas-time-field__label" for="workStart">Opens</label>
-                <div class="time-stepper" role="group" aria-label="Default opening time">
-                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-                  <span class="time-stepper__value" aria-live="polite">09:00</span>
-                  <input type="hidden" id="workStart" value="09:00" autocomplete="off" />
-                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
-                </div>
-              </div>
-              <div class="admin-saas-time-field">
-                <label class="admin-saas-time-field__label" for="workEnd">Closes</label>
-                <div class="time-stepper" role="group" aria-label="Default closing time">
-                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-                  <span class="time-stepper__value" aria-live="polite">17:00</span>
-                  <input type="hidden" id="workEnd" value="17:00" autocomplete="off" />
-                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
-                </div>
-              </div>
-            </div>
-            <details class="admin-saas-override-details wizard-override-details">
-              <summary>Optional overrides for certain weekdays</summary>
-              <p class="wizard-override-hint">Uses the defaults above unless you enable a weekday below.</p>
-              <div id="settingsDayOverrideRows" data-override-context="settings" class="wizard-override-list"></div>
-            </details>
-          </section>
-
-          <section class="admin-saas-subsection" aria-labelledby="availabilityDaysHeading">
-            <h3 id="availabilityDaysHeading" class="admin-saas-subsection__title">Working days</h3>
-            <p class="admin-saas-subsection__hint">Select which days customers can book.</p>
-            <div class="admin-saas-weekday-pills" role="group" aria-label="Working days">
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="1" /><span>Mon</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="2" /><span>Tue</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="3" /><span>Wed</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="4" /><span>Thu</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="5" /><span>Fri</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="6" /><span>Sat</span></label>
-              <label class="admin-saas-weekday-pill"><input type="checkbox" class="workDay" value="0" /><span>Sun</span></label>
-            </div>
-          </section>
-
-          <section class="admin-saas-subsection" aria-labelledby="availabilityBreakHeading">
-            <h3 id="availabilityBreakHeading" class="admin-saas-subsection__title">Break / pause</h3>
-            <p id="availabilityBreakStatus" class="admin-saas-break-status admin-saas-break-status--empty" aria-live="polite">No break set</p>
-            <div class="admin-saas-time-grid">
-              <div class="admin-saas-time-field">
-                <label class="admin-saas-time-field__label" for="breakStart">Break starts</label>
-                <div class="time-stepper" role="group" aria-label="Break start optional" data-allow-empty="true" data-seed-time="12:00">
-                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-                  <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
-                  <input type="hidden" id="breakStart" value="" autocomplete="off" />
-                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
-                </div>
-              </div>
-              <div class="admin-saas-time-field">
-                <label class="admin-saas-time-field__label" for="breakEnd">Break ends</label>
-                <div class="time-stepper" role="group" aria-label="Break end optional" data-allow-empty="true" data-seed-time="13:00">
-                  <button type="button" class="time-stepper__btn" data-delta-min="-15" aria-label="15 minutes earlier">−</button>
-                  <span class="time-stepper__value time-stepper__value--empty" aria-live="polite">— : —</span>
-                  <input type="hidden" id="breakEnd" value="" autocomplete="off" />
-                  <button type="button" class="time-stepper__btn" data-delta-min="15" aria-label="15 minutes later">+</button>
-                </div>
-              </div>
-            </div>
+          <section class="admin-saas-subsection" aria-labelledby="availabilityHoursLinkHeading">
+            <h3 id="availabilityHoursLinkHeading" class="admin-saas-subsection__title">Working hours</h3>
+            <p class="admin-saas-subsection__hint">Working days, open/close times, booking window, minimum notice, and breaks are edited in <strong>Business profile &amp; booking page</strong>.</p>
+            <button type="button" class="secondary" onclick="openAdminCustomizePage({ scrollToHours: true })">Edit working hours &amp; availability</button>
           </section>
 
           <section class="admin-saas-subsection" aria-labelledby="availabilityRecurringHeading">
@@ -25427,20 +25874,6 @@
                 <strong>Allow recurring appointments</strong>
                 <span>When off, the public booking flow is unchanged.</span>
               </span>
-            </label>
-          </section>
-
-          <section class="admin-saas-subsection" aria-labelledby="availabilityWindowHeading">
-            <h3 id="availabilityWindowHeading" class="admin-saas-subsection__title">Booking window</h3>
-            <p class="admin-saas-subsection__hint">How far ahead customers can schedule appointments.</p>
-            <label class="admin-saas-field">
-              <span class="admin-saas-field__label">Book ahead</span>
-              <select id="bookingWindowWeeks" aria-label="Booking window in weeks">
-                <option value="1">1 week</option>
-                <option value="2">2 weeks</option>
-                <option value="4" selected>4 weeks</option>
-                <option value="8">8 weeks</option>
-              </select>
             </label>
           </section>
 
@@ -26195,7 +26628,7 @@
                 <p class="settings-card__eyebrow">Business setup</p>
                 <button type="button" class="settings-setup-row" onclick="openAdminCustomizePage()">
                   <span class="settings-setup-row__icon" aria-hidden="true"></span>
-                  <span class="settings-setup-row__label">Customize booking page</span>
+                  <span class="settings-setup-row__label">Business profile &amp; booking page</span>
                   <span class="settings-setup-row__chev" aria-hidden="true"></span>
                 </button>
                 <button type="button" class="settings-setup-row" onclick="adminMobileOpenSetup()">
@@ -34384,6 +34817,216 @@
     "beauty-soft": { label: "Beauty Soft", base: "cards" }
   };
 
+  /** Single source of truth — onboarding (mobile/web) + Admin customize + overview. */
+  const XBOOK_BUSINESS_CATEGORIES = [
+    { id: "barber", label: "Barber" },
+    { id: "hair-salon", label: "Hair Salon" },
+    { id: "beauty-salon", label: "Beauty Salon" },
+    { id: "nail-studio", label: "Nail Studio" },
+    { id: "spa-wellness", label: "Spa & Wellness" },
+    { id: "massage-therapy", label: "Massage Therapy" },
+    { id: "dental-clinic", label: "Dental Clinic" },
+    { id: "medical-clinic", label: "Medical Clinic" },
+    { id: "physiotherapy", label: "Physiotherapy" },
+    { id: "chiropractic", label: "Chiropractic" },
+    { id: "fitness-gym", label: "Fitness Gym" },
+    { id: "personal-trainer", label: "Personal Trainer" },
+    { id: "yoga-studio", label: "Yoga Studio" },
+    { id: "pilates-studio", label: "Pilates Studio" },
+    { id: "tattoo-studio", label: "Tattoo Studio" },
+    { id: "aesthetics-clinic", label: "Aesthetics Clinic" },
+    { id: "cosmetic-studio", label: "Cosmetic Studio" },
+    { id: "eyebrows-lashes", label: "Eyebrows & Lashes" },
+    { id: "makeup-artist", label: "Makeup Artist" },
+    { id: "therapy-counseling", label: "Therapy & Counseling" },
+    { id: "pet-grooming", label: "Pet Grooming" },
+    { id: "photography-studio", label: "Photography Studio" },
+    { id: "education-tutoring", label: "Education & Tutoring" },
+    { id: "automotive-services", label: "Automotive Services" },
+    { id: "professional-services", label: "Professional Services" },
+    { id: "other", label: "Other" }
+  ];
+
+  const XBOOK_BUSINESS_CATEGORY_LEGACY_ALIASES = {
+    salon: "hair-salon",
+    dentist: "dental-clinic",
+    clinic: "medical-clinic",
+    fitness: "fitness-gym"
+  };
+
+  const BUSINESS_PROFILE_EXTRAS_LS_PREFIX = "xbookBusinessProfileExtras:";
+
+  function normalizeBusinessCategoryId(raw) {
+    const v = String(raw || "")
+      .trim()
+      .toLowerCase();
+    if (!v) return "";
+    return XBOOK_BUSINESS_CATEGORY_LEGACY_ALIASES[v] || v;
+  }
+
+  function getBusinessCategoryLabel(categoryId) {
+    const id = normalizeBusinessCategoryId(categoryId);
+    const hit = XBOOK_BUSINESS_CATEGORIES.find((c) => c.id === id);
+    return hit ? hit.label : "";
+  }
+
+  function getBusinessProfileExtrasStorageKey() {
+    return businessId ? `${BUSINESS_PROFILE_EXTRAS_LS_PREFIX}${businessId}` : "";
+  }
+
+  function loadBusinessProfileExtras() {
+    try {
+      const raw = localStorage.getItem(getBusinessProfileExtrasStorageKey());
+      if (!raw) return { email: "", website: "" };
+      const parsed = JSON.parse(raw);
+      return {
+        email: String(parsed?.email || "").trim(),
+        website: String(parsed?.website || "").trim()
+      };
+    } catch (e) {
+      return { email: "", website: "" };
+    }
+  }
+
+  function saveBusinessProfileExtras(extras) {
+    if (!businessId) return;
+    try {
+      localStorage.setItem(
+        getBusinessProfileExtrasStorageKey(),
+        JSON.stringify({
+          email: String(extras?.email || "").trim(),
+          website: String(extras?.website || "").trim()
+        })
+      );
+    } catch (e) {
+      logSetup("business profile extras save failed", e?.message);
+    }
+  }
+
+  function getBusinessEmailForForm() {
+    const fromDb = String(businessSettings?.business_email || "").trim();
+    if (fromDb) return fromDb;
+    return loadBusinessProfileExtras().email;
+  }
+
+  function getBusinessWebsiteForForm() {
+    const fromDb = String(businessSettings?.business_website || "").trim();
+    if (fromDb) return fromDb;
+    return loadBusinessProfileExtras().website;
+  }
+
+  function mergeBusinessProfileExtrasIntoSettings(settings) {
+    if (!settings) return settings;
+    const extras = loadBusinessProfileExtras();
+    if (!String(settings.business_email || "").trim() && extras.email) {
+      settings.business_email = extras.email;
+    }
+    if (!String(settings.business_website || "").trim() && extras.website) {
+      settings.business_website = extras.website;
+    }
+    return settings;
+  }
+
+  function fillBusinessCategorySelect(selectEl, selectedCategoryId) {
+    if (!selectEl) return;
+    const selected = normalizeBusinessCategoryId(selectedCategoryId);
+    selectEl.innerHTML = "";
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select business type";
+    selectEl.appendChild(placeholder);
+    XBOOK_BUSINESS_CATEGORIES.forEach((cat) => {
+      const opt = document.createElement("option");
+      opt.value = cat.id;
+      opt.textContent = cat.label;
+      if (cat.id === selected) opt.selected = true;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  function renderBusinessCategoryPills(container, selectedCategoryId) {
+    if (!container) return;
+    const selected = normalizeBusinessCategoryId(selectedCategoryId);
+    container.innerHTML = "";
+    XBOOK_BUSINESS_CATEGORIES.forEach((cat) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "wizard-category-pill";
+      btn.dataset.category = cat.id;
+      btn.textContent = cat.label;
+      const on = selected && cat.id === selected;
+      btn.classList.toggle("wizard-category-pill--selected", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      container.appendChild(btn);
+    });
+  }
+
+  function getSelectedBusinessCategoryFromPills(containerSelector) {
+    const selected = document.querySelector(
+      `${containerSelector} .wizard-category-pill.wizard-category-pill--selected`
+    );
+    return selected ? String(selected.dataset.category || "").trim().toLowerCase() : null;
+  }
+
+  function setBusinessCategoryPillSelection(containerSelector, rawCategoryId) {
+    const v = normalizeBusinessCategoryId(rawCategoryId);
+    document.querySelectorAll(`${containerSelector} .wizard-category-pill`).forEach((p) => {
+      const on = v && p.dataset.category === v;
+      p.classList.toggle("wizard-category-pill--selected", on);
+      p.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function readBusinessCategoryFromAdminForms() {
+    const fromSelect =
+      document.getElementById("customizeBusinessCategory")?.value ||
+      document.getElementById("businessCategory")?.value ||
+      "";
+    return normalizeBusinessCategoryId(fromSelect);
+  }
+
+  function readBusinessEmailWebsiteFromAdminForms() {
+    return {
+      email:
+        document.getElementById("customizeBusinessEmail")?.value.trim() ||
+        document.getElementById("businessEmail")?.value.trim() ||
+        "",
+      website:
+        document.getElementById("customizeBusinessWebsite")?.value.trim() ||
+        document.getElementById("businessWebsite")?.value.trim() ||
+        ""
+    };
+  }
+
+  function stripUnsupportedBusinessProfileColumns(payload) {
+    const next = { ...payload };
+    if ("business_email" in next) delete next.business_email;
+    if ("business_website" in next) delete next.business_website;
+    return next;
+  }
+
+  async function updateBusinessSettingsWithProfileFields(payload) {
+    const emailWebsite = {
+      email: payload.business_email,
+      website: payload.business_website
+    };
+    let result = await sb.from("business_settings").update(payload).eq("business_id", businessId);
+    if (
+      result.error &&
+      (payload.business_email !== undefined || payload.business_website !== undefined) &&
+      /business_email|business_website|column/i.test(String(result.error.message || ""))
+    ) {
+      saveBusinessProfileExtras(emailWebsite);
+      result = await sb
+        .from("business_settings")
+        .update(stripUnsupportedBusinessProfileColumns(payload))
+        .eq("business_id", businessId);
+    } else if (!result.error) {
+      saveBusinessProfileExtras(emailWebsite);
+    }
+    return result;
+  }
+
   function normalizePublicLayout(value) {
     const v = String(value || "")
       .trim()
@@ -35047,21 +35690,35 @@
     [
       "customizeBusinessDescription",
       "customizeBusinessPhone",
+      "customizeBusinessEmail",
       "customizeBusinessAddress",
+      "customizeBusinessWebsite",
       "customizeBusinessInstagram",
       "customizeBusinessFacebook"
     ].forEach((id) => {
       document.getElementById(id)?.addEventListener("input", () => previewBookingPageHero());
     });
+
+    document.getElementById("customizeBusinessCategory")?.addEventListener("change", () => {
+      const cat = readBusinessCategoryFromAdminForms();
+      fillBusinessCategorySelect(document.getElementById("businessCategory"), cat);
+      previewBookingPageHero();
+    });
   }
 
   function getCustomizeBrandingFromForm() {
+    const extras = readBusinessEmailWebsiteFromAdminForms();
+    const instagramRaw = document.getElementById("customizeBusinessInstagram")?.value.trim() || "";
+    const facebookRaw = document.getElementById("customizeBusinessFacebook")?.value.trim() || "";
     return {
+      business_category: readBusinessCategoryFromAdminForms() || null,
       business_description: document.getElementById("customizeBusinessDescription")?.value.trim() || null,
       business_phone: document.getElementById("customizeBusinessPhone")?.value.trim() || null,
+      business_email: extras.email || null,
+      business_website: extras.website || null,
       business_address: document.getElementById("customizeBusinessAddress")?.value.trim() || null,
-      business_instagram_url: document.getElementById("customizeBusinessInstagram")?.value.trim() || null,
-      business_facebook_url: document.getElementById("customizeBusinessFacebook")?.value.trim() || null,
+      business_instagram_url: instagramRaw ? normalizeSocialUrl(instagramRaw, "instagram") : null,
+      business_facebook_url: facebookRaw ? normalizeSocialUrl(facebookRaw, "facebook") : null,
       public_show_about: document.getElementById("customizeShowAbout")?.checked !== false,
       public_show_address: document.getElementById("customizeShowAddress")?.checked !== false
     };
@@ -35075,9 +35732,16 @@
     if (document.getElementById("businessPhone")) {
       document.getElementById("businessPhone").value = b.business_phone || "";
     }
+    if (document.getElementById("businessEmail")) {
+      document.getElementById("businessEmail").value = b.business_email || "";
+    }
     if (document.getElementById("businessAddress")) {
       document.getElementById("businessAddress").value = b.business_address || "";
     }
+    if (document.getElementById("businessWebsite")) {
+      document.getElementById("businessWebsite").value = b.business_website || "";
+    }
+    fillBusinessCategorySelect(document.getElementById("businessCategory"), b.business_category);
   }
 
   function getCustomizePublicTaglineValue() {
@@ -35113,6 +35777,8 @@
       chips.push(escapeHtml(branding.business_address));
     }
     if (branding.business_phone) chips.push(escapeHtml(branding.business_phone));
+    if (branding.business_email) chips.push(escapeHtml(branding.business_email));
+    if (branding.business_website) chips.push("Website");
     if (branding.business_instagram_url) chips.push("Instagram");
     if (branding.business_facebook_url) chips.push("Facebook");
 
@@ -35162,6 +35828,11 @@
     if (document.getElementById("businessName")) {
       document.getElementById("businessName").value = businessSettings?.business_name || "";
     }
+    fillBusinessCategorySelect(
+      document.getElementById("customizeBusinessCategory"),
+      businessSettings?.business_category || ""
+    );
+    fillBusinessCategorySelect(document.getElementById("businessCategory"), businessSettings?.business_category || "");
     if (document.getElementById("customizePublicTagline")) {
       document.getElementById("customizePublicTagline").value = businessSettings?.public_tagline || "";
     }
@@ -35172,8 +35843,14 @@
     if (document.getElementById("customizeBusinessPhone")) {
       document.getElementById("customizeBusinessPhone").value = businessSettings?.business_phone || "";
     }
+    if (document.getElementById("customizeBusinessEmail")) {
+      document.getElementById("customizeBusinessEmail").value = getBusinessEmailForForm();
+    }
     if (document.getElementById("customizeBusinessAddress")) {
       document.getElementById("customizeBusinessAddress").value = businessSettings?.business_address || "";
+    }
+    if (document.getElementById("customizeBusinessWebsite")) {
+      document.getElementById("customizeBusinessWebsite").value = getBusinessWebsiteForForm();
     }
     if (document.getElementById("customizeBusinessInstagram")) {
       document.getElementById("customizeBusinessInstagram").value =
@@ -35217,6 +35894,94 @@
     previewBusinessPublicLink();
     applyBusinessVisualTheme();
     previewBookingPageHero();
+
+    ensureDayOverrideRowsBuilt("settingsDayOverrideRows", "settings");
+    if (businessSettings) {
+      const wS = document.getElementById("workStart");
+      const wE = document.getElementById("workEnd");
+      if (wS) wS.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
+      if (wE) wE.value = snapTimeStringToQuarterHour(businessSettings.work_end || "17:00");
+      if (document.getElementById("breakStart")) {
+        document.getElementById("breakStart").value = String(businessSettings.break_start ?? "").trim();
+      }
+      if (document.getElementById("breakEnd")) {
+        document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
+      }
+      hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
+      const bookingWindowEl = document.getElementById("bookingWindowWeeks");
+      if (bookingWindowEl) {
+        bookingWindowEl.value = String(normalizeBookingWindowWeeksForSelect(businessSettings.booking_window_weeks));
+      }
+      const mnEl = document.getElementById("settingsMinimumNoticeMinutes");
+      if (mnEl) {
+        const raw = businessSettings.minimum_notice_minutes;
+        let mn = raw === null || typeof raw === "undefined" ? 0 : Math.max(0, Math.round(Number(raw) || 0));
+        if (!ONBOARDING_MIN_NOTICE_OPTS.includes(mn)) mn = 60;
+        mnEl.value = String(mn);
+      }
+      const days = getWorkingDaysArray();
+      document.querySelectorAll("#widgetCustomizeBooking .workDay").forEach((cb) => {
+        cb.checked = days.includes(Number(cb.value));
+      });
+      const hoursSection = document.getElementById("customizeHoursSection");
+      if (hoursSection) syncAllTimeStepperDisplaysUnder(hoursSection);
+    }
+  }
+
+  function collectAvailabilitySettingsUpdates() {
+    const workingDays = Array.from(
+      document.querySelectorAll(
+        "#widgetCustomizeBooking .workDay:checked, #widgetSettings .workDay:checked, #adminSectionAvailability .workDay:checked"
+      )
+    ).map((cb) => Number(cb.value));
+
+    const bksRaw = document.getElementById("breakStart")?.value?.trim() || "";
+    const bkeRaw = document.getElementById("breakEnd")?.value?.trim() || "";
+
+    return {
+      work_start: snapTimeStringToQuarterHour(String(document.getElementById("workStart")?.value || "").trim()),
+      work_end: snapTimeStringToQuarterHour(String(document.getElementById("workEnd")?.value || "").trim()),
+      working_days: workingDays,
+      working_hours_overrides: collectDayOverridesPayload("settingsDayOverrideRows", "settings"),
+      break_start: bksRaw ? bksRaw : null,
+      break_end: bkeRaw ? bkeRaw : null,
+      booking_window_weeks: Number(
+        normalizeBookingWindowWeeksForSelect(document.getElementById("bookingWindowWeeks")?.value || 4)
+      ),
+      minimum_notice_minutes: Number(
+        document.getElementById("settingsMinimumNoticeMinutes")?.value ??
+          document.getElementById("onboardingMinimumNoticeMinutes")?.value ??
+          0
+      )
+    };
+  }
+
+  function validateAvailabilitySettingsForm() {
+    if (!validateConditionalDayOverridesForContainer("settingsDayOverrideRows", "settings")) {
+      showToast("Check optional weekday overrides: each enabled day needs Opens before Closes.", "error");
+      return false;
+    }
+    const workingDays = collectAvailabilitySettingsUpdates().working_days;
+    if (!workingDays.length) {
+      showToast("Select at least one working day.", "error");
+      return false;
+    }
+    const ws = document.getElementById("workStart")?.value || "";
+    const we = document.getElementById("workEnd")?.value || "";
+    if (!ws || !we) {
+      showToast("Enter valid open and close times.", "error");
+      return false;
+    }
+    try {
+      if (!(timeToMinutes(we) > timeToMinutes(ws))) {
+        showToast("Close time must be after open time.", "error");
+        return false;
+      }
+    } catch (e) {
+      showToast("Enter valid open and close times.", "error");
+      return false;
+    }
+    return true;
   }
 
   async function saveCustomizeBookingPage() {
@@ -35232,8 +35997,17 @@
     }
 
     const branding = getCustomizeBrandingFromForm();
+    const category = branding.business_category;
+    if (!category) {
+      showToast("Please select a business type.", "error");
+      return;
+    }
+
+    if (!validateAvailabilitySettingsForm()) return;
+
     const updates = {
       business_name: businessNameValue,
+      business_category: category,
       public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || null,
       business_logo_url: getBusinessLogoUrl() || null,
       business_cover_url: getBusinessCoverUrl() || null,
@@ -35242,16 +36016,19 @@
       public_show_logo: document.getElementById("customizeShowLogo")?.checked !== false,
       public_show_staff: document.getElementById("customizeShowStaff")?.checked !== false,
       public_show_prices: document.getElementById("customizeShowPrices")?.checked !== false,
-      ...branding
+      ...branding,
+      ...collectAvailabilitySettingsUpdates()
     };
 
-    const { error } = await sb.from("business_settings").update(updates).eq("business_id", businessId);
+    const { error } = await updateBusinessSettingsWithProfileFields(updates);
 
     if (error) {
       let hint = "";
       if (/public_tagline/i.test(error.message)) hint = " Run supabase-public-tagline.sql in Supabase.";
       else if (/business_instagram|business_facebook|public_show_about/i.test(error.message)) {
         hint = " Run supabase-business-branding-social.sql in Supabase.";
+      } else if (/business_email|business_website/i.test(error.message)) {
+        hint = " Run supabase-business-profile-email-website.sql in Supabase.";
       }
       showToast("Could not save: " + error.message + hint, "error", 8000);
       return;
@@ -35263,6 +36040,7 @@
 
     applyBusinessVisualTheme();
     syncOverviewBrandingFieldsFromCustomize();
+    syncDashboardAvailabilityFieldsFromBusinessSettings();
     renderPublicBusinessProfileInfo();
     previewBookingPageHero();
     previewBusinessPublicLink();
@@ -35273,7 +36051,11 @@
       initPublicBookingWizardStep();
     }
 
-    showToast("Theme and booking page settings saved.", "success");
+    if (document.getElementById("adminSectionCalendar")?.classList.contains("admin-section--active")) {
+      renderAdminCalendar();
+    }
+
+    showToast("Business profile and availability saved.", "success");
     await loadAdminData();
   }
 
@@ -36545,7 +37327,13 @@
   function updateAdminMobileSetupBackBar() {
     const bar = document.getElementById("adminMobileSetupBackBar");
     if (!bar) return;
+    const onboardingView = document.getElementById("adminOnboardingView");
+    const onboardingWizardActive = onboardingView && !onboardingView.classList.contains("hidden");
+    const onboardingStillRequired =
+      typeof isAdminOnboardingRequired === "function" && isAdminOnboardingRequired();
     const show =
+      onboardingStillRequired &&
+      !onboardingWizardActive &&
       document.body.classList.contains("admin-mobile-shell-active") &&
       adminMobileFromSetup &&
       ADMIN_MOBILE_SETUP_CHILD_SECTIONS.has(adminActiveSection);
@@ -36611,17 +37399,23 @@
   }
   window.refreshAdminCustomizeSectionUi = refreshAdminCustomizeSectionUi;
 
-  function openAdminCustomizePage() {
-    if (document.body.classList.contains("admin-mobile-shell-active")) {
-      adminMobileSetupOpenSection("customize");
-    } else {
-      setAdminSection("customize");
-    }
+  function openAdminCustomizePage(opts = {}) {
+    adminMobileFromSetup = opts.fromSetupHub === true;
+    setAdminSection("customize");
+    const scrollTarget = opts.scrollToHours
+      ? document.getElementById("customizeHoursHeading")
+      : document.getElementById("customizeLogoHeading");
     requestAnimationFrame(() => {
-      document.getElementById("customizeLogoHeading")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
+      updateAdminMobileSetupBackBar();
     });
   }
   window.openAdminCustomizePage = openAdminCustomizePage;
+
+  function adminMobileSetupOpenCustomizeHours() {
+    openAdminCustomizePage({ fromSetupHub: true, scrollToHours: true });
+  }
+  window.adminMobileSetupOpenCustomizeHours = adminMobileSetupOpenCustomizeHours;
 
   function adminMobileOpenCustomize() {
     openAdminCustomizePage();
@@ -36678,6 +37472,7 @@
     }
 
     setAdminSection(adminActiveSection || "overview", { silent: true, skipRender: false });
+    updateAdminMobileSetupBackBar();
   }
 
   function showAdminView() {
@@ -37148,67 +37943,15 @@
   let onboardingStep1ListenersBound = false;
   let onboardingStep1Saving = false;
 
-  const WIZARD_BUSINESS_CATEGORIES = [
-    { id: "barber", label: "Barber" },
-    { id: "hair-salon", label: "Hair Salon" },
-    { id: "beauty-salon", label: "Beauty Salon" },
-    { id: "nail-studio", label: "Nail Studio" },
-    { id: "spa-wellness", label: "Spa & Wellness" },
-    { id: "massage-therapy", label: "Massage Therapy" },
-    { id: "dental-clinic", label: "Dental Clinic" },
-    { id: "medical-clinic", label: "Medical Clinic" },
-    { id: "physiotherapy", label: "Physiotherapy" },
-    { id: "chiropractic", label: "Chiropractic" },
-    { id: "fitness-gym", label: "Fitness Gym" },
-    { id: "personal-trainer", label: "Personal Trainer" },
-    { id: "yoga-studio", label: "Yoga Studio" },
-    { id: "pilates-studio", label: "Pilates Studio" },
-    { id: "tattoo-studio", label: "Tattoo Studio" },
-    { id: "aesthetics-clinic", label: "Aesthetics Clinic" },
-    { id: "cosmetic-studio", label: "Cosmetic Studio" },
-    { id: "eyebrows-lashes", label: "Eyebrows & Lashes" },
-    { id: "makeup-artist", label: "Makeup Artist" },
-    { id: "therapy-counseling", label: "Therapy & Counseling" },
-    { id: "pet-grooming", label: "Pet Grooming" },
-    { id: "photography-studio", label: "Photography Studio" },
-    { id: "education-tutoring", label: "Education & Tutoring" },
-    { id: "automotive-services", label: "Automotive Services" },
-    { id: "professional-services", label: "Professional Services" },
-    { id: "other", label: "Other" }
-  ];
-
-  const LEGACY_WIZARD_CATEGORY_ALIASES = {
-    salon: "hair-salon",
-    dentist: "dental-clinic",
-    clinic: "medical-clinic",
-    fitness: "fitness-gym"
-  };
-
-  function normalizeWizardBusinessCategory(raw) {
-    const v = String(raw || "")
-      .trim()
-      .toLowerCase();
-    if (!v) return "";
-    return LEGACY_WIZARD_CATEGORY_ALIASES[v] || v;
-  }
-
   function renderWizardBusinessCategoryGrid() {
-    const grid = document.getElementById("onboardingBusinessCategoryGrid");
-    if (!grid) return;
-    grid.innerHTML = "";
-    WIZARD_BUSINESS_CATEGORIES.forEach((cat) => {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "wizard-category-pill";
-      btn.dataset.category = cat.id;
-      btn.textContent = cat.label;
-      btn.setAttribute("aria-pressed", "false");
-      grid.appendChild(btn);
-    });
+    renderBusinessCategoryPills(
+      document.getElementById("onboardingBusinessCategoryGrid"),
+      businessSettings?.business_category || ""
+    );
   }
 
   function getOnboardingServiceExamplesForCategory(rawCategory) {
-    const cat = normalizeWizardBusinessCategory(rawCategory);
+    const cat = normalizeBusinessCategoryId(rawCategory);
     const beautyIds = new Set([
       "hair-salon",
       "beauty-salon",
@@ -37343,19 +38086,11 @@
   }
 
   function getSelectedWizardBusinessCategory() {
-    const selected = document.querySelector(
-      "#adminOnboardingStep1Panel .wizard-category-pill.wizard-category-pill--selected"
-    );
-    return selected ? String(selected.dataset.category || "").trim().toLowerCase() : null;
+    return getSelectedBusinessCategoryFromPills("#adminOnboardingStep1Panel");
   }
 
   function setWizardCategorySelection(raw) {
-    const v = normalizeWizardBusinessCategory(raw);
-    document.querySelectorAll("#adminOnboardingStep1Panel .wizard-category-pill").forEach((p) => {
-      const on = v && p.dataset.category === v;
-      p.classList.toggle("wizard-category-pill--selected", on);
-      p.setAttribute("aria-pressed", on ? "true" : "false");
-    });
+    setBusinessCategoryPillSelection("#adminOnboardingStep1Panel", raw);
   }
 
   function hydrateOnboardingStep1FromSettings() {
@@ -37378,6 +38113,11 @@
     initOnboardingBusinessPhoneIntl();
     hydrateOnboardingBusinessPhoneValue(businessSettings?.business_phone);
     if (addressEl) addressEl.value = String(businessSettings?.business_address ?? "").trim();
+
+    const emailEl = document.getElementById("onboardingBusinessEmail");
+    const websiteEl = document.getElementById("onboardingBusinessWebsite");
+    if (emailEl) emailEl.value = getBusinessEmailForForm();
+    if (websiteEl) websiteEl.value = getBusinessWebsiteForForm();
 
     const igEl = document.getElementById("onboardingBusinessInstagram");
     const fbEl = document.getElementById("onboardingBusinessFacebook");
@@ -37484,6 +38224,8 @@
     const category = getSelectedWizardBusinessCategory();
     const timezone =
       document.getElementById("onboardingTimezone")?.value || businessSettings?.timezone || "Europe/Skopje";
+    const email = String(document.getElementById("onboardingBusinessEmail")?.value || "").trim();
+    const website = String(document.getElementById("onboardingBusinessWebsite")?.value || "").trim();
     const instagramRaw = String(document.getElementById("onboardingBusinessInstagram")?.value || "").trim();
     const facebookRaw = String(document.getElementById("onboardingBusinessFacebook")?.value || "").trim();
     const instagram = instagramRaw ? normalizeSocialUrl(instagramRaw, "instagram") : null;
@@ -37524,20 +38266,20 @@
 
     logSetup("step1 save", { slug, category });
 
-    const { error } = await sb
-      .from("business_settings")
-      .update({
-        business_name: name,
-        business_slug: slug,
-        business_phone: phone || null,
-        business_address: address || null,
-        business_instagram_url: instagram,
-        business_facebook_url: facebook,
-        business_category: category,
-        timezone,
-        onboarding_step: 2
-      })
-      .eq("business_id", businessId);
+    const step1Payload = {
+      business_name: name,
+      business_slug: slug,
+      business_phone: phone || null,
+      business_address: address || null,
+      business_email: email || null,
+      business_website: website || null,
+      business_instagram_url: instagram,
+      business_facebook_url: facebook,
+      business_category: category,
+      timezone,
+      onboarding_step: 2
+    };
+    const { error } = await updateBusinessSettingsWithProfileFields(step1Payload);
 
     onboardingStep1Saving = false;
     if (backBtn) backBtn.disabled = false;
@@ -37559,6 +38301,8 @@
       business_slug: slug,
       business_phone: phone || null,
       business_address: address || null,
+      business_email: email || null,
+      business_website: website || null,
       business_instagram_url: instagram,
       business_facebook_url: facebook,
       business_category: category,
@@ -38895,6 +39639,13 @@
       const bookingWindowEl = document.getElementById("bookingWindowWeeks");
       if (bookingWindowEl) {
         bookingWindowEl.value = String(normalizeBookingWindowWeeksForSelect(businessSettings.booking_window_weeks));
+      }
+      const mnEl = document.getElementById("settingsMinimumNoticeMinutes");
+      if (mnEl) {
+        const raw = businessSettings.minimum_notice_minutes;
+        let mn = raw === null || typeof raw === "undefined" ? 0 : Math.max(0, Math.round(Number(raw) || 0));
+        if (!ONBOARDING_MIN_NOTICE_OPTS.includes(mn)) mn = 60;
+        mnEl.value = String(mn);
       }
       const days = getWorkingDaysArray();
       document.querySelectorAll(".workDay").forEach((cb) => {
@@ -41099,7 +41850,7 @@
     return start + " – " + end;
   }
 
-  function buildCustomerBrandedHeaderMetaHtml(address, phone, hours) {
+  function buildCustomerBrandedHeaderMetaHtml(address, phone, hours, email, website) {
     const parts = [];
     if (address) {
       parts.push(
@@ -41123,6 +41874,23 @@
           '">' +
           escapeHtml(phone) +
           "</a></span></span>"
+      );
+    }
+    if (email) {
+      parts.push(
+        '<span class="customer-branded-header__meta-item"><span class="customer-branded-header__meta-icon customer-branded-header__meta-icon--mail" aria-hidden="true"></span><span><a href="mailto:' +
+          escapeHtml(email) +
+          '">' +
+          escapeHtml(email) +
+          "</a></span></span>"
+      );
+    }
+    if (website) {
+      const site = /^https?:\/\//i.test(website) ? website : "https://" + website;
+      parts.push(
+        '<span class="customer-branded-header__meta-item"><span class="customer-branded-header__meta-icon customer-branded-header__meta-icon--link" aria-hidden="true"></span><span><a href="' +
+          escapeHtml(site) +
+          '" target="_blank" rel="noopener noreferrer">Website</a></span></span>'
       );
     }
     return parts.join("");
@@ -41157,6 +41925,8 @@
     const showAbout = businessSettings?.public_show_about !== false;
     const address = showAddress ? businessSettings?.business_address || "" : "";
     const phone = businessSettings?.business_phone || "";
+    const email = String(businessSettings?.business_email || "").trim();
+    const website = String(businessSettings?.business_website || "").trim();
     const welcomeTagline = (businessSettings?.public_tagline || "").trim();
     const description = showAbout ? businessSettings?.business_description || "" : "";
     const hoursLabel = formatPublicBusinessHoursLabel();
@@ -41210,7 +41980,7 @@
 
     const metaBox = document.getElementById("publicBusinessInfo");
     if (metaBox) {
-      const metaHtml = buildCustomerBrandedHeaderMetaHtml(address, phone, hoursLabel);
+      const metaHtml = buildCustomerBrandedHeaderMetaHtml(address, phone, hoursLabel, email, website);
       if (!metaHtml) {
         metaBox.classList.add("hidden");
         metaBox.innerHTML = "";
@@ -41362,7 +42132,7 @@
   function normalizeBusinessSettingsRecord(settings) {
     if (!settings) return settings;
     settings.allow_recurring_appointments = readAllowRecurringAppointmentsSetting(settings);
-    return settings;
+    return mergeBusinessProfileExtrasIntoSettings(settings);
   }
 
   async function loadBusinessSettings() {
@@ -41426,8 +42196,19 @@
     fillCustomizeBookingPageForm();
 
     if (document.getElementById("businessSlug")) document.getElementById("businessSlug").value = businessSettings.business_slug || generateFallbackBusinessSlug();
+    fillBusinessCategorySelect(document.getElementById("businessCategory"), businessSettings.business_category || "");
+    fillBusinessCategorySelect(
+      document.getElementById("customizeBusinessCategory"),
+      businessSettings.business_category || ""
+    );
     if (document.getElementById("businessPhone")) document.getElementById("businessPhone").value = businessSettings.business_phone || "";
+    if (document.getElementById("businessEmail")) {
+      document.getElementById("businessEmail").value = getBusinessEmailForForm();
+    }
     if (document.getElementById("businessAddress")) document.getElementById("businessAddress").value = businessSettings.business_address || "";
+    if (document.getElementById("businessWebsite")) {
+      document.getElementById("businessWebsite").value = getBusinessWebsiteForForm();
+    }
     if (document.getElementById("businessDescription")) {
       document.getElementById("businessDescription").value = businessSettings.business_description || "";
     }
@@ -41451,13 +42232,24 @@
     const wE = document.getElementById("workEnd");
     if (wS) wS.value = snapTimeStringToQuarterHour(businessSettings.work_start || "09:00");
     if (wE) wE.value = snapTimeStringToQuarterHour(businessSettings.work_end || "17:00");
-    document.getElementById("breakStart").value = String(businessSettings.break_start ?? "").trim();
-    document.getElementById("breakEnd").value = String(businessSettings.break_end ?? "").trim();
+    const breakStartEl = document.getElementById("breakStart");
+    const breakEndEl = document.getElementById("breakEnd");
+    if (breakStartEl) breakStartEl.value = String(businessSettings.break_start ?? "").trim();
+    if (breakEndEl) breakEndEl.value = String(businessSettings.break_end ?? "").trim();
+    ensureDayOverrideRowsBuilt("settingsDayOverrideRows", "settings");
     hydrateDayOverrideRowsUi("settingsDayOverrideRows", "settings", businessSettings.working_hours_overrides);
     syncAllTimeStepperDisplaysUnder(document.body);
     const bookingWindowEl = document.getElementById("bookingWindowWeeks");
     if (bookingWindowEl) {
       bookingWindowEl.value = String(normalizeBookingWindowWeeksForSelect(businessSettings.booking_window_weeks));
+    }
+
+    const mnEl = document.getElementById("settingsMinimumNoticeMinutes");
+    if (mnEl) {
+      const raw = businessSettings.minimum_notice_minutes;
+      let mn = raw === null || typeof raw === "undefined" ? 0 : Math.max(0, Math.round(Number(raw) || 0));
+      if (!ONBOARDING_MIN_NOTICE_OPTS.includes(mn)) mn = 60;
+      mnEl.value = String(mn);
     }
 
     const allowRecurringEl = document.getElementById("allowRecurringAppointments");
@@ -41525,20 +42317,9 @@
         return;
       }
 
-      if (!validateConditionalDayOverridesForContainer("settingsDayOverrideRows", "settings")) {
-        const msg = "Check optional weekday overrides: each enabled day needs Opens before Closes.";
+      if (!validateAvailabilitySettingsForm()) {
+        const msg = "Check working hours in Business profile or fix the fields shown.";
         setAvailabilitySaveStatus(msg, "error");
-        showToast(msg, "error", 6000);
-        return;
-      }
-
-      const workingDays = Array.from(
-        document.querySelectorAll("#widgetSettings .workDay:checked, #adminSectionAvailability .workDay:checked")
-      ).map((cb) => Number(cb.value));
-      if (!workingDays.length) {
-        const msg = "Select at least one working day.";
-        setAvailabilitySaveStatus(msg, "error");
-        showToast(msg, "error", 6000);
         return;
       }
 
@@ -41546,15 +42327,7 @@
         document.getElementById("allowRecurringAppointments")?.checked === true;
 
       const updates = {
-        work_start: snapTimeStringToQuarterHour(
-          String(document.getElementById("workStart")?.value || "").trim()
-        ),
-        work_end: snapTimeStringToQuarterHour(String(document.getElementById("workEnd")?.value || "").trim()),
-        working_days: workingDays,
-        working_hours_overrides: collectDayOverridesPayload("settingsDayOverrideRows", "settings"),
-        break_start: document.getElementById("breakStart")?.value || null,
-        break_end: document.getElementById("breakEnd")?.value || null,
-        booking_window_weeks: Number(document.getElementById("bookingWindowWeeks")?.value || 4),
+        ...collectAvailabilitySettingsUpdates(),
         allow_recurring_appointments: allowRecurringChecked
       };
 
@@ -41658,9 +42431,15 @@
       return;
     }
 
+    const profileExtras = readBusinessEmailWebsiteFromAdminForms();
+    const category = readBusinessCategoryFromAdminForms();
+    const instagramOverview = document.getElementById("customizeBusinessInstagram")?.value.trim() || "";
+    const facebookOverview = document.getElementById("customizeBusinessFacebook")?.value.trim() || "";
+
     const updates = {
       business_name: document.getElementById("businessName")?.value.trim() || businessNameValue,
       business_slug: slugValue,
+      business_category: category || businessSettings?.business_category || null,
       public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || null,
       business_logo_url: getBusinessLogoUrl() || null,
       business_cover_url: getBusinessCoverUrl() || null,
@@ -41672,12 +42451,18 @@
         document.getElementById("customizeBusinessPhone")?.value.trim() ||
         document.getElementById("businessPhone")?.value.trim() ||
         null,
+      business_email: profileExtras.email || null,
+      business_website: profileExtras.website || null,
       business_description:
         document.getElementById("customizeBusinessDescription")?.value.trim() ||
         document.getElementById("businessDescription")?.value.trim() ||
         null,
-      business_instagram_url: document.getElementById("customizeBusinessInstagram")?.value.trim() || null,
-      business_facebook_url: document.getElementById("customizeBusinessFacebook")?.value.trim() || null,
+      business_instagram_url: instagramOverview
+        ? normalizeSocialUrl(instagramOverview, "instagram")
+        : null,
+      business_facebook_url: facebookOverview
+        ? normalizeSocialUrl(facebookOverview, "facebook")
+        : null,
       public_show_about: document.getElementById("customizeShowAbout")?.checked !== false,
       public_show_address: document.getElementById("customizeShowAddress")?.checked !== false,
       business_accent_color: getBusinessAccentColorFromForm(),
@@ -41691,31 +42476,41 @@
       working_hours_overrides: collectDayOverridesPayload("settingsDayOverrideRows", "settings"),
       break_start: document.getElementById("breakStart").value || null,
       break_end: document.getElementById("breakEnd").value || null,
-      booking_window_weeks: Number(document.getElementById("bookingWindowWeeks").value || 4),
+      booking_window_weeks: Number(
+        normalizeBookingWindowWeeksForSelect(document.getElementById("bookingWindowWeeks")?.value || 4)
+      ),
+      minimum_notice_minutes: Number(
+        document.getElementById("settingsMinimumNoticeMinutes")?.value ??
+          document.getElementById("onboardingMinimumNoticeMinutes")?.value ??
+          0
+      ),
       allow_recurring_appointments: document.getElementById("allowRecurringAppointments")?.checked === true
     };
 
-    const { data: savedRow, error } = await sb
-      .from("business_settings")
-      .update(updates)
-      .eq("business_id", businessId)
-      .select("allow_recurring_appointments")
-      .maybeSingle();
+    const { error } = await updateBusinessSettingsWithProfileFields(updates);
 
     if (error) {
-      alert("Save settings error: " + error.message + "\n\nIf the error mentions business_slug/logo/address/phone/description/accent_color, run the SQL file from the ZIP first. If it says duplicate key, choose another Business ID / slug.");
+      alert(
+        "Save settings error: " +
+          error.message +
+          "\n\nIf the error mentions business_slug/logo/address/phone/description/accent_color, run the SQL file from the ZIP first. If it mentions business_email or business_website, run supabase-business-profile-email-website.sql. If it says duplicate key, choose another Business ID / slug."
+      );
       return;
     }
 
-    if (!savedRow) {
-      console.warn("[recurring] saveBusinessSettings: no business_settings row updated for", businessId);
-      showToast("Settings could not be saved — business record not found.", "error");
-      return;
+    const { data: savedRow, error: recurErr } = await sb
+      .from("business_settings")
+      .select("allow_recurring_appointments")
+      .eq("business_id", businessId)
+      .maybeSingle();
+
+    if (recurErr) {
+      console.warn("[recurring] saveBusinessSettings follow-up select failed:", recurErr.message);
     }
 
     const savedRecurring = readAllowRecurringAppointmentsSetting({
       allow_recurring_appointments:
-        savedRow.allow_recurring_appointments ?? updates.allow_recurring_appointments
+        savedRow?.allow_recurring_appointments ?? updates.allow_recurring_appointments
     });
     console.debug("[recurring] saveBusinessSettings saved", {
       business_id: businessId,
@@ -48853,10 +49648,7 @@
   }
 
   function normalizeBookingWindowWeeksForSelect(value) {
-    const n = Number(value) || 4;
-    const allowed = [1, 2, 4, 8];
-    if (allowed.includes(n)) return n;
-    return allowed.reduce((best, cur) => (Math.abs(cur - n) < Math.abs(best - n) ? cur : best));
+    return normalizeOnboardingBookingWindowWeeks(value);
   }
 
   function syncAvailabilityBreakStatus() {
