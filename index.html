@@ -6262,75 +6262,109 @@
 
     #adminSectionCustomize .widget-content {
       display: block !important;
-      padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
     }
 
-    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .widget-content {
-      padding-bottom: calc(148px + env(safe-area-inset-bottom, 0px));
+    body.admin-mobile-shell-active #adminSectionCustomize.admin-section--active .widget-content,
+    body.native-app-shell #adminSectionCustomize.admin-section--active .widget-content {
+      padding-bottom: calc(168px + env(safe-area-inset-bottom, 0px));
     }
 
-    #adminSectionCustomize.admin-section--active .admin-customize-save-bar,
-    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .admin-customize-save-bar {
+    /* Fixed save dock — outside scroll container so it stays visible on iOS/mobile */
+    #adminCustomizeSaveDock {
+      display: none;
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 9000;
+      z-index: 10050;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
       margin: 0;
       padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.92) 24%, #fff 100%);
-      border-top: none;
-      box-shadow: 0 -12px 32px rgba(15, 23, 42, 0.08);
-      display: flex;
-      justify-content: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.94) 20%, #fff 100%);
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 -10px 28px rgba(15, 23, 42, 0.12);
       box-sizing: border-box;
-      pointer-events: none;
+      pointer-events: auto;
     }
 
-    body.admin-mobile-shell-active #adminSectionCustomize:not(.hidden) .admin-customize-save-bar {
-      bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    #adminView:not(.hidden)[data-admin-active-section="customize"] #adminCustomizeSaveDock:not(.hidden) {
+      display: flex !important;
+    }
+
+    body.admin-mobile-shell-active #adminView:not(.hidden)[data-admin-active-section="customize"] #adminCustomizeSaveDock,
+    body.native-app-shell #adminView:not(.hidden)[data-admin-active-section="customize"] #adminCustomizeSaveDock {
+      bottom: calc(var(--admin-tabbar-height, 66px) + 10px + env(safe-area-inset-bottom, 0px));
       padding-left: max(16px, env(safe-area-inset-left, 0px));
       padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
 
-    #adminSectionCustomize .admin-customize-save-bar button,
-    #adminSectionCustomize .admin-customize-save-btn {
+    #adminCustomizeSaveDock .admin-customize-unsaved-hint {
+      margin: 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #b45309;
+    }
+
+    #adminCustomizeSaveDock .admin-customize-unsaved-hint.hidden {
+      display: none;
+    }
+
+    #adminSectionCustomize .admin-customize-save-reminder {
+      margin: 0 0 var(--space-md);
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+    }
+
+    #adminCustomizeSaveDock .admin-customize-save-btn {
       width: 100%;
-      max-width: 480px;
+      max-width: none;
       min-height: 52px;
       margin: 0;
       padding: 14px 20px;
       font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.02em;
-      border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 52%, #3b82f6 100%);
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
-      pointer-events: auto;
+      border: none !important;
+      border-radius: 16px !important;
+      background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+      color: #fff !important;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15) !important;
       -webkit-tap-highlight-color: transparent;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease, background 0.15s ease;
+      cursor: default;
+      opacity: 1 !important;
     }
 
-    #adminSectionCustomize .admin-customize-save-bar button:active,
-    #adminSectionCustomize .admin-customize-save-btn:active {
+    #adminCustomizeSaveDock.admin-customize-save-dock--dirty .admin-customize-save-btn,
+    #adminCustomizeSaveDock .admin-customize-save-btn.admin-customize-save-btn--dirty {
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f46e5 0%, #2563eb 52%, #3b82f6 100%) !important;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4), 0 1px 0 rgba(255, 255, 255, 0.2) inset !important;
+    }
+
+    #adminCustomizeSaveDock .admin-customize-save-btn:active:not(:disabled) {
       transform: scale(0.98);
       filter: brightness(0.96);
     }
 
     @media (min-width: 769px) {
-      #adminSectionCustomize.admin-section--active .admin-customize-save-bar {
-        position: sticky;
+      body:not(.admin-mobile-shell-active) #adminView:not(.hidden)[data-admin-active-section="customize"] #adminCustomizeSaveDock {
         bottom: 0;
-        z-index: 5;
-        padding: 14px 0 calc(14px + env(safe-area-inset-bottom, 0px));
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, #fff 40%);
-        border-top: 1px solid var(--color-border);
-        box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
-        margin: var(--space-md) calc(-1 * var(--space-md)) calc(-1 * var(--space-md));
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
+        max-width: 720px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 32px);
+        border-radius: 16px 16px 0 0;
       }
     }
 
@@ -6657,8 +6691,9 @@
       color: #f1f5f9;
     }
 
-    body.app-theme-dark #adminSectionCustomize .admin-customize-save-bar {
+    body.app-theme-dark #adminCustomizeSaveDock {
       background: linear-gradient(180deg, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0.94) 28%, var(--admin-surface, #1e293b) 100%);
+      border-top-color: var(--xbook-on-dark-border, rgba(148, 163, 184, 0.25));
     }
 
     #adminSectionCustomize .widget-content.collapsed {
@@ -25570,6 +25605,7 @@
       <div class="card widget-card">
         <h2 class="admin-section-title">Business profile &amp; booking page</h2>
         <div id="widgetCustomizeBooking" class="widget-content">
+          <p class="admin-customize-save-reminder" role="note">Most fields are not live until you tap <strong>Save Changes</strong> at the bottom. Logo and cover uploads save to your account immediately when upload finishes.</p>
           <p class="small">Make your booking page feel like <strong>your</strong> app — logo, colors, and contact info. Customers only see the live page, not this editor.</p>
 
           <section class="customize-section" aria-labelledby="customizeLogoHeading">
@@ -25835,6 +25871,12 @@
 
           <section class="customize-section" aria-labelledby="customizeShareHeading">
             <h3 id="customizeShareHeading">Share your booking page</h3>
+            <label class="small" for="customizeBusinessSlug"><strong>Booking page link</strong></label>
+            <div class="business-id-row">
+              <input id="customizeBusinessSlug" placeholder="e.g. barber-shop-skopje" oninput="syncBusinessSlugAcrossForms(this.value); previewBusinessPublicLink()" autocomplete="off" />
+              <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
+            </div>
+            <p class="small">Lowercase letters, numbers and hyphens. Saved with Save Changes.</p>
             <div id="bookingQrLink" class="public-link-box small"></div>
             <div class="booking-qr-actions" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0">
               <button type="button" class="success" onclick="copyPublicBookingLink()">Copy link</button>
@@ -25846,9 +25888,6 @@
             </div>
           </section>
 
-          <div class="admin-customize-save-bar" role="region" aria-label="Save settings">
-            <button type="button" class="success admin-customize-save-btn" id="saveCustomizeBookingPageBtn" onclick="saveCustomizeBookingPage()">Save changes</button>
-          </div>
         </div>
       </div>
           </section>
@@ -26641,6 +26680,11 @@
           </section>
 
         </div>
+      </div>
+
+      <div id="adminCustomizeSaveDock" class="admin-customize-save-dock hidden" role="region" aria-label="Save settings" aria-hidden="true">
+        <p id="adminCustomizeUnsavedHint" class="admin-customize-unsaved-hint hidden" aria-live="polite">Unsaved changes</p>
+        <button type="button" class="success admin-customize-save-btn" id="saveCustomizeBookingPageBtn" onclick="saveCustomizeBookingPage()" disabled>Save Changes</button>
       </div>
 
       <div id="bookingsActionSheet" class="bookings-action-menu hidden" role="menu" aria-label="Booking actions">
@@ -34584,17 +34628,19 @@
   }
 
   function generateBusinessSlugFromName() {
-    const input = document.getElementById("businessSlug");
-    if (!input) return;
-    input.value = generateFallbackBusinessSlug();
+    syncBusinessSlugAcrossForms(generateFallbackBusinessSlug());
     previewBusinessPublicLink();
+    markAdminCustomizeDirty();
   }
 
   let bookingQrGenerateTimer = null;
 
   function getPublicBookingLinkForSettings() {
     const rawSlug =
-      document.getElementById("businessSlug")?.value || businessSettings?.business_slug || "";
+      document.getElementById("customizeBusinessSlug")?.value ||
+      document.getElementById("businessSlug")?.value ||
+      businessSettings?.business_slug ||
+      "";
     const slug = normalizeBusinessSlug(rawSlug);
     if (!slug) return "";
     return buildPublicBookingLink(slug);
@@ -35365,6 +35411,9 @@
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
     }
+    if (document.getElementById("adminSectionCustomize") && !document.getElementById("adminSectionCustomize").classList.contains("hidden")) {
+      snapshotAdminCustomizeBaseline();
+    }
     return true;
   }
 
@@ -35540,6 +35589,9 @@
       renderPublicBusinessProfileInfo();
       applyPublicBusinessBranding();
     }
+    if (document.getElementById("adminSectionCustomize") && !document.getElementById("adminSectionCustomize").classList.contains("hidden")) {
+      snapshotAdminCustomizeBaseline();
+    }
     return true;
   }
 
@@ -35665,11 +35717,131 @@
       accent: getBusinessAccentColorFromForm()
     });
     previewBookingPageHero();
+    markAdminCustomizeDirty();
+  }
+
+  let adminCustomizeSavedSnapshot = null;
+  let adminCustomizeDirtyTrackingBound = false;
+  let adminCustomizeSaveInFlight = false;
+
+  function syncBusinessSlugAcrossForms(value) {
+    const raw =
+      value !== undefined && value !== null
+        ? value
+        : document.getElementById("customizeBusinessSlug")?.value ||
+          document.getElementById("businessSlug")?.value ||
+          "";
+    const slug = normalizeBusinessSlug(raw);
+    ["businessSlug", "customizeBusinessSlug"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.value = slug;
+    });
+    return slug;
+  }
+
+  function getCustomizeBusinessSlugFromForm() {
+    return syncBusinessSlugAcrossForms();
+  }
+
+  function getCustomizeFormSnapshot() {
+    const branding = getCustomizeBrandingFromForm();
+    const availability = collectAvailabilitySettingsUpdates();
+    const workDays = [...(availability.working_days || [])].sort((a, b) => a - b);
+    return JSON.stringify({
+      business_name: document.getElementById("businessName")?.value.trim() || "",
+      business_slug: getCustomizeBusinessSlugFromForm(),
+      public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || "",
+      business_logo_url: getBusinessLogoUrl() || "",
+      business_cover_url: getBusinessCoverUrl() || "",
+      business_accent_color: getBusinessAccentColorFromForm(),
+      public_layout: getAdminCustomizeSelectedLayout(),
+      public_show_logo: document.getElementById("customizeShowLogo")?.checked !== false,
+      public_show_staff: document.getElementById("customizeShowStaff")?.checked !== false,
+      public_show_prices: document.getElementById("customizeShowPrices")?.checked !== false,
+      business_category: branding.business_category,
+      business_description: branding.business_description,
+      business_phone: branding.business_phone,
+      business_email: branding.business_email,
+      business_website: branding.business_website,
+      business_address: branding.business_address,
+      business_instagram_url: branding.business_instagram_url,
+      business_facebook_url: branding.business_facebook_url,
+      public_show_about: branding.public_show_about,
+      public_show_address: branding.public_show_address,
+      work_start: availability.work_start,
+      work_end: availability.work_end,
+      working_days: workDays,
+      working_hours_overrides: availability.working_hours_overrides,
+      break_start: availability.break_start,
+      break_end: availability.break_end,
+      booking_window_weeks: availability.booking_window_weeks,
+      minimum_notice_minutes: availability.minimum_notice_minutes
+    });
+  }
+
+  function isAdminCustomizeFormDirty() {
+    if (adminCustomizeSavedSnapshot === null) return false;
+    return getCustomizeFormSnapshot() !== adminCustomizeSavedSnapshot;
+  }
+
+  function syncAdminCustomizeSaveDockVisibility() {
+    const dock = document.getElementById("adminCustomizeSaveDock");
+    if (!dock) return;
+    const adminView = document.getElementById("adminView");
+    const show =
+      adminView &&
+      !adminView.classList.contains("hidden") &&
+      adminActiveSection === "customize";
+    dock.classList.toggle("hidden", !show);
+    dock.setAttribute("aria-hidden", show ? "false" : "true");
+  }
+
+  function updateAdminCustomizeSaveUi() {
+    const btn = document.getElementById("saveCustomizeBookingPageBtn");
+    const hint = document.getElementById("adminCustomizeUnsavedHint");
+    const dock = document.getElementById("adminCustomizeSaveDock");
+    if (!btn) return;
+    const dirty = !adminCustomizeSaveInFlight && isAdminCustomizeFormDirty();
+    btn.disabled = !dirty || adminCustomizeSaveInFlight;
+    btn.classList.toggle("admin-customize-save-btn--dirty", dirty);
+    btn.textContent = adminCustomizeSaveInFlight ? "Saving…" : "Save Changes";
+    dock?.classList.toggle("admin-customize-save-dock--dirty", dirty);
+    if (hint) hint.classList.toggle("hidden", !dirty);
+    syncAdminCustomizeSaveDockVisibility();
+  }
+
+  function markAdminCustomizeDirty() {
+    if (adminCustomizeSaveInFlight) return;
+    updateAdminCustomizeSaveUi();
+  }
+
+  function snapshotAdminCustomizeBaseline() {
+    adminCustomizeSavedSnapshot = getCustomizeFormSnapshot();
+    updateAdminCustomizeSaveUi();
+  }
+
+  function bindAdminCustomizeDirtyTracking() {
+    if (adminCustomizeDirtyTrackingBound) return;
+    const root = document.getElementById("widgetCustomizeBooking");
+    if (!root) return;
+    adminCustomizeDirtyTrackingBound = true;
+    root.addEventListener("input", markAdminCustomizeDirty);
+    root.addEventListener("change", markAdminCustomizeDirty);
+    root.addEventListener("click", (e) => {
+      if (
+        e.target.closest(
+          ".time-stepper__btn, .customize-layout-card, .customize-weekday-pill, .workDay"
+        )
+      ) {
+        requestAnimationFrame(markAdminCustomizeDirty);
+      }
+    });
   }
 
   function bindAdminCustomizeListeners() {
     if (adminCustomizeListenersBound) return;
     adminCustomizeListenersBound = true;
+    bindAdminCustomizeDirtyTracking();
 
     document.getElementById("adminCustomizeLayoutGrid")?.addEventListener("click", (e) => {
       const card = e.target.closest(".customize-layout-card");
@@ -35742,6 +35914,7 @@
       document.getElementById("businessWebsite").value = b.business_website || "";
     }
     fillBusinessCategorySelect(document.getElementById("businessCategory"), b.business_category);
+    syncBusinessSlugAcrossForms(getCustomizeBusinessSlugFromForm() || businessSettings?.business_slug || "");
   }
 
   function getCustomizePublicTaglineValue() {
@@ -35925,7 +36098,10 @@
       });
       const hoursSection = document.getElementById("customizeHoursSection");
       if (hoursSection) syncAllTimeStepperDisplaysUnder(hoursSection);
+      syncBusinessSlugAcrossForms(businessSettings.business_slug || generateFallbackBusinessSlug());
     }
+    bindAdminCustomizeDirtyTracking();
+    requestAnimationFrame(() => snapshotAdminCustomizeBaseline());
   }
 
   function collectAvailabilitySettingsUpdates() {
@@ -35986,7 +36162,12 @@
 
   async function saveCustomizeBookingPage() {
     if (!businessId || !isValidUuid(businessId)) {
-      showToast("Business not loaded.", "error");
+      showToast("Could not save changes. Please try again.", "error");
+      return;
+    }
+
+    if (!isAdminCustomizeFormDirty() && !adminCustomizeSaveInFlight) {
+      showToast("No changes to save.", "info", 3000);
       return;
     }
 
@@ -36003,10 +36184,20 @@
       return;
     }
 
+    const slugValue = getCustomizeBusinessSlugFromForm();
+    if (!slugValue) {
+      showToast("Booking page link is required.", "error");
+      return;
+    }
+
     if (!validateAvailabilitySettingsForm()) return;
+
+    adminCustomizeSaveInFlight = true;
+    updateAdminCustomizeSaveUi();
 
     const updates = {
       business_name: businessNameValue,
+      business_slug: slugValue,
       business_category: category,
       public_tagline: document.getElementById("customizePublicTagline")?.value.trim() || null,
       business_logo_url: getBusinessLogoUrl() || null,
@@ -36020,43 +36211,48 @@
       ...collectAvailabilitySettingsUpdates()
     };
 
-    const { error } = await updateBusinessSettingsWithProfileFields(updates);
+    try {
+      const { error } = await updateBusinessSettingsWithProfileFields(updates);
 
-    if (error) {
-      let hint = "";
-      if (/public_tagline/i.test(error.message)) hint = " Run supabase-public-tagline.sql in Supabase.";
-      else if (/business_instagram|business_facebook|public_show_about/i.test(error.message)) {
-        hint = " Run supabase-business-branding-social.sql in Supabase.";
-      } else if (/business_email|business_website/i.test(error.message)) {
-        hint = " Run supabase-business-profile-email-website.sql in Supabase.";
+      if (error) {
+        console.warn("[customize] save failed", error);
+        showToast("Could not save changes. Please try again.", "error", 6000);
+        return;
       }
-      showToast("Could not save: " + error.message + hint, "error", 8000);
-      return;
+
+      if (businessSettings) {
+        Object.assign(businessSettings, updates);
+      }
+
+      applyBusinessVisualTheme();
+      syncOverviewBrandingFieldsFromCustomize();
+      syncBusinessSlugAcrossForms(slugValue);
+      syncDashboardAvailabilityFieldsFromBusinessSettings();
+      renderPublicBusinessProfileInfo();
+      previewBookingPageHero();
+      previewBusinessPublicLink();
+      updatePublicBookingQrSection();
+
+      const publicView = document.getElementById("publicView");
+      const publicOpen = publicView && !publicView.classList.contains("hidden");
+      if (publicOpen) {
+        initPublicBookingWizardStep();
+      }
+
+      if (document.getElementById("adminSectionCalendar")?.classList.contains("admin-section--active")) {
+        renderAdminCalendar();
+      }
+
+      showToast("Changes saved", "success");
+      await loadAdminData();
+      snapshotAdminCustomizeBaseline();
+    } catch (err) {
+      console.warn("[customize] save exception", err);
+      showToast("Could not save changes. Please try again.", "error", 6000);
+    } finally {
+      adminCustomizeSaveInFlight = false;
+      updateAdminCustomizeSaveUi();
     }
-
-    if (businessSettings) {
-      Object.assign(businessSettings, updates);
-    }
-
-    applyBusinessVisualTheme();
-    syncOverviewBrandingFieldsFromCustomize();
-    syncDashboardAvailabilityFieldsFromBusinessSettings();
-    renderPublicBusinessProfileInfo();
-    previewBookingPageHero();
-    previewBusinessPublicLink();
-
-    const publicView = document.getElementById("publicView");
-    const publicOpen = publicView && !publicView.classList.contains("hidden");
-    if (publicOpen) {
-      initPublicBookingWizardStep();
-    }
-
-    if (document.getElementById("adminSectionCalendar")?.classList.contains("admin-section--active")) {
-      renderAdminCalendar();
-    }
-
-    showToast("Business profile and availability saved.", "success");
-    await loadAdminData();
   }
 
   function setPublicBusinessLogo(url, businessName) {
@@ -37160,6 +37356,7 @@
     if (key === "customize") {
       refreshAdminCustomizeSectionUi();
     }
+    syncAdminCustomizeSaveDockVisibility();
 
     if (document.body.classList.contains("admin-mobile-shell-active")) {
       syncAdminMobileTabHighlightFromSection(key);
@@ -37396,6 +37593,8 @@
     updatePublicBookingQrSection();
     const widget = document.getElementById("widgetCustomizeBooking");
     if (widget) widget.classList.remove("collapsed");
+    syncAdminCustomizeSaveDockVisibility();
+    updateAdminCustomizeSaveUi();
   }
   window.refreshAdminCustomizeSectionUi = refreshAdminCustomizeSectionUi;
 
