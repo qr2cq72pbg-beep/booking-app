@@ -1,7 +1,29 @@
 {
   "images" : [
     {
-      "filename" : "AppIcon-512@2x.png",
+      "filename" : "19396128-7b0f-4ab3-a3e0-0c0a4947a23a.png",
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "idiom" : "universal",
+      "platform" : "ios",
+      "size" : "1024x1024"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "tinted"
+        }
+      ],
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
