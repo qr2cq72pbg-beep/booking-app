@@ -4567,9 +4567,136 @@
       transform: none;
     }
 
+    #adminSectionStaff .staff-page-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    #adminSectionStaff .staff-page-body #staffListSection {
+      order: 1;
+    }
+
+    #adminSectionStaff .staff-page-body #staffAddCard {
+      order: 2;
+    }
+
+    #adminSectionStaff .staff-page-body:not(.staff-page-body--has-team) #staffListSection {
+      order: 2;
+    }
+
+    #adminSectionStaff .staff-page-body:not(.staff-page-body--has-team) #staffAddCard {
+      order: 1;
+    }
+
     #adminSectionStaff .staff-add-card .admin-saas-form__actions {
       width: 100%;
       justify-content: flex-start;
+    }
+
+    #adminSectionStaff .staff-add-card__toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 44px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #adminSectionStaff .staff-add-card__toggle:focus-visible {
+      outline: 2px solid rgba(99, 102, 241, 0.45);
+      outline-offset: 2px;
+      border-radius: 10px;
+    }
+
+    #adminSectionStaff .staff-add-card:not(.staff-add-card--has-staff) .staff-add-card__toggle {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    #adminSectionStaff .staff-add-card__head-copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    #adminSectionStaff .staff-add-card__title {
+      display: block;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+
+    #adminSectionStaff .staff-add-card__title-collapsed {
+      display: none;
+    }
+
+    #adminSectionStaff .staff-add-card--collapsed.staff-add-card--has-staff .staff-add-card__title-expanded {
+      display: none;
+    }
+
+    #adminSectionStaff .staff-add-card--collapsed.staff-add-card--has-staff .staff-add-card__title-collapsed {
+      display: block;
+    }
+
+    #adminSectionStaff .staff-add-card__hint {
+      display: block;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #64748b;
+    }
+
+    #adminSectionStaff .staff-add-card--collapsed .staff-add-card__hint {
+      display: none;
+    }
+
+    #adminSectionStaff .staff-add-card__chev {
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      margin-left: auto;
+      background: center / 14px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      opacity: 0.7;
+      transition: transform 200ms ease;
+    }
+
+    #adminSectionStaff .staff-add-card:not(.staff-add-card--has-staff) .staff-add-card__chev {
+      display: none;
+    }
+
+    #adminSectionStaff .staff-add-card--expanded.staff-add-card--has-staff .staff-add-card__chev {
+      transform: rotate(180deg);
+    }
+
+    #adminSectionStaff .staff-add-card__body {
+      overflow: hidden;
+      transition: max-height 220ms ease, opacity 200ms ease, margin-top 200ms ease;
+      max-height: 720px;
+      opacity: 1;
+      margin-top: 12px;
+    }
+
+    #adminSectionStaff .staff-add-card--collapsed .staff-add-card__body {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      pointer-events: none;
     }
 
     #adminSectionServices .admin-saas-field,
@@ -9586,6 +9713,36 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #818cf8;
+    }
+
+    #adminSectionServices .xbook-duration-presets {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 0 10px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #adminSectionServices .xbook-duration-preset {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 48px;
+      height: 52px;
+      max-height: 56px;
+      margin: 0;
+      padding: 0 10px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-sizing: border-box;
     }
 
     #adminOnboardingStep3Panel.hidden {
@@ -22623,6 +22780,9 @@
     body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact {
       margin: 0;
       padding: 14px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       border-radius: 16px;
       background: #ffffff;
       box-shadow: 0 2px 10px rgba(99, 102, 241, 0.06), inset 0 0 0 1px rgba(99, 102, 241, 0.05);
@@ -22700,10 +22860,23 @@
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__row {
-      margin-bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      justify-items: stretch;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__chip {
+      flex: none;
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
       min-height: 40px;
       padding: 8px 6px;
       font-size: 12px;
@@ -22713,6 +22886,30 @@
       color: #475569;
       border: none;
       box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.08);
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__chip.overview-actions__btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 72px;
+      padding: 10px 4px;
+      text-align: center;
+      line-height: 1.2;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__chip.overview-actions__btn::before {
+      display: block;
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      margin: 0 auto;
     }
 
     body.admin-mobile-shell-active #adminSectionOverview .overview-actions--compact .overview-actions__link {
@@ -23823,11 +24020,30 @@
       border: none;
     }
 
-    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__head {
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__toggle {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
+      width: 100%;
+      min-height: 44px;
+      margin: 0;
+      padding: 0;
+      border: none !important;
+      border-radius: 0;
+      background: transparent !important;
+      color: inherit !important;
+      box-shadow: none !important;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card--collapsed.staff-add-card--has-staff {
+      padding-top: 12px;
+      padding-bottom: 12px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .staff-add-card--collapsed.staff-add-card--has-staff .staff-add-card__toggle {
+      min-height: 40px;
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .staff-add-card__icon {
@@ -24008,6 +24224,10 @@
       line-height: 1;
     }
 
+    body.admin-mobile-shell-active #adminSectionStaff .staff-page-body {
+      gap: 10px;
+    }
+
     body.admin-mobile-shell-active #adminSectionStaff .staff-list-section__head {
       margin-bottom: 8px;
     }
@@ -24171,23 +24391,37 @@
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-row__actions--staff-compact {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      align-items: center;
+      gap: 8px;
       margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid rgba(99, 102, 241, 0.08);
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--compact {
-      flex: 1 1 calc(33.333% - 4px);
+      flex: 0 1 auto;
+      width: auto;
       min-width: 0;
-      min-height: 0 !important;
+      min-height: 38px !important;
+      height: 38px;
       margin: 0 !important;
-      padding: 6px 8px !important;
-      font-size: 11px !important;
+      padding: 0 14px !important;
+      font-size: 12px !important;
       font-weight: 600 !important;
-      line-height: 1.2 !important;
+      line-height: 1 !important;
       border-radius: 999px !important;
       white-space: nowrap;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .staff-row__tap {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 12px;
+      transition: background 150ms ease;
+    }
+
+    body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .staff-row__tap:active {
+      background: rgba(99, 102, 241, 0.05);
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-btn--staff-edit::before,
@@ -24219,8 +24453,8 @@
     }
 
     body.admin-mobile-shell-active #adminSectionStaff .admin-saas-row--staff .admin-saas-btn--staff-delete {
-      background: #fef2f2 !important;
-      color: #dc2626 !important;
+      background: #fff1f2 !important;
+      color: #e11d48 !important;
       border: none !important;
       box-shadow: none !important;
     }
@@ -25857,10 +26091,14 @@
     body.admin-mobile-shell-active #adminSectionClients .admin-clients-screen--ref {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
       padding: 2px 2px 0;
       max-width: 100%;
       overflow-x: hidden;
+    }
+
+    body.admin-mobile-shell-active #adminSectionClients .admin-clients-screen__header {
+      padding: 2px 2px 2px;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .admin-clients-screen__title {
@@ -25873,20 +26111,21 @@
     }
 
     body.admin-mobile-shell-active #adminSectionClients .admin-clients-screen__subtitle {
-      margin: 4px 0 0;
+      margin: 2px 0 0;
       font-size: 13px;
       font-weight: 500;
       color: #94a3b8;
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-search-wrap {
       position: relative;
       display: flex;
       align-items: center;
-      min-height: 40px;
-      padding: 0 10px 0 36px;
-      border-radius: 11px;
+      min-height: 50px;
+      height: 50px;
+      padding: 0 12px 0 38px;
+      border-radius: 10px;
       background: #f8f9fe;
       box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
     }
@@ -25902,39 +26141,81 @@
 
     body.admin-mobile-shell-active #adminSectionClients .clients-search-input {
       width: 100%;
-      min-height: 38px;
+      min-height: 0;
+      height: 100%;
       margin: 0;
       padding: 0;
       border: none;
       background: transparent;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 500;
       color: #0f172a;
       letter-spacing: -0.01em;
+    }
+
+    body.admin-mobile-shell-active #adminSectionClients .clients-approval-filters {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin: 0;
+      padding: 0 0 1px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionClients .clients-approval-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    body.admin-mobile-shell-active #adminSectionClients .clients-approval-filter {
+      flex: 0 0 auto;
+      width: auto;
+      min-height: 44px;
+      height: 44px;
+      margin: 0;
+      padding: 0 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      background: #fff;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    body.admin-mobile-shell-active #adminSectionClients .clients-approval-filter--active {
+      background: var(--business-accent, #2563eb);
+      border-color: var(--business-accent, #2563eb);
+      color: #fff;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-results-meta {
       margin: 0;
       padding: 0 2px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #64748b;
+      line-height: 1.2;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-card {
       display: block;
       width: 100%;
       margin: 0;
-      padding: 9px 10px;
+      padding: 7px 10px;
       border: none;
-      border-radius: 13px;
+      border-radius: 12px;
       background: #ffffff;
       box-shadow: 0 1px 6px rgba(99, 102, 241, 0.05), inset 0 0 0 1px rgba(148, 163, 184, 0.07);
       text-align: left;
@@ -25953,7 +26234,7 @@
     body.admin-mobile-shell-active #adminSectionClients .clients-card__shell {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 6px 8px;
+      gap: 4px 8px;
       align-items: start;
     }
 
@@ -25961,7 +26242,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
       grid-column: 1 / -1;
     }
 
@@ -25973,6 +26254,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.2;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-card__number {
@@ -26000,13 +26282,13 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: flex-end;
-      gap: 4px;
+      gap: 3px;
       flex: 0 0 auto;
     }
 
     body.admin-mobile-shell-active #adminSectionClients .clients-card__badge {
       flex: 0 0 auto;
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 999px;
       background: #f3f0ff;
       color: #6d28d9;
@@ -26017,7 +26299,7 @@
 
     body.admin-mobile-shell-active #adminSectionClients .clients-status-badge {
       flex: 0 0 auto;
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 999px;
       font-size: 10px;
       font-weight: 700;
@@ -26045,7 +26327,7 @@
     body.admin-mobile-shell-active #adminSectionClients .clients-card__body {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
       min-width: 0;
     }
 
@@ -26053,7 +26335,7 @@
       font-size: 12px;
       font-weight: 500;
       color: #64748b;
-      line-height: 1.35;
+      line-height: 1.28;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -26063,7 +26345,7 @@
       flex: 0 0 8px;
       width: 8px;
       height: 8px;
-      margin-top: 6px;
+      margin-top: 4px;
       border-right: 2px solid #cbd5e1;
       border-bottom: 2px solid #cbd5e1;
       transform: rotate(-45deg);
@@ -28760,20 +29042,36 @@
             <h2 class="admin-native-screen__title staff-screen-header__title">Staff</h2>
             <p class="admin-native-screen__subtitle">Manage your team and their availability.</p>
           </div>
-          <button type="button" class="staff-screen-header__add" onclick="document.getElementById('staffName')?.focus({ preventScroll: false })" aria-label="Focus add staff form">
+          <button type="button" class="staff-screen-header__add" onclick="openStaffAddForm()" aria-label="Add staff member">
             <svg viewBox="0 0 24 24" fill="none" focusable="false" aria-hidden="true"><path stroke="currentColor" stroke-width="1.75" stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
           </button>
         </header>
         <div id="staffSetupNotice" class="staff-status-pill-wrap" aria-live="polite"></div>
 
-        <div class="admin-saas-form staff-add-card">
-          <div class="staff-add-card__head">
-            <span class="staff-add-card__icon" aria-hidden="true"></span>
-            <div class="staff-add-card__head-copy">
-              <p class="staff-add-card__title">Add new staff member</p>
-              <p class="staff-add-card__hint">Add staff who can provide services to your customers.</p>
+        <div id="staffPageBody" class="staff-page-body">
+        <div class="staff-list-section" id="staffListSection">
+          <div class="staff-list-section__head">
+            <div class="staff-list-section__title-group">
+              <h3 class="staff-list-section__title">Your team</h3>
+              <span id="staffListCount" class="staff-list-section__count" aria-live="polite">0 staff members</span>
             </div>
           </div>
+          <div id="staffList" class="admin-saas-list staff-premium-list" role="list" aria-label="Staff members"></div>
+        </div>
+
+        <div class="admin-saas-form staff-add-card staff-add-card--expanded" id="staffAddCard">
+          <button type="button" class="staff-add-card__toggle" id="staffAddCardToggle" aria-expanded="true" aria-controls="staffAddCardBody" onclick="toggleStaffAddForm()">
+            <span class="staff-add-card__icon" aria-hidden="true"></span>
+            <span class="staff-add-card__head-copy">
+              <span class="staff-add-card__title">
+                <span class="staff-add-card__title-expanded">Add new staff member</span>
+                <span class="staff-add-card__title-collapsed">Add staff</span>
+              </span>
+              <span class="staff-add-card__hint">Add staff who can provide services to your customers.</span>
+            </span>
+            <span class="staff-add-card__chev" aria-hidden="true"></span>
+          </button>
+          <div id="staffAddCardBody" class="staff-add-card__body">
           <div class="admin-saas-form__fields staff-add-card__fields">
             <label class="admin-saas-field">
               <span class="admin-saas-field__label">Name</span>
@@ -28809,16 +29107,8 @@
           <div class="admin-saas-form__actions staff-add-card__actions">
             <button type="button" class="admin-saas-btn admin-saas-btn--primary staff-add-card__submit" onclick="addStaffMember()"><span class="staff-add-card__submit-plus" aria-hidden="true">+</span> Add staff member</button>
           </div>
-        </div>
-
-        <div class="staff-list-section">
-          <div class="staff-list-section__head">
-            <div class="staff-list-section__title-group">
-              <h3 class="staff-list-section__title">Your team</h3>
-              <span id="staffListCount" class="staff-list-section__count" aria-live="polite">0 staff members</span>
-            </div>
           </div>
-          <div id="staffList" class="admin-saas-list staff-premium-list" role="list" aria-label="Staff members"></div>
+        </div>
         </div>
 
           <div id="editStaffCard" class="admin-saas-edit-panel staff-edit-card hidden">
@@ -32016,6 +32306,7 @@
   let businessSettings = null;
   let services = [];
   let staffMembers = [];
+  let staffAddFormExpanded = false;
   let dashboardStaffEditId = null;
   let dashboardStaffEditSnapshot = null;
   let dashboardStaffEditPendingPhotoFile = null;
@@ -48830,6 +49121,47 @@
     bookingStaffColumnAvailable = !error;
   }
 
+  function syncStaffAddCardUi() {
+    const card = document.getElementById("staffAddCard");
+    const toggle = document.getElementById("staffAddCardToggle");
+    const pageBody = document.getElementById("staffPageBody");
+    if (!card) return;
+
+    const count = Array.isArray(staffMembers) ? staffMembers.length : 0;
+    const hasStaff = count > 0;
+    card.classList.toggle("staff-add-card--has-staff", hasStaff);
+    if (pageBody) pageBody.classList.toggle("staff-page-body--has-team", hasStaff);
+
+    if (!hasStaff) staffAddFormExpanded = true;
+
+    const expanded = !hasStaff || staffAddFormExpanded;
+    card.classList.toggle("staff-add-card--collapsed", hasStaff && !expanded);
+    card.classList.toggle("staff-add-card--expanded", expanded);
+
+    if (toggle) toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+  }
+
+  function toggleStaffAddForm() {
+    const count = Array.isArray(staffMembers) ? staffMembers.length : 0;
+    if (count === 0) return;
+    staffAddFormExpanded = !staffAddFormExpanded;
+    syncStaffAddCardUi();
+    if (staffAddFormExpanded) {
+      requestAnimationFrame(() => {
+        document.getElementById("staffName")?.focus({ preventScroll: false });
+      });
+    }
+  }
+
+  function openStaffAddForm() {
+    const count = Array.isArray(staffMembers) ? staffMembers.length : 0;
+    if (count > 0) staffAddFormExpanded = true;
+    syncStaffAddCardUi();
+    requestAnimationFrame(() => {
+      document.getElementById("staffName")?.focus({ preventScroll: false });
+    });
+  }
+
   function syncStaffListCount() {
     const el = document.getElementById("staffListCount");
     if (!el) return;
@@ -48862,6 +49194,7 @@
           '<span class="staff-status-pill staff-status-pill--warn"><span class="staff-status-pill__dot" aria-hidden="true"></span>Staff table is not ready — run SQL from README</span>';
       }
       box.innerHTML = emptyStateHtml("Staff not configured", "Run the staff SQL from README.txt, then reload.");
+      syncStaffAddCardUi();
       return;
     }
 
@@ -48885,6 +49218,7 @@
           <p class="staff-premium-empty__text">Add your first team member above.</p>
         </div>
       `;
+      syncStaffAddCardUi();
       return;
     }
 
@@ -48923,7 +49257,7 @@
         : "admin-saas-btn--staff-activate";
 
       div.innerHTML = `
-        <div class="admin-saas-row__top">
+        <div class="admin-saas-row__top staff-row__tap" role="button" tabindex="0" aria-label="Edit ${escapeHtml(staff.name)}" onclick="openEditStaffMember('${staff.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openEditStaffMember('${staff.id}')}">
           <div class="admin-saas-row__avatar">
             <div class="staff-row__avatar staff-list-avatar-slot${avatarActiveClass}" aria-hidden="true">
               ${avatarInner}
@@ -48946,6 +49280,8 @@
       `;
       box.appendChild(div);
     });
+
+    syncStaffAddCardUi();
   }
 
   function getDashboardStaffEditSnapshotPhoto() {
@@ -49319,6 +49655,7 @@
     document.getElementById("staffRole").value = "";
     clearDashboardStaffPhotoSelection();
 
+    staffAddFormExpanded = false;
     await loadStaffMembers();
     renderStaffMembers();
     renderAdminAddStaffOptions();
