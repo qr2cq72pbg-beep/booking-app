@@ -22089,7 +22089,8 @@
       background: linear-gradient(180deg, #6366f1, #4f46e5);
     }
 
-    body.admin-mobile-shell-active #adminSectionProfile .settings-card--setup::before {
+    body.admin-mobile-shell-active #adminSectionProfile .settings-card--setup::before,
+    body.admin-mobile-shell-active #adminSectionProfile .settings-card--support::before {
       background: linear-gradient(180deg, #8b5cf6, #7c3aed);
     }
 
@@ -25660,7 +25661,8 @@
     }
 
     body.admin-mobile-shell-active #adminSectionProfile .admin-native-screen--settings-ref .settings-card--link::before,
-    body.admin-mobile-shell-active #adminSectionProfile .admin-native-screen--settings-ref .settings-card--setup::before {
+    body.admin-mobile-shell-active #adminSectionProfile .admin-native-screen--settings-ref .settings-card--setup::before,
+    body.admin-mobile-shell-active #adminSectionProfile .admin-native-screen--settings-ref .settings-card--support::before {
       background: linear-gradient(180deg, #a78bfa, #7c3aed);
     }
 
@@ -29782,6 +29784,19 @@
                   <span class="settings-setup-row__chev" aria-hidden="true"></span>
                 </button>
               </div>
+              <div class="settings-card settings-card--support">
+                <p class="settings-card__eyebrow">Support</p>
+                <button type="button" class="settings-setup-row" onclick="openCustomerProfileHelpSheet()">
+                  <span class="settings-setup-row__icon" aria-hidden="true"></span>
+                  <span class="settings-setup-row__label">Help &amp; Support</span>
+                  <span class="settings-setup-row__chev" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="settings-setup-row" onclick="openCustomerProfileAboutSheet()">
+                  <span class="settings-setup-row__icon" aria-hidden="true"></span>
+                  <span class="settings-setup-row__label">About XBOOK</span>
+                  <span class="settings-setup-row__chev" aria-hidden="true"></span>
+                </button>
+              </div>
             </div>
           </section>
 
@@ -30995,7 +31010,7 @@
               </button>
               <div class="customer-mobile-profile-row customer-mobile-profile-row--static">
                 <span>Version</span>
-                <span id="customerMobileProfileAppVersion" class="customer-mobile-profile-row__muted">1.0.0</span>
+                <span id="customerMobileProfileAppVersion" class="customer-mobile-profile-row__muted">1.0</span>
               </div>
             </div>
           </section>
@@ -31538,10 +31553,10 @@
           </header>
           <div class="customer-profile-edit-sheet__body">
             <p class="customer-profile-info-lead">Need help with your booking or account?</p>
-            <a class="customer-profile-info-email" href="mailto:support@xbook.app">support@xbook.app</a>
+            <a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=XBOOK%20Support">xbooksupport@gtwebstudio.com</a>
           </div>
           <footer class="customer-profile-edit-sheet__footer">
-            <button type="button" class="success customer-profile-edit-sheet__btn" onclick="contactCustomerSupport()">Contact Support</button>
+            <button type="button" class="success customer-profile-edit-sheet__btn" onclick="contactCustomerSupport()">Send Email</button>
           </footer>
         </div>
       </div>
@@ -31559,6 +31574,7 @@
           <div class="customer-profile-edit-sheet__body">
             <p class="customer-profile-info-copy">XBOOK respects your privacy. Your account information and booking data are used only to provide booking, reminder, and account services. We do not sell your personal data.</p>
             <p class="customer-profile-info-soon">Full Privacy Policy coming soon.</p>
+            <p class="customer-profile-info-copy">Questions? Contact <a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=XBOOK%20Support">xbooksupport@gtwebstudio.com</a>.</p>
           </div>
           <footer class="customer-profile-edit-sheet__footer">
             <button type="button" class="secondary customer-profile-edit-sheet__btn" onclick="closeCustomerProfileInfoSheets()">Close</button>
@@ -31579,6 +31595,7 @@
           <div class="customer-profile-edit-sheet__body">
             <p class="customer-profile-info-copy">By using XBOOK, you agree to use the service responsibly and keep your booking information accurate. Businesses manage their own availability, services, and appointments.</p>
             <p class="customer-profile-info-soon">Full Terms of Service coming soon.</p>
+            <p class="customer-profile-info-copy">Support: <a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=XBOOK%20Support">xbooksupport@gtwebstudio.com</a></p>
           </div>
           <footer class="customer-profile-edit-sheet__footer">
             <button type="button" class="secondary customer-profile-edit-sheet__btn" onclick="closeCustomerProfileInfoSheets()">Close</button>
@@ -31598,9 +31615,10 @@
           </header>
           <div class="customer-profile-edit-sheet__body">
             <p class="customer-profile-info-about-brand">XBOOK</p>
-            <p class="customer-profile-info-about-version">Version <span id="customerProfileAboutVersion">1.0.0</span></p>
-            <p class="customer-profile-info-about-tagline">A booking platform that helps businesses manage appointments and helps customers book faster.</p>
-            <p class="customer-profile-info-about-note">Built for modern service businesses.</p>
+            <p class="customer-profile-info-about-version">Version <span id="customerProfileAboutVersion">1.0</span></p>
+            <p class="customer-profile-info-copy">Developed and maintained by GT Web Studio.</p>
+            <p class="customer-profile-info-copy">Support:<br><a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=XBOOK%20Support">xbooksupport@gtwebstudio.com</a></p>
+            <p class="customer-profile-info-about-note">© 2026 GT Web Studio<br>All rights reserved.</p>
           </div>
           <footer class="customer-profile-edit-sheet__footer">
             <button type="button" class="secondary customer-profile-edit-sheet__btn" onclick="closeCustomerProfileInfoSheets()">Close</button>
@@ -32598,8 +32616,11 @@
     logManageNav("exitPublicManageMode", source);
   }
 
-  const CUSTOMER_APP_VERSION = "1.0.0";
-  const CUSTOMER_SUPPORT_EMAIL = "support@xbook.app";
+  const CUSTOMER_APP_VERSION = "1.0";
+  const XBOOK_SUPPORT_EMAIL = "xbooksupport@gtwebstudio.com";
+  const CUSTOMER_SUPPORT_EMAIL = XBOOK_SUPPORT_EMAIL;
+  const XBOOK_SUPPORT_MAILTO =
+    "mailto:xbooksupport@gtwebstudio.com?subject=" + encodeURIComponent("XBOOK Support");
   const CUSTOMER_PROFILE_INFO_SHEET_IDS = [
     "customerProfileHelpSheet",
     "customerProfilePrivacySheet",
@@ -34040,7 +34061,7 @@
     }
     try {
       const link = document.createElement("a");
-      link.href = "mailto:" + email;
+      link.href = XBOOK_SUPPORT_MAILTO;
       link.style.display = "none";
       document.body.appendChild(link);
       link.click();
