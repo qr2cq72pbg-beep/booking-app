@@ -27281,12 +27281,16 @@
 
     .mode-entry-hero-logo {
       display: block;
-      width: clamp(140px, 44vw, 180px);
-      max-width: 180px;
+      width: clamp(170px, 48vw, 210px);
+      max-width: 210px;
       height: auto;
-      margin: 0 auto 18px;
+      margin: 0 auto 20px;
       object-fit: contain;
       object-position: center;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .mode-entry-welcome {
@@ -27435,6 +27439,275 @@
     body.native-app-shell:has(#modeView.mode-entry-screen--ref:not(.hidden)) .container {
       padding-top: 0;
       padding-bottom: 0;
+    }
+
+    /* —— XBOOK static demo preview (read-only brochure; no Supabase / no real flows) —— */
+    body:has(#xbookDemoHomeView:not(.hidden)),
+    body:has(#xbookDemoBusinessView:not(.hidden)),
+    body:has(#xbookDemoCustomerView:not(.hidden)) {
+      background: #fafafa;
+    }
+
+    body:has(#xbookDemoHomeView:not(.hidden)) .topbar,
+    body:has(#xbookDemoBusinessView:not(.hidden)) .topbar,
+    body:has(#xbookDemoCustomerView:not(.hidden)) .topbar {
+      display: none;
+    }
+
+    body:has(#xbookDemoHomeView:not(.hidden)) .container,
+    body:has(#xbookDemoBusinessView:not(.hidden)) .container,
+    body:has(#xbookDemoCustomerView:not(.hidden)) .container {
+      max-width: none;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .xbook-demo-screen {
+      width: 100%;
+      min-height: 100dvh;
+      min-height: calc(100dvh - env(safe-area-inset-top, 0px));
+      background: linear-gradient(180deg, #ffffff 0%, #fafafa 55%, #f8fafc 100%);
+    }
+
+    .xbook-demo-screen__inner {
+      max-width: 440px;
+      margin: 0 auto;
+      padding:
+        calc(max(12px, env(safe-area-inset-top, 0px)) + 12px)
+        max(20px, env(safe-area-inset-right, 0px))
+        max(24px, env(safe-area-inset-bottom, 0px))
+        max(20px, env(safe-area-inset-left, 0px));
+    }
+
+    .xbook-demo-banner {
+      margin: 0 0 16px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(0, 27, 94, 0.06);
+      border: 1px solid rgba(0, 27, 94, 0.1);
+      color: var(--xbook-navy);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .xbook-demo-header {
+      margin: 0 0 18px;
+      text-align: center;
+    }
+
+    .xbook-demo-header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.375rem, 5vw, 1.625rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #0f172a;
+    }
+
+    .xbook-demo-header p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #64748b;
+    }
+
+    .xbook-demo-nav-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .xbook-demo-nav-card {
+      width: 100%;
+      margin: 0;
+      padding: 16px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius-card);
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .xbook-demo-nav-card:active {
+      transform: scale(0.99);
+    }
+
+    .xbook-demo-nav-card__title {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .xbook-demo-nav-card__desc {
+      display: block;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    .xbook-demo-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .xbook-demo-card {
+      padding: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius-card);
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .xbook-demo-card__title {
+      margin: 0 0 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    .xbook-demo-card__body {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #64748b;
+    }
+
+    .xbook-demo-card__list {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .xbook-demo-card__list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .xbook-demo-card__list strong {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .xbook-demo-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .xbook-demo-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .xbook-demo-chip--vip {
+      background: rgba(245, 158, 11, 0.12);
+      color: #b45309;
+    }
+
+    .xbook-demo-chip--blocked {
+      background: rgba(239, 68, 68, 0.1);
+      color: #b91c1c;
+    }
+
+    .xbook-demo-locked-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .xbook-demo-preview-block {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .xbook-demo-preview-block__label {
+      display: block;
+      margin: 0 0 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .xbook-demo-preview-block__value {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .xbook-demo-slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .xbook-demo-slot {
+      padding: 8px 4px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      text-align: center;
+    }
+
+    .xbook-demo-slot--selected {
+      border-color: var(--xbook-navy);
+      background: rgba(0, 27, 94, 0.06);
+      color: var(--xbook-navy);
+    }
+
+    .xbook-demo-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mode-entry-btn--demo {
+      color: var(--xbook-navy);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px dashed #cbd5e1;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
     /* App shell — session restore, offline, error (full-screen branded) */
@@ -28006,7 +28279,7 @@
       <div class="mode-entry-screen__content">
         <div class="mode-entry-main">
           <header class="mode-entry-hero mode-entry-hero--brand">
-            <img class="mode-entry-hero-logo" src="icons/xbook-logo-hero.png" alt="XBOOK" width="168" height="168" decoding="async" />
+            <img class="mode-entry-hero-logo" src="icons/xbook-logo-hero.png" alt="XBOOK" width="190" height="153" decoding="async" />
           </header>
 
           <section class="mode-entry-welcome" aria-labelledby="modeEntryHeadline">
@@ -28028,9 +28301,260 @@
               </button>
               <p class="mode-entry-action__hint">For existing business owners and customers.</p>
             </div>
+            <div class="mode-entry-action">
+              <button type="button" class="mode-entry-btn mode-entry-btn--demo" onclick="openXbookDemoHome()">
+                Explore XBOOK Demo
+              </button>
+              <p class="mode-entry-action__hint">Preview the app — no sign-in required.</p>
+            </div>
           </div>
 
           <p class="mode-entry-trust-line">For salons, barbers, clinics and more.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="xbookDemoHomeView" class="xbook-demo-screen hidden" role="main" aria-label="Explore XBOOK Demo">
+      <div class="xbook-demo-screen__inner">
+        <div class="xbook-demo-banner">Demo Preview — all features are locked. This is only a visual tour.</div>
+        <header class="xbook-demo-header">
+          <h1>Explore XBOOK Demo</h1>
+          <p>Preview how XBOOK looks for business owners and customers. All features are locked in demo mode.</p>
+        </header>
+        <div class="xbook-demo-nav-cards">
+          <button type="button" class="xbook-demo-nav-card" onclick="openXbookDemoBusinessPreview()">
+            <span class="xbook-demo-nav-card__title">Business Owner Preview</span>
+            <span class="xbook-demo-nav-card__desc">See the tools for managing bookings, clients, services, staff, availability, and business settings.</span>
+          </button>
+          <button type="button" class="xbook-demo-nav-card" onclick="openXbookDemoCustomerPreview()">
+            <span class="xbook-demo-nav-card__title">Customer View Preview</span>
+            <span class="xbook-demo-nav-card__desc">See how clients experience booking, choosing services, selecting time slots, and managing appointments.</span>
+          </button>
+        </div>
+        <div class="xbook-demo-footer">
+          <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="backToHomeFromDemo()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="xbookDemoBusinessView" class="xbook-demo-screen hidden" role="main" aria-label="Business owner demo preview">
+      <div class="xbook-demo-screen__inner">
+        <div class="xbook-demo-banner">Demo Preview — all features are locked. This is only a visual tour.</div>
+        <header class="xbook-demo-header">
+          <h1>Business Owner Preview</h1>
+          <p>Sample admin tools and dashboards — static examples only.</p>
+        </header>
+        <div class="xbook-demo-grid">
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Dashboard Overview</h2>
+            <p class="xbook-demo-card__body">Today’s bookings, upcoming appointments, revenue preview, and client activity.</p>
+            <ul class="xbook-demo-card__list">
+              <li><span>Today</span><strong>6 bookings</strong></li>
+              <li><span>Upcoming</span><strong>14 this week</strong></li>
+              <li><span>Revenue preview</span><strong>€1,240</strong></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">View dashboard — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Bookings</h2>
+            <p class="xbook-demo-card__body">Appointment list with status, client name, service, and staff.</p>
+            <ul class="xbook-demo-card__list">
+              <li><strong>9:00 Haircut</strong><span>Confirmed</span></li>
+              <li><strong>10:30 Beard Trim</strong><span>Confirmed</span></li>
+              <li><strong>12:00 Consultation</strong><span>Pending</span></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add booking — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Calendar</h2>
+            <p class="xbook-demo-card__body">Visual calendar with staff columns and color-coded appointments.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip">Mon 3</span>
+              <span class="xbook-demo-chip">Tue 4</span>
+              <span class="xbook-demo-chip">Wed 5</span>
+              <span class="xbook-demo-chip">Thu 6</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Open calendar — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Services</h2>
+            <p class="xbook-demo-card__body">Service cards with price, duration, and category.</p>
+            <ul class="xbook-demo-card__list">
+              <li><strong>Haircut</strong><span>45 min · €25</span></li>
+              <li><strong>Beard Trim</strong><span>20 min · €12</span></li>
+              <li><strong>Full Groom</strong><span>60 min · €40</span></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add service — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Staff</h2>
+            <p class="xbook-demo-card__body">Staff member cards with availability and assigned services.</p>
+            <ul class="xbook-demo-card__list">
+              <li><strong>Marko D.</strong><span>Mon–Sat</span></li>
+              <li><strong>Ana K.</strong><span>Tue–Fri</span></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add staff — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Clients</h2>
+            <p class="xbook-demo-card__body">Customer profiles with notes, VIP tags, and blocked indicators.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip xbook-demo-chip--vip">VIP · Elena R.</span>
+              <span class="xbook-demo-chip">Note: prefers mornings</span>
+              <span class="xbook-demo-chip xbook-demo-chip--blocked">Blocked · No-show</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add client — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Booking Rules</h2>
+            <p class="xbook-demo-card__body">Max bookings per day/week per client and booking limits.</p>
+            <ul class="xbook-demo-card__list">
+              <li><span>Max per day</span><strong>2 bookings</strong></li>
+              <li><span>Max per week</span><strong>5 bookings</strong></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save rules — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Closed Days &amp; Holidays</h2>
+            <p class="xbook-demo-card__body">Vacation days, non-working days, and public holiday blocking.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip">Aug 15 — Public holiday</span>
+              <span class="xbook-demo-chip">Sep 2–6 — Vacation</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add closed day — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">QR / Public Booking Link</h2>
+            <p class="xbook-demo-card__body">Shareable link and QR code for client self-booking.</p>
+            <div class="xbook-demo-preview-block">
+              <span class="xbook-demo-preview-block__label">Sample link</span>
+              <p class="xbook-demo-preview-block__value">xbook.app/book/studio-gt</p>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Copy link — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Branding</h2>
+            <p class="xbook-demo-card__body">Logo, cover photo, colors, and business profile preview.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip">Logo uploaded</span>
+              <span class="xbook-demo-chip">Navy theme</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Upload logo — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Notifications</h2>
+            <p class="xbook-demo-card__body">Confirmations, cancellations, and appointment reminders.</p>
+            <ul class="xbook-demo-card__list">
+              <li><span>Email confirmations</span><strong>On</strong></li>
+              <li><span>24h reminders</span><strong>On</strong></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save notifications — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Settings</h2>
+            <p class="xbook-demo-card__body">Business details, hours, and availability settings.</p>
+            <ul class="xbook-demo-card__list">
+              <li><span>Business name</span><strong>GT Studio</strong></li>
+              <li><span>Hours</span><strong>Mon–Sat 9:00–18:00</strong></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save settings — locked</button>
+          </article>
+        </div>
+        <div class="xbook-demo-footer">
+          <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="backToXbookDemoHome()">Back to Demo Home</button>
+          <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="xbookDemoCustomerView" class="xbook-demo-screen hidden" role="main" aria-label="Customer demo preview">
+      <div class="xbook-demo-screen__inner">
+        <div class="xbook-demo-banner">Demo Preview — all features are locked. This is only a visual tour.</div>
+        <header class="xbook-demo-header">
+          <h1>Customer View Preview</h1>
+          <p>Sample client booking experience — static examples only.</p>
+        </header>
+        <div class="xbook-demo-grid">
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Business Profile</h2>
+            <p class="xbook-demo-card__body">Branded header with logo, cover photo, and business details.</p>
+            <div class="xbook-demo-preview-block">
+              <span class="xbook-demo-preview-block__label">GT Studio · Barber &amp; Grooming</span>
+              <p class="xbook-demo-preview-block__value">Skopje · Open today 9:00–18:00</p>
+            </div>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Choose a Service</h2>
+            <p class="xbook-demo-card__body">Service selection cards with duration and price.</p>
+            <ul class="xbook-demo-card__list">
+              <li><strong>Haircut</strong><span>45 min · €25</span></li>
+              <li><strong>Beard Trim</strong><span>20 min · €12</span></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Select service — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Choose Staff</h2>
+            <p class="xbook-demo-card__body">Pick a staff member or choose “Any Available”.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip">Any Available</span>
+              <span class="xbook-demo-chip">Marko D.</span>
+              <span class="xbook-demo-chip">Ana K.</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Choose staff — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Pick Date &amp; Time</h2>
+            <p class="xbook-demo-card__body">Calendar and available time slot selection.</p>
+            <div class="xbook-demo-slot-grid">
+              <span class="xbook-demo-slot">9:00</span>
+              <span class="xbook-demo-slot xbook-demo-slot--selected">10:30</span>
+              <span class="xbook-demo-slot">12:00</span>
+              <span class="xbook-demo-slot">14:00</span>
+              <span class="xbook-demo-slot">15:30</span>
+              <span class="xbook-demo-slot">17:00</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Book time — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Booking Confirmation</h2>
+            <p class="xbook-demo-card__body">Review summary before confirming an appointment.</p>
+            <ul class="xbook-demo-card__list">
+              <li><span>Service</span><strong>Haircut</strong></li>
+              <li><span>Date</span><strong>Wed, Jun 18 · 10:30</strong></li>
+              <li><span>Staff</span><strong>Marko D.</strong></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Confirm booking — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Upcoming Appointment</h2>
+            <p class="xbook-demo-card__body">Next visit card with date, service, and location.</p>
+            <div class="xbook-demo-preview-block">
+              <span class="xbook-demo-preview-block__label">Next visit</span>
+              <p class="xbook-demo-preview-block__value">Wed, Jun 18 · 10:30 · Haircut</p>
+            </div>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">My Bookings &amp; Profile</h2>
+            <p class="xbook-demo-card__body">Customer appointment history and profile details.</p>
+            <ul class="xbook-demo-card__list">
+              <li><strong>Jun 18 · Haircut</strong><span>Upcoming</span></li>
+              <li><strong>May 30 · Beard Trim</strong><span>Completed</span></li>
+            </ul>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Edit profile — locked</button>
+          </article>
+          <article class="xbook-demo-card">
+            <h2 class="xbook-demo-card__title">Cancel / Reschedule</h2>
+            <p class="xbook-demo-card__body">Manage appointment options shown to customers.</p>
+            <div class="xbook-demo-chip-row">
+              <span class="xbook-demo-chip">Reschedule</span>
+              <span class="xbook-demo-chip">Cancel</span>
+            </div>
+            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Manage appointment — locked</button>
+          </article>
+        </div>
+        <div class="xbook-demo-footer">
+          <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="backToXbookDemoHome()">Back to Demo Home</button>
+          <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
         </div>
       </div>
     </div>
@@ -41686,6 +42210,9 @@
     document.getElementById("adminView")?.classList.add("hidden");
     document.getElementById("adminOnboardingView")?.classList.add("hidden");
     document.getElementById("publicView")?.classList.add("hidden");
+    document.getElementById("xbookDemoHomeView")?.classList.add("hidden");
+    document.getElementById("xbookDemoBusinessView")?.classList.add("hidden");
+    document.getElementById("xbookDemoCustomerView")?.classList.add("hidden");
     customerMyBookingsViewOpen = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
   }
@@ -41699,6 +42226,49 @@
       const topbar = document.querySelector(".topbar");
       if (topbar) topbar.style.display = "none";
     }
+  }
+
+  /** Static read-only demo preview — no Supabase, no auth, no real app actions. */
+  function showXbookDemoLockMessage() {
+    showToast("Demo Preview — actions are disabled.", "info", 2800);
+  }
+
+  function applyXbookDemoShellUi() {
+    document.getElementById("logoutBtn")?.classList.add("hidden");
+    document.getElementById("homeBtn")?.classList.add("hidden");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
+  }
+
+  function openXbookDemoHome() {
+    hideAllViews();
+    document.getElementById("xbookDemoHomeView")?.classList.remove("hidden");
+    applyXbookDemoShellUi();
+    window.scrollTo(0, 0);
+  }
+
+  function openXbookDemoBusinessPreview() {
+    hideAllViews();
+    document.getElementById("xbookDemoBusinessView")?.classList.remove("hidden");
+    applyXbookDemoShellUi();
+    window.scrollTo(0, 0);
+  }
+
+  function openXbookDemoCustomerPreview() {
+    hideAllViews();
+    document.getElementById("xbookDemoCustomerView")?.classList.remove("hidden");
+    applyXbookDemoShellUi();
+    window.scrollTo(0, 0);
+  }
+
+  function backToXbookDemoHome() {
+    openXbookDemoHome();
+  }
+
+  function backToHomeFromDemo() {
+    showModeView();
   }
 
   function showAuthView() {
