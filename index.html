@@ -87,52 +87,42 @@
     }
 
     /* —— XBOOK Design System v1 (tokens → components) —— */
-    .xbook-mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border-radius: 12px;
-      background: var(--xbook-navy);
-      color: #fff;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1;
-    }
-
-    .xbook-mark__x {
+    .xbook-logo {
       display: block;
-      font-family: var(--font-display);
+      flex-shrink: 0;
+      object-fit: contain;
+      width: auto;
+      height: auto;
     }
 
-    .xbook-mark--sm {
+    .xbook-logo--sm {
       width: 28px;
       height: 28px;
-      border-radius: 8px;
-      font-size: 14px;
     }
 
-    .xbook-mark--lg {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      font-size: 28px;
-    }
-
-    .xbook-mark--md {
+    .xbook-logo--md {
       width: 46px;
       height: 46px;
-      border-radius: 12px;
-      font-size: 22px;
     }
 
-    .xbook-mark--splash {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      font-size: 32px;
-      background: #ffffff;
-      color: var(--xbook-navy);
+    .xbook-logo--lg {
+      width: 56px;
+      height: 56px;
+    }
+
+    .xbook-logo--splash {
+      width: 72px;
+      height: 72px;
+    }
+
+    .xbook-logo--restore {
+      width: 80px;
+      height: 80px;
+    }
+
+    .xbook-logo--about {
+      width: 72px;
+      height: 72px;
     }
 
     .auth-brand {
@@ -17075,18 +17065,11 @@
     }
 
     .empty-state__mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
+      display: block;
+      width: 36px;
+      height: 36px;
       margin: 0 auto 12px;
-      border-radius: 12px;
-      background: var(--xbook-bg);
-      color: var(--xbook-navy);
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      object-fit: contain;
     }
 
     .empty-state-title {
@@ -19111,7 +19094,8 @@
       background: #f1f5f9;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet {
       position: fixed;
       inset: 0;
       z-index: 12100;
@@ -19121,15 +19105,18 @@
       pointer-events: none;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet:not(.hidden) {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet:not(.hidden),
+    body.admin-mobile-shell-active .customer-profile-edit-sheet:not(.hidden) {
       pointer-events: auto;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet.hidden {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet.hidden,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet.hidden {
       display: none !important;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__backdrop {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__backdrop,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__backdrop {
       position: absolute;
       inset: 0;
       background: rgba(15, 23, 42, 0.42);
@@ -19137,7 +19124,8 @@
       -webkit-backdrop-filter: blur(2px);
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__panel {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__panel,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__panel {
       position: relative;
       z-index: 1;
       width: 100%;
@@ -19156,7 +19144,8 @@
       box-sizing: border-box;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__grab {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__grab,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__grab {
       flex-shrink: 0;
       width: 36px;
       height: 4px;
@@ -19165,7 +19154,8 @@
       background: #e2e8f0;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__header {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__header,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -19174,7 +19164,8 @@
       padding: 10px 16px 8px;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__header h2 {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__header h2,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__header h2 {
       margin: 0;
       font-size: 17px;
       font-weight: 800;
@@ -19182,7 +19173,8 @@
       color: #0f172a;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__close {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__close,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__close {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -19200,12 +19192,14 @@
       font-family: inherit;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__close-icon {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__close-icon,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__close-icon {
       font-size: 1.25rem;
       line-height: 1;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__body {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__body,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__body {
       flex: 1 1 auto;
       min-height: 0;
       overflow-y: auto;
@@ -19213,7 +19207,8 @@
       padding: 4px 16px 12px;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__label {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__label,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__label {
       display: block;
       margin: 12px 0 6px;
       font-size: 13px;
@@ -19221,16 +19216,19 @@
       color: #475569;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__label:first-child {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__label:first-child,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__label:first-child {
       margin-top: 4px;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__optional {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__optional,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__optional {
       font-weight: 500;
       color: #94a3b8;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__input {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__input,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__input {
       width: 100%;
       margin: 0 0 4px;
       padding: 13px 14px;
@@ -19242,13 +19240,15 @@
       box-sizing: border-box;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__input:focus {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__input:focus,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__input:focus {
       outline: none;
       border-color: color-mix(in srgb, var(--business-accent, #38bdf8) 55%, #e2e8f0);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--business-accent, #38bdf8) 18%, transparent);
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__error {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__error,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__error {
       margin: 10px 0 0;
       font-size: 13px;
       font-weight: 600;
@@ -19256,7 +19256,8 @@
       color: #dc2626;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__footer {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__footer,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__footer {
       flex-shrink: 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -19266,7 +19267,8 @@
       background: #fff;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet__btn {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet__btn,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet__btn {
       width: 100%;
       min-height: 48px;
       margin: 0;
@@ -19275,18 +19277,21 @@
       font-weight: 700;
     }
 
-    body.customer-mobile-shell-active .customer-profile-edit-sheet--info .customer-profile-edit-sheet__footer {
+    body.customer-mobile-shell-active .customer-profile-edit-sheet--info .customer-profile-edit-sheet__footer,
+    body.admin-mobile-shell-active .customer-profile-edit-sheet--info .customer-profile-edit-sheet__footer {
       grid-template-columns: 1fr;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-lead {
+    body.customer-mobile-shell-active .customer-profile-info-lead,
+    body.admin-mobile-shell-active .customer-profile-info-lead {
       margin: 4px 0 16px;
       font-size: 15px;
       line-height: 1.5;
       color: #475569;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-email {
+    body.customer-mobile-shell-active .customer-profile-info-email,
+    body.admin-mobile-shell-active .customer-profile-info-email {
       display: inline-block;
       margin: 0 0 8px;
       font-size: 16px;
@@ -19296,14 +19301,16 @@
       word-break: break-all;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-copy {
+    body.customer-mobile-shell-active .customer-profile-info-copy,
+    body.admin-mobile-shell-active .customer-profile-info-copy {
       margin: 4px 0 0;
       font-size: 15px;
       line-height: 1.55;
       color: #334155;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-soon {
+    body.customer-mobile-shell-active .customer-profile-info-soon,
+    body.admin-mobile-shell-active .customer-profile-info-soon {
       margin: 14px 0 0;
       font-size: 13px;
       font-weight: 600;
@@ -19311,29 +19318,41 @@
       color: #94a3b8;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-about-brand {
+    body.customer-mobile-shell-active .customer-profile-info-about-logo,
+    body.admin-mobile-shell-active .customer-profile-info-about-logo {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 8px;
+    }
+
+    body.customer-mobile-shell-active .customer-profile-info-about-brand,
+    body.admin-mobile-shell-active .customer-profile-info-about-brand {
       margin: 4px 0 4px;
+      text-align: center;
       font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.03em;
       color: #0f172a;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-about-version {
+    body.customer-mobile-shell-active .customer-profile-info-about-version,
+    body.admin-mobile-shell-active .customer-profile-info-about-version {
       margin: 0 0 14px;
       font-size: 14px;
       font-weight: 600;
       color: #64748b;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-about-tagline {
+    body.customer-mobile-shell-active .customer-profile-info-about-tagline,
+    body.admin-mobile-shell-active .customer-profile-info-about-tagline {
       margin: 0 0 10px;
       font-size: 15px;
       line-height: 1.5;
       color: #475569;
     }
 
-    body.customer-mobile-shell-active .customer-profile-info-about-note {
+    body.customer-mobile-shell-active .customer-profile-info-about-note,
+    body.admin-mobile-shell-active .customer-profile-info-about-note {
       margin: 0;
       font-size: 14px;
       line-height: 1.45;
@@ -20904,7 +20923,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--xbook-navy);
+      background: #ffffff;
       transition: opacity 0.28s ease, visibility 0.28s ease;
     }
 
@@ -20935,7 +20954,7 @@
       font-size: 1.125rem;
       font-weight: 800;
       letter-spacing: 0.16em;
-      color: #ffffff;
+      color: var(--xbook-navy);
     }
 
     .pwa-install-hint {
@@ -21064,7 +21083,7 @@
     }
 
     body.native-app-shell .app-splash {
-      background: var(--xbook-navy);
+      background: #ffffff;
     }
 
     body.native-app-shell .app-splash-icon {
@@ -21074,7 +21093,7 @@
     body.native-app-shell .app-splash-title {
       font-size: 1.125rem;
       letter-spacing: 0.16em;
-      color: #ffffff;
+      color: var(--xbook-navy);
     }
 
     body.native-app-shell #authView.auth-card {
@@ -26018,6 +26037,18 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13'/%3E%3C/svg%3E");
     }
 
+    body.admin-mobile-shell-active #adminSectionProfile .settings-card--support .settings-setup-row--support-action {
+      position: relative;
+      z-index: 1;
+      pointer-events: auto;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    body.admin-mobile-shell-active #adminSectionProfile .settings-card--support .settings-setup-row--support-action * {
+      pointer-events: none;
+    }
+
     body.admin-mobile-shell-active #adminSectionProfile .settings-setup-row {
       display: flex;
       align-items: center;
@@ -26035,6 +26066,7 @@
       font-weight: 600;
       text-align: left;
       cursor: pointer;
+      touch-action: manipulation;
       -webkit-appearance: none;
       appearance: none;
     }
@@ -27242,50 +27274,19 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+      width: 100%;
       padding-top: 0;
-      margin-bottom: 14px;
+      margin: 0 0 2px;
     }
 
-    .mode-entry-logo {
-      position: relative;
-      width: 96px;
-      height: 96px;
-      margin-bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .mode-entry-logo::before {
-      content: "";
-      position: absolute;
-      inset: -16px;
-      border-radius: 32px;
-      background: radial-gradient(circle, rgba(148, 163, 184, 0.07) 0%, transparent 72%);
-      filter: blur(10px);
-    }
-
-    .mode-entry-logo__x {
-      position: relative;
-      font-size: 4.75rem;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.06em;
-      background: linear-gradient(160deg, #4f46e5 0%, #4338ca 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 2px 6px rgba(67, 56, 202, 0.1));
-    }
-
-    .mode-entry-brand {
-      margin: -4px 0 0;
-      font-size: clamp(0.9375rem, 3.4vw, 1.0625rem);
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: #64748b;
-      line-height: 1.1;
-      text-transform: uppercase;
+    .mode-entry-hero-logo {
+      display: block;
+      width: clamp(140px, 44vw, 180px);
+      max-width: 180px;
+      height: auto;
+      margin: 0 auto 18px;
+      object-fit: contain;
+      object-position: center;
     }
 
     .mode-entry-welcome {
@@ -27512,15 +27513,7 @@
 
     .app-shell-restore__logo {
       position: relative;
-      font-size: 3.25rem;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -0.06em;
-      background: linear-gradient(145deg, #a78bfa 0%, #7c3aed 38%, #6366f1 68%, #3b82f6 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 6px 20px rgba(99, 102, 241, 0.22));
+      display: block;
     }
 
     .app-shell-restore__wordmark {
@@ -27941,7 +27934,7 @@
 
   <div id="appSplash" class="app-splash is-hidden" aria-hidden="true">
     <div class="app-splash-inner">
-      <span class="xbook-mark xbook-mark--splash" aria-hidden="true"><span class="xbook-mark__x">X</span></span>
+      <img class="xbook-logo xbook-logo--splash" src="icons/xbook-logo.png" alt="" width="72" height="72" decoding="async" />
       <p class="app-splash-title">XBOOK</p>
     </div>
   </div>
@@ -27950,7 +27943,7 @@
     <div class="app-shell-restore__bg" aria-hidden="true"></div>
     <div class="app-shell-overlay-card app-shell-restore__inner">
       <div id="appShellRestoreGeneric" class="app-shell-restore__brand">
-        <span class="app-shell-restore__logo" aria-hidden="true">X</span>
+        <img class="xbook-logo xbook-logo--restore app-shell-restore__logo" src="icons/xbook-logo.png" alt="" width="80" height="80" decoding="async" />
         <p class="app-shell-restore__wordmark">XBook</p>
         <p class="app-shell-restore__tagline">Smart booking for modern businesses</p>
       </div>
@@ -27985,7 +27978,7 @@
   <div class="topbar">
     <div class="topbar-inner">
       <div class="topbar-brand topbar-brand--xbook">
-        <span class="xbook-mark xbook-mark--sm" aria-hidden="true"><span class="xbook-mark__x">X</span></span>
+        <img class="xbook-logo xbook-logo--sm" src="icons/xbook-logo.png" alt="" width="28" height="28" decoding="async" />
         <strong class="topbar-title">XBOOK</strong>
       </div>
       <div class="topbar-actions">
@@ -28013,10 +28006,7 @@
       <div class="mode-entry-screen__content">
         <div class="mode-entry-main">
           <header class="mode-entry-hero mode-entry-hero--brand">
-            <div class="mode-entry-logo" aria-hidden="true">
-              <span class="mode-entry-logo__x">X</span>
-            </div>
-            <p class="mode-entry-brand">XBOOK</p>
+            <img class="mode-entry-hero-logo" src="icons/xbook-logo-hero.png" alt="XBOOK" width="168" height="168" decoding="async" />
           </header>
 
           <section class="mode-entry-welcome" aria-labelledby="modeEntryHeadline">
@@ -28048,7 +28038,7 @@
     <div id="authView" class="card auth-card hidden">
       <div class="auth-card-inner">
         <div class="auth-brand auth-brand--auth-screen">
-          <span class="xbook-mark xbook-mark--md" aria-hidden="true"><span class="xbook-mark__x">X</span></span>
+          <img class="xbook-logo xbook-logo--md" src="icons/xbook-logo.png" alt="" width="46" height="46" decoding="async" />
           <p class="auth-brand__name">XBOOK</p>
           <p class="auth-brand__welcome">Welcome Back</p>
         </div>
@@ -28165,7 +28155,7 @@
     <div id="adminEmailVerifiedView" class="email-verified-screen hidden" role="main" aria-label="Email verified">
       <div class="email-verified-screen__inner">
         <div class="auth-brand auth-brand--auth-screen">
-          <span class="xbook-mark xbook-mark--md" aria-hidden="true"><span class="xbook-mark__x">X</span></span>
+          <img class="xbook-logo xbook-logo--md" src="icons/xbook-logo.png" alt="" width="46" height="46" decoding="async" />
           <p class="auth-brand__name">XBOOK</p>
         </div>
         <h1 class="email-verified-screen__title">Email confirmed</h1>
@@ -29786,12 +29776,12 @@
               </div>
               <div class="settings-card settings-card--support">
                 <p class="settings-card__eyebrow">Support</p>
-                <button type="button" class="settings-setup-row" onclick="openCustomerProfileHelpSheet()">
+                <button type="button" id="adminSettingsHelpSupportRow" class="settings-setup-row settings-setup-row--support-action" onclick="openAdminHelpSupportFromSettings(event)">
                   <span class="settings-setup-row__icon" aria-hidden="true"></span>
                   <span class="settings-setup-row__label">Help &amp; Support</span>
                   <span class="settings-setup-row__chev" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="settings-setup-row" onclick="openCustomerProfileAboutSheet()">
+                <button type="button" id="adminSettingsAboutXbookRow" class="settings-setup-row settings-setup-row--support-action" onclick="openAdminAboutXbookFromSettings(event)">
                   <span class="settings-setup-row__icon" aria-hidden="true"></span>
                   <span class="settings-setup-row__label">About XBOOK</span>
                   <span class="settings-setup-row__chev" aria-hidden="true"></span>
@@ -30641,7 +30631,7 @@
       <div id="customerStartCard" class="card customer-hub-card hidden">
         <div class="customer-hub-shell">
           <div class="auth-brand auth-brand--auth-screen">
-            <span class="xbook-mark xbook-mark--md" aria-hidden="true"><span class="xbook-mark__x">X</span></span>
+            <img class="xbook-logo xbook-logo--md" src="icons/xbook-logo.png" alt="" width="46" height="46" decoding="async" />
             <p class="auth-brand__name">XBOOK</p>
             <p class="auth-brand__welcome">Welcome Back</p>
           </div>
@@ -31614,6 +31604,9 @@
             </button>
           </header>
           <div class="customer-profile-edit-sheet__body">
+            <div class="customer-profile-info-about-logo" aria-hidden="true">
+              <img class="xbook-logo xbook-logo--about" src="icons/xbook-logo.png" alt="" width="72" height="72" decoding="async" />
+            </div>
             <p class="customer-profile-info-about-brand">XBOOK</p>
             <p class="customer-profile-info-about-version">Version <span id="customerProfileAboutVersion">1.0</span></p>
             <p class="customer-profile-info-copy">Developed and maintained by GT Web Studio.</p>
@@ -34008,7 +34001,17 @@
     }
   }
 
+  function portalCustomerProfileInfoSheetForAdmin(sheetId) {
+    const sheet = document.getElementById(sheetId);
+    const adminView = document.getElementById("adminView");
+    if (!sheet || !adminView || adminView.classList.contains("hidden")) return;
+    if (sheet.closest("#publicView")) {
+      document.body.appendChild(sheet);
+    }
+  }
+
   function showCustomerProfileInfoSheet(sheetId) {
+    portalCustomerProfileInfoSheetForAdmin(sheetId);
     document.getElementById("customerProfileEditSheet")?.classList.add("hidden");
     setCustomerProfileEditError("");
     CUSTOMER_PROFILE_INFO_SHEET_IDS.forEach((id) => {
@@ -34052,6 +34055,36 @@
     showCustomerProfileInfoSheet("customerProfileAboutSheet");
   }
   window.openCustomerProfileAboutSheet = openCustomerProfileAboutSheet;
+
+  function openHelpSupportSheet() {
+    openCustomerProfileHelpSheet();
+  }
+  window.openHelpSupportSheet = openHelpSupportSheet;
+
+  function openAboutXbookSheet() {
+    openCustomerProfileAboutSheet();
+  }
+  window.openAboutXbookSheet = openAboutXbookSheet;
+
+  function openAdminHelpSupportFromSettings(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.log("[admin-settings] Help & Support tapped");
+    openHelpSupportSheet();
+  }
+  window.openAdminHelpSupportFromSettings = openAdminHelpSupportFromSettings;
+
+  function openAdminAboutXbookFromSettings(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    console.log("[admin-settings] About XBOOK tapped");
+    openAboutXbookSheet();
+  }
+  window.openAdminAboutXbookFromSettings = openAdminAboutXbookFromSettings;
 
   async function contactCustomerSupport() {
     const email = CUSTOMER_SUPPORT_EMAIL;
@@ -35562,7 +35595,7 @@
   function emptyStateHtml(title, message = "") {
     return `
       <div class="empty-state">
-        <span class="empty-state__mark" aria-hidden="true">X</span>
+        <img class="xbook-logo empty-state__mark" src="icons/xbook-logo.png" alt="" width="36" height="36" decoding="async" />
         <span class="empty-state-title">${escapeHtml(title)}</span>
         ${message ? `<span>${escapeHtml(message)}</span>` : ""}
       </div>
