@@ -9,3 +9,4 @@ www/*
 # Uncomment to commit ios/android to git:
 # ios/
 # android/
+*.zip

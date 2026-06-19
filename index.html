@@ -111,13 +111,25 @@
     }
 
     .xbook-logo--splash {
-      width: 72px;
-      height: 72px;
+      width: clamp(72px, 20vw, 88px);
+      max-width: 88px;
+      height: auto;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      object-fit: contain;
     }
 
     .xbook-logo--restore {
-      width: 80px;
-      height: 80px;
+      width: clamp(76px, 22vw, 96px);
+      max-width: 96px;
+      height: auto;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      object-fit: contain;
     }
 
     .xbook-logo--about {
@@ -7696,9 +7708,220 @@
       --admin-save-dock-inner: 88px;
     }
 
+    .admin-customize-hub {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .admin-customize-hub-lead {
+      margin: 0 0 12px;
+      color: var(--color-muted, #64748b);
+      line-height: 1.45;
+    }
+
+    .admin-customize-hub-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 58px;
+      margin: 0;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border, #e2e8f0);
+      border-radius: 14px;
+      background: var(--color-surface, #fff);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.06));
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+      touch-action: manipulation;
+    }
+
+    .admin-customize-hub-row:active {
+      transform: scale(0.99);
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary, #2563eb)) 6%, var(--color-surface, #fff));
+    }
+
+    .admin-customize-hub-row__icon {
+      flex: 0 0 36px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--business-accent, var(--color-primary, #2563eb)) 12%, #f8fafc) center / 20px no-repeat;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--business-accent, var(--color-primary, #2563eb)) 18%, transparent);
+    }
+
+    .admin-customize-hub-row__icon--logo {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Ccircle cx='8.5' cy='10.5' r='1.5' fill='%232563eb' stroke='none'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--profile {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--contact {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--hours {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 6v6l4 2'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--closed {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--limits {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--approval {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--branding {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0L12 2.69z'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--preview {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__icon--share {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb' stroke-width='1.75'%3E%3Ccircle cx='18' cy='5' r='3'/%3E%3Ccircle cx='6' cy='12' r='3'/%3E%3Ccircle cx='18' cy='19' r='3'/%3E%3Cpath d='M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98'/%3E%3C/svg%3E");
+    }
+
+    .admin-customize-hub-row__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .admin-customize-hub-row__title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text, #0f172a);
+    }
+
+    .admin-customize-hub-row__subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-muted, #64748b);
+      line-height: 1.35;
+    }
+
+    .admin-customize-hub-row__chev {
+      flex: 0 0 8px;
+      width: 8px;
+      height: 8px;
+      border-right: 2px solid #cbd5e1;
+      border-bottom: 2px solid #cbd5e1;
+      transform: rotate(-45deg);
+    }
+
+    .admin-customize-hub-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 10px;
+      padding: 4px 0;
+      border: none;
+      background: none;
+      color: var(--business-accent, var(--color-primary, #2563eb));
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .admin-customize-hub-back:active {
+      opacity: 0.75;
+    }
+
+    #adminSectionCustomize.admin-customize--panel .admin-section-title,
+    #adminSectionCustomize.admin-customize--panel .admin-customize-hub-lead {
+      display: none !important;
+    }
+
+    #adminSectionCustomize.admin-customize--hub .admin-customize-hub-back {
+      display: none !important;
+    }
+
+    /* View switching — only hub OR one panel visible (not both stacked) */
+    #adminSectionCustomize.admin-customize--hub #adminCustomizeHub {
+      display: flex !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel #adminCustomizeHub {
+      display: none !important;
+    }
+
+    #adminSectionCustomize.admin-customize--hub #widgetCustomizeBooking {
+      display: none !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel #widgetCustomizeBooking {
+      display: block !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel .admin-customize-hub-back {
+      display: inline-flex !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel .admin-customize-panel {
+      display: none !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel .admin-customize-panel.is-active {
+      display: block !important;
+    }
+
+    .admin-customize-panel.hidden {
+      display: none !important;
+    }
+
+    #adminSectionCustomize.admin-customize--panel .admin-customize-panels-intro {
+      display: none;
+    }
+
+    #adminSectionCustomize.admin-customize--hub .admin-customize-hub {
+      padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #adminSectionCustomize.admin-customize--panel #widgetCustomizeBooking {
+      padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.admin-mobile-shell-active #adminSectionCustomize.admin-customize--panel #widgetCustomizeBooking,
+    body.native-app-shell #adminSectionCustomize.admin-customize--panel #widgetCustomizeBooking {
+      padding-bottom: calc(
+        env(safe-area-inset-bottom, 0px) + 10px + 64px + var(--admin-save-dock-gap) + var(--admin-save-dock-inner) + 36px
+      );
+    }
+
+    body.admin-mobile-shell-active #adminSectionCustomize.admin-customize--panel.admin-customize--save-dock-hidden #widgetCustomizeBooking,
+    body.native-app-shell #adminSectionCustomize.admin-customize--panel.admin-customize--save-dock-hidden #widgetCustomizeBooking {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px + 64px + 24px);
+    }
+
     #adminSectionCustomize .widget-content {
       display: block !important;
       padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #adminSectionCustomize.admin-customize--hub .widget-content.admin-customize-panels {
+      display: none !important;
     }
 
     body.admin-mobile-shell-active #adminSectionCustomize.admin-section--active .widget-content,
@@ -27441,22 +27664,28 @@
       padding-bottom: 0;
     }
 
-    /* —— XBOOK static demo preview (read-only brochure; no Supabase / no real flows) —— */
+    /* —— XBOOK static demo preview (read-only; no Supabase / no real flows) —— */
     body:has(#xbookDemoHomeView:not(.hidden)),
-    body:has(#xbookDemoBusinessView:not(.hidden)),
-    body:has(#xbookDemoCustomerView:not(.hidden)) {
+    body:has(#xbookDemoAdminView:not(.hidden)),
+    body:has(#xbookDemoCustomerShell:not(.hidden)),
+    body.xbook-demo-admin-active,
+    body.xbook-demo-customer-active {
       background: #fafafa;
     }
 
     body:has(#xbookDemoHomeView:not(.hidden)) .topbar,
-    body:has(#xbookDemoBusinessView:not(.hidden)) .topbar,
-    body:has(#xbookDemoCustomerView:not(.hidden)) .topbar {
+    body:has(#xbookDemoAdminView:not(.hidden)) .topbar,
+    body:has(#xbookDemoCustomerShell:not(.hidden)) .topbar,
+    body.xbook-demo-admin-active .topbar,
+    body.xbook-demo-customer-active .topbar {
       display: none;
     }
 
     body:has(#xbookDemoHomeView:not(.hidden)) .container,
-    body:has(#xbookDemoBusinessView:not(.hidden)) .container,
-    body:has(#xbookDemoCustomerView:not(.hidden)) .container {
+    body:has(#xbookDemoAdminView:not(.hidden)) .container,
+    body:has(#xbookDemoCustomerShell:not(.hidden)) .container,
+    body.xbook-demo-admin-active .container,
+    body.xbook-demo-customer-active .container {
       max-width: none;
       width: 100%;
       padding: 0;
@@ -27710,6 +27939,815 @@
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
+    /* —— XBOOK demo admin shell (Phase 1 — read-only, local data only) —— */
+    #xbookDemoAdminView {
+      position: relative;
+      width: 100%;
+      min-height: 100dvh;
+      min-height: calc(100dvh - env(safe-area-inset-top, 0px));
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #xbookDemoAdminView.hidden {
+      display: none;
+    }
+
+    .xbook-demo-admin__banner {
+      flex-shrink: 0;
+      margin: 0;
+      padding: 8px 14px;
+      background: rgba(0, 27, 94, 0.06);
+      border-bottom: 1px solid rgba(0, 27, 94, 0.08);
+      color: var(--xbook-navy);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .xbook-demo-admin__toolbar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .xbook-demo-admin__back {
+      margin: 0;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #fff;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .xbook-demo-admin__brand {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      text-align: right;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #xbookDemoAdminMain {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 14px calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #xbookDemoAdminBottomNav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-around;
+      gap: 2px;
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 1px solid rgba(226, 232, 240, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    #xbookDemoAdminBottomNav .admin-mobile-nav-item {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 4px 2px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #xbookDemoAdminBottomNav .admin-mobile-nav-item--active {
+      color: var(--xbook-navy);
+    }
+
+    #xbookDemoAdminBottomNav .admin-mobile-nav-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .xbook-demo-admin-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .xbook-demo-admin-card {
+      padding: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius-card);
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .xbook-demo-admin-card__title {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .xbook-demo-admin-card__sub {
+      margin: -6px 0 10px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .xbook-demo-admin-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .xbook-demo-admin-kpi {
+      padding: 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .xbook-demo-admin-kpi__label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .xbook-demo-admin-kpi__value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+    }
+
+    .xbook-demo-admin-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .xbook-demo-admin-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .xbook-demo-admin-row strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .xbook-demo-admin-row span {
+      color: #64748b;
+      text-align: right;
+    }
+
+    .xbook-demo-admin-list-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .xbook-demo-admin-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .xbook-demo-admin-list-item__main {
+      min-width: 0;
+    }
+
+    .xbook-demo-admin-list-item__title {
+      margin: 0 0 2px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .xbook-demo-admin-list-item__meta {
+      margin: 0;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .xbook-demo-admin-badge {
+      flex-shrink: 0;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .xbook-demo-admin-badge--confirmed {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .xbook-demo-admin-badge--pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .xbook-demo-admin-badge--vip {
+      background: rgba(245, 158, 11, 0.12);
+      color: #b45309;
+    }
+
+    .xbook-demo-admin-badge--blocked {
+      background: rgba(239, 68, 68, 0.1);
+      color: #b91c1c;
+    }
+
+    .xbook-demo-admin-hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: var(--radius-card);
+      background: linear-gradient(135deg, #001b5e 0%, #1e3a8a 100%);
+      color: #fff;
+    }
+
+    .xbook-demo-admin-hero__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .xbook-demo-admin-hero__title {
+      margin: 0 0 2px;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .xbook-demo-admin-hero__sub {
+      margin: 0;
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .xbook-demo-admin-nav-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px;
+      margin: 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .xbook-demo-admin-nav-row__chev {
+      color: #94a3b8;
+      font-size: 18px;
+    }
+
+    .xbook-demo-admin-locked-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .xbook-demo-admin-static-field {
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .xbook-demo-admin-static-field__label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .xbook-demo-admin-calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .xbook-demo-admin-calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f8fafc;
+    }
+
+    .xbook-demo-admin-calendar-day--booked {
+      background: rgba(0, 27, 94, 0.08);
+      color: var(--xbook-navy);
+    }
+
+    .xbook-demo-admin-calendar-day--closed {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .xbook-demo-admin-qr {
+      width: 120px;
+      height: 120px;
+      margin: 12px auto;
+      border-radius: 12px;
+      border: 2px dashed #cbd5e1;
+      background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 8px, #e2e8f0 8px, #e2e8f0 16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    /* —— XBOOK demo customer shell (Phase 2 — read-only, local data only) —— */
+    #xbookDemoCustomerShell {
+      position: relative;
+      width: 100%;
+      min-height: 100dvh;
+      min-height: calc(100dvh - env(safe-area-inset-top, 0px));
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #xbookDemoCustomerShell.hidden {
+      display: none;
+    }
+
+    .xbook-demo-customer__banner {
+      flex-shrink: 0;
+      margin: 0;
+      padding: 8px 14px;
+      background: rgba(0, 27, 94, 0.06);
+      border-bottom: 1px solid rgba(0, 27, 94, 0.08);
+      color: var(--xbook-navy);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .xbook-demo-customer__toolbar {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .xbook-demo-customer__back {
+      margin: 0;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #fff;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #xbookDemoCustomerBrandedHeader {
+      flex-shrink: 0;
+      position: relative;
+      min-height: 140px;
+      padding: 16px 14px 14px;
+      background: linear-gradient(135deg, #001b5e 0%, #1e40af 55%, #3b82f6 100%);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    #xbookDemoCustomerBrandedHeader.hidden {
+      display: none;
+    }
+
+    #xbookDemoCustomerBrandedHeader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.35) 100%);
+      pointer-events: none;
+    }
+
+    .xbook-demo-customer-brand {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .xbook-demo-customer-brand__logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .xbook-demo-customer-brand__name {
+      margin: 0 0 2px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .xbook-demo-customer-brand__meta {
+      margin: 0;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    #xbookDemoCustomerMain {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 14px calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    #xbookDemoCustomerBottomNav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-around;
+      gap: 2px;
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+      background: rgba(255, 255, 255, 0.96);
+      border-top: 1px solid rgba(226, 232, 240, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    #xbookDemoCustomerBottomNav .customer-mobile-nav-item {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 4px 2px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    #xbookDemoCustomerBottomNav .customer-mobile-nav-item--active {
+      color: var(--xbook-navy);
+    }
+
+    #xbookDemoCustomerBottomNav .customer-mobile-nav-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .xbook-demo-customer-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .xbook-demo-customer-card {
+      padding: 14px;
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      border-radius: var(--radius-card);
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .xbook-demo-customer-card__title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .xbook-demo-customer-card__sub {
+      margin: -4px 0 10px;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-upcoming {
+      padding: 14px;
+      border-radius: var(--radius-card);
+      background: linear-gradient(135deg, rgba(0, 27, 94, 0.04) 0%, rgba(59, 130, 246, 0.08) 100%);
+      border: 1px solid rgba(0, 27, 94, 0.1);
+    }
+
+    .xbook-demo-customer-upcoming__label {
+      margin: 0 0 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--xbook-navy);
+    }
+
+    .xbook-demo-customer-upcoming__title {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .xbook-demo-customer-upcoming__meta {
+      margin: 0;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-step-label {
+      margin: 0 0 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-service-card {
+      width: 100%;
+      margin: 0 0 8px;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .xbook-demo-customer-service-card--selected {
+      border-color: var(--xbook-navy);
+      background: rgba(0, 27, 94, 0.04);
+    }
+
+    .xbook-demo-customer-service-card__name {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .xbook-demo-customer-service-card__meta {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .xbook-demo-customer-chip {
+      padding: 10px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+    }
+
+    .xbook-demo-customer-chip--selected {
+      border-color: var(--xbook-navy);
+      background: rgba(0, 27, 94, 0.06);
+      color: var(--xbook-navy);
+    }
+
+    .xbook-demo-customer-date-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .xbook-demo-customer-date {
+      flex-shrink: 0;
+      min-width: 56px;
+      padding: 10px 8px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .xbook-demo-customer-date--selected {
+      border-color: var(--xbook-navy);
+      background: rgba(0, 27, 94, 0.06);
+    }
+
+    .xbook-demo-customer-date__day {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-date__num {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .xbook-demo-customer-slot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .xbook-demo-customer-slot {
+      padding: 12px 8px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .xbook-demo-customer-slot--selected {
+      border-color: var(--xbook-navy);
+      background: rgba(0, 27, 94, 0.06);
+      color: var(--xbook-navy);
+    }
+
+    .xbook-demo-customer-confirm-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .xbook-demo-customer-confirm-row:last-child {
+      border-bottom: none;
+    }
+
+    .xbook-demo-customer-confirm-row span {
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-confirm-row strong {
+      color: #0f172a;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .xbook-demo-customer-booking-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .xbook-demo-customer-booking-item:last-child {
+      border-bottom: none;
+    }
+
+    .xbook-demo-customer-profile-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 13px;
+    }
+
+    .xbook-demo-customer-profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .xbook-demo-customer-profile-row span {
+      color: #64748b;
+    }
+
+    .xbook-demo-customer-profile-row strong {
+      color: #0f172a;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .xbook-demo-customer-locked-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px 14px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .xbook-demo-customer-primary-btn {
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: var(--xbook-navy);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     /* App shell — session restore, offline, error (full-screen branded) */
     .app-shell-overlay {
       position: fixed;
@@ -27787,6 +28825,10 @@
     .app-shell-restore__logo {
       position: relative;
       display: block;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
     }
 
     .app-shell-restore__wordmark {
@@ -28207,7 +29249,7 @@
 
   <div id="appSplash" class="app-splash is-hidden" aria-hidden="true">
     <div class="app-splash-inner">
-      <img class="xbook-logo xbook-logo--splash" src="icons/xbook-logo.png" alt="" width="72" height="72" decoding="async" />
+      <img class="xbook-logo xbook-logo--splash" src="icons/xbook-logo-hero.png" alt="" width="88" height="71" decoding="async" />
       <p class="app-splash-title">XBOOK</p>
     </div>
   </div>
@@ -28216,7 +29258,7 @@
     <div class="app-shell-restore__bg" aria-hidden="true"></div>
     <div class="app-shell-overlay-card app-shell-restore__inner">
       <div id="appShellRestoreGeneric" class="app-shell-restore__brand">
-        <img class="xbook-logo xbook-logo--restore app-shell-restore__logo" src="icons/xbook-logo.png" alt="" width="80" height="80" decoding="async" />
+        <img class="xbook-logo xbook-logo--restore app-shell-restore__logo" src="icons/xbook-logo-hero.png" alt="" width="96" height="77" decoding="async" />
         <p class="app-shell-restore__wordmark">XBook</p>
         <p class="app-shell-restore__tagline">Smart booking for modern businesses</p>
       </div>
@@ -28337,226 +29379,78 @@
       </div>
     </div>
 
-    <div id="xbookDemoBusinessView" class="xbook-demo-screen hidden" role="main" aria-label="Business owner demo preview">
-      <div class="xbook-demo-screen__inner">
-        <div class="xbook-demo-banner">Demo Preview — all features are locked. This is only a visual tour.</div>
-        <header class="xbook-demo-header">
-          <h1>Business Owner Preview</h1>
-          <p>Sample admin tools and dashboards — static examples only.</p>
-        </header>
-        <div class="xbook-demo-grid">
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Dashboard Overview</h2>
-            <p class="xbook-demo-card__body">Today’s bookings, upcoming appointments, revenue preview, and client activity.</p>
-            <ul class="xbook-demo-card__list">
-              <li><span>Today</span><strong>6 bookings</strong></li>
-              <li><span>Upcoming</span><strong>14 this week</strong></li>
-              <li><span>Revenue preview</span><strong>€1,240</strong></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">View dashboard — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Bookings</h2>
-            <p class="xbook-demo-card__body">Appointment list with status, client name, service, and staff.</p>
-            <ul class="xbook-demo-card__list">
-              <li><strong>9:00 Haircut</strong><span>Confirmed</span></li>
-              <li><strong>10:30 Beard Trim</strong><span>Confirmed</span></li>
-              <li><strong>12:00 Consultation</strong><span>Pending</span></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add booking — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Calendar</h2>
-            <p class="xbook-demo-card__body">Visual calendar with staff columns and color-coded appointments.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip">Mon 3</span>
-              <span class="xbook-demo-chip">Tue 4</span>
-              <span class="xbook-demo-chip">Wed 5</span>
-              <span class="xbook-demo-chip">Thu 6</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Open calendar — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Services</h2>
-            <p class="xbook-demo-card__body">Service cards with price, duration, and category.</p>
-            <ul class="xbook-demo-card__list">
-              <li><strong>Haircut</strong><span>45 min · €25</span></li>
-              <li><strong>Beard Trim</strong><span>20 min · €12</span></li>
-              <li><strong>Full Groom</strong><span>60 min · €40</span></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add service — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Staff</h2>
-            <p class="xbook-demo-card__body">Staff member cards with availability and assigned services.</p>
-            <ul class="xbook-demo-card__list">
-              <li><strong>Marko D.</strong><span>Mon–Sat</span></li>
-              <li><strong>Ana K.</strong><span>Tue–Fri</span></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add staff — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Clients</h2>
-            <p class="xbook-demo-card__body">Customer profiles with notes, VIP tags, and blocked indicators.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip xbook-demo-chip--vip">VIP · Elena R.</span>
-              <span class="xbook-demo-chip">Note: prefers mornings</span>
-              <span class="xbook-demo-chip xbook-demo-chip--blocked">Blocked · No-show</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add client — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Booking Rules</h2>
-            <p class="xbook-demo-card__body">Max bookings per day/week per client and booking limits.</p>
-            <ul class="xbook-demo-card__list">
-              <li><span>Max per day</span><strong>2 bookings</strong></li>
-              <li><span>Max per week</span><strong>5 bookings</strong></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save rules — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Closed Days &amp; Holidays</h2>
-            <p class="xbook-demo-card__body">Vacation days, non-working days, and public holiday blocking.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip">Aug 15 — Public holiday</span>
-              <span class="xbook-demo-chip">Sep 2–6 — Vacation</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Add closed day — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">QR / Public Booking Link</h2>
-            <p class="xbook-demo-card__body">Shareable link and QR code for client self-booking.</p>
-            <div class="xbook-demo-preview-block">
-              <span class="xbook-demo-preview-block__label">Sample link</span>
-              <p class="xbook-demo-preview-block__value">xbook.app/book/studio-gt</p>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Copy link — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Branding</h2>
-            <p class="xbook-demo-card__body">Logo, cover photo, colors, and business profile preview.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip">Logo uploaded</span>
-              <span class="xbook-demo-chip">Navy theme</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Upload logo — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Notifications</h2>
-            <p class="xbook-demo-card__body">Confirmations, cancellations, and appointment reminders.</p>
-            <ul class="xbook-demo-card__list">
-              <li><span>Email confirmations</span><strong>On</strong></li>
-              <li><span>24h reminders</span><strong>On</strong></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save notifications — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Settings</h2>
-            <p class="xbook-demo-card__body">Business details, hours, and availability settings.</p>
-            <ul class="xbook-demo-card__list">
-              <li><span>Business name</span><strong>GT Studio</strong></li>
-              <li><span>Hours</span><strong>Mon–Sat 9:00–18:00</strong></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Save settings — locked</button>
-          </article>
-        </div>
-        <div class="xbook-demo-footer">
-          <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="backToXbookDemoHome()">Back to Demo Home</button>
-          <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
-        </div>
-      </div>
+    <div id="xbookDemoAdminView" class="hidden" role="main" aria-label="Business owner demo preview">
+      <p class="xbook-demo-admin__banner">Demo Preview — all features are locked. This is only a visual tour.</p>
+      <header class="xbook-demo-admin__toolbar">
+        <button type="button" class="xbook-demo-admin__back" onclick="backToXbookDemoHome()">← Demo Home</button>
+        <p id="xbookDemoAdminToolbarBrand" class="xbook-demo-admin__brand">GT Studio</p>
+      </header>
+      <main id="xbookDemoAdminMain" aria-live="polite"></main>
+      <nav id="xbookDemoAdminBottomNav" aria-label="Demo admin navigation">
+        <button type="button" class="admin-mobile-nav-item admin-mobile-nav-item--active" data-xbook-demo-tab="overview" aria-current="page">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z"/></svg></span>
+          <span class="admin-mobile-nav-label">Overview</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="services" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 2 2 7l10 5 10-5-10-5z"/><path stroke="currentColor" stroke-width="1.5" d="M2 17l10 5 10-5"/><path stroke="currentColor" stroke-width="1.5" d="M2 12l10 5 10-5"/></svg></span>
+          <span class="admin-mobile-nav-label">Services</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="staff" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <span class="admin-mobile-nav-label">Staff</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="calendar" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path stroke="currentColor" stroke-width="1.5" d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+          <span class="admin-mobile-nav-label">Calendar</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="bookings" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <span class="admin-mobile-nav-label">Bookings</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="clients" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <span class="admin-mobile-nav-label">Clients</span>
+        </button>
+        <button type="button" class="admin-mobile-nav-item" data-xbook-demo-tab="settings" aria-current="false">
+          <span class="admin-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path stroke="currentColor" stroke-width="1.5" d="M12 2.5 18.2 6.8V17.2L12 21.5 5.8 17.2V6.8L12 2.5z"/><circle cx="12" cy="12" r="2.25" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <span class="admin-mobile-nav-label">Settings</span>
+        </button>
+      </nav>
     </div>
 
-    <div id="xbookDemoCustomerView" class="xbook-demo-screen hidden" role="main" aria-label="Customer demo preview">
-      <div class="xbook-demo-screen__inner">
-        <div class="xbook-demo-banner">Demo Preview — all features are locked. This is only a visual tour.</div>
-        <header class="xbook-demo-header">
-          <h1>Customer View Preview</h1>
-          <p>Sample client booking experience — static examples only.</p>
-        </header>
-        <div class="xbook-demo-grid">
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Business Profile</h2>
-            <p class="xbook-demo-card__body">Branded header with logo, cover photo, and business details.</p>
-            <div class="xbook-demo-preview-block">
-              <span class="xbook-demo-preview-block__label">GT Studio · Barber &amp; Grooming</span>
-              <p class="xbook-demo-preview-block__value">Skopje · Open today 9:00–18:00</p>
-            </div>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Choose a Service</h2>
-            <p class="xbook-demo-card__body">Service selection cards with duration and price.</p>
-            <ul class="xbook-demo-card__list">
-              <li><strong>Haircut</strong><span>45 min · €25</span></li>
-              <li><strong>Beard Trim</strong><span>20 min · €12</span></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Select service — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Choose Staff</h2>
-            <p class="xbook-demo-card__body">Pick a staff member or choose “Any Available”.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip">Any Available</span>
-              <span class="xbook-demo-chip">Marko D.</span>
-              <span class="xbook-demo-chip">Ana K.</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Choose staff — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Pick Date &amp; Time</h2>
-            <p class="xbook-demo-card__body">Calendar and available time slot selection.</p>
-            <div class="xbook-demo-slot-grid">
-              <span class="xbook-demo-slot">9:00</span>
-              <span class="xbook-demo-slot xbook-demo-slot--selected">10:30</span>
-              <span class="xbook-demo-slot">12:00</span>
-              <span class="xbook-demo-slot">14:00</span>
-              <span class="xbook-demo-slot">15:30</span>
-              <span class="xbook-demo-slot">17:00</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Book time — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Booking Confirmation</h2>
-            <p class="xbook-demo-card__body">Review summary before confirming an appointment.</p>
-            <ul class="xbook-demo-card__list">
-              <li><span>Service</span><strong>Haircut</strong></li>
-              <li><span>Date</span><strong>Wed, Jun 18 · 10:30</strong></li>
-              <li><span>Staff</span><strong>Marko D.</strong></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Confirm booking — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Upcoming Appointment</h2>
-            <p class="xbook-demo-card__body">Next visit card with date, service, and location.</p>
-            <div class="xbook-demo-preview-block">
-              <span class="xbook-demo-preview-block__label">Next visit</span>
-              <p class="xbook-demo-preview-block__value">Wed, Jun 18 · 10:30 · Haircut</p>
-            </div>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">My Bookings &amp; Profile</h2>
-            <p class="xbook-demo-card__body">Customer appointment history and profile details.</p>
-            <ul class="xbook-demo-card__list">
-              <li><strong>Jun 18 · Haircut</strong><span>Upcoming</span></li>
-              <li><strong>May 30 · Beard Trim</strong><span>Completed</span></li>
-            </ul>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Edit profile — locked</button>
-          </article>
-          <article class="xbook-demo-card">
-            <h2 class="xbook-demo-card__title">Cancel / Reschedule</h2>
-            <p class="xbook-demo-card__body">Manage appointment options shown to customers.</p>
-            <div class="xbook-demo-chip-row">
-              <span class="xbook-demo-chip">Reschedule</span>
-              <span class="xbook-demo-chip">Cancel</span>
-            </div>
-            <button type="button" class="xbook-demo-locked-btn" onclick="showXbookDemoLockMessage()">Manage appointment — locked</button>
-          </article>
-        </div>
-        <div class="xbook-demo-footer">
-          <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="backToXbookDemoHome()">Back to Demo Home</button>
-          <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
-        </div>
+    <div id="xbookDemoCustomerShell" class="hidden" role="main" aria-label="Customer demo preview">
+      <p class="xbook-demo-customer__banner">Demo Preview — all features are locked. This is only a visual tour.</p>
+      <div class="xbook-demo-customer__toolbar">
+        <button type="button" class="xbook-demo-customer__back" onclick="backToXbookDemoHome()">← Demo Home</button>
       </div>
+      <header id="xbookDemoCustomerBrandedHeader" aria-label="Business branding">
+        <div class="xbook-demo-customer-brand">
+          <div id="xbookDemoCustomerBrandLogo" class="xbook-demo-customer-brand__logo" aria-hidden="true">G</div>
+          <div>
+            <p id="xbookDemoCustomerBrandName" class="xbook-demo-customer-brand__name">GT Studio</p>
+            <p id="xbookDemoCustomerBrandMeta" class="xbook-demo-customer-brand__meta">Barber &amp; Grooming · Skopje</p>
+          </div>
+        </div>
+      </header>
+      <main id="xbookDemoCustomerMain" aria-live="polite"></main>
+      <nav id="xbookDemoCustomerBottomNav" aria-label="Demo customer navigation">
+        <button type="button" class="customer-mobile-nav-item customer-mobile-nav-item--active" data-xbook-demo-customer-tab="home" aria-current="page">
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z" fill="currentColor"/></svg></span>
+          <span>Home</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-xbook-demo-customer-tab="book" aria-current="false">
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 3v4M16 3v4M4 10h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          <span>Book</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-xbook-demo-customer-tab="bookings" aria-current="false">
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          <span>Bookings</span>
+        </button>
+        <button type="button" class="customer-mobile-nav-item" data-xbook-demo-customer-tab="profile" aria-current="false">
+          <span class="customer-mobile-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 20v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+          <span>Profile</span>
+        </button>
+      </nav>
     </div>
 
     <div id="authView" class="card auth-card hidden">
@@ -28935,13 +29829,100 @@
       </div>
           </section>
 
-          <section id="adminSectionCustomize" class="admin-section" data-admin-section="customize" hidden aria-label="Customize booking page">
+          <section id="adminSectionCustomize" class="admin-section admin-customize--hub" data-admin-section="customize" hidden aria-label="Customize booking page">
       <div class="card widget-card">
-        <h2 class="admin-section-title">Business profile &amp; booking page</h2>
-        <div id="widgetCustomizeBooking" class="widget-content">
-          <p class="admin-customize-save-reminder" role="note">Most fields are not live until you tap <strong>Save Changes</strong> at the bottom. Logo and cover uploads save to your account immediately when upload finishes.</p>
-          <p class="small">Make your booking page feel like <strong>your</strong> app — logo, colors, and contact info. Customers only see the live page, not this editor.</p>
+        <button type="button" id="adminCustomizeHubBack" class="admin-customize-hub-back hidden" onclick="backToAdminCustomizeHub()">
+          <span aria-hidden="true">←</span> Business profile &amp; booking page
+        </button>
+        <h2 class="admin-section-title" id="adminCustomizePageTitle">Business profile &amp; booking page</h2>
+        <p id="adminCustomizeHubLead" class="admin-customize-hub-lead small">Choose a section to edit your public booking page. Changes apply after you save.</p>
+        <nav id="adminCustomizeHub" class="admin-customize-hub" aria-label="Booking page settings">
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('logo-cover')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--logo" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Logo &amp; cover image</span>
+              <span class="admin-customize-hub-row__subtitle">Profile logo and hero cover</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('profile')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--profile" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Business profile</span>
+              <span class="admin-customize-hub-row__subtitle">Name, link slug, and about text</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('contact')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--contact" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Contact &amp; location</span>
+              <span class="admin-customize-hub-row__subtitle">Phone, email, address, and social links</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('hours')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--hours" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Working hours &amp; availability</span>
+              <span class="admin-customize-hub-row__subtitle">Open days, times, breaks, and booking window</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('closed-days')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--closed" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Non-working days &amp; holidays</span>
+              <span class="admin-customize-hub-row__subtitle">Manual closed days and public holidays</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('booking-limits')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--limits" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Booking limits</span>
+              <span class="admin-customize-hub-row__subtitle">Daily and weekly caps per client</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('client-approval')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--approval" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Client approval</span>
+              <span class="admin-customize-hub-row__subtitle">Who can book with your business</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('branding')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--branding" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Branding</span>
+              <span class="admin-customize-hub-row__subtitle">Accent color and page visibility toggles</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('preview')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--preview" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Live preview</span>
+              <span class="admin-customize-hub-row__subtitle">See how your booking page hero looks</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="admin-customize-hub-row" onclick="openAdminCustomizePanel('share')">
+            <span class="admin-customize-hub-row__icon admin-customize-hub-row__icon--share" aria-hidden="true"></span>
+            <span class="admin-customize-hub-row__text">
+              <span class="admin-customize-hub-row__title">Share your booking app</span>
+              <span class="admin-customize-hub-row__subtitle">Public link, QR code, and share actions</span>
+            </span>
+            <span class="admin-customize-hub-row__chev" aria-hidden="true"></span>
+          </button>
+        </nav>
+        <div id="widgetCustomizeBooking" class="widget-content admin-customize-panels hidden">
+          <p class="admin-customize-save-reminder admin-customize-panels-intro" role="note">Most fields are not live until you tap <strong>Save Changes</strong> at the bottom. Logo and cover uploads save to your account immediately when upload finishes.</p>
+          <p class="small admin-customize-panels-intro">Make your booking page feel like <strong>your</strong> app — logo, colors, and contact info. Customers only see the live page, not this editor.</p>
 
+          <div class="admin-customize-panel" data-customize-panel="logo-cover">
           <section class="customize-section" aria-labelledby="customizeLogoHeading">
             <h3 id="customizeLogoHeading">Profile logo</h3>
             <p class="small">Appears on your booking page hero. JPG, PNG or WebP, max 3 MB.</p>
@@ -28973,7 +29954,9 @@
             <input type="hidden" id="businessCoverUrl" />
             <div id="coverUploadStatus" class="hidden"></div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="profile">
           <section class="customize-section" aria-labelledby="customizeTextHeading">
             <h3 id="customizeTextHeading">Business profile</h3>
             <p class="small" style="margin: 0 0 12px">Core details from setup — update anytime. Customers see name, phone, and links on your booking page.</p>
@@ -28994,8 +29977,16 @@
                 <span>Uses the text above in your public hero.</span>
               </span>
             </label>
+            <label class="small" style="margin-top:14px" for="customizeBusinessSlug"><strong>Public booking link slug</strong></label>
+            <div class="business-id-row">
+              <input id="customizeBusinessSlug" placeholder="e.g. barber-shop-skopje" oninput="syncBusinessSlugAcrossForms(this.value); previewBusinessPublicLink()" autocomplete="off" />
+              <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
+            </div>
+            <p class="small">Lowercase letters, numbers and hyphens. Saved with Save Changes.</p>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="contact">
           <section class="customize-section" aria-labelledby="customizeContactHeading">
             <h3 id="customizeContactHeading">Contact &amp; location</h3>
             <div class="customize-contact-grid">
@@ -29028,7 +30019,9 @@
             <label class="small" style="margin-top:10px"><strong>Facebook</strong> <span style="font-weight:500;color:#64748b">(optional)</span></label>
             <input id="customizeBusinessFacebook" type="url" inputmode="url" placeholder="https://facebook.com/yourbusiness" oninput="previewBookingPageHero()" />
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="hours">
           <section class="customize-section customize-hours-block" id="customizeHoursSection" aria-labelledby="customizeHoursHeading">
             <div class="customize-hours-card">
               <div class="customize-hours-card__head">
@@ -29205,7 +30198,9 @@
               </div>
             </div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="closed-days">
           <section class="customize-section customize-hours-block" id="customizeClosedDaysSection" aria-labelledby="customizeClosedDaysHeading">
             <div id="widgetBlocked" class="customize-hours-card admin-closed-days-panel">
               <div class="customize-hours-card__head">
@@ -29250,7 +30245,9 @@
               <div id="blockedDaysList" class="admin-saas-list" role="list" aria-label="Closed days"></div>
             </div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="booking-limits">
           <section class="customize-section" id="customizeBookingLimitsSection" aria-labelledby="customizeBookingLimitsHeading">
             <div class="customize-hours-card admin-closed-days-panel">
               <div class="customize-hours-card__head">
@@ -29278,7 +30275,9 @@
               </div>
             </div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="client-approval">
           <section class="customize-section" id="customizeClientApprovalSection" aria-labelledby="customizeClientApprovalHeading">
             <div class="customize-hours-card admin-closed-days-panel">
               <div class="customize-hours-card__head">
@@ -29306,7 +30305,9 @@
               </div>
             </div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="branding">
           <section class="customize-section" aria-labelledby="customizeBrandingHeading">
             <h3 id="customizeBrandingHeading">Branding</h3>
             <label class="small"><strong>Accent color</strong></label>
@@ -29342,21 +30343,20 @@
               </label>
             </div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="preview">
           <section class="customize-section" aria-labelledby="customizePreviewHeading">
             <h3 id="customizePreviewHeading">Live preview</h3>
             <p class="small">Hero preview updates as you edit. Full booking flow is on your public link.</p>
             <div id="bookingPageHeroPreview" class="booking-page-hero-preview" aria-live="polite"></div>
           </section>
+          </div>
 
+          <div class="admin-customize-panel" data-customize-panel="share">
           <section class="customize-section" aria-labelledby="customizeShareHeading">
-            <h3 id="customizeShareHeading">Share your booking page</h3>
-            <label class="small" for="customizeBusinessSlug"><strong>Booking page link</strong></label>
-            <div class="business-id-row">
-              <input id="customizeBusinessSlug" placeholder="e.g. barber-shop-skopje" oninput="syncBusinessSlugAcrossForms(this.value); previewBusinessPublicLink()" autocomplete="off" />
-              <button type="button" class="secondary" onclick="generateBusinessSlugFromName()">Generate</button>
-            </div>
-            <p class="small">Lowercase letters, numbers and hyphens. Saved with Save Changes.</p>
+            <h3 id="customizeShareHeading">Share your booking app</h3>
+            <p class="small">Share your public booking link or QR code with customers. Edit the link slug in <strong>Business profile</strong>.</p>
             <div id="bookingQrLink" class="public-link-box small"></div>
             <div class="booking-qr-actions">
               <button type="button" class="success" onclick="copyPublicBookingLink()">Copy link</button>
@@ -29367,6 +30367,7 @@
               <div id="bookingQrHost" aria-label="Public booking QR code"></div>
             </div>
           </section>
+          </div>
 
         </div>
       </div>
@@ -40582,8 +41583,20 @@
   let adminCustomizeListenersBound = false;
 
   let adminCustomizeSavedSnapshot = null;
+  let adminCustomizeActivePanel = null;
   let adminCustomizeDirtyTrackingBound = false;
   let adminCustomizeSaveInFlight = false;
+
+  const ADMIN_CUSTOMIZE_SAVE_PANELS = new Set([
+    "logo-cover",
+    "profile",
+    "contact",
+    "hours",
+    "closed-days",
+    "booking-limits",
+    "client-approval",
+    "branding"
+  ]);
 
   function syncBusinessSlugAcrossForms(value) {
     const raw =
@@ -40649,14 +41662,21 @@
 
   function syncAdminCustomizeSaveDockVisibility() {
     const dock = document.getElementById("adminCustomizeSaveDock");
+    const section = document.getElementById("adminSectionCustomize");
     if (!dock) return;
     const adminView = document.getElementById("adminView");
+    const onSavePanel =
+      adminCustomizeActivePanel !== null &&
+      ADMIN_CUSTOMIZE_SAVE_PANELS.has(adminCustomizeActivePanel);
     const show =
       adminView &&
       !adminView.classList.contains("hidden") &&
-      adminActiveSection === "customize";
+      adminActiveSection === "customize" &&
+      (onSavePanel || isAdminCustomizeFormDirty());
     dock.classList.toggle("hidden", !show);
     dock.setAttribute("aria-hidden", show ? "false" : "true");
+    section?.classList.toggle("admin-customize--save-dock-visible", show);
+    section?.classList.toggle("admin-customize--save-dock-hidden", !show);
   }
 
   function updateAdminCustomizeSaveUi() {
@@ -42211,8 +43231,10 @@
     document.getElementById("adminOnboardingView")?.classList.add("hidden");
     document.getElementById("publicView")?.classList.add("hidden");
     document.getElementById("xbookDemoHomeView")?.classList.add("hidden");
-    document.getElementById("xbookDemoBusinessView")?.classList.add("hidden");
-    document.getElementById("xbookDemoCustomerView")?.classList.add("hidden");
+    document.getElementById("xbookDemoAdminView")?.classList.add("hidden");
+    document.getElementById("xbookDemoCustomerShell")?.classList.add("hidden");
+    document.body.classList.remove("xbook-demo-admin-active");
+    document.body.classList.remove("xbook-demo-customer-active");
     customerMyBookingsViewOpen = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
   }
@@ -42229,8 +43251,102 @@
   }
 
   /** Static read-only demo preview — no Supabase, no auth, no real app actions. */
+  const XBOOK_DEMO_DATA = Object.freeze({
+    business: Object.freeze({
+      name: "GT Studio",
+      slug: "studio-gt",
+      tagline: "Barber & Grooming",
+      email: "hello@gtstudio.com",
+      hours: "Mon–Sat 9:00–18:00",
+      initial: "G"
+    }),
+    stats: Object.freeze({ today: 6, upcoming: 14, total: 318, closedDays: 4 }),
+    performance: Object.freeze({
+      period: "This month",
+      revenue: "€1,240",
+      bookings: 48,
+      topServices: Object.freeze([
+        Object.freeze({ name: "Haircut", count: 22, revenue: "€550" }),
+        Object.freeze({ name: "Beard Trim", count: 15, revenue: "€180" }),
+        Object.freeze({ name: "Full Groom", count: 11, revenue: "€440" })
+      ])
+    }),
+    nextBooking: Object.freeze({
+      time: "10:30",
+      service: "Haircut",
+      client: "Elena R.",
+      staff: "Marko D."
+    }),
+    bookings: Object.freeze([
+      Object.freeze({ time: "09:00", service: "Haircut", client: "Nikola P.", staff: "Marko D.", status: "Confirmed" }),
+      Object.freeze({ time: "10:30", service: "Haircut", client: "Elena R.", staff: "Marko D.", status: "Confirmed" }),
+      Object.freeze({ time: "12:00", service: "Consultation", client: "Sara M.", staff: "Ana K.", status: "Pending" }),
+      Object.freeze({ time: "14:00", service: "Beard Trim", client: "Ivan T.", staff: "Ana K.", status: "Confirmed" }),
+      Object.freeze({ time: "15:30", service: "Full Groom", client: "David L.", staff: "Marko D.", status: "Confirmed" }),
+      Object.freeze({ time: "17:00", service: "Haircut", client: "Petra S.", staff: "Ana K.", status: "Confirmed" })
+    ]),
+    calendarDays: Object.freeze([
+      0, 1, 1, 1, 0, 1, 0,
+      1, 1, 2, 1, 1, 0, 0,
+      1, 2, 1, 1, 1, 0, 0,
+      1, 1, 1, 3, 1, 0, 0
+    ]),
+    services: Object.freeze([
+      Object.freeze({ name: "Haircut", duration: "45 min", price: "€25", category: "Hair" }),
+      Object.freeze({ name: "Beard Trim", duration: "20 min", price: "€12", category: "Grooming" }),
+      Object.freeze({ name: "Full Groom", duration: "60 min", price: "€40", category: "Package" }),
+      Object.freeze({ name: "Consultation", duration: "30 min", price: "€15", category: "Other" })
+    ]),
+    staff: Object.freeze([
+      Object.freeze({ name: "Marko D.", hours: "Mon–Sat", services: "Haircut, Full Groom", initial: "M" }),
+      Object.freeze({ name: "Ana K.", hours: "Tue–Fri", services: "Beard Trim, Consultation", initial: "A" })
+    ]),
+    clients: Object.freeze([
+      Object.freeze({ name: "Elena R.", visits: 12, tag: "VIP", note: "Prefers mornings" }),
+      Object.freeze({ name: "Nikola P.", visits: 8, tag: null, note: null }),
+      Object.freeze({ name: "Sara M.", visits: 3, tag: "Pending", note: "New client" }),
+      Object.freeze({ name: "Igor V.", visits: 1, tag: "Blocked", note: "No-show" })
+    ]),
+    bookingRules: Object.freeze({
+      maxPerDay: 2,
+      maxPerWeek: 5,
+      advanceDays: 30,
+      minNoticeHours: 2
+    }),
+    closedDays: Object.freeze([
+      Object.freeze({ label: "Aug 15", reason: "Public holiday" }),
+      Object.freeze({ label: "Sep 2–6", reason: "Vacation" }),
+      Object.freeze({ label: "Dec 25", reason: "Christmas" })
+    ]),
+    publicLink: "xbook.app/book/studio-gt",
+    branding: Object.freeze({
+      logo: "Logo uploaded",
+      cover: "Cover image set",
+      theme: "Navy theme",
+      tagline: "Premium cuts in Skopje"
+    }),
+    notifications: Object.freeze({
+      emailConfirm: "On",
+      reminders24h: "On",
+      cancellations: "On"
+    }),
+    settings: Object.freeze({
+      businessName: "GT Studio",
+      phone: "+389 70 123 456",
+      address: "Skopje, North Macedonia",
+      availability: "Mon–Sat 9:00–18:00"
+    })
+  });
+
+  let xbookDemoAdminState = { tab: "overview", settingsSub: null, overviewSub: null };
+  let xbookDemoAdminListenersBound = false;
+
   function showXbookDemoLockMessage() {
     showToast("Demo Preview — actions are disabled.", "info", 2800);
+  }
+
+  function xbookDemoLockedBtn(label) {
+    return `<button type="button" class="xbook-demo-admin-locked-btn" onclick="showXbookDemoLockMessage()">${escapeHtml(label)}</button>`;
   }
 
   function applyXbookDemoShellUi() {
@@ -42242,6 +43358,588 @@
     }
   }
 
+  function syncXbookDemoAdminNav() {
+    const tab = xbookDemoAdminState.tab;
+    document.querySelectorAll("#xbookDemoAdminBottomNav .admin-mobile-nav-item").forEach((btn) => {
+      const on = btn.dataset.xbookDemoTab === tab;
+      btn.classList.toggle("admin-mobile-nav-item--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+    const brand = document.getElementById("xbookDemoAdminToolbarBrand");
+    if (brand) brand.textContent = XBOOK_DEMO_DATA.business.name;
+  }
+
+  function setXbookDemoAdminTab(tab) {
+    xbookDemoAdminState.tab = tab;
+    xbookDemoAdminState.settingsSub = null;
+    xbookDemoAdminState.overviewSub = null;
+    syncXbookDemoAdminNav();
+    renderXbookDemoAdmin();
+    document.getElementById("xbookDemoAdminMain")?.scrollTo(0, 0);
+  }
+
+  function setXbookDemoAdminSettingsSub(sub) {
+    xbookDemoAdminState.settingsSub = sub;
+    renderXbookDemoAdmin();
+    document.getElementById("xbookDemoAdminMain")?.scrollTo(0, 0);
+  }
+
+  function setXbookDemoAdminOverviewSub(sub) {
+    xbookDemoAdminState.overviewSub = sub;
+    renderXbookDemoAdmin();
+    document.getElementById("xbookDemoAdminMain")?.scrollTo(0, 0);
+  }
+
+  function bindXbookDemoAdminListeners() {
+    if (xbookDemoAdminListenersBound) return;
+    xbookDemoAdminListenersBound = true;
+    document.getElementById("xbookDemoAdminBottomNav")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-xbook-demo-tab]");
+      if (!btn) return;
+      setXbookDemoAdminTab(btn.dataset.xbookDemoTab);
+    });
+  }
+
+  function renderXbookDemoAdminOverview() {
+    const d = XBOOK_DEMO_DATA;
+    if (xbookDemoAdminState.overviewSub === "performance") {
+      return `
+        <div class="xbook-demo-admin-panel">
+          <button type="button" class="xbook-demo-admin__back" onclick="setXbookDemoAdminOverviewSub(null)">← Overview</button>
+          <div class="xbook-demo-admin-card">
+            <h2 class="xbook-demo-admin-card__title">Performance</h2>
+            <p class="xbook-demo-admin-card__sub">${escapeHtml(d.performance.period)}</p>
+            <div class="xbook-demo-admin-kpi-grid">
+              <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Revenue</span><span class="xbook-demo-admin-kpi__value">${escapeHtml(d.performance.revenue)}</span></div>
+              <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Bookings</span><span class="xbook-demo-admin-kpi__value">${d.performance.bookings}</span></div>
+            </div>
+          </div>
+          <div class="xbook-demo-admin-card">
+            <h2 class="xbook-demo-admin-card__title">Top services</h2>
+            ${d.performance.topServices.map((s) => `
+              <div class="xbook-demo-admin-row"><strong>${escapeHtml(s.name)}</strong><span>${s.count} · ${escapeHtml(s.revenue)}</span></div>
+            `).join("")}
+          </div>
+          ${xbookDemoLockedBtn("Export report — locked")}
+        </div>`;
+    }
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-hero">
+          <div class="xbook-demo-admin-hero__avatar" aria-hidden="true">${escapeHtml(d.business.initial)}</div>
+          <div>
+            <p class="xbook-demo-admin-hero__title">${escapeHtml(d.business.name)}</p>
+            <p class="xbook-demo-admin-hero__sub">${escapeHtml(d.business.tagline)} · ${escapeHtml(d.business.slug)}</p>
+          </div>
+        </div>
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">At a glance</h2>
+          <div class="xbook-demo-admin-kpi-grid">
+            <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Today</span><span class="xbook-demo-admin-kpi__value">${d.stats.today}</span></div>
+            <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Upcoming</span><span class="xbook-demo-admin-kpi__value">${d.stats.upcoming}</span></div>
+            <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Total bookings</span><span class="xbook-demo-admin-kpi__value">${d.stats.total}</span></div>
+            <div class="xbook-demo-admin-kpi"><span class="xbook-demo-admin-kpi__label">Closed days</span><span class="xbook-demo-admin-kpi__value">${d.stats.closedDays}</span></div>
+          </div>
+        </div>
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Next booking</h2>
+          <div class="xbook-demo-admin-row"><strong>${escapeHtml(d.nextBooking.time)} · ${escapeHtml(d.nextBooking.service)}</strong></div>
+          <div class="xbook-demo-admin-row"><span>Client</span><strong>${escapeHtml(d.nextBooking.client)}</strong></div>
+          <div class="xbook-demo-admin-row"><span>Staff</span><strong>${escapeHtml(d.nextBooking.staff)}</strong></div>
+        </div>
+        <button type="button" class="xbook-demo-admin-nav-row" onclick="setXbookDemoAdminOverviewSub('performance')">
+          <span>View performance stats</span><span class="xbook-demo-admin-nav-row__chev" aria-hidden="true">›</span>
+        </button>
+        ${xbookDemoLockedBtn("Add booking — locked")}
+      </div>`;
+  }
+
+  function renderXbookDemoAdminBookings() {
+    const d = XBOOK_DEMO_DATA;
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Bookings</h2>
+          <p class="xbook-demo-admin-card__sub">Today's appointments</p>
+          ${d.bookings.map((b) => `
+            <div class="xbook-demo-admin-list-item">
+              <div class="xbook-demo-admin-list-item__main">
+                <p class="xbook-demo-admin-list-item__title">${escapeHtml(b.time)} · ${escapeHtml(b.service)}</p>
+                <p class="xbook-demo-admin-list-item__meta">${escapeHtml(b.client)} · ${escapeHtml(b.staff)}</p>
+              </div>
+              <span class="xbook-demo-admin-badge xbook-demo-admin-badge--${b.status === "Confirmed" ? "confirmed" : "pending"}">${escapeHtml(b.status)}</span>
+            </div>
+          `).join("")}
+          ${xbookDemoLockedBtn("Add booking — locked")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoAdminCalendar() {
+    const days = XBOOK_DEMO_DATA.calendarDays;
+    const labels = ["M", "T", "W", "T", "F", "S", "S"];
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Calendar</h2>
+          <p class="xbook-demo-admin-card__sub">June 2026 · sample week view</p>
+          <div class="xbook-demo-admin-calendar-grid">
+            ${labels.map((l) => `<div class="xbook-demo-admin-calendar-day" style="font-weight:800;background:transparent">${l}</div>`).join("")}
+            ${days.map((n) => {
+              const cls = n === 0 ? "xbook-demo-admin-calendar-day--closed" : n >= 2 ? "xbook-demo-admin-calendar-day--booked" : "xbook-demo-admin-calendar-day";
+              return `<div class="${cls}">${n || "—"}</div>`;
+            }).join("")}
+          </div>
+          ${xbookDemoLockedBtn("Open full calendar — locked")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoAdminServices() {
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Services</h2>
+          ${XBOOK_DEMO_DATA.services.map((s) => `
+            <div class="xbook-demo-admin-list-item">
+              <div class="xbook-demo-admin-list-item__main">
+                <p class="xbook-demo-admin-list-item__title">${escapeHtml(s.name)}</p>
+                <p class="xbook-demo-admin-list-item__meta">${escapeHtml(s.category)} · ${escapeHtml(s.duration)} · ${escapeHtml(s.price)}</p>
+              </div>
+            </div>
+          `).join("")}
+          ${xbookDemoLockedBtn("Add service — locked")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoAdminStaff() {
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Staff</h2>
+          ${XBOOK_DEMO_DATA.staff.map((s) => `
+            <div class="xbook-demo-admin-list-item">
+              <div class="xbook-demo-admin-list-item__main">
+                <p class="xbook-demo-admin-list-item__title">${escapeHtml(s.name)}</p>
+                <p class="xbook-demo-admin-list-item__meta">${escapeHtml(s.hours)} · ${escapeHtml(s.services)}</p>
+              </div>
+              <span class="xbook-demo-admin-hero__avatar" style="width:36px;height:36px;font-size:14px;border-radius:10px">${escapeHtml(s.initial)}</span>
+            </div>
+          `).join("")}
+          ${xbookDemoLockedBtn("Add staff — locked")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoAdminClients() {
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Clients</h2>
+          ${XBOOK_DEMO_DATA.clients.map((c) => {
+            const badgeCls = c.tag === "VIP" ? "vip" : c.tag === "Blocked" ? "blocked" : c.tag === "Pending" ? "pending" : "";
+            return `
+            <div class="xbook-demo-admin-list-item">
+              <div class="xbook-demo-admin-list-item__main">
+                <p class="xbook-demo-admin-list-item__title">${escapeHtml(c.name)}</p>
+                <p class="xbook-demo-admin-list-item__meta">${c.visits} visits${c.note ? " · " + escapeHtml(c.note) : ""}</p>
+              </div>
+              ${c.tag ? `<span class="xbook-demo-admin-badge xbook-demo-admin-badge--${badgeCls}">${escapeHtml(c.tag)}</span>` : ""}
+            </div>`;
+          }).join("")}
+          ${xbookDemoLockedBtn("Add client — locked")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoAdminSettingsSub() {
+    const sub = xbookDemoAdminState.settingsSub;
+    const d = XBOOK_DEMO_DATA;
+    const backBtn = `<button type="button" class="xbook-demo-admin__back" onclick="setXbookDemoAdminSettingsSub(null)">← Settings</button>`;
+    if (sub === "rules") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">Booking Rules</h2>
+        <div class="xbook-demo-admin-row"><strong>Max per day</strong><span>${d.bookingRules.maxPerDay} bookings</span></div>
+        <div class="xbook-demo-admin-row"><strong>Max per week</strong><span>${d.bookingRules.maxPerWeek} bookings</span></div>
+        <div class="xbook-demo-admin-row"><strong>Advance booking</strong><span>${d.bookingRules.advanceDays} days</span></div>
+        <div class="xbook-demo-admin-row"><strong>Min notice</strong><span>${d.bookingRules.minNoticeHours} hours</span></div>
+        ${xbookDemoLockedBtn("Save rules — locked")}</div></div>`;
+    }
+    if (sub === "closedDays") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">Closed Days &amp; Holidays</h2>
+        ${d.closedDays.map((day) => `<div class="xbook-demo-admin-row"><strong>${escapeHtml(day.label)}</strong><span>${escapeHtml(day.reason)}</span></div>`).join("")}
+        ${xbookDemoLockedBtn("Add closed day — locked")}</div></div>`;
+    }
+    if (sub === "qr") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">QR / Public Booking Link</h2>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Public link</span>${escapeHtml(d.publicLink)}</div>
+        <div class="xbook-demo-admin-qr" aria-hidden="true">QR<br>Preview</div>
+        ${xbookDemoLockedBtn("Copy link — locked")}${xbookDemoLockedBtn("Share — locked")}</div></div>`;
+    }
+    if (sub === "branding") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">Branding</h2>
+        <div class="xbook-demo-admin-row"><strong>Logo</strong><span>${escapeHtml(d.branding.logo)}</span></div>
+        <div class="xbook-demo-admin-row"><strong>Cover</strong><span>${escapeHtml(d.branding.cover)}</span></div>
+        <div class="xbook-demo-admin-row"><strong>Theme</strong><span>${escapeHtml(d.branding.theme)}</span></div>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Tagline</span>${escapeHtml(d.branding.tagline)}</div>
+        ${xbookDemoLockedBtn("Upload logo — locked")}${xbookDemoLockedBtn("Upload cover — locked")}</div></div>`;
+    }
+    if (sub === "notifications") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">Notifications</h2>
+        <div class="xbook-demo-admin-row"><strong>Email confirmations</strong><span>${escapeHtml(d.notifications.emailConfirm)}</span></div>
+        <div class="xbook-demo-admin-row"><strong>24h reminders</strong><span>${escapeHtml(d.notifications.reminders24h)}</span></div>
+        <div class="xbook-demo-admin-row"><strong>Cancellation alerts</strong><span>${escapeHtml(d.notifications.cancellations)}</span></div>
+        ${xbookDemoLockedBtn("Save notifications — locked")}</div></div>`;
+    }
+    if (sub === "business") {
+      return `<div class="xbook-demo-admin-panel">${backBtn}<div class="xbook-demo-admin-card"><h2 class="xbook-demo-admin-card__title">Business Settings</h2>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Business name</span>${escapeHtml(d.settings.businessName)}</div>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Phone</span>${escapeHtml(d.settings.phone)}</div>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Address</span>${escapeHtml(d.settings.address)}</div>
+        <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Availability</span>${escapeHtml(d.settings.availability)}</div>
+        ${xbookDemoLockedBtn("Save settings — locked")}</div></div>`;
+    }
+    return "";
+  }
+
+  function renderXbookDemoAdminSettings() {
+    if (xbookDemoAdminState.settingsSub) return renderXbookDemoAdminSettingsSub();
+    const rows = [
+      { sub: "business", label: "Business details & availability" },
+      { sub: "rules", label: "Booking rules" },
+      { sub: "closedDays", label: "Closed days & holidays" },
+      { sub: "qr", label: "QR / public booking link" },
+      { sub: "branding", label: "Branding & booking page" },
+      { sub: "notifications", label: "Notifications" }
+    ];
+    return `
+      <div class="xbook-demo-admin-panel">
+        <div class="xbook-demo-admin-card">
+          <h2 class="xbook-demo-admin-card__title">Settings</h2>
+          <p class="xbook-demo-admin-card__sub">Account, business setup, and booking link</p>
+          <div class="xbook-demo-admin-static-field"><span class="xbook-demo-admin-static-field__label">Signed in as</span>${escapeHtml(XBOOK_DEMO_DATA.business.email)}</div>
+        </div>
+        ${rows.map((r) => `
+          <button type="button" class="xbook-demo-admin-nav-row" onclick="setXbookDemoAdminSettingsSub('${r.sub}')">
+            <span>${escapeHtml(r.label)}</span><span class="xbook-demo-admin-nav-row__chev" aria-hidden="true">›</span>
+          </button>
+        `).join("")}
+        <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
+      </div>`;
+  }
+
+  function renderXbookDemoAdmin() {
+    const mount = document.getElementById("xbookDemoAdminMain");
+    if (!mount) return;
+    const tab = xbookDemoAdminState.tab;
+    let html = "";
+    if (tab === "overview") html = renderXbookDemoAdminOverview();
+    else if (tab === "bookings") html = renderXbookDemoAdminBookings();
+    else if (tab === "calendar") html = renderXbookDemoAdminCalendar();
+    else if (tab === "services") html = renderXbookDemoAdminServices();
+    else if (tab === "staff") html = renderXbookDemoAdminStaff();
+    else if (tab === "clients") html = renderXbookDemoAdminClients();
+    else if (tab === "settings") html = renderXbookDemoAdminSettings();
+    else html = renderXbookDemoAdminOverview();
+    mount.innerHTML = html;
+    syncXbookDemoAdminNav();
+  }
+
+  /** —— XBOOK demo customer shell (Phase 2 — read-only, local data only) —— */
+  const XBOOK_DEMO_CUSTOMER_DATA = Object.freeze({
+    business: Object.freeze({
+      name: "GT Studio",
+      tagline: "Barber & Grooming",
+      location: "Skopje",
+      hours: "Open today 9:00–18:00",
+      logoInitial: "G"
+    }),
+    welcome: "Welcome back, Elena",
+    upcoming: Object.freeze({
+      service: "Haircut",
+      when: "Wed, Jun 18 · 10:30",
+      staff: "Marko D.",
+      location: "GT Studio, Skopje"
+    }),
+    services: Object.freeze([
+      Object.freeze({ id: "haircut", name: "Haircut", duration: "45 min", price: "€25" }),
+      Object.freeze({ id: "beard", name: "Beard Trim", duration: "20 min", price: "€12" }),
+      Object.freeze({ id: "groom", name: "Full Groom", duration: "60 min", price: "€40" })
+    ]),
+    staff: Object.freeze([
+      Object.freeze({ id: "any", name: "Any Available" }),
+      Object.freeze({ id: "marko", name: "Marko D." }),
+      Object.freeze({ id: "ana", name: "Ana K." })
+    ]),
+    dates: Object.freeze([
+      Object.freeze({ id: "wed18", label: "Wed", num: "18" }),
+      Object.freeze({ id: "thu19", label: "Thu", num: "19" }),
+      Object.freeze({ id: "fri20", label: "Fri", num: "20" }),
+      Object.freeze({ id: "sat21", label: "Sat", num: "21" })
+    ]),
+    slots: Object.freeze(["9:00", "10:30", "12:00", "14:00", "15:30", "17:00"]),
+    bookings: Object.freeze({
+      upcoming: Object.freeze([
+        Object.freeze({ service: "Haircut", when: "Wed, Jun 18 · 10:30", staff: "Marko D.", status: "Confirmed" })
+      ]),
+      past: Object.freeze([
+        Object.freeze({ service: "Beard Trim", when: "Fri, May 30 · 14:00", staff: "Ana K.", status: "Completed" }),
+        Object.freeze({ service: "Haircut", when: "Wed, May 14 · 10:30", staff: "Marko D.", status: "Completed" })
+      ])
+    }),
+    profile: Object.freeze({
+      name: "Elena R.",
+      email: "elena@email.com",
+      phone: "+389 70 555 123",
+      notifications: Object.freeze({
+        reminders: "On",
+        confirmations: "On",
+        promotions: "Off"
+      }),
+      supportEmail: "xbooksupport@gtwebstudio.com"
+    })
+  });
+
+  let xbookDemoCustomerState = {
+    tab: "home",
+    bookStep: 1,
+    selectedService: null,
+    selectedStaff: null,
+    selectedDate: null,
+    selectedSlot: null
+  };
+  let xbookDemoCustomerListenersBound = false;
+
+  function xbookDemoCustomerLockedBtn(label) {
+    return `<button type="button" class="xbook-demo-customer-locked-btn" onclick="showXbookDemoLockMessage()">${escapeHtml(label)}</button>`;
+  }
+
+  function syncXbookDemoCustomerBranding() {
+    const d = XBOOK_DEMO_CUSTOMER_DATA.business;
+    const logo = document.getElementById("xbookDemoCustomerBrandLogo");
+    const name = document.getElementById("xbookDemoCustomerBrandName");
+    const meta = document.getElementById("xbookDemoCustomerBrandMeta");
+    if (logo) logo.textContent = d.logoInitial;
+    if (name) name.textContent = d.name;
+    if (meta) meta.textContent = `${d.tagline} · ${d.location}`;
+  }
+
+  function syncXbookDemoCustomerNav() {
+    const tab = xbookDemoCustomerState.tab;
+    document.querySelectorAll("#xbookDemoCustomerBottomNav .customer-mobile-nav-item").forEach((btn) => {
+      const on = btn.dataset.xbookDemoCustomerTab === tab;
+      btn.classList.toggle("customer-mobile-nav-item--active", on);
+      btn.setAttribute("aria-current", on ? "page" : "false");
+    });
+    const header = document.getElementById("xbookDemoCustomerBrandedHeader");
+    if (header) {
+      header.classList.toggle("hidden", tab === "profile");
+    }
+  }
+
+  function setXbookDemoCustomerTab(tab) {
+    xbookDemoCustomerState.tab = tab;
+    if (tab === "book") {
+      xbookDemoCustomerState.bookStep = 1;
+    }
+    syncXbookDemoCustomerNav();
+    renderXbookDemoCustomer();
+    document.getElementById("xbookDemoCustomerMain")?.scrollTo(0, 0);
+  }
+
+  function setXbookDemoCustomerBookStep(step) {
+    xbookDemoCustomerState.bookStep = step;
+    renderXbookDemoCustomer();
+    document.getElementById("xbookDemoCustomerMain")?.scrollTo(0, 0);
+  }
+
+  function pickXbookDemoCustomerService(serviceId) {
+    xbookDemoCustomerState.selectedService = serviceId;
+    xbookDemoCustomerState.bookStep = 2;
+    renderXbookDemoCustomer();
+  }
+
+  function pickXbookDemoCustomerStaff(staffId) {
+    xbookDemoCustomerState.selectedStaff = staffId;
+    xbookDemoCustomerState.bookStep = 3;
+    renderXbookDemoCustomer();
+  }
+
+  function pickXbookDemoCustomerDate(dateId) {
+    xbookDemoCustomerState.selectedDate = dateId;
+    xbookDemoCustomerState.bookStep = 4;
+    renderXbookDemoCustomer();
+  }
+
+  function pickXbookDemoCustomerSlot(slot) {
+    xbookDemoCustomerState.selectedSlot = slot;
+    xbookDemoCustomerState.bookStep = 5;
+    renderXbookDemoCustomer();
+  }
+
+  function bindXbookDemoCustomerListeners() {
+    if (xbookDemoCustomerListenersBound) return;
+    xbookDemoCustomerListenersBound = true;
+    document.getElementById("xbookDemoCustomerBottomNav")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-xbook-demo-customer-tab]");
+      if (!btn) return;
+      setXbookDemoCustomerTab(btn.dataset.xbookDemoCustomerTab);
+    });
+  }
+
+  function getXbookDemoCustomerSelectionLabels() {
+    const d = XBOOK_DEMO_CUSTOMER_DATA;
+    const svc = d.services.find((s) => s.id === xbookDemoCustomerState.selectedService);
+    const staff = d.staff.find((s) => s.id === xbookDemoCustomerState.selectedStaff);
+    const date = d.dates.find((dt) => dt.id === xbookDemoCustomerState.selectedDate);
+    return {
+      service: svc?.name || "—",
+      staff: staff?.name || "—",
+      date: date ? `${date.label}, Jun ${date.num}` : "—",
+      slot: xbookDemoCustomerState.selectedSlot || "—"
+    };
+  }
+
+  function renderXbookDemoCustomerHome() {
+    const d = XBOOK_DEMO_CUSTOMER_DATA;
+    return `
+      <div class="xbook-demo-customer-panel">
+        <div class="xbook-demo-customer-card">
+          <p class="xbook-demo-customer-card__sub">${escapeHtml(d.welcome)}</p>
+          <h2 class="xbook-demo-customer-card__title">${escapeHtml(d.business.name)}</h2>
+          <p class="xbook-demo-customer-card__sub">${escapeHtml(d.business.hours)}</p>
+        </div>
+        <div class="xbook-demo-customer-upcoming">
+          <p class="xbook-demo-customer-upcoming__label">Upcoming appointment</p>
+          <p class="xbook-demo-customer-upcoming__title">${escapeHtml(d.upcoming.service)}</p>
+          <p class="xbook-demo-customer-upcoming__meta">${escapeHtml(d.upcoming.when)} · ${escapeHtml(d.upcoming.staff)}</p>
+          <p class="xbook-demo-customer-upcoming__meta">${escapeHtml(d.upcoming.location)}</p>
+        </div>
+        <button type="button" class="xbook-demo-customer-primary-btn" onclick="setXbookDemoCustomerTab('book')">Book again</button>
+        ${xbookDemoCustomerLockedBtn("Manage appointment — locked")}
+      </div>`;
+  }
+
+  function renderXbookDemoCustomerBook() {
+    const d = XBOOK_DEMO_CUSTOMER_DATA;
+    const step = xbookDemoCustomerState.bookStep;
+    const labels = ["Choose a service", "Choose staff", "Choose a date", "Choose a time", "Confirm booking"];
+    let body = "";
+
+    if (step === 1) {
+      body = d.services.map((s) => `
+        <button type="button" class="xbook-demo-customer-service-card${xbookDemoCustomerState.selectedService === s.id ? " xbook-demo-customer-service-card--selected" : ""}" onclick="pickXbookDemoCustomerService('${s.id}')">
+          <span class="xbook-demo-customer-service-card__name">${escapeHtml(s.name)}</span>
+          <span class="xbook-demo-customer-service-card__meta">${escapeHtml(s.duration)} · ${escapeHtml(s.price)}</span>
+        </button>
+      `).join("");
+    } else if (step === 2) {
+      body = `<div class="xbook-demo-customer-chip-row">${d.staff.map((s) => `
+        <button type="button" class="xbook-demo-customer-chip${xbookDemoCustomerState.selectedStaff === s.id ? " xbook-demo-customer-chip--selected" : ""}" onclick="pickXbookDemoCustomerStaff('${s.id}')">${escapeHtml(s.name)}</button>
+      `).join("")}</div>`;
+    } else if (step === 3) {
+      body = `<div class="xbook-demo-customer-date-row">${d.dates.map((dt) => `
+        <button type="button" class="xbook-demo-customer-date${xbookDemoCustomerState.selectedDate === dt.id ? " xbook-demo-customer-date--selected" : ""}" onclick="pickXbookDemoCustomerDate('${dt.id}')">
+          <span class="xbook-demo-customer-date__day">${escapeHtml(dt.label)}</span>
+          <span class="xbook-demo-customer-date__num">${escapeHtml(dt.num)}</span>
+        </button>
+      `).join("")}</div>`;
+    } else if (step === 4) {
+      body = `<div class="xbook-demo-customer-slot-grid">${d.slots.map((slot) => `
+        <button type="button" class="xbook-demo-customer-slot${xbookDemoCustomerState.selectedSlot === slot ? " xbook-demo-customer-slot--selected" : ""}" onclick="pickXbookDemoCustomerSlot('${slot}')">${escapeHtml(slot)}</button>
+      `).join("")}</div>`;
+    } else if (step === 5) {
+      const sel = getXbookDemoCustomerSelectionLabels();
+      body = `
+        <div class="xbook-demo-customer-confirm-row"><span>Service</span><strong>${escapeHtml(sel.service)}</strong></div>
+        <div class="xbook-demo-customer-confirm-row"><span>Staff</span><strong>${escapeHtml(sel.staff)}</strong></div>
+        <div class="xbook-demo-customer-confirm-row"><span>Date</span><strong>${escapeHtml(sel.date)}</strong></div>
+        <div class="xbook-demo-customer-confirm-row"><span>Time</span><strong>${escapeHtml(sel.slot)}</strong></div>
+        <button type="button" class="xbook-demo-customer-primary-btn" onclick="showXbookDemoLockMessage()">Confirm booking</button>
+      `;
+    }
+
+    const backBtn = step > 1
+      ? `<button type="button" class="xbook-demo-customer__back" onclick="setXbookDemoCustomerBookStep(${step - 1})">← Back</button>`
+      : "";
+
+    return `
+      <div class="xbook-demo-customer-panel">
+        ${backBtn}
+        <div class="xbook-demo-customer-card">
+          <p class="xbook-demo-customer-step-label">Step ${step} of 5</p>
+          <h2 class="xbook-demo-customer-card__title">${escapeHtml(labels[step - 1])}</h2>
+          ${body}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoCustomerBookings() {
+    const d = XBOOK_DEMO_CUSTOMER_DATA.bookings;
+    const itemHtml = (b, upcoming) => `
+      <div class="xbook-demo-customer-booking-item">
+        <div>
+          <p class="xbook-demo-customer-upcoming__title" style="margin:0 0 4px;font-size:14px">${escapeHtml(b.service)}</p>
+          <p class="xbook-demo-customer-upcoming__meta">${escapeHtml(b.when)} · ${escapeHtml(b.staff)}</p>
+        </div>
+        <span class="xbook-demo-admin-badge xbook-demo-admin-badge--${b.status === "Confirmed" ? "confirmed" : "pending"}">${escapeHtml(b.status)}</span>
+      </div>
+      ${upcoming ? `${xbookDemoCustomerLockedBtn("Reschedule — locked")}${xbookDemoCustomerLockedBtn("Cancel — locked")}` : ""}
+    `;
+    return `
+      <div class="xbook-demo-customer-panel">
+        <div class="xbook-demo-customer-card">
+          <h2 class="xbook-demo-customer-card__title">Upcoming</h2>
+          ${d.upcoming.map((b) => itemHtml(b, true)).join("")}
+        </div>
+        <div class="xbook-demo-customer-card">
+          <h2 class="xbook-demo-customer-card__title">Past appointments</h2>
+          ${d.past.map((b) => itemHtml(b, false)).join("")}
+        </div>
+      </div>`;
+  }
+
+  function renderXbookDemoCustomerProfile() {
+    const p = XBOOK_DEMO_CUSTOMER_DATA.profile;
+    return `
+      <div class="xbook-demo-customer-panel">
+        <div class="xbook-demo-customer-card">
+          <h2 class="xbook-demo-customer-card__title">Profile</h2>
+          <div class="xbook-demo-customer-profile-row"><span>Name</span><strong>${escapeHtml(p.name)}</strong></div>
+          <div class="xbook-demo-customer-profile-row"><span>Email</span><strong>${escapeHtml(p.email)}</strong></div>
+          <div class="xbook-demo-customer-profile-row"><span>Phone</span><strong>${escapeHtml(p.phone)}</strong></div>
+          ${xbookDemoCustomerLockedBtn("Edit profile — locked")}
+        </div>
+        <div class="xbook-demo-customer-card">
+          <h2 class="xbook-demo-customer-card__title">Notifications</h2>
+          <div class="xbook-demo-customer-profile-row"><span>Reminders</span><strong>${escapeHtml(p.notifications.reminders)}</strong></div>
+          <div class="xbook-demo-customer-profile-row"><span>Confirmations</span><strong>${escapeHtml(p.notifications.confirmations)}</strong></div>
+          <div class="xbook-demo-customer-profile-row"><span>Promotions</span><strong>${escapeHtml(p.notifications.promotions)}</strong></div>
+          ${xbookDemoCustomerLockedBtn("Save preferences — locked")}
+        </div>
+        <div class="xbook-demo-customer-card">
+          <h2 class="xbook-demo-customer-card__title">Support</h2>
+          <div class="xbook-demo-customer-profile-row"><span>Email</span><strong>${escapeHtml(p.supportEmail)}</strong></div>
+          ${xbookDemoCustomerLockedBtn("Contact support — locked")}
+        </div>
+        <button type="button" class="auth-btn auth-btn--ghost" onclick="backToHomeFromDemo()">Back to Home</button>
+      </div>`;
+  }
+
+  function renderXbookDemoCustomer() {
+    const mount = document.getElementById("xbookDemoCustomerMain");
+    if (!mount) return;
+    const tab = xbookDemoCustomerState.tab;
+    let html = "";
+    if (tab === "home") html = renderXbookDemoCustomerHome();
+    else if (tab === "book") html = renderXbookDemoCustomerBook();
+    else if (tab === "bookings") html = renderXbookDemoCustomerBookings();
+    else if (tab === "profile") html = renderXbookDemoCustomerProfile();
+    else html = renderXbookDemoCustomerHome();
+    mount.innerHTML = html;
+    syncXbookDemoCustomerNav();
+  }
+
   function openXbookDemoHome() {
     hideAllViews();
     document.getElementById("xbookDemoHomeView")?.classList.remove("hidden");
@@ -42251,19 +43949,37 @@
 
   function openXbookDemoBusinessPreview() {
     hideAllViews();
-    document.getElementById("xbookDemoBusinessView")?.classList.remove("hidden");
+    xbookDemoAdminState = { tab: "overview", settingsSub: null, overviewSub: null };
+    document.body.classList.add("xbook-demo-admin-active");
+    document.getElementById("xbookDemoAdminView")?.classList.remove("hidden");
     applyXbookDemoShellUi();
+    bindXbookDemoAdminListeners();
+    renderXbookDemoAdmin();
     window.scrollTo(0, 0);
   }
 
   function openXbookDemoCustomerPreview() {
     hideAllViews();
-    document.getElementById("xbookDemoCustomerView")?.classList.remove("hidden");
+    xbookDemoCustomerState = {
+      tab: "home",
+      bookStep: 1,
+      selectedService: null,
+      selectedStaff: null,
+      selectedDate: null,
+      selectedSlot: null
+    };
+    document.body.classList.add("xbook-demo-customer-active");
+    document.getElementById("xbookDemoCustomerShell")?.classList.remove("hidden");
     applyXbookDemoShellUi();
+    bindXbookDemoCustomerListeners();
+    syncXbookDemoCustomerBranding();
+    renderXbookDemoCustomer();
     window.scrollTo(0, 0);
   }
 
   function backToXbookDemoHome() {
+    document.body.classList.remove("xbook-demo-admin-active");
+    document.body.classList.remove("xbook-demo-customer-active");
     openXbookDemoHome();
   }
 
@@ -42438,6 +44154,9 @@
     }
     if (key === "profile") {
       syncAdminNativeToolbar();
+    }
+    if (key !== "customize") {
+      adminCustomizeActivePanel = null;
     }
     if (key === "customize") {
       refreshAdminCustomizeSectionUi();
@@ -42636,14 +44355,7 @@
   }
 
   function adminMobileSetupOpenPublicLink() {
-    adminMobileSetupOpenSection("customize");
-    requestAnimationFrame(() => {
-      updatePublicBookingQrSection();
-      const target =
-        document.getElementById("customizeShareHeading") ||
-        document.getElementById("bookingQrHost");
-      target?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    openAdminCustomizePage({ fromSetupHub: true, panel: "share" });
   }
 
   function adminMobileOpenSetup() {
@@ -42691,21 +44403,106 @@
       setHolidaySettingsStatus("");
     }
     renderBlockedDays();
+    syncAdminCustomizeHubUi();
     syncAdminCustomizeSaveDockVisibility();
     updateAdminCustomizeSaveUi();
   }
   window.refreshAdminCustomizeSectionUi = refreshAdminCustomizeSectionUi;
 
+  const ADMIN_CUSTOMIZE_PANEL_IDS = new Set([
+    "logo-cover",
+    "profile",
+    "contact",
+    "hours",
+    "closed-days",
+    "booking-limits",
+    "client-approval",
+    "branding",
+    "preview",
+    "share"
+  ]);
+
+  const ADMIN_CUSTOMIZE_PANEL_LABELS = {
+    "logo-cover": "Logo & cover image",
+    profile: "Business profile",
+    contact: "Contact & location",
+    hours: "Working hours & availability",
+    "closed-days": "Non-working days & holidays",
+    "booking-limits": "Booking limits",
+    "client-approval": "Client approval",
+    branding: "Branding",
+    preview: "Live preview",
+    share: "Share your booking app"
+  };
+
+  function resetAdminCustomizeScroll() {
+    const scrollHost = document.querySelector(".admin-dashboard-panels");
+    if (scrollHost) scrollHost.scrollTop = 0;
+  }
+
+  function syncAdminCustomizeHubUi() {
+    const section = document.getElementById("adminSectionCustomize");
+    const backBtn = document.getElementById("adminCustomizeHubBack");
+    const isHub = !adminCustomizeActivePanel;
+
+    section?.classList.toggle("admin-customize--hub", isHub);
+    section?.classList.toggle("admin-customize--panel", !isHub);
+
+    if (backBtn) {
+      if (isHub) {
+        backBtn.classList.add("hidden");
+        backBtn.setAttribute("aria-hidden", "true");
+      } else {
+        backBtn.classList.remove("hidden");
+        backBtn.setAttribute("aria-hidden", "false");
+        const title =
+          ADMIN_CUSTOMIZE_PANEL_LABELS[adminCustomizeActivePanel] || "Back";
+        backBtn.innerHTML = `<span aria-hidden="true">←</span> ${title}`;
+      }
+    }
+
+    document.querySelectorAll("#widgetCustomizeBooking .admin-customize-panel").forEach((el) => {
+      const show = !isHub && el.dataset.customizePanel === adminCustomizeActivePanel;
+      el.classList.toggle("hidden", !show);
+      el.classList.toggle("is-active", show);
+      el.setAttribute("aria-hidden", show ? "false" : "true");
+    });
+
+    resetAdminCustomizeScroll();
+    syncAdminCustomizeSaveDockVisibility();
+  }
+  window.syncAdminCustomizeHubUi = syncAdminCustomizeHubUi;
+
+  function openAdminCustomizePanel(panelId) {
+    if (!ADMIN_CUSTOMIZE_PANEL_IDS.has(panelId)) return;
+    adminCustomizeActivePanel = panelId;
+    syncAdminCustomizeHubUi();
+    if (panelId === "share" || panelId === "preview") {
+      updatePublicBookingQrSection();
+      previewBookingPageHero();
+    }
+  }
+  window.openAdminCustomizePanel = openAdminCustomizePanel;
+
+  function backToAdminCustomizeHub() {
+    adminCustomizeActivePanel = null;
+    syncAdminCustomizeHubUi();
+  }
+  window.backToAdminCustomizeHub = backToAdminCustomizeHub;
+
   function openAdminCustomizePage(opts = {}) {
     adminMobileFromSetup = opts.fromSetupHub === true;
+    let panel = opts.panel || null;
+    if (opts.scrollToClosedDays) panel = "closed-days";
+    if (opts.scrollToHours) panel = "hours";
+    adminCustomizeActivePanel = panel;
     setAdminSection("customize");
-    const scrollTarget = opts.scrollToClosedDays
-      ? document.getElementById("customizeClosedDaysHeading")
-      : opts.scrollToHours
-        ? document.getElementById("customizeHoursHeading")
-        : document.getElementById("customizeLogoHeading");
     requestAnimationFrame(() => {
-      scrollTarget?.scrollIntoView({ behavior: "smooth", block: "start" });
+      syncAdminCustomizeHubUi();
+      if (panel === "share" || panel === "preview") {
+        updatePublicBookingQrSection();
+        previewBookingPageHero();
+      }
       updateAdminMobileSetupBackBar();
     });
   }
