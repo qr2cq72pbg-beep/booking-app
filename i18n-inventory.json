@@ -1,0 +1,6846 @@
+{
+  "summary": {
+    "htmlTextStrings": 657,
+    "attrStrings": 192,
+    "jsStrings": 222,
+    "total": 1071
+  },
+  "htmlText": [
+    {
+      "string": "‹ Week",
+      "contexts": [
+        "button.public-week-nav"
+      ]
+    },
+    {
+      "string": "(optional)",
+      "contexts": [
+        "span",
+        "span.customize-hours-optional",
+        "span.staff-field-optional",
+        "span.customer-profile-edit-sheet__optional"
+      ]
+    },
+    {
+      "string": "© 2026 GT Web Studio",
+      "contexts": [
+        "p.customer-profile-info-about-note"
+      ]
+    },
+    {
+      "string": "← Back",
+      "contexts": [
+        "button.services-edit-card__back",
+        "button.customer-mobile-auth-back"
+      ]
+    },
+    {
+      "string": "← Back to Setup",
+      "contexts": [
+        "button.admin-mobile-setup-back__btn"
+      ]
+    },
+    {
+      "string": "← Demo Home",
+      "contexts": [
+        "button.xbook-demo-admin__back",
+        "button.xbook-demo-customer__back"
+      ]
+    },
+    {
+      "string": "→ Working hours & availability.",
+      "contexts": [
+        "p.admin-saas-subsection__hint"
+      ]
+    },
+    {
+      "string": "+ Add a service",
+      "contexts": [
+        "button#onboardingServiceAddBtn.wizard-service-add-btn"
+      ]
+    },
+    {
+      "string": "+ Add a team member",
+      "contexts": [
+        "button#onboardingStaffAddBtn.wizard-service-add-btn"
+      ]
+    },
+    {
+      "string": "+ Add another business",
+      "contexts": [
+        "button#customerBusinessSwitcherAddBtn.customer-business-switcher-add"
+      ]
+    },
+    {
+      "string": "🇲🇰 North Macedonia (+389)",
+      "contexts": [
+        "span#customerCountryButtonText"
+      ]
+    },
+    {
+      "string": "✓ Setup takes less than 5 minutes",
+      "contexts": [
+        "p.mode-entry-action__hint.mode-entry-action__hint--setup"
+      ]
+    },
+    {
+      "string": "0 clients",
+      "contexts": [
+        "p#clientsListSummary.clients-results-meta"
+      ]
+    },
+    {
+      "string": "0 dates selected",
+      "contexts": [
+        "p#closedDaysPickerCount.closed-days-picker-summary__count"
+      ]
+    },
+    {
+      "string": "0 selected",
+      "contexts": [
+        "span#closedDaysSelectionCount.admin-closed-days-select-toolbar__count"
+      ]
+    },
+    {
+      "string": "0 services",
+      "contexts": [
+        "span#servicesListCount.services-list-section__count"
+      ]
+    },
+    {
+      "string": "0 staff members",
+      "contexts": [
+        "span#staffListCount.staff-list-section__count"
+      ]
+    },
+    {
+      "string": "1 hour",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "1 month",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "1 Month",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "120 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "15 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "2 hours",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "2 months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "2 Months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "24 hours",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "3 months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "3 Months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "30 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "30 minutes",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "45 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "6 hours",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "6 months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "6 Months",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "60 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "90 min",
+      "contexts": [
+        "button.xbook-duration-preset",
+        "button.wizard-duration-preset.xbook-duration-preset"
+      ]
+    },
+    {
+      "string": "A 15 minute break gives you time to prepare, clean up, or get ready for the next customer.",
+      "contexts": [
+        "p.wizard-override-hint"
+      ]
+    },
+    {
+      "string": "About XBOOK",
+      "contexts": [
+        "span",
+        "h2#customerProfileAboutTitle"
+      ]
+    },
+    {
+      "string": "About your business",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Accent color",
+      "contexts": [
+        "h3#customizeAccentHeading"
+      ]
+    },
+    {
+      "string": "Accept new clients",
+      "contexts": [
+        "span.admin-saas-toggle-row__title"
+      ]
+    },
+    {
+      "string": "Account",
+      "contexts": [
+        "p.customer-mobile-section-title"
+      ]
+    },
+    {
+      "string": "Account details",
+      "contexts": [
+        "h3#settingsAccountSheetTitle.settings-account-sheet__title"
+      ]
+    },
+    {
+      "string": "Account required",
+      "contexts": [
+        "h3.public-booking-auth-gate__title"
+      ]
+    },
+    {
+      "string": "Account type",
+      "contexts": [
+        "dt.settings-account-sheet__label"
+      ]
+    },
+    {
+      "string": "Active on booking page",
+      "contexts": [
+        "span.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Add a booking for a customer",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Add a reason",
+      "contexts": [
+        "h3.closed-days-modal__title"
+      ]
+    },
+    {
+      "string": "Add and edit services",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Add booking",
+      "contexts": [
+        "span.overview-performance-entry__title",
+        "h2.admin-add-premium__title"
+      ]
+    },
+    {
+      "string": "Add Booking",
+      "contexts": [
+        "button.admin-nav-btn"
+      ]
+    },
+    {
+      "string": "Add extra time between appointments.",
+      "contexts": [
+        "p.wizard-override-hint"
+      ]
+    },
+    {
+      "string": "Add new service",
+      "contexts": [
+        "p.services-add-card__title"
+      ]
+    },
+    {
+      "string": "Add new staff member",
+      "contexts": [
+        "span.staff-add-card__title-expanded"
+      ]
+    },
+    {
+      "string": "Add Note",
+      "contexts": [
+        "button#clientDetailSheetNotesBtn.client-detail-sheet__notes-btn"
+      ]
+    },
+    {
+      "string": "Add Photo",
+      "contexts": [
+        "button#businessGalleryUploadBtn.secondary"
+      ]
+    },
+    {
+      "string": "Add photos of your work, space, services, or results.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Add service",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--primary"
+      ]
+    },
+    {
+      "string": "Add staff",
+      "contexts": [
+        "span.staff-add-card__title-collapsed"
+      ]
+    },
+    {
+      "string": "Add staff member",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--primary"
+      ]
+    },
+    {
+      "string": "Add staff who can provide services to your customers.",
+      "contexts": [
+        "span.staff-add-card__hint"
+      ]
+    },
+    {
+      "string": "Add to calendar",
+      "contexts": [
+        "span.public-success-label"
+      ]
+    },
+    {
+      "string": "Add to Home Screen for the best experience.",
+      "contexts": [
+        "p#pwaInstallHintText.pwa-install-hint-text"
+      ]
+    },
+    {
+      "string": "Add what customers can book — name, duration, and optional price.",
+      "contexts": [
+        "p.services-add-card__hint"
+      ]
+    },
+    {
+      "string": "Additional Business Details (Optional)",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "Address",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "All",
+      "contexts": [
+        "button.clients-approval-filter.clients-approval-filter--active"
+      ]
+    },
+    {
+      "string": "All Customers",
+      "contexts": [
+        "span.customer-notifications-form__radio-label"
+      ]
+    },
+    {
+      "string": "All rights reserved.",
+      "contexts": [
+        "p.customer-profile-info-about-note"
+      ]
+    },
+    {
+      "string": "All services",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "All staff",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Allow customers to book recurring appointments",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Allowed repeat intervals",
+      "contexts": [
+        "span#customizeRecurringIntervalsLabel.customize-hours-label"
+      ]
+    },
+    {
+      "string": "Almost done — choose how your page looks, copy your link or QR, then finish to start accepting bookings.",
+      "contexts": [
+        "p.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Already have an account? Log in",
+      "contexts": [
+        "button.auth-link-btn",
+        "button#customerJoinLoginLink.auth-link-btn"
+      ]
+    },
+    {
+      "string": "America / New York",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "App",
+      "contexts": [
+        "p.customer-mobile-section-title"
+      ]
+    },
+    {
+      "string": "app — logo, colors, and contact info. Customers only see the live page, not this editor.",
+      "contexts": [
+        "p.small.admin-customize-panels-intro"
+      ]
+    },
+    {
+      "string": "Appears on your booking page hero. JPG, PNG or WebP, max 3 MB.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Apple (.ics)",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Apply",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--primary"
+      ]
+    },
+    {
+      "string": "Apply these hours to all selected days",
+      "contexts": [
+        "span.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Appointment",
+      "contexts": [
+        "h3.admin-saas-subsection-card__title.admin-add-premium-card__title"
+      ]
+    },
+    {
+      "string": "Appointment Confirmed",
+      "contexts": [
+        "h2.public-success-title"
+      ]
+    },
+    {
+      "string": "Appointment Rescheduled",
+      "contexts": [
+        "h2#customerRescheduleSuccessPopupTitle.customer-reschedule-success-popup__title"
+      ]
+    },
+    {
+      "string": "Approve",
+      "contexts": [
+        "button#clientDetailApproveBtn.client-detail-sheet__approval-btn.client-detail-sheet__approval-btn--approve"
+      ]
+    },
+    {
+      "string": "Approved",
+      "contexts": [
+        "button.clients-approval-filter",
+        "span#clientDetailSheetStatusBadge.clients-status-badge.clients-status-badge--active"
+      ]
+    },
+    {
+      "string": "Are you sure you want to mark these days as non-working days?",
+      "contexts": [
+        "p.closed-days-modal__lead"
+      ]
+    },
+    {
+      "string": "Ask the business for their XBOOK code if you do not have it.",
+      "contexts": [
+        "p.auth-card-lead.customer-join-code-hint"
+      ]
+    },
+    {
+      "string": "at the bottom. Logo and cover uploads save to your account immediately when upload finishes.",
+      "contexts": [
+        "p.admin-customize-save-reminder.admin-customize-panels-intro"
+      ]
+    },
+    {
+      "string": "Availability",
+      "contexts": [
+        "button.admin-nav-btn",
+        "span.admin-mobile-home-card__label"
+      ]
+    },
+    {
+      "string": "Available times",
+      "contexts": [
+        "p#manageBookingSlotsTitle.manage-reschedule-panel__slots-label"
+      ]
+    },
+    {
+      "string": "Average booking value",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Back",
+      "contexts": [
+        "button.auth-btn.auth-btn--ghost",
+        "button#adminOnboardingBackBtn.secondary.wizard-btn-back",
+        "button.secondary.customer-my-bookings-back-btn",
+        "button#publicBookingBackBtn.secondary.public-wizard-back-btn"
+      ]
+    },
+    {
+      "string": "Back to Calendar",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--muted"
+      ]
+    },
+    {
+      "string": "Back to Home",
+      "contexts": [
+        "button.mode-entry-btn.mode-entry-btn--secondary"
+      ]
+    },
+    {
+      "string": "Back to login",
+      "contexts": [
+        "button.auth-btn.auth-btn--ghost"
+      ]
+    },
+    {
+      "string": "Barber & Grooming · Skopje",
+      "contexts": [
+        "p#xbookDemoCustomerBrandMeta.xbook-demo-customer-brand__meta"
+      ]
+    },
+    {
+      "string": "Beard Trim",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Block",
+      "contexts": [
+        "button#clientDetailBlockBtn.client-detail-sheet__approval-btn.client-detail-sheet__approval-btn--block"
+      ]
+    },
+    {
+      "string": "Block custom closed days and optionally block public holidays for your country.",
+      "contexts": [
+        "p.customize-hours-card__lead"
+      ]
+    },
+    {
+      "string": "Block public holidays automatically",
+      "contexts": [
+        "span.admin-saas-toggle-row__title"
+      ]
+    },
+    {
+      "string": "Blocked",
+      "contexts": [
+        "button.clients-approval-filter"
+      ]
+    },
+    {
+      "string": "Book",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Book another",
+      "contexts": [
+        "button#manageBookingBookAnotherBtn.secondary"
+      ]
+    },
+    {
+      "string": "Book another appointment",
+      "contexts": [
+        "button.secondary.public-success-book-another"
+      ]
+    },
+    {
+      "string": "Book appointment",
+      "contexts": [
+        "button.auth-btn.auth-btn--primary",
+        "span.customer-mobile-home-cta__label"
+      ]
+    },
+    {
+      "string": "Book Appointment",
+      "contexts": [
+        "h1#publicBusinessName.customer-branded-header__name.public-booking-hero__name"
+      ]
+    },
+    {
+      "string": "Book new",
+      "contexts": [
+        "button.success.customer-my-bookings-book-btn"
+      ]
+    },
+    {
+      "string": "Book new appointment",
+      "contexts": [
+        "button#manageBookingBookNewBtn.success.hidden"
+      ]
+    },
+    {
+      "string": "Book online",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Book your appointment online",
+      "contexts": [
+        "p#publicBusinessTagline.customer-branded-header__subtitle.public-hero-tagline"
+      ]
+    },
+    {
+      "string": "Book your next visit",
+      "contexts": [
+        "p#customerBrandedHeaderHeadline.customer-branded-header__headline-main"
+      ]
+    },
+    {
+      "string": "Booking",
+      "contexts": [
+        "h3#adminBookingDetailTitle",
+        "div.wizard-brand"
+      ]
+    },
+    {
+      "string": "Booking at",
+      "contexts": [
+        "span.customer-business-context-label"
+      ]
+    },
+    {
+      "string": "Booking details",
+      "contexts": [
+        "h3#customerMyDetailTitle.customer-my-panel-title"
+      ]
+    },
+    {
+      "string": "Booking limits",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeBookingLimitsHeading"
+      ]
+    },
+    {
+      "string": "Booking page",
+      "contexts": [
+        "span.admin-mobile-home-card__label"
+      ]
+    },
+    {
+      "string": "Booking reference",
+      "contexts": [
+        "span.public-success-label"
+      ]
+    },
+    {
+      "string": "Booking summary",
+      "contexts": [
+        "h3.admin-add-booking-summary-panel__title"
+      ]
+    },
+    {
+      "string": "Booking window",
+      "contexts": [
+        "span.customize-hours-label"
+      ]
+    },
+    {
+      "string": "Booking Window",
+      "contexts": [
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Bookings",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "span",
+        "button.admin-nav-btn",
+        "span.client-detail-sheet__stat-label"
+      ]
+    },
+    {
+      "string": "Bookings, clients and staff management in one place.",
+      "contexts": [
+        "p.mode-entry-subtitle"
+      ]
+    },
+    {
+      "string": "Break between appointments",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "Break Between Appointments (Optional)",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "Break ends",
+      "contexts": [
+        "label.customize-time-field__label.admin-saas-time-field__label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Break starts",
+      "contexts": [
+        "label.customize-time-field__label.admin-saas-time-field__label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Business",
+      "contexts": [
+        "span.wizard-pill-label",
+        "p#customerProfileBusinessSectionTitle.customer-mobile-section-title"
+      ]
+    },
+    {
+      "string": "Business Code",
+      "contexts": [
+        "label.auth-field-label"
+      ]
+    },
+    {
+      "string": "Business email",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Business ID",
+      "contexts": [
+        "label.auth-field-label"
+      ]
+    },
+    {
+      "string": "Business info",
+      "contexts": [
+        "span.admin-mobile-home-card__label"
+      ]
+    },
+    {
+      "string": "Business messages and appointment reminders for this device.",
+      "contexts": [
+        "p.customer-alerts-lead"
+      ]
+    },
+    {
+      "string": "Business messages and appointment reminders will appear here.",
+      "contexts": [
+        "p.customer-premium-empty__sub"
+      ]
+    },
+    {
+      "string": "Business messages appear here even when push delivery is unavailable. Local appointment reminders require device permission.",
+      "contexts": [
+        "p.customer-alerts-footnote"
+      ]
+    },
+    {
+      "string": "Business name",
+      "contexts": [
+        "strong",
+        "dt.settings-account-sheet__label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Business name and booking link",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Business Owner Preview",
+      "contexts": [
+        "span.xbook-demo-nav-card__title"
+      ]
+    },
+    {
+      "string": "Business phone",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Business profile",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeTextHeading",
+        "strong"
+      ]
+    },
+    {
+      "string": "Business profile & booking page",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Business setup · ~5 minutes",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Business Switcher",
+      "contexts": [
+        "span.customer-mobile-profile-row__title"
+      ]
+    },
+    {
+      "string": "Business type / industry",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "By using XBOOK, you agree to use the service responsibly and keep your booking information accurate. Businesses manage their own availability, services, and appointments.",
+      "contexts": [
+        "p.customer-profile-info-copy"
+      ]
+    },
+    {
+      "string": "Calendar",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button.admin-nav-btn",
+        "h2.admin-calendar-screen__title",
+        "strong"
+      ]
+    },
+    {
+      "string": "Cancel",
+      "contexts": [
+        "button.admin-closed-days-pill",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Cancel booking",
+      "contexts": [
+        "button.admin-schedule-nav-btn",
+        "button#bookingsActionSheetCancel.bookings-action-menu__item.bookings-action-menu__item--warn",
+        "button#manageBookingCancelBtn.danger"
+      ]
+    },
+    {
+      "string": "Cancel this booking?",
+      "contexts": [
+        "h2#customerCancelConfirmPopupTitle.customer-cancel-confirm-popup__title"
+      ]
+    },
+    {
+      "string": "Cancelled",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Cancelled appointments",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Change",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--muted",
+        "span"
+      ]
+    },
+    {
+      "string": "Change business",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Change your account password.",
+      "contexts": [
+        "p.account-password-security-sheet__subtitle"
+      ]
+    },
+    {
+      "string": "Checking…",
+      "contexts": [
+        "span#customerNotifStatus.customer-notif-status-pill.customer-notif-status-pill--pending"
+      ]
+    },
+    {
+      "string": "Choose a new password for your account.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Choose a section to edit your public booking page. Changes apply after you save.",
+      "contexts": [
+        "p#adminCustomizeHubLead.admin-customize-hub-lead.small"
+      ]
+    },
+    {
+      "string": "Choose a service below",
+      "contexts": [
+        "p#publicHeroScrollHint.customer-branded-header__hint.public-hero-hint"
+      ]
+    },
+    {
+      "string": "Choose a service to continue to available times.",
+      "contexts": [
+        "p.public-service-step-helper"
+      ]
+    },
+    {
+      "string": "Choose a service to see the weekly schedule.",
+      "contexts": [
+        "p#publicTimelineHint.public-timeline-hint.hidden"
+      ]
+    },
+    {
+      "string": "Choose an icon",
+      "contexts": [
+        "span#serviceIconPickerAddLabel.service-icon-picker__summary-text",
+        "span#serviceIconPickerEditLabel.service-icon-picker__summary-text",
+        "span#serviceIconPickerOnboardingLabel.service-icon-picker__summary-text"
+      ]
+    },
+    {
+      "string": "Choose closed days",
+      "contexts": [
+        "h3#closedDaysPickerTitle.closed-days-modal__title"
+      ]
+    },
+    {
+      "string": "Choose closed days manually",
+      "contexts": [
+        "h4.admin-saas-subsection__title.admin-saas-subsection__title--minor",
+        "span.closed-days-action-card__title"
+      ]
+    },
+    {
+      "string": "Choose date",
+      "contexts": [
+        "h3#adminCalendarDatePickerTitle.admin-calendar-date-sheet__title"
+      ]
+    },
+    {
+      "string": "Choose date & time",
+      "contexts": [
+        "h2#selectedDateTitle.public-panel-title.public-booking-step-heading"
+      ]
+    },
+    {
+      "string": "Choose how far into the future customers can book appointments.",
+      "contexts": [
+        "p#customizeBookingWindowHint.customize-hours-hint",
+        "p#onboardingBwHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Choose service",
+      "contexts": [
+        "h2#publicServiceStepTitle.public-panel-title.public-booking-step-heading"
+      ]
+    },
+    {
+      "string": "Choose stylist",
+      "contexts": [
+        "h2#publicStaffStepTitle.public-panel-title.public-booking-step-heading",
+        "h3.public-schedule-staff-picker__title"
+      ]
+    },
+    {
+      "string": "Choose the category that best matches your business.",
+      "contexts": [
+        "p#onboardingIndustryHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Choose the days you’re open, set your usual hours, and tell us how far ahead customers can book. You can change any of this later.",
+      "contexts": [
+        "p.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Choose which repeat schedules customers can pick.",
+      "contexts": [
+        "p.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "Clear",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--muted",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Clear History",
+      "contexts": [
+        "button#customerNotificationClearHistoryBtn.customer-notif-history__clear-btn"
+      ]
+    },
+    {
+      "string": "Clear photo",
+      "contexts": [
+        "button#staffMemberPhotoClearBtn.staff-upload-clear.hidden"
+      ]
+    },
+    {
+      "string": "Client",
+      "contexts": [
+        "h3#clientDetailSheetTitle.client-detail-sheet__title"
+      ]
+    },
+    {
+      "string": "Client approval",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeClientApprovalHeading"
+      ]
+    },
+    {
+      "string": "Client Notes",
+      "contexts": [
+        "h3#clientNotesSheetTitle.client-notes-sheet__title"
+      ]
+    },
+    {
+      "string": "Clients",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button.admin-nav-btn"
+      ]
+    },
+    {
+      "string": "Close",
+      "contexts": [
+        "button.admin-schedule-nav-btn",
+        "button.admin-saas-btn.admin-saas-btn--muted",
+        "button.client-detail-sheet__close",
+        "button.client-detail-sheet__done"
+      ]
+    },
+    {
+      "string": "Close time",
+      "contexts": [
+        "label.customize-time-field__label.admin-saas-time-field__label"
+      ]
+    },
+    {
+      "string": "Closed by default — turn on only when a day differs. Everything else keeps the default schedule above.",
+      "contexts": [
+        "p.wizard-override-hint"
+      ]
+    },
+    {
+      "string": "Closed days",
+      "contexts": [
+        "span.overview-kpi__label"
+      ]
+    },
+    {
+      "string": "Closes",
+      "contexts": [
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Company website",
+      "contexts": [
+        "label"
+      ]
+    },
+    {
+      "string": "Complete your booking",
+      "contexts": [
+        "h2#publicDetailsStepTitle.public-confirm-heading"
+      ]
+    },
+    {
+      "string": "Complete your profile",
+      "contexts": [
+        "strong#customerMobileProfileName.customer-mobile-profile-name",
+        "h2#customerProfileEditTitle"
+      ]
+    },
+    {
+      "string": "Completed appointments",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Completed revenue",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Configured in",
+      "contexts": [
+        "p.admin-saas-subsection__hint"
+      ]
+    },
+    {
+      "string": "Confirm",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "Confirm appointment",
+      "contexts": [
+        "button#publicConfirmBookingBtn.success.public-wizard-confirm-btn"
+      ]
+    },
+    {
+      "string": "Confirm non-working days",
+      "contexts": [
+        "h3#closedDaysConfirmTitle.closed-days-modal__title"
+      ]
+    },
+    {
+      "string": "Confirm password",
+      "contexts": [
+        "label.auth-field-label",
+        "label.customer-profile-edit-sheet__label"
+      ]
+    },
+    {
+      "string": "Confirm reschedule",
+      "contexts": [
+        "button#manageBookingRescheduleBtn.success.hidden"
+      ]
+    },
+    {
+      "string": "Confirmation sent successfully",
+      "contexts": [
+        "p"
+      ]
+    },
+    {
+      "string": "Confirmation sent successfully when email is provided",
+      "contexts": [
+        "p.public-confirm-email-hint"
+      ]
+    },
+    {
+      "string": "Confirmed",
+      "contexts": [
+        "option",
+        "p.public-success-eyebrow",
+        "span.customer-booking-success-popup__badge",
+        "dd#customerBookingSuccessPopupStatus"
+      ]
+    },
+    {
+      "string": "Confirming your appointment…",
+      "contexts": [
+        "p"
+      ]
+    },
+    {
+      "string": "Consultation",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Contact & location",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeContactHeading"
+      ]
+    },
+    {
+      "string": "Continue",
+      "contexts": [
+        "button#customerJoinContinueBtn.auth-btn.auth-btn--primary",
+        "button.auth-btn.auth-btn--primary",
+        "button#adminOnboardingContinueBtn.success.wizard-btn-continue"
+      ]
+    },
+    {
+      "string": "Continue with Apple",
+      "contexts": [
+        "button.auth-btn.auth-btn--oauth"
+      ]
+    },
+    {
+      "string": "Continue with Google",
+      "contexts": [
+        "button.auth-btn.auth-btn--oauth"
+      ]
+    },
+    {
+      "string": "Control how many appointments a client can book.",
+      "contexts": [
+        "p.customize-hours-card__lead"
+      ]
+    },
+    {
+      "string": "Control who can book with your business.",
+      "contexts": [
+        "p.customize-hours-card__lead"
+      ]
+    },
+    {
+      "string": "Copy booking link",
+      "contexts": [
+        "button.success",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Copy link",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "Copy manage link",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Core details from setup — update anytime. Customers see name, phone, and links on your booking page.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Cover image",
+      "contexts": [
+        "h3#customizeCoverHeading"
+      ]
+    },
+    {
+      "string": "Create a new appointment manually",
+      "contexts": [
+        "span.overview-performance-entry__subtitle"
+      ]
+    },
+    {
+      "string": "Create account",
+      "contexts": [
+        "button.auth-btn.auth-btn--success",
+        "button.secondary",
+        "button.customer-mobile-profile-btn.customer-mobile-profile-btn--secondary",
+        "button.success"
+      ]
+    },
+    {
+      "string": "Create Account",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Create an account to book faster next time.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Create an account to keep all your bookings in one place.",
+      "contexts": [
+        "p#bookingSuccessGuestLead.public-success-account-lead.hidden"
+      ]
+    },
+    {
+      "string": "Create business account",
+      "contexts": [
+        "button.auth-link-btn"
+      ]
+    },
+    {
+      "string": "Create Business Account",
+      "contexts": [
+        "button.mode-entry-btn.mode-entry-btn--primary",
+        "button.auth-btn.auth-btn--primary"
+      ]
+    },
+    {
+      "string": "Create customer account",
+      "contexts": [
+        "button.auth-link-btn"
+      ]
+    },
+    {
+      "string": "Create Customer Account",
+      "contexts": [
+        "button#customerJoinCreateBtn.auth-btn.auth-btn--primary"
+      ]
+    },
+    {
+      "string": "Creating booking for",
+      "contexts": [
+        "p.admin-add-context-card__label"
+      ]
+    },
+    {
+      "string": "Currency",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Custom closed days and public holiday blocking are edited in",
+      "contexts": [
+        "p.admin-saas-subsection__hint"
+      ]
+    },
+    {
+      "string": "Custom duration (minutes)",
+      "contexts": [
+        "label.admin-saas-field__label.xbook-duration-field__custom-label",
+        "label.wizard-field-label.xbook-duration-field__custom-label"
+      ]
+    },
+    {
+      "string": "Custom range",
+      "contexts": [
+        "h3.admin-performance-custom-card__title"
+      ]
+    },
+    {
+      "string": "Custom Selection",
+      "contexts": [
+        "span.customer-notifications-form__radio-label"
+      ]
+    },
+    {
+      "string": "Customer",
+      "contexts": [
+        "h3.admin-saas-subsection-card__title.admin-add-premium-card__title",
+        "span.admin-saas-field__label",
+        "span.booking-flow-label"
+      ]
+    },
+    {
+      "string": "Customer account",
+      "contexts": [
+        "h2.auth-card-title"
+      ]
+    },
+    {
+      "string": "Customer Login",
+      "contexts": [
+        "button.success",
+        "button.customer-mobile-profile-btn.customer-mobile-profile-btn--primary",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Customer Notifications",
+      "contexts": [
+        "h3#customerNotificationsSheetTitle.settings-account-sheet__title"
+      ]
+    },
+    {
+      "string": "Customer View Preview",
+      "contexts": [
+        "span.xbook-demo-nav-card__title"
+      ]
+    },
+    {
+      "string": "Customers can use this number to contact you.",
+      "contexts": [
+        "p#onboardingBusinessPhoneHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Customize Page",
+      "contexts": [
+        "button.admin-nav-btn"
+      ]
+    },
+    {
+      "string": "Daily and weekly caps per client",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Date",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "dt",
+        "span.bookings-field__label.admin-saas-field__label",
+        "dt.public-summary-label"
+      ]
+    },
+    {
+      "string": "Day",
+      "contexts": [
+        "button.admin-calendar-view-tab.cal-view-tab"
+      ]
+    },
+    {
+      "string": "Default window for every working day you select — adjust in 15-minute steps (− / +).",
+      "contexts": [
+        "p.wizard-schedule-base-hint"
+      ]
+    },
+    {
+      "string": "Delete booking",
+      "contexts": [
+        "button.bookings-action-menu__item.bookings-action-menu__item--danger"
+      ]
+    },
+    {
+      "string": "Delete selected",
+      "contexts": [
+        "button#closedDaysDeleteSelectedBtn.admin-closed-days-pill.admin-closed-days-pill--danger"
+      ]
+    },
+    {
+      "string": "Demo Preview — all features are locked. This is only a visual tour.",
+      "contexts": [
+        "div.xbook-demo-banner",
+        "p.xbook-demo-admin__banner",
+        "p.xbook-demo-customer__banner"
+      ]
+    },
+    {
+      "string": "Developed and maintained by GT Web Studio.",
+      "contexts": [
+        "p.customer-profile-info-copy"
+      ]
+    },
+    {
+      "string": "Display prices on service cards in the booking wizard.",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Display your logo in the public hero when a logo URL is set.",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Done",
+      "contexts": [
+        "button.secondary",
+        "button.success.customer-reschedule-success-popup__done"
+      ]
+    },
+    {
+      "string": "Download QR",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Download QR code",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Duration",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "dt",
+        "span.wizard-duration-label",
+        "dt.public-summary-label"
+      ]
+    },
+    {
+      "string": "Edit",
+      "contexts": [
+        "button.admin-schedule-nav-btn"
+      ]
+    },
+    {
+      "string": "Edit booking",
+      "contexts": [
+        "h2",
+        "button.bookings-action-menu__item"
+      ]
+    },
+    {
+      "string": "Edit non-working days & holidays",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Edit recurring bookings",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Edit service",
+      "contexts": [
+        "h2.services-edit-card__title"
+      ]
+    },
+    {
+      "string": "Edit staff member",
+      "contexts": [
+        "h2"
+      ]
+    },
+    {
+      "string": "Edit working hours & availability",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Email",
+      "contexts": [
+        "label.auth-field-label",
+        "span.admin-saas-field__label",
+        "dt.settings-account-sheet__label",
+        "span.public-field-label"
+      ]
+    },
+    {
+      "string": "Email confirmed",
+      "contexts": [
+        "h1.email-verified-screen__title"
+      ]
+    },
+    {
+      "string": "Enable booking limits",
+      "contexts": [
+        "span.admin-saas-toggle-row__title"
+      ]
+    },
+    {
+      "string": "Enable notifications",
+      "contexts": [
+        "button#customerNotifEnableBtn.customer-alerts-btn.customer-alerts-btn--primary"
+      ]
+    },
+    {
+      "string": "End month",
+      "contexts": [
+        "label.admin-performance-field__label"
+      ]
+    },
+    {
+      "string": "English",
+      "contexts": [
+        "span#adminSettingsLanguageValue.settings-setup-row__value",
+        "span.language-option__name"
+      ]
+    },
+    {
+      "string": "Enter business code",
+      "contexts": [
+        "h2.auth-card-title"
+      ]
+    },
+    {
+      "string": "Enter code",
+      "contexts": [
+        "span.customer-mobile-profile-row__value"
+      ]
+    },
+    {
+      "string": "EUR (€)",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Europe / Belgrade",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Europe / Berlin",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Europe / London",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Europe / Paris",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Europe / Skopje",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Every 2 weeks",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Every 3 weeks",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Every 4 weeks",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Every week",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Example:",
+      "contexts": [
+        "p.wizard-override-hint",
+        "p#onboardingBwHint.wizard-field-hint",
+        "p#onboardingMnHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Explore XBOOK Demo",
+      "contexts": [
+        "button.mode-entry-btn.mode-entry-btn--demo",
+        "h1"
+      ]
+    },
+    {
+      "string": "Extra time between appointments for preparation or cleanup.",
+      "contexts": [
+        "p.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "Facebook",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "First name",
+      "contexts": [
+        "label.customer-profile-edit-sheet__label"
+      ]
+    },
+    {
+      "string": "First Name",
+      "contexts": [
+        "label.auth-field-label"
+      ]
+    },
+    {
+      "string": "For existing business owners and customers.",
+      "contexts": [
+        "p.mode-entry-action__hint"
+      ]
+    },
+    {
+      "string": "For salons, barbers, clinics and more.",
+      "contexts": [
+        "p.mode-entry-trust-line"
+      ]
+    },
+    {
+      "string": "Forgot password",
+      "contexts": [
+        "button.auth-btn.auth-btn--ghost"
+      ]
+    },
+    {
+      "string": "Friday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Full name",
+      "contexts": [
+        "label.auth-field-label",
+        "span.public-field-label"
+      ]
+    },
+    {
+      "string": "Full Privacy Policy coming soon.",
+      "contexts": [
+        "p.customer-profile-info-soon"
+      ]
+    },
+    {
+      "string": "Full Terms of Service coming soon.",
+      "contexts": [
+        "p.customer-profile-info-soon"
+      ]
+    },
+    {
+      "string": "G",
+      "contexts": [
+        "div#xbookDemoCustomerBrandLogo.xbook-demo-customer-brand__logo"
+      ]
+    },
+    {
+      "string": "Gallery",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeGalleryHeading",
+        "h2.customer-mobile-gallery__title"
+      ]
+    },
+    {
+      "string": "Generate",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Generate Report",
+      "contexts": [
+        "button#performanceGenerateBtn.admin-performance-generate"
+      ]
+    },
+    {
+      "string": "Go live",
+      "contexts": [
+        "span.wizard-pill-label"
+      ]
+    },
+    {
+      "string": "Go to dashboard",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Good morning",
+      "contexts": [
+        "h3#overviewGreetingTitle.overview-dash-greeting__title"
+      ]
+    },
+    {
+      "string": "Google",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "GT Studio",
+      "contexts": [
+        "p#xbookDemoAdminToolbarBrand.xbook-demo-admin__brand",
+        "p#xbookDemoCustomerBrandName.xbook-demo-customer-brand__name"
+      ]
+    },
+    {
+      "string": "H1",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "H2",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "Haircut",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Have a business code?",
+      "contexts": [
+        "button.customer-hub-manual-code-toggle"
+      ]
+    },
+    {
+      "string": "Help & Support",
+      "contexts": [
+        "span",
+        "h2#customerProfileHelpTitle"
+      ]
+    },
+    {
+      "string": "Hero preview updates as you edit. Full booking flow is on your public link.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Holiday country",
+      "contexts": [
+        "span.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Home",
+      "contexts": [
+        "button#homeBtn.hidden",
+        "span"
+      ]
+    },
+    {
+      "string": "Hours",
+      "contexts": [
+        "span.wizard-pill-label"
+      ]
+    },
+    {
+      "string": "How long a recurring series may run at most.",
+      "contexts": [
+        "p.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "How many appointments?",
+      "contexts": [
+        "label"
+      ]
+    },
+    {
+      "string": "How much advance notice do you need before a customer can book?",
+      "contexts": [
+        "p#onboardingMnHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "How much notice customers must give before booking.",
+      "contexts": [
+        "p#customizeMinimumNoticeHint.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "If approval is required, new clients must be approved before they can book. If accepting new clients is off, only approved existing clients can book.",
+      "contexts": [
+        "p.customize-hours-hint.admin-client-approval-settings__helper"
+      ]
+    },
+    {
+      "string": "If you booked as a guest, use the Manage booking link from your confirmation.",
+      "contexts": [
+        "p.customer-mobile-placeholder-note"
+      ]
+    },
+    {
+      "string": "If you choose 2 hours, customers cannot book appointments starting in less than 2 hours.",
+      "contexts": [
+        "p#onboardingMnHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "If you select 3 months, customers can book any available time up to 3 months from today.",
+      "contexts": [
+        "p#onboardingBwHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Inbox",
+      "contexts": [
+        "h3#customerAlertsRemindersHeading.customer-alerts-section-label"
+      ]
+    },
+    {
+      "string": "Industry / business type",
+      "contexts": [
+        "legend"
+      ]
+    },
+    {
+      "string": "Instagram",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label",
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Internal notes (optional)",
+      "contexts": [
+        "span.admin-saas-field__label.admin-add-notes-field__label"
+      ]
+    },
+    {
+      "string": "Internal only — customers never see this.",
+      "contexts": [
+        "p.client-notes-sheet__hint"
+      ]
+    },
+    {
+      "string": "Join a business",
+      "contexts": [
+        "h2.auth-card-title"
+      ]
+    },
+    {
+      "string": "Join with business code",
+      "contexts": [
+        "button.auth-link-btn",
+        "button.auth-link-btn.auth-link-btn--minor"
+      ]
+    },
+    {
+      "string": "JPG, PNG or WebP, max 3 MB. If empty, a premium gradient is used.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Keep Appointment",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "Last Month",
+      "contexts": [
+        "button.admin-performance-preset"
+      ]
+    },
+    {
+      "string": "Last name",
+      "contexts": [
+        "label.customer-profile-edit-sheet__label"
+      ]
+    },
+    {
+      "string": "Last Name",
+      "contexts": [
+        "label.auth-field-label"
+      ]
+    },
+    {
+      "string": "Last visit",
+      "contexts": [
+        "span.client-detail-sheet__stat-label"
+      ]
+    },
+    {
+      "string": "Let customers choose a team member when staff exist.",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Live preview",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizePreviewHeading"
+      ]
+    },
+    {
+      "string": "Loading bookings…",
+      "contexts": [
+        "p.customer-my-bookings-loading__label"
+      ]
+    },
+    {
+      "string": "Loading manage booking...",
+      "contexts": [
+        "span#manageBookingLoadingLabel.visually-hidden"
+      ]
+    },
+    {
+      "string": "Loading manage booking…",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Log in",
+      "contexts": [
+        "button.auth-btn.auth-btn--primary"
+      ]
+    },
+    {
+      "string": "Log In",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "Log out",
+      "contexts": [
+        "button.secondary.wizard-logout",
+        "button.auth-btn.auth-btn--ghost",
+        "button#customerMobileProfileLogoutBtn.customer-mobile-profile-row.customer-mobile-profile-row--action"
+      ]
+    },
+    {
+      "string": "Logo & cover image",
+      "contexts": [
+        "span.admin-customize-hub-row__title"
+      ]
+    },
+    {
+      "string": "Logo visibility",
+      "contexts": [
+        "h3#customizeLogoVisibilityHeading.visually-hidden"
+      ]
+    },
+    {
+      "string": "Logo, cover, colors and customer page",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Logout",
+      "contexts": [
+        "button#logoutBtn.hidden"
+      ]
+    },
+    {
+      "string": "Lowercase letters, numbers and hyphens. Saved with Save Changes.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Make your booking page feel like",
+      "contexts": [
+        "p.small.admin-customize-panels-intro"
+      ]
+    },
+    {
+      "string": "Manage and review all customer bookings.",
+      "contexts": [
+        "p.admin-bookings-screen__subtitle"
+      ]
+    },
+    {
+      "string": "Manage appointments",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Manage appointments or book your next visit.",
+      "contexts": [
+        "p#customerHubLoggedLead.customer-hub-lead"
+      ]
+    },
+    {
+      "string": "Manage booking",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "Manage team members",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Manage your appointments",
+      "contexts": [
+        "h3.customer-mobile-guest-title"
+      ]
+    },
+    {
+      "string": "Manage your booking",
+      "contexts": [
+        "h2"
+      ]
+    },
+    {
+      "string": "Manage your business settings",
+      "contexts": [
+        "p.admin-mobile-card__hint"
+      ]
+    },
+    {
+      "string": "Manage your team and their availability.",
+      "contexts": [
+        "p.admin-native-screen__subtitle"
+      ]
+    },
+    {
+      "string": "Manual closed days and public holidays",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Max bookings per day",
+      "contexts": [
+        "span.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Max bookings per week",
+      "contexts": [
+        "span.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Max repeat duration",
+      "contexts": [
+        "span.customize-hours-label"
+      ]
+    },
+    {
+      "string": "Message",
+      "contexts": [
+        "span.customer-notifications-form__label"
+      ]
+    },
+    {
+      "string": "Minimum notice",
+      "contexts": [
+        "span.customize-hours-label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "MKD",
+      "contexts": [
+        "span.services-input-wrap__suffix"
+      ]
+    },
+    {
+      "string": "MKD — Macedonian Denar",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Monday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Month",
+      "contexts": [
+        "button.admin-calendar-view-tab.cal-view-tab"
+      ]
+    },
+    {
+      "string": "More options",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "Most fields are not live until you tap",
+      "contexts": [
+        "p.admin-customize-save-reminder.admin-customize-panels-intro"
+      ]
+    },
+    {
+      "string": "My Bookings",
+      "contexts": [
+        "button.auth-btn.auth-btn--secondary",
+        "h2"
+      ]
+    },
+    {
+      "string": "Name",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "label.wizard-field-label",
+        "dt"
+      ]
+    },
+    {
+      "string": "Name, link slug, and about text",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Name, phone, address and details",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Need help with your booking or account?",
+      "contexts": [
+        "p.customer-profile-info-lead"
+      ]
+    },
+    {
+      "string": "New clients must be approved before they can book.",
+      "contexts": [
+        "span.admin-saas-toggle-row__hint"
+      ]
+    },
+    {
+      "string": "New date",
+      "contexts": [
+        "span.public-field-label"
+      ]
+    },
+    {
+      "string": "New password",
+      "contexts": [
+        "label.auth-field-label",
+        "label.customer-profile-edit-sheet__label"
+      ]
+    },
+    {
+      "string": "Next booking",
+      "contexts": [
+        "p#adminMobileHomeNextLabel.admin-mobile-summary__next-label.hidden",
+        "h3.overview-next-card__title"
+      ]
+    },
+    {
+      "string": "Next: open your dashboard to see bookings, or test the page yourself with “Open booking page”.",
+      "contexts": [
+        "p.wizard-launch-next"
+      ]
+    },
+    {
+      "string": "No break set",
+      "contexts": [
+        "p#availabilityBreakStatus.admin-saas-break-status.admin-saas-break-status--empty"
+      ]
+    },
+    {
+      "string": "No cover — gradient default",
+      "contexts": [
+        "div#customizeCoverPreviewEmpty.customize-brand-preview__cover-empty"
+      ]
+    },
+    {
+      "string": "No customers selected",
+      "contexts": [
+        "p#customerNotificationSelectionSummary.customer-notifications-custom__summary"
+      ]
+    },
+    {
+      "string": "No dates selected yet.",
+      "contexts": [
+        "p#closedDaysPickerDetail.closed-days-picker-summary__detail"
+      ]
+    },
+    {
+      "string": "No gallery photos yet.",
+      "contexts": [
+        "p.admin-gallery-empty",
+        "p#customerMobileGalleryEmpty.customer-mobile-gallery__empty.hidden"
+      ]
+    },
+    {
+      "string": "No minimum",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "No notes yet.",
+      "contexts": [
+        "p#clientDetailSheetNotesEmpty.client-detail-sheet__notes-empty"
+      ]
+    },
+    {
+      "string": "No notifications sent yet.",
+      "contexts": [
+        "p.customer-notif-history__empty"
+      ]
+    },
+    {
+      "string": "No notifications yet",
+      "contexts": [
+        "p.customer-premium-empty__title"
+      ]
+    },
+    {
+      "string": "No repeat",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "No upcoming booking.",
+      "contexts": [
+        "div#statNextBooking.overview-next-card__body.small"
+      ]
+    },
+    {
+      "string": "Non-working days & holidays",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeClosedDaysHeading",
+        "h3#availabilityClosedDaysLinkHeading.admin-saas-subsection__title"
+      ]
+    },
+    {
+      "string": "North Macedonia",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Notes",
+      "contexts": [
+        "h3.admin-saas-subsection-card__title.admin-add-premium-card__title",
+        "h4#clientDetailSheetNotesTitle.client-detail-sheet__notes-title",
+        "span.public-field-label"
+      ]
+    },
+    {
+      "string": "Notification Details",
+      "contexts": [
+        "h3#customerNotificationDetailTitle.customer-notification-detail-sheet__title"
+      ]
+    },
+    {
+      "string": "Notification History",
+      "contexts": [
+        "h4#customerNotificationHistoryTitle.customer-notif-history__title"
+      ]
+    },
+    {
+      "string": "Notifications",
+      "contexts": [
+        "h2.customer-alerts-title"
+      ]
+    },
+    {
+      "string": "Notify customers",
+      "contexts": [
+        "span.overview-performance-entry__title"
+      ]
+    },
+    {
+      "string": "Offline snapshot",
+      "contexts": [
+        "p#customerMyBookingsOfflineBadge.customer-offline-snapshot-badge.hidden"
+      ]
+    },
+    {
+      "string": "Online Booking Platform",
+      "contexts": [
+        "p.mode-entry-badge"
+      ]
+    },
+    {
+      "string": "Only needed if you do not have a booking link.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Open a booking link",
+      "contexts": [
+        "h2.auth-card-title"
+      ]
+    },
+    {
+      "string": "Open booking",
+      "contexts": [
+        "button.auth-btn.auth-btn--primary"
+      ]
+    },
+    {
+      "string": "Open booking page",
+      "contexts": [
+        "button.secondary",
+        "button.success"
+      ]
+    },
+    {
+      "string": "Open Calendar to pick a slot, or enter details here.",
+      "contexts": [
+        "p#adminAddBottomHint.admin-add-bottom-hint"
+      ]
+    },
+    {
+      "string": "Open days, times, breaks, and booking window",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Open page",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Open time",
+      "contexts": [
+        "label.customize-time-field__label.admin-saas-time-field__label"
+      ]
+    },
+    {
+      "string": "Opens",
+      "contexts": [
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "optional",
+      "contexts": [
+        "span#customerEmailOptionalTag.public-field-optional",
+        "span.public-field-optional"
+      ]
+    },
+    {
+      "string": "Optional — helps you remember why these days are closed.",
+      "contexts": [
+        "p.closed-days-modal__lead"
+      ]
+    },
+    {
+      "string": "Optional — JPG, PNG or WebP, max 3 MB.",
+      "contexts": [
+        "p.wizard-field-hint.wizard-staff-photo-hint"
+      ]
+    },
+    {
+      "string": "Optional overrides for specific weekdays",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "Optional step — add teammates only if customers should choose who they book with. Solo owners can tap",
+      "contexts": [
+        "p.wizard-staff-lead"
+      ]
+    },
+    {
+      "string": "Optional: override hours on specific weekdays",
+      "contexts": [
+        "summary"
+      ]
+    },
+    {
+      "string": "or",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Outlook",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Overview",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button.admin-nav-btn.admin-nav-btn--active"
+      ]
+    },
+    {
+      "string": "Password",
+      "contexts": [
+        "label.auth-field-label"
+      ]
+    },
+    {
+      "string": "Password & security",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Password & Security",
+      "contexts": [
+        "h2#accountPasswordSecurityTitle"
+      ]
+    },
+    {
+      "string": "Pending",
+      "contexts": [
+        "option",
+        "button.clients-approval-filter"
+      ]
+    },
+    {
+      "string": "Performance",
+      "contexts": [
+        "button.admin-nav-btn",
+        "span.overview-performance-entry__title"
+      ]
+    },
+    {
+      "string": "Phone",
+      "contexts": [
+        "label.auth-field-label",
+        "span#adminAddPhoneLabel.admin-saas-field__label",
+        "span.public-field-label",
+        "label.customer-profile-edit-sheet__label"
+      ]
+    },
+    {
+      "string": "Phone, email, address, and social links",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Photo",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "button#onboardingStaffPhotoUploadBtn.secondary"
+      ]
+    },
+    {
+      "string": "Photos from this business",
+      "contexts": [
+        "p.customer-mobile-gallery__subtitle"
+      ]
+    },
+    {
+      "string": "Photos of your work, space, services, or results",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Pick a day, then choose an available time.",
+      "contexts": [
+        "p#publicTimesHint.public-panel-hint.public-booking-step-subtitle"
+      ]
+    },
+    {
+      "string": "Pick a new date and available time.",
+      "contexts": [
+        "p.manage-reschedule-panel__hint"
+      ]
+    },
+    {
+      "string": "Preparing your booking experience",
+      "contexts": [
+        "p#appShellTitle.app-shell-title.app-shell-restore__title"
+      ]
+    },
+    {
+      "string": "Preview how XBOOK looks for business owners and customers. All features are locked in demo mode.",
+      "contexts": [
+        "p"
+      ]
+    },
+    {
+      "string": "Preview the app — no sign-in required.",
+      "contexts": [
+        "p.mode-entry-action__hint"
+      ]
+    },
+    {
+      "string": "Price",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "dt"
+      ]
+    },
+    {
+      "string": "Price (optional)",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Privacy Policy",
+      "contexts": [
+        "span",
+        "h2#customerProfilePrivacyTitle"
+      ]
+    },
+    {
+      "string": "Profile",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Profile logo",
+      "contexts": [
+        "h3#customizeLogoHeading"
+      ]
+    },
+    {
+      "string": "Profile logo and hero cover",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Public booking link slug",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Public booking page style",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Public holidays",
+      "contexts": [
+        "span.admin-holidays-accordion__title"
+      ]
+    },
+    {
+      "string": "Public link & QR",
+      "contexts": [
+        "span.admin-mobile-home-card__label"
+      ]
+    },
+    {
+      "string": "Public link, QR code, and share actions",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Public slug",
+      "contexts": [
+        "dt.settings-account-sheet__label"
+      ]
+    },
+    {
+      "string": "Q1",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "Q2",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "Q3",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "Q4",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--secondary"
+      ]
+    },
+    {
+      "string": "Questions? Contact",
+      "contexts": [
+        "p.customer-profile-info-copy"
+      ]
+    },
+    {
+      "string": "Quick share",
+      "contexts": [
+        "p.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "Reason",
+      "contexts": [
+        "label"
+      ]
+    },
+    {
+      "string": "Recent bookings",
+      "contexts": [
+        "p.client-detail-sheet__history-title"
+      ]
+    },
+    {
+      "string": "Recipients",
+      "contexts": [
+        "legend.customer-notifications-form__label"
+      ]
+    },
+    {
+      "string": "Recommended: 16:9 wide image. This appears as the background of your booking page.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Recurring bookings",
+      "contexts": [
+        "span#customizeRecurringHeading.customize-hours-label",
+        "h3#availabilityRecurringHeading.admin-saas-subsection__title"
+      ]
+    },
+    {
+      "string": "Reference",
+      "contexts": [
+        "span.booking-flow-label"
+      ]
+    },
+    {
+      "string": "Refreshing…",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Reject",
+      "contexts": [
+        "button#clientDetailRejectBtn.client-detail-sheet__approval-btn.client-detail-sheet__approval-btn--reject"
+      ]
+    },
+    {
+      "string": "Rejected",
+      "contexts": [
+        "button.clients-approval-filter"
+      ]
+    },
+    {
+      "string": "Remove",
+      "contexts": [
+        "button#editStaffPhotoRemoveBtn.admin-saas-btn.admin-saas-btn--ghost-danger"
+      ]
+    },
+    {
+      "string": "Remove cover",
+      "contexts": [
+        "button#businessCoverRemoveBtn.secondary.hidden"
+      ]
+    },
+    {
+      "string": "Remove logo",
+      "contexts": [
+        "button#businessLogoRemoveBtn.secondary.hidden"
+      ]
+    },
+    {
+      "string": "Remove photo",
+      "contexts": [
+        "button#onboardingStaffPhotoRemoveBtn.secondary.hidden"
+      ]
+    },
+    {
+      "string": "Repeat this appointment?",
+      "contexts": [
+        "p#publicRecurringTitle.public-recurring-panel__title"
+      ]
+    },
+    {
+      "string": "Report period",
+      "contexts": [
+        "h3.admin-performance-period-controls__title"
+      ]
+    },
+    {
+      "string": "Require approval for new clients",
+      "contexts": [
+        "span.admin-saas-toggle-row__title"
+      ]
+    },
+    {
+      "string": "Reschedule",
+      "contexts": [
+        "h3.manage-reschedule-panel__title"
+      ]
+    },
+    {
+      "string": "Restoring your session…",
+      "contexts": [
+        "p#appShellMessage.app-shell-message.app-shell-restore__subtitle"
+      ]
+    },
+    {
+      "string": "Retry",
+      "contexts": [
+        "button#appShellRetryBtn.success.app-shell-retry"
+      ]
+    },
+    {
+      "string": "Retry connection",
+      "contexts": [
+        "button"
+      ]
+    },
+    {
+      "string": "Revenue and activity for your business.",
+      "contexts": [
+        "p.admin-native-screen__subtitle.admin-performance-screen__subtitle"
+      ]
+    },
+    {
+      "string": "Revenue uses saved booking price when available; otherwise current service price.",
+      "contexts": [
+        "p.admin-performance-footnote"
+      ]
+    },
+    {
+      "string": "Revenue, appointments, clients and services",
+      "contexts": [
+        "span.overview-performance-entry__subtitle"
+      ]
+    },
+    {
+      "string": "Review",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--secondary"
+      ]
+    },
+    {
+      "string": "Review clients",
+      "contexts": [
+        "button.overview-pending-clients-alert__btn"
+      ]
+    },
+    {
+      "string": "Role",
+      "contexts": [
+        "span.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Role or title (optional)",
+      "contexts": [
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Run and grow your business",
+      "contexts": [
+        "h1#modeEntryHeadline.mode-entry-headline"
+      ]
+    },
+    {
+      "string": "Saturday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Save",
+      "contexts": [
+        "button#onboardingStaffComposerSaveBtn.success"
+      ]
+    },
+    {
+      "string": "Save & continue",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Save availability",
+      "contexts": [
+        "button#saveAvailabilityBtn.admin-saas-btn.admin-saas-btn--primary"
+      ]
+    },
+    {
+      "string": "Save Changes",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Save holiday settings",
+      "contexts": [
+        "button.admin-saas-btn.admin-saas-btn--secondary"
+      ]
+    },
+    {
+      "string": "Save password",
+      "contexts": [
+        "button.auth-btn.auth-btn--success"
+      ]
+    },
+    {
+      "string": "Save service",
+      "contexts": [
+        "button#onboardingServiceComposerSaveBtn.success"
+      ]
+    },
+    {
+      "string": "Save проверува дали терминот се судира со друг booking и дали денот е closed.",
+      "contexts": [
+        "p.admin-saas-hint"
+      ]
+    },
+    {
+      "string": "Saved Businesses",
+      "contexts": [
+        "h2#customerBusinessSwitcherTitle"
+      ]
+    },
+    {
+      "string": "Scan or share",
+      "contexts": [
+        "span.public-success-label"
+      ]
+    },
+    {
+      "string": "Search",
+      "contexts": [
+        "span.bookings-field__label.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Search by name, phone, email, or #001",
+      "contexts": [
+        "p.admin-add-customer-picker__helper"
+      ]
+    },
+    {
+      "string": "See how clients experience booking, choosing services, selecting time slots, and managing appointments.",
+      "contexts": [
+        "span.xbook-demo-nav-card__desc"
+      ]
+    },
+    {
+      "string": "See how your booking page hero looks",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "See the tools for managing bookings, clients, services, staff, availability, and business settings.",
+      "contexts": [
+        "span.xbook-demo-nav-card__desc"
+      ]
+    },
+    {
+      "string": "Select a booking to see details and manage options.",
+      "contexts": [
+        "p.customer-my-detail-empty"
+      ]
+    },
+    {
+      "string": "Select a service to preview booking length.",
+      "contexts": [
+        "span.cal-info-card__text"
+      ]
+    },
+    {
+      "string": "Select a service, then click or drag an empty slot to add a booking. Click a block for details.",
+      "contexts": [
+        "p.admin-saas-subsection__hint.cal-screen-footer-hint"
+      ]
+    },
+    {
+      "string": "Select all",
+      "contexts": [
+        "button.admin-closed-days-pill"
+      ]
+    },
+    {
+      "string": "Select days",
+      "contexts": [
+        "button#closedDaysTabDays.closed-days-segments__btn.closed-days-segments__btn--active"
+      ]
+    },
+    {
+      "string": "Select one or more dates, or a date range, to mark as non-working days.",
+      "contexts": [
+        "p.admin-saas-subsection__hint"
+      ]
+    },
+    {
+      "string": "Select range",
+      "contexts": [
+        "button#closedDaysTabRange.closed-days-segments__btn"
+      ]
+    },
+    {
+      "string": "Select service…",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Select the days your business is open.",
+      "contexts": [
+        "p.wizard-weekday-list-hint"
+      ]
+    },
+    {
+      "string": "Select to delete",
+      "contexts": [
+        "button#closedDaysSelectBtn.admin-closed-days-pill.admin-closed-days-select-btn"
+      ]
+    },
+    {
+      "string": "Selected customer",
+      "contexts": [
+        "p.admin-add-customer-picker__card-label"
+      ]
+    },
+    {
+      "string": "Selected day",
+      "contexts": [
+        "h3#customerMyDayTitle.customer-my-panel-title"
+      ]
+    },
+    {
+      "string": "Send booking page",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Send Email",
+      "contexts": [
+        "button.success.customer-profile-edit-sheet__btn"
+      ]
+    },
+    {
+      "string": "Send Notification",
+      "contexts": [
+        "button#customerNotificationSendBtn.customer-notifications-form__btn.customer-notifications-form__btn--send"
+      ]
+    },
+    {
+      "string": "Send promotions and important updates",
+      "contexts": [
+        "span.overview-performance-entry__subtitle"
+      ]
+    },
+    {
+      "string": "Service",
+      "contexts": [
+        "span.cal-filter-card__label",
+        "span.admin-saas-field__label",
+        "dt",
+        "span.bookings-field__label.admin-saas-field__label"
+      ]
+    },
+    {
+      "string": "Service icon",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "span.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Service name",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Services",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button.admin-nav-btn",
+        "span.admin-mobile-home-card__label",
+        "span.wizard-pill-label"
+      ]
+    },
+    {
+      "string": "Services customers can book",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "Services, staff and availability",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Set new password",
+      "contexts": [
+        "h1.auth-card-title"
+      ]
+    },
+    {
+      "string": "Set up your business and start accepting bookings online.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Set when customers can book. These hours apply to your public page and calendar.",
+      "contexts": [
+        "p.customize-hours-card__lead"
+      ]
+    },
+    {
+      "string": "Settings",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button#adminCustomizeHubBack.settings-sub-back.admin-customize-hub-back",
+        "button#adminServicesSettingsBack.settings-sub-back.hidden",
+        "button#adminStaffSettingsBack.settings-sub-back.hidden"
+      ]
+    },
+    {
+      "string": "Setup",
+      "contexts": [
+        "p.admin-mobile-card__eyebrow",
+        "h1.admin-mobile-card__title"
+      ]
+    },
+    {
+      "string": "Share your booking app",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeShareHeading"
+      ]
+    },
+    {
+      "string": "Share your booking page",
+      "contexts": [
+        "span.admin-mobile-home-card__desc",
+        "h2#onboardingShareHeading.wizard-step5-heading"
+      ]
+    },
+    {
+      "string": "Share your link or QR. New bookings appear in your dashboard calendar.",
+      "contexts": [
+        "p.wizard-launch-sub"
+      ]
+    },
+    {
+      "string": "Share your public booking link or QR code with customers. Edit the link slug in",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Show",
+      "contexts": [
+        "button.password-toggle"
+      ]
+    },
+    {
+      "string": "Show about section on booking page",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Show address on booking page",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Show as available for booking (active)",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Show logo on booking page",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Show logo on your public page",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Show service prices",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Show service prices on the booking page",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Show staff picker",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Show staff picker when you have team members",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Shown under your name on the booking page — e.g. “Premium cuts in Skopje”.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Sign in",
+      "contexts": [
+        "h1.auth-card-title.visually-hidden"
+      ]
+    },
+    {
+      "string": "Sign In",
+      "contexts": [
+        "button.mode-entry-btn.mode-entry-btn--secondary"
+      ]
+    },
+    {
+      "string": "Sign in from Profile to see appointments across businesses.",
+      "contexts": [
+        "p#customerMobileHomeGuestHint.customer-mobile-home-guest-hint.hidden"
+      ]
+    },
+    {
+      "string": "Sign in to book and manage your appointments.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Sign in to book appointments and view your schedule.",
+      "contexts": [
+        "p#customerHubSubtitle.customer-hub-subtitle"
+      ]
+    },
+    {
+      "string": "Sign in to see all your upcoming appointments.",
+      "contexts": [
+        "p.customer-mobile-placeholder-lead"
+      ]
+    },
+    {
+      "string": "Sign in to view your bookings, reschedule appointments, and manage your profile.",
+      "contexts": [
+        "p.customer-mobile-placeholder-lead"
+      ]
+    },
+    {
+      "string": "Sign in to your XBOOK account.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Signed in",
+      "contexts": [
+        "span.admin-native-toolbar__label"
+      ]
+    },
+    {
+      "string": "Skip for now — open dashboard",
+      "contexts": [
+        "button.wizard-skip-btn"
+      ]
+    },
+    {
+      "string": "Smart booking for modern businesses",
+      "contexts": [
+        "p.app-shell-restore__tagline"
+      ]
+    },
+    {
+      "string": "SMS",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Social media",
+      "contexts": [
+        "span.wizard-social-label"
+      ]
+    },
+    {
+      "string": "Staff",
+      "contexts": [
+        "span.admin-mobile-nav-label",
+        "button.admin-nav-btn",
+        "span.admin-mobile-home-card__label",
+        "span.cal-filter-card__label"
+      ]
+    },
+    {
+      "string": "Start month",
+      "contexts": [
+        "label.admin-performance-field__label"
+      ]
+    },
+    {
+      "string": "Status",
+      "contexts": [
+        "span.admin-saas-field__label",
+        "dt",
+        "dt.settings-account-sheet__label",
+        "span.customer-alerts-status-label"
+      ]
+    },
+    {
+      "string": "Step 1 of 5 — Business",
+      "contexts": [
+        "p#adminOnboardingProgressLabel.wizard-step-counter"
+      ]
+    },
+    {
+      "string": "Stylist",
+      "contexts": [
+        "dt.public-summary-label",
+        "span.booking-flow-label"
+      ]
+    },
+    {
+      "string": "Subtitle",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Sunday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Support",
+      "contexts": [
+        "p.customer-mobile-section-title"
+      ]
+    },
+    {
+      "string": "Support:",
+      "contexts": [
+        "p.customer-profile-info-copy"
+      ]
+    },
+    {
+      "string": "Swipe to see more times",
+      "contexts": [
+        "p#adminAddMobileSlotsHint.admin-add-mobile-slots-hint.hidden"
+      ]
+    },
+    {
+      "string": "Switch between saved businesses",
+      "contexts": [
+        "span.customer-mobile-profile-row__sub"
+      ]
+    },
+    {
+      "string": "Tap a highlighted day on the calendar.",
+      "contexts": [
+        "p#customerMyDaySubtitle.customer-my-panel-subtitle"
+      ]
+    },
+    {
+      "string": "Tap dates to select or unselect them.",
+      "contexts": [
+        "p#closedDaysPickerModeHint.closed-days-picker-hint"
+      ]
+    },
+    {
+      "string": "Tap to select one or more days or a date range.",
+      "contexts": [
+        "span.closed-days-action-card__subtitle"
+      ]
+    },
+    {
+      "string": "Telegram",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "Terms of Service",
+      "contexts": [
+        "span",
+        "h2#customerProfileTermsTitle"
+      ]
+    },
+    {
+      "string": "The name customers will see when booking.",
+      "contexts": [
+        "p#onboardingBusinessNameHint.wizard-field-hint"
+      ]
+    },
+    {
+      "string": "This action cannot be undone. Your appointment will be cancelled.",
+      "contexts": [
+        "p.customer-cancel-confirm-popup__lead"
+      ]
+    },
+    {
+      "string": "This business requires an account to book.",
+      "contexts": [
+        "p.public-booking-auth-gate__lead"
+      ]
+    },
+    {
+      "string": "This Month",
+      "contexts": [
+        "button.admin-performance-preset.admin-performance-preset--active"
+      ]
+    },
+    {
+      "string": "This week",
+      "contexts": [
+        "p#adminCalendarSubtitle.cal-date-card__sub",
+        "h3#publicWeekTitle.public-week-toolbar-title"
+      ]
+    },
+    {
+      "string": "Thursday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Time",
+      "contexts": [
+        "span.admin-saas-field__label.admin-add-mobile-slots-wrap__label",
+        "span.admin-saas-field__label",
+        "dt",
+        "dt.public-summary-label"
+      ]
+    },
+    {
+      "string": "Title",
+      "contexts": [
+        "span.customer-notifications-form__label"
+      ]
+    },
+    {
+      "string": "to click or drag a slot — this form opens with date, time, and staff filled in.",
+      "contexts": [
+        "p.admin-saas__intro"
+      ]
+    },
+    {
+      "string": "Today",
+      "contexts": [
+        "p.admin-mobile-card__eyebrow",
+        "span.overview-kpi__label"
+      ]
+    },
+    {
+      "string": "Today's Appointments",
+      "contexts": [
+        "p.mode-entry-preview-card__title"
+      ]
+    },
+    {
+      "string": "Today’s schedule",
+      "contexts": [
+        "p#adminMobileHomeTodayStat.admin-mobile-summary__stat"
+      ]
+    },
+    {
+      "string": "Top clients",
+      "contexts": [
+        "h3#performanceTopClientsHeading.admin-performance-rank__title"
+      ]
+    },
+    {
+      "string": "Top service",
+      "contexts": [
+        "span.client-detail-sheet__stat-label"
+      ]
+    },
+    {
+      "string": "Top services",
+      "contexts": [
+        "h3#performanceTopServicesHeading.admin-performance-rank__title"
+      ]
+    },
+    {
+      "string": "Total bookings",
+      "contexts": [
+        "span.overview-kpi__label"
+      ]
+    },
+    {
+      "string": "Total spent",
+      "contexts": [
+        "span.client-detail-sheet__stat-label"
+      ]
+    },
+    {
+      "string": "Tuesday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Unblock",
+      "contexts": [
+        "button#clientDetailUnblockBtn.client-detail-sheet__approval-btn.client-detail-sheet__approval-btn--unblock"
+      ]
+    },
+    {
+      "string": "Unsaved changes",
+      "contexts": [
+        "p#adminCustomizeUnsavedHint.admin-customize-unsaved-hint.hidden"
+      ]
+    },
+    {
+      "string": "Upcoming",
+      "contexts": [
+        "span.overview-kpi__label",
+        "h3#customerMyUpcomingTitle.customer-my-panel-title"
+      ]
+    },
+    {
+      "string": "Upcoming appointments",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Upcoming revenue",
+      "contexts": [
+        "span.admin-performance-kpi__label"
+      ]
+    },
+    {
+      "string": "Upload cover",
+      "contexts": [
+        "button#businessCoverUploadBtn.secondary"
+      ]
+    },
+    {
+      "string": "Upload logo",
+      "contexts": [
+        "button#businessLogoUploadBtn.secondary"
+      ]
+    },
+    {
+      "string": "Upload photo",
+      "contexts": [
+        "span.staff-upload-zone__text"
+      ]
+    },
+    {
+      "string": "USD ($)",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Use a different business ID",
+      "contexts": [
+        "button.auth-btn.auth-btn--ghost"
+      ]
+    },
+    {
+      "string": "Use any duration, for example 20, 40, or 75 minutes.",
+      "contexts": [
+        "p.xbook-duration-field__helper"
+      ]
+    },
+    {
+      "string": "Use the booking link sent by the business.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Use the code from your salon, barber, clinic or service provider.",
+      "contexts": [
+        "p.auth-card-lead"
+      ]
+    },
+    {
+      "string": "Use this only if some days have different hours.",
+      "contexts": [
+        "p.wizard-override-hint.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "Used for service prices, bookings, revenue, and client totals. Amounts are not converted — only the label changes.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Used on your booking page buttons, links, and highlights.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Uses the text above in your public hero.",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "UTC",
+      "contexts": [
+        "option"
+      ]
+    },
+    {
+      "string": "Version",
+      "contexts": [
+        "span",
+        "p.customer-profile-info-about-version"
+      ]
+    },
+    {
+      "string": "Viber",
+      "contexts": [
+        "button.secondary"
+      ]
+    },
+    {
+      "string": "View Booking",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "View customer history and activity.",
+      "contexts": [
+        "p.admin-native-screen__subtitle.admin-clients-screen__subtitle"
+      ]
+    },
+    {
+      "string": "View My Bookings",
+      "contexts": [
+        "button.success"
+      ]
+    },
+    {
+      "string": "View synced public holidays",
+      "contexts": [
+        "span.admin-holidays-accordion__subtitle"
+      ]
+    },
+    {
+      "string": "View your booking, pick a new time, or cancel your appointment.",
+      "contexts": [
+        "p.booking-flow-lead"
+      ]
+    },
+    {
+      "string": "View your schedule",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "We only need a few details to confirm your appointment",
+      "contexts": [
+        "p.public-confirm-subheading"
+      ]
+    },
+    {
+      "string": "Website",
+      "contexts": [
+        "strong",
+        "label.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Wednesday",
+      "contexts": [
+        "span.wizard-weekday-pill__label"
+      ]
+    },
+    {
+      "string": "Week",
+      "contexts": [
+        "button.admin-calendar-view-tab.admin-calendar-view-tab--active"
+      ]
+    },
+    {
+      "string": "Week ›",
+      "contexts": [
+        "button.public-week-nav"
+      ]
+    },
+    {
+      "string": "Weekly",
+      "contexts": [
+        "span"
+      ]
+    },
+    {
+      "string": "Welcome Back",
+      "contexts": [
+        "p.auth-brand__welcome"
+      ]
+    },
+    {
+      "string": "What customers can book with you.",
+      "contexts": [
+        "p.admin-native-screen__subtitle"
+      ]
+    },
+    {
+      "string": "What customers see",
+      "contexts": [
+        "h2#onboardingVisibilityHeading.wizard-step5-heading"
+      ]
+    },
+    {
+      "string": "What happens next",
+      "contexts": [
+        "span.wizard-next-callout-label"
+      ]
+    },
+    {
+      "string": "What would you like to book?",
+      "contexts": [
+        "p.public-panel-hint.public-booking-step-hint"
+      ]
+    },
+    {
+      "string": "When enabled, customers can repeat the same appointment weekly, every 2 weeks, every 3 weeks, or every 4 weeks.",
+      "contexts": [
+        "p#customizeRecurringHelper.customize-hours-hint"
+      ]
+    },
+    {
+      "string": "When off, only approved existing clients can book.",
+      "contexts": [
+        "span.admin-saas-toggle-row__hint"
+      ]
+    },
+    {
+      "string": "When on, clients cannot exceed the daily or weekly caps below.",
+      "contexts": [
+        "span.admin-saas-toggle-row__hint"
+      ]
+    },
+    {
+      "string": "When on, national holidays are closed for online booking.",
+      "contexts": [
+        "span.admin-saas-toggle-row__hint"
+      ]
+    },
+    {
+      "string": "Who can book with your business",
+      "contexts": [
+        "span.admin-customize-hub-row__subtitle"
+      ]
+    },
+    {
+      "string": "Who would you like to book with?",
+      "contexts": [
+        "p.public-panel-hint.public-booking-step-hint"
+      ]
+    },
+    {
+      "string": "with an empty list.",
+      "contexts": [
+        "p.wizard-staff-lead"
+      ]
+    },
+    {
+      "string": "Working days",
+      "contexts": [
+        "span#customizeWorkingDaysLabel.customize-hours-label",
+        "span#onboardingDaysLabel.wizard-field-label"
+      ]
+    },
+    {
+      "string": "Working days, hours and breaks",
+      "contexts": [
+        "span.admin-mobile-home-card__desc"
+      ]
+    },
+    {
+      "string": "Working days, open/close times, booking window, minimum notice, and breaks are edited in",
+      "contexts": [
+        "p.admin-saas-subsection__hint"
+      ]
+    },
+    {
+      "string": "Working hours",
+      "contexts": [
+        "h3#availabilityHoursLinkHeading.admin-saas-subsection__title"
+      ]
+    },
+    {
+      "string": "Working hours & availability",
+      "contexts": [
+        "span.admin-customize-hub-row__title",
+        "h3#customizeHoursHeading"
+      ]
+    },
+    {
+      "string": "Working hours and availability rules",
+      "contexts": [
+        "li"
+      ]
+    },
+    {
+      "string": "X",
+      "contexts": [
+        "span#overviewIdentityAvatarInitial.overview-identity__avatar-initial"
+      ]
+    },
+    {
+      "string": "XBook",
+      "contexts": [
+        "p.app-shell-restore__wordmark"
+      ]
+    },
+    {
+      "string": "XBOOK",
+      "contexts": [
+        "p.app-splash-title",
+        "strong.topbar-title",
+        "p.auth-brand__name",
+        "p.customer-profile-info-about-brand"
+      ]
+    },
+    {
+      "string": "XBOOK respects your privacy. Your account information and booking data are used only to provide booking, reminder, and account services. We do not sell your personal data.",
+      "contexts": [
+        "p.customer-profile-info-copy"
+      ]
+    },
+    {
+      "string": "xbooksupport@gtwebstudio.com",
+      "contexts": [
+        "a.customer-profile-info-email"
+      ]
+    },
+    {
+      "string": "Year",
+      "contexts": [
+        "label.admin-performance-field__label"
+      ]
+    },
+    {
+      "string": "Yes, Cancel Appointment",
+      "contexts": [
+        "button.danger"
+      ]
+    },
+    {
+      "string": "You can complete the rest of your business profile later.",
+      "contexts": [
+        "p.wizard-override-hint"
+      ]
+    },
+    {
+      "string": "You can now continue setting up your business and start accepting bookings.",
+      "contexts": [
+        "p.email-verified-screen__sub"
+      ]
+    },
+    {
+      "string": "You can reschedule or cancel anytime from your email",
+      "contexts": [
+        "p.public-confirm-trust-sub",
+        "p"
+      ]
+    },
+    {
+      "string": "You’re all set. Save the details below or manage anytime.",
+      "contexts": [
+        "p.public-success-lead"
+      ]
+    },
+    {
+      "string": "You're booked!",
+      "contexts": [
+        "h2#customerBookingSuccessPopupTitle.customer-booking-success-popup__title"
+      ]
+    },
+    {
+      "string": "You’re live — customers can book now",
+      "contexts": [
+        "h2#onboardingLaunchHeadline.wizard-launch-headline"
+      ]
+    },
+    {
+      "string": "You're offline. Showing saved data where available.",
+      "contexts": [
+        "span.app-shell-offline-banner__text"
+      ]
+    },
+    {
+      "string": "your",
+      "contexts": [
+        "strong"
+      ]
+    },
+    {
+      "string": "Your appointment",
+      "contexts": [
+        "span.public-booking-summary-mobile-label",
+        "h3.public-booking-summary-title"
+      ]
+    },
+    {
+      "string": "Your appointment has been updated.",
+      "contexts": [
+        "p#customerRescheduleSuccessPopupBody.customer-reschedule-success-popup__body"
+      ]
+    },
+    {
+      "string": "Your appointments across businesses — only visible to you.",
+      "contexts": [
+        "p.small"
+      ]
+    },
+    {
+      "string": "Your booking dashboard",
+      "contexts": [
+        "p#overviewHeroSubtitle.overview-identity__subtitle"
+      ]
+    },
+    {
+      "string": "Your booking has been cancelled.",
+      "contexts": [
+        "div#manageBookingCancelledBanner.manage-booking-cancelled-banner.hidden"
+      ]
+    },
+    {
+      "string": "Your booking has been rescheduled.",
+      "contexts": [
+        "div#manageBookingRescheduledBanner.manage-booking-rescheduled-banner.hidden"
+      ]
+    },
+    {
+      "string": "Your booking is secured",
+      "contexts": [
+        "p"
+      ]
+    },
+    {
+      "string": "Your bookings",
+      "contexts": [
+        "h1#customerHubTitle.customer-hub-title",
+        "h3.customer-mobile-guest-title"
+      ]
+    },
+    {
+      "string": "Your business",
+      "contexts": [
+        "h1#adminMobileHomeBusinessName.admin-mobile-card__title",
+        "h2#overviewHeroBusinessName.overview-identity__title"
+      ]
+    },
+    {
+      "string": "Your closed days",
+      "contexts": [
+        "h4.admin-saas-subsection__title.admin-saas-subsection__title--minor"
+      ]
+    },
+    {
+      "string": "Your email has been verified successfully.",
+      "contexts": [
+        "p.email-verified-screen__message"
+      ]
+    },
+    {
+      "string": "Your next appointment",
+      "contexts": [
+        "p.customer-mobile-home-eyebrow"
+      ]
+    },
+    {
+      "string": "Your progress is saved. You can finish logo, services, and hours anytime in Business Settings.",
+      "contexts": [
+        "p.wizard-footer-hint"
+      ]
+    },
+    {
+      "string": "Your services",
+      "contexts": [
+        "h3.admin-native-screen__section-title.services-list-section__title"
+      ]
+    },
+    {
+      "string": "Your team",
+      "contexts": [
+        "h3.staff-list-section__title"
+      ]
+    },
+    {
+      "string": "YTD",
+      "contexts": [
+        "button.admin-performance-preset"
+      ]
+    },
+    {
+      "string": "Ако стар service нема duration, системот ќе користи 30 min како fallback.",
+      "contexts": [
+        "p.admin-saas-hint.services-edit-card__hint"
+      ]
+    },
+    {
+      "string": "Додај вработени/мајстори. Customer и Admin ќе можат да изберат кај кого е терминот.",
+      "contexts": [
+        "p.admin-saas__intro"
+      ]
+    },
+    {
+      "string": "За термин што клиент го договорил преку телефон, Instagram, Viber или директно со тебе. Use",
+      "contexts": [
+        "p.admin-saas__intro"
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "attr": "placeholder",
+      "string": "#2563eb",
+      "contexts": [
+        "input#businessAccentColor"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "123 Main Street, Skopje",
+      "contexts": [
+        "input#onboardingBusinessAddress"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "15 minutes earlier",
+      "contexts": [
+        "button.time-stepper__btn"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "15 minutes later",
+      "contexts": [
+        "button.time-stepper__btn"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Add booking",
+      "contexts": [
+        "button.overview-performance-entry",
+        "section#adminSectionManual.admin-section"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Add context for this booking…",
+      "contexts": [
+        "textarea#adminAddNotes"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Add staff member",
+      "contexts": [
+        "button.staff-screen-header__add"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Admin account",
+      "contexts": [
+        "header#adminNativeToolbar.admin-native-toolbar"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Admin app navigation",
+      "contexts": [
+        "nav#adminMobileBottomNav.admin-mobile-bottom-nav.admin-mobile-bottom-nav--luxury"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Admin dashboard sections",
+      "contexts": [
+        "nav#adminNav.admin-nav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Allowed repeat intervals",
+      "contexts": [
+        "div.customize-recurring-interval-pills"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Anything we should know?",
+      "contexts": [
+        "textarea#customerNotes"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "At least 6 characters",
+      "contexts": [
+        "input#authSignupPassword",
+        "input#customerJoinPassword",
+        "input#newPassword",
+        "input#customerSignupPassword"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "At least 8 characters",
+      "contexts": [
+        "input#accountPasswordNewPassword.customer-profile-edit-sheet__input"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Availability",
+      "contexts": [
+        "section#adminSectionAvailability.admin-section"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Available times",
+      "contexts": [
+        "div#adminAddMobileSlotsMount.admin-add-mobile-slots-grid",
+        "div#publicMobileSlotsMount.public-mobile-slots-grid",
+        "div#manageBookingSlotsContainer.manage-reschedule-slots"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Available times (fallback)",
+      "contexts": [
+        "div#slotsContainer.public-time-slots.public-time-slots--legacy"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Back to Settings",
+      "contexts": [
+        "button#adminCustomizeHubBack.settings-sub-back.admin-customize-hub-back",
+        "button#adminServicesSettingsBack.settings-sub-back.hidden",
+        "button#adminStaffSettingsBack.settings-sub-back.hidden",
+        "button.settings-sub-back.settings-sub-back--sheet"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Book your appointment online",
+      "contexts": [
+        "input#customizePublicTagline"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking actions",
+      "contexts": [
+        "div#bookingsActionSheet.bookings-action-menu.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking page QR code preview",
+      "contexts": [
+        "div#onboardingStep5QrHost"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking page settings",
+      "contexts": [
+        "nav#adminCustomizeHub.admin-customize-hub"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking progress",
+      "contexts": [
+        "nav#publicBookingProgress.public-booking-progress"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking summary",
+      "contexts": [
+        "aside.admin-add-booking-summary-panel",
+        "aside#publicBookingSummary.public-booking-summary.public-appointment-summary"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Booking window",
+      "contexts": [
+        "select#bookingWindowWeeks.customize-profile-select.customize-hours-select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Bookings",
+      "contexts": [
+        "section#adminSectionBookings.admin-section",
+        "div#bookingsList.admin-saas-list.admin-saas-bookings-list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Bookings calendar",
+      "contexts": [
+        "div#customerMyBookingsMonthGrid.customer-my-calendar-grid"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Break end optional",
+      "contexts": [
+        "div.time-stepper.customize-time-stepper",
+        "div.time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Break start optional",
+      "contexts": [
+        "div.time-stepper.customize-time-stepper",
+        "div.time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Business",
+      "contexts": [
+        "header#customerBrandedHeader.customer-branded-header.public-hero"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Business branding",
+      "contexts": [
+        "header#xbookDemoCustomerBrandedHeader"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Business cover",
+      "contexts": [
+        "div#overviewIdentityCover.overview-identity__cover.overview-dash-header__cover-sr"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Business owner demo preview",
+      "contexts": [
+        "div#xbookDemoAdminView.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Business type",
+      "contexts": [
+        "select#customizeBusinessCategory.customize-profile-select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Calendar",
+      "contexts": [
+        "section#adminSectionCalendar.admin-section",
+        "div#closedDaysPickerCalendar.closed-days-picker-calendar"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Calendar month",
+      "contexts": [
+        "div#adminCalendarDatePickerCalendar.admin-calendar-date-sheet__calendar.closed-days-picker-calendar"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Calendar view",
+      "contexts": [
+        "div.admin-calendar-view-tabs.cal-view-tabs"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Change customer",
+      "contexts": [
+        "button.admin-add-customer-picker__change"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Choose date",
+      "contexts": [
+        "button.cal-date-card"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Choose stylist",
+      "contexts": [
+        "div#publicScheduleStaffCards.public-schedule-staff-chips"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Client note",
+      "contexts": [
+        "textarea#clientNotesSheetInput.client-notes-sheet__textarea"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Clients",
+      "contexts": [
+        "section#adminSectionClients.admin-section",
+        "div#clientsList.clients-list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close",
+      "contexts": [
+        "button.customer-business-switcher-sheet__close",
+        "button.customer-profile-edit-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close account details",
+      "contexts": [
+        "button.settings-account-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close client details",
+      "contexts": [
+        "button.client-detail-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close customer notifications",
+      "contexts": [
+        "button.settings-account-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close notes editor",
+      "contexts": [
+        "button.client-notes-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close notification details",
+      "contexts": [
+        "button.customer-notification-detail-sheet__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Close photo preview",
+      "contexts": [
+        "button.public-gallery-lightbox__close"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Closed days",
+      "contexts": [
+        "div#blockedDaysList.admin-saas-list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Currency",
+      "contexts": [
+        "select#customizeBusinessCurrency.customize-profile-select"
+      ]
+    },
+    {
+      "attr": "alt",
+      "string": "Current cover preview",
+      "contexts": [
+        "img#customizeCoverPreview.customize-brand-preview__cover-img.hidden"
+      ]
+    },
+    {
+      "attr": "alt",
+      "string": "Current logo preview",
+      "contexts": [
+        "img#customizeLogoPreview.customize-brand-preview__logo-img"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Customer app navigation",
+      "contexts": [
+        "nav#customerMobileBottomNav.customer-mobile-bottom-nav.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Customer demo preview",
+      "contexts": [
+        "div#xbookDemoCustomerShell.hidden"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Customer email optional",
+      "contexts": [
+        "input#editCustomerEmail"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Customer name",
+      "contexts": [
+        "input#editCustomerName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Customer phone",
+      "contexts": [
+        "input#editCustomerPhone"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Customer sign in",
+      "contexts": [
+        "div#customerMobileAuthOverlay.customer-mobile-auth-overlay.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Customer suggestions",
+      "contexts": [
+        "div#adminAddCustomerPickerList.admin-add-customer-picker__list.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Customize booking page",
+      "contexts": [
+        "section#adminSectionCustomize.admin-section.admin-customize--hub"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Dashboard header",
+      "contexts": [
+        "header.overview-dash-header"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Date",
+      "contexts": [
+        "input#adminAddDate"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Default closing time",
+      "contexts": [
+        "div.time-stepper.customize-time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Default closing time for selected days",
+      "contexts": [
+        "div.time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Default opening time",
+      "contexts": [
+        "div.time-stepper.customize-time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Default opening time for selected days",
+      "contexts": [
+        "div.time-stepper"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Demo admin navigation",
+      "contexts": [
+        "nav#xbookDemoAdminBottomNav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Demo customer navigation",
+      "contexts": [
+        "nav#xbookDemoCustomerBottomNav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Dismiss install tip",
+      "contexts": [
+        "button.pwa-install-hint-dismiss"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. 25",
+      "contexts": [
+        "input#serviceDuration",
+        "input#editServiceDuration",
+        "input#onboardingServiceDuration"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. 500 — leave blank for free",
+      "contexts": [
+        "input#onboardingServicePrice"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Ana, Mike, Dr. Petrov",
+      "contexts": [
+        "input#onboardingStaffNameInput"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. barber-shop-skopje",
+      "contexts": [
+        "input#customizeBusinessSlug"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Barber, Stylist, Dentist, Trainer",
+      "contexts": [
+        "input#onboardingStaffRoleInput"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Classic haircut",
+      "contexts": [
+        "input#onboardingServiceName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Haircut",
+      "contexts": [
+        "input#serviceName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. my-business-41784a",
+      "contexts": [
+        "input#manualBusinessId"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Stefan",
+      "contexts": [
+        "input#staffName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Stojan Barber",
+      "contexts": [
+        "input#businessName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "e.g. Stylist, Therapist, Trainer",
+      "contexts": [
+        "input#staffRole"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Edit your profile",
+      "contexts": [
+        "button#customerMobileProfileIdentityBtn.customer-mobile-profile-identity.customer-mobile-profile-identity--action"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Email",
+      "contexts": [
+        "input#adminAddCustomerEmail"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Email",
+      "contexts": [
+        "input#adminAddCustomerEmail"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Email verified",
+      "contexts": [
+        "div#adminEmailVerifiedView.email-verified-screen.hidden"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Enter your business code",
+      "contexts": [
+        "input#customerJoinBusinessCode"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Explore XBOOK Demo",
+      "contexts": [
+        "div#xbookDemoHomeView.xbook-demo-screen.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Filter clients by approval status",
+      "contexts": [
+        "div#clientsApprovalFilters.clients-approval-filters"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "First name",
+      "contexts": [
+        "input#customerJoinFirstName",
+        "input#customerProfileEditFirstName.customer-profile-edit-sheet__input"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Focus add service form",
+      "contexts": [
+        "button.services-screen-header__add"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "For confirmation email",
+      "contexts": [
+        "input#customerEmail"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Gallery",
+      "contexts": [
+        "section#customerMobileTabGallery.customer-mobile-tab-panel.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Go back",
+      "contexts": [
+        "button.admin-add-premium__back"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "hello@yourbusiness.com",
+      "contexts": [
+        "input#customizeBusinessEmail",
+        "input#onboardingBusinessEmail"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Holiday country",
+      "contexts": [
+        "select#holidayCountrySelect"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Home",
+      "contexts": [
+        "section#adminSectionHome.admin-section",
+        "section#customerMobileTabHome.customer-mobile-tab-panel.hidden"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "https://facebook.com/yourbusiness",
+      "contexts": [
+        "input#customizeBusinessFacebook",
+        "input#onboardingBusinessFacebook"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "https://instagram.com/yourbusiness",
+      "contexts": [
+        "input#customizeBusinessInstagram",
+        "input#onboardingBusinessInstagram"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "https://yourbusiness.com",
+      "contexts": [
+        "input#customizeBusinessWebsite",
+        "input#onboardingBusinessWebsite"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Icon categories",
+      "contexts": [
+        "div#serviceIconPickerAddCategories.service-icon-picker__categories",
+        "div#serviceIconPickerEditCategories.service-icon-picker__categories",
+        "div#serviceIconPickerOnboardingCategories.service-icon-picker__categories"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Industry / business type",
+      "contexts": [
+        "div#onboardingBusinessCategoryGrid.wizard-category-grid.wizard-category-grid--scroll"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Internal notes optional",
+      "contexts": [
+        "textarea#adminAddNotes"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Key metrics",
+      "contexts": [
+        "div.overview-kpi-grid"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Last name",
+      "contexts": [
+        "input#customerJoinLastName",
+        "input#customerProfileEditLastName.customer-profile-edit-sheet__input"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Loading setup step",
+      "contexts": [
+        "div#adminOnboardingStepSkeleton.wizard-step-skeleton.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Log out of admin account",
+      "contexts": [
+        "button#adminSettingsLogoutBtn.admin-mobile-profile__btn.admin-mobile-profile__btn--logout"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Maximum repeat duration",
+      "contexts": [
+        "select#recurringMaxDurationMonths.customize-profile-select.customize-hours-select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Minimum notice before booking",
+      "contexts": [
+        "select#settingsMinimumNoticeMinutes.customize-profile-select.customize-hours-select"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Name",
+      "contexts": [
+        "input#editStaffMemberName"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "New date",
+      "contexts": [
+        "input#manageBookingDate"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Next",
+      "contexts": [
+        "button.cal-nav-btn.cal-nav-btn--next"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Next month",
+      "contexts": [
+        "button.closed-days-picker-nav__btn",
+        "button.customer-my-cal-nav",
+        "button.public-cal-nav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Next photo",
+      "contexts": [
+        "button#publicBusinessGalleryLightboxNext.public-gallery-lightbox__nav.public-gallery-lightbox__nav--next"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Next week",
+      "contexts": [
+        "button.public-week-nav"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Notes optional",
+      "contexts": [
+        "textarea#editNotes"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Notification title",
+      "contexts": [
+        "input#customerNotificationTitle"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Notifications",
+      "contexts": [
+        "section#customerMobileTabNotifications.customer-mobile-tab-panel.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Notify customers",
+      "contexts": [
+        "button.overview-performance-entry"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Number of appointments in series",
+      "contexts": [
+        "div.public-recurring-counts",
+        "select#publicRecurringCount.public-recurring-count-select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Open Performance",
+      "contexts": [
+        "button.overview-performance-entry"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Optional",
+      "contexts": [
+        "input#editServicePrice"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Optional staff photo",
+      "contexts": [
+        "input#staffMemberPhotoFile.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Overview",
+      "contexts": [
+        "section#adminSectionOverview.admin-section.admin-section--active"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Password",
+      "contexts": [
+        "input#authPassword",
+        "input#customerAuthPassword"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Performance",
+      "contexts": [
+        "section#adminSectionPerformance.admin-section"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Petre Barber Shop",
+      "contexts": [
+        "input#onboardingBusinessName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Phone",
+      "contexts": [
+        "input#adminAddCustomerPhone"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Phone",
+      "contexts": [
+        "input#adminAddCustomerPhone"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Phone e.g. 78359201",
+      "contexts": [
+        "input#customerAuthPhone"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Phone number",
+      "contexts": [
+        "input#customerPhone",
+        "input#customerProfileEditPhone.customer-profile-edit-sheet__input"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Photo preview",
+      "contexts": [
+        "div#publicBusinessGalleryLightbox.public-gallery-lightbox.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Preset year",
+      "contexts": [
+        "select#performancePresetYear.admin-performance-select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Previous",
+      "contexts": [
+        "button.cal-nav-btn.cal-nav-btn--prev"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Previous month",
+      "contexts": [
+        "button.closed-days-picker-nav__btn",
+        "button.customer-my-cal-nav",
+        "button.public-cal-nav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Previous photo",
+      "contexts": [
+        "button#publicBusinessGalleryLightboxPrev.public-gallery-lightbox__nav.public-gallery-lightbox__nav--prev"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Previous week",
+      "contexts": [
+        "button.public-week-nav"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Primary performance metrics",
+      "contexts": [
+        "div.admin-performance-kpi-grid.admin-performance-kpi-grid--primary"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Private notes for your team...",
+      "contexts": [
+        "textarea#clientNotesSheetInput.client-notes-sheet__textarea"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Profile",
+      "contexts": [
+        "section#customerMobileTabProfile.customer-mobile-tab-panel.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Public booking QR code",
+      "contexts": [
+        "div#bookingQrHost"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Public holidays",
+      "contexts": [
+        "div#publicHolidaysList.admin-saas-list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Quick actions",
+      "contexts": [
+        "section.overview-actions.overview-actions--hub"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Quick duration presets",
+      "contexts": [
+        "div.xbook-duration-presets",
+        "div.wizard-duration-presets.xbook-duration-presets"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Quick period presets",
+      "contexts": [
+        "div#performancePresetChips.admin-performance-presets-wrap"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Repeat password",
+      "contexts": [
+        "input#adminAuthConfirmPassword",
+        "input#customerJoinConfirmPassword",
+        "input#confirmNewPassword",
+        "input#customerAuthConfirmPassword"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Report period",
+      "contexts": [
+        "section.admin-performance-period-controls"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Role",
+      "contexts": [
+        "input#editStaffMemberRole"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Save settings",
+      "contexts": [
+        "div#adminCustomizeSaveDock.admin-customize-save-dock.hidden"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Search bookings…",
+      "contexts": [
+        "input#bookingSearch.bookings-input"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Search clients",
+      "contexts": [
+        "label.clients-search-wrap"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Search customer",
+      "contexts": [
+        "input#adminAddCustomerSearch"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Search customer",
+      "contexts": [
+        "input#adminAddCustomerSearch"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Search name, phone, email, or #010",
+      "contexts": [
+        "input#clientSearch.clients-search-input"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Search name, phone, or #001",
+      "contexts": [
+        "input#customerNotificationCustomerSearch.customer-notifications-custom__search"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Secondary performance metrics",
+      "contexts": [
+        "div.admin-performance-kpi-grid.admin-performance-kpi-grid--secondary"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Select customers",
+      "contexts": [
+        "div#customerNotificationCustomerList.customer-notifications-custom__list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Selection mode",
+      "contexts": [
+        "div.closed-days-segments"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Service",
+      "contexts": [
+        "select#adminAddService"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Service filter",
+      "contexts": [
+        "select#adminCalendarServiceFilter.cal-filter-card__select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Service icons",
+      "contexts": [
+        "div#serviceIconPickerAddGrid.service-icon-picker__grid",
+        "div#serviceIconPickerEditGrid.service-icon-picker__grid",
+        "div#serviceIconPickerOnboardingGrid.service-icon-picker__grid"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Service name",
+      "contexts": [
+        "input#editServiceName"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Services",
+      "contexts": [
+        "section#adminSectionServices.admin-section",
+        "div#servicesList.admin-saas-list.services-premium-list",
+        "div#publicServiceList.public-service-list.public-service-list--wizard"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Settings",
+      "contexts": [
+        "section#adminSectionProfile.admin-section"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Setup",
+      "contexts": [
+        "section#adminSectionSetup.admin-section"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Setup complete",
+      "contexts": [
+        "ul.wizard-launch-checklist"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Setup overview",
+      "contexts": [
+        "ol#adminOnboardingRoadmap.wizard-roadmap"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Setup steps",
+      "contexts": [
+        "div.wizard-pills"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Short welcome text for customers (optional)",
+      "contexts": [
+        "textarea#customizeBusinessDescription"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Sign in required to book",
+      "contexts": [
+        "div#publicBookingScheduleAuthGate.public-booking-auth-gate.public-booking-schedule-auth-gate",
+        "div#publicBookingAuthGate.public-booking-auth-gate.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Social links",
+      "contexts": [
+        "div#publicBusinessSocial.public-hero-social.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Social sign in",
+      "contexts": [
+        "div.admin-auth-oauth",
+        "div.customer-auth-oauth"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Staff",
+      "contexts": [
+        "section#adminSectionStaff.admin-section",
+        "select#adminAddStaff",
+        "div#publicStaffCards.public-staff-cards.public-staff-cards--wizard"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Staff filter",
+      "contexts": [
+        "select#adminCalendarStaffFilter.cal-filter-card__select"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Staff members",
+      "contexts": [
+        "div#staffList.admin-saas-list.staff-premium-list"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Staff photo",
+      "contexts": [
+        "input#editStaffMemberPhotoFile.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Staff photo upload",
+      "contexts": [
+        "input#onboardingStaffPhotoFile.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Status",
+      "contexts": [
+        "select#adminAddStatus"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Street, city",
+      "contexts": [
+        "input#customizeBusinessAddress"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Today's date",
+      "contexts": [
+        "div.overview-dash-date-pill"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Vacation, wedding, renovation, private event, etc.",
+      "contexts": [
+        "input#closedDaysPickerReason"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "View account details",
+      "contexts": [
+        "div.settings-account-row"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Week schedule timeline",
+      "contexts": [
+        "div#publicTimelineMount.public-timeline-mount"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Welcome to XBOOK",
+      "contexts": [
+        "div#modeView.mode-entry-screen.mode-entry-screen--ref"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Write your message to customers",
+      "contexts": [
+        "textarea#customerNotificationMessage"
+      ]
+    },
+    {
+      "attr": "alt",
+      "string": "XBOOK",
+      "contexts": [
+        "img.mode-entry-hero-logo"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "you@business.com",
+      "contexts": [
+        "input#authSignupEmail"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "you@email.com",
+      "contexts": [
+        "input#authEmail",
+        "input#customerJoinEmail",
+        "input#customerAuthEmail",
+        "input#customerSignupEmail"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Your booking QR code",
+      "contexts": [
+        "div#onboardingLaunchQrHost"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Your bookings",
+      "contexts": [
+        "section#customerMobileTabBookingsGuest.customer-mobile-tab-panel.hidden"
+      ]
+    },
+    {
+      "attr": "aria-label",
+      "string": "Your bookings list",
+      "contexts": [
+        "div#customerMyBookingsListFallback.customer-my-list-fallback.hidden"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Your full name",
+      "contexts": [
+        "input#customerAuthName"
+      ]
+    },
+    {
+      "attr": "placeholder",
+      "string": "Your name",
+      "contexts": [
+        "input#customerName"
+      ]
+    }
+  ],
+  "js": [
+    {
+      "string": "15 minutes earlier",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "15 minutes later",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Account created, but we could not open the business. Try your business code again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Account created. Please check your email and confirm your address before logging in.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Add at least one service with a valid name and duration.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Add closed day error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Add service error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Add staff error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Availability saved.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Back to ${title}",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Back to Settings",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Book at",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Booked",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Booking added successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Booking deleted.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Booking page link is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Booking updated successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business ID / slug is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business name is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business not found. Check the code and try again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business not found. Check your booking link.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business not loaded.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Business not loaded. Open Admin dashboard first.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cannot delete: business context is missing.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cannot update status: business context is missing.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Changes saved",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Check optional weekday overrides: each enabled day needs Opens before Closes (15-minute times).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Check optional weekday overrides: each enabled day needs Opens before Closes.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a date and available time.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a date.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a day and service first.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a service first.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a service.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose a time slot.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose date, slot and service.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Choose date.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Close time must be after open time.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Closed days saved.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Connection not ready. Refresh and try again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not complete sign-in from the link. Please try logging in again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not connect.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not finish setup:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not read new staff member id.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not remove cover:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not remove logo:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not remove photo:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save availability:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save changes. Please try again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save cover URL:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save logo URL:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save note.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save photo URL:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save progress:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save your booking page:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not save:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Could not switch to that business. It may no longer be available.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cover image uploaded.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cover must be 3 MB or smaller.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cover removed.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Cover upload failed:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Custom hours for",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Customer login success.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Delete booking error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Delete did not remove the booking. Run supabase-bookings-admin-delete.sql in Supabase (missing DELETE permission).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Delete service error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Delete staff error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Demo Preview — actions are disabled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Each service needs a valid name and a duration over zero.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Edit booking error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Edit service error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Email confirmed. You can now continue.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Email is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enable appointment reminders in the Alerts tab.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enable notifications in your device Settings for this app.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter a service name and a valid duration (5–480 minutes).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter a team member name to save.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter a title and message.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter and confirm the new password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter customer email and password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter email and password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter email, password, and confirm password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter service name.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter staff name.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter valid open and close times.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Enter your email first, then click Forgot / Reset Password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "extConten",
+      "patterns": [
+        "assign"
+      ]
+    },
+    {
+      "string": "Finish the draft service (name + valid duration) or tap Cancel to continue.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Finish the team member card (name required) or tap Cancel to continue.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "First and last name are required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "For customer signup, name, phone, email, password and confirm password are required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Full name is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Gallery photo deleted.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Holiday closures are managed with the holiday settings toggle.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Holiday settings saved.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "itl",
+      "patterns": [
+        "assign"
+      ]
+    },
+    {
+      "string": "Join a business with a code before creating a customer account.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "ler",
+      "patterns": [
+        "dialog"
+      ]
+    },
+    {
+      "string": "Load bookings error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Load closed days error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Load services error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login as Admin to upload a cover image.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login as Admin to upload a logo.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login as Admin to upload a photo.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login as Admin to upload gallery photos.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login crash:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Login failed. No user returned from Supabase.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Logo must be 3 MB or smaller.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Logo removed.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Logo upload failed:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Logo uploaded.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Manage link copied.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Missing booking id.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Name, phone, service, date and time are required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Name, service, date and time are required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "New booking received",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "nnerTex",
+      "patterns": [
+        "assign"
+      ]
+    },
+    {
+      "string": "No booking selected.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No changes to save.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No link found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No manage link found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No public link found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No service selected.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "No staff member selected.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Note saved.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Notification deleted.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Notification history cleared.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Notification sent successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Notifications enabled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Notifications were not allowed.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "onfir",
+      "patterns": [
+        "dialog"
+      ]
+    },
+    {
+      "string": "Only business owners can send customer notifications.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Open a staff member to edit first.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Open Admin dashboard first so your business is loaded.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Optional weekday overrides need valid hours on each enabled day (Opens before Closes, 15-minute times).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Password changed successfully. Login again with the new password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Password must be at least 6 characters.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Password reset email sent. Open the email link, then set a new password in this app.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Password reset error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Password updated successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Passwords do not match.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Past date is not allowed.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Past date.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Phone is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Photo must be 3 MB or smaller.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Photo update failed:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Photo upload failed:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please choose an available time slot.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please choose your industry / business type.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please confirm your email first. Check your inbox.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please enter a valid business phone number.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please enter your business name.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Please select a business type.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Profile saved on this device.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Public booking link copied.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Recurring toggle saved. Run supabase-recurring-booking-settings.sql for interval and duration options.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Remove service error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Reschedule at",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Run the staff SQL from README first, then reload the app.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Run the staff SQL from README.txt first, then reload the app.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Save password error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select a service in the calendar toolbar to preview booking length.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select at least one customer.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select at least one date.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select at least one day and enter a valid time range (end after start).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select at least one repeat interval for recurring bookings.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Select at least one working day.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Selected appointment time",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Selected days are already closed.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Selected service not found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Selection overlaps break / pause.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Service name is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Service not found for this booking.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Service not found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Service updated successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Set a public slug first.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Set business slug and APP_PUBLIC_BASE_URL (https).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Set business slug to share your booking link.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Settings saved.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Sign in as a customer to view My Bookings.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Sign in to your business account to change your password.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Signed in successfully.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Sorry, no stylist is available at this time.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Sorry, this slot is already booked.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff added but photo was not linked:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff member not found.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff member updated.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff name is required.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff system is not ready.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Staff update error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Start month must be before or equal to end month.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Status update error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Status was not updated. Run supabase-bookings-admin-update.sql in Supabase (missing UPDATE permission).",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Step ${n}: ${label}",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "That booking link is already in use.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This booking is already cancelled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This booking is cancelled and cannot be rescheduled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This booking is outside working hours.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This date is already blocked as a public holiday.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This date is already blocked.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This date is outside booking window.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This is an Admin account. Use Admin login instead.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This is not a working day.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This slot is not available for the selected service.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This time conflicts with another booking.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This time is during break / pause.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This time is inside break / pause.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "This time is not available.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Too many booking attempts. Please wait a few minutes and try again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Unable to create your profile. Please try again.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Unsupported image type.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Update service error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Update staff error:",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Upload succeeded but public URL was missing.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Use JPG, PNG, or WEBP only.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "View ${c.name}",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "Week days",
+      "patterns": [
+        "aria"
+      ]
+    },
+    {
+      "string": "You already have a booking for this time.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "You are logged in as Customer. Logout first, then login with an Admin account.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Your appointment has been rescheduled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Your booking has been cancelled.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Your dashboard is ready. Finish branding anytime in Settings.",
+      "patterns": [
+        "showToast"
+      ]
+    },
+    {
+      "string": "Your dashboard is ready. Share your link anytime in Settings.",
+      "patterns": [
+        "showToast"
+      ]
+    }
+  ]
+}

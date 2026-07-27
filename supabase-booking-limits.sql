@@ -110,13 +110,15 @@ BEGIN
   v_max_day := greatest(1, least(20, coalesce(v_settings.max_bookings_per_day, 1)));
   v_max_week := greatest(1, least(100, coalesce(v_settings.max_bookings_per_week, 5)));
 
+  -- Daily cap: active bookings on the same appointment date (bookings.date), not created_at.
   SELECT count(*)::integer
   INTO v_day_count
   FROM public.bookings b
   WHERE b.business_id = p_business_id
-    AND trim(b.date::text) = to_char(p_date, 'YYYY-MM-DD')
+    AND b.date IS NOT NULL
+    AND b.date::date = p_date::date
     AND (p_exclude_booking_id IS NULL OR b.id <> p_exclude_booking_id)
-    AND lower(trim(coalesce(b.booking_status::text, b.status::text, ''))) <> 'cancelled'
+    AND public._booking_active_status(coalesce(b.booking_status::text, b.status::text))
     AND public._booking_belongs_to_client(b, p_customer_user_id, p_customer_phone, p_customer_email);
 
   IF v_day_count >= v_max_day THEN
@@ -125,13 +127,15 @@ BEGIN
       USING ERRCODE = 'P0001';
   END IF;
 
+  -- Weekly cap: active bookings in the calendar week of the requested appointment date.
   SELECT count(*)::integer
   INTO v_week_count
   FROM public.bookings b
   WHERE b.business_id = p_business_id
-    AND date_trunc('week', b.date::date) = date_trunc('week', p_date)
+    AND b.date IS NOT NULL
+    AND date_trunc('week', b.date::date) = date_trunc('week', p_date::date)
     AND (p_exclude_booking_id IS NULL OR b.id <> p_exclude_booking_id)
-    AND lower(trim(coalesce(b.booking_status::text, b.status::text, ''))) <> 'cancelled'
+    AND public._booking_active_status(coalesce(b.booking_status::text, b.status::text))
     AND public._booking_belongs_to_client(b, p_customer_user_id, p_customer_phone, p_customer_email);
 
   IF v_week_count >= v_max_week THEN

@@ -10,6 +10,8 @@ PODS:
     - Capacitor
   - CapacitorNetwork (7.0.4):
     - Capacitor
+  - CapacitorPushNotifications (7.0.6):
+    - Capacitor
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -18,6 +20,7 @@ DEPENDENCIES:
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorLocalNotifications (from `../../node_modules/@capacitor/local-notifications`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
+  - "CapacitorPushNotifications (from `../../node_modules/@capacitor/push-notifications`)"
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -32,6 +35,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/local-notifications"
   CapacitorNetwork:
     :path: "../../node_modules/@capacitor/network"
+  CapacitorPushNotifications:
+    :path: "../../node_modules/@capacitor/push-notifications"
 
 SPEC CHECKSUMS:
   Capacitor: e9708b186e71dc45f9b2ee72e826b7389fb79ff2
@@ -40,7 +45,8 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 1b145fa83c622e5383a3bac04ea81e2514f0b0f5
   CapacitorLocalNotifications: 2e3f5b717ec9cd2bd64d93c99a9470941e1c80be
   CapacitorNetwork: b719d692a8d1310da8d26d6648d3aa1ef1e100e1
+  CapacitorPushNotifications: b8e30637549ce91468b8c4dddbef2657be831f4c
 
-PODFILE CHECKSUM: 7c7ffe41589e76e65b278fa5bd1853e608bd6ed7
+PODFILE CHECKSUM: adff4691fb3ffb592550af8cc3ee4d7f2e0bebb1
 
 COCOAPODS: 1.16.2

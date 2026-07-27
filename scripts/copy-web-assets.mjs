@@ -10,7 +10,17 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const wwwDir = path.join(projectRoot, "www");
 
 const COPY_FILES = ["index.html", "manifest.json"];
-const COPY_DIRS = ["icons"];
+const COPY_DIRS = ["icons", "vendor"];
+const SUPABASE_UMD_SRC = path.join(
+  projectRoot,
+  "node_modules",
+  "@supabase",
+  "supabase-js",
+  "dist",
+  "umd",
+  "supabase.js"
+);
+const SUPABASE_UMD_DEST = path.join(projectRoot, "vendor", "supabase-js.min.js");
 
 function rmrf(target) {
   if (!fs.existsSync(target)) return;
@@ -34,6 +44,13 @@ function copyDir(src, dest) {
 
 fs.mkdirSync(wwwDir, { recursive: true });
 
+if (!fs.existsSync(SUPABASE_UMD_SRC)) {
+  console.error("[web:copy] Missing @supabase/supabase-js UMD bundle. Run: npm install");
+  process.exit(1);
+}
+fs.mkdirSync(path.dirname(SUPABASE_UMD_DEST), { recursive: true });
+copyFile(SUPABASE_UMD_SRC, SUPABASE_UMD_DEST);
+
 for (const file of COPY_FILES) {
   const src = path.join(projectRoot, file);
   if (!fs.existsSync(src)) {
@@ -54,4 +71,4 @@ for (const dir of COPY_DIRS) {
   copyDir(src, dest);
 }
 
-console.log("[web:copy] Copied index.html, manifest.json, icons/ → www/");
+console.log("[web:copy] Copied index.html, manifest.json, icons/, vendor/ → www/");

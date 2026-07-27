@@ -8,3 +8,6 @@ project_id = "sdqothuulzeczcncyfqd"
 [functions.send-booking-email]
 verify_jwt = false
 
+[functions.send-customer-notification]
+verify_jwt = false
+
