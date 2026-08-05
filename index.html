@@ -42515,6 +42515,18 @@
     const platform = getNativePushPlatform();
     if (!platform) return;
 
+    // Android PushNotifications.register() calls FirebaseMessaging.getInstance().
+    // Without google-services.json / FirebaseApp, that fatals the process
+    // (IllegalStateException on CapacitorPlugins thread). Proven on-device for
+    // customer post-login. iOS uses APNs and must keep calling register().
+    if (platform === "android") {
+      logNotifications(
+        "android push register skipped — FirebaseApp not configured",
+        reason || ""
+      );
+      return;
+    }
+
     customerPushRegistrationInFlight = true;
     try {
       let permission = await plugin.checkPermissions();
