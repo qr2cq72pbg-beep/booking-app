@@ -5630,6 +5630,55 @@
       border-color: color-mix(in srgb, #f87171 35%, transparent);
     }
 
+    body.app-theme-dark #adminSectionBookings .business-bookings-date-nav,
+    body.app-theme-dark #adminSectionBookings .business-bookings-calendar {
+      background: color-mix(in srgb, var(--color-surface, #111827) 92%, #000);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.22);
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-main-view-switch {
+      background: color-mix(in srgb, var(--color-surface, #111827) 88%, #000);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.28);
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-main-view-btn:not(.business-bookings-main-view-btn--active) {
+      background: transparent;
+      color: #e2e8f0;
+      box-shadow: none;
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-mode-switch {
+      background: rgba(148, 163, 184, 0.16);
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-month-cell {
+      background: transparent;
+      color: #e2e8f0;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.14);
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-month-cell--outside {
+      color: #64748b;
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-event__name {
+      color: #f8fafc;
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-header,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-gutter,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-view .business-bookings-time-labels,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-view .business-bookings-time-label,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line__pin,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-board {
+      background: color-mix(in srgb, var(--color-surface, #111827) 96%, #000);
+    }
+
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-col--today,
+    body.app-theme-dark #adminSectionBookings .business-bookings-week-day-head--today {
+      background: rgba(148, 163, 184, 0.1);
+    }
+
     @media (max-width: 900px) {
       #adminSectionBookings .admin-saas-bookings-toolbar {
         align-items: stretch;
@@ -5670,6 +5719,1403 @@
 
       #adminSectionBookings .admin-saas-edit-panel .row {
         grid-template-columns: 1fr;
+      }
+    }
+
+    /* —— Business Bookings calendar redesign (scoped) —— */
+    #adminSectionBookings > .admin-bookings-legacy-card > .admin-saas__title {
+      display: none;
+    }
+
+    #adminSectionBookings .admin-bookings-screen__title {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      line-height: 1.05;
+    }
+
+    #adminSectionBookings .admin-bookings-screen__subtitle {
+      margin: 6px 0 0;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-secondary, var(--color-muted, #64748b));
+      line-height: 1.35;
+      min-width: 170px;
+      max-width: 260px;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+    }
+
+    #adminSectionBookings .business-bookings-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 16px;
+      box-sizing: border-box;
+    }
+
+    #adminSectionBookings .business-bookings-header__text {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    /* List / Calendar — fixed 184×36 (2+90+90+2); right edge = Month via -16px vs header pad */
+    #adminSectionBookings .business-bookings-main-view-switch {
+      display: grid;
+      grid-template-columns: 90px 90px;
+      align-items: stretch;
+      flex: 0 0 184px;
+      flex-shrink: 0;
+      width: 184px;
+      min-width: 184px;
+      max-width: 184px;
+      height: 36px;
+      margin-top: 2px;
+      margin-left: auto;
+      margin-right: -16px;
+      gap: 0;
+      padding: 2px;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px var(--color-border, var(--xbook-border, #e2e8f0));
+      box-sizing: border-box;
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 90px;
+      min-width: 90px;
+      max-width: 90px;
+      height: 32px;
+      min-height: 32px;
+      max-height: 32px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #001b5e;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 13px;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: none;
+      transition: background-color 160ms ease, color 160ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn__label {
+      display: inline-block;
+      line-height: 13px;
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn--active {
+      background: #001b5e;
+      color: #fff;
+      box-shadow: none;
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn__icon {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      background: center / 15px no-repeat;
+      opacity: 1;
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn__icon--calendar {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23001b5e' stroke-width='1.7'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn--active .business-bookings-main-view-btn__icon--calendar {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='1.7'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn__icon--list {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23001b5e' stroke-width='1.7'%3E%3Cpath stroke-linecap='round' d='M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-main-view-btn--active .business-bookings-main-view-btn__icon--list {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white' stroke-width='1.7'%3E%3Cpath stroke-linecap='round' d='M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01'/%3E%3C/svg%3E");
+    }
+
+    @media (max-width: 359px) {
+      #adminSectionBookings .business-bookings-header {
+        flex-wrap: wrap;
+      }
+
+      #adminSectionBookings .business-bookings-header__text {
+        flex: 1 1 100%;
+      }
+
+      #adminSectionBookings .business-bookings-main-view-switch {
+        width: 184px;
+        min-width: 184px;
+        max-width: 184px;
+        align-self: flex-end;
+        margin-top: 8px;
+        margin-left: auto;
+        margin-right: -16px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      #adminSectionBookings .business-bookings-header {
+        padding: 12px 20px;
+      }
+
+      #adminSectionBookings .business-bookings-main-view-switch {
+        margin-right: -20px;
+      }
+
+      #adminSectionBookings .admin-bookings-screen__title {
+        font-size: 34px;
+      }
+
+      #adminSectionBookings .admin-bookings-screen__subtitle {
+        font-size: 16px;
+        max-width: none;
+      }
+    }
+
+    #adminSectionBookings .business-bookings-filters-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 0;
+    }
+
+    #adminSectionBookings .business-bookings-filters-panel[hidden] {
+      display: none !important;
+    }
+
+    #adminSectionBookings .business-bookings-calendar-chrome {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+      margin-top: 6px;
+      flex: 1 1 auto;
+    }
+
+    #adminSectionBookings .business-bookings-calendar-chrome[hidden],
+    #adminSectionBookings .business-bookings-list-chrome[hidden] {
+      display: none !important;
+    }
+
+    #adminSectionBookings .business-bookings-calendar-toolbar {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    #adminSectionBookings .business-bookings-mode-switch {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      border-radius: 14px;
+      background: #eef1f6;
+      padding: 4px;
+      gap: 4px;
+      box-sizing: border-box;
+    }
+
+    #adminSectionBookings .business-bookings-mode-btn {
+      min-height: 36px;
+      min-width: 0;
+      padding: 0 10px;
+      margin: 0;
+      border: none;
+      border-radius: 11px;
+      background: transparent;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #adminSectionBookings .business-bookings-mode-btn--active {
+      background: var(--color-primary, var(--xbook-navy, #001b5e));
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 27, 94, 0.18);
+    }
+
+    #adminSectionBookings .business-bookings-date-nav {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      min-width: 0;
+      padding: 4px;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.22), 0 1px 2px rgba(15, 23, 42, 0.03);
+      box-sizing: border-box;
+    }
+
+    #adminSectionBookings .business-bookings-date-picker-input {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__btn {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--color-primary, var(--xbook-navy, #001b5e));
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__btn:hover {
+      background: #f1f5f9;
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__chev {
+      display: block;
+      width: 18px;
+      height: 18px;
+      background: center / 18px no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23001b5e' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M15 19l-7-7 7-7'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__chev--next {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23001b5e' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 5l7 7-7 7'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__current {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 36px;
+      max-width: none;
+      padding: 0 8px;
+      margin: 0;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .business-bookings-date-nav__cal-icon {
+      flex: 0 0 15px;
+      width: 15px;
+      height: 15px;
+      background: center / 15px no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23001b5e' stroke-width='1.7'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings #adminBookingsCalendarDateLabel {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .business-bookings-calendar {
+      min-width: 0;
+      min-height: 280px;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.14);
+      overflow: hidden;
+    }
+
+    #adminSectionBookings .business-bookings-day-view,
+    #adminSectionBookings .business-bookings-week-view {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      max-height: min(64vh, 680px);
+    }
+
+    #adminSectionBookings .business-bookings-day-view {
+      --business-bookings-gutter: 52px;
+      --business-bookings-hour-px: 150px;
+    }
+
+    #adminSectionBookings .business-bookings-day-view .business-bookings-time-scroll {
+      padding-bottom: calc(var(--admin-tabbar-height, 58px) + env(safe-area-inset-bottom, 0px) + 28px);
+    }
+
+    #adminSectionBookings .business-bookings-week-view {
+      --business-bookings-gutter: 56px;
+      --business-bookings-week-col-min: 145px;
+      --business-bookings-hour-px: 105px;
+      --business-bookings-quarter-px: 26.25px;
+    }
+
+    /* Week View: single board scrolls both axes; header + time column freeze via sticky */
+    #adminSectionBookings .business-bookings-week-board {
+      position: relative;
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding-bottom: calc(var(--admin-tabbar-height, 58px) + env(safe-area-inset-bottom, 0px) + 24px);
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    #adminSectionBookings .business-bookings-all-day-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 12px 12px 8px 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.01em;
+    }
+
+    #adminSectionBookings .business-bookings-time-scroll {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+    #adminSectionBookings .business-bookings-time-grid-wrap {
+      position: relative;
+      min-width: 0;
+      width: 100%;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-grid-wrap {
+      --bb-week-min-width: calc(
+        var(--business-bookings-gutter, 56px) + 7 * var(--business-bookings-week-col-min, 145px)
+      );
+      width: max(100%, var(--bb-week-min-width));
+      min-width: var(--bb-week-min-width);
+    }
+
+    #adminSectionBookings .business-bookings-time-grid {
+      --business-bookings-gutter: 52px;
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--business-bookings-gutter) minmax(0, 1fr);
+      min-width: 0;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-grid {
+      --business-bookings-gutter: 56px;
+      --bb-week-min-width: calc(
+        var(--business-bookings-gutter) + 7 * var(--business-bookings-week-col-min, 145px)
+      );
+      grid-template-columns: var(--business-bookings-gutter) repeat(
+          7,
+          minmax(var(--business-bookings-week-col-min, 145px), 1fr)
+        );
+      min-width: var(--bb-week-min-width);
+      width: max(100%, var(--bb-week-min-width));
+    }
+
+    #adminSectionBookings .business-bookings-week-header {
+      --bb-week-min-width: calc(
+        var(--business-bookings-gutter, 56px) + 7 * var(--business-bookings-week-col-min, 145px)
+      );
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      display: grid;
+      grid-template-columns: var(--business-bookings-gutter, 56px) repeat(
+          7,
+          minmax(var(--business-bookings-week-col-min, 145px), 1fr)
+        );
+      min-width: var(--bb-week-min-width);
+      width: max(100%, var(--bb-week-min-width));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(148, 163, 184, 0.08);
+    }
+
+    #adminSectionBookings .business-bookings-week-gutter {
+      position: sticky;
+      left: 0;
+      z-index: 9;
+      min-width: 0;
+      background: #fff;
+      box-shadow: 1px 0 0 rgba(148, 163, 184, 0.12);
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px 2px 8px;
+      margin: 0;
+      border: none;
+      background: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      min-width: 0;
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head strong {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      line-height: 1;
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      line-height: 1;
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head--today {
+      background: rgba(0, 27, 94, 0.04);
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head--today span {
+      background: var(--color-primary, var(--xbook-navy, #001b5e));
+      color: #fff;
+    }
+
+    #adminSectionBookings .business-bookings-week-day-head--muted {
+      opacity: 0.5;
+    }
+
+    #adminSectionBookings .business-bookings-week-col--today {
+      background-color: rgba(0, 27, 94, 0.035);
+    }
+
+    #adminSectionBookings .business-bookings-time-labels {
+      position: relative;
+      z-index: 1;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-labels {
+      position: sticky;
+      left: 0;
+      z-index: 5;
+      background: #fff;
+      box-shadow: 1px 0 0 rgba(148, 163, 184, 0.12);
+    }
+
+    #adminSectionBookings .business-bookings-time-label {
+      box-sizing: border-box;
+      padding: 0 6px 0 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      transform: translateY(-0.45em);
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-label {
+      padding: 0 4px 0 4px;
+      font-size: 11px;
+      background: #fff;
+      transform: translateY(-0.35em);
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-label--hour {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-time-label--quarter {
+      font-size: 9px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    /* Week columns: subtle quarter-hour lines + stronger hour lines */
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col {
+      background-image:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent calc(var(--business-bookings-hour-px, 105px) - 1px),
+          rgba(148, 163, 184, 0.22) calc(var(--business-bookings-hour-px, 105px) - 1px),
+          rgba(148, 163, 184, 0.22) var(--business-bookings-hour-px, 105px)
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent calc(var(--business-bookings-quarter-px, 26.25px) - 1px),
+          rgba(148, 163, 184, 0.1) calc(var(--business-bookings-quarter-px, 26.25px) - 1px),
+          rgba(148, 163, 184, 0.1) var(--business-bookings-quarter-px, 26.25px)
+        );
+    }
+
+    #adminSectionBookings .business-bookings-time-label--now {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    #adminSectionBookings .business-bookings-day-col,
+    #adminSectionBookings .business-bookings-week-col {
+      position: relative;
+      border-left: 1px solid rgba(148, 163, 184, 0.12);
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent calc(var(--business-bookings-hour-px, 64px) - 1px),
+        rgba(148, 163, 184, 0.13) calc(var(--business-bookings-hour-px, 64px) - 1px),
+        rgba(148, 163, 184, 0.13) var(--business-bookings-hour-px, 64px)
+      );
+    }
+
+    #adminSectionBookings .business-bookings-day-col--closed,
+    #adminSectionBookings .business-bookings-week-col--closed,
+    #adminSectionBookings .business-bookings-day-col--off,
+    #adminSectionBookings .business-bookings-week-col--off {
+      background-color: rgba(148, 163, 184, 0.07);
+    }
+
+    #adminSectionBookings .business-bookings-nonworking-banner {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      top: 10px;
+      z-index: 2;
+      padding: 5px 8px;
+      border-radius: 8px;
+      background: rgba(241, 245, 249, 0.94);
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 700;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    #adminSectionBookings .business-bookings-day-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px 16px;
+      padding: 28px 18px;
+      border-radius: 16px;
+      background: #f1f5f9;
+      color: #64748b;
+      text-align: center;
+    }
+
+    #adminSectionBookings .business-bookings-day-empty__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e2e8f0 center / 20px no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='1.7'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath stroke-linecap='round' d='M12 7v5l3 2'/%3E%3C/svg%3E");
+    }
+
+    #adminSectionBookings .business-bookings-day-empty__text {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #64748b;
+    }
+
+    #adminSectionBookings .business-bookings-event {
+      position: absolute;
+      z-index: 3;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: 1px;
+      min-height: 0;
+      padding: 3px 8px 3px 10px;
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        inset 0 0 0 1px rgba(148, 163, 184, 0.16);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #adminSectionBookings .business-bookings-event::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 10px 0 0 10px;
+      background: var(--bb-accent, #3b82f6);
+    }
+
+    #adminSectionBookings .business-bookings-event__time,
+    #adminSectionBookings .business-bookings-event__name,
+    #adminSectionBookings .business-bookings-event__service {
+      display: block;
+      min-width: 0;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+    }
+
+    #adminSectionBookings .business-bookings-event__time {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bb-accent-text, #2563eb);
+      line-height: 1.15;
+    }
+
+    #adminSectionBookings .business-bookings-event__name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      line-height: 1.2;
+    }
+
+    #adminSectionBookings .business-bookings-event__service {
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+      line-height: 1.15;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event {
+      gap: 1px;
+      padding: 3px 6px 3px 8px;
+      border-radius: 8px;
+      box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.05),
+        inset 0 0 0 1px rgba(148, 163, 184, 0.14);
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      justify-content: center;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event::before {
+      width: 3px;
+      border-radius: 8px 0 0 8px;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event__time,
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event__name {
+      display: block;
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event__time {
+      font-size: 10px;
+      line-height: 1.15;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event__name {
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* Week overview: never show service/employee inside cards */
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event__service {
+      display: none !important;
+    }
+
+    /* Day View: full-size cards (45+ min) — readable, not oversized */
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event {
+      gap: 2px;
+      padding: 6px 8px 6px 10px;
+      justify-content: flex-start;
+    }
+
+    /* Day View medium (25–44 min): time + name; service only when not --no-service */
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--compact {
+      gap: 1px;
+      padding: 5px 8px 5px 10px;
+      justify-content: center;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--compact .business-bookings-event__time {
+      font-size: 11px;
+      line-height: 1.15;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--compact .business-bookings-event__name {
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--compact .business-bookings-event__service {
+      font-size: 11px;
+      line-height: 1.15;
+      color: #64748b;
+    }
+
+    #adminSectionBookings .business-bookings-event--no-service .business-bookings-event__service {
+      display: none;
+    }
+
+    /* Day View short (<25 min): one compact row — time + client name */
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--tiny {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 4px 8px 4px 10px;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--tiny .business-bookings-event__time {
+      flex: 0 0 auto;
+      font-size: 11px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--tiny .business-bookings-event__name {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: 12px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .business-bookings-day-col .business-bookings-event--tiny .business-bookings-event__service {
+      display: none;
+    }
+
+    /* Week: medium cards — stacked time + name */
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--compact {
+      flex-direction: column;
+      gap: 1px;
+      padding: 3px 6px 3px 8px;
+      justify-content: center;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--compact .business-bookings-event__time {
+      font-size: 10px;
+      line-height: 1.1;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--compact .business-bookings-event__name {
+      font-size: 11px;
+      line-height: 1.15;
+    }
+
+    /* Week: short cards — prefer one line "time · name", wrap to two if needed */
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--tiny {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      align-content: center;
+      justify-content: flex-start;
+      gap: 0 2px;
+      padding: 2px 5px 2px 7px;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--tiny .business-bookings-event__time {
+      flex: 0 1 auto;
+      max-width: 100%;
+      font-size: 10px;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--tiny .business-bookings-event__time::after {
+      content: " · ";
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-week-col .business-bookings-event--tiny .business-bookings-event__name {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: 11px;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #adminSectionBookings .business-bookings-event--cancelled {
+      opacity: 0.55;
+      filter: grayscale(0.25);
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 6;
+      height: 0;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line__pin {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 3;
+      width: var(--business-bookings-gutter, 52px);
+      height: 0;
+      pointer-events: none;
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line__dot {
+      position: absolute;
+      right: -5px;
+      top: 0;
+      z-index: 2;
+      width: 10px;
+      height: 10px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-sizing: border-box;
+      box-shadow: 0 0 0 2px #fff;
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line__label {
+      position: absolute;
+      left: 4px;
+      top: 0;
+      z-index: 2;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: 700;
+      color: #ef4444;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      background: #fff;
+      padding: 1px 2px;
+    }
+
+    #adminSectionBookings .business-bookings-current-time-line__line {
+      position: absolute;
+      left: var(--business-bookings-gutter, 52px);
+      right: 0;
+      top: 0;
+      height: 2px;
+      margin-top: -1px;
+      background: #ef4444;
+    }
+
+    /* Week: pin sticks with frozen time column while the red line spans day columns */
+    #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line {
+      z-index: 6;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line__pin {
+      position: sticky;
+      left: 0;
+      z-index: 7;
+      width: var(--business-bookings-gutter, 56px);
+      height: 14px;
+      margin-top: -7px;
+      background: #fff;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line__dot {
+      right: -4px;
+      width: 8px;
+      height: 8px;
+      margin-top: -4px;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line__label {
+      font-size: 9px;
+      left: 2px;
+    }
+
+    #adminSectionBookings .business-bookings-week-view .business-bookings-current-time-line__line {
+      left: var(--business-bookings-gutter, 56px);
+    }
+
+    #adminSectionBookings .business-bookings-month-view {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 10px 8px 12px;
+    }
+
+    #adminSectionBookings .business-bookings-month-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 2px 0;
+    }
+
+    #adminSectionBookings .business-bookings-month-dow {
+      padding: 8px 2px 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      min-height: 88px;
+      padding: 12px 4px 14px;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: inset 0 -1px 0 rgba(148, 163, 184, 0.12);
+    }
+
+    #adminSectionBookings .business-bookings-month-cell--outside {
+      color: #cbd5e1;
+      background: transparent;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell--closed,
+    #adminSectionBookings .business-bookings-month-cell--off {
+      background: transparent;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell__num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: center;
+      min-width: 28px;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell--today .business-bookings-month-cell__num {
+      background: var(--color-primary, var(--xbook-navy, #001b5e));
+      color: #fff;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell__count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      max-width: 100%;
+      padding: 0 2px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      text-align: center;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    #adminSectionBookings .business-bookings-month-cell--outside .business-bookings-month-cell__count {
+      color: #cbd5e1;
+    }
+
+    /* Bookings date / month-year picker sheets */
+    .business-bookings-picker-sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 10170;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: stretch;
+      pointer-events: none;
+      padding: 0 12px calc(12px + env(safe-area-inset-bottom, 0px));
+      box-sizing: border-box;
+    }
+
+    body.admin-mobile-shell-active .business-bookings-picker-sheet:not(.hidden),
+    body.native-app-shell .business-bookings-picker-sheet:not(.hidden) {
+      padding: 0 12px calc(var(--admin-tabbar-height, 66px) + env(safe-area-inset-bottom, 0px) + 18px);
+    }
+
+    .business-bookings-picker-sheet:not(.hidden) {
+      pointer-events: auto;
+    }
+
+    .business-bookings-picker-sheet.hidden {
+      display: none !important;
+    }
+
+    .business-bookings-picker-sheet__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+
+    .business-bookings-picker-sheet__panel {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      max-height: min(78vh, 560px);
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px 20px 24px 24px;
+      background: #ffffff;
+      box-shadow: 0 -12px 40px rgba(15, 23, 42, 0.18);
+      padding: 8px 16px 14px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .business-bookings-picker-sheet__grab {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 4px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      margin: 0 auto 12px;
+    }
+
+    .business-bookings-picker-sheet__title {
+      flex: 0 0 auto;
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      color: #64748b;
+      letter-spacing: 0.02em;
+    }
+
+    .business-bookings-picker-sheet__nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .business-bookings-picker-sheet__nav-title {
+      margin: 0;
+      flex: 1;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    .business-bookings-picker-sheet__nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: var(--color-primary, #001b5e);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .business-bookings-picker-sheet__body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .business-bookings-picker-sheet__calendar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      width: 100%;
+    }
+
+    .business-bookings-picker-sheet__dow {
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      color: #94a3b8;
+      padding: 2px 0 4px;
+      text-transform: uppercase;
+    }
+
+    .business-bookings-picker-sheet__day {
+      aspect-ratio: 1;
+      min-height: 40px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .business-bookings-picker-sheet__day--empty {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .business-bookings-picker-sheet__day--outside {
+      color: #cbd5e1;
+    }
+
+    .business-bookings-picker-sheet__day--selected {
+      background: var(--color-primary, #001b5e);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .business-bookings-picker-sheet__day--today:not(.business-bookings-picker-sheet__day--selected) {
+      box-shadow: inset 0 0 0 1.5px rgba(0, 27, 94, 0.35);
+    }
+
+    .business-bookings-picker-sheet__footer {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 4px;
+    }
+
+    .business-bookings-picker-sheet__done {
+      min-height: 40px;
+      min-width: 96px;
+      margin: 0;
+      padding: 0 18px;
+      border: none;
+      border-radius: 12px;
+      background: var(--color-primary, #001b5e);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .business-bookings-month-year-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .business-bookings-month-year-grid__btn {
+      min-height: 44px;
+      margin: 0;
+      padding: 0 8px;
+      border: none;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .business-bookings-month-year-grid__btn--active {
+      background: var(--color-primary, #001b5e);
+      color: #fff;
+    }
+
+    .business-bookings-year-select-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .business-bookings-year-select-wrap label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .business-bookings-year-select-wrap select {
+      min-height: 40px;
+      min-width: 110px;
+      padding: 0 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: #fff;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    #adminSectionBookings .business-bookings-list-chrome {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+      margin-top: 4px;
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 480px) {
+      #adminSectionBookings .business-bookings-date-nav__current {
+        font-size: 12px;
+      }
+
+      #adminSectionBookings .business-bookings-mode-btn {
+        font-size: 12px;
+        min-height: 34px;
+      }
+
+      #adminSectionBookings .business-bookings-month-cell {
+        min-height: 80px;
+        padding: 10px 2px 12px;
+        gap: 10px;
+      }
+
+      #adminSectionBookings .business-bookings-month-cell__num {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        font-size: 13px;
+      }
+
+      #adminSectionBookings .business-bookings-month-cell__count {
+        font-size: 12px;
+      }
+
+      #adminSectionBookings .business-bookings-week-day-head span {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      #adminSectionBookings .business-bookings-calendar-toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      #adminSectionBookings .business-bookings-mode-switch {
+        width: auto;
+        min-width: 240px;
+        flex: 0 0 auto;
+      }
+
+      #adminSectionBookings .business-bookings-date-nav {
+        width: auto;
+        flex: 1 1 auto;
+        max-width: 420px;
+        margin-left: auto;
+      }
+
+      #adminSectionBookings .business-bookings-day-view,
+      #adminSectionBookings .business-bookings-week-view {
+        max-height: min(70vh, 760px);
+      }
+
+      #adminSectionBookings .business-bookings-time-scroll {
+        padding-bottom: 36px;
+      }
+
+      #adminSectionBookings .business-bookings-month-cell {
+        min-height: 96px;
       }
     }
 
@@ -21507,28 +22953,11 @@
       background: #fef2f2;
     }
 
-    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row--logout {
-      width: 100%;
-      margin: 0;
-      padding: 15px 16px;
-      border: none;
-      border-radius: 0;
-      background: #fff;
-      font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      color: #dc2626;
-      text-align: center;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row--logout:active {
-      background: #fef2f2;
-    }
-
     body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-group--logout {
-      border-color: #fecaca;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
     }
 
     body.customer-mobile-shell-active #customerMobileTabNotifications .customer-alerts-card {
@@ -22463,11 +23892,6 @@
 
     body.customer-mobile-shell-active #customerMobileBottomNav .customer-mobile-nav-badge.hidden {
       display: none;
-    }
-
-    body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-row--logout {
-      margin-top: 0;
-      border-top: none;
     }
 
     body.customer-mobile-shell-active #customerMobileTabProfile .customer-mobile-profile-actions {
@@ -27594,32 +29018,75 @@
     body.admin-mobile-shell-active #adminSectionBookings .admin-bookings-screen--ref {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 10px;
       padding: 2px 2px 0;
     }
 
-    body.admin-mobile-shell-active #adminSectionBookings .admin-bookings-screen__header {
+    body.admin-mobile-shell-active #adminSectionBookings .admin-bookings-screen__header,
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-header {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 16px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-header__text {
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      padding: 0 2px;
+      gap: 0;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-calendar {
+      max-height: none;
+      min-height: 320px;
+      margin-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-calendar-chrome {
+      padding-bottom: 4px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-day-view,
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-week-view {
+      max-height: min(56vh, 560px);
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-time-scroll {
+      padding-bottom: 36px;
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-day-view .business-bookings-time-scroll {
+      padding-bottom: calc(var(--admin-tabbar-height, 58px) + env(safe-area-inset-bottom, 0px) + 36px);
+    }
+
+    body.admin-mobile-shell-active #adminSectionBookings .business-bookings-week-board {
+      padding-bottom: calc(var(--admin-tabbar-height, 58px) + env(safe-area-inset-bottom, 0px) + 36px);
     }
 
     body.admin-mobile-shell-active #adminSectionBookings .admin-bookings-screen__title {
       margin: 0;
-      font-size: 1.375rem;
+      font-size: 32px;
       font-weight: 700;
       letter-spacing: -0.03em;
-      color: #0f172a;
-      line-height: 1.15;
+      color: var(--color-text, var(--xbook-text, #0f172a));
+      line-height: 1.05;
     }
 
     body.admin-mobile-shell-active #adminSectionBookings .admin-bookings-screen__subtitle {
-      margin: 0;
-      font-size: 13px;
-      font-weight: 500;
-      color: #94a3b8;
+      margin: 6px 0 0;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-secondary, var(--color-muted, #64748b));
       line-height: 1.35;
+      min-width: 170px;
+      max-width: 260px;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
     }
 
     body.admin-mobile-shell-active #adminSectionBookings .bookings-filter-card {
@@ -29198,7 +30665,8 @@
       margin-right: 2px;
     }
 
-    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn.settings-logout-row {
+    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn.settings-logout-row,
+    body.customer-mobile-shell-active #customerMobileTabProfile .settings-logout-btn.settings-logout-row {
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -29214,20 +30682,29 @@
       font-size: 13px;
       font-weight: 600;
       box-shadow: none;
+      cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn.settings-logout-row:active {
+    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn.settings-logout-row:hover,
+    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn.settings-logout-row:active,
+    body.customer-mobile-shell-active #customerMobileTabProfile .settings-logout-btn.settings-logout-row:hover,
+    body.customer-mobile-shell-active #customerMobileTabProfile .settings-logout-btn.settings-logout-row:active {
       background: #fef2f2;
+      border-color: rgba(220, 38, 38, 0.32);
+      color: #991b1b;
     }
 
-    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-row__label {
+    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-row__label,
+    body.customer-mobile-shell-active #customerMobileTabProfile .settings-logout-row__label {
       flex: 1;
       text-align: left;
     }
 
-    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn__icon {
+    body.admin-mobile-shell-active #adminSectionProfile .settings-logout-btn__icon,
+    body.customer-mobile-shell-active #customerMobileTabProfile .settings-logout-btn__icon {
       flex: 0 0 16px;
       width: 16px;
       height: 16px;
@@ -35528,51 +37005,103 @@
       <div class="card widget-card admin-saas admin-bookings-legacy-card">
         <h2 class="admin-section-title admin-saas__title" data-i18n="screenBookings">Bookings</h2>
         <div id="widgetBookings" class="widget-content admin-saas__body admin-saas-bookings-panel admin-bookings-screen admin-bookings-screen--ref">
-          <header class="admin-bookings-screen__header">
-            <h2 class="admin-bookings-screen__title" data-i18n="screenBookings">Bookings</h2>
-            <p class="admin-bookings-screen__subtitle">Manage and review all customer bookings.</p>
+          <header class="admin-bookings-screen__header business-bookings-header">
+            <div class="business-bookings-header__text">
+              <h2 class="admin-bookings-screen__title" data-i18n="screenBookings">Bookings</h2>
+              <p class="admin-bookings-screen__subtitle" data-i18n="bookingsSubtitle">View and manage all customer bookings.</p>
+            </div>
+            <div class="business-bookings-main-view-switch" role="group" aria-label="Bookings view">
+              <button
+                type="button"
+                class="business-bookings-main-view-btn"
+                data-bookings-main-view="list"
+                aria-pressed="false"
+                aria-label="List"
+                onclick="setAdminBookingsMainView('list')"
+              >
+                <span class="business-bookings-main-view-btn__icon business-bookings-main-view-btn__icon--list" aria-hidden="true"></span>
+                <span class="business-bookings-main-view-btn__label">List</span>
+              </button>
+              <button
+                type="button"
+                class="business-bookings-main-view-btn business-bookings-main-view-btn--active"
+                data-bookings-main-view="calendar"
+                aria-pressed="true"
+                aria-label="Calendar"
+                onclick="setAdminBookingsMainView('calendar')"
+              >
+                <span class="business-bookings-main-view-btn__icon business-bookings-main-view-btn__icon--calendar" aria-hidden="true"></span>
+                <span class="business-bookings-main-view-btn__label">Calendar</span>
+              </button>
+            </div>
           </header>
 
-          <div class="bookings-filter-card admin-saas-bookings-toolbar" role="search">
-            <label class="bookings-field admin-saas-toolbar-field admin-saas-toolbar-field--grow">
-              <span class="bookings-field__label admin-saas-field__label">Search</span>
-              <span class="bookings-input-wrap bookings-input-wrap--search">
-                <span class="bookings-input-wrap__icon" aria-hidden="true"></span>
-                <input id="bookingSearch" class="bookings-input" type="search" placeholder="Search bookings…" oninput="renderBookings()" autocomplete="off" />
-              </span>
-            </label>
-            <div class="bookings-filter-row">
-              <label class="bookings-field admin-saas-toolbar-field">
-                <span class="bookings-field__label admin-saas-field__label">Date</span>
-                <span class="bookings-input-wrap bookings-input-wrap--date">
+          <div class="business-bookings-filters-wrap">
+            <div id="adminBookingsFiltersPanel" class="bookings-filter-card admin-saas-bookings-toolbar business-bookings-filters-panel" role="search">
+              <label class="bookings-field admin-saas-toolbar-field admin-saas-toolbar-field--grow">
+                <span class="bookings-field__label admin-saas-field__label">Search</span>
+                <span class="bookings-input-wrap bookings-input-wrap--search">
                   <span class="bookings-input-wrap__icon" aria-hidden="true"></span>
-                  <input id="bookingDateFilter" class="bookings-input" type="date" onchange="renderBookings()" />
+                  <input id="bookingSearch" class="bookings-input" type="search" placeholder="Search bookings…" oninput="renderBookings()" autocomplete="off" />
                 </span>
               </label>
-              <label class="bookings-field admin-saas-toolbar-field">
-                <span class="bookings-field__label admin-saas-field__label">Service</span>
-                <span class="bookings-input-wrap bookings-input-wrap--service">
-                  <span class="bookings-input-wrap__icon" aria-hidden="true"></span>
-                  <select id="bookingServiceFilter" class="bookings-input bookings-input--select" onchange="renderBookings()">
-                    <option value="">All services</option>
-                  </select>
-                  <span class="bookings-input-wrap__chevron" aria-hidden="true"></span>
-                </span>
-              </label>
-            </div>
-            <div class="bookings-filter-actions admin-saas-toolbar-actions">
-              <button type="button" class="admin-saas-btn admin-saas-btn--muted bookings-btn bookings-btn--clear" onclick="clearBookingFilters()">Clear</button>
-              <button type="button" class="admin-saas-btn admin-saas-btn--primary bookings-btn bookings-btn--apply" onclick="renderBookings()">
-                <span class="bookings-btn--apply__icon" aria-hidden="true"></span>
-                Apply
-              </button>
+              <div class="bookings-filter-row">
+                <label class="bookings-field admin-saas-toolbar-field">
+                  <span class="bookings-field__label admin-saas-field__label">Date</span>
+                  <span class="bookings-input-wrap bookings-input-wrap--date">
+                    <span class="bookings-input-wrap__icon" aria-hidden="true"></span>
+                    <input id="bookingDateFilter" class="bookings-input" type="date" onchange="renderBookings()" />
+                  </span>
+                </label>
+                <label class="bookings-field admin-saas-toolbar-field">
+                  <span class="bookings-field__label admin-saas-field__label">Service</span>
+                  <span class="bookings-input-wrap bookings-input-wrap--service">
+                    <span class="bookings-input-wrap__icon" aria-hidden="true"></span>
+                    <select id="bookingServiceFilter" class="bookings-input bookings-input--select" onchange="renderBookings()">
+                      <option value="">All services</option>
+                    </select>
+                    <span class="bookings-input-wrap__chevron" aria-hidden="true"></span>
+                  </span>
+                </label>
+              </div>
+              <div class="bookings-filter-actions admin-saas-toolbar-actions">
+                <button type="button" class="admin-saas-btn admin-saas-btn--muted bookings-btn bookings-btn--clear" onclick="clearBookingFilters()">Clear</button>
+                <button type="button" class="admin-saas-btn admin-saas-btn--primary bookings-btn bookings-btn--apply" onclick="renderBookings()">
+                  <span class="bookings-btn--apply__icon" aria-hidden="true"></span>
+                  Apply
+                </button>
+              </div>
             </div>
           </div>
 
-          <p id="bookingFilterInfo" class="admin-saas-status bookings-results-meta"></p>
+          <div id="adminBookingsCalendarChrome" class="business-bookings-calendar-chrome">
+            <div class="business-bookings-calendar-toolbar">
+              <div class="business-bookings-mode-switch" role="tablist" aria-label="Calendar mode">
+                <button type="button" class="business-bookings-mode-btn business-bookings-mode-btn--active" data-bookings-cal-mode="day" role="tab" aria-selected="true" onclick="setAdminBookingsCalendarMode('day')" data-i18n="bookingsModeDay">Day</button>
+                <button type="button" class="business-bookings-mode-btn" data-bookings-cal-mode="week" role="tab" aria-selected="false" onclick="setAdminBookingsCalendarMode('week')" data-i18n="bookingsModeWeek">Week</button>
+                <button type="button" class="business-bookings-mode-btn" data-bookings-cal-mode="month" role="tab" aria-selected="false" onclick="setAdminBookingsCalendarMode('month')" data-i18n="bookingsModeMonth">Month</button>
+              </div>
+              <div class="business-bookings-date-nav">
+                <button type="button" class="business-bookings-date-nav__btn" onclick="adminBookingsCalendarNavigate(-1)" aria-label="Previous day">
+                  <span class="business-bookings-date-nav__chev" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="business-bookings-date-nav__current" onclick="openAdminBookingsDatePicker()" data-i18n-aria-label="bookingsPickDate" aria-label="Choose date">
+                  <span class="business-bookings-date-nav__cal-icon" aria-hidden="true"></span>
+                  <span id="adminBookingsCalendarDateLabel">—</span>
+                </button>
+                <button type="button" class="business-bookings-date-nav__btn" onclick="adminBookingsCalendarNavigate(1)" aria-label="Next day">
+                  <span class="business-bookings-date-nav__chev business-bookings-date-nav__chev--next" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+            <div id="businessBookingsCalendarMount" class="business-bookings-calendar" aria-live="polite"></div>
+          </div>
 
-          <div class="admin-saas-bookings-scroll bookings-list-scroll">
-            <div id="bookingsList" class="admin-saas-list admin-saas-bookings-list bookings-list" role="list" aria-label="Bookings"></div>
+          <div id="adminBookingsListChrome" class="business-bookings-list-chrome" hidden>
+            <p id="bookingFilterInfo" class="admin-saas-status bookings-results-meta"></p>
+            <div class="admin-saas-bookings-scroll bookings-list-scroll">
+              <div id="bookingsList" class="admin-saas-list admin-saas-bookings-list bookings-list" role="list" aria-label="Bookings"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -36114,6 +37643,43 @@
           <p id="adminCalendarDatePickerMonthLabel" class="admin-calendar-date-sheet__month">—</p>
           <div class="admin-calendar-date-sheet__calendar-wrap">
             <div id="adminCalendarDatePickerCalendar" class="admin-calendar-date-sheet__calendar closed-days-picker-calendar" aria-label="Calendar month"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="adminBookingsDatePickerModal" class="business-bookings-picker-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="adminBookingsDatePickerTitle" hidden>
+        <div class="business-bookings-picker-sheet__backdrop" onclick="closeAdminBookingsDatePicker()"></div>
+        <div class="business-bookings-picker-sheet__panel" onclick="event.stopPropagation()">
+          <div class="business-bookings-picker-sheet__grab" aria-hidden="true"></div>
+          <h3 id="adminBookingsDatePickerTitle" class="business-bookings-picker-sheet__title" data-i18n="bookingsSelectDate">Select date</h3>
+          <div class="business-bookings-picker-sheet__nav">
+            <button type="button" class="business-bookings-picker-sheet__nav-btn" onclick="adminBookingsDatePickerChangeMonth(-1)" aria-label="Previous month">‹</button>
+            <p id="adminBookingsDatePickerMonthLabel" class="business-bookings-picker-sheet__nav-title">—</p>
+            <button type="button" class="business-bookings-picker-sheet__nav-btn" onclick="adminBookingsDatePickerChangeMonth(1)" aria-label="Next month">›</button>
+          </div>
+          <div class="business-bookings-picker-sheet__body">
+            <div id="adminBookingsDatePickerCalendar" class="business-bookings-picker-sheet__calendar" aria-label="Select date"></div>
+          </div>
+          <div class="business-bookings-picker-sheet__footer">
+            <button type="button" class="business-bookings-picker-sheet__done" onclick="confirmAdminBookingsDatePicker()" data-i18n="commonDone">Done</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="adminBookingsMonthYearPickerModal" class="business-bookings-picker-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="adminBookingsMonthYearPickerTitle" hidden>
+        <div class="business-bookings-picker-sheet__backdrop" onclick="closeAdminBookingsMonthYearPicker()"></div>
+        <div class="business-bookings-picker-sheet__panel" onclick="event.stopPropagation()">
+          <div class="business-bookings-picker-sheet__grab" aria-hidden="true"></div>
+          <h3 id="adminBookingsMonthYearPickerTitle" class="business-bookings-picker-sheet__title" data-i18n="bookingsSelectMonth">Select month</h3>
+          <div class="business-bookings-year-select-wrap">
+            <label for="adminBookingsYearSelect" data-i18n="bookingsYear">Year</label>
+            <select id="adminBookingsYearSelect" onchange="onAdminBookingsYearSelectChange(event)"></select>
+          </div>
+          <div class="business-bookings-picker-sheet__body">
+            <div id="adminBookingsMonthYearGrid" class="business-bookings-month-year-grid" aria-label="Select month"></div>
+          </div>
+          <div class="business-bookings-picker-sheet__footer">
+            <button type="button" class="business-bookings-picker-sheet__done" onclick="confirmAdminBookingsMonthYearPicker()" data-i18n="commonDone">Done</button>
           </div>
         </div>
       </div>
@@ -37186,8 +38752,14 @@
 
           <section id="customerMobileProfileLogoutSection" class="customer-mobile-profile-section customer-mobile-profile-section--logout hidden">
             <div class="customer-mobile-profile-group customer-mobile-profile-group--logout">
-              <button type="button" id="customerMobileProfileLogoutBtn" class="customer-mobile-profile-row customer-mobile-profile-row--action customer-mobile-profile-row--logout" onclick="customerLogout()">
-                Log out
+              <button
+                type="button"
+                id="customerMobileProfileLogoutBtn"
+                class="settings-logout-btn settings-logout-row"
+                onclick="customerLogout()"
+              >
+                <span class="settings-logout-btn__icon" aria-hidden="true"></span>
+                <span class="settings-logout-row__label">Log out</span>
               </button>
             </div>
           </section>
@@ -38104,6 +39676,34 @@
       screenServices: "Services",
       screenStaff: "Staff",
       screenBookings: "Bookings",
+      bookingsSubtitle: "View and manage all customer bookings.",
+      bookingsCalendarView: "Calendar view",
+      bookingsListView: "List view",
+      bookingsModeDay: "Day",
+      bookingsModeWeek: "Week",
+      bookingsModeMonth: "Month",
+      bookingsToday: "Today",
+      bookingsPickDate: "Choose date",
+      bookingsSelectDate: "Select date",
+      bookingsSelectMonth: "Select month",
+      bookingsYear: "Year",
+      bookingsClosedNoBookings: "Closed. No bookings for this day.",
+      bookingsPrevPeriod: "Previous",
+      bookingsNextPeriod: "Next",
+      bookingsPrevDay: "Previous day",
+      bookingsNextDay: "Next day",
+      bookingsPrevWeek: "Previous week",
+      bookingsNextWeek: "Next week",
+      bookingsPrevMonth: "Previous month",
+      bookingsNextMonth: "Next month",
+      bookingsAllDay: "All day",
+      bookingsAppointment: "appointment",
+      bookingsAppointments: "appointments",
+      bookingsNonWorkingDay: "Non-working day",
+      bookingsHoliday: "Holiday",
+      bookingsNoAppointments: "No appointments",
+      bookingsFiltersToggle: "Filters",
+      commonDone: "Done",
       screenClients: "Clients",
       clientsFilterAll: "All",
       clientsFilterPending: "Pending",
@@ -38253,6 +39853,34 @@
       screenServices: "Услуги",
       screenStaff: "Вработени",
       screenBookings: "Резервации",
+      bookingsSubtitle: "Прегледувајте и управувајте со сите термини на клиентите.",
+      bookingsCalendarView: "Календарски приказ",
+      bookingsListView: "Приказ како листа",
+      bookingsModeDay: "Ден",
+      bookingsModeWeek: "Недела",
+      bookingsModeMonth: "Месец",
+      bookingsToday: "Денес",
+      bookingsPickDate: "Избери датум",
+      bookingsSelectDate: "Избери датум",
+      bookingsSelectMonth: "Избери месец",
+      bookingsYear: "Година",
+      bookingsClosedNoBookings: "Затворено. Нема термини за овој ден.",
+      bookingsPrevPeriod: "Претходно",
+      bookingsNextPeriod: "Следно",
+      bookingsPrevDay: "Претходен ден",
+      bookingsNextDay: "Следен ден",
+      bookingsPrevWeek: "Претходна недела",
+      bookingsNextWeek: "Следна недела",
+      bookingsPrevMonth: "Претходен месец",
+      bookingsNextMonth: "Следен месец",
+      bookingsAllDay: "Цел ден",
+      bookingsAppointment: "термин",
+      bookingsAppointments: "термини",
+      bookingsNonWorkingDay: "Неработен ден",
+      bookingsHoliday: "Празник",
+      bookingsNoAppointments: "Нема термини",
+      bookingsFiltersToggle: "Филтри",
+      commonDone: "Готово",
       screenClients: "Клиенти",
       clientsFilterAll: "Сите",
       clientsFilterPending: "Неодобрени",
@@ -38671,7 +40299,21 @@
           "By using XBOOK, you agree to use the service responsibly and keep your booking information accurate. Businesses manage their own availability, services, and appointments.": "Со користење на XBOOK, се согласувате да ја користите услугата одговорно и да ги одржувате точни вашите информации за закажување. Бизнисите управуваат со сопствената достапност, услуги и термини.",
           "Calendar": "Календар",
           "Calendar month": "Календарски месец",
-          "Calendar view": "Приказ на календар",
+          "Calendar view": "Календарски приказ",
+          "List view": "Приказ како листа",
+          "View and manage all customer bookings.": "Прегледувајте и управувајте со сите термини на клиентите.",
+          "All day": "Цел ден",
+          "Non-working day": "Неработен ден",
+          "Holiday": "Празник",
+          "No appointments": "Нема термини",
+          "appointment": "термин",
+          "appointments": "термини",
+          "Previous day": "Претходен ден",
+          "Next day": "Следен ден",
+          "Previous week": "Претходна недела",
+          "Next week": "Следна недела",
+          "Previous month": "Претходен месец",
+          "Next month": "Следен месец",
           "Cancel booking": "Откажи термин",
           "Cancel this booking?": "Да се откаже овој термин?",
           "Cancelled": "Откажан",
@@ -39973,6 +41615,14 @@
     }
     syncLanguagePickerUi();
     syncLanguageSettingValue();
+    const bookingsSection = document.getElementById("adminSectionBookings");
+    if (
+      typeof renderBookings === "function" &&
+      bookingsSection &&
+      bookingsSection.classList.contains("admin-section--active")
+    ) {
+      renderBookings();
+    }
     return next;
   }
   window.setAppLanguage = setAppLanguage;
@@ -40830,6 +42480,39 @@
   let adminCalendarStaffFilter = "";
   let adminCalendarServiceFilter = "";
   let adminCalendarAnchorDate = new Date();
+  let adminBookingsMainView = "calendar";
+  let adminBookingsCalendarMode = (function () {
+    try {
+      const stored = localStorage.getItem("xbook_bookings_calendar_mode");
+      if (stored === "day" || stored === "week" || stored === "month") return stored;
+    } catch (err) {
+      /* ignore */
+    }
+    return "day";
+  })();
+  let adminBookingsAnchorDate = new Date();
+  let adminBookingsFiltersOpen = false;
+  let adminBookingsNowTimer = null;
+  let adminBookingsActiveGrid = null;
+  let adminBookingsResizeAttached = false;
+  let adminBookingsDatePickerState = null;
+  let adminBookingsMonthYearPickerState = null;
+  const BUSINESS_BOOKINGS_PX_PER_HOUR = 72;
+  const BUSINESS_BOOKINGS_PX_PER_MIN = BUSINESS_BOOKINGS_PX_PER_HOUR / 60;
+  /* Day View only: taller timeline so 15/30-min cards have readable height. */
+  const BUSINESS_BOOKINGS_DAY_PX_PER_HOUR = 150;
+  const BUSINESS_BOOKINGS_DAY_PX_PER_MIN = BUSINESS_BOOKINGS_DAY_PX_PER_HOUR / 60;
+  /* Week View only: overview scale (not Day 150, not legacy 72). */
+  const BUSINESS_BOOKINGS_WEEK_PX_PER_HOUR = 105;
+  const BUSINESS_BOOKINGS_WEEK_PX_PER_MIN = BUSINESS_BOOKINGS_WEEK_PX_PER_HOUR / 60;
+  const BUSINESS_BOOKINGS_EVENT_COLORS = [
+    { bg: "#ecfdf5", accent: "#10b981", text: "#047857" },
+    { bg: "#eff6ff", accent: "#3b82f6", text: "#1d4ed8" },
+    { bg: "#f5f3ff", accent: "#8b5cf6", text: "#6d28d9" },
+    { bg: "#fff7ed", accent: "#f97316", text: "#c2410c" },
+    { bg: "#fdf2f8", accent: "#ec4899", text: "#be185d" },
+    { bg: "#ecfeff", accent: "#06b6d4", text: "#0e7490" }
+  ];
   let adminBookingDetailModalId = null;
   let adminScheduleNowTimer = null;
   let adminScheduleActiveGrid = null;
@@ -53569,6 +55252,8 @@
       renderBookings();
     } else if (key !== "bookings") {
       closeBookingsActionSheet();
+      stopAdminBookingsNowTimer();
+      adminBookingsActiveGrid = null;
     }
     if (key === "clients" && !opts.skipRender) {
       renderClients();
@@ -63682,10 +65367,912 @@
   }
 
   function clearBookingFilters() {
-    document.getElementById("bookingSearch").value = "";
-    document.getElementById("bookingDateFilter").value = "";
-    document.getElementById("bookingServiceFilter").value = "";
+    const searchEl = document.getElementById("bookingSearch");
+    const dateEl = document.getElementById("bookingDateFilter");
+    const serviceEl = document.getElementById("bookingServiceFilter");
+    if (searchEl) searchEl.value = "";
+    if (dateEl) dateEl.value = "";
+    if (serviceEl) serviceEl.value = "";
     renderBookings();
+  }
+
+  function getBusinessBookingsUiLocale() {
+    return currentLanguage === "mk" ? "mk-MK" : "en-GB";
+  }
+
+  function persistAdminBookingsCalendarMode(mode) {
+    try {
+      localStorage.setItem("xbook_bookings_calendar_mode", mode);
+    } catch (err) {
+      /* ignore */
+    }
+  }
+
+  function stopAdminBookingsNowTimer() {
+    if (adminBookingsNowTimer) {
+      clearInterval(adminBookingsNowTimer);
+      adminBookingsNowTimer = null;
+    }
+  }
+
+  function getBusinessBookingsEventColor(booking) {
+    const key = String(booking?.service_id || booking?.service_name || booking?.id || "0");
+    let hash = 0;
+    for (let i = 0; i < key.length; i += 1) hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+    return BUSINESS_BOOKINGS_EVENT_COLORS[hash % BUSINESS_BOOKINGS_EVENT_COLORS.length];
+  }
+
+  function formatBusinessBookingsAppointmentCount(count) {
+    const n = Number(count) || 0;
+    if (n <= 0) return "";
+    if (n === 1) return "1 " + t("bookingsAppointment", "appointment");
+    return n + " " + t("bookingsAppointments", "appointments");
+  }
+
+  function formatBusinessBookingsDayLabel(dateObj) {
+    const locale = getBusinessBookingsUiLocale();
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleDateString(locale, { month: "long" });
+    const weekday = dateObj.toLocaleDateString(locale, { weekday: "long" });
+    const year = dateObj.getFullYear();
+    if (currentLanguage === "mk") {
+      return weekday.charAt(0).toUpperCase() + weekday.slice(1) + ", " + day + " " + month + " " + year;
+    }
+    return day + " " + month.charAt(0).toUpperCase() + month.slice(1) + " " + year + ", " + weekday;
+  }
+
+  function formatBusinessBookingsWeekLabel(weekStart, weekEnd) {
+    const locale = getBusinessBookingsUiLocale();
+    const a = weekStart.toLocaleDateString(locale, { day: "numeric", month: "short" });
+    const b = weekEnd.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
+    return a + " – " + b;
+  }
+
+  function formatBusinessBookingsMonthLabel(dateObj) {
+    const locale = getBusinessBookingsUiLocale();
+    const label = dateObj.toLocaleDateString(locale, { month: "long", year: "numeric" });
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  }
+
+  function syncAdminBookingsNavAria() {
+    const prev = document.querySelector("#adminSectionBookings .business-bookings-date-nav__btn:first-child");
+    const next = document.querySelector("#adminSectionBookings .business-bookings-date-nav__btn:last-child");
+    const mode = adminBookingsCalendarMode;
+    let prevKey = "bookingsPrevPeriod";
+    let nextKey = "bookingsNextPeriod";
+    if (mode === "day") {
+      prevKey = "bookingsPrevDay";
+      nextKey = "bookingsNextDay";
+    } else if (mode === "week") {
+      prevKey = "bookingsPrevWeek";
+      nextKey = "bookingsNextWeek";
+    } else if (mode === "month") {
+      prevKey = "bookingsPrevMonth";
+      nextKey = "bookingsNextMonth";
+    }
+    if (prev) prev.setAttribute("aria-label", t(prevKey));
+    if (next) next.setAttribute("aria-label", t(nextKey));
+  }
+
+  function syncAdminBookingsMainViewUi() {
+    const calChrome = document.getElementById("adminBookingsCalendarChrome");
+    const listChrome = document.getElementById("adminBookingsListChrome");
+    const isCalendar = adminBookingsMainView === "calendar";
+    if (calChrome) calChrome.hidden = !isCalendar;
+    if (listChrome) listChrome.hidden = isCalendar;
+    document.querySelectorAll("#adminSectionBookings [data-bookings-main-view]").forEach((btn) => {
+      const on = btn.getAttribute("data-bookings-main-view") === adminBookingsMainView;
+      btn.classList.toggle("business-bookings-main-view-btn--active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    document.querySelectorAll("#adminSectionBookings [data-bookings-cal-mode]").forEach((btn) => {
+      const on = btn.getAttribute("data-bookings-cal-mode") === adminBookingsCalendarMode;
+      btn.classList.toggle("business-bookings-mode-btn--active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+    });
+    const filtersPanel = document.getElementById("adminBookingsFiltersPanel");
+    /* Filters stay visible in List view; not gated by a header toggle button. */
+    if (filtersPanel) filtersPanel.hidden = isCalendar;
+    syncAdminBookingsNavAria();
+  }
+
+  function toggleAdminBookingsFiltersPanel() {
+    /* No-op: header filters toggle removed; panel visibility follows List/Calendar. */
+  }
+
+  function setAdminBookingsMainView(view) {
+    adminBookingsMainView = view === "list" ? "list" : "calendar";
+    if (adminBookingsMainView !== "calendar") stopAdminBookingsNowTimer();
+    renderBookings();
+  }
+
+  function setAdminBookingsCalendarMode(mode) {
+    const next = mode === "week" || mode === "month" ? mode : "day";
+    adminBookingsCalendarMode = next;
+    persistAdminBookingsCalendarMode(next);
+    if (adminBookingsMainView !== "calendar") adminBookingsMainView = "calendar";
+    renderBookings();
+  }
+
+  function adminBookingsCalendarNavigate(offset) {
+    const step = Number(offset) || 0;
+    const d = new Date(adminBookingsAnchorDate || new Date());
+    if (adminBookingsCalendarMode === "month") d.setMonth(d.getMonth() + step);
+    else if (adminBookingsCalendarMode === "week") d.setDate(d.getDate() + step * 7);
+    else d.setDate(d.getDate() + step);
+    adminBookingsAnchorDate = d;
+    if (adminBookingsMainView !== "calendar") adminBookingsMainView = "calendar";
+    renderBusinessBookingsCalendar();
+  }
+
+  function adminBookingsCalendarGoToday() {
+    adminBookingsAnchorDate = new Date();
+    if (adminBookingsMainView !== "calendar") adminBookingsMainView = "calendar";
+    renderBusinessBookingsCalendar();
+  }
+
+  function openAdminBookingsPickerSheet(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.remove("hidden");
+    modal.removeAttribute("hidden");
+    modal.style.display = "flex";
+    modal.style.pointerEvents = "auto";
+    applyTranslations(modal);
+    applyUiTranslations(modal);
+  }
+
+  function closeAdminBookingsPickerSheet(modalId) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.add("hidden");
+    modal.setAttribute("hidden", "");
+    modal.style.display = "";
+    modal.style.pointerEvents = "";
+  }
+
+  function renderAdminBookingsDatePicker() {
+    const mount = document.getElementById("adminBookingsDatePickerCalendar");
+    const monthLabel = document.getElementById("adminBookingsDatePickerMonthLabel");
+    if (!mount || !adminBookingsDatePickerState) return;
+
+    const anchor = new Date(adminBookingsDatePickerState.anchor);
+    const year = anchor.getFullYear();
+    const month = anchor.getMonth();
+    const selected = adminBookingsDatePickerState.selected || "";
+    const todayStr = getTodayDateString();
+    const locale = getBusinessBookingsUiLocale();
+
+    if (monthLabel) {
+      const label = anchor.toLocaleDateString(locale, { month: "long", year: "numeric" });
+      monthLabel.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    }
+
+    mount.innerHTML = "";
+    const weekStart = getAdminWeekStartMonday(new Date(year, month, 1));
+    for (let i = 0; i < 7; i += 1) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const dow = document.createElement("div");
+      dow.className = "business-bookings-picker-sheet__dow";
+      dow.textContent = d.toLocaleDateString(locale, { weekday: "short" }).replace(/\./g, "");
+      mount.appendChild(dow);
+    }
+
+    const firstDay = new Date(year, month, 1);
+    let startOffset = firstDay.getDay();
+    startOffset = startOffset === 0 ? 6 : startOffset - 1;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+    const gridStart = new Date(year, month, 1 - startOffset);
+
+    for (let i = 0; i < totalCells; i += 1) {
+      const d = new Date(gridStart);
+      d.setDate(gridStart.getDate() + i);
+      const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+      const inMonth = d.getMonth() === month;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "business-bookings-picker-sheet__day";
+      if (!inMonth) btn.classList.add("business-bookings-picker-sheet__day--outside");
+      if (dateStr === selected) btn.classList.add("business-bookings-picker-sheet__day--selected");
+      if (dateStr === todayStr) btn.classList.add("business-bookings-picker-sheet__day--today");
+      btn.textContent = String(d.getDate());
+      btn.setAttribute("aria-label", dateStr);
+      btn.addEventListener("click", () => {
+        adminBookingsDatePickerState.selected = dateStr;
+        adminBookingsDatePickerState.anchor = new Date(d.getFullYear(), d.getMonth(), 1, 12, 0, 0);
+        renderAdminBookingsDatePicker();
+      });
+      mount.appendChild(btn);
+    }
+  }
+
+  function adminBookingsDatePickerChangeMonth(offset) {
+    if (!adminBookingsDatePickerState) return;
+    const next = new Date(adminBookingsDatePickerState.anchor);
+    next.setMonth(next.getMonth() + (Number(offset) || 0));
+    adminBookingsDatePickerState.anchor = next;
+    renderAdminBookingsDatePicker();
+  }
+
+  function openAdminBookingsDatePicker() {
+    if (adminBookingsCalendarMode === "month") {
+      openAdminBookingsMonthYearPicker();
+      return;
+    }
+    const anchor = adminBookingsAnchorDate || new Date();
+    const selected = formatDate(anchor.getFullYear(), anchor.getMonth(), anchor.getDate());
+    adminBookingsDatePickerState = {
+      anchor: new Date(anchor.getFullYear(), anchor.getMonth(), 1, 12, 0, 0),
+      selected
+    };
+    renderAdminBookingsDatePicker();
+    openAdminBookingsPickerSheet("adminBookingsDatePickerModal");
+  }
+
+  function closeAdminBookingsDatePicker() {
+    closeAdminBookingsPickerSheet("adminBookingsDatePickerModal");
+    adminBookingsDatePickerState = null;
+  }
+
+  function confirmAdminBookingsDatePicker() {
+    const selected = adminBookingsDatePickerState?.selected;
+    if (!selected || !/^\d{4}-\d{2}-\d{2}$/.test(selected)) {
+      closeAdminBookingsDatePicker();
+      return;
+    }
+    const parts = selected.split("-").map(Number);
+    adminBookingsAnchorDate = new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+    if (adminBookingsMainView !== "calendar") adminBookingsMainView = "calendar";
+    closeAdminBookingsDatePicker();
+    renderBusinessBookingsCalendar();
+  }
+
+  function renderAdminBookingsMonthYearPicker() {
+    const grid = document.getElementById("adminBookingsMonthYearGrid");
+    const yearSelect = document.getElementById("adminBookingsYearSelect");
+    if (!grid || !adminBookingsMonthYearPickerState) return;
+
+    const locale = getBusinessBookingsUiLocale();
+    const year = adminBookingsMonthYearPickerState.year;
+    const month = adminBookingsMonthYearPickerState.month;
+
+    if (yearSelect) {
+      const currentYear = new Date().getFullYear();
+      const startYear = currentYear - 3;
+      const endYear = currentYear + 5;
+      yearSelect.innerHTML = "";
+      for (let y = startYear; y <= endYear; y += 1) {
+        const opt = document.createElement("option");
+        opt.value = String(y);
+        opt.textContent = String(y);
+        if (y === year) opt.selected = true;
+        yearSelect.appendChild(opt);
+      }
+    }
+
+    grid.innerHTML = "";
+    for (let m = 0; m < 12; m += 1) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className =
+        "business-bookings-month-year-grid__btn" +
+        (m === month ? " business-bookings-month-year-grid__btn--active" : "");
+      const labelDate = new Date(year, m, 1);
+      const label = labelDate.toLocaleDateString(locale, { month: "short" });
+      btn.textContent = label.charAt(0).toUpperCase() + label.slice(1).replace(/\./g, "");
+      btn.addEventListener("click", () => {
+        adminBookingsMonthYearPickerState.month = m;
+        renderAdminBookingsMonthYearPicker();
+      });
+      grid.appendChild(btn);
+    }
+  }
+
+  function openAdminBookingsMonthYearPicker() {
+    const anchor = adminBookingsAnchorDate || new Date();
+    adminBookingsMonthYearPickerState = {
+      year: anchor.getFullYear(),
+      month: anchor.getMonth()
+    };
+    renderAdminBookingsMonthYearPicker();
+    openAdminBookingsPickerSheet("adminBookingsMonthYearPickerModal");
+  }
+
+  function closeAdminBookingsMonthYearPicker() {
+    closeAdminBookingsPickerSheet("adminBookingsMonthYearPickerModal");
+    adminBookingsMonthYearPickerState = null;
+  }
+
+  function onAdminBookingsYearSelectChange(event) {
+    if (!adminBookingsMonthYearPickerState) return;
+    const y = Number(event?.target?.value);
+    if (!Number.isFinite(y)) return;
+    adminBookingsMonthYearPickerState.year = y;
+    renderAdminBookingsMonthYearPicker();
+  }
+
+  function confirmAdminBookingsMonthYearPicker() {
+    if (!adminBookingsMonthYearPickerState) {
+      closeAdminBookingsMonthYearPicker();
+      return;
+    }
+    const { year, month } = adminBookingsMonthYearPickerState;
+    adminBookingsAnchorDate = new Date(year, month, 1, 12, 0, 0);
+    if (adminBookingsMainView !== "calendar") adminBookingsMainView = "calendar";
+    closeAdminBookingsMonthYearPicker();
+    renderBusinessBookingsCalendar();
+  }
+
+  function openAdminBookingsDayView(dateStr) {
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return;
+    const parts = dateStr.split("-").map(Number);
+    adminBookingsAnchorDate = new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+    adminBookingsCalendarMode = "day";
+    persistAdminBookingsCalendarMode("day");
+    adminBookingsMainView = "calendar";
+    renderBookings();
+  }
+
+  function getBusinessBookingsDayBanner(dateStr) {
+    if (isAdminScheduleDayClosed(dateStr)) {
+      const holiday = getPublicHolidayForDate(dateStr);
+      if (holiday) {
+        const title = holiday.title ? translateRuntimeText(holiday.title) : "";
+        return title || t("bookingsHoliday", "Holiday");
+      }
+      return translateRuntimeText(getBusinessClosedDayCalendarLabel(dateStr)) || t("bookingsNonWorkingDay", "Non-working day");
+    }
+    if (!isAdminScheduleDayWorking(dateStr)) return t("bookingsNonWorkingDay", "Non-working day");
+    return "";
+  }
+
+  /** Business timezone id used by Bookings now-line (source: businessSettings.timezone). */
+  function getBusinessBookingsTimezoneId() {
+    return String(businessSettings?.timezone || "").trim();
+  }
+
+  /**
+   * Current date + clock minutes for the Bookings red now-line.
+   * Prefers businessSettings.timezone via Intl (DST-aware). Falls back to device-local
+   * when timezone is missing/invalid — same practical fallback as getTodayDateString().
+   */
+  function getBusinessBookingsNowParts() {
+    const now = new Date();
+    const fallback = () => ({
+      dateStr: formatDate(now.getFullYear(), now.getMonth(), now.getDate()),
+      nowMin: now.getHours() * 60 + now.getMinutes()
+    });
+    const tz = getBusinessBookingsTimezoneId();
+    if (!tz) return fallback();
+    try {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+      }).formatToParts(now);
+      const map = {};
+      parts.forEach((part) => {
+        if (part.type !== "literal") map[part.type] = part.value;
+      });
+      const year = Number(map.year);
+      const month = Number(map.month);
+      const day = Number(map.day);
+      const hour = Number(map.hour);
+      const minute = Number(map.minute);
+      if (![year, month, day, hour, minute].every((n) => Number.isFinite(n))) return fallback();
+      return {
+        dateStr: formatDate(year, month - 1, day),
+        nowMin: hour * 60 + minute
+      };
+    } catch (err) {
+      return fallback();
+    }
+  }
+
+  function updateAdminBookingsNowLines() {
+    const grid = adminBookingsActiveGrid;
+    const mount = document.getElementById("businessBookingsCalendarMount");
+    if (!grid || !mount) return;
+
+    const { dateStr: todayStr, nowMin } = getBusinessBookingsNowParts();
+    const timeLabel = minutesToTime(nowMin);
+    const dayView = mount.querySelector(".business-bookings-day-view");
+    const weekView = mount.querySelector(".business-bookings-week-view");
+    const showingToday =
+      (dayView && dayView.getAttribute("data-date") === todayStr) ||
+      (weekView &&
+        !!weekView.querySelector('.business-bookings-week-col[data-date="' + todayStr + '"]'));
+    const nowHourFloor = Math.floor(nowMin / 60) * 60;
+    const inGrid = nowMin >= grid.startMin && nowMin <= grid.endMin;
+
+    const pxPerMin = dayView
+      ? BUSINESS_BOOKINGS_DAY_PX_PER_MIN
+      : weekView
+        ? BUSINESS_BOOKINGS_WEEK_PX_PER_MIN
+        : BUSINESS_BOOKINGS_PX_PER_MIN;
+    mount.querySelectorAll(".business-bookings-current-time-line").forEach((ui) => {
+      const scopeDate = ui.getAttribute("data-date") || "";
+      const show = !!scopeDate && scopeDate === todayStr && inGrid;
+      if (!show) {
+        ui.classList.remove("is-visible");
+        return;
+      }
+      ui.style.top = (nowMin - grid.startMin) * pxPerMin + "px";
+      const labelEl = ui.querySelector(".business-bookings-current-time-line__label");
+      if (labelEl) labelEl.textContent = timeLabel;
+      ui.classList.add("is-visible");
+    });
+
+    mount.querySelectorAll(".business-bookings-time-label").forEach((lab) => {
+      const mins = Number(lab.getAttribute("data-mins"));
+      lab.classList.toggle(
+        "business-bookings-time-label--now",
+        !!(showingToday && inGrid && Number.isFinite(mins) && mins === nowHourFloor)
+      );
+    });
+  }
+
+  function startAdminBookingsNowTimer(grid) {
+    adminBookingsActiveGrid = grid;
+    stopAdminBookingsNowTimer();
+    updateAdminBookingsNowLines();
+    adminBookingsNowTimer = setInterval(updateAdminBookingsNowLines, 60000);
+  }
+
+  function ensureAdminBookingsResizeListener() {
+    if (adminBookingsResizeAttached) return;
+    adminBookingsResizeAttached = true;
+    window.addEventListener("resize", () => {
+      const section = document.getElementById("adminSectionBookings");
+      if (!section || section.hidden || !section.classList.contains("admin-section--active")) return;
+      if (adminBookingsMainView !== "calendar") return;
+      if (adminBookingsCalendarMode === "month") return;
+      updateAdminBookingsNowLines();
+    });
+  }
+
+  function appendBusinessBookingsEvents(col, grid, dayBookings) {
+    const layouts = computeAdminScheduleEventLayouts(dayBookings, grid);
+    const isWeekCol = col.classList.contains("business-bookings-week-col");
+    const pxPerMin = isWeekCol ? BUSINESS_BOOKINGS_WEEK_PX_PER_MIN : BUSINESS_BOOKINGS_DAY_PX_PER_MIN;
+    layouts.forEach(({ booking: b, range, colIndex, colCount }) => {
+      const durationMin = range.endMin - range.startMin;
+      const top = (range.startMin - grid.startMin) * pxPerMin;
+      // Height follows real duration; 3px visual gap keeps consecutive cards separate
+      // without changing timeline start positions or duration math.
+      const durationPx = durationMin * pxPerMin;
+      const visualGap = 3;
+      const height = Math.max(2, durationPx - visualGap);
+      const status = getBookingStatus(b);
+      const service = services.find((s) => s.id === b.service_id);
+      const serviceName = service?.name || b.service_name || "Service";
+      const staffName = getStaffName(b.staff_id);
+      const colors = getBusinessBookingsEventColor(b);
+      const widthPct = 100 / colCount;
+      const leftPct = colIndex * widthPct;
+      const startLabel = minutesToTime(range.startMin);
+      const endLabel = minutesToTime(range.endMin);
+      const inset = isWeekCol ? 2 : 4;
+      const gap = isWeekCol ? 4 : 8;
+
+      const el = document.createElement("button");
+      el.type = "button";
+      let eventClass = "business-bookings-event";
+      if (status === "Cancelled") eventClass += " business-bookings-event--cancelled";
+      if (isWeekCol) {
+        // Week overview: time + client only; layout by appointment duration.
+        eventClass += " business-bookings-event--no-service";
+        if (durationMin < 25) eventClass += " business-bookings-event--tiny";
+        else if (durationMin < 45) eventClass += " business-bookings-event--compact";
+      } else {
+        // Day View layouts by real appointment duration (presentation only).
+        if (durationMin < 25) {
+          eventClass += " business-bookings-event--tiny business-bookings-event--no-service";
+        } else if (durationMin < 45) {
+          eventClass += " business-bookings-event--compact";
+          if (height < 56) eventClass += " business-bookings-event--no-service";
+        }
+      }
+      el.className = eventClass;
+      el.style.top = Math.max(0, top) + "px";
+      el.style.height = height + "px";
+      el.style.left = "calc(" + leftPct + "% + " + inset + "px)";
+      el.style.width = "calc(" + widthPct + "% - " + gap + "px)";
+      el.style.background = colors.bg;
+      el.style.setProperty("--bb-accent", colors.accent);
+      el.style.setProperty("--bb-accent-text", colors.text);
+      el.title =
+        (b.customer_name || "Customer") +
+        " · " +
+        serviceName +
+        (staffName && staffName !== "—" ? " · " + staffName : "") +
+        " · " +
+        status;
+      const timeSep = " – ";
+      if (isWeekCol) {
+        el.innerHTML =
+          '<span class="business-bookings-event__time">' +
+          escapeHtml(startLabel) +
+          timeSep +
+          escapeHtml(endLabel) +
+          "</span>" +
+          '<span class="business-bookings-event__name">' +
+          escapeHtml(b.customer_name || "Customer") +
+          "</span>";
+      } else {
+        el.innerHTML =
+          '<span class="business-bookings-event__time">' +
+          escapeHtml(startLabel) +
+          timeSep +
+          escapeHtml(endLabel) +
+          "</span>" +
+          '<span class="business-bookings-event__name">' +
+          escapeHtml(b.customer_name || "Customer") +
+          "</span>" +
+          '<span class="business-bookings-event__service">' +
+          escapeHtml(serviceName) +
+          (staffName && staffName !== "—" ? " · " + escapeHtml(staffName) : "") +
+          "</span>";
+      }
+      el.addEventListener("click", (ev) => {
+        ev.stopPropagation();
+        openBookingsActionSheet(b.id, el);
+      });
+      col.appendChild(el);
+    });
+  }
+
+  function buildBusinessBookingsNowLine(dateStr) {
+    const ui = document.createElement("div");
+    ui.className = "business-bookings-current-time-line";
+    ui.setAttribute("data-date", dateStr);
+    ui.setAttribute("aria-hidden", "true");
+    ui.innerHTML =
+      '<span class="business-bookings-current-time-line__pin">' +
+      '<span class="business-bookings-current-time-line__label"></span>' +
+      '<span class="business-bookings-current-time-line__dot"></span>' +
+      "</span>" +
+      '<span class="business-bookings-current-time-line__line"></span>';
+    return ui;
+  }
+
+  function buildBusinessBookingsTimeLabels(grid, gridHeight, pxPerHour) {
+    const hourPx = Number.isFinite(pxPerHour) ? pxPerHour : BUSINESS_BOOKINGS_PX_PER_HOUR;
+    const labels = document.createElement("div");
+    labels.className = "business-bookings-time-labels";
+    labels.style.height = gridHeight + "px";
+    for (let m = grid.startMin; m < grid.endMin; m += 60) {
+      const lab = document.createElement("div");
+      lab.className = "business-bookings-time-label";
+      lab.style.height = hourPx + "px";
+      lab.setAttribute("data-mins", String(m));
+      lab.textContent = minutesToTime(m);
+      labels.appendChild(lab);
+    }
+    return labels;
+  }
+
+  /** Week View only: hour + quarter-hour labels (:00 / :15 / :30 / :45). */
+  function buildBusinessBookingsWeekTimeLabels(grid, gridHeight) {
+    const labels = document.createElement("div");
+    labels.className = "business-bookings-time-labels";
+    labels.style.height = gridHeight + "px";
+    const slotPx = BUSINESS_BOOKINGS_WEEK_PX_PER_MIN * 15;
+    for (let m = grid.startMin; m < grid.endMin; m += 15) {
+      const lab = document.createElement("div");
+      const isHour = m % 60 === 0;
+      lab.className =
+        "business-bookings-time-label " +
+        (isHour ? "business-bookings-time-label--hour" : "business-bookings-time-label--quarter");
+      lab.style.height = slotPx + "px";
+      lab.setAttribute("data-mins", String(m));
+      lab.textContent = minutesToTime(m);
+      labels.appendChild(lab);
+    }
+    return labels;
+  }
+
+  function buildBusinessBookingsDayColumn(dateStr, grid, gridHeight, dayBookings, opts) {
+    const col = document.createElement("div");
+    const baseClass = opts?.week ? "business-bookings-week-col" : "business-bookings-day-col";
+    const pxPerMin = opts?.week ? BUSINESS_BOOKINGS_WEEK_PX_PER_MIN : BUSINESS_BOOKINGS_DAY_PX_PER_MIN;
+    col.className = baseClass;
+    col.style.height = gridHeight + "px";
+    col.dataset.date = dateStr;
+
+    if (isAdminScheduleDayClosed(dateStr)) col.classList.add(baseClass + "--closed");
+    else if (!isAdminScheduleDayWorking(dateStr)) col.classList.add(baseClass + "--off");
+
+    const banner = getBusinessBookingsDayBanner(dateStr);
+    if (banner && !opts?.compactBanner) {
+      const note = document.createElement("div");
+      note.className = "business-bookings-nonworking-banner";
+      note.textContent = banner;
+      col.appendChild(note);
+    }
+
+    if (!isAdminScheduleDayClosed(dateStr)) {
+      const bs = String(businessSettings?.break_start ?? "").trim();
+      const be = String(businessSettings?.break_end ?? "").trim();
+      if (bs && be) {
+        const breakStart = timeToMinutes(bs);
+        const breakEnd = timeToMinutes(be);
+        if (breakEnd > grid.startMin && breakStart < grid.endMin && breakEnd > breakStart) {
+          const br = document.createElement("div");
+          br.className = "business-bookings-break-layer";
+          br.style.position = "absolute";
+          br.style.left = "0";
+          br.style.right = "0";
+          br.style.top = Math.max(0, (breakStart - grid.startMin) * pxPerMin) + "px";
+          br.style.height = Math.max(4, (breakEnd - breakStart) * pxPerMin) + "px";
+          br.style.background = "rgba(148, 163, 184, 0.14)";
+          br.style.pointerEvents = "none";
+          br.style.zIndex = "1";
+          col.appendChild(br);
+        }
+      }
+    }
+
+    appendBusinessBookingsEvents(col, grid, dayBookings);
+    return col;
+  }
+
+  function updateAdminBookingsDateLabel() {
+    const el = document.getElementById("adminBookingsCalendarDateLabel");
+    if (!el) return;
+    const anchor = adminBookingsAnchorDate || new Date();
+    if (adminBookingsCalendarMode === "month") {
+      el.textContent = formatBusinessBookingsMonthLabel(anchor);
+    } else if (adminBookingsCalendarMode === "week") {
+      const weekStart = getAdminWeekStartMonday(anchor);
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6);
+      el.textContent = formatBusinessBookingsWeekLabel(weekStart, weekEnd);
+    } else {
+      el.textContent = formatBusinessBookingsDayLabel(anchor);
+    }
+  }
+
+  function renderBusinessBookingsDayView(mount, filtered) {
+    const anchor = adminBookingsAnchorDate || new Date();
+    const dateStr = formatDate(anchor.getFullYear(), anchor.getMonth(), anchor.getDate());
+    const grid = getAdminScheduleGridBounds();
+    const gridHeight = (grid.endMin - grid.startMin) * BUSINESS_BOOKINGS_DAY_PX_PER_MIN;
+    const dayBookings = filtered.filter((b) => b.date === dateStr);
+    const closedOrOff = isAdminScheduleDayClosed(dateStr) || !isAdminScheduleDayWorking(dateStr);
+
+    const wrap = document.createElement("div");
+    wrap.className = "business-bookings-day-view";
+    wrap.setAttribute("data-date", dateStr);
+
+    const allDay = document.createElement("div");
+    allDay.className = "business-bookings-all-day-row";
+    allDay.textContent = t("bookingsAllDay", "All day");
+    wrap.appendChild(allDay);
+
+    if (!dayBookings.length && closedOrOff) {
+      const empty = document.createElement("div");
+      empty.className = "business-bookings-day-empty";
+      empty.innerHTML =
+        '<span class="business-bookings-day-empty__icon" aria-hidden="true"></span>' +
+        '<p class="business-bookings-day-empty__text">' +
+        escapeHtml(t("bookingsClosedNoBookings", "Closed. No bookings for this day.")) +
+        "</p>";
+      wrap.appendChild(empty);
+    }
+
+    const scroll = document.createElement("div");
+    scroll.className = "business-bookings-time-scroll";
+
+    const gridWrap = document.createElement("div");
+    gridWrap.className = "business-bookings-time-grid-wrap";
+
+    const gridEl = document.createElement("div");
+    gridEl.className = "business-bookings-time-grid";
+    gridEl.style.setProperty("--business-bookings-hour-px", BUSINESS_BOOKINGS_DAY_PX_PER_HOUR + "px");
+    gridEl.setAttribute("data-now-day", dateStr);
+    gridEl.appendChild(buildBusinessBookingsTimeLabels(grid, gridHeight, BUSINESS_BOOKINGS_DAY_PX_PER_HOUR));
+    gridEl.appendChild(buildBusinessBookingsDayColumn(dateStr, grid, gridHeight, dayBookings));
+    gridWrap.appendChild(gridEl);
+    gridWrap.appendChild(buildBusinessBookingsNowLine(dateStr));
+    scroll.appendChild(gridWrap);
+    wrap.appendChild(scroll);
+
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+    startAdminBookingsNowTimer(grid);
+  }
+
+  function renderBusinessBookingsWeekView(mount, filtered) {
+    const anchor = adminBookingsAnchorDate || new Date();
+    const weekStart = getAdminWeekStartMonday(anchor);
+    const todayStr = getTodayDateString();
+    const grid = getAdminScheduleGridBounds();
+    const gridHeight = (grid.endMin - grid.startMin) * BUSINESS_BOOKINGS_WEEK_PX_PER_MIN;
+    const locale = getBusinessBookingsUiLocale();
+    const dayNames = [];
+    for (let i = 0; i < 7; i += 1) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      dayNames.push(d.toLocaleDateString(locale, { weekday: "short" }));
+    }
+
+    const wrap = document.createElement("div");
+    wrap.className = "business-bookings-week-view";
+    wrap.style.setProperty("--business-bookings-gutter", "56px");
+    wrap.style.setProperty("--business-bookings-week-col-min", "145px");
+    wrap.style.setProperty("--business-bookings-hour-px", BUSINESS_BOOKINGS_WEEK_PX_PER_HOUR + "px");
+    wrap.style.setProperty("--business-bookings-quarter-px", BUSINESS_BOOKINGS_WEEK_PX_PER_MIN * 15 + "px");
+
+    /* One scrollport for both axes → sticky header + sticky time column (freeze panes). */
+    const board = document.createElement("div");
+    board.className = "business-bookings-week-board";
+
+    const header = document.createElement("div");
+    header.className = "business-bookings-week-header";
+    header.innerHTML = '<div class="business-bookings-week-gutter"></div>';
+
+    const columnSpecs = [];
+    for (let i = 0; i < 7; i += 1) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+      columnSpecs.push({ dateStr, dayBookings: filtered.filter((b) => b.date === dateStr), dateObj: d, i });
+      const head = document.createElement("button");
+      head.type = "button";
+      head.className =
+        "business-bookings-week-day-head" + (dateStr === todayStr ? " business-bookings-week-day-head--today" : "");
+      if (isAdminScheduleDayClosed(dateStr) || !isAdminScheduleDayWorking(dateStr)) {
+        head.classList.add("business-bookings-week-day-head--muted");
+      }
+      head.innerHTML =
+        "<strong>" +
+        escapeHtml(String(dayNames[i] || "").replace(/\./g, "")) +
+        "</strong><span>" +
+        d.getDate() +
+        "</span>";
+      head.addEventListener("click", () => openAdminBookingsDayView(dateStr));
+      header.appendChild(head);
+    }
+    board.appendChild(header);
+
+    const gridWrap = document.createElement("div");
+    gridWrap.className = "business-bookings-time-grid-wrap";
+
+    const gridEl = document.createElement("div");
+    gridEl.className = "business-bookings-time-grid";
+    gridEl.style.setProperty("--business-bookings-hour-px", BUSINESS_BOOKINGS_WEEK_PX_PER_HOUR + "px");
+    gridEl.style.setProperty("--business-bookings-quarter-px", BUSINESS_BOOKINGS_WEEK_PX_PER_MIN * 15 + "px");
+    gridEl.style.setProperty("--business-bookings-gutter", "56px");
+    gridEl.appendChild(buildBusinessBookingsWeekTimeLabels(grid, gridHeight));
+    columnSpecs.forEach(({ dateStr, dayBookings }) => {
+      const col = buildBusinessBookingsDayColumn(dateStr, grid, gridHeight, dayBookings, {
+        week: true,
+        compactBanner: true
+      });
+      if (dateStr === todayStr) col.classList.add("business-bookings-week-col--today");
+      gridEl.appendChild(col);
+    });
+    gridWrap.appendChild(gridEl);
+    const weekHasToday = columnSpecs.some((spec) => spec.dateStr === todayStr);
+    if (weekHasToday) gridWrap.appendChild(buildBusinessBookingsNowLine(todayStr));
+    board.appendChild(gridWrap);
+    wrap.appendChild(board);
+
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+    startAdminBookingsNowTimer(grid);
+  }
+
+  function renderBusinessBookingsMonthView(mount, filtered) {
+    stopAdminBookingsNowTimer();
+    adminBookingsActiveGrid = null;
+
+    const anchor = adminBookingsAnchorDate || new Date();
+    const year = anchor.getFullYear();
+    const month = anchor.getMonth();
+    const todayStr = getTodayDateString();
+    const locale = getBusinessBookingsUiLocale();
+
+    const wrap = document.createElement("div");
+    wrap.className = "business-bookings-month-view";
+
+    const grid = document.createElement("div");
+    grid.className = "business-bookings-month-grid";
+
+    const weekStart = getAdminWeekStartMonday(new Date(year, month, 1));
+    for (let i = 0; i < 7; i += 1) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const dow = document.createElement("div");
+      dow.className = "business-bookings-month-dow";
+      dow.textContent = d.toLocaleDateString(locale, { weekday: "short" });
+      grid.appendChild(dow);
+    }
+
+    const firstDay = new Date(year, month, 1);
+    let startOffset = firstDay.getDay();
+    startOffset = startOffset === 0 ? 6 : startOffset - 1;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+    const gridStart = new Date(year, month, 1 - startOffset);
+
+    for (let i = 0; i < totalCells; i += 1) {
+      const d = new Date(gridStart);
+      d.setDate(gridStart.getDate() + i);
+      const dateStr = formatDate(d.getFullYear(), d.getMonth(), d.getDate());
+      const inMonth = d.getMonth() === month;
+      const dayBookings = filtered.filter((b) => b.date === dateStr);
+      const count = dayBookings.length;
+      const closed = isAdminScheduleDayClosed(dateStr);
+      const off = !closed && !isAdminScheduleDayWorking(dateStr);
+
+      const cell = document.createElement("button");
+      cell.type = "button";
+      cell.className = "business-bookings-month-cell";
+      if (!inMonth) cell.classList.add("business-bookings-month-cell--outside");
+      if (closed) cell.classList.add("business-bookings-month-cell--closed");
+      else if (off) cell.classList.add("business-bookings-month-cell--off");
+      if (dateStr === todayStr) cell.classList.add("business-bookings-month-cell--today");
+      cell.setAttribute(
+        "aria-label",
+        dateStr + (count ? ", " + formatBusinessBookingsAppointmentCount(count) : "")
+      );
+
+      const countHtml = count
+        ? '<span class="business-bookings-month-cell__count">' + String(count) + "</span>"
+        : "";
+      cell.innerHTML =
+        '<span class="business-bookings-month-cell__num">' +
+        d.getDate() +
+        "</span>" +
+        countHtml;
+      cell.addEventListener("click", () => openAdminBookingsDayView(dateStr));
+      grid.appendChild(cell);
+    }
+
+    wrap.appendChild(grid);
+    mount.innerHTML = "";
+    mount.appendChild(wrap);
+  }
+
+  function renderBusinessBookingsCalendar() {
+    const mount = document.getElementById("businessBookingsCalendarMount");
+    if (!mount) return;
+
+    ensureAdminBookingsResizeListener();
+    syncAdminBookingsMainViewUi();
+    updateAdminBookingsDateLabel();
+
+    const filtered = getFilteredBookings();
+    const hourPx =
+      adminBookingsCalendarMode === "day"
+        ? BUSINESS_BOOKINGS_DAY_PX_PER_HOUR
+        : adminBookingsCalendarMode === "week"
+          ? BUSINESS_BOOKINGS_WEEK_PX_PER_HOUR
+          : BUSINESS_BOOKINGS_PX_PER_HOUR;
+    mount.style.setProperty("--business-bookings-hour-px", hourPx + "px");
+
+    if (adminBookingsCalendarMode === "month") {
+      renderBusinessBookingsMonthView(mount, filtered);
+    } else if (adminBookingsCalendarMode === "week") {
+      renderBusinessBookingsWeekView(mount, filtered);
+    } else {
+      renderBusinessBookingsDayView(mount, filtered);
+    }
+
+    const section = document.getElementById("adminSectionBookings");
+    if (section) {
+      applyTranslations(section);
+      applyUiTranslations(section);
+    }
+    syncAdminBookingsNavAria();
   }
 
   function normalizeClientPhoneDigits(phone) {
@@ -64571,6 +67158,16 @@
 
   function renderBookings() {
     closeBookingsActionSheet();
+    syncAdminBookingsMainViewUi();
+
+    if (adminBookingsMainView === "calendar") {
+      renderBusinessBookingsCalendar();
+      return;
+    }
+
+    stopAdminBookingsNowTimer();
+    adminBookingsActiveGrid = null;
+
     const box = document.getElementById("bookingsList");
     if (!box) return;
 
