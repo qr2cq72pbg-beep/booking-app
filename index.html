@@ -35278,6 +35278,12 @@
               <p class="mode-entry-action__hint mode-entry-action__hint--setup">✓ Setup takes less than 5 minutes</p>
             </div>
             <div class="mode-entry-action">
+              <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="chooseCreateCustomerAccount()">
+                Create Customer Account
+              </button>
+              <p class="mode-entry-action__hint">Use the code from your salon, barber, clinic or service provider.</p>
+            </div>
+            <div class="mode-entry-action">
               <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="chooseAdmin()">
                 Sign In
               </button>
@@ -53825,6 +53831,7 @@
   async function applyAuthenticatedSession(session) {
     currentUser = session.user;
     let role = await loadCurrentUserRole();
+    role = await reconcileAdminRoleFromSignupMetadataIfNeeded(session.user, role);
 
     const adminOAuthIntent = sessionStorage.getItem("bookingAdminOAuthIntent") === "1";
     const customerOAuthIntent =
@@ -58398,6 +58405,30 @@
     return currentUserRole;
   }
 
+  /** True only when auth signup metadata explicitly stamped role=admin (never inferred). */
+  function userHasExplicitAdminSignupMetadata(user) {
+    const metaRole = String(user?.user_metadata?.role || "").trim().toLowerCase();
+    return metaRole === "admin";
+  }
+
+  /**
+   * If profile role is missing/stale but signup metadata explicitly says admin,
+   * reconcile via upsertUserProfile, then continue admin flow.
+   * Never escalates customers (metadata must already be admin).
+   */
+  async function reconcileAdminRoleFromSignupMetadataIfNeeded(user, profileRole) {
+    if (!user || !userHasExplicitAdminSignupMetadata(user)) return profileRole;
+    if (profileRole === "admin") return "admin";
+
+    const ok = await upsertUserProfile(
+      user,
+      "admin",
+      { email: user.email || null },
+      { logContext: "[admin-role-reconcile]" }
+    );
+    return ok ? "admin" : profileRole;
+  }
+
   async function upsertUserProfile(user, role, extra = {}, options = {}) {
     if (!user) return false;
 
@@ -59531,6 +59562,10 @@
     setAdminAuthPanel("signup");
   }
 
+  function chooseCreateCustomerAccount() {
+    ensureCustomerJoinSignupScreen();
+  }
+
   async function chooseAdmin() {
     if (currentUser) {
       const role = await loadCurrentUserRole();
@@ -59790,7 +59825,10 @@
       email,
       password,
       options: {
-        emailRedirectTo: getAuthEmailRedirectUrl()
+        emailRedirectTo: getAuthEmailRedirectUrl(),
+        data: {
+          role: "admin"
+        }
       }
     });
 
@@ -60179,7 +60217,8 @@
         showAuthView();
         return;
       }
-      const role = await loadCurrentUserRole();
+      let role = await loadCurrentUserRole();
+      role = await reconcileAdminRoleFromSignupMetadataIfNeeded(currentUser, role);
 
       if (role === "customer") {
         clearEmailVerificationSuccessFlags();
