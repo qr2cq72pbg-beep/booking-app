@@ -12229,6 +12229,80 @@
       padding-right: 2px;
     }
 
+    #adminOnboardingView.wizard-language-mode .wizard-step-counter,
+    #adminOnboardingView.wizard-language-mode .wizard-pills,
+    #adminOnboardingView.wizard-language-mode .wizard-progress-track,
+    #adminOnboardingView.wizard-language-mode .wizard-roadmap,
+    #adminOnboardingView.wizard-language-mode .wizard-next-callout,
+    #adminOnboardingView.wizard-language-mode .wizard-step-helper,
+    #adminOnboardingView.wizard-language-mode .wizard-footer {
+      display: none !important;
+    }
+
+    #adminOnboardingLanguagePanel .wizard-language-options {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    #adminOnboardingLanguagePanel .wizard-language-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 64px;
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 2px solid #e2e8f0;
+      background: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #adminOnboardingLanguagePanel .wizard-language-option:hover {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    #adminOnboardingLanguagePanel .wizard-language-option:active {
+      border-color: var(--color-primary, #2563eb);
+      background: #eff6ff;
+      color: var(--color-primary, #2563eb);
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
+
+    #adminOnboardingStep1Panel .wizard-onboarding-public-link .business-id-row {
+      margin-top: 4px;
+    }
+
+    @media (max-width: 520px) {
+      #adminOnboardingStep1Panel .wizard-onboarding-public-link .business-id-row {
+        grid-template-columns: 1fr;
+      }
+
+      #adminOnboardingStep1Panel .wizard-onboarding-public-link .business-id-row button {
+        width: 100%;
+        min-height: 48px;
+      }
+    }
+
+    #adminOnboardingStep1Panel .wizard-public-link-preview {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #0f172a;
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
     #adminOnboardingView .wizard-category-pill {
       min-height: 52px;
       padding: 12px 10px;
@@ -37759,6 +37833,27 @@
               <div class="mobile-skeleton-block mobile-skeleton-block--line"></div>
             </div>
 
+            <div id="adminOnboardingLanguagePanel" class="hidden" role="group" aria-label="Choose your language">
+              <div class="wizard-language-options">
+                <button
+                  type="button"
+                  class="wizard-language-option"
+                  data-onboarding-language="en"
+                  onclick="chooseOnboardingLanguage('en')"
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  class="wizard-language-option"
+                  data-onboarding-language="mk"
+                  onclick="chooseOnboardingLanguage('mk')"
+                >
+                  Македонски
+                </button>
+              </div>
+            </div>
+
             <div id="adminOnboardingStep1Panel" class="hidden">
               <div class="wizard-field">
                 <label class="wizard-field-label" for="onboardingBusinessName">Business name</label>
@@ -37804,6 +37899,30 @@
                 <p id="onboardingBusinessPhoneHint" class="wizard-field-hint">
                   Customers can use this number to contact you.
                 </p>
+              </div>
+
+              <div class="wizard-field wizard-onboarding-public-link">
+                <label class="wizard-field-label" for="onboardingBusinessSlug">Public booking link</label>
+                <p id="onboardingPublicLinkExplanation" class="wizard-field-hint" style="margin-top: 0; margin-bottom: 10px">
+                  This is the link you can share with customers so they can open your booking page and book appointments with your business.
+                </p>
+                <div class="business-id-row">
+                  <input
+                    id="onboardingBusinessSlug"
+                    type="text"
+                    name="onboardingBusinessSlug"
+                    autocomplete="off"
+                    spellcheck="false"
+                    placeholder="my-business-name"
+                    aria-describedby="onboardingPublicLinkPreview onboardingPublicLinkHelper onboardingSlugError"
+                  />
+                  <button type="button" class="secondary" onclick="generateOnboardingBusinessSlug()">Generate</button>
+                </div>
+                <p id="onboardingPublicLinkPreview" class="wizard-public-link-preview" aria-live="polite">—</p>
+                <p id="onboardingPublicLinkHelper" class="wizard-field-hint">
+                  Customers can use this link to find your business directly.
+                </p>
+                <p id="onboardingSlugError" class="wizard-field-error hidden" role="alert"></p>
               </div>
 
               <details class="wizard-step1-optional-details">
@@ -37868,14 +37987,6 @@
                 </div>
               </details>
 
-              <input
-                type="hidden"
-                id="onboardingBusinessSlug"
-                name="onboardingBusinessSlug"
-                autocomplete="off"
-                aria-hidden="true"
-              />
-              <p id="onboardingSlugError" class="wizard-field-error hidden" role="alert"></p>
               <select id="onboardingTimezone" name="onboardingTimezone" class="hidden" aria-hidden="true" tabindex="-1">
                 <option value="Europe/Skopje">Europe / Skopje</option>
                 <option value="Europe/Belgrade">Europe / Belgrade</option>
@@ -38532,7 +38643,7 @@
           </div>
         </div>
 
-        <button type="button" class="customer-my-bookings-primary-btn" onclick="continueCustomerToBooking()" data-i18n="resBookNew">Book a new appointment</button>
+        <button type="button" class="customer-my-bookings-primary-btn" onclick="enterCustomerBookingFromUi()" data-i18n="resBookNew">Book a new appointment</button>
 
         <div id="customerMyBookingsLoading" class="customer-my-bookings-loading" role="status" aria-busy="true" aria-live="polite">
           <p class="customer-my-bookings-loading__label">Loading bookings…</p>
@@ -41039,6 +41150,7 @@
     "You're offline": "Немате интернет",
     "Something went wrong": "Нешто тргна наопаку",
     "We couldn't load the app. Please try again.": "Не можевме да ја вчитаме апликацијата. Обидете се повторно.",
+    "We couldn't confirm your account type. Please try again.": "Не можевме да го потврдиме типот на вашата сметка. Обидете се повторно.",
     "Check your connection and try again.": "Проверете ја врската и обидете се повторно.",
     "Could not connect to the app services.": "Не можевме да се поврземе со услугите на апликацијата.",
     "Connect to the internet to sign in, or retry when you're back online.": "Поврзете се на интернет за да се најавите или обидете се повторно кога ќе бидете онлајн.",
@@ -41151,6 +41263,12 @@
     "Closed days & holidays": "Неработни денови и празници",
     "QR / public booking link": "QR / јавен линк за закажување",
     "Booking rules": "Правила за закажување",
+    "Choose your language": "Изберете јазик",
+    "Select the language you want to use while setting up XBOOK.": "Изберете го јазикот што сакате да го користите додека го поставувате XBOOK.",
+    "Public booking link": "Јавен линк за резервации",
+    "This is the link you can share with customers so they can open your booking page and book appointments with your business.": "Ова е линкот што можете да го споделувате со клиентите за директно да ја отворат страницата за резервации на вашиот бизнис.",
+    "Customers can use this link to find your business directly.": "Клиентите можат преку овој линк директно да го најдат вашиот бизнис.",
+    "This link is already taken. Try a small change to make it unique.": "Овој линк е веќе зафатен. Направете мала промена за да биде уникатен.",
     "What can customers book?": "Што можат да закажат клиентите?",
     "When are you open for bookings?": "Кога сте отворени за закажување?",
     "Team members (optional)": "Членови на тимот (изборно)",
@@ -42444,6 +42562,8 @@
 
   let currentUser = null;
   let currentUserRole = null;
+  /** Phase 2: "none" | "resolved" | "missing" | "error" | "invalid" — do not treat null role alone as new account. */
+  let currentUserRoleLoadStatus = "none";
   let businessId = null;
   let businessSettings = null;
   let services = [];
@@ -46255,7 +46375,15 @@
   }
 
   async function ensureCustomerBusinessContextOrJoinGate() {
-    if (currentUserRole !== "customer") return true;
+    // Phase 7: only resolved customers may receive Client/join from this owner helper.
+    if (
+      !(
+        currentUserRoleLoadStatus === "resolved" &&
+        currentUserRole === "customer"
+      )
+    ) {
+      return true;
+    }
 
     syncPublicBusinessFromUrl();
 
@@ -46265,6 +46393,11 @@
       return true;
     };
 
+    // Priority (actual):
+    // 1) live URL / active public business slug
+    // 2) saved customer business localStorage (tryRestore…)
+    // 3) first saved-businesses list entry
+    // 4) Customer Business Join gate
     if (hasKnownPublicBusinessFromUrl() || hasPublicBusinessContext()) {
       return finishWithBusiness();
     }
@@ -46624,7 +46757,7 @@
         startNewPublicBookingFromHome();
         return;
       }
-      continueCustomerToBooking();
+      void enterCustomerBookingFromUi({ owner: "customer-hub-book" });
       return;
     }
     showCustomerManualBusinessBookingEntry();
@@ -46870,7 +47003,7 @@
     const slug = getActivePublicBusinessSlug();
     const manualId = document.getElementById("manualBusinessId")?.value.trim();
     if (slug || manualId) {
-      await continueCustomerToBooking();
+      await continueCustomerToBooking({ owner: "customer-auth-return" });
     }
   }
   let activeManageToken = publicManageToken ? String(publicManageToken).trim() : null;
@@ -51093,6 +51226,38 @@
     return next;
   }
 
+  /** Optional business_settings columns already handled by UPDATE / schema-cache fallbacks. */
+  function getKnownOptionalBusinessSettingsColumnKeys() {
+    return [
+      "business_currency",
+      "business_latitude",
+      "business_longitude",
+      "recurring_allowed_interval_weeks",
+      "recurring_max_duration_months",
+      "business_email",
+      "business_website",
+      "allow_recurring_appointments"
+    ];
+  }
+
+  /** Reuses existing strip helpers + currency / allow_recurring (UPDATE schema-cache set). */
+  function stripKnownOptionalBusinessSettingsColumns(payload) {
+    const next = stripUnsupportedBusinessLocationColumns(
+      stripUnsupportedRecurringBookingColumns(stripUnsupportedBusinessProfileColumns({ ...payload }))
+    );
+    if ("business_currency" in next) delete next.business_currency;
+    if ("allow_recurring_appointments" in next) delete next.allow_recurring_appointments;
+    return next;
+  }
+
+  function isOptionalBusinessSettingsColumnSchemaError(error, payload) {
+    const msg = String(error?.message || "");
+    if (!/schema cache|PGRST204|Could not find the/i.test(msg)) return false;
+    return getKnownOptionalBusinessSettingsColumnKeys().some(
+      (key) => payload && Object.prototype.hasOwnProperty.call(payload, key) && new RegExp(key, "i").test(msg)
+    );
+  }
+
   async function updateBusinessSettingsWithProfileFields(payload) {
     const emailWebsite = {
       email: payload.business_email,
@@ -53389,6 +53554,285 @@
     }
   }
 
+  /** Phase 1: authenticated session with unknown role must not enter Admin/Client shells. */
+  function showUnresolvedAccountTypeRecovery(opts = {}) {
+    debugNavTrace("showUnresolvedAccountTypeRecovery", {
+      reason: opts.reason || "unresolved-role",
+      role: currentUserRole
+    });
+    setAppShellState(APP_SHELL_STATE.ERROR, {
+      reason: opts.reason || "unresolved-role",
+      message: translateRuntimeText(
+        "We couldn't confirm your account type. Please try again."
+      )
+    });
+  }
+
+  /**
+   * Phase 3/7: single authenticated shell router.
+   * Role state must already be loaded into currentUserRole / currentUserRoleLoadStatus.
+   * Does not write roles. Does not own business-context or onboarding internals.
+   */
+  async function routeAuthenticatedUser(opts = {}) {
+    const reason = opts.reason || "authenticated-route";
+    debugNavTrace("routeAuthenticatedUser", {
+      reason,
+      role: currentUserRole,
+      status: currentUserRoleLoadStatus
+    });
+
+    if (!currentUser) {
+      showUnresolvedAccountTypeRecovery({ reason: reason + "-no-user" });
+      return "unresolved";
+    }
+
+    if (
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "admin"
+    ) {
+      return await routeAdminShell({ reason });
+    }
+
+    if (
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "customer"
+    ) {
+      return await routeResolvedCustomerContext({
+        reason,
+        customerPushSource: opts.customerPushSource,
+        handlePublicDeepLinks: opts.handlePublicDeepLinks !== false
+      });
+    }
+
+    showUnresolvedAccountTypeRecovery({ reason });
+    return "unresolved";
+  }
+
+  /**
+   * Phase 7: Admin Sub-Router — onboarding vs dashboard only.
+   * Precondition: resolved admin. Does not decide identity.
+   */
+  async function routeAdminShell(opts = {}) {
+    const reason = opts.reason || "admin-shell";
+    debugNavTrace("routeAdminShell", {
+      reason,
+      role: currentUserRole,
+      status: currentUserRoleLoadStatus
+    });
+
+    if (
+      !(
+        currentUser &&
+        currentUserRoleLoadStatus === "resolved" &&
+        currentUserRole === "admin"
+      )
+    ) {
+      console.warn("[routing] routeAdminShell refused — not a resolved admin", {
+        role: currentUserRole,
+        status: currentUserRoleLoadStatus
+      });
+      return "refused";
+    }
+
+    await restoreAdminSession({ fromAuthenticatedRouter: true });
+    return "admin";
+  }
+
+  /**
+   * Phase 7: Customer Context Resolver — business/context for resolved customers only.
+   * Precondition: resolved customer. Does not write role or decide Admin/Customer identity.
+   */
+  async function routeResolvedCustomerContext(opts = {}) {
+    const reason = opts.reason || "customer-context";
+    debugNavTrace("routeResolvedCustomerContext:start", {
+      reason,
+      role: currentUserRole,
+      status: currentUserRoleLoadStatus
+    });
+
+    if (
+      !(
+        currentUser &&
+        currentUserRoleLoadStatus === "resolved" &&
+        currentUserRole === "customer"
+      )
+    ) {
+      console.warn("[routing] routeResolvedCustomerContext refused — not a resolved customer", {
+        role: currentUserRole,
+        status: currentUserRoleLoadStatus
+      });
+      return "refused";
+    }
+
+    syncPublicBusinessFromUrl();
+
+    if (opts.handlePublicDeepLinks !== false && publicManageToken) {
+      showPublicView(true);
+      await openManageBookingFromToken(publicManageToken);
+      if (opts.customerPushSource) {
+        void ensureCustomerPushNotificationsReady(opts.customerPushSource);
+      }
+      void refreshCustomerNotificationsUnreadBadge();
+      if (pendingCustomerBusinessNotificationId) {
+        void openCustomerNotificationsFromPush(pendingCustomerBusinessNotificationId);
+      }
+      return "customer-manage";
+    }
+
+    if (opts.handlePublicDeepLinks !== false) {
+      const shouldResume = sessionStorage.getItem(PUBLIC_BOOKING_RESUME_FLAG_KEY) === "1";
+      if (shouldResume) {
+        sessionStorage.removeItem(PUBLIC_BOOKING_RESUME_FLAG_KEY);
+        await continueCustomerToBooking({ owner: "customer-context-resume" });
+        await restorePublicBookingResumeState();
+        await resumePublicBookingAfterCustomerAuth();
+        clearPublicBookingResumeState();
+        if (opts.customerPushSource) {
+          void ensureCustomerPushNotificationsReady(opts.customerPushSource);
+        }
+        void refreshCustomerNotificationsUnreadBadge();
+        if (pendingCustomerBusinessNotificationId) {
+          void openCustomerNotificationsFromPush(pendingCustomerBusinessNotificationId);
+        }
+        return "customer-booking-resume";
+      }
+    }
+
+    // Standard context priority lives in ensureCustomerBusinessContextOrJoinGate.
+    await ensureCustomerBusinessContextOrJoinGate();
+
+    if (opts.customerPushSource) {
+      void ensureCustomerPushNotificationsReady(opts.customerPushSource);
+    }
+    void refreshCustomerNotificationsUnreadBadge();
+    if (pendingCustomerBusinessNotificationId) {
+      void openCustomerNotificationsFromPush(pendingCustomerBusinessNotificationId);
+    }
+
+    return "customer";
+  }
+
+  function hasAppShellPublicContext() {
+    return !!(publicBusinessId || publicManageToken || getPublicBusinessIdFromUrl());
+  }
+
+  /**
+   * Phase 6: Public/Guest router — no-session (or intentional guest) surfaces only.
+   * Must not decide account role for authenticated users.
+   */
+  async function routePublicGuest(opts = {}) {
+    const reason = opts.reason || "public-guest";
+    debugNavTrace("routePublicGuest:start", { reason });
+
+    if (currentUser) {
+      debugNavTrace("routePublicGuest:handoff-authenticated", {
+        role: currentUserRole,
+        status: currentUserRoleLoadStatus
+      });
+      if (currentUserRoleLoadStatus === "none") {
+        await loadCurrentUserRole();
+      }
+      return await routeAuthenticatedUser({
+        reason: reason + "-authenticated-redirect"
+      });
+    }
+
+    if (hasAppShellPublicContext()) {
+      syncPublicBusinessFromUrl();
+      const urlBiz = getActivePublicBusinessSlug();
+      if (urlBiz) ensureBusinessQueryInUrl(urlBiz);
+
+      if (publicManageToken) {
+        showPublicView(true);
+        await openManageBookingFromToken(publicManageToken);
+        return "public-manage";
+      }
+
+      if (urlBiz) {
+        await continueCustomerToBooking({ owner: "public-guest" });
+        return "public-booking";
+      }
+
+      showPublicView(true);
+      if (isBrowserOnline()) {
+        await loadPublicData();
+      }
+      return "public-view";
+    }
+
+    if (await tryRestoreSavedCustomerBusinessContext()) {
+      return "saved-business";
+    }
+
+    showModeView();
+    debugNavTrace("routePublicGuest:showModeView", { reason });
+    return "welcome";
+  }
+
+  /**
+   * Phase 6/7: Authenticated entry after session is known.
+   * Identity first via applyAuthenticatedSession → routeAuthenticatedUser.
+   * Customer business/manage/resume belong to routeResolvedCustomerContext (not here).
+   */
+  async function routeAuthenticatedAppEntry(session, opts = {}) {
+    const reason = opts.reason || "authenticated-entry";
+    if (!session?.user) {
+      return await routePublicGuest({ reason: reason + "-no-session" });
+    }
+
+    // Keep URL business query sticky for customer context resolver when present.
+    if (hasAppShellPublicContext()) {
+      syncPublicBusinessFromUrl();
+      const urlBiz = getActivePublicBusinessSlug();
+      if (urlBiz) ensureBusinessQueryInUrl(urlBiz);
+    }
+
+    const shell = await applyAuthenticatedSession(session);
+    if (shell === "unresolved") return "unresolved-role";
+    return shell;
+  }
+
+  async function routeAppShellAfterSession(session, opts = {}) {
+    debugNavTrace("routeAppShellAfterSession:start", {
+      reason: opts.reason || "route",
+      hasSession: !!session?.user
+    });
+    captureEmailVerificationRedirectFromUrl();
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const queryParams = new URLSearchParams(window.location.search);
+
+    if (session?.user && (hashParams.has("access_token") || queryParams.has("code"))) {
+      clearOAuthRedirectHashFromUrl();
+    }
+
+    const isRecoveryLink =
+      queryParams.get("reset_password") === "1" ||
+      queryParams.get("type") === "recovery" ||
+      hashParams.get("type") === "recovery" ||
+      window.location.href.includes("type=recovery") ||
+      sessionStorage.getItem("bookingPasswordRecoveryPending") === "1";
+
+    if (isRecoveryLink) {
+      try {
+        sessionStorage.removeItem("bookingPasswordRecoveryPending");
+      } catch (e) {
+        /* ignore */
+      }
+      currentUser = session?.user || null;
+      showResetPasswordView();
+      return "recovery";
+    }
+
+    // Phase 6 thin dispatcher: session → authenticated entry; no session → public/guest.
+    if (session?.user) {
+      return await routeAuthenticatedAppEntry(session, opts);
+    }
+
+    return await routePublicGuest({
+      reason: (opts.reason || "route") + "-no-session"
+    });
+  }
+
   function deferUntilAppShellReady(fn) {
     if (typeof fn !== "function") return;
     if (publicManageMode) {
@@ -53419,6 +53863,7 @@
     debugNavTrace("clearAuthenticatedUiState");
     currentUser = null;
     currentUserRole = null;
+    currentUserRoleLoadStatus = "none";
     customerUserProfile = null;
     if (typeof closeCustomerProfileEditSheet === "function") {
       closeCustomerProfileEditSheet();
@@ -53682,7 +54127,24 @@
 
   async function continueFromEmailVerificationSuccess() {
     clearEmailVerificationSuccessFlags();
-    await restoreAdminSession();
+    authCallbackSessionProcessed = true;
+
+    if (!currentUser) {
+      if (!initSupabaseClient()) return;
+      const { data } = await sb.auth.getSession();
+      currentUser = data?.session?.user || null;
+    }
+    if (!currentUser) {
+      showAuthView();
+      return;
+    }
+
+    await loadCurrentUserRole();
+    await reconcileAdminRoleFromSignupMetadataIfNeeded(currentUser, currentUserRole);
+    await routeAuthenticatedUser({
+      reason: "email-verified-continue",
+      customerPushSource: "email-verified-continue"
+    });
   }
 
   function clearOAuthRedirectHashFromUrl() {
@@ -53787,13 +54249,36 @@
       document.getElementById("customerSignupEmail").value = session.user.email;
     }
 
-    if (currentUserRole !== "customer") {
-      const ok = await upsertUserProfile(session.user, "customer", {
-        email: session.user.email || null,
-        full_name: fullName,
-        phone: null
+    currentUser = session.user;
+    let role = currentUserRole;
+    if (currentUserRoleLoadStatus === "none" || role == null) {
+      role = await loadCurrentUserRole();
+    }
+
+    if (role === "customer") {
+      // Existing customer — continue without role write.
+    } else if (role === "admin") {
+      // Never overwrite admin via customer OAuth completion.
+      showToast("This is an Admin account. Use Admin login instead.", "error");
+      return false;
+    } else if (isConfirmedMissingUserProfileRole()) {
+      // Brand-new OAuth account with confirmed missing/empty profile — CREATE only.
+      const writeResult = await writeAccountRole({
+        user: session.user,
+        role: "customer",
+        intent: ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_CUSTOMER_OAUTH,
+        extra: {
+          email: session.user.email || null,
+          full_name: fullName,
+          phone: null
+        }
       });
-      if (!ok) return false;
+      if (!writeResult.ok) return false;
+      role = currentUserRole;
+    } else {
+      // Query/network error or invalid role — shared router owns recovery.
+      await routeAuthenticatedUser({ reason: "customer-oauth-unresolved-role" });
+      return false;
     }
 
     const savedBusinessSlug = normalizeBusinessSlug(
@@ -53810,22 +54295,13 @@
     updateCustomerAuthUI();
     showToast("Signed in successfully.", "success");
 
-    const shouldResumePublic =
-      sessionStorage.getItem(PUBLIC_BOOKING_RESUME_FLAG_KEY) === "1";
-    if (shouldResumePublic && currentUserRole === "customer") {
-      sessionStorage.removeItem(PUBLIC_BOOKING_RESUME_FLAG_KEY);
-      await continueCustomerToBooking();
-      await restorePublicBookingResumeState();
-      await resumePublicBookingAfterCustomerAuth();
-      return true;
-    }
-
-    if (hasPublicBusinessContext()) {
-      await continueCustomerToBooking();
-      return true;
-    }
-
-    return await ensureCustomerBusinessContextOrJoinGate();
+    // Resume flag (if any) is consumed by routeResolvedCustomerContext via routeAuthenticatedUser.
+    const shell = await routeAuthenticatedUser({
+      reason: "customer-oauth",
+      customerPushSource: "customer-oauth",
+      handlePublicDeepLinks: true
+    });
+    return shell === "customer" || shell === "customer-manage" || shell === "customer-booking-resume";
   }
 
   async function applyAuthenticatedSession(session) {
@@ -53845,143 +54321,56 @@
         await sb.auth.signOut();
         currentUser = null;
         currentUserRole = null;
+        currentUserRoleLoadStatus = "none";
         showPublicView(false);
         updateCustomerAuthUI();
         return;
       }
       const ok = await completeCustomerOAuthSignIn(session);
       if (!ok) {
+        if (getAppShellState() === APP_SHELL_STATE.ERROR) {
+          return "unresolved";
+        }
         showPublicView(false);
         updateCustomerAuthUI();
       }
-      return;
+      return ok ? "customer" : undefined;
     }
 
-    if (role === "customer") {
-      syncPublicBusinessFromUrl();
-      await ensureCustomerBusinessContextOrJoinGate();
-      void ensureCustomerPushNotificationsReady("customer-session");
-      void refreshCustomerNotificationsUnreadBadge();
-      if (pendingCustomerBusinessNotificationId) {
-        void openCustomerNotificationsFromPush(pendingCustomerBusinessNotificationId);
-      }
-      return;
-    }
-
-    if (session?.user?.id) {
-      void refreshCustomerNotificationsUnreadBadge();
-    }
-
-    if (!role && adminOAuthIntent && session?.user) {
-      const ok = await upsertUserProfile(session.user, "admin", {
-        email: session.user.email || null,
-        full_name: getOAuthUserDisplayName(session.user)
+    // Phase 2/5: admin OAuth may CREATE admin only for confirmed missing/empty profile.
+    if (adminOAuthIntent && session?.user && isConfirmedMissingUserProfileRole()) {
+      const writeResult = await writeAccountRole({
+        user: session.user,
+        role: "admin",
+        intent: ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_ADMIN_OAUTH,
+        extra: {
+          email: session.user.email || null,
+          full_name: getOAuthUserDisplayName(session.user)
+        }
       });
-      if (!ok) {
+      if (!writeResult.ok) {
         showAuthView();
         return;
       }
       role = currentUserRole;
     }
 
+    if (session?.user?.id) {
+      void refreshCustomerNotificationsUnreadBadge();
+    }
+
+    // Email-confirm success must not dead-end Business admins.
     if (shouldShowEmailVerificationSuccessScreen(session) && !authCallbackSessionProcessed) {
       clearOAuthRedirectHashFromUrl();
-      showEmailVerificationSuccessView();
-      return;
+      clearEmailVerificationSuccessFlags();
     }
 
     clearOAuthRedirectHashFromUrl();
-    await restoreAdminSession();
-  }
-
-  async function routeAppShellAfterSession(session, opts = {}) {
-    debugNavTrace("routeAppShellAfterSession:start", {
-      reason: opts.reason || "route",
-      hasSession: !!session?.user
+    return await routeAuthenticatedUser({
+      reason: "apply-authenticated-session",
+      customerPushSource: "customer-session",
+      session
     });
-    captureEmailVerificationRedirectFromUrl();
-    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-    const queryParams = new URLSearchParams(window.location.search);
-
-    if (session?.user && (hashParams.has("access_token") || queryParams.has("code"))) {
-      clearOAuthRedirectHashFromUrl();
-    }
-
-    const isRecoveryLink =
-      queryParams.get("reset_password") === "1" ||
-      queryParams.get("type") === "recovery" ||
-      hashParams.get("type") === "recovery" ||
-      window.location.href.includes("type=recovery") ||
-      sessionStorage.getItem("bookingPasswordRecoveryPending") === "1";
-
-    if (isRecoveryLink) {
-      try {
-        sessionStorage.removeItem("bookingPasswordRecoveryPending");
-      } catch (e) {
-        /* ignore */
-      }
-      currentUser = session?.user || null;
-      showResetPasswordView();
-      return;
-    }
-
-    if (publicBusinessId || publicManageToken || getPublicBusinessIdFromUrl()) {
-      syncPublicBusinessFromUrl();
-      const urlBiz = getActivePublicBusinessSlug();
-      if (urlBiz) ensureBusinessQueryInUrl(urlBiz);
-      if (session?.user) {
-        currentUser = session.user;
-        await loadCurrentUserRole();
-      }
-      if (publicManageToken) {
-        showPublicView(true);
-        await openManageBookingFromToken(publicManageToken);
-        return;
-      }
-      if (session?.user && currentUserRole === "customer") {
-        const shouldResume = sessionStorage.getItem(PUBLIC_BOOKING_RESUME_FLAG_KEY) === "1";
-        if (shouldResume) {
-          sessionStorage.removeItem(PUBLIC_BOOKING_RESUME_FLAG_KEY);
-          await continueCustomerToBooking();
-          await restorePublicBookingResumeState();
-          await resumePublicBookingAfterCustomerAuth();
-          clearPublicBookingResumeState();
-          return;
-        }
-        await continueCustomerToBooking();
-        return;
-      }
-      if (urlBiz) {
-        const shouldResume = sessionStorage.getItem(PUBLIC_BOOKING_RESUME_FLAG_KEY) === "1";
-        if (shouldResume && session?.user && currentUserRole === "customer") {
-          sessionStorage.removeItem(PUBLIC_BOOKING_RESUME_FLAG_KEY);
-          await continueCustomerToBooking();
-          await restorePublicBookingResumeState();
-          await resumePublicBookingAfterCustomerAuth();
-          clearPublicBookingResumeState();
-          return;
-        }
-        await continueCustomerToBooking();
-        return;
-      }
-      showPublicView(true);
-      if (isBrowserOnline()) {
-        await loadPublicData();
-      }
-      return;
-    }
-
-    if (session?.user) {
-      await applyAuthenticatedSession(session);
-      return;
-    }
-
-    if (await tryRestoreSavedCustomerBusinessContext()) {
-      return;
-    }
-
-    showModeView();
-    debugNavTrace("routeAppShellAfterSession:showModeView", { reason: "no-session-no-saved-business" });
   }
 
   async function restoreAppSession(opts = {}) {
@@ -54016,7 +54405,8 @@
           return;
         }
         if (data?.session && !currentUser) {
-          await routeAppShellAfterSession(data.session, { reason });
+          const resumeRouteStatus = await routeAppShellAfterSession(data.session, { reason });
+          if (resumeRouteStatus === "unresolved-role") return;
         }
         if (data?.session && currentUser) {
           await resumeAdminOnboardingIfNeeded(reason);
@@ -54034,7 +54424,11 @@
           });
           currentUser = data.session.user;
           await loadCurrentUserRole();
-          await routeAppShellAfterSession(data.session, { reason });
+          const offlineRouteStatus = await routeAppShellAfterSession(data.session, { reason });
+          if (offlineRouteStatus === "unresolved-role") {
+            syncAppShellOfflineBanner();
+            return;
+          }
           setAppShellState(APP_SHELL_STATE.READY, { reason: reason + "-offline-cached" });
           syncAppShellOfflineBanner();
         } else {
@@ -54061,7 +54455,8 @@
         return;
       }
 
-      await routeAppShellAfterSession(data?.session || null, { reason });
+      const routeStatus = await routeAppShellAfterSession(data?.session || null, { reason });
+      if (routeStatus === "unresolved-role") return;
       setAppShellState(APP_SHELL_STATE.READY, { reason });
     } catch (err) {
       console.error("[app-shell] restore failed", err);
@@ -54208,9 +54603,26 @@
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
   }
 
-  function showModeView() {
+  function showModeView(opts = {}) {
     if (shouldBlockGuestWelcomeRootForAuthenticatedMobileShell("showModeView")) {
       ensureCustomerMobileShellUiConsistency("showModeView:blocked");
+      return;
+    }
+    // Phase 4: Welcome/mode is guest-oriented. Do not keep authenticated users on identity picker.
+    if (currentUser && opts.allowWhileAuthenticated !== true) {
+      debugNavTrace("showModeView:redirect-authenticated", {
+        role: currentUserRole,
+        status: currentUserRoleLoadStatus
+      });
+      void (async () => {
+        if (!currentUser) return;
+        if (currentUserRoleLoadStatus === "none") {
+          await loadCurrentUserRole();
+        }
+        await routeAuthenticatedUser({
+          reason: "showModeView-authenticated-redirect"
+        });
+      })();
       return;
     }
     debugNavTrace("showModeView");
@@ -55892,20 +56304,50 @@
   }
 
 
-  async function restoreAdminSession() {
+  async function restoreAdminSession(opts = {}) {
+    // Phase 6/7: Admin Sub-Router only (via routeAdminShell → fromAuthenticatedRouter).
+    if (opts.fromAuthenticatedRouter !== true) {
+      console.warn(
+        "[routing] restoreAdminSession bypass blocked — redirecting through routeAuthenticatedUser"
+      );
+      await routeAuthenticatedUser({ reason: "restoreAdminSession-bypass" });
+      return;
+    }
     businessId = currentUser.id;
-    await bootstrapAdminAfterLogin();
+    await bootstrapAdminAfterLogin({ fromAdminSubRouter: true });
   }
 
-  async function bootstrapAdminAfterLogin() {
+  async function bootstrapAdminAfterLogin(opts = {}) {
+    if (opts.fromAdminSubRouter !== true) {
+      console.warn(
+        "[routing] bootstrapAdminAfterLogin bypass blocked — redirecting through routeAuthenticatedUser"
+      );
+      await routeAuthenticatedUser({ reason: "bootstrapAdminAfterLogin-bypass" });
+      return;
+    }
     logBusinessInit("bootstrapAdminAfterLogin", { businessId: currentUser?.id });
+    if (!businessId && currentUser?.id) businessId = currentUser.id;
+
     await ensureBusinessSettings();
     await loadBusinessSettings();
 
+    // Missing settings must never mean "setup complete" for a brand-new Business.
     if (!businessSettings) {
-      showAdminView();
-      await loadAdminData();
-      return;
+      logBusinessInit("retry ensureBusinessSettings after missing row");
+      await ensureBusinessSettings();
+      await loadBusinessSettings();
+    }
+
+    if (!businessSettings) {
+      // Insert/load failed — keep in-memory incomplete settings so onboarding still runs.
+      logOnboarding("business_settings unavailable — treating as incomplete onboarding");
+      businessSettings = {
+        business_id: businessId,
+        business_name: "My Business",
+        business_slug: typeof generateFallbackBusinessSlug === "function" ? generateFallbackBusinessSlug() : null,
+        onboarding_completed_at: null,
+        onboarding_step: 1
+      };
     }
 
     await loadServices();
@@ -56222,6 +56664,66 @@
     logOnboarding("wizard visible");
   }
 
+  /** True only when the user has previously persisted a supported app language. */
+  function hasStoredAppLanguagePreference() {
+    try {
+      const stored = localStorage.getItem(XBOOK_LANGUAGE_KEY);
+      return !!(stored && isSupportedLanguage(stored));
+    } catch (err) {
+      return false;
+    }
+  }
+
+  function showAdminOnboardingLanguagePanel() {
+    const view = document.getElementById("adminOnboardingView");
+    const langPanel = document.getElementById("adminOnboardingLanguagePanel");
+    if (!view || !langPanel) return;
+
+    view.classList.add("wizard-language-mode");
+    langPanel.classList.remove("hidden");
+
+    [
+      "adminOnboardingStep1Panel",
+      "adminOnboardingStep2Panel",
+      "adminOnboardingStep3Panel",
+      "adminOnboardingStep4Panel",
+      "adminOnboardingStep5Panel",
+      "adminOnboardingPlaceholder",
+      "adminOnboardingStepSkeleton"
+    ].forEach((id) => document.getElementById(id)?.classList.add("hidden"));
+
+    const titleEl = document.getElementById("adminOnboardingStepTitle");
+    const guidanceEl = document.getElementById("adminOnboardingGuidance");
+    const helperEl = document.getElementById("adminOnboardingHelper");
+    if (titleEl) titleEl.textContent = "Choose your language";
+    if (guidanceEl) {
+      guidanceEl.textContent = "Select the language you want to use while setting up XBOOK.";
+    }
+    if (helperEl) helperEl.textContent = "";
+
+    document.getElementById("adminOnboardingNextStep")?.classList.add("hidden");
+
+    if (typeof applyUiTranslations === "function") {
+      applyUiTranslations(view);
+    }
+    logOnboarding("language panel visible");
+  }
+
+  function hideAdminOnboardingLanguagePanel() {
+    document.getElementById("adminOnboardingView")?.classList.remove("wizard-language-mode");
+    document.getElementById("adminOnboardingLanguagePanel")?.classList.add("hidden");
+  }
+
+  function chooseOnboardingLanguage(code) {
+    const next = isSupportedLanguage(code) ? code : XBOOK_DEFAULT_LANGUAGE;
+    setAppLanguage(next);
+    triggerHaptic?.("light");
+    logOnboarding("language chosen", { language: next });
+    hideAdminOnboardingLanguagePanel();
+    renderAdminOnboardingShell();
+  }
+  window.chooseOnboardingLanguage = chooseOnboardingLanguage;
+
   function bindAdminOnboardingFooterKeyboardGuard() {
     if (window.__adminOnboardingFooterKbBound) return;
     window.__adminOnboardingFooterKbBound = true;
@@ -56421,6 +56923,21 @@
     }
     preview.textContent = buildPublicBookingLink(slug);
   }
+
+  /** Onboarding Generate — reuses fallback/normalize helpers without Customize dirty-state. */
+  function generateOnboardingBusinessSlug() {
+    const slugEl = document.getElementById("onboardingBusinessSlug");
+    if (!slugEl) return;
+    const slug = normalizeBusinessSlug(generateFallbackBusinessSlug());
+    slugEl.value = slug;
+    onboardingSlugUserEdited = true;
+    slugEl.setAttribute("aria-invalid", "false");
+    refreshOnboardingPublicLinkPreview();
+    clearOnboardingSlugConflictError();
+    updateWizardStep1Validation();
+    scheduleOnboardingDraftSave();
+  }
+  window.generateOnboardingBusinessSlug = generateOnboardingBusinessSlug;
 
   function getSelectedWizardBusinessCategory() {
     return getSelectedBusinessCategoryFromPills("#adminOnboardingStep1Panel");
@@ -58065,6 +58582,13 @@
   }
 
   async function renderAdminOnboardingShell() {
+    if (!hasStoredAppLanguagePreference()) {
+      showAdminOnboardingLanguagePanel();
+      return;
+    }
+
+    hideAdminOnboardingLanguagePanel();
+
     const step = getAdminOnboardingStep();
     logOnboarding("render shell", { step });
     const idx = step - 1;
@@ -58215,6 +58739,11 @@
 
     const mainScroll = document.querySelector("#adminOnboardingView .wizard-main");
     if (mainScroll) mainScroll.scrollTop = 0;
+
+    // Re-apply UI translations after shell textContent updates (e.g. right after language choice).
+    if (currentLanguage !== "en" && typeof applyUiTranslations === "function") {
+      applyUiTranslations(document.getElementById("adminOnboardingView") || document.body);
+    }
   }
 
   async function persistAdminOnboardingStep(nextStep) {
@@ -58387,6 +58916,7 @@
 
   async function loadCurrentUserRole() {
     currentUserRole = null;
+    currentUserRoleLoadStatus = "none";
 
     if (!currentUser) return null;
 
@@ -58397,12 +58927,37 @@
       .maybeSingle();
 
     if (error) {
-      // Backwards compatibility: old admin accounts may not have a profile yet.
+      // Phase 2: query failure is NOT proof of a missing profile / new account.
+      currentUserRoleLoadStatus = "error";
+      console.warn("[user_profiles] role load failed:", error.message || error);
       return null;
     }
 
-    currentUserRole = data?.role || null;
+    const rawRole = data == null ? "" : String(data.role || "").trim();
+    if (!data || !rawRole) {
+      // Confirmed readable response with no profile row or empty role.
+      currentUserRoleLoadStatus = "missing";
+      currentUserRole = null;
+      return null;
+    }
+
+    if (rawRole === "admin" || rawRole === "customer") {
+      currentUserRole = rawRole;
+      currentUserRoleLoadStatus = "resolved";
+      return currentUserRole;
+    }
+
+    currentUserRole = rawRole;
+    currentUserRoleLoadStatus = "invalid";
     return currentUserRole;
+  }
+
+  function isConfirmedMissingUserProfileRole() {
+    return currentUserRoleLoadStatus === "missing";
+  }
+
+  function isUserProfileRoleLoadError() {
+    return currentUserRoleLoadStatus === "error";
   }
 
   /** True only when auth signup metadata explicitly stamped role=admin (never inferred). */
@@ -58412,33 +58967,241 @@
   }
 
   /**
-   * If profile role is missing/stale but signup metadata explicitly says admin,
-   * reconcile via upsertUserProfile, then continue admin flow.
-   * Never escalates customers (metadata must already be admin).
+   * Legacy admin metadata reconcile.
+   * Phase 2: hot auth paths must NOT silently rewrite persistent role from metadata.
+   * Pass options.allowLegacyRepair === true only for an isolated future repair tool.
    */
-  async function reconcileAdminRoleFromSignupMetadataIfNeeded(user, profileRole) {
+  async function reconcileAdminRoleFromSignupMetadataIfNeeded(user, profileRole, options = {}) {
     if (!user || !userHasExplicitAdminSignupMetadata(user)) return profileRole;
     if (profileRole === "admin") return "admin";
 
-    const ok = await upsertUserProfile(
-      user,
-      "admin",
-      { email: user.email || null },
-      { logContext: "[admin-role-reconcile]" }
-    );
-    return ok ? "admin" : profileRole;
+    const logTag = "[admin-role-reconcile]";
+
+    // Phase 2 default: report mismatch, leave DB role unchanged.
+    if (options.allowLegacyRepair !== true) {
+      if (profileRole && profileRole !== "admin") {
+        console.warn(`${logTag} metadata/DB mismatch — leaving DB role unchanged`, {
+          profileRole,
+          metaRole: user?.user_metadata?.role || null,
+          userId: user.id
+        });
+      }
+      return profileRole;
+    }
+
+    let verifiedUser = null;
+    try {
+      const { data: userData, error: userErr } = await sb.auth.getUser();
+      if (userErr) {
+        console.warn(`${logTag} getUser failed — skip upsert`, userErr.message || userErr);
+        return profileRole;
+      }
+      verifiedUser = userData?.user || null;
+    } catch (e) {
+      console.warn(`${logTag} getUser threw — skip upsert`, e?.message || e);
+      return profileRole;
+    }
+
+    if (!verifiedUser?.id) {
+      console.warn(`${logTag} no authenticated user from getUser — skip upsert`, {
+        targetUserId: user.id
+      });
+      return profileRole;
+    }
+
+    if (verifiedUser.id !== user.id) {
+      console.warn(`${logTag} getUser id mismatch — skip upsert`, {
+        getUserId: verifiedUser.id,
+        targetUserId: user.id
+      });
+      return profileRole;
+    }
+
+    if (!userHasExplicitAdminSignupMetadata(verifiedUser)) {
+      console.warn(`${logTag} verified user metadata role is not admin — skip upsert`, {
+        metaRole: verifiedUser?.user_metadata?.role || null,
+        targetUserId: user.id
+      });
+      return profileRole;
+    }
+
+    const ok = await writeAccountRole({
+      user: verifiedUser,
+      role: "admin",
+      intent: ACCOUNT_ROLE_WRITE_INTENT.LEGACY_REPAIR,
+      extra: { email: verifiedUser.email || user.email || null },
+      options: { logContext: logTag }
+    });
+    return ok.ok ? "admin" : profileRole;
   }
 
+  function isUserProfilesForeignKeyError(error) {
+    if (!error) return false;
+    const code = String(error.code || error?.code || "").trim();
+    const msg = String(error.message || "");
+    if (code === "23503") return true;
+    return /user_profiles_id_fkey|violates foreign key constraint/i.test(msg);
+  }
+
+  /** Phase 5: only these intents may request a persistent role write. */
+  const ACCOUNT_ROLE_WRITE_INTENT = Object.freeze({
+    CREATE_BUSINESS_ACCOUNT: "create_business_account",
+    CREATE_CUSTOMER_ACCOUNT: "create_customer_account",
+    BRAND_NEW_ADMIN_OAUTH: "brand_new_admin_oauth",
+    BRAND_NEW_CUSTOMER_OAUTH: "brand_new_customer_oauth",
+    LEGACY_REPAIR: "legacy_repair"
+  });
+
+  const ACCOUNT_ROLE_WRITE_RESULT = Object.freeze({
+    SUCCESS_CREATED: "success_created",
+    SUCCESS_EXISTING_SAME_ROLE: "success_existing_same_role",
+    REFUSED_OPPOSITE_ROLE: "refused_opposite_role",
+    REFUSED_INTENT: "refused_intent",
+    UNRESOLVED_ROLE_STATE: "unresolved_role_state",
+    DATABASE_ERROR: "database_error"
+  });
+
+  /**
+   * Phase 5 Account-Role Writer — sole client policy for user_profiles.role mutations.
+   * Does not route shells. Updates in-memory role only after durable success / same-role confirm.
+   */
+  async function writeAccountRole({
+    user,
+    role,
+    intent,
+    extra = {},
+    options = {}
+  } = {}) {
+    const logTag = options.logContext || "[account-role-writer]";
+    const requestedRole = String(role || "").trim();
+
+    if (!user?.id) {
+      return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.DATABASE_ERROR };
+    }
+    if (requestedRole !== "admin" && requestedRole !== "customer") {
+      console.warn(`${logTag} refused invalid role`, { requestedRole, intent });
+      return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.REFUSED_INTENT };
+    }
+
+    const allowedCreateIntents = new Set([
+      ACCOUNT_ROLE_WRITE_INTENT.CREATE_BUSINESS_ACCOUNT,
+      ACCOUNT_ROLE_WRITE_INTENT.CREATE_CUSTOMER_ACCOUNT,
+      ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_ADMIN_OAUTH,
+      ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_CUSTOMER_OAUTH
+    ]);
+    const isLegacyRepair = intent === ACCOUNT_ROLE_WRITE_INTENT.LEGACY_REPAIR;
+    if (!isLegacyRepair && !allowedCreateIntents.has(intent)) {
+      console.warn(`${logTag} refused unknown intent`, { intent, requestedRole });
+      return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.REFUSED_INTENT };
+    }
+
+    if (
+      intent === ACCOUNT_ROLE_WRITE_INTENT.CREATE_BUSINESS_ACCOUNT ||
+      intent === ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_ADMIN_OAUTH
+    ) {
+      if (requestedRole !== "admin") {
+        return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.REFUSED_INTENT };
+      }
+    }
+    if (
+      intent === ACCOUNT_ROLE_WRITE_INTENT.CREATE_CUSTOMER_ACCOUNT ||
+      intent === ACCOUNT_ROLE_WRITE_INTENT.BRAND_NEW_CUSTOMER_OAUTH
+    ) {
+      if (requestedRole !== "customer") {
+        return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.REFUSED_INTENT };
+      }
+    }
+
+    // Always re-read durable role — do not trust in-memory null as "missing".
+    const { data: existingProfile, error: existingError } = await sb
+      .from("user_profiles")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (existingError) {
+      console.warn(`${logTag} role read failed — refusing write`, {
+        message: existingError.message || existingError,
+        intent,
+        requestedRole,
+        userId: user.id
+      });
+      return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.UNRESOLVED_ROLE_STATE };
+    }
+
+    const existingRole = String(existingProfile?.role || "").trim();
+
+    if (existingRole === requestedRole) {
+      if (currentUser?.id === user.id) {
+        currentUserRole = requestedRole;
+        currentUserRoleLoadStatus = "resolved";
+      }
+      return { ok: true, status: ACCOUNT_ROLE_WRITE_RESULT.SUCCESS_EXISTING_SAME_ROLE };
+    }
+
+    if (existingRole === "admin" || existingRole === "customer") {
+      if (!isLegacyRepair) {
+        console.warn(`${logTag} refused opposite/existing role overwrite`, {
+          existingRole,
+          requestedRole,
+          intent,
+          userId: user.id
+        });
+        return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.REFUSED_OPPOSITE_ROLE };
+      }
+    } else if (existingRole) {
+      // Invalid non-empty role — do not silently replace unless legacy repair.
+      if (!isLegacyRepair) {
+        console.warn(`${logTag} refused write over invalid existing role`, {
+          existingRole,
+          requestedRole,
+          intent,
+          userId: user.id
+        });
+        return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.UNRESOLVED_ROLE_STATE };
+      }
+    }
+
+    const wrote = await upsertUserProfile(user, requestedRole, extra, {
+      ...options,
+      logContext: logTag,
+      fromAccountRoleWriter: true,
+      allowRoleChange: isLegacyRepair === true
+    });
+
+    if (!wrote) {
+      return { ok: false, status: ACCOUNT_ROLE_WRITE_RESULT.DATABASE_ERROR };
+    }
+
+    return { ok: true, status: ACCOUNT_ROLE_WRITE_RESULT.SUCCESS_CREATED };
+  }
+
+  /**
+   * Profile upsert helper. Persistent role may only be written when invoked by writeAccountRole
+   * (options.fromAccountRoleWriter === true).
+   */
   async function upsertUserProfile(user, role, extra = {}, options = {}) {
     if (!user) return false;
+
+    const requestedRole = role == null ? "" : String(role).trim();
+    const wantsRoleWrite = requestedRole === "admin" || requestedRole === "customer";
+    if (wantsRoleWrite && options.fromAccountRoleWriter !== true) {
+      console.error(
+        "[user_profiles] role writes must go through writeAccountRole — refusing direct role upsert",
+        { requestedRole, userId: user.id }
+      );
+      return false;
+    }
 
     const payload = {
       id: user.id,
       email: user.email || extra.email || null,
-      role,
       full_name: extra.full_name || null,
       phone: extra.phone || null
     };
+    if (wantsRoleWrite) {
+      payload.role = requestedRole;
+    }
 
     const logTag = options.logContext || "[user_profiles]";
     const { data: sessionData } = await sb.auth.getSession();
@@ -58450,7 +59213,7 @@
       authUserId,
       targetUserId: user.id,
       hasSession,
-      role
+      role: wantsRoleWrite ? requestedRole : "(unchanged)"
     });
 
     if (!hasSession || !authUserId) {
@@ -58468,13 +59231,61 @@
       return false;
     }
 
+    // Defense in depth: refuse opposite overwrite unless writer authorized a legacy repair.
+    if (wantsRoleWrite && options.allowRoleChange !== true) {
+      const { data: existingProfile, error: existingError } = await sb
+        .from("user_profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (existingError) {
+        console.warn(`${logTag} existing role check failed — refusing role write`, {
+          message: existingError.message || existingError,
+          targetUserId: user.id,
+          role: requestedRole
+        });
+        return false;
+      }
+      const existingRole = String(existingProfile?.role || "").trim();
+      if (
+        (existingRole === "admin" || existingRole === "customer") &&
+        existingRole !== requestedRole
+      ) {
+        console.warn(`${logTag} refusing to overwrite existing role`, {
+          existingRole,
+          requestedRole,
+          targetUserId: user.id
+        });
+        return false;
+      }
+    }
+
     const { error } = await sb
       .from("user_profiles")
       .upsert(payload, { onConflict: "id" });
 
     if (error) {
+      if (isUserProfilesForeignKeyError(error)) {
+        let getUserId = null;
+        try {
+          const { data: userData } = await sb.auth.getUser();
+          getUserId = userData?.user?.id || null;
+        } catch (e) {
+          /* ignore */
+        }
+        console.error(`${logTag} upsert FK violation (auth user not durable / not in auth.users)`, {
+          targetUserId: user.id,
+          sessionUserId: authUserId,
+          getUserId,
+          code: error.code || null,
+          message: error.message
+        });
+        return false;
+      }
+
       console.error(`${logTag} upsert failed:`, error.message, error);
-      const friendly = options.friendlyError === true || role === "customer";
+      const friendly =
+        options.friendlyError === true || requestedRole === "customer";
       if (friendly) {
         showToast("Unable to create your profile. Please try again.", "error");
       } else {
@@ -58483,7 +59294,10 @@
       return false;
     }
 
-    currentUserRole = role;
+    if (wantsRoleWrite) {
+      currentUserRole = requestedRole;
+      currentUserRoleLoadStatus = "resolved";
+    }
     return true;
   }
 
@@ -59554,7 +60368,7 @@
         return;
       }
 
-      await restoreAdminSession();
+      await routeAuthenticatedUser({ reason: "choose-create-business-account" });
       return;
     }
 
@@ -59563,7 +60377,19 @@
   }
 
   function chooseCreateCustomerAccount() {
-    ensureCustomerJoinSignupScreen();
+    void (async () => {
+      if (currentUser) {
+        if (currentUserRoleLoadStatus === "none") {
+          await loadCurrentUserRole();
+        }
+        // Phase 4: do not open guest customer signup against a live authenticated session.
+        await routeAuthenticatedUser({
+          reason: "choose-create-customer-account-blocked"
+        });
+        return;
+      }
+      ensureCustomerJoinSignupScreen();
+    })();
   }
 
   async function chooseAdmin() {
@@ -59575,7 +60401,7 @@
         return;
       }
 
-      await restoreAdminSession();
+      await routeAuthenticatedUser({ reason: "choose-admin" });
       return;
     }
 
@@ -59625,42 +60451,25 @@
   }
   window.confirmSwitchToAdminAccount = confirmSwitchToAdminAccount;
 
+  /** Dead UI entry — Phase 6: neutralized. Do not wire to Welcome buttons. */
   function chooseCustomer() {
-    stopBookingRealtime();
-    const urlBiz = syncPublicBusinessFromUrl();
-
-    if (!urlBiz) {
-      const saved = getSavedCustomerBusinessContext();
-      const savedSlug = normalizeBusinessSlug(saved?.slug || "");
-      if (savedSlug) {
-        ensureBusinessQueryInUrl(savedSlug);
-        void continueCustomerToBooking();
-        return;
-      }
-      businessId = null;
-      businessSettings = null;
-      services = [];
-      staffMembers = [];
-      bookings = [];
-      blockedDays = [];
-      selectedDate = null;
-      selectedSlot = null;
-      selectedService = null;
-      currentDate = new Date();
-      customerPreferManualBusinessEntry = false;
-      showPublicView(false);
-      updateCustomerHubBusinessContextUi();
+    console.warn("[routing] chooseCustomer is dead/neutralized");
+    if (currentUser) {
+      void (async () => {
+        if (currentUserRoleLoadStatus === "none") {
+          await loadCurrentUserRole();
+        }
+        await routeAuthenticatedUser({ reason: "chooseCustomer-blocked" });
+      })();
       return;
     }
-
-    ensureBusinessQueryInUrl(urlBiz);
-    void continueCustomerToBooking();
+    void routePublicGuest({ reason: "chooseCustomer-guest" });
   }
 
-  function goHome() {
+  async function goHome() {
     exitPublicManageMode("goHome");
     stopBookingRealtime();
-    clearSavedCustomerBusinessContext();
+
     businessId = null;
     businessSettings = null;
     services = [];
@@ -59675,7 +60484,30 @@
     if (document.getElementById("manualBusinessId")) document.getElementById("manualBusinessId").value = "";
     if (document.getElementById("slotsContainer")) document.getElementById("slotsContainer").innerHTML = "";
     history.replaceState(null, "", window.location.pathname);
-    showModeView();
+
+    // Guest Home: clear saved public/customer business context and show Welcome.
+    if (!currentUser) {
+      clearSavedCustomerBusinessContext();
+      showModeView();
+      return;
+    }
+
+    // Authenticated Home: clear sticky public URL only — do not treat as logout.
+    // Keep customer saved-business localStorage so Customer Context Resolver can restore.
+    if (
+      !(
+        currentUserRoleLoadStatus === "resolved" &&
+        currentUserRole === "customer"
+      )
+    ) {
+      clearSavedCustomerBusinessContext();
+    }
+
+    if (currentUserRoleLoadStatus === "none") {
+      await loadCurrentUserRole();
+    }
+
+    await routeAuthenticatedUser({ reason: "go-home" });
   }
 
   async function copyPublicLink() {
@@ -59740,7 +60572,7 @@
 
   function showCustomerManualBusinessBookingEntry() {
     if (hasPublicBusinessContext()) {
-      void continueCustomerToBooking();
+      void enterCustomerBookingFromUi({ owner: "customer-manual-entry" });
       return;
     }
 
@@ -59755,7 +60587,51 @@
     updateCustomerHubBusinessContextUi();
   }
 
-  async function continueCustomerToBooking() {
+  /**
+   * Phase 7: UI/public entry into booking leaf — does not decide Admin vs Customer identity.
+   * Resolved admin is redirected to Admin Sub-Router; guests/customers use continueCustomerToBooking.
+   */
+  async function enterCustomerBookingFromUi(opts = {}) {
+    if (
+      currentUser &&
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "admin"
+    ) {
+      await routeAuthenticatedUser({
+        reason: "enterCustomerBookingFromUi-blocked-admin"
+      });
+      return;
+    }
+
+    const owner =
+      opts.owner ||
+      (currentUser &&
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "customer"
+        ? "customer-ui"
+        : "public-guest-ui");
+
+    await continueCustomerToBooking({ owner });
+  }
+  window.enterCustomerBookingFromUi = enterCustomerBookingFromUi;
+
+  async function continueCustomerToBooking(opts = {}) {
+    // Phase 6/7: leaf helper — never open Client booking for a resolved admin.
+    if (
+      currentUser &&
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "admin"
+    ) {
+      console.warn(
+        "[routing] continueCustomerToBooking blocked for resolved admin",
+        { owner: opts.owner || "unspecified" }
+      );
+      await routeAuthenticatedUser({
+        reason: "continueCustomerToBooking-blocked-admin"
+      });
+      return;
+    }
+
     syncPublicBusinessFromUrl();
     const urlSlug = getPublicBusinessIdFromUrl();
     let id = urlSlug;
@@ -59837,14 +60713,39 @@
       return;
     }
 
-    if (data?.user) {
-      await upsertUserProfile(data.user, "admin", { email });
+    const signupUser = data?.user || null;
+    const signupSession = data?.session || null;
+    const hasIdentity =
+      Array.isArray(signupUser?.identities) && signupUser.identities.length > 0;
+    const sessionMatchesUser =
+      !!signupSession?.user?.id &&
+      !!signupUser?.id &&
+      signupSession.user.id === signupUser.id;
+
+    if (signupSession && signupUser && hasIdentity && sessionMatchesUser) {
+      await writeAccountRole({
+        user: signupUser,
+        role: "admin",
+        intent: ACCOUNT_ROLE_WRITE_INTENT.CREATE_BUSINESS_ACCOUNT,
+        extra: { email }
+      });
+    } else {
+      console.log(
+        "[user_profiles] Business signup: skip immediate upsert — rely on handle_new_user_profile / post-confirm reconcile",
+        {
+          hasSession: !!signupSession,
+          hasUser: !!signupUser,
+          identityCount: Array.isArray(signupUser?.identities) ? signupUser.identities.length : 0,
+          sessionMatchesUser
+        }
+      );
     }
 
-    if (data?.session) {
+    if (signupSession) {
       await sb.auth.signOut();
       currentUser = null;
       currentUserRole = null;
+      currentUserRoleLoadStatus = "none";
     }
     try {
       sessionStorage.setItem(BOOKING_AWAITING_EMAIL_CONFIRM_FLAG, "1");
@@ -59939,16 +60840,18 @@
       let profileOk;
 
       if (hasSession) {
-        profileOk = await upsertUserProfile(
-          data.user,
-          "customer",
-          {
+        const writeResult = await writeAccountRole({
+          user: data.user,
+          role: "customer",
+          intent: ACCOUNT_ROLE_WRITE_INTENT.CREATE_CUSTOMER_ACCOUNT,
+          extra: {
             email,
             full_name: fullName,
             phone
           },
-          { friendlyError: true, logContext: logTag }
-        );
+          options: { friendlyError: true, logContext: logTag }
+        });
+        profileOk = writeResult.ok;
       } else {
         console.log(
           `${logTag} no session after signUp — profile should be created by handle_new_user_profile trigger`
@@ -60069,22 +60972,27 @@
       await sb.auth.signOut();
       currentUser = null;
       currentUserRole = null;
+      currentUserRoleLoadStatus = "none";
       updateCustomerAuthUI();
       return;
-    }
-
-    if (!role) {
-      const ok = await upsertUserProfile(currentUser, "customer", { email });
-      if (!ok) return;
     }
 
     document.getElementById("customerAuthPassword").value = "";
     if (document.getElementById("customerSignupPassword")) document.getElementById("customerSignupPassword").value = "";
     if (document.getElementById("customerAuthConfirmPassword")) document.getElementById("customerAuthConfirmPassword").value = "";
-    showToast("Customer login success.", "success");
-    updateCustomerAuthUI();
 
-    await ensureCustomerBusinessContextOrJoinGate();
+    if (
+      currentUserRoleLoadStatus === "resolved" &&
+      currentUserRole === "customer"
+    ) {
+      showToast("Customer login success.", "success");
+      updateCustomerAuthUI();
+    }
+
+    await routeAuthenticatedUser({
+      reason: "customer-login",
+      customerPushSource: "customer-login"
+    });
   }
 
   async function customerLogout() {
@@ -60220,21 +61128,19 @@
       let role = await loadCurrentUserRole();
       role = await reconcileAdminRoleFromSignupMetadataIfNeeded(currentUser, role);
 
-      if (role === "customer") {
-        clearEmailVerificationSuccessFlags();
-        document.getElementById("authPassword").value = "";
+      clearEmailVerificationSuccessFlags();
+      document.getElementById("authPassword").value = "";
+      if (
+        currentUserRoleLoadStatus === "resolved" &&
+        (currentUserRole === "admin" || currentUserRole === "customer")
+      ) {
         showToast("Signed in successfully.", "success");
-        await ensureCustomerBusinessContextOrJoinGate();
-        void ensureCustomerPushNotificationsReady("login");
-        void refreshCustomerNotificationsUnreadBadge();
-        if (pendingCustomerBusinessNotificationId) {
-          void openCustomerNotificationsFromPush(pendingCustomerBusinessNotificationId);
-        }
-        return;
       }
 
-      clearEmailVerificationSuccessFlags();
-      await restoreAdminSession();
+      await routeAuthenticatedUser({
+        reason: "password-login",
+        customerPushSource: "login"
+      });
     } catch (err) {
       showToast("Login crash: " + err.message, "error")
     }
@@ -62304,9 +63210,17 @@
         recurring_max_duration_months: 1
       };
 
-      const { error } = await sb
-        .from("business_settings")
-        .insert(defaultSettings);
+      let { error } = await sb.from("business_settings").insert(defaultSettings);
+
+      if (error && isOptionalBusinessSettingsColumnSchemaError(error, defaultSettings)) {
+        const stripped = stripKnownOptionalBusinessSettingsColumns(defaultSettings);
+        logBusinessInit("retrying business_settings insert without optional columns", {
+          missingHint: String(error.message || ""),
+          strippedKeys: Object.keys(defaultSettings).filter((k) => !(k in stripped))
+        });
+        const retry = await sb.from("business_settings").insert(stripped);
+        error = retry.error;
+      }
 
       if (error) {
         alert("Business settings error: " + error.message);
