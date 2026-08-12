@@ -57063,19 +57063,20 @@
   async function isBusinessSlugTakenByAnotherBusiness(normalizedSlug) {
     if (!normalizedSlug || !businessId || !initSupabaseClient()) return false;
 
-    const { data, error } = await sb
-      .from("business_settings")
-      .select("business_id")
-      .eq("business_slug", normalizedSlug)
-      .neq("business_id", businessId)
-      .limit(1);
+    // Boolean-only RPC — no cross-business business_settings SELECT
+    // (removes dependency on public_can_read_business_settings).
+    const excludeId = isValidUuid(businessId) ? businessId : null;
+    const { data, error } = await sb.rpc("is_business_slug_taken", {
+      p_business_slug: normalizedSlug,
+      p_exclude_business_id: excludeId
+    });
 
     if (error) {
       console.warn("Slug uniqueness check failed:", error.message);
       return false;
     }
 
-    return Array.isArray(data) && data.length > 0;
+    return data === true;
   }
 
   async function saveAdminOnboardingStep1AndAdvance() {
@@ -59570,13 +59571,20 @@
     const staffNameMap = {};
 
     if (bizIds.length) {
-      const { data: settings } = await sb
-        .from("business_settings")
-        .select("business_id, business_name, business_slug, business_currency")
-        .in("business_id", bizIds);
-      (settings || []).forEach((s) => {
-        metaMap[s.business_id] = s;
-      });
+      // Public meta only — never direct business_settings SELECT (customer path).
+      await Promise.all(
+        bizIds.map(async (id) => {
+          if (!isValidUuid(id)) return;
+          const { data: settingsRow, error } = await fetchPublicBusinessSettingsRow(id);
+          if (error) {
+            console.warn("[my-bookings] public business settings lookup failed", id, error.message);
+            return;
+          }
+          if (settingsRow?.business_id) {
+            metaMap[settingsRow.business_id] = settingsRow;
+          }
+        })
+      );
     }
     if (serviceIds.length) {
       const { data: svcRows } = await sb
@@ -63442,45 +63450,94 @@
     return mergeBusinessProfileExtrasIntoSettings(settings);
   }
 
+  /** True only when the signed-in admin is loading their own row (business_id = auth.uid()). */
+  function isAdminOwnerBusinessSettingsContext() {
+    return (
+      currentUserRole === "admin" &&
+      !!currentUser?.id &&
+      isValidUuid(businessId) &&
+      String(businessId) === String(currentUser.id)
+    );
+  }
+
+  /**
+   * Public/customer-safe settings for ONE business via get_public_business_settings.
+   * Pass exactly one of UUID or slug; the other RPC arg is null.
+   * Never uses currentUser.id as a customer business id.
+   */
+  async function fetchPublicBusinessSettingsRow(identifier) {
+    const raw = String(identifier || "").trim();
+    if (!raw) {
+      return { data: null, error: { message: "Missing business identifier." } };
+    }
+    if (!initSupabaseClient()) {
+      return { data: null, error: { message: "Could not connect." } };
+    }
+
+    let params;
+    if (isValidUuid(raw)) {
+      params = { p_business_id: raw, p_business_slug: null };
+    } else {
+      const slug = normalizeBusinessSlug(raw);
+      if (!slug) {
+        return { data: null, error: { message: "Invalid business code." } };
+      }
+      params = { p_business_id: null, p_business_slug: slug };
+    }
+
+    const { data, error } = await sb.rpc("get_public_business_settings", params);
+    if (error) return { data: null, error };
+
+    const row = Array.isArray(data) ? data[0] || null : data || null;
+    return { data: row, error: null };
+  }
+
   async function loadBusinessSettings() {
     if (!businessId) {
       businessSettings = null;
       return;
     }
 
-    let query = sb
-      .from("business_settings")
-      .select("*");
+    let data = null;
+    let error = null;
 
-    if (isValidUuid(businessId)) {
-      query = query.eq("business_id", businessId);
+    if (isAdminOwnerBusinessSettingsContext()) {
+      // Owner private read — full row (onboarding, limits, holiday config, etc.).
+      const result = await sb
+        .from("business_settings")
+        .select("*")
+        .eq("business_id", businessId)
+        .maybeSingle();
+      data = result.data;
+      error = result.error;
+
+      if (!error && data) {
+        const ownerId = data.business_id || businessId;
+        const { data: recurRow, error: recurErr } = await sb
+          .from("business_settings")
+          .select("allow_recurring_appointments")
+          .eq("business_id", ownerId)
+          .maybeSingle();
+
+        if (recurErr) {
+          console.warn("[recurring] allow_recurring_appointments select failed:", recurErr.message);
+        } else if (recurRow && Object.prototype.hasOwnProperty.call(recurRow, "allow_recurring_appointments")) {
+          data = { ...data, allow_recurring_appointments: recurRow.allow_recurring_appointments };
+        }
+      }
     } else {
-      query = query.eq("business_slug", normalizeBusinessSlug(businessId));
+      // Guest / customer / non-owner — bounded public RPC only (no table SELECT).
+      const result = await fetchPublicBusinessSettingsRow(businessId);
+      data = result.data;
+      error = result.error;
     }
-
-    const { data, error } = await query.maybeSingle();
 
     if (error) {
       alert("Load settings error: " + error.message + "\n\nIf you just added Business ID / slug, run the SQL from the ZIP first.");
       return;
     }
 
-    let merged = data ? { ...data } : null;
-    const ownerId = merged?.business_id || (isValidUuid(businessId) ? businessId : null);
-
-    if (ownerId) {
-      const { data: recurRow, error: recurErr } = await sb
-        .from("business_settings")
-        .select("allow_recurring_appointments")
-        .eq("business_id", ownerId)
-        .maybeSingle();
-
-      if (recurErr) {
-        console.warn("[recurring] allow_recurring_appointments select failed:", recurErr.message);
-      } else if (recurRow && Object.prototype.hasOwnProperty.call(recurRow, "allow_recurring_appointments")) {
-        merged.allow_recurring_appointments = recurRow.allow_recurring_appointments;
-      }
-    }
+    const merged = data ? { ...data } : null;
 
     businessSettings = normalizeBusinessSettingsRecord(merged);
     console.log(
