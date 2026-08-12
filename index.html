@@ -42577,6 +42577,10 @@
   let staffFeatureAvailable = false;
   let bookingStaffColumnAvailable = false;
   let bookings = [];
+  /** "full" = admin owner SELECT *; "busy" = get_business_busy_slots only (no PII). */
+  let bookingsCacheMode = "full";
+  let publicBusySlotsFocusRefreshBound = false;
+  let publicBusySlotsNetworkRefreshTimer = null;
   let businessCustomersByKey = Object.create(null);
   let businessCustomersLoadedForBizId = null;
   let businessCustomersLoadPromise = null;
@@ -49507,7 +49511,7 @@
   function runPublicBookingPostSuccessTasks() {
     void (async () => {
       try {
-        await loadBookings(true);
+        await loadBookings(true, { mode: "busy" });
         await loadBlockedDays(true);
         startBookingRealtime();
         if (
@@ -50035,7 +50039,7 @@
       return null;
     }
 
-    await loadBookings(true);
+    await loadBookings(true, { mode: "busy", excludeBookingId: data?.id || null });
     hidePublicBookingWizardForManageFlow("refreshManageBookingFromToken");
     hideBookingSuccessCard();
     document.getElementById("manageBookingCard")?.classList.remove("hidden");
@@ -50157,7 +50161,10 @@
     if (!staffMembers.length) await loadStaffMembers();
     await checkBookingStaffColumn();
     if (businessId) {
-      await loadBookings(true);
+      await loadBookings(true, {
+        mode: "busy",
+        excludeBookingId: manageBookingData?.id || null
+      });
       await loadBlockedDays(true);
     }
   }
@@ -50609,7 +50616,10 @@
       return;
     }
 
-    await loadBookings(true);
+    await loadBookings(true, {
+      mode: "busy",
+      excludeBookingId: manageBookingData?.id || null
+    });
     const validationError = getManageRescheduleValidationError(newDate, newTime, serviceId, manageBookingData);
     if (validationError) {
       showToast(validationError, "error");
@@ -59447,6 +59457,12 @@
     const limits = readBookingLimitsConfig(opts?.businessSettings);
     if (!limits.enabled) return { ok: true, message: "" };
 
+    // Busy-slot cache has no customer identity. Server create/reschedule RPCs
+    // remain authoritative via _assert_client_booking_limits.
+    if (bookingsCacheMode !== "full") {
+      return { ok: true, message: "", deferredToServer: true };
+    }
+
     const appointmentDate = getBookingAppointmentDateKey(opts?.date);
     if (!appointmentDate) return { ok: true, message: "" };
 
@@ -59483,6 +59499,9 @@
   function checkClientBookingLimitsForSeries(dateList, opts) {
     const limits = readBookingLimitsConfig(opts?.businessSettings);
     if (!limits.enabled) return { ok: true, message: "" };
+    if (bookingsCacheMode !== "full") {
+      return { ok: true, message: "", deferredToServer: true };
+    }
     const dates = Array.isArray(dateList) ? dateList : [];
     if (!dates.length) return { ok: true, message: "" };
 
@@ -62170,7 +62189,7 @@
     await loadStaffMembers();
     await ensureOwnerStaffMemberIfNeeded();
     await checkBookingStaffColumn();
-    await loadBookings();
+    await loadBookings(false, { mode: "full" });
     await loadBlockedDays();
     if (readBlockPublicHolidaysSetting()) {
       await syncBusinessHolidayClosedDays();
@@ -62274,7 +62293,7 @@
     await loadServices();
     await loadStaffMembers();
     await checkBookingStaffColumn();
-    await loadBookings();
+    await loadBookings(false, { mode: "busy" });
     await loadBlockedDays();
 
     renderPublicBusinessProfileInfo();
@@ -64666,7 +64685,7 @@
     cancelEditService();
 
     await loadServices();
-    await loadBookings();
+    await loadBookings(false, { mode: "full" });
 
     renderServices();
     renderEditServiceOptions();
@@ -64911,6 +64930,10 @@
       refreshCalendar: opts.refreshCalendar !== false && (serviceChanged || opts.forceRefresh)
     });
 
+    if (serviceChanged || opts.forceRefresh) {
+      schedulePublicBusySlotsNetworkRefresh("service");
+    }
+
     // Team member is chosen before the service now, so never reset it here.
     syncPublicStaffSelectionForService(service, { preserveChoice: true });
 
@@ -65075,6 +65098,24 @@
   }
 
   async function checkBookingStaffColumn() {
+    // Public/customer must not SELECT bookings. staff_id is part of the live
+    // XBook schema and is returned by get_business_busy_slots.
+    const adminView = document.getElementById("adminView");
+    const adminVisible = !!(adminView && !adminView.classList.contains("hidden"));
+    const isAdminOwner =
+      currentUserRole === "admin" ||
+      (currentUser?.id && businessId && String(currentUser.id) === String(businessId));
+
+    if (!adminVisible || !isAdminOwner) {
+      bookingStaffColumnAvailable = true;
+      return;
+    }
+
+    if (!initSupabaseClient() || !businessId || !isValidUuid(businessId)) {
+      bookingStaffColumnAvailable = true;
+      return;
+    }
+
     const { error } = await sb
       .from("bookings")
       .select("staff_id")
@@ -65787,7 +65828,7 @@
     }
 
     await loadStaffMembers();
-    await loadBookings();
+    await loadBookings(false, { mode: "full" });
     renderStaffMembers();
     renderAdminAddStaffOptions();
     renderEditStaffOptions();
@@ -66049,6 +66090,9 @@
       }
       refreshPublicAvailability({ refreshCalendar: true });
       updatePublicScheduleStaffUi();
+      if (staffChanged) {
+        schedulePublicBusySlotsNetworkRefresh("staff");
+      }
       if (!opts.stayOnSchedule) {
         goToPublicBookingStep(getPublicBookingStepAfterStaff());
       }
@@ -66112,7 +66156,106 @@
     });
   }
 
-  async function loadBookings(silent = false) {
+  /**
+   * Admin Business View needs full booking rows (PII, CRM, list/calendar).
+   * Public/customer availability must use get_business_busy_slots (non-PII).
+   */
+  function inferBookingsCacheLoadMode() {
+    const adminView = document.getElementById("adminView");
+    const adminVisible = !!(adminView && !adminView.classList.contains("hidden"));
+    if (adminVisible && currentUserRole === "admin") return "full";
+    if (
+      adminVisible &&
+      currentUser?.id &&
+      businessId &&
+      isValidUuid(businessId) &&
+      String(currentUser.id) === String(businessId)
+    ) {
+      return "full";
+    }
+    return "busy";
+  }
+
+  function getBusySlotsAvailabilityRange() {
+    const from = getTodayDateString();
+    const weeks = Math.max(1, Number(businessSettings?.booking_window_weeks) || 4);
+    const months = Math.max(1, Number(businessSettings?.recurring_max_duration_months) || 1);
+    const spanDays = Math.min(92, Math.max(weeks * 7, months * 31));
+    const fromDate = new Date(from + "T00:00:00");
+    const toDate = new Date(fromDate.getTime());
+    toDate.setDate(toDate.getDate() + spanDays);
+    const to = formatDate(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+    return { from, to };
+  }
+
+  function normalizeBusySlotRow(row) {
+    if (!row || typeof row !== "object") return null;
+    const dateRaw = row.slot_date ?? row.slotDate ?? "";
+    let date = "";
+    if (typeof dateRaw === "string") {
+      date = dateRaw.trim().slice(0, 10);
+    } else if (dateRaw instanceof Date && !Number.isNaN(dateRaw.getTime())) {
+      date = formatDate(dateRaw.getFullYear(), dateRaw.getMonth(), dateRaw.getDate());
+    } else if (dateRaw != null) {
+      date = String(dateRaw).trim().slice(0, 10);
+    }
+    const timeRaw = row.start_time ?? row.startTime ?? "";
+    const time = String(timeRaw || "").trim().slice(0, 5);
+    const duration = Number(row.duration_minutes ?? row.durationMinutes);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) return null;
+    return {
+      date,
+      time,
+      duration_minutes: Number.isFinite(duration) && duration > 0 ? duration : 30,
+      staff_id: row.staff_id || row.staffId || null,
+      business_id: getActiveBusinessUuid() || businessId || null,
+      // Active rows only from RPC; mark Confirmed so getBookingStatus skips cancel branch.
+      booking_status: "Confirmed",
+      status: "Confirmed"
+    };
+  }
+
+  function resolveAvailabilityExcludeBookingId(explicitId) {
+    if (explicitId && isValidUuid(explicitId)) return explicitId;
+    const manageId = manageBookingData?.id;
+    if (publicManageMode && manageId && isValidUuid(manageId)) return manageId;
+    return null;
+  }
+
+  async function loadBusySlotsAvailability(silent = false, excludeBookingId = null) {
+    if (!initSupabaseClient()) {
+      if (!silent) showToast("Connection not ready. Refresh and try again.", "error");
+      return false;
+    }
+
+    const bizUuid = getActiveBusinessUuid();
+    if (!bizUuid || !isValidUuid(bizUuid)) {
+      bookings = [];
+      return false;
+    }
+
+    const { from, to } = getBusySlotsAvailabilityRange();
+    const excludeId = resolveAvailabilityExcludeBookingId(excludeBookingId);
+
+    const { data, error } = await sb.rpc("get_business_busy_slots", {
+      p_business_id: bizUuid,
+      p_from_date: from,
+      p_to_date: to,
+      p_exclude_booking_id: excludeId
+    });
+
+    if (error) {
+      if (!silent) showToast("Load availability error: " + error.message, "error");
+      return false;
+    }
+
+    const rows = Array.isArray(data) ? data : [];
+    bookings = rows.map(normalizeBusySlotRow).filter(Boolean);
+    bookingsCacheMode = "busy";
+    return true;
+  }
+
+  async function loadBookingsFull(silent = false) {
     const { data, error } = await sb
       .from("bookings")
       .select("*")
@@ -66121,17 +66264,27 @@
       .order("time", { ascending: true });
 
     if (error) {
-      if (!silent) showToast("Load bookings error: " + error.message, "error")
+      if (!silent) showToast("Load bookings error: " + error.message, "error");
       return false;
     }
 
     bookings = data || [];
+    bookingsCacheMode = "full";
     const bizUuid = getActiveBusinessUuid();
     if (bizUuid && canLoadBusinessCustomersForBiz(bizUuid)) {
       await hydrateClientNotesFromSupabase(bizUuid);
       await hydrateBusinessCustomersFromSupabase(bizUuid);
     }
     return true;
+  }
+
+  /** @param {{ mode?: "full"|"busy", excludeBookingId?: string|null }} [options] */
+  async function loadBookings(silent = false, options = {}) {
+    const mode = options.mode || inferBookingsCacheLoadMode();
+    if (mode === "busy") {
+      return loadBusySlotsAvailability(silent, options.excludeBookingId ?? null);
+    }
+    return loadBookingsFull(silent);
   }
 
   /** create_booking RPC rejects empty phone; admin Add Booking treats phone as optional. */
@@ -66172,6 +66325,46 @@
     return isAdminScheduleSlotAvailable(dateStr, startMins, staffId || "", service, dayBookings);
   }
 
+  function isPublicBookingSurfaceVisible() {
+    const publicView = document.getElementById("publicView");
+    return !!(publicView && !publicView.classList.contains("hidden"));
+  }
+
+  function isAdminBookingSurfaceVisible() {
+    const adminView = document.getElementById("adminView");
+    return !!(adminView && !adminView.classList.contains("hidden"));
+  }
+
+  function schedulePublicBusySlotsNetworkRefresh(reason) {
+    if (!isPublicBookingSurfaceVisible()) return;
+    if (!businessId || !isValidUuid(businessId)) return;
+    if (publicBusySlotsNetworkRefreshTimer) clearTimeout(publicBusySlotsNetworkRefreshTimer);
+    publicBusySlotsNetworkRefreshTimer = setTimeout(() => {
+      publicBusySlotsNetworkRefreshTimer = null;
+      void refreshBookingsAfterChange(true);
+    }, 450);
+    void reason;
+  }
+
+  function ensurePublicBusySlotsFocusRefresh() {
+    if (publicBusySlotsFocusRefreshBound) return;
+    publicBusySlotsFocusRefreshBound = true;
+
+    const refreshIfPublicVisible = () => {
+      if (typeof document.visibilityState === "string" && document.visibilityState !== "visible") {
+        return;
+      }
+      if (!isPublicBookingSurfaceVisible()) return;
+      if (!businessId || !isValidUuid(businessId)) return;
+      void refreshBookingsAfterChange(true);
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") refreshIfPublicVisible();
+    });
+    window.addEventListener("focus", refreshIfPublicVisible);
+  }
+
   function stopBookingRealtime() {
     if (bookingRealtimeRefreshTimer) {
       clearTimeout(bookingRealtimeRefreshTimer);
@@ -66195,13 +66388,16 @@
   async function refreshBookingsAfterChange(silentLoad) {
     if (!businessId || !isValidUuid(businessId)) return false;
 
-    const publicView = document.getElementById("publicView");
-    const adminView = document.getElementById("adminView");
-    const publicVisible = !!(publicView && !publicView.classList.contains("hidden"));
-    const adminVisible = !!(adminView && !adminView.classList.contains("hidden"));
+    const publicVisible = isPublicBookingSurfaceVisible();
+    const adminVisible = isAdminBookingSurfaceVisible();
     if (!publicVisible && !adminVisible) return true;
 
-    const bookingsOk = await loadBookings(!!silentLoad);
+    const bookingsOk = adminVisible
+      ? await loadBookings(!!silentLoad, { mode: "full" })
+      : await loadBookings(!!silentLoad, {
+          mode: "busy",
+          excludeBookingId: manageBookingData?.id || null
+        });
     if (!bookingsOk) return false;
 
     if (publicVisible) {
@@ -66246,10 +66442,8 @@
   async function handleBookingRealtimeRefresh() {
     if (!businessId || !isValidUuid(businessId)) return;
 
-    const publicView = document.getElementById("publicView");
-    const adminView = document.getElementById("adminView");
-    const publicVisible = !!(publicView && !publicView.classList.contains("hidden"));
-    const adminVisible = !!(adminView && !adminView.classList.contains("hidden"));
+    const publicVisible = isPublicBookingSurfaceVisible();
+    const adminVisible = isAdminBookingSurfaceVisible();
     if (!publicVisible && !adminVisible) return;
 
     await refreshBookingsAfterChange(true);
@@ -66259,9 +66453,17 @@
     stopBookingRealtime();
     if (!sb || !businessId || !isValidUuid(businessId)) return;
 
-    bookingRealtimeChannel = sb
-      .channel("booking-availability-" + businessId)
-      .on(
+    ensurePublicBusySlotsFocusRefresh();
+
+    const adminVisible = isAdminBookingSurfaceVisible();
+    const channel = sb.channel("booking-availability-" + businessId);
+
+    // Bookings postgres_changes require SELECT on matched rows. After
+    // public_can_read_bookings is dropped, guests/customers will not receive
+    // booking events — admin owner SELECT still works. Public uses focus /
+    // selection refresh of get_business_busy_slots instead.
+    if (adminVisible) {
+      channel.on(
         "postgres_changes",
         {
           event: "*",
@@ -66270,7 +66472,10 @@
           filter: "business_id=eq." + businessId
         },
         (payload) => handleBookingRealtimeChange(payload)
-      )
+      );
+    }
+
+    channel
       .on(
         "postgres_changes",
         {
@@ -66292,6 +66497,8 @@
         () => scheduleBookingRealtimeRefresh()
       )
       .subscribe();
+
+    bookingRealtimeChannel = channel;
   }
 
   function getFilteredBookings() {
@@ -68553,7 +68760,7 @@
       return;
     }
 
-    await loadBookings();
+    await loadBookings(false, { mode: "full" });
 
     const conflict = hasConflict(date, time, serviceId, null, staffId);
     if (conflict) {
@@ -68652,7 +68859,7 @@
       ctxBanner.classList.add("hidden");
     }
 
-    await loadBookings(true);
+    await loadBookings(true, { mode: "full" });
     clearAdminAddMobileSlotIfInvalid();
     renderAdminAddMobileSlots();
 
@@ -73491,7 +73698,9 @@
     } else {
       refreshPublicAvailability({ refreshCalendar: false });
     }
-    void dateChanged;
+    if (dateChanged) {
+      schedulePublicBusySlotsNetworkRefresh("date");
+    }
   }
 
   function renderSlots(dateStr, serviceIdOverride) {
@@ -73828,7 +74037,7 @@
     try {
       try {
         await Promise.race([
-          Promise.all([loadBookings(), loadStaffMembers()]),
+          Promise.all([loadBookings(false, { mode: "busy" }), loadStaffMembers()]),
           new Promise((resolve) => setTimeout(() => resolve(null), 6000))
         ]);
       } catch (prefetchErr) {
