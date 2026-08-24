@@ -45,6 +45,8 @@
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>XBook uses your location only when you choose Use my current location to set your business address.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>

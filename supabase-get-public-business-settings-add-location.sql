@@ -1,28 +1,20 @@
 -- =============================================================================
--- XBook STEP 6A: get_public_business_settings (FINAL — live types)
--- Bounded public business profile/settings for ONE business (by id OR slug).
+-- XBook: add business_latitude / business_longitude to get_public_business_settings
 --
--- DO NOT drop public_can_read_business_settings in this step.
--- DO NOT modify business_settings RLS policies in this step.
--- DO NOT create any new business_slug index/constraint
---   (UNIQUE already exists: business_settings_business_slug_key).
--- DO NOT change index.html in this step.
+-- WHY THIS FILE EXISTS
+-- PostgreSQL 42P13: CREATE OR REPLACE cannot change RETURNS TABLE.
+-- The live function is still the old signature (no lat/lng).
+-- Columns business_latitude / business_longitude already exist on business_settings.
 --
--- LIVE schema: business_latitude / business_longitude now exist on business_settings.
--- Adding them to this RPC REQUIRES DROP FUNCTION first (PostgreSQL 42P13).
--- Run supabase-get-public-business-settings-add-location.sql instead of this file.
---
--- Intentionally omitted from the OLD live RPC (still deployed until DROP+CREATE):
---   business_latitude, business_longitude (added by the add-location SQL),
---   business_currency, recurring_allowed_interval_weeks, recurring_max_duration_months.
--- Intentionally omitted (private/admin): business_email, notification_email,
---   onboarding_*, timezone, public_layout, booking_limits_*, max_bookings_*,
---   block_public_holidays, holiday_country.
+-- DO NOT run supabase-get-public-business-settings.sql for this change.
+-- DO NOT execute from the app. Run once in Supabase Dashboard → SQL Editor.
 -- =============================================================================
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION public.get_public_business_settings(
+DROP FUNCTION IF EXISTS public.get_public_business_settings(uuid, text);
+
+CREATE FUNCTION public.get_public_business_settings(
   p_business_id uuid DEFAULT NULL,
   p_business_slug text DEFAULT NULL
 )
@@ -37,6 +29,8 @@ RETURNS TABLE (
   business_cover_url text,
   business_accent_color text,
   business_address text,
+  business_latitude double precision,
+  business_longitude double precision,
   business_phone text,
   business_website text,
   business_instagram_url text,
@@ -106,6 +100,8 @@ BEGIN
       bs.business_cover_url,
       bs.business_accent_color,
       bs.business_address,
+      bs.business_latitude,
+      bs.business_longitude,
       bs.business_phone,
       bs.business_website,
       bs.business_instagram_url,
@@ -144,6 +140,8 @@ BEGIN
     bs.business_cover_url,
     bs.business_accent_color,
     bs.business_address,
+    bs.business_latitude,
+    bs.business_longitude,
     bs.business_phone,
     bs.business_website,
     bs.business_instagram_url,
@@ -171,37 +169,23 @@ END;
 $$;
 
 COMMENT ON FUNCTION public.get_public_business_settings(uuid, text) IS
-  'STEP 6A: Public/customer safe business settings for ONE business by id or slug. Explicit live public columns only. Excludes email/notification/onboarding/limits/holiday admin fields and columns not present in production.';
+  'Public/customer safe business settings for ONE business by id or slug. Includes optional business_latitude/business_longitude. Excludes email/notification/onboarding/limits/holiday admin fields.';
 
 REVOKE ALL ON FUNCTION public.get_public_business_settings(uuid, text) FROM PUBLIC;
 
 GRANT EXECUTE ON FUNCTION public.get_public_business_settings(uuid, text)
   TO anon, authenticated;
 
+NOTIFY pgrst, 'reload schema';
+
 COMMIT;
 
 -- =============================================================================
 -- Direct tests (run after APPLY; replace placeholders)
 -- =============================================================================
--- Valid slug:
---   SELECT * FROM public.get_public_business_settings(NULL, 'YOUR-SLUG-HERE');
---
--- Valid UUID:
---   SELECT * FROM public.get_public_business_settings('YOUR-UUID-HERE'::uuid, NULL);
---
--- Private columns must NOT appear in result metadata:
---   SELECT column_name
---   FROM information_schema.columns
---   WHERE table_name = '' -- N/A for set-returning fn; use:
---   SELECT * FROM public.get_public_business_settings(NULL, 'YOUR-SLUG-HERE');
---   -- then confirm result has no: business_email, notification_email,
---   -- onboarding_*, timezone, public_layout, booking_limits_*, max_bookings_*,
---   -- block_public_holidays, holiday_country
---
--- Or:
---   SELECT pg_get_function_result(
---     'public.get_public_business_settings(uuid, text)'::regprocedure
---   );
---
--- Rollback:
---   DROP FUNCTION IF EXISTS public.get_public_business_settings(uuid, text);
+-- SELECT * FROM public.get_public_business_settings(NULL, 'YOUR-SLUG-HERE');
+-- SELECT * FROM public.get_public_business_settings('YOUR-UUID-HERE'::uuid, NULL);
+-- Confirm result includes business_latitude and business_longitude.
+-- Confirm result has no: business_email, notification_email, onboarding_*,
+--   timezone, public_layout, booking_limits_*, max_bookings_*,
+--   block_public_holidays, holiday_country.
