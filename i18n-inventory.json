@@ -1152,12 +1152,6 @@
       ]
     },
     {
-      "string": "Closed days",
-      "contexts": [
-        "span.overview-kpi__label"
-      ]
-    },
-    {
       "string": "Closes",
       "contexts": [
         "label.wizard-field-label"
