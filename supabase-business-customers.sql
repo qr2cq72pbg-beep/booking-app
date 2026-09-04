@@ -299,6 +299,11 @@ BEGIN
     AND client_key = v_key;
 
   IF FOUND THEN
+    -- Linked membership: never blindly replace trusted identity from a booking form.
+    IF v_row.customer_user_id IS NOT NULL THEN
+      RETURN v_row;
+    END IF;
+
     UPDATE public.business_customers
     SET
       display_name = coalesce(nullif(trim(p_name), ''), display_name),
@@ -351,8 +356,12 @@ COMMENT ON FUNCTION public.ensure_business_customer(uuid, text, text, text) IS
   'Returns existing CRM customer or assigns next customer_number for that business only.';
 
 REVOKE ALL ON FUNCTION public.ensure_business_customer(uuid, text, text, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.ensure_business_customer(uuid, text, text, text)
+  FROM anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.ensure_business_customer(uuid, text, text, text)
-  TO authenticated, service_role;
+  TO service_role;
+-- Canonical ACL: internal helper. Owners use ensure_business_customer_for_owner.
+-- Nested SECURITY DEFINER callers keep access via function owner (postgres).
 
 -- -----------------------------------------------------------------------------
 -- 8) RLS (same ownership model as business_client_notes)

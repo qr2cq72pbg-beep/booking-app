@@ -4,48 +4,34 @@
 --   supabase-business-customers.sql
 --   supabase-client-approval.sql (for _lookup_business_customer_row / _booking_client_key)
 --
--- Safe to re-run (idempotent).
+-- NOT safe to re-run the historical customer_user_id backfill (removed below).
+-- Notification recipient INSERT remains idempotent (ON CONFLICT DO NOTHING).
 -- Does NOT modify guest bookings (only reads bookings.customer_user_id IS NOT NULL).
 -- Does NOT overwrite existing business_customers.customer_user_id values.
+--
+-- Membership helpers live in supabase-safe-customer-identity-linking.sql.
+-- If you re-run this file, re-run that identity file afterwards.
 
 BEGIN;
 
 -- ---------------------------------------------------------------------------
--- 1) Link CRM rows: backfill business_customers.customer_user_id from bookings
---    Only where CRM row exists and customer_user_id is still NULL.
+-- 1) HISTORICAL / UNSAFE — executable customer_user_id backfill REMOVED.
+--    This UPDATE stamped bookings.customer_user_id onto every matching
+--    business_customers.client_key and attached one auth account to many
+--    distinct CRM rows. It must NEVER be rerun against the unique membership
+--    model. Account linking is only via _ensure_business_customer_membership.
 -- ---------------------------------------------------------------------------
-UPDATE public.business_customers bc
-SET
-  customer_user_id = sub.customer_user_id,
-  updated_at = now()
-FROM (
-  SELECT DISTINCT ON (
-    b.business_id,
-    public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name)
-  )
-    b.business_id,
-    public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name) AS client_key,
-    b.customer_user_id
-  FROM public.bookings b
-  WHERE b.customer_user_id IS NOT NULL
-    AND public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name) IS NOT NULL
-    AND EXISTS (
-      SELECT 1
-      FROM auth.users u
-      WHERE u.id = b.customer_user_id
-    )
-  ORDER BY
-    b.business_id,
-    public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name),
-    b.created_at DESC NULLS LAST
-) sub
-WHERE bc.business_id = sub.business_id
-  AND bc.client_key = sub.client_key
-  AND bc.customer_user_id IS NULL;
 
 -- ---------------------------------------------------------------------------
--- 2) Future logins: link auth user on existing CRM membership rows when missing.
+-- 2) Future logins: SUPERSEDED.
+--    public._ensure_business_customer_membership is defined by
+--    supabase-safe-customer-identity-linking.sql (safe matching).
+--    This file no longer CREATE OR REPLACEs it, so re-running cannot restore
+--    email-OR-phone LIMIT 1 claiming.
+--    The historical function body is kept below as a comment only.
 -- ---------------------------------------------------------------------------
+/*
+HISTORICAL UNSAFE BODY — DO NOT UNCOMMENT.
 CREATE OR REPLACE FUNCTION public._ensure_business_customer_membership(
   p_business_id        uuid,
   p_customer_user_id   uuid,
@@ -121,6 +107,7 @@ BEGIN
   RETURN v_row;
 END;
 $$;
+*/
 
 -- ---------------------------------------------------------------------------
 -- 3) Backfill notification_recipients for existing notifications.

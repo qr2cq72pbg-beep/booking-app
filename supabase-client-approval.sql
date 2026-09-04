@@ -5,6 +5,9 @@
 --
 -- Extends business_customers with approval_status (reuses CRM registry).
 -- Enforces rules via BEFORE INSERT trigger on bookings + helper RPCs.
+--
+-- Identity matching for authenticated membership is defined in
+-- supabase-safe-customer-identity-linking.sql. Re-run that file after this one.
 
 BEGIN;
 
@@ -85,25 +88,20 @@ SET approval_status = 'approved'
 WHERE approval_status IS NULL
    OR trim(approval_status) = '';
 
--- Link customer_user_id from past bookings where possible.
-UPDATE public.business_customers bc
-SET customer_user_id = sub.customer_user_id
-FROM (
-  SELECT DISTINCT ON (b.business_id, public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name))
-    b.business_id,
-    public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name) AS client_key,
-    b.customer_user_id
-  FROM public.bookings b
-  WHERE b.customer_user_id IS NOT NULL
-    AND public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name) IS NOT NULL
-  ORDER BY
-    b.business_id,
-    public._booking_client_key(b.customer_phone, b.customer_email, b.customer_name),
-    b.created_at DESC NULLS LAST
-) sub
-WHERE bc.business_id = sub.business_id
-  AND bc.client_key = sub.client_key
-  AND bc.customer_user_id IS NULL;
+-- HISTORICAL / UNSAFE — DO NOT RUN.
+-- This booking-wide UPDATE stamped bookings.customer_user_id onto every
+-- matching business_customers.client_key. That is how one auth account was
+-- attached to many distinct CRM rows (different phones/names/emails).
+-- Account linking must happen ONLY through the safe membership RPC:
+--   public._ensure_business_customer_membership
+--   (see supabase-safe-customer-identity-linking.sql).
+-- Do NOT re-enable this backfill. Do NOT alter historical live CRM data again.
+--
+-- UPDATE public.business_customers bc
+-- SET customer_user_id = sub.customer_user_id
+-- FROM ( DISTINCT ON (business_id, client_key) bookings.customer_user_id ) sub
+-- WHERE bc.client_key = sub.client_key
+--   AND bc.customer_user_id IS NULL;
 
 -- ---------------------------------------------------------------------------
 -- 3) Match client to bookings / registry
@@ -169,42 +167,28 @@ DECLARE
   v_row public.business_customers%ROWTYPE;
   v_key text;
 BEGIN
+  -- Authenticated identity: only the unique membership row.
+  -- Never fall through to name / email-OR-phone claiming.
   IF p_customer_user_id IS NOT NULL THEN
-    SELECT * INTO v_row
+    SELECT *
+    INTO v_row
     FROM public.business_customers bc
     WHERE bc.business_id = p_business_id
       AND bc.customer_user_id = p_customer_user_id
-    ORDER BY bc.updated_at DESC
     LIMIT 1;
-    IF FOUND THEN RETURN v_row; END IF;
+    RETURN v_row;
   END IF;
 
+  -- Guest / manual CRM: client_key only (p:/e:/n: historical grouping).
   v_key := public._booking_client_key(p_customer_phone, p_customer_email, p_customer_name);
   IF v_key IS NOT NULL THEN
-    SELECT * INTO v_row
+    SELECT *
+    INTO v_row
     FROM public.business_customers bc
     WHERE bc.business_id = p_business_id
       AND bc.client_key = v_key
     LIMIT 1;
-    IF FOUND THEN RETURN v_row; END IF;
   END IF;
-
-  SELECT * INTO v_row
-  FROM public.business_customers bc
-  WHERE bc.business_id = p_business_id
-    AND (
-      (
-        coalesce(nullif(lower(trim(p_customer_email)), ''), '') <> ''
-        AND lower(trim(coalesce(bc.email, ''))) = lower(trim(p_customer_email))
-      )
-      OR (
-        length(public._normalize_booking_phone(p_customer_phone)) >= 8
-        AND public._normalize_booking_phone(bc.phone)
-          = public._normalize_booking_phone(p_customer_phone)
-      )
-    )
-  ORDER BY bc.updated_at DESC
-  LIMIT 1;
 
   RETURN v_row;
 END;
@@ -212,6 +196,7 @@ $$;
 
 -- ---------------------------------------------------------------------------
 -- 4) Upsert pending / link auth user on registry row
+--    Canonical body also in supabase-safe-customer-identity-linking.sql
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public._upsert_business_customer_approval_row(
   p_business_id        uuid,
@@ -228,34 +213,44 @@ SET search_path = public
 AS $$
 DECLARE
   v_row public.business_customers%ROWTYPE;
-  v_key text;
   v_status text := lower(trim(coalesce(p_approval_status, 'pending')));
 BEGIN
   IF v_status NOT IN ('approved', 'pending', 'rejected', 'blocked') THEN
     v_status := 'pending';
   END IF;
 
+  IF p_customer_user_id IS NOT NULL THEN
+    v_row := public._ensure_business_customer_membership(
+      p_business_id,
+      p_customer_user_id,
+      p_customer_phone,
+      p_customer_email,
+      p_customer_name,
+      v_status
+    );
+    RETURN v_row;
+  END IF;
+
   v_row := public._lookup_business_customer_row(
-    p_business_id, p_customer_user_id, p_customer_phone, p_customer_email, p_customer_name
+    p_business_id, NULL, p_customer_phone, p_customer_email, p_customer_name
   );
 
   IF v_row.id IS NOT NULL THEN
+    IF v_row.customer_user_id IS NOT NULL THEN
+      RETURN v_row;
+    END IF;
+
     UPDATE public.business_customers
     SET
-      customer_user_id = coalesce(p_customer_user_id, customer_user_id),
       display_name = coalesce(nullif(trim(p_customer_name), ''), display_name),
       phone = coalesce(nullif(trim(p_customer_phone), ''), phone),
       email = coalesce(nullif(lower(trim(p_customer_email)), ''), email),
       approval_status = v_status,
       updated_at = now()
     WHERE id = v_row.id
+      AND customer_user_id IS NULL
     RETURNING * INTO v_row;
     RETURN v_row;
-  END IF;
-
-  v_key := public._booking_client_key(p_customer_phone, p_customer_email, p_customer_name);
-  IF v_key IS NULL THEN
-    RETURN NULL;
   END IF;
 
   v_row := public.ensure_business_customer(
@@ -266,12 +261,16 @@ BEGIN
     RETURN NULL;
   END IF;
 
+  IF v_row.customer_user_id IS NOT NULL THEN
+    RETURN v_row;
+  END IF;
+
   UPDATE public.business_customers
   SET
-    customer_user_id = coalesce(p_customer_user_id, customer_user_id),
     approval_status = v_status,
     updated_at = now()
   WHERE id = v_row.id
+    AND customer_user_id IS NULL
   RETURNING * INTO v_row;
 
   RETURN v_row;
@@ -295,20 +294,30 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
-  v_settings     public.business_settings%ROWTYPE;
   v_row          public.business_customers%ROWTYPE;
   v_status       text;
-  v_has_past     boolean;
   v_caller_uid   uuid := auth.uid();
   v_jwt_role     text := coalesce(nullif(auth.jwt() ->> 'role', ''), '');
+  v_lookup_uid   uuid;
 BEGIN
+  -- p_create_pending / phone / email / name kept for signature compatibility only.
+  -- Booking-time membership is (business_id, customer_user_id) + approval_status.
+
   IF p_business_id IS NULL THEN
-    RETURN jsonb_build_object('allowed', true, 'code', 'ok', 'message', '');
+    RETURN jsonb_build_object(
+      'allowed', false,
+      'code', 'no_business',
+      'message', 'Business not found.'
+    );
   END IF;
 
-  -- Admin manual booking bypass.
-  IF v_jwt_role <> 'service_role'
-     AND v_caller_uid IS NOT NULL
+  -- Preserve service_role / backend automation.
+  IF v_jwt_role = 'service_role' THEN
+    RETURN jsonb_build_object('allowed', true, 'code', 'service', 'message', '');
+  END IF;
+
+  -- Owner / manual booking bypass. Membership is not required.
+  IF v_caller_uid IS NOT NULL
      AND EXISTS (
        SELECT 1 FROM public.business_settings bs
        WHERE bs.business_id = p_business_id AND bs.business_id = v_caller_uid
@@ -316,36 +325,33 @@ BEGIN
     RETURN jsonb_build_object('allowed', true, 'code', 'admin', 'message', '');
   END IF;
 
-  SELECT * INTO v_settings FROM public.business_settings bs WHERE bs.business_id = p_business_id;
-  IF NOT FOUND THEN
-    RETURN jsonb_build_object('allowed', true, 'code', 'ok', 'message', '');
+  v_lookup_uid := coalesce(v_caller_uid, p_customer_user_id);
+  IF v_lookup_uid IS NULL THEN
+    RETURN jsonb_build_object(
+      'allowed', false,
+      'code', 'auth',
+      'message', 'This business requires an account to book.'
+    );
   END IF;
 
-  v_has_past := public._client_has_past_business_bookings(
-    p_business_id, p_customer_user_id, p_customer_phone, p_customer_email, p_customer_name
-  );
+  -- Authenticated membership only. Missing must not coalesce to approved.
+  -- Phone / email / name are never membership proof.
+  SELECT *
+  INTO v_row
+  FROM public.business_customers bc
+  WHERE bc.business_id = p_business_id
+    AND bc.customer_user_id = v_lookup_uid
+  LIMIT 1;
 
-  v_row := public._lookup_business_customer_row(
-    p_business_id, p_customer_user_id, p_customer_phone, p_customer_email, p_customer_name
-  );
-  v_status := lower(trim(coalesce(v_row.approval_status, 'approved')));
-
-  -- Legacy clients with past bookings are always treated as approved unless blocked.
-  IF v_has_past THEN
-    IF v_status = 'blocked' THEN
-      RETURN jsonb_build_object(
-        'allowed', false,
-        'code', 'blocked',
-        'message', 'You cannot book with this business.'
-      );
-    END IF;
-    IF v_row.id IS NOT NULL AND v_status <> 'approved' THEN
-      UPDATE public.business_customers
-      SET approval_status = 'approved', updated_at = now()
-      WHERE id = v_row.id AND approval_status <> 'approved';
-    END IF;
-    RETURN jsonb_build_object('allowed', true, 'code', 'legacy', 'message', '');
+  IF v_row.id IS NULL THEN
+    RETURN jsonb_build_object(
+      'allowed', false,
+      'code', 'no_membership',
+      'message', 'Join this business with its Business Code before you can book.'
+    );
   END IF;
+
+  v_status := lower(trim(coalesce(v_row.approval_status, '')));
 
   IF v_status = 'blocked' THEN
     RETURN jsonb_build_object(
@@ -371,42 +377,15 @@ BEGIN
     );
   END IF;
 
-  IF coalesce(v_settings.require_client_approval, false) = false
-     AND coalesce(v_settings.accept_new_clients, true) = true THEN
-    RETURN jsonb_build_object('allowed', true, 'code', 'ok', 'message', '');
+  IF v_status = 'approved' THEN
+    RETURN jsonb_build_object('allowed', true, 'code', 'approved', 'message', '');
   END IF;
 
-  IF coalesce(v_settings.accept_new_clients, true) = false THEN
-    IF v_status = 'approved' THEN
-      RETURN jsonb_build_object('allowed', true, 'code', 'approved', 'message', '');
-    END IF;
-    RETURN jsonb_build_object(
-      'allowed', false,
-      'code', 'closed',
-      'message', 'This business is not accepting new clients right now.'
-    );
-  END IF;
-
-  -- require_client_approval = true, accept_new_clients = true, new client.
-  IF coalesce(v_settings.require_client_approval, false) THEN
-    IF p_create_pending THEN
-      PERFORM public._upsert_business_customer_approval_row(
-        p_business_id,
-        p_customer_user_id,
-        p_customer_phone,
-        p_customer_email,
-        p_customer_name,
-        'pending'
-      );
-    END IF;
-    RETURN jsonb_build_object(
-      'allowed', false,
-      'code', 'request_sent',
-      'message', 'Your request has been sent. This business needs to approve new clients before they can book.'
-    );
-  END IF;
-
-  RETURN jsonb_build_object('allowed', true, 'code', 'ok', 'message', '');
+  RETURN jsonb_build_object(
+    'allowed', false,
+    'code', 'no_membership',
+    'message', 'Join this business with its Business Code before you can book.'
+  );
 END;
 $$;
 
@@ -431,7 +410,7 @@ BEGIN
     p_customer_phone,
     p_customer_email,
     p_customer_name,
-    true
+    false
   );
 
   IF coalesce((v_result ->> 'allowed')::boolean, false) THEN
@@ -470,7 +449,7 @@ BEGIN
     p_customer_phone,
     p_customer_email,
     p_customer_name,
-    true
+    false
   );
 END;
 $$;

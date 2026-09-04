@@ -49,5 +49,18 @@
 	<string>XBook uses your location only when you choose Use my current location to set your business address.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.gtwebstudio.booking.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>xbook</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
