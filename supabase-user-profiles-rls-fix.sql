@@ -84,6 +84,8 @@ COMMENT ON TABLE public.user_profiles IS
 -- ---------------------------------------------------------------------------
 -- 5) Auto-create profile on auth.users INSERT (email-confirm flows have no session)
 --    Reads full_name, phone, role from signUp options.data (raw_user_meta_data).
+--    Only explicit role=admin|customer is written. Missing/invalid role is not guessed
+--    (OAuth users have no XBOOK role metadata; frontend assigns from signup intent).
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.handle_new_user_profile()
 RETURNS trigger
@@ -96,10 +98,13 @@ DECLARE
   v_full_name text;
   v_phone text;
 BEGIN
-  v_role := lower(trim(coalesce(NEW.raw_user_meta_data->>'role', 'customer')));
+  v_role := lower(trim(coalesce(NEW.raw_user_meta_data->>'role', '')));
+
+  -- Explicit XBOOK signup metadata only. Never default OAuth / unknown to customer.
   IF v_role NOT IN ('customer', 'admin') THEN
-    v_role := 'customer';
+    RETURN NEW;
   END IF;
+
   v_full_name := nullif(trim(coalesce(NEW.raw_user_meta_data->>'full_name', '')), '');
   v_phone := nullif(trim(coalesce(NEW.raw_user_meta_data->>'phone', '')), '');
 
@@ -123,4 +128,4 @@ CREATE TRIGGER on_auth_user_created_profile
   EXECUTE FUNCTION public.handle_new_user_profile();
 
 COMMENT ON FUNCTION public.handle_new_user_profile() IS
-  'Creates user_profiles row from auth signUp metadata when client has no session yet.';
+  'Creates user_profiles from explicit auth signup metadata (role=admin|customer). Does not guess a role when metadata is missing (OAuth).';

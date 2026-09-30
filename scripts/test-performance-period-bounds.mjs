@@ -94,6 +94,24 @@ function buildPerformancePeriodRange(preset, year, parts) {
       return buildPerformanceMonthRange(selectedYear, 0, 5);
     case "h2":
       return buildPerformanceMonthRange(selectedYear, 6, 11);
+    case "this_week": {
+      const date = new Date(Date.UTC(parts.year, parts.monthIndex, parts.day));
+      const dow = date.getUTCDay();
+      date.setUTCDate(date.getUTCDate() + (dow === 0 ? -6 : 1 - dow));
+      const start = formatDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+      date.setUTCDate(date.getUTCDate() + 6);
+      return {
+        startDate: start,
+        endDate: formatDate(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+      };
+    }
+    case "this_quarter": {
+      const startMonth = Math.floor(currentMonth / 3) * 3;
+      return {
+        startDate: formatDate(currentYear, startMonth, 1),
+        endDate: formatDate(currentYear, startMonth + 2, performanceLastDayOfMonth(currentYear, startMonth + 2))
+      };
+    }
     case "ytd":
       return {
         startDate: formatDate(currentYear, 0, 1),
@@ -257,6 +275,26 @@ const ny = "America/New_York";
       rangeEq(last, "2025-12-01", "2025-12-31") &&
       utcHack !== undefined,
     `today=${today.startDate} last=${last.startDate}..${last.endDate} utcIso=${utcHack}`
+  );
+}
+
+{
+  const parts = { year: 2026, monthIndex: 8, day: 9 };
+  const week = buildPerformancePeriodRange("this_week", 2026, parts);
+  check(
+    "this_week_wednesday",
+    rangeEq(week, "2026-09-07", "2026-09-13"),
+    `${week.startDate}..${week.endDate}`
+  );
+}
+
+{
+  const parts = { year: 2026, monthIndex: 8, day: 10 };
+  const quarter = buildPerformancePeriodRange("this_quarter", 2026, parts);
+  check(
+    "this_quarter_sep",
+    rangeEq(quarter, "2026-07-01", "2026-09-30"),
+    `${quarter.startDate}..${quarter.endDate}`
   );
 }
 

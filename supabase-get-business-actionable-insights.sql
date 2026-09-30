@@ -89,7 +89,12 @@ BEGIN
     v_cmp_to,
     v_prev_from,
     v_prev_to
-  FROM public._service_analytics_comparison_windows(p_from_date, p_to_date, v_today) w;
+  FROM public._service_analytics_comparison_windows(
+    p_from_date,
+    p_to_date,
+    v_today,
+    nullif(current_setting('xbook.analytics_period_kind', true), '')
+  ) w;
 
   v_comparable := (v_comparison_type IS DISTINCT FROM 'not_applicable' AND v_cmp_from IS NOT NULL AND v_prev_from IS NOT NULL);
 
@@ -654,8 +659,32 @@ $$;
 COMMENT ON FUNCTION public.get_business_actionable_insights(uuid, date, date) IS
   'Owner-only Actionable Insights V1. Deterministic max-3 ranked observations from canonical visit/price/identity/Unassigned/trend formulas. Does not call existing analytics JSON RPCs. No localized prose.';
 
+CREATE OR REPLACE FUNCTION public.get_business_actionable_insights(
+  p_business_id uuid,
+  p_from_date date,
+  p_to_date date,
+  p_period_kind text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  PERFORM set_config('xbook.analytics_period_kind', coalesce(p_period_kind, ''), true);
+  RETURN public.get_business_actionable_insights(p_business_id, p_from_date, p_to_date);
+END;
+$$;
+
+COMMENT ON FUNCTION public.get_business_actionable_insights(uuid, date, date, text) IS
+  'Owner-only Actionable Insights with explicit period kind: this_week, this_quarter, last_month, or null inference.';
+
 REVOKE ALL ON FUNCTION public.get_business_actionable_insights(uuid, date, date) FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.get_business_actionable_insights(uuid, date, date) FROM anon, service_role;
+REVOKE ALL ON FUNCTION public.get_business_actionable_insights(uuid, date, date, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_business_actionable_insights(uuid, date, date, text) FROM anon, service_role;
+GRANT EXECUTE ON FUNCTION public.get_business_actionable_insights(uuid, date, date, text) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_business_actionable_insights(uuid, date, date) TO authenticated;
 
 COMMIT;

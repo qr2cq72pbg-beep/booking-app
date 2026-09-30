@@ -154,7 +154,7 @@ function formatServiceAnalyticsCancelledLine(row) {
 
 function formatServiceAnalyticsComparisonLabel(payload) {
   const type = String((payload && payload.comparison_type) || "");
-  if (type === "elapsed_mtd") {
+  if (type === "elapsed_mtd" || type === "elapsed_wtd" || type === "elapsed_qtd") {
     return t("saComparedElapsed", "Compared with equivalent elapsed period");
   }
   if (type === "not_applicable" || !(payload && payload.previous_from)) {
@@ -182,6 +182,9 @@ const runFnStart = html.indexOf("async function runAdminServiceAnalyticsReport")
 const runFn = runFnStart >= 0 ? html.slice(runFnStart, html.indexOf("function renderAdminServiceAnalytics")) : "";
 const paintListStart = html.indexOf("function paintServiceAnalyticsList");
 const paintList = paintListStart >= 0 ? html.slice(paintListStart, html.indexOf("function paintServiceAnalyticsPayload")) : "";
+const saSectionStart = html.indexOf('id="adminSectionServiceAnalytics"');
+const saSectionEnd = html.indexOf('id="adminSectionStaffAnalytics"');
+const saSection = saSectionStart >= 0 && saSectionEnd > saSectionStart ? html.slice(saSectionStart, saSectionEnd) : "";
 const saCssStart = html.indexOf("/* Service Analytics — ranking cards");
 const saCss = saCssStart >= 0 ? html.slice(saCssStart, html.indexOf("/* Customer Analytics — presentation extras")) : "";
 
@@ -251,7 +254,7 @@ const septemberUpcoming = {
 /* 1 entry */
 assert(html.includes('data-admin-section="service-analytics"'), "1 Service Analytics entry renders");
 assert(html.includes('id="adminSectionServiceAnalytics"'), "1 section panel");
-assert(html.includes("setAdminSection('service-analytics')"), "1 overview hub entry");
+assert(html.includes('data-analytics-section="service-analytics"'), "1 Services remains reachable from Analytics segmented navigation");
 assert(html.includes("Аналитика на услуги") && html.includes("Analitika e shërbimeve"), "1 MK/SQ titles");
 
 /* 2–5 RPC */
@@ -269,6 +272,27 @@ assert(html.includes('data-i18n="saTopByRevenue"') && html.includes('id="saKpiRe
 assert(html.includes('data-i18n="saServicesUsed"') && html.includes('id="saKpiUsed"'), "8 Services Used renders");
 assert(html.includes("payload.summary") || html.includes("summary.top_service_by_visits") || html.includes("top_service_by_visits"), "27 uses backend summary objects");
 assert(html.includes("summary.top_service_by_visits") || html.includes("topVisits.display_name"), "27 no JS top recompute");
+const saGrid = saSection.slice(
+  saSection.indexOf("admin-performance-kpi-grid--sa-summary"),
+  saSection.indexOf("serviceAnalyticsEstimatedNote")
+);
+assert((saGrid.match(/<article class="admin-performance-kpi/g) || []).length === 3, "6–8 exactly 3 Service KPI cells");
+assert(saGrid.indexOf('id="saKpiVisitsValue"') < saGrid.indexOf('id="saKpiVisitsName"'), "6 visits metric is primary");
+assert(saGrid.indexOf('id="saKpiRevenueValue"') < saGrid.indexOf('id="saKpiRevenueName"'), "7 revenue metric is primary");
+assert(saGrid.includes('id="saKpiUsedContext"'), "8 Services Used context slot");
+assert((saGrid.match(/admin-performance-kpi__value/g) || []).length >= 3, "6–8 shared KPI value class");
+assert((saGrid.match(/admin-performance-kpi__hint/g) || []).length >= 3, "6–8 shared KPI context class");
+assert(!saGrid.includes("admin-sa-kpi__name") && !saGrid.includes("admin-sa-kpi__metric"), "6–8 no Services-only KPI typography classes");
+assert(html.includes("admin-performance-kpi--sa-span") && html.includes("grid-column: 1 / -1"), "8 third KPI spans full width");
+const saMoneyCssStart = html.indexOf("#adminSectionServiceAnalytics .admin-performance-kpi-grid--sa-summary .admin-performance-kpi__value--money,");
+const saMoneyCss = saMoneyCssStart >= 0 ? html.slice(saMoneyCssStart, html.indexOf("}", saMoneyCssStart) + 1) : "";
+assert(saMoneyCss.includes("white-space: nowrap"), "7 Services money stays on one line");
+assert(saMoneyCss.includes("flex-wrap: nowrap"), "7 Services money does not wrap currency");
+assert(html.includes("admin-performance-kpi__value--money-long"), "7 extreme money uses tighter size");
+assert(!/#adminSectionServiceAnalytics \.admin-performance-kpi-grid--sa-summary \.admin-performance-kpi__value--money,[\s\S]{0,280}flex-wrap:\s*wrap/.test(html), "7 Services money no longer uses Team wrap");
+assert(html.includes("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__value--money") && html.includes("flex-wrap: wrap"), "7 Team money wrap rule remains");
+assert(html.includes('saServicesUsedContext: "services"') && html.includes('saServicesUsedContext: "услуги"') && html.includes('saServicesUsedContext: "shërbime"'), "8 EN/MK/SQ used-services context");
+assert(html.includes("setServiceAnalyticsKpiMoney") && html.includes("formatServiceAnalyticsUsedContext"), "7/8 presentation-only KPI paint");
 
 /* 9 estimated note */
 assert(shouldShowServiceAnalyticsEstimatedNote({ contains_estimated_prices: true }), "9 estimated note when true");
@@ -440,6 +464,9 @@ assert(formatServiceAnalyticsTrend(augustServices[0].visit_trend) === "-47.4%", 
 assert(formatServiceAnalyticsTrend(augustServices[1].visit_trend) === "+50%", "T August Masaza trend");
 assert(formatServiceAnalyticsTrend(augustServices[2].visit_trend) === "-75%", "T August combo trend");
 assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "elapsed_mtd", previous_from: "2026-08-01" }) === "Compared with equivalent elapsed period", "K elapsed MTD wording");
+assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "elapsed_wtd", previous_from: "2026-08-31" }) === "Compared with equivalent elapsed period", "K elapsed WTD wording");
+assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "elapsed_qtd", previous_from: "2026-04-01" }) === "Compared with equivalent elapsed period", "K elapsed QTD wording");
+assert(html.includes('type === "elapsed_wtd"') && html.includes("closed_calendar_month"), "K week/quarter/month kinds in UI");
 
 /* 35 SQL files unchanged in this phase */
 assert(!html.includes("CREATE OR REPLACE FUNCTION public.get_business_service_analytics"), "35 no SQL in index.html");
@@ -453,7 +480,14 @@ try {
 } catch {
   sqlDiff = "git-error";
 }
-assert(sqlDiff === "", `35 no SQL files changed (${sqlDiff || "clean"})`);
+const allowedSql = new Set([
+  "supabase-get-business-service-analytics.sql",
+  "supabase-get-business-service-analytics-tests.sql"
+]);
+assert(
+  sqlDiff === "" || sqlDiff.split("\n").every((name) => allowedSql.has(name)),
+  `35 only approved comparison-window SQL may change (${sqlDiff || "clean"})`
+);
 
 /* period reuse */
 assert(html.includes("serviceAnalyticsPresetChips") && html.includes("getActivePerformancePeriodRange"), "C period reuse");

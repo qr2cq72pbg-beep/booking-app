@@ -202,7 +202,9 @@ BEGIN
     'grants_authenticated_only',
     has_function_privilege('authenticated', 'public.get_business_staff_analytics(uuid,date,date)', 'EXECUTE')
       AND NOT has_function_privilege('anon', 'public.get_business_staff_analytics(uuid,date,date)', 'EXECUTE')
-      AND NOT has_function_privilege('service_role', 'public.get_business_staff_analytics(uuid,date,date)', 'EXECUTE'),
+      AND NOT has_function_privilege('service_role', 'public.get_business_staff_analytics(uuid,date,date)', 'EXECUTE')
+      AND has_function_privilege('authenticated', 'public.get_business_staff_analytics(uuid,date,date,text)', 'EXECUTE')
+      AND NOT has_function_privilege('anon', 'public.get_business_staff_analytics(uuid,date,date,text)', 'EXECUTE'),
     'authenticated execute; anon/service_role revoked'
   );
 

@@ -149,7 +149,7 @@ function formatServiceAnalyticsShare(pct, kind) {
 
 function formatServiceAnalyticsComparisonLabel(payload) {
   const type = String((payload && payload.comparison_type) || "");
-  if (type === "elapsed_mtd") {
+  if (type === "elapsed_mtd" || type === "elapsed_wtd" || type === "elapsed_qtd") {
     return t("saComparedElapsed", "Compared with equivalent elapsed period");
   }
   if (type === "not_applicable" || !(payload && payload.previous_from)) {
@@ -402,7 +402,7 @@ const augustSummary = {
 /* 1 navigation */
 assert(html.includes('data-admin-section="staff-analytics"'), "1 Staff Analytics navigation entry exists");
 assert(html.includes('id="adminSectionStaffAnalytics"'), "1 section panel");
-assert(html.includes("setAdminSection('staff-analytics')"), "2 mobile Quick Action exists");
+assert(html.includes('data-analytics-section="staff-analytics"'), "2 Team remains reachable from Analytics segmented navigation");
 assert(
   html.indexOf('data-admin-section="service-analytics"') < html.indexOf('data-admin-section="staff-analytics"') &&
     html.indexOf('data-admin-section="performance"') < html.indexOf('data-admin-section="customer-analytics"'),
@@ -416,7 +416,7 @@ assert(html.includes('overview: "overview"') && html.includes('settings: "profil
 
 /* 4–7 mobile Back */
 assert(html.includes('id="staffHomeBackBtn"'), "4 mobile Back exists");
-assert(staffSection.includes("onclick=\"setAdminSection('overview')\""), "5 Back → setAdminSection('overview')");
+assert(staffSection.includes("onclick=\"setAdminSection('performance')\""), "5 Back → Analytics Overview");
 assert(staffSection.includes('class="admin-ca-seg-back"') && staffSection.includes('data-i18n="commonBack"'), "4 Back reuses admin-ca-seg-back / commonBack");
 assert(staCss.includes("#adminSectionStaffAnalytics") || html.includes("#adminSectionStaffAnalytics"), "6 Back protected via shared analytics chrome");
 assert(
@@ -474,6 +474,24 @@ assert(formatStaffAnalyticsTeamActivity(augustSummary) === "1 of 1 active", "17 
 assert(formatStaffAnalyticsUnassignedShareKpi(0) === "0% unassigned", "18 known zero share");
 assert(formatStaffAnalyticsUnassignedShareKpi(35.4) === "35.4% unassigned", "18 YTD unassigned share");
 assert(formatStaffAnalyticsUnassignedShareKpi(null) === "N/A", "18 null share is N/A");
+const staGrid = staffSection.slice(
+  staffSection.indexOf("admin-performance-kpi-grid--sta-summary"),
+  staffSection.indexOf("staffAnalyticsUnassignedNote")
+);
+assert(staGrid.indexOf('id="staKpiVisitsValue"') < staGrid.indexOf('id="staKpiVisitsName"'), "15 visits metric is primary");
+assert(staGrid.indexOf('id="staKpiRevenueValue"') < staGrid.indexOf('id="staKpiRevenueName"'), "16 revenue metric is primary");
+assert(staGrid.includes('id="staKpiTeamContext"') && staGrid.includes('id="staKpiUnassignedShareContext"'), "17/18 KPI context slots");
+assert((staGrid.match(/admin-performance-kpi__value/g) || []).length >= 4, "15–18 shared KPI value class");
+assert((staGrid.match(/admin-performance-kpi__hint/g) || []).length >= 4, "15–18 shared KPI context class");
+const staMoneyFitStart = html.indexOf("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__value--money,\n    body.admin-mobile-shell-active #adminView #adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__value--money");
+const staMoneyFitCss = staMoneyFitStart >= 0 ? html.slice(staMoneyFitStart, html.indexOf("}", staMoneyFitStart) + 1) : "";
+assert(staMoneyFitCss.includes("white-space: nowrap") && staMoneyFitCss.includes("flex-wrap: nowrap"), "16 Team money stays on one line");
+assert(html.includes("#adminSectionServiceAnalytics .admin-performance-kpi-grid--sa-summary .admin-performance-kpi__value--money") && html.includes("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__value--money"), "16 Team reuses Services money fitting");
+assert(html.includes("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi") && /#adminSectionStaffAnalytics \.admin-performance-kpi-grid--sta-summary \.admin-performance-kpi,[\s\S]{0,260}min-height:\s*0/.test(html), "15–18 Team KPI cells are compact");
+assert(html.includes(".admin-performance-kpi:nth-child(n + 3)") && html.includes("gap: 4px"), "17/18 Team bottom row is more compact");
+assert(!staMoneyFitCss.includes("flex-wrap: wrap"), "16 Team money no longer wraps currency");
+assert(paintSummary.includes("formatStaffAnalyticsTeamActivityValue") && paintSummary.includes("formatStaffAnalyticsUnassignedShareValue"), "17/18 split KPI paint");
+assert(html.includes("staff_with_period_activity") && html.includes("active_team_size"), "17 Team Activity keeps RPC fields");
 
 /* 20–25 real staff card */
 assert(paintList.includes("formatStaffAnalyticsVisitsLine(row && row.completed_visits)"), "20 real staff card shows visits");
@@ -533,6 +551,7 @@ assert(html.includes("formatServiceAnalyticsEstimatedNote") && html.includes("st
 assert(html.includes("Historical values include estimated service prices."), "35 EN estimated copy");
 assert(html.includes("staffAnalyticsCompareLabel") && html.includes("formatServiceAnalyticsComparisonLabel"), "36 comparison context renders");
 assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "elapsed_mtd", previous_from: "2026-08-01" }) === "Compared with equivalent elapsed period", "36 elapsed wording");
+assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "elapsed_wtd", previous_from: "2026-08-31" }) === "Compared with equivalent elapsed period", "36 elapsed WTD wording");
 assert(formatServiceAnalyticsComparisonLabel({ comparison_type: "previous_period", previous_from: "2026-07-01" }) === "Compared with previous period", "36 previous wording");
 assert(!paintList.includes("comparison_type"), "36 technical comparison_type not on cards");
 
@@ -559,14 +578,14 @@ assert(html.includes('staUnassigned: "Unassigned"') && html.includes("Bookings w
 assert(html.includes('staInactive: "Inactive"') && html.includes("Archived / missing staff"), "44 EN inactive/orphan");
 assert(html.includes("A significant share of completed visits is unassigned to staff."), "44 EN unassigned warning");
 assert(html.includes('commonStaffAnalytics: "Аналитика на вработени"'), "45 MK Staff Analytics");
-assert(html.includes("Нема активност на вработени во овој период."), "45 MK empty");
-assert(html.includes("Значителен дел од реализираните посети се без вработен."), "45 MK unassigned warning");
-assert(html.includes("Термини без доделен вработен."), "45 MK unassigned hint");
+assert(html.includes("Нема активност на тимот во овој период."), "45 MK empty");
+assert(html.includes("Значителен дел од завршените посети се недоделени."), "45 MK unassigned warning");
+assert(html.includes("Резервации без доделен член на тимот."), "45 MK unassigned hint");
 assert(html.includes('staInactive: "Неактивен"'), "45 MK Inactive");
 assert(html.includes('commonStaffAnalytics: "Analitika e stafit"'), "46 SQ Staff Analytics");
-assert(html.includes("Nuk ka aktivitet stafi në këtë periudhë."), "46 SQ empty");
+assert(html.includes("Nuk ka aktivitet të ekipit në këtë periudhë."), "46 SQ empty");
 assert(html.includes('staInactive: "Joaktiv"'), "46 SQ Inactive");
-assert(html.includes("Rezervime pa anëtar stafi të caktuar."), "46 SQ unassigned hint");
+assert(html.includes("Rezervime pa anëtar të caktuar të ekipit."), "46 SQ unassigned hint");
 
 /* 47–51 existing analytics unchanged */
 assert(html.includes('id="adminSectionPerformance"') && html.includes("performanceKpiCompletedRevenue"), "47 Performance unchanged");
@@ -576,8 +595,8 @@ assert(html.includes('id="adminSectionServiceAnalytics"') && html.includes("saKp
 assert(html.includes('sb.rpc("get_business_service_analytics"'), "49 Service Analytics RPC unchanged");
 assert(html.includes('id="caDetVipBtn"') && html.includes("caDetMarkVip: \"Mark VIP\""), "50 VIP unchanged");
 assert(html.includes("caDetNotesTitle: \"Internal Notes\"") && html.includes('id="caDetNotesCard"'), "50 Notes unchanged");
-assert(html.includes('id="saHomeBackBtn"') && html.includes('id="perfHomeBackBtn"') && html.includes('id="caHomeBackBtn"'), "51 analytics Home Back unchanged");
-assert(html.includes("onclick=\"setAdminSection('overview')\""), "51 Home Back destination unchanged");
+assert(html.includes('id="saHomeBackBtn"') && html.includes('id="perfHomeBackBtn"') && html.includes('id="caHomeBackBtn"'), "51 analytics Back controls retained");
+assert(html.includes("onclick=\"setAdminSection('performance')\""), "51 drill-down Back destination is Analytics Overview");
 
 /* 52 no SQL */
 assert(!html.includes("CREATE OR REPLACE FUNCTION public.get_business_staff_analytics"), "52 no SQL in index.html");
@@ -591,7 +610,14 @@ try {
 } catch {
   sqlDiff = "git-error";
 }
-assert(sqlDiff === "", `52 no SQL files changed (${sqlDiff || "clean"})`);
+const allowedSql = new Set([
+  "supabase-get-business-staff-analytics.sql",
+  "supabase-get-business-staff-analytics-tests.sql"
+]);
+assert(
+  sqlDiff === "" || sqlDiff.split("\n").every((name) => allowedSql.has(name)),
+  `52 only approved comparison-window SQL may change (${sqlDiff || "clean"})`
+);
 
 /* period reuse */
 assert(html.includes("staffAnalyticsPresetChips") && html.includes("getActivePerformancePeriodRange"), "D period reuse");

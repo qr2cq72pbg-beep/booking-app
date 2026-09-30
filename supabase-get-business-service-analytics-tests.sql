@@ -254,6 +254,60 @@ BEGIN
   );
 
   SELECT * INTO v_win
+  FROM public._service_analytics_comparison_windows(DATE '2026-09-07', DATE '2026-09-13', DATE '2026-09-09', 'this_week');
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'window_elapsed_wtd_wednesday',
+    v_win.comparison_type = 'elapsed_wtd'
+      AND v_win.comparison_current_from = DATE '2026-09-07'
+      AND v_win.comparison_current_to = DATE '2026-09-09'
+      AND v_win.previous_from = DATE '2026-08-31'
+      AND v_win.previous_to = DATE '2026-09-02',
+    format('%s curr=%s..%s prev=%s..%s', v_win.comparison_type, v_win.comparison_current_from, v_win.comparison_current_to, v_win.previous_from, v_win.previous_to)
+  );
+
+  SELECT * INTO v_win
+  FROM public._service_analytics_comparison_windows(DATE '2026-09-07', DATE '2026-09-13', DATE '2026-09-13', 'this_week');
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'window_elapsed_wtd_sunday',
+    v_win.comparison_type = 'elapsed_wtd'
+      AND v_win.previous_from = DATE '2026-08-31'
+      AND v_win.previous_to = DATE '2026-09-06',
+    format('%s prev=%s..%s', v_win.comparison_type, v_win.previous_from, v_win.previous_to)
+  );
+
+  SELECT * INTO v_win
+  FROM public._service_analytics_comparison_windows(DATE '2026-07-01', DATE '2026-09-30', DATE '2026-09-10', 'this_quarter');
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'window_elapsed_qtd_sep10',
+    v_win.comparison_type = 'elapsed_qtd'
+      AND v_win.comparison_current_from = DATE '2026-07-01'
+      AND v_win.comparison_current_to = DATE '2026-09-10'
+      AND v_win.previous_from = DATE '2026-04-01'
+      AND v_win.previous_to = DATE '2026-06-11',
+    format('%s curr=%s..%s prev=%s..%s', v_win.comparison_type, v_win.comparison_current_from, v_win.comparison_current_to, v_win.previous_from, v_win.previous_to)
+  );
+
+  SELECT * INTO v_win
+  FROM public._service_analytics_comparison_windows(DATE '2026-03-01', DATE '2026-03-31', DATE '2026-04-10', 'last_month');
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'window_closed_calendar_month_march',
+    v_win.comparison_type = 'closed_calendar_month'
+      AND v_win.previous_from = DATE '2026-02-01'
+      AND v_win.previous_to = DATE '2026-02-28',
+    format('%s prev=%s..%s', v_win.comparison_type, v_win.previous_from, v_win.previous_to)
+  );
+
+  SELECT * INTO v_win
+  FROM public._service_analytics_comparison_windows(DATE '2026-03-01', DATE '2026-03-31', DATE '2026-04-10', NULL);
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'window_custom_march_still_equal_length',
+    v_win.comparison_type = 'closed_equal_length'
+      AND v_win.previous_from = DATE '2026-01-29'
+      AND v_win.previous_to = DATE '2026-02-28',
+    format('%s prev=%s..%s', v_win.comparison_type, v_win.previous_from, v_win.previous_to)
+  );
+
+  SELECT * INTO v_win
   FROM public._service_analytics_comparison_windows(DATE '2026-10-01', DATE '2026-10-10', DATE '2026-09-01');
   INSERT INTO _xbook_sa4b_results VALUES (
     'window_future_not_applicable',
@@ -309,8 +363,16 @@ BEGIN
   INSERT INTO _xbook_sa4b_results VALUES (
     'helpers_not_granted',
     NOT has_function_privilege('authenticated', 'public._service_analytics_comparison_windows(date,date,date)', 'EXECUTE')
+      AND NOT has_function_privilege('authenticated', 'public._service_analytics_comparison_windows(date,date,date,text)', 'EXECUTE')
       AND NOT has_function_privilege('authenticated', 'public._service_analytics_trend(numeric,numeric,text,boolean)', 'EXECUTE'),
     'helpers revoked from authenticated'
+  );
+  INSERT INTO _xbook_sa4b_results VALUES (
+    'period_kind_overload_authenticated_only',
+    has_function_privilege('authenticated', 'public.get_business_service_analytics(uuid,date,date,text)', 'EXECUTE')
+      AND NOT has_function_privilege('anon', 'public.get_business_service_analytics(uuid,date,date,text)', 'EXECUTE')
+      AND NOT has_function_privilege('service_role', 'public.get_business_service_analytics(uuid,date,date,text)', 'EXECUTE'),
+    '4-arg period kind overload authenticated only'
   );
 
   -- -------------------------------------------------------------------------

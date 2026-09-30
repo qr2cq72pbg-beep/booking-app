@@ -163,7 +163,7 @@ const closeDetail = sliceBetween(html, "function closeCustomerAnalyticsCustomerD
 const bottomNav = sliceBetween(html, 'id="adminMobileBottomNav"', "</nav>");
 const xaCss = sliceBetween(html, "/* Cross Analytics — filter/segment chrome on shared Performance family */", "/* Customer Analytics — presentation extras on shared Performance chrome */");
 const nav = sliceBetween(html, 'id="adminNav"', "</nav>");
-const overviewActions = sliceBetween(html, 'class="overview-actions overview-actions--hub overview-actions--compact"', "</section>");
+const analyticsRail = sliceBetween(html, 'class="analytics-hub-nav"', "</nav>");
 
 const XA_PRESETS = {
   all: {},
@@ -179,22 +179,29 @@ const XA_PRESETS = {
 
 /* 1–5 navigation */
 assert(html.includes('id="adminSectionCrossAnalytics"'), "1 Cross Analytics section exists");
-assert(nav.includes('data-admin-section="cross-analytics"'), "2 desktop nav item exists");
 assert(
-  nav.indexOf('data-admin-section="staff-analytics"') < nav.indexOf('data-admin-section="cross-analytics"') &&
-    nav.indexOf('data-admin-section="service-analytics"') < nav.indexOf('data-admin-section="staff-analytics"'),
-  "2 desktop nav after Staff"
+  nav.includes('data-admin-section="performance"') &&
+    !nav.includes('data-admin-section="cross-analytics"'),
+  "2 desktop nav uses one Analytics destination"
 );
-assert(overviewActions.includes("setAdminSection('cross-analytics')"), "3 mobile Quick Action exists");
 assert(
-  overviewActions.indexOf("setAdminSection('staff-analytics')") <
-    overviewActions.indexOf("setAdminSection('cross-analytics')"),
-  "3 Quick Action after Staff Analytics"
+  !analyticsRail.includes('data-analytics-section="cross-analytics"') &&
+    html.includes("onclick=\"setAdminSection('cross-analytics')\"") &&
+    html.includes('data-i18n="analyticsAdvanced"'),
+  "3 Cross Analytics is preserved as contextual advanced analysis, not a fifth tab"
 );
 assert(!bottomNav.includes("cross-analytics"), "4 no bottom-nav Cross tab");
 assert(!bottomNav.includes('data-admin-mobile-tab="cross-analytics"'), "4 no cross-analytics mobile tab");
 assert(html.includes('id="crossHomeBackBtn"'), "5 mobile Back exists");
-assert(xaSection.includes("onclick=\"setAdminSection('overview')\""), "5 mobile Back → overview");
+assert(xaSection.includes("onclick=\"setAdminSection('performance')\""), "5 mobile Back → Analytics Overview");
+{
+  const start = xaSection.indexOf('id="crossHomeBackBtn"');
+  const tagStart = xaSection.lastIndexOf("<button", start);
+  const tagEnd = xaSection.indexOf("</button>", start);
+  const crossBack = tagStart >= 0 && tagEnd > tagStart ? xaSection.slice(tagStart, tagEnd + 9) : "";
+  assert(crossBack.includes('class="admin-ca-seg-back"') && !crossBack.includes(">Back</span>"), "5 Advanced Analysis Back is icon-only like Filters");
+}
+assert(xaCss.includes("#crossHomeBackBtn") && xaCss.includes("#xaFilterHeader .admin-xa-sheet__back") && xaCss.includes("flex: 0 0 44px"), "5 Advanced Analysis Back shares Filters 44x44 circle");
 
 /* 6–8 shared period */
 assert(xaSection.includes('id="crossAnalyticsPresetChips"'), "6 shared period controls used");
@@ -235,7 +242,7 @@ assert(xaJs.includes("crossAnalyticsState.offset = 0") && runFn.includes("const 
 assert(xaJs.includes('data-xa-gender') && xaJs.includes("out.gender"), "25 gender multi-select");
 assert(xaJs.includes("age_buckets") && xaJs.includes("under_18") && xaJs.includes("65_plus"), "26 age multi-select");
 assert(xaJs.includes("city_ids") && xaJs.includes("isXaUuid"), "27 city UUID filter");
-assert(xaJs.includes("city_unknown") && xaSection.includes('id="xaCityUnknown"'), "28 city unknown");
+assert(xaJs.includes("city_unknown") && xaJs.includes('xaPickerRowHtml("__unknown__"'), "28 city unknown");
 assert(xaJs.includes('data-xa-vip') && xaJs.includes("is_vip === true") && xaJs.includes("is_vip === false"), "29 VIP tri-state");
 assert(xaJs.includes('data-xa-type') && xaJs.includes('customer_type === "new"'), "30 customer type exclusive");
 assert(xaJs.includes('data-xa-freq') && xaJs.includes('visit_frequency === "repeat"') && xaJs.includes('"single"'), "31 repeat/single exclusive");
@@ -319,6 +326,19 @@ assert(paintPayload.includes("xaEmptyFiltered") && paintPayload.includes("xaEmpt
 assert(html.includes("No customers match these filters."), "69 empty filtered copy");
 assert(html.includes("No customers yet."), "70 empty no-customer copy");
 assert(!xaSection.includes("No activity in this period"), "70 does not use period-empty copy");
+assert(xaCss.includes(".admin-xa-more-error[hidden]"), "zero-result more-error [hidden] override exists");
+assert(html.includes(".admin-xa-more-error[hidden]") && html.includes("display: none !important"), "more-error hidden beats display:flex");
+assert(paintPayload.includes('setXaHidden("crossAnalyticsError", true)'), "success paint hides full-query Retry");
+assert(paintPayload.includes('setXaHidden("crossAnalyticsMoreError", true)'), "success paint hides more-error Retry");
+assert(paintPayload.includes('setXaHidden("crossAnalyticsEmpty", !empty)'), "success zero shows empty copy only");
+assert(
+  !paintPayload.includes('setXaHidden("crossAnalyticsMoreError", false)') &&
+    !paintPayload.includes('setXaHidden("crossAnalyticsError", false)'),
+  "success/zero paint never unhides Retry"
+);
+assert(runFn.includes("paintCrossAnalyticsUnavailable") && xaJs.includes('setXaHidden("crossAnalyticsError", false)'), "RPC error still shows Retry");
+assert(/#adminSectionCrossAnalytics \.admin-xa-sheet \{[\s\S]*?padding-top:\s*0/.test(xaCss), "Filters sheet no longer exposes the safe-area gap");
+assert(xaCss.includes("#xaFilterHeader") && xaCss.includes("env(safe-area-inset-top"), "Filters header surface owns safe-area inset");
 
 /* 71–75 customer detail reuse */
 assert(xaJs.includes("openCrossAnalyticsCustomerDetail") && xaJs.includes("openCustomerAnalyticsCustomerDetail(customerKey)"), "71 row click opens existing Customer Detail");
@@ -343,10 +363,16 @@ assert(paintRow.includes("<button type=\"button\"") && paintRow.includes("data-x
 assert(html.includes('commonCrossAnalytics: "Cross Analytics"'), "83 EN Cross Analytics");
 assert(html.includes('xaFilters: "Filters"') && html.includes('xaApplyFilters: "Apply Filters"'), "83 EN filter keys");
 assert(html.includes('commonCrossAnalytics: "Вкрстена аналитика"'), "84 MK title");
-assert(html.includes('xaCompletedVisits: "Реализирани посети"') && html.includes('xaCompletedRevenue: "Реализиран приход"'), "84 MK locked terminology");
+assert(html.includes('xaCompletedVisits: "Завршени посети"') && html.includes('xaCompletedRevenue: "Реализиран приход"'), "84 MK locked terminology");
 assert(html.includes('commonCrossAnalytics: "Analitika e kryqëzuar"'), "85 SQ title");
-assert(html.includes('xaCompletedVisits: "Vizita të realizuara"') && html.includes('xaCompletedRevenue: "Të ardhura të realizuara"'), "85 SQ locked terminology");
+assert(html.includes('xaCompletedVisits: "Vizita të përfunduara"') && html.includes('xaCompletedRevenue: "Të ardhura të realizuara"'), "85 SQ locked terminology");
 assert(html.includes("No customers match these filters.") && html.includes("Нема клиенти што одговараат на овие филтри.") && html.includes("Asnjë klient nuk përputhet me këta filtra."), "83–85 empty filtered i18n");
+assert(html.includes('xaPresetAtRisk30: "Inactive 30+ days"'), "83 inactivity wording EN");
+assert(html.includes('xaPresetAtRisk30: "Неактивни 30+ дена"'), "84 inactivity wording MK");
+assert(html.includes('xaPresetAtRisk30: "Joaktivë 30+ ditë"'), "85 inactivity wording SQ");
+assert(html.includes('sectionKey === "cross-analytics"') && html.includes('.analytics-hub-nav")?.remove()'), "hub nav is not a Cross destination");
+assert(xaCss.includes("flex-wrap: wrap") && xaCss.includes("var(--analytics-radius-control"), "segment presets use compact chip radius");
+assert(html.includes("function analyticsPeriodBarHtml(") && html.includes('sectionKey === "cross-analytics"'), "Cross uses shared period bar without hub tabs");
 
 /* 86–93 scope */
 assert(!html.includes("CREATE OR REPLACE FUNCTION public.get_business_cross_analytics"), "86 no SQL in index.html");
@@ -374,5 +400,74 @@ assert(html.includes("commitPerformanceCustomRangeFromPrefix(\"crossAnalyticsCus
 assert(xaSection.includes('id="crossAnalyticsFilterSheet"'), "filter sheet exists");
 assert(!xaJs.includes("sb.from(\"bookings\")"), "no bookings table download");
 assert(fetchFn.includes("p_filters: filters") && fetchFn.includes("p_sort: sort") && fetchFn.includes("p_limit: limit") && fetchFn.includes("p_offset: offset"), "RPC arg contract");
+
+/* Captain Filters redesign — UI only, same predicates */
+assert(xaJs.includes("function xaDraftIsDirty") && xaJs.includes("xaFiltersEqual(crossAnalyticsDraft, crossAnalyticsState.appliedFilters)"), "R1 open clones applied → draft / dirty uses xaFiltersEqual");
+assert(xaSection.includes('id="xaSheetResult"') && xaJs.includes("xaLastAppliedSummary") && xaJs.includes("crossAnalyticsCache.payload.summary"), "R7 summary is last-applied snapshot");
+assert(xaJs.includes("xaResultsNotApplied") && xaJs.includes("admin-xa-result--dirty"), "R3/R8 dirty snapshot is marked, not live");
+assert(!openFnIncludesEnsureOnOpen(), "R2 opening Filters does not load city catalog / RPC");
+assert(xaJs.includes("closeCrossAnalyticsFilterSheet({ keepDraft: true })") && xaJs.includes("applyXaFiltersNow(crossAnalyticsDraft)"), "R4 Apply still authoritative once");
+assert(xaJs.includes("function cancelCrossAnalyticsFilters") && closeFnResetsDraft(), "R5 Cancel discards draft");
+assert(xaJs.includes("function clearCrossAnalyticsFilters") && xaJs.includes("applyXaFiltersNow({})"), "R6 Clear All still immediate apply {}");
+assert(xaJs.includes("function openXaPicker") && xaJs.includes('mode === "city"') && xaJs.includes("ensureXaCityCatalog"), "R9 city picker opens catalog only then");
+assert(xaJs.includes("function paintXaPicker") && xaJs.includes("cityMatchesSearchQuery"), "R9 city picker search");
+assert(xaJs.includes('xaPickerRowHtml("__unknown__"') && !xaSection.includes('id="xaCityUnknown"'), "R9 unknown city is a picker row, not a main-sheet checkbox");
+assert(xaJs.includes("service_ids_none") && xaJs.includes('exclusiveOtherKey') && xaJs.includes("xaServiceConflict"), "R10 used/never-used remain exclusive");
+assert(xaJs.includes('xaStaffInactiveHint') && xaJs.includes("member.active === false") && xaJs.includes('"unassigned"'), "R11 team picker keeps inactive + Unassigned");
+assert(xaJs.includes('setXaHidden("xaServiceScopeWrap"') && xaJs.includes('setXaHidden("xaStaffScopeWrap"'), "R12 scopes hidden when empty");
+assert(xaJs.includes("customer_type") && xaJs.includes("visit_frequency") && xaJs.includes("lifetime_visits_min"), "R13 New/Returning distinct from Repeat and min visits");
+assert(xaJs.includes("inactive_days_min") && !xaJs.includes("inactive_for >=") && xaJs.includes("xaInactiveShort30"), "R14 inactivity still min-only / short chips");
+assert(!xaSection.includes('id="xaCityResults"') && !xaSection.includes('id="xaServiceAny"') && !xaSection.includes('id="xaStaffAny"'), "R15 no main-sheet catalogs");
+assert(xaCss.includes("--admin-tabbar-height") && xaCss.includes("--admin-tabbar-float-gap") && xaCss.includes("--xa-keyboard-inset"), "R16 CTA clears tab bar + keyboard");
+assert(xaCss.includes(".admin-xa-sheet__header[hidden]") && xaCss.includes(".admin-xa-sheet__body[hidden]"), "nested picker hides main header/form");
+assert(xaCss.includes("overflow-x: hidden") && xaSection.includes("admin-xa-seg") && xaJs.includes("admin-xa-chip-opt"), "R17 compact chips/segments, no overflow rules");
+assert(html.includes('xaShowCustomers: "Show {n} customers"') && html.includes('xaShowCustomers: "Прикажи {n} клиенти"') && html.includes('xaShowCustomers: "Shfaq {n} klientë"'), "R18 Show CTA EN/MK/SQ");
+assert(html.includes('xaResultsNotApplied: "Not applied"') && html.includes('xaResultsNotApplied: "Не е применето"') && html.includes('xaResultsNotApplied: "Nuk është aplikuar"'), "R18 dirty copy EN/MK/SQ");
+assert(xaCss.includes("var(--theme-surface-primary)") && xaCss.includes("var(--theme-danger-text") && !xaCss.includes("#ffb900") && !xaCss.includes("#FFB900"), "R19 semantic tokens, no CAPTAIN yellow");
+assert(!xaFilterHeaderHasCancelLabel(), "Filters header Cancel is icon-only");
+assert(xaCss.includes("#xaFilterHeader .admin-xa-sheet__title") && xaCss.includes("min-width: max-content") && xaCss.includes("text-overflow: unset"), "Filters title cannot ellipsis");
+assert(xaCss.includes(".admin-xa-chip-opt") && xaCss.includes("flex: 0 0 auto") && xaCss.includes("width: auto") && xaCss.includes("white-space: nowrap"), "D1 gender/age/inactivity chips are content-sized");
+assert(xaCss.includes(".admin-xa-seg {") && xaCss.includes("height: 40px") && xaCss.includes("flex: 1 1 0"), "D2 exclusive controls stay one segmented track");
+assert(xaCss.includes(".admin-xa-trigger {") && xaCss.includes("width: 100%") && xaCss.includes("height: 44px"), "D3 picker rows remain 44px full-width");
+assert(xaCss.includes("margin: 0 0 20px") && xaCss.includes("gap: 8px"), "D4 section spacing tightened");
+assert(!xaSection.includes('id="xaCityResults"') && !xaJs.includes("inactive_for >="), "D5 catalogs still picker-only / inactivity semantics unchanged");
+assert(xaCss.includes("#xaFilterHeader .admin-xa-sheet__back") && xaCss.includes("flex: 0 0 44px"), "Filters back is 44x44");
+assert(xaJs.includes("function paintXaSheetCta") && xaJs.includes("xaShowCustomersOne"), "CTA clean vs dirty");
+assert(xaJs.includes("setXaFieldError") && xaJs.includes("xaFieldErrorNumber"), "validation surfaces inline error");
+assert(!openSheetCallsRpc(), "R2 draft edits / open do not call get_business_cross_analytics");
+
+function openFnIncludesEnsureOnOpen() {
+  const start = xaJs.indexOf("function openCrossAnalyticsFilterSheet");
+  const end = xaJs.indexOf("function closeCrossAnalyticsFilterSheet", start);
+  const body = start >= 0 && end > start ? xaJs.slice(start, end) : "";
+  return body.includes("ensureXaCityCatalog") || body.includes("runAdminCrossAnalyticsReport") || body.includes("fetchBusinessCrossAnalytics");
+}
+
+function xaFilterHeaderHasCancelLabel() {
+  const start = xaSection.indexOf('id="xaFilterHeader"');
+  const end = xaSection.indexOf('id="xaPickerHeader"', start);
+  const body = start >= 0 && end > start ? xaSection.slice(start, end) : "";
+  return body.includes('data-i18n="commonCancel"') || body.includes(">Cancel<") || body.includes("Откажи");
+}
+
+function closeFnResetsDraft() {
+  const start = xaJs.indexOf("function closeCrossAnalyticsFilterSheet");
+  const end = xaJs.indexOf("function cancelCrossAnalyticsFilters", start);
+  const body = start >= 0 && end > start ? xaJs.slice(start, end) : "";
+  return body.includes("cloneXaFilters(crossAnalyticsState.appliedFilters)");
+}
+
+function openSheetCallsRpc() {
+  const start = xaJs.indexOf("function handleXaFilterSheetClick");
+  const end = xaJs.indexOf("function portalCustomerAnalyticsDetailToCross", start);
+  const body = start >= 0 && end > start ? xaJs.slice(start, end) : "";
+  return body.includes("runAdminCrossAnalyticsReport") || body.includes("fetchBusinessCrossAnalytics") || body.includes("applyXaFiltersNow");
+}
+
+try {
+  new Function(xaJs);
+} catch (err) {
+  assert(false, `R20 JS parse: ${err.message}`);
+}
 
 console.log(`cross-analytics-ui: ${passed} passed`);

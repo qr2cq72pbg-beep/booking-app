@@ -100,7 +100,12 @@ BEGIN
     v_cmp_to,
     v_prev_from,
     v_prev_to
-  FROM public._service_analytics_comparison_windows(p_from_date, p_to_date, v_today) w;
+  FROM public._service_analytics_comparison_windows(
+    p_from_date,
+    p_to_date,
+    v_today,
+    nullif(current_setting('xbook.analytics_period_kind', true), '')
+  ) w;
 
   v_comparable := (v_comparison_type IS DISTINCT FROM 'not_applicable' AND v_cmp_from IS NOT NULL AND v_prev_from IS NOT NULL);
 
@@ -664,8 +669,32 @@ $$;
 COMMENT ON FUNCTION public.get_business_staff_analytics(uuid, date, date) IS
   'Owner-only canonical Staff Analytics. Group key = staff_id or unassigned. Completed visit / price / identity / comparison match Performance + Service Analytics. Unassigned is first-class and cannot win Top Staff. Rename follows live staff_members.name. Orphan UUID history kept as Unknown staff. No utilization. Does not write bookings.staff_name.';
 
+CREATE OR REPLACE FUNCTION public.get_business_staff_analytics(
+  p_business_id uuid,
+  p_from_date date,
+  p_to_date date,
+  p_period_kind text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  PERFORM set_config('xbook.analytics_period_kind', coalesce(p_period_kind, ''), true);
+  RETURN public.get_business_staff_analytics(p_business_id, p_from_date, p_to_date);
+END;
+$$;
+
+COMMENT ON FUNCTION public.get_business_staff_analytics(uuid, date, date, text) IS
+  'Owner-only Staff Analytics with explicit period kind: this_week, this_quarter, last_month, or null inference.';
+
 REVOKE ALL ON FUNCTION public.get_business_staff_analytics(uuid, date, date) FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.get_business_staff_analytics(uuid, date, date) FROM anon, service_role;
+REVOKE ALL ON FUNCTION public.get_business_staff_analytics(uuid, date, date, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_business_staff_analytics(uuid, date, date, text) FROM anon, service_role;
+GRANT EXECUTE ON FUNCTION public.get_business_staff_analytics(uuid, date, date, text) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_business_staff_analytics(uuid, date, date) TO authenticated;
 
 COMMIT;

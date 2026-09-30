@@ -26,10 +26,14 @@ BEGIN;
 -- -----------------------------------------------------------------------------
 -- 1) Deterministic previous-period windows (internal)
 -- -----------------------------------------------------------------------------
+DROP FUNCTION IF EXISTS public._service_analytics_comparison_windows(date, date, date);
+DROP FUNCTION IF EXISTS public._service_analytics_comparison_windows(date, date, date, text);
+
 CREATE OR REPLACE FUNCTION public._service_analytics_comparison_windows(
   p_from_date date,
   p_to_date date,
-  p_today date
+  p_today date,
+  p_period_kind text DEFAULT NULL
 )
 RETURNS TABLE (
   comparison_type text,
@@ -53,13 +57,62 @@ DECLARE
   v_prev_month_start date;
   v_prev_month_end date;
   v_ytd_from date;
+  v_week_start date;
+  v_q_start date;
+  v_q_end date;
+  v_prev_q_start date;
+  v_prev_q_end date;
+  v_kind text;
 BEGIN
+  v_kind := nullif(lower(trim(coalesce(p_period_kind, ''))), '');
+
   IF p_from_date IS NULL OR p_to_date IS NULL OR p_today IS NULL OR p_from_date > p_to_date THEN
     comparison_type := 'not_applicable';
     comparison_current_from := NULL;
     comparison_current_to := NULL;
     previous_from := NULL;
     previous_to := NULL;
+    RETURN NEXT;
+    RETURN;
+  END IF;
+
+  IF v_kind = 'this_week' THEN
+    v_week_start := p_today - ((EXTRACT(ISODOW FROM p_today)::integer) - 1);
+    comparison_type := 'elapsed_wtd';
+    comparison_current_from := v_week_start;
+    comparison_current_to := p_today;
+    previous_from := v_week_start - 7;
+    previous_to := previous_from + (p_today - v_week_start);
+    RETURN NEXT;
+    RETURN;
+  END IF;
+
+  IF v_kind = 'this_quarter' THEN
+    v_q_start := date_trunc('quarter', p_today)::date;
+    v_q_end := (date_trunc('quarter', p_today) + interval '3 months' - interval '1 day')::date;
+    v_prev_q_start := (date_trunc('quarter', p_today) - interval '3 months')::date;
+    v_prev_q_end := v_q_start - 1;
+    v_prev_to := v_prev_q_start + (p_today - v_q_start);
+    IF v_prev_to > v_prev_q_end THEN
+      v_prev_to := v_prev_q_end;
+    END IF;
+    comparison_type := 'elapsed_qtd';
+    comparison_current_from := v_q_start;
+    comparison_current_to := p_today;
+    previous_from := v_prev_q_start;
+    previous_to := v_prev_to;
+    RETURN NEXT;
+    RETURN;
+  END IF;
+
+  IF v_kind = 'last_month' THEN
+    v_month_start := date_trunc('month', p_from_date)::date;
+    v_month_end := (date_trunc('month', p_from_date) + interval '1 month' - interval '1 day')::date;
+    comparison_type := 'closed_calendar_month';
+    comparison_current_from := v_month_start;
+    comparison_current_to := v_month_end;
+    previous_from := (date_trunc('month', p_from_date) - interval '1 month')::date;
+    previous_to := v_month_start - 1;
     RETURN NEXT;
     RETURN;
   END IF;
@@ -142,11 +195,37 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION public._service_analytics_comparison_windows(
+  p_from_date date,
+  p_to_date date,
+  p_today date
+)
+RETURNS TABLE (
+  comparison_type text,
+  comparison_current_from date,
+  comparison_current_to date,
+  previous_from date,
+  previous_to date
+)
+LANGUAGE sql
+IMMUTABLE
+SET search_path = public
+AS $$
+  SELECT *
+  FROM public._service_analytics_comparison_windows(p_from_date, p_to_date, p_today, NULL);
+$$;
+
+COMMENT ON FUNCTION public._service_analytics_comparison_windows(date, date, date, text) IS
+  'Internal Service Analytics previous-period windows. Today / YTD / elapsed MTD / elapsed WTD / elapsed QTD / closed calendar month / equal-length / not_applicable.';
+
 COMMENT ON FUNCTION public._service_analytics_comparison_windows(date, date, date) IS
-  'Internal Service Analytics previous-period windows. Today / YTD / elapsed MTD / equal-length / not_applicable. Not a second visit or revenue definition.';
+  'Wrapper: comparison windows with null period kind (existing inference).';
 
 REVOKE ALL ON FUNCTION public._service_analytics_comparison_windows(date, date, date) FROM PUBLIC;
 REVOKE ALL ON FUNCTION public._service_analytics_comparison_windows(date, date, date)
+  FROM anon, authenticated, service_role;
+REVOKE ALL ON FUNCTION public._service_analytics_comparison_windows(date, date, date, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public._service_analytics_comparison_windows(date, date, date, text)
   FROM anon, authenticated, service_role;
 
 -- -----------------------------------------------------------------------------
@@ -258,7 +337,12 @@ BEGIN
     v_cmp_to,
     v_prev_from,
     v_prev_to
-  FROM public._service_analytics_comparison_windows(p_from_date, p_to_date, v_today) w;
+  FROM public._service_analytics_comparison_windows(
+    p_from_date,
+    p_to_date,
+    v_today,
+    nullif(current_setting('xbook.analytics_period_kind', true), '')
+  ) w;
 
   v_comparable := (v_comparison_type IS DISTINCT FROM 'not_applicable' AND v_cmp_from IS NOT NULL AND v_prev_from IS NOT NULL);
 
@@ -666,8 +750,32 @@ $$;
 COMMENT ON FUNCTION public.get_business_service_analytics(uuid, date, date) IS
   'Owner-only canonical Service Analytics. Full-tenant scan. Completed visit / price / identity match Performance + Customer Analytics. Group key matches Performance Top Services. Previous period computed server-side. cancellation_rate is 0-100 with 1 decimal, null if no Pending+Confirmed+Cancelled in period. Revenue is snapshot-or-estimated; estimated is disclosed, not collected cash.';
 
+CREATE OR REPLACE FUNCTION public.get_business_service_analytics(
+  p_business_id uuid,
+  p_from_date date,
+  p_to_date date,
+  p_period_kind text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  PERFORM set_config('xbook.analytics_period_kind', coalesce(p_period_kind, ''), true);
+  RETURN public.get_business_service_analytics(p_business_id, p_from_date, p_to_date);
+END;
+$$;
+
+COMMENT ON FUNCTION public.get_business_service_analytics(uuid, date, date, text) IS
+  'Owner-only Service Analytics with explicit period kind: this_week, this_quarter, last_month, or null inference.';
+
 REVOKE ALL ON FUNCTION public.get_business_service_analytics(uuid, date, date) FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.get_business_service_analytics(uuid, date, date) FROM anon, service_role;
+REVOKE ALL ON FUNCTION public.get_business_service_analytics(uuid, date, date, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION public.get_business_service_analytics(uuid, date, date, text) FROM anon, service_role;
+GRANT EXECUTE ON FUNCTION public.get_business_service_analytics(uuid, date, date, text) TO authenticated;
 GRANT EXECUTE ON FUNCTION public.get_business_service_analytics(uuid, date, date) TO authenticated;
 
 COMMIT;

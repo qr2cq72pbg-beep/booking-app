@@ -36,82 +36,91 @@ function cssRule(selector) {
   return html.slice(start, end + 1);
 }
 
-const overview = sliceBetween(html, 'id="adminSectionOverview"', 'id="adminSectionCustomize"');
-const hub = sliceBetween(
-  overview,
-  'class="overview-actions overview-actions--hub overview-actions--compact"',
-  "</section>"
-);
-const analyticsGroup = sliceBetween(hub, 'data-overview-group="analytics"', 'data-overview-group="actions"');
-const actionsStart = hub.indexOf('data-overview-group="actions"');
-assert(actionsStart >= 0, "missing Actions group");
-const actionsGroup = hub.slice(actionsStart);
+const performance = sliceBetween(html, 'id="adminSectionPerformance"', 'id="adminSectionCustomerAnalytics"');
+const businessHome = sliceBetween(html, 'id="adminSectionOverview"', 'id="adminSectionCustomize"');
+const categoryRail = sliceBetween(performance, 'class="analytics-hub-nav"', "</nav>");
+const desktopNav = sliceBetween(html, 'id="adminNav"', "</nav>");
 const bottomNav = sliceBetween(html, 'id="adminMobileBottomNav"', "</nav>");
+const customerAnalytics = sliceBetween(html, 'id="adminSectionCustomerAnalytics"', 'id="adminSectionServiceAnalytics"');
+const serviceAnalytics = sliceBetween(html, 'id="adminSectionServiceAnalytics"', 'id="adminSectionStaffAnalytics"');
+const staffAnalytics = sliceBetween(html, 'id="adminSectionStaffAnalytics"', 'id="adminSectionCrossAnalytics"');
+const scheduleDeferred = sliceBetween(html, "function scheduleAdminOverviewDeferredData(model)", "function renderAdminStats(opts = {})");
 
-assert(hub.includes('data-i18n="homeAnalytics"') && hub.includes(">Analytics</h2>"), "1 Analytics heading exists");
-assert(hub.includes('data-i18n="homeActions"') && hub.includes(">Actions</h2>"), "2 Actions heading exists");
-assert(!hub.includes("Quick actions"), "3 Quick actions heading absent from Business Home hub");
-assert(!hub.includes('data-i18n="homeQuickActions"'), "3 Quick actions i18n unused in Home hub");
-assert(!hub.includes('aria-label="Quick actions"'), "3 Quick actions aria-label absent from Home hub");
+assert(performance.includes('data-i18n="commonAnalytics"') && performance.includes(">Analytics</h1>"), "1 unified Analytics heading exists");
+assert(categoryRail.includes('data-analytics-section="performance"'), "2 Overview category exists");
+assert(categoryRail.includes('data-analytics-section="customer-analytics"'), "3 Customers category exists");
+assert(categoryRail.includes('data-analytics-section="staff-analytics"'), "4 Team category exists");
+assert(categoryRail.includes('data-analytics-section="service-analytics"'), "5 Services category exists");
+assert(!categoryRail.includes('data-analytics-section="cross-analytics"'), "6 Cross Analytics is not a primary category");
+assert(categoryRail.indexOf("performance") < categoryRail.indexOf("customer-analytics"), "7 Overview leads category order");
+assert(categoryRail.indexOf("customer-analytics") < categoryRail.indexOf("staff-analytics"), "7 Customers precede Team");
+assert(categoryRail.indexOf("staff-analytics") < categoryRail.indexOf("service-analytics"), "7 Team precedes Services");
 
-assert(analyticsGroup.includes("setAdminSection('performance')"), "4 Performance in Analytics");
-assert(analyticsGroup.includes("setAdminSection('customer-analytics')"), "5 Customer Analytics in Analytics");
-assert(analyticsGroup.includes("setAdminSection('service-analytics')"), "6 Service Analytics in Analytics");
-assert(analyticsGroup.includes("setAdminSection('staff-analytics')"), "7 Staff Analytics in Analytics");
-assert(analyticsGroup.includes("setAdminSection('cross-analytics')"), "8 Cross Analytics in Analytics");
-assert(!analyticsGroup.includes("openCustomerNotificationsSheet()"), "4–8 Notify not in Analytics");
-assert(!analyticsGroup.includes("adminMobileOpenNewBooking()"), "4–8 Add booking not in Analytics");
+assert(desktopNav.includes('data-admin-section="performance"'), "8 desktop nav exposes Analytics");
+assert(!desktopNav.includes('data-admin-section="customer-analytics"'), "9 no duplicate Customers desktop destination");
+assert(!desktopNav.includes('data-admin-section="service-analytics"'), "9 no duplicate Services desktop destination");
+assert(!desktopNav.includes('data-admin-section="staff-analytics"'), "9 no duplicate Staff desktop destination");
+assert(!desktopNav.includes('data-admin-section="cross-analytics"'), "9 no duplicate Explore desktop destination");
 
-assert(actionsGroup.includes("openCustomerNotificationsSheet()"), "9 Notify customers in Actions");
-assert(actionsGroup.includes("adminMobileOpenNewBooking()"), "10 Add booking in Actions");
-assert(!actionsGroup.includes("setAdminSection('performance')"), "9–10 Performance not in Actions");
-assert(!actionsGroup.includes("setAdminSection('cross-analytics')"), "9–10 Cross Analytics not in Actions");
+assert(bottomNav.includes('data-admin-mobile-tab="analytics"'), "10 Analytics replaces Clients in bottom navigation");
+assert(!bottomNav.includes('data-admin-mobile-tab="clients"'), "10 Clients is not a bottom-nav destination");
+assert(!bottomNav.includes('data-admin-mobile-tab="cross-analytics"'), "10 no Explore bottom-nav item");
+assert(bottomNav.includes('data-admin-mobile-tab="overview"'), "10 Home tab unchanged");
 
-const analyticsHeadingAt = hub.indexOf('data-i18n="homeAnalytics"');
-const actionsHeadingAt = hub.indexOf('data-i18n="homeActions"');
-const crossAt = hub.indexOf("setAdminSection('cross-analytics')");
-const notifyAt = hub.indexOf("openCustomerNotificationsSheet()");
-assert(analyticsHeadingAt >= 0 && analyticsHeadingAt < actionsHeadingAt, "11 Analytics appears before Actions");
-assert(crossAt >= 0 && crossAt < actionsHeadingAt, "12 Cross Analytics appears before Actions heading");
-assert(notifyAt > actionsHeadingAt, "13 Notify customers appears after Actions heading");
+assert(performance.includes('id="analyticsPeriodSheet"'), "11 shared period sheet exists");
+assert(performance.includes('id="analyticsQualitySheet"'), "12 quality sheet exists");
+assert(performance.includes("Booking value"), "13 authoritative financial wording");
+assert(!performance.includes('id="analyticsReturningRing"'), "14 Overview has no category preview radial");
+assert(!performance.includes('id="analyticsCustomerHealthHeading"'), "14 Overview has no Customers preview");
+assert(!performance.includes('id="analyticsStaffPreviewHeading"') && !performance.includes('id="analyticsStaffPreview"'), "14 Overview has no Team preview");
+assert(!performance.includes('id="analyticsServicePreviewHeading"') && !performance.includes('id="analyticsServicePreview"'), "14 Overview has no Services preview");
+assert(!performance.includes("analyticsViewDetails"), "14 Overview has no category View details actions");
+assert(!performance.toLowerCase().includes("no-show"), "15 no unsupported no-show metric");
+assert(!performance.toLowerCase().includes("utilization"), "16 no unsupported utilization metric");
+assert(!performance.includes("CREATE OR REPLACE"), "17 no SQL in Analytics markup");
+assert(!html.includes('data-admin-section="analytics-hub"'), "18 performance destination is repurposed");
 
-assert(hub.includes("onclick=\"setAdminSection('performance')\""), "14 Performance handler preserved");
-assert(hub.includes("onclick=\"setAdminSection('customer-analytics')\""), "14 Customer Analytics handler preserved");
-assert(hub.includes("onclick=\"setAdminSection('service-analytics')\""), "14 Service Analytics handler preserved");
-assert(hub.includes("onclick=\"setAdminSection('staff-analytics')\""), "14 Staff Analytics handler preserved");
-assert(hub.includes("onclick=\"setAdminSection('cross-analytics')\""), "14 Cross Analytics handler preserved");
-assert(hub.includes('onclick="openCustomerNotificationsSheet()"'), "14 Notify handler preserved");
-assert(hub.includes('onclick="adminMobileOpenNewBooking()"'), "14 Add booking handler preserved");
-assert(hub.includes('aria-label="Open Performance"'), "14 Performance a11y preserved");
-assert(hub.includes('aria-label="Open Cross Analytics"'), "14 Cross Analytics a11y preserved");
-assert(hub.includes('aria-label="Notify customers"'), "14 Notify a11y preserved");
-assert(hub.includes('aria-label="Add booking"'), "14 Add booking a11y preserved");
+assert(
+  [...bottomNav.matchAll(/data-admin-mobile-tab="([^"]+)"/g)].map((match) => match[1]).join(",") ===
+    "overview,calendar,bookings,analytics,settings",
+  "19 bottom navigation has exactly Home / Book / Bookings / Analytics / Settings"
+);
+assert(!businessHome.includes('id="overviewBusinessPulse"'), "20 Home monthly Pulse removed");
+assert(!businessHome.includes("Business pulse") && !businessHome.includes("This month"), "20 Home has no monthly performance copy");
+assert(!businessHome.includes("overview-quick-actions") && !businessHome.includes("overviewHomeActionsHeading"), "20 Home Shortcuts card removed");
+assert(!businessHome.includes("Notify clients") && !businessHome.includes("Shortcuts"), "20 Home has no Shortcuts / Notify clients entry points");
+assert(scheduleDeferred.includes("renderAdminOverviewInsights(model)") && !scheduleDeferred.includes("loadAdminOverviewPulse"), "21 Home retains only TODAY insight scheduling");
+assert(!sliceBetween(html, "function renderAdminOverviewInsights(model)", "function scheduleAdminOverviewDeferredData(model)").includes("inactiveClients"), "22 historical inactivity insight removed from Home");
 
-assert(!bottomNav.includes('data-admin-mobile-tab="analytics"'), "15 no Analytics bottom-nav item");
-assert(!bottomNav.includes('data-admin-mobile-tab="actions"'), "15 no Actions bottom-nav item");
-assert(!bottomNav.includes('data-admin-mobile-tab="cross-analytics"'), "15 no Cross Analytics tab");
-assert(bottomNav.includes('data-admin-mobile-tab="overview"'), "15 Home tab unchanged");
+for (const [name, section] of [
+  ["Customers", customerAnalytics],
+  ["Team", staffAnalytics],
+  ["Services", serviceAnalytics]
+]) {
+  assert(section.includes('data-i18n="commonAnalytics">Analytics</h1>'), `23 ${name} inherits Analytics title`);
+}
+assert(customerAnalytics.includes("openBusinessCustomersList({ from: 'customer-analytics' })"), "24 CRM remains reachable from Customer Analytics");
+assert(customerAnalytics.includes("onclick=\"setAdminSection('cross-analytics')\""), "25 Cross Analytics preserved as advanced analysis");
+assert(customerAnalytics.includes("admin-ca-overview-nav__row"), "24/25 Customer overview uses compact nav rows");
+assert(!customerAnalytics.includes("analytics-section-link"), "24/25 Customer overview no longer uses naked text links");
+assert(html.includes('sectionKey === "cross-analytics"') && html.includes('.analytics-hub-nav")?.remove()'), "25 Advanced analysis does not keep the Overview hub tab");
 
-assert(html.includes('homeAnalytics: "Analytics"'), "16 EN Analytics");
-assert(html.includes('homeActions: "Actions"'), "16 EN Actions");
-assert(html.includes('homeAnalytics: "Аналитика"'), "16 MK Analytics");
-assert(html.includes('homeActions: "Акции"'), "16 MK Actions");
-assert(html.includes('homeAnalytics: "Analitika"'), "16 SQ Analytics");
-assert(html.includes('homeActions: "Veprime"'), "16 SQ Actions");
-
-const actionsGap = cssRule("#adminSectionOverview .overview-home-group--actions");
-const mobileActionsGap = cssRule("body.admin-mobile-shell-active #adminSectionOverview .overview-home-group--actions");
-const titleRule = cssRule("#adminSectionOverview .overview-home-group__title");
-const mobileTitleRule = cssRule("body.admin-mobile-shell-active #adminSectionOverview .overview-home-group__title");
-assert(/margin-top:\s*28px/.test(actionsGap), "17 Actions heading 28px group gap");
-assert(/margin-top:\s*28px/.test(mobileActionsGap), "17 mobile Actions heading 28px group gap");
-assert(/font-size:\s*1\.125rem/.test(titleRule) && /font-weight:\s*700/.test(titleRule), "17 heading 18px / 700");
-assert(/font-size:\s*1\.1875rem/.test(mobileTitleRule) && /font-weight:\s*700/.test(mobileTitleRule), "17 mobile heading ~19px / 700");
-const groupRule = cssRule("#adminSectionOverview .overview-home-group");
-assert(groupRule.includes("max-width: 100%"), "17 groups cannot overflow horizontally");
-
-assert(!hub.includes("CREATE OR REPLACE"), "18 no SQL in Home hub");
-assert(!hub.includes(".rpc("), "18 no RPC in Home hub");
-assert(!html.includes('data-admin-section="analytics-hub"'), "18 no new analytics destination");
+const heroPos = performance.indexOf('class="analytics-financial-hero"');
+const comparisonPos = performance.indexOf('id="analyticsComparisonStack"');
+const kpiPos = performance.indexOf('class="analytics-kpi-band"');
+const insightsPos = performance.indexOf('id="analyticsInsightsSection"');
+const qualityPos = performance.indexOf('id="analyticsQualityRow"');
+assert(
+  heroPos >= 0 &&
+    comparisonPos > heroPos &&
+    kpiPos > comparisonPos &&
+    insightsPos > kpiPos &&
+    qualityPos > insightsPos,
+  "26 Overview hierarchy: hero, dual comparison, KPI, Insights, Data Quality"
+);
+assert(
+  !/analytics-(?:customer-health|preview-list|preview-row)|analyticsCustomerHealthHeading|analyticsStaffPreview|analyticsServicePreview/.test(performance),
+  "26 Overview does not render Customers/Team/Services previews"
+);
 
 console.log("analytics-home-ia-ui: passed");

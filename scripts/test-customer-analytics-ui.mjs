@@ -440,7 +440,7 @@ assert(isCustomerAnalyticsSegmentResponseStale(1, 2, "a", "a") === true, "P stal
 assert(isCustomerAnalyticsSegmentResponseStale(1, 1, "a", "b") === true, "P stale token");
 assert(isCustomerAnalyticsSegmentResponseStale(3, 3, "x", "x") === false, "P current accepted");
 assert(html.includes("No customers in this segment."), "Q empty");
-assert(html.includes("No customers currently match this at-risk group."), "Q empty at-risk");
+assert(html.includes("No customers currently match this inactive group."), "Q empty inactive");
 assert(html.includes("Could not load this customer list."), "R error copy");
 assert(html.includes("caSegRetryBtn"), "R retry");
 assert(isCustomerAnalyticsSegmentSchemaError({ message: "Could not find the function public.get_business_customer_segment" }), "R schema cache");
@@ -450,10 +450,10 @@ assert(customerAnalyticsSegmentContactHtml(null, null).length === 0, "T omit mis
 assert(customerAnalyticsSegmentContactHtml("+38970111222", null).join() === "tel", "T phone only");
 assert(customerAnalyticsSegmentContactHtml(null, "a@b.com").join() === "mailto", "T email only");
 assert(html.includes("caSegAtRisk90"), "U i18n key");
-assert(html.includes("Ризични — 90+ дена"), "U MK at-risk 90");
-assert(html.includes("Вчитај уште"), "U MK load more");
-assert(html.includes("Në rrezik — 90+ ditë"), "U SQ at-risk 90");
-assert(html.includes("Ngarko më shumë"), "U SQ load more");
+assert(html.includes("Неактивни — 90+ дена"), "U MK inactive 90");
+assert(html.includes("Прикажи повеќе"), "U MK load more");
+assert(html.includes("Joaktivë — 90+ ditë"), "U SQ inactive 90");
+assert(html.includes("Shfaq më shumë"), "U SQ load more");
 assert(html.includes("Klientë të përsëritur") || html.includes("caSegRepeat"), "U SQ repeat");
 assert(html.includes("#customerAnalyticsSegmentView") && html.includes("overflow-x: hidden"), "V overflow");
 assert(html.includes("id=\"caSegBackBtn\""), "W back button");
@@ -727,9 +727,9 @@ const segBackCss = html.slice(
 );
 assert(segBackCss.includes("width: auto"), "1 Back width auto not 100%");
 assert(segBackCss.includes("text-align: left") && segBackCss.includes("justify-content: flex-start"), "1 Back left-aligned");
-assert(segBackCss.includes("flex-direction: column"), "1 mobile stacks Back then title");
+assert(segBackCss.includes("flex-direction: row"), "1 mobile keeps Back + title in one header row");
 assert(html.includes("id=\"caSegBackBtn\"") && html.includes("closeCustomerAnalyticsSegmentView"), "2 Back still clickable / restores");
-assert(segBackCss.includes("flex: 0 0 auto") && segBackCss.includes("admin-ca-seg-heading"), "3 heading does not grow into a blank column");
+assert(segBackCss.includes("flex: 1 1 auto") && segBackCss.includes("admin-ca-seg-heading"), "3 heading sits beside the Back control");
 assert(html.includes("justify-content: flex-start"), "3 segment column starts at top");
 assert(html.includes("id=\"caSegEstimatedNote\"") && html.includes("id=\"caSegList\""), "4 note then list remain in order");
 assert(html.includes("openCustomerAnalyticsCustomerDetail(key)"), "5 Segment → Detail unchanged");
@@ -743,4 +743,26 @@ assert(html.includes("data-i18n-aria-label=\"commonBack\""), "Back aria-label");
 assert(html.includes("min-height: 44px"), "44px touch target still present");
 
 console.log("customer-analytics-ui segment mobile layout: passed");
+
+const caOverview = html.slice(
+  html.indexOf('aria-labelledby="caOverviewGroupTitle"'),
+  html.indexOf('data-i18n="caPeriodHeading"')
+);
+assert((caOverview.match(/admin-ca-overview-nav__row/g) || []).length === 2, "overview has exactly two nav rows");
+assert(!caOverview.includes("analytics-section-link"), "overview no longer renders naked section links");
+assert(!caOverview.includes("analytics-group__head"), "overview no longer uses split head/link layout");
+assert(
+  (caOverview.match(/openBusinessCustomersList\(\{ from: 'customer-analytics' \}\)/g) || []).length === 1,
+  "Customer list row keeps the existing CRM path once"
+);
+assert(
+  (caOverview.match(/setAdminSection\('cross-analytics'\)/g) || []).length === 1,
+  "Advanced analysis row keeps the existing Cross path once"
+);
+assert((html.match(/openBusinessCustomersList\(\{ from: 'customer-analytics' \}\)/g) || []).length === 1, "no duplicate customer-list listeners");
+assert(caOverview.includes('data-i18n="caNavCustomerList"'), "Customer list uses shorter localized label");
+assert(caOverview.includes('data-i18n="analyticsAdvanced"'), "Advanced analysis keeps existing wording");
+assert(html.includes("#adminSectionCustomerAnalytics .admin-ca-overview-nav") && html.includes("height: 48px"), "overview nav is a compact 48px row surface");
+
+console.log("customer-analytics-ui overview nav: passed");
 

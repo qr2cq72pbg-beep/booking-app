@@ -95,7 +95,6 @@ const mobileChipCss = html.slice(
   html.indexOf("body.admin-mobile-shell-active #adminView :is(#adminSectionPerformance, #adminSectionCustomerAnalytics, #adminSectionServiceAnalytics, #adminSectionStaffAnalytics, #adminSectionCrossAnalytics) select.admin-performance-select")
 );
 const staTertiaryCss = cssRule("#adminSectionStaffAnalytics .admin-sta-card__tertiary");
-const saMetricCss = cssRule("#adminSectionServiceAnalytics .admin-sa-kpi__metric");
 const staMetricCss = cssRule("#adminSectionStaffAnalytics .admin-sta-kpi__metric");
 const staffTrendFn = sliceBetween(html, "function formatStaffAnalyticsTrend(", "function formatStaffAnalyticsTrendLine(");
 const serviceTrendFn = sliceBetween(html, "function formatServiceAnalyticsTrend(", "function formatServiceAnalyticsTrendLine(");
@@ -111,12 +110,11 @@ assert(html.includes('id="adminSectionServiceAnalytics"'), "1 Service Analytics 
 assert(html.includes('id="adminSectionStaffAnalytics"'), "1 Staff Analytics screen");
 assert(html.includes('id="adminSectionCrossAnalytics"'), "1 Cross Analytics screen");
 
-/* 2 same mobile Back contract */
-assert(perfSection.includes('id="perfHomeBackBtn"') && perfSection.includes('class="admin-ca-seg-back"'), "2 Performance Back");
-assert(caSection.includes('id="caHomeBackBtn"') && caSection.includes('class="admin-ca-seg-back"'), "2 Customer Back");
-assert(saSection.includes('id="saHomeBackBtn"') && saSection.includes('class="admin-ca-seg-back"'), "2 Service Back");
-assert(staSection.includes('id="staffHomeBackBtn"') && staSection.includes('class="admin-ca-seg-back"'), "2 Staff Back");
-assert(html.includes("onclick=\"setAdminSection('overview')\""), "2 Back → overview");
+/* 2 main Analytics sections use bottom-nav destination, not legacy top-level Back */
+assert(perfSection.includes('id="perfHomeBackBtn" class="admin-ca-seg-back hidden" hidden'), "2 Overview legacy Back hidden");
+assert(caSection.includes('id="caHomeBackBtn" class="admin-ca-seg-back hidden" hidden'), "2 Customer legacy Back hidden");
+assert(saSection.includes('id="saHomeBackBtn" class="admin-ca-seg-back hidden" hidden'), "2 Service legacy Back hidden");
+assert(staSection.includes('id="staffHomeBackBtn" class="admin-ca-seg-back hidden" hidden'), "2 Staff legacy Back hidden");
 
 /* 3 shared period classes */
 ["performancePresetChips", "customerAnalyticsPresetChips", "serviceAnalyticsPresetChips", "staffAnalyticsPresetChips", "crossAnalyticsPresetChips"].forEach((id) => {
@@ -212,8 +210,14 @@ assert(html.includes("grid-template-columns: repeat(2, minmax(0, 1fr))"), "31/32
 assert(html.includes("#adminSectionPerformance .admin-performance-kpi-grid--primary") && html.includes("repeat(4, minmax(0, 1fr))"), "33 Performance desktop 4-col primary");
 
 /* 34 SA/STA summary typography */
-assert(saMetricCss.includes("font-size: 1.15rem"), "34 Service summary 1.15rem");
-assert(staMetricCss.includes("font-size: 1.15rem"), "34 Staff summary 1.15rem");
+assert(saSection.includes('class="admin-performance-kpi__value"') && saSection.includes('class="admin-performance-kpi__hint"'), "34 Service summary uses shared KPI value/hint");
+assert(html.includes("#adminSectionServiceAnalytics .admin-performance-kpi-grid--sa-summary .admin-performance-kpi__value"), "34 Service summary reuses Team KPI value class");
+assert(html.includes("#adminSectionServiceAnalytics .admin-performance-kpi-grid--sa-summary .admin-performance-kpi__hint"), "34 Service summary reuses Team KPI hint class");
+assert(staMetricCss.includes("font-size: 1.15rem"), "34 Staff leftover metric rule unchanged");
+assert(html.includes("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__label"), "34 Team shared KPI label class remains");
+assert(html.includes("clamp(22px, 18cqi, 30px)"), "34 Team KPI value range remains");
+assert(html.includes("#adminSectionStaffAnalytics .admin-performance-kpi-grid--sta-summary .admin-performance-kpi__value--money"), "34 Team money uses shared Services fitting");
+assert(html.includes("flex-wrap: nowrap") && html.includes("admin-performance-kpi__value--money-long"), "34 shared non-breaking money treatment");
 
 /* 35 Staff tertiary secondary */
 assert(staTertiaryCss.includes("font-size: 12px") && staTertiaryCss.includes("font-weight: 500") && staTertiaryCss.includes("color: #64748b"), "35 Staff tertiary secondary");
@@ -222,8 +226,8 @@ assert(html.includes('class="admin-sta-card__tertiary"'), "35 tertiary grouping 
 /* 36–42 terminology */
 assert(html.includes('commonCustomerAnalytics: "Аналитика на клиенти"'), "36 MK Customer Analytics");
 assert(html.includes('saCompletedRevenue: "Реализиран приход"') && html.includes('staCompletedRevenue: "Реализиран приход"'), "37 MK Completed revenue");
-assert(html.includes('saCompletedVisits: "Реализирани посети"') && html.includes('staCompletedVisits: "Реализирани посети"'), "38 MK Completed visits");
-assert(html.includes('perfLoadError: "Не може да се вчитаат Перформанси"'), "39 MK Performance error uses Перформанси");
+assert(html.includes('saCompletedVisits: "Завршени посети"') && html.includes('staCompletedVisits: "Завршени посети"'), "38 MK Completed visits");
+assert(html.includes('perfLoadError: "Не може да се вчита аналитиката"'), "39 MK error uses unified Analytics terminology");
 assert(!html.includes("извештајот за успешност"), "39 no успешност leftover");
 assert(html.includes('staTrendNew: "Ново"'), "40 MK staff New is Ново");
 assert(html.includes('saTrendNew: "Нова"'), "40 Service keeps feminine Нова");
@@ -267,5 +271,11 @@ assert(html.includes("admin-performance-presets--secondary"), "secondary chip ro
 assert(html.includes("caLifetimeHeading: \"За цело време\""), "lifetime MK communicates historical scope");
 assert(html.includes("caLifetimeHeading: \"Gjatë gjithë kohës\""), "lifetime SQ communicates historical scope");
 assert(html.includes("@keyframes admin-analytics-skel-shimmer"), "skeleton animation shared");
+assert(
+  html.includes("#adminSectionStaffAnalytics,\n      #adminSectionServiceAnalytics,\n      #adminSectionCrossAnalytics"),
+  "Cross Analytics is included in the shared Analytics visual system"
+);
+assert(html.includes("#adminSectionCrossAnalytics .analytics-hub-nav"), "Advanced analysis does not keep a hub Overview tab");
+assert(html.includes("button.admin-xa-preset:not(.admin-mobile-nav-item)"), "Cross segment filters beat global CTA button sizing");
 
 console.log("analytics-consistency-ui: all Phase 6B contract checks passed");
