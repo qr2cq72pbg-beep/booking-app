@@ -453,7 +453,9 @@
     }
     #customerCompleteProfileView .complete-profile-city--open {
       z-index: 6;
-      padding-bottom: min(228px, 42vh);
+    }
+    #customerCompleteProfileView .complete-profile-city #completeProfileCitySearch {
+      margin-bottom: 0;
     }
     #customerCompleteProfileView .complete-profile-city > #customerProfileCitySuggestPortal.complete-profile-city__results,
     #customerCompleteProfileView .complete-profile-city > #customerProfileCitySuggestPortal.complete-profile-city__results.xb-lg-city-suggest {
@@ -464,6 +466,9 @@
       left: 0 !important;
       width: auto !important;
       max-width: none !important;
+      max-height: min(220px, 38vh) !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
       z-index: 40;
     }
     #customerProfileCitySuggestPortal.complete-profile-city__results:not(.hidden) {
@@ -53241,11 +53246,12 @@
       display: none;
     }
 
-    #customerInviteLangSwitch {
+    #customerInviteLangSwitch,
+    .customer-invite-lang-switch {
       display: none;
       position: absolute;
-      top: max(8px, env(safe-area-inset-top, 0px));
-      right: max(10px, env(safe-area-inset-right, 0px));
+      top: max(12px, calc(env(safe-area-inset-top, 0px) + 6px));
+      right: max(18px, calc(env(safe-area-inset-right, 0px) + 14px));
       z-index: 6;
       align-items: center;
       gap: 0;
@@ -53261,10 +53267,12 @@
       backdrop-filter: saturate(180%) blur(16px);
       pointer-events: auto;
     }
-    #customerInviteLangSwitch:not([hidden]) {
+    #customerInviteLangSwitch:not([hidden]),
+    .customer-invite-lang-switch:not([hidden]) {
       display: inline-flex;
     }
-    #customerInviteLangSwitch .customer-invite-lang-btn {
+    #customerInviteLangSwitch .customer-invite-lang-btn,
+    .customer-invite-lang-switch .customer-invite-lang-btn {
       appearance: none;
       -webkit-appearance: none;
       display: inline-flex;
@@ -53288,13 +53296,15 @@
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
-    #customerInviteLangSwitch .customer-invite-lang-btn.is-active {
+    #customerInviteLangSwitch .customer-invite-lang-btn.is-active,
+    .customer-invite-lang-switch .customer-invite-lang-btn.is-active {
       opacity: 1;
       color: var(--xb-text-primary, #12203e);
       background: rgba(255, 255, 255, 0.48);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
     }
-    #customerInviteLangSwitch .customer-invite-lang-sep {
+    #customerInviteLangSwitch .customer-invite-lang-sep,
+    .customer-invite-lang-switch .customer-invite-lang-sep {
       color: var(--xb-text-secondary, #5b6b8c);
       font-size: 11px;
       font-weight: 500;
@@ -53305,7 +53315,9 @@
       user-select: none;
     }
     :root[data-xbook-theme="dark"] #customerInviteLangSwitch,
-    html[data-xbook-theme="dark"] #customerInviteLangSwitch {
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch,
+    :root[data-xbook-theme="dark"] .customer-invite-lang-switch,
+    html[data-xbook-theme="dark"] .customer-invite-lang-switch {
       border-color: rgba(255, 255, 255, 0.16);
       background: rgba(12, 24, 52, 0.38);
       box-shadow:
@@ -53313,19 +53325,231 @@
         0 8px 20px rgba(0, 0, 0, 0.22);
     }
     :root[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn,
-    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn {
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn,
+    :root[data-xbook-theme="dark"] .customer-invite-lang-switch .customer-invite-lang-btn,
+    html[data-xbook-theme="dark"] .customer-invite-lang-switch .customer-invite-lang-btn {
       color: rgba(230, 238, 255, 0.72);
     }
     :root[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn.is-active,
-    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn.is-active {
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn.is-active,
+    :root[data-xbook-theme="dark"] .customer-invite-lang-switch .customer-invite-lang-btn.is-active,
+    html[data-xbook-theme="dark"] .customer-invite-lang-switch .customer-invite-lang-btn.is-active {
       color: #f4f7ff;
       background: rgba(255, 255, 255, 0.14);
     }
     @media (max-width: 420px) {
-      #customerInviteLangSwitch {
-        top: max(6px, env(safe-area-inset-top, 0px));
-        right: max(8px, env(safe-area-inset-right, 0px));
+      #customerInviteLangSwitch,
+      .customer-invite-lang-switch {
+        top: max(10px, calc(env(safe-area-inset-top, 0px) + 4px));
+        right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px));
       }
+    }
+
+    #customerInviteIdentity {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 10px;
+      text-align: center;
+    }
+    #adminAuthCustomerSignupPanel.auth-panel--customer-invite #customerInviteIdentity:not(.hidden) {
+      display: flex;
+    }
+    .customer-invite-identity__avatar {
+      width: 56px;
+      height: 56px;
+      margin: 2px 0 2px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(214, 230, 255, 0.28) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 20px rgba(28, 58, 120, 0.12);
+    }
+    .customer-invite-identity__logo,
+    .customer-invite-identity__initials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    .customer-invite-identity__logo {
+      object-fit: cover;
+    }
+    .customer-invite-identity__logo.hidden,
+    .customer-invite-identity__initials.hidden {
+      display: none !important;
+    }
+    .customer-invite-identity__initials {
+      color: var(--xb-text-primary, #12203e);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .customer-invite-identity__name {
+      margin: 0;
+      max-width: 100%;
+      color: var(--xb-text-primary, #12203e);
+      font-family: var(--font-display, inherit);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+    }
+    .customer-invite-identity__kicker {
+      margin: 0;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    #authView.xb-lg-create #adminAuthCustomerSignupPanel.auth-panel--customer-invite #customerInviteIdentity .customer-invite-identity__name {
+      display: block;
+    }
+
+    #customerInviteSuccessView.auth-card:not(.hidden) {
+      position: relative;
+      isolation: isolate;
+      width: 100%;
+      max-width: none;
+      min-height: 100dvh;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background-color: var(--xb-scene-canvas-light, #E7ECFB) !important;
+      background-image:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 16%, transparent) 0%,
+          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 28%, transparent) 36%,
+          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 42%, transparent) 100%
+        ),
+        url("assets/xbook-scene/xbook-liquid-scene-light.webp") !important;
+      background-size: cover, cover !important;
+      background-position: 50% 0, 50% 0 !important;
+      background-repeat: no-repeat !important;
+      color: var(--xb-text-primary, #0c1b3a);
+      padding: 0 !important;
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView.auth-card:not(.hidden) {
+      background-color: var(--xb-scene-canvas-dark, #0E2350) !important;
+      background-image:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 16%, transparent) 0%,
+          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 28%, transparent) 36%,
+          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 46%, transparent) 100%
+        ),
+        url("assets/xbook-scene/xbook-liquid-scene-dark.webp") !important;
+      color: var(--xb-text-primary, #f4f7fb);
+    }
+    #customerInviteSuccessView > .auth-card-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: min(372px, 100%);
+      margin: 0 auto;
+      padding:
+        calc(max(28px, env(safe-area-inset-top, 0px)) + 12px)
+        max(22px, env(safe-area-inset-right, 0px))
+        calc(max(28px, env(safe-area-inset-bottom, 0px)) + 16px)
+        max(22px, env(safe-area-inset-left, 0px));
+      box-sizing: border-box;
+      text-align: center;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    .customer-invite-success__check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      margin: 8px 0 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(210, 236, 220, 0.42) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 10px 22px rgba(20, 90, 50, 0.12);
+      color: #147a46;
+    }
+    .customer-invite-success__check svg {
+      width: 24px;
+      height: 24px;
+    }
+    .customer-invite-success__title {
+      margin: 0 0 8px;
+      color: var(--xb-text-primary, #0c1b3a);
+      font-family: var(--font-display, inherit);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+    }
+    .customer-invite-success__connected {
+      margin: 0 0 10px;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    #customerInviteSuccessIdentity {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 22px;
+    }
+    #customerInviteSuccessCodeSlot {
+      display: none !important;
+    }
+    .customer-invite-success__download-title {
+      margin: 0 0 12px;
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+    .customer-invite-success__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .customer-invite-success__actions .auth-btn {
+      width: 100%;
+    }
+    .customer-invite-success__actions .auth-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    body:has(#customerInviteSuccessView:not(.hidden)) .topbar {
+      display: none !important;
+    }
+    html:has(#customerInviteSuccessView:not(.hidden)),
+    html:has(#customerInviteSuccessView:not(.hidden)) body,
+    body:has(#customerInviteSuccessView:not(.hidden)) {
+      height: auto !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      background: var(--xb-scene-canvas-light, #E7ECFB);
+    }
+    html[data-xbook-theme="dark"]:has(#customerInviteSuccessView:not(.hidden)),
+    html[data-xbook-theme="dark"]:has(#customerInviteSuccessView:not(.hidden)) body {
+      background: var(--xb-scene-canvas-dark, #0E2350);
     }
     :is(
       #adminAuthCustomerSignupPanel,
@@ -75813,7 +76037,14 @@
 
         <div id="adminAuthCustomerSignupPanel" class="auth-panel hidden">
           <h2 id="customerAccountSignupTitle" class="auth-card-title" style="font-size: 1.15rem; margin-bottom: 6px" data-i18n="modeCreateCustomerTitle">Create Customer Account</h2>
-          <p id="customerInviteBusinessName" class="auth-card-title hidden" style="font-size: 1.15rem; margin-bottom: 6px"></p>
+          <div id="customerInviteIdentity" class="customer-invite-identity hidden">
+            <div class="customer-invite-identity__avatar" aria-hidden="true">
+              <img id="customerInviteBusinessLogo" class="customer-invite-identity__logo hidden" alt="" />
+              <span id="customerInviteBusinessInitials" class="customer-invite-identity__initials"></span>
+            </div>
+            <p id="customerInviteBusinessName" class="customer-invite-identity__name" data-i18n-ignore></p>
+            <p id="customerInviteKicker" class="customer-invite-identity__kicker" data-i18n="customerInviteKicker">invites you to XBook</p>
+          </div>
           <p id="customerAccountSignupLead" class="auth-card-lead" data-i18n="customerCreateAccountLead">Create your customer account. You can join a business later.</p>
           <p id="customerInviteLead" class="auth-card-lead hidden" data-i18n="customerInviteLead">Create your XBook profile to book appointments.</p>
           <p id="customerInviteCheckEmail" class="auth-card-lead hidden" data-i18n="customerInviteCheckEmail">Account created. Check your email and confirm your address to continue.</p>
@@ -75977,6 +76208,42 @@
         <p id="completeProfileError" class="customer-profile-edit-sheet__error hidden" role="alert"></p>
         <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" id="completeProfileSubmitBtn" onclick="submitCustomerCompleteProfile()" data-i18n="completeProfileSubmit">Complete Profile</button>
         <button type="button" class="auth-btn auth-btn--ghost" onclick="logout()" data-i18n="completeProfileSignOut">Sign out</button>
+      </div>
+    </div>
+
+    <div id="customerInviteSuccessView" class="card auth-card hidden" role="main" aria-labelledby="customerInviteSuccessTitle">
+      <div class="customer-invite-lang-switch" hidden data-i18n-ignore role="group" aria-label="Language">
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="mk" aria-pressed="false" onclick="setCustomerInviteLanguage('mk')">MK</button>
+        <span class="customer-invite-lang-sep" aria-hidden="true">|</span>
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="en" aria-pressed="false" onclick="setCustomerInviteLanguage('en')">EN</button>
+        <span class="customer-invite-lang-sep" aria-hidden="true">|</span>
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="sq" aria-pressed="false" onclick="setCustomerInviteLanguage('sq')">SQ</button>
+      </div>
+      <div class="auth-card-inner">
+        <div class="auth-brand auth-brand--auth-screen">
+          <img class="xbook-logo xbook-logo--md" src="icons/xbook-logo.png" alt="" width="46" height="46" decoding="async" />
+          <p class="auth-brand__name">XBOOK</p>
+        </div>
+        <div class="customer-invite-success__check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" focusable="false">
+            <path d="M20 6.5 9.5 17 4 11.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 id="customerInviteSuccessTitle" class="customer-invite-success__title" data-i18n="customerInviteSuccessTitle">Your XBook profile is ready</h1>
+        <p class="customer-invite-success__connected" data-i18n="customerInviteSuccessConnected">You are connected to</p>
+        <div id="customerInviteSuccessIdentity">
+          <div class="customer-invite-identity__avatar" aria-hidden="true">
+            <img id="customerInviteSuccessLogo" class="customer-invite-identity__logo hidden" alt="" />
+            <span id="customerInviteSuccessInitials" class="customer-invite-identity__initials"></span>
+          </div>
+          <p id="customerInviteSuccessBusinessName" class="customer-invite-identity__name" data-i18n-ignore></p>
+        </div>
+        <div id="customerInviteSuccessCodeSlot" hidden aria-hidden="true"></div>
+        <p class="customer-invite-success__download-title" data-i18n="customerInviteDownloadTitle">Download XBook</p>
+        <div class="customer-invite-success__actions">
+          <button type="button" id="customerInviteDownloadIosBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="openXbookAppDownload('ios')" data-i18n="customerInviteDownloadIos">Download for iPhone</button>
+          <button type="button" id="customerInviteDownloadAndroidBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="openXbookAppDownload('android')" data-i18n="customerInviteDownloadAndroid">Download for Android</button>
+        </div>
       </div>
     </div>
 
@@ -82038,6 +82305,8 @@
    */
   const APP_PUBLIC_BASE_URL = "https://booking-app-fawn-five.vercel.app";
   const XBOOK_NATIVE_AUTH_CALLBACK_URL = "xbook://auth/callback";
+  const XBOOK_IOS_DOWNLOAD_URL = "";
+  const XBOOK_ANDROID_DOWNLOAD_URL = "";
 
   /* ============================================================
    * i18n — lightweight translation layer (English, Macedonian, Albanian)
@@ -83413,9 +83682,15 @@
       modeCreateCustomerHint: "Book and manage appointments. You can join a business anytime.",
       customerCreateAccountLead: "Create your customer account. You can join a business later.",
       customerInviteLead: "Create your XBook profile to book appointments.",
+      customerInviteKicker: "invites you to XBook",
       customerInviteCheckEmail: "Account created. Check your email and confirm your address to continue.",
       customerInviteLoginLink: "Already have an account? Log in",
       customerInviteCreateCta: "Create Account",
+      customerInviteSuccessTitle: "Your XBook profile is ready",
+      customerInviteSuccessConnected: "You are connected to",
+      customerInviteDownloadTitle: "Download XBook",
+      customerInviteDownloadIos: "Download for iPhone",
+      customerInviteDownloadAndroid: "Download for Android",
       customerInviteUnavailableTitle: "Invitation unavailable",
       customerInviteUnavailableLead: "This invitation link is invalid or no longer available.",
       customerInviteAlreadyExists: "An XBook account already exists for this email. Log in to continue.",
@@ -85000,9 +85275,15 @@
       modeCreateCustomerHint: "Закажувајте и управувајте со термини. Можете да се приклучите на бизнис во секое време.",
       customerCreateAccountLead: "Креирајте клиентска сметка. Подоцна можете да се приклучите на бизнис.",
       customerInviteLead: "Креирајте XBook профил за да закажувате термини.",
+      customerInviteKicker: "ве поканува на XBook",
       customerInviteCheckEmail: "Сметката е креирана. Проверете ја е-поштата и потврдете ја адресата за да продолжите.",
       customerInviteLoginLink: "Веќе имате сметка? Најавете се",
       customerInviteCreateCta: "Креирај сметка",
+      customerInviteSuccessTitle: "Вашиот XBook профил е подготвен",
+      customerInviteSuccessConnected: "Поврзани сте со",
+      customerInviteDownloadTitle: "Преземете го XBook",
+      customerInviteDownloadIos: "Преземи за iPhone",
+      customerInviteDownloadAndroid: "Преземи за Android",
       customerInviteUnavailableTitle: "Поканата не е достапна",
       customerInviteUnavailableLead: "Овој линк за покана е невалиден или повеќе не е достапен.",
       customerInviteAlreadyExists: "Веќе постои XBook сметка за оваа е-пошта. Најавете се за да продолжите.",
@@ -86580,9 +86861,15 @@
       modeCreateCustomerHint: "Rezervoni dhe menaxhoni terminet. Mund të bashkoheni me një biznes në çdo kohë.",
       customerCreateAccountLead: "Krijoni llogarinë tuaj të klientit. Mund të bashkoheni me një biznes më vonë.",
       customerInviteLead: "Krijoni profilin tuaj XBook për të rezervuar termine.",
+      customerInviteKicker: "ju fton në XBook",
       customerInviteCheckEmail: "Llogaria u krijua. Kontrolloni emailin dhe konfirmoni adresën për të vazhduar.",
       customerInviteLoginLink: "Keni tashmë një llogari? Hyni",
       customerInviteCreateCta: "Krijo llogari",
+      customerInviteSuccessTitle: "Profili juaj XBook është gati",
+      customerInviteSuccessConnected: "Jeni i lidhur me",
+      customerInviteDownloadTitle: "Shkarkoni XBook",
+      customerInviteDownloadIos: "Shkarko për iPhone",
+      customerInviteDownloadAndroid: "Shkarko për Android",
       customerInviteUnavailableTitle: "Ftesa nuk është e disponueshme",
       customerInviteUnavailableLead: "Kjo lidhje ftese është e pavlefshme ose nuk është më e disponueshme.",
       customerInviteAlreadyExists: "Ekziston tashmë një llogari XBook për këtë email. Hyni për të vazhduar.",
@@ -93062,6 +93349,11 @@
       if (!profileComplete) return;
     }
 
+    if (typeof shouldShowCustomerInviteSuccessScreen === "function" && shouldShowCustomerInviteSuccessScreen()) {
+      await showCustomerInviteSuccessView();
+      return;
+    }
+
     if (currentUser && currentUserRole === "customer" && resumePublicBooking) {
       await resumePublicBookingAfterCustomerAuth();
       return;
@@ -97045,8 +97337,16 @@
       portal.style.bottom = "";
       portal.style.left = "";
       portal.style.width = "";
-      portal.style.maxHeight = "";
       portal.style.zIndex = "";
+      if (contextName === "complete") {
+        const rect = searchEl.getBoundingClientRect();
+        const vv = window.visualViewport;
+        const viewportBottom = vv ? vv.offsetTop + vv.height : window.innerHeight;
+        const spaceBelow = Math.max(96, viewportBottom - rect.bottom - 10);
+        portal.style.maxHeight = `${Math.round(Math.min(220, spaceBelow))}px`;
+      } else {
+        portal.style.maxHeight = "";
+      }
       portal.removeAttribute("hidden");
       return;
     }
@@ -97331,7 +97631,10 @@
     if (contextName === "complete") closeCompleteProfileGenderPicker();
     const ctx = getCustomerProfileFormContext(contextName);
     const searchEl = document.getElementById(ctx.citySearchId);
-    searchEl?.scrollIntoView({ block: "center", inline: "nearest" });
+    searchEl?.scrollIntoView({
+      block: contextName === "complete" ? "nearest" : "center",
+      inline: "nearest"
+    });
     void refreshProfileCityResults(contextName);
     window.setTimeout(() => {
       if (document.activeElement === searchEl) {
@@ -100931,6 +101234,116 @@
     }
   }
 
+  function getXbookIosDownloadUrl() {
+    return String(XBOOK_IOS_DOWNLOAD_URL || "").trim();
+  }
+
+  function getXbookAndroidDownloadUrl() {
+    return String(XBOOK_ANDROID_DOWNLOAD_URL || "").trim();
+  }
+
+  function syncCustomerInviteDownloadButtons() {
+    const iosBtn = document.getElementById("customerInviteDownloadIosBtn");
+    const androidBtn = document.getElementById("customerInviteDownloadAndroidBtn");
+    const iosUrl = getXbookIosDownloadUrl();
+    const androidUrl = getXbookAndroidDownloadUrl();
+    if (iosBtn) {
+      iosBtn.disabled = !iosUrl;
+      iosBtn.setAttribute("aria-disabled", iosUrl ? "false" : "true");
+    }
+    if (androidBtn) {
+      androidBtn.disabled = !androidUrl;
+      androidBtn.setAttribute("aria-disabled", androidUrl ? "false" : "true");
+    }
+  }
+
+  function openXbookAppDownload(kind) {
+    const url = kind === "android" ? getXbookAndroidDownloadUrl() : getXbookIosDownloadUrl();
+    if (!url) return;
+    try {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch (e) {
+      window.location.assign(url);
+    }
+  }
+  window.openXbookAppDownload = openXbookAppDownload;
+
+  function getCustomerInviteIdentitySnapshot() {
+    const ctx = getCustomerInviteContext();
+    const membership = ctx.slug ? findRememberedCustomerMembership(ctx.slug) : null;
+    return {
+      slug: ctx.slug || "",
+      name: String(
+        businessSettings?.business_name || membership?.business_name || ""
+      ).trim(),
+      logoUrl: String(
+        businessSettings?.business_logo_url || membership?.business_logo_url || ""
+      ).trim()
+    };
+  }
+
+  function shouldShowCustomerInviteSuccessScreen() {
+    if (typeof isNativeCapacitorApp === "function" && isNativeCapacitorApp()) return false;
+    if (!currentUser || currentUserRole !== "customer") return false;
+    if (!(currentUser.email_confirmed_at || currentUser.confirmed_at)) return false;
+    if (
+      typeof isCustomerProfileComplete === "function" &&
+      !isCustomerProfileComplete(customerCompleteProfileModel)
+    ) {
+      return false;
+    }
+    const ctx = getCustomerInviteContext();
+    if (!ctx.active || !ctx.slug) return false;
+    const row =
+      findRememberedCustomerMembership(ctx.slug) || findActiveCustomerMembershipRow();
+    return isValidJoinedMembershipRow(row, row?.business_id || getActiveBusinessUuid());
+  }
+
+  async function showCustomerInviteSuccessView() {
+    const ctx = getCustomerInviteContext();
+    if (ctx.slug) {
+      persistCustomerInviteContext(ctx.slug);
+      ensureInviteQueryInUrl(ctx.slug);
+    }
+    let snap = getCustomerInviteIdentitySnapshot();
+    if (!snap.name && ctx.slug) {
+      const resolved = await resolveCustomerInviteBusiness(ctx.slug);
+      if (resolved?.ok) {
+        snap = {
+          slug: resolved.slug,
+          name: resolved.name,
+          logoUrl: String(resolved.settings?.business_logo_url || "").trim()
+        };
+      }
+    }
+    hideAllViews();
+    const view = document.getElementById("customerInviteSuccessView");
+    if (view) view.classList.remove("hidden");
+    fillInviteBusinessIdentity(
+      document.getElementById("customerInviteSuccessBusinessName"),
+      document.getElementById("customerInviteSuccessLogo"),
+      document.getElementById("customerInviteSuccessInitials"),
+      snap.name,
+      snap.logoUrl
+    );
+    applyTranslations(view);
+    fillInviteBusinessIdentity(
+      document.getElementById("customerInviteSuccessBusinessName"),
+      document.getElementById("customerInviteSuccessLogo"),
+      document.getElementById("customerInviteSuccessInitials"),
+      snap.name,
+      snap.logoUrl
+    );
+    syncCustomerInviteDownloadButtons();
+    if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
+    document.getElementById("logoutBtn")?.classList.add("hidden");
+    if (document.body.classList.contains("native-app-shell")) {
+      const topbar = document.querySelector(".topbar");
+      if (topbar) topbar.style.display = "none";
+    }
+    setAppShellState(APP_SHELL_STATE.READY, { reason: "customer-invite-success" });
+  }
+
   function maybeRestoreCustomerInviteAfterCallback() {
     const stored = readStoredCustomerInviteSlug();
     if (!stored) return;
@@ -101393,20 +101806,26 @@
       typeof isCustomerInviteFlowActive === "function" &&
       isCustomerInviteFlowActive()
     );
-    return inviteSignupVisible || inviteUnavailableVisible || inviteLoginVisible;
+    const success = document.getElementById("customerInviteSuccessView");
+    const inviteSuccessVisible = !!(success && !success.classList.contains("hidden"));
+    return inviteSignupVisible || inviteUnavailableVisible || inviteLoginVisible || inviteSuccessVisible;
   }
 
   function syncCustomerInviteLangSwitch() {
-    const el = document.getElementById("customerInviteLangSwitch");
-    if (!el) return;
+    const successVisible = !document.getElementById("customerInviteSuccessView")?.classList.contains("hidden");
+    const authVisible = !document.getElementById("authView")?.classList.contains("hidden");
     const show = isCustomerInviteLangSwitchSurface();
-    el.hidden = !show;
-    el.setAttribute("aria-hidden", show ? "false" : "true");
     const active = typeof currentLanguage === "string" ? currentLanguage : "en";
-    el.querySelectorAll("[data-invite-lang]").forEach((btn) => {
-      const on = String(btn.getAttribute("data-invite-lang") || "") === active;
-      btn.classList.toggle("is-active", on);
-      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    document.querySelectorAll(".customer-invite-lang-switch").forEach((el) => {
+      const onSuccess = !!el.closest("#customerInviteSuccessView");
+      const visibleHere = show && (onSuccess ? successVisible : authVisible);
+      el.hidden = !visibleHere;
+      el.setAttribute("aria-hidden", visibleHere ? "false" : "true");
+      el.querySelectorAll("[data-invite-lang]").forEach((btn) => {
+        const on = String(btn.getAttribute("data-invite-lang") || "") === active;
+        btn.classList.toggle("is-active", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
     });
   }
 
@@ -101417,19 +101836,63 @@
   window.setCustomerInviteLanguage = setCustomerInviteLanguage;
   window.syncCustomerInviteLangSwitch = syncCustomerInviteLangSwitch;
 
-  function applyCustomerInviteSignupChrome(active, businessName) {
+  function fillInviteBusinessIdentity(nameEl, logoEl, initialsEl, name, logoUrl) {
+    const displayName = String(name || "").trim();
+    if (nameEl) {
+      nameEl.setAttribute("data-i18n-ignore", "");
+      nameEl.textContent = displayName;
+    }
+    const initials =
+      (typeof getBusinessInitials === "function"
+        ? getBusinessInitials(displayName)
+        : displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase()) || "XB";
+    const url = String(logoUrl || "").trim();
+    if (initialsEl) initialsEl.textContent = initials;
+    if (!logoEl) return;
+    logoEl.onerror = () => {
+      logoEl.classList.add("hidden");
+      logoEl.removeAttribute("src");
+      initialsEl?.classList.remove("hidden");
+    };
+    if (url) {
+      logoEl.alt = displayName;
+      logoEl.src = url;
+      logoEl.classList.remove("hidden");
+      initialsEl?.classList.add("hidden");
+    } else {
+      logoEl.classList.add("hidden");
+      logoEl.removeAttribute("src");
+      initialsEl?.classList.remove("hidden");
+    }
+  }
+
+  function applyCustomerInviteSignupChrome(active, businessName, settings) {
     const panel = document.getElementById("adminAuthCustomerSignupPanel");
     panel?.classList.toggle("auth-panel--customer-invite", !!active);
     document.getElementById("customerAccountSignupTitle")?.classList.toggle("hidden", !!active);
     document.getElementById("customerAccountSignupLead")?.classList.toggle("hidden", !!active);
-    document.getElementById("customerInviteBusinessName")?.classList.toggle("hidden", !active);
+    document.getElementById("customerInviteIdentity")?.classList.toggle("hidden", !active);
     document.getElementById("customerInviteLead")?.classList.toggle("hidden", !active);
     document.getElementById("customerInviteLoginLink")?.classList.toggle("hidden", !active);
     document.getElementById("customerInviteCheckEmail")?.classList.add("hidden");
-    const nameEl = document.getElementById("customerInviteBusinessName");
-    if (nameEl) {
-      nameEl.textContent = active ? String(businessName || "").trim() : "";
-    }
+    const resolvedName = active
+      ? String(
+          businessName ||
+            settings?.business_name ||
+            businessSettings?.business_name ||
+            ""
+        ).trim()
+      : "";
+    const resolvedLogo = active
+      ? String(settings?.business_logo_url || businessSettings?.business_logo_url || "").trim()
+      : "";
+    fillInviteBusinessIdentity(
+      document.getElementById("customerInviteBusinessName"),
+      document.getElementById("customerInviteBusinessLogo"),
+      document.getElementById("customerInviteBusinessInitials"),
+      resolvedName,
+      resolvedLogo
+    );
     const createBtn = document.getElementById("customerAccountCreateBtn");
     if (createBtn) {
       createBtn.setAttribute(
@@ -101442,7 +101905,13 @@
     }
     if (active) {
       applyTranslations(panel);
-      if (nameEl) nameEl.textContent = String(businessName || nameEl.textContent || "").trim();
+      fillInviteBusinessIdentity(
+        document.getElementById("customerInviteBusinessName"),
+        document.getElementById("customerInviteBusinessLogo"),
+        document.getElementById("customerInviteBusinessInitials"),
+        resolvedName,
+        resolvedLogo
+      );
     }
     if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
   }
@@ -101472,10 +101941,9 @@
       ? normalizeBusinessSettingsRecord({ ...resolved.settings })
       : resolved.settings;
     showAuthView("invite");
-    applyCustomerInviteSignupChrome(true, resolved.name);
+    applyCustomerInviteSignupChrome(true, resolved.name, resolved.settings);
     applyTranslations(document.getElementById("adminAuthCustomerSignupPanel"));
-    const nameEl = document.getElementById("customerInviteBusinessName");
-    if (nameEl) nameEl.textContent = resolved.name;
+    applyCustomerInviteSignupChrome(true, resolved.name, resolved.settings);
     if (typeof applyBusinessBranding === "function" && businessSettings) {
       try {
         applyBusinessBranding();
@@ -101542,7 +102010,7 @@
       return;
     }
     if (!signupResult?.ok) return;
-    applyCustomerInviteSignupChrome(true, businessSettings?.business_name || ctx.slug);
+    applyCustomerInviteSignupChrome(true, businessSettings?.business_name || ctx.slug, businessSettings);
     document.getElementById("customerInviteCheckEmail")?.classList.remove("hidden");
   }
 
@@ -109677,7 +110145,11 @@
 
     syncPublicBusinessFromUrl();
 
-    if (opts.handlePublicDeepLinks !== false && publicManageToken) {
+    const inviteWebOnboarding =
+      getCustomerInviteContext().active === true &&
+      !(typeof isNativeCapacitorApp === "function" && isNativeCapacitorApp());
+
+    if (!inviteWebOnboarding && opts.handlePublicDeepLinks !== false && publicManageToken) {
       showPublicView(true);
       await openManageBookingFromToken(publicManageToken);
       if (opts.customerPushSource) {
@@ -109693,7 +110165,7 @@
       return "customer-manage";
     }
 
-    if (opts.handlePublicDeepLinks !== false) {
+    if (!inviteWebOnboarding && opts.handlePublicDeepLinks !== false) {
       const shouldResume = sessionStorage.getItem(PUBLIC_BOOKING_RESUME_FLAG_KEY) === "1";
       if (shouldResume) {
         sessionStorage.removeItem(PUBLIC_BOOKING_RESUME_FLAG_KEY);
@@ -109728,7 +110200,10 @@
       const persisted =
         findRememberedCustomerMembership(inviteCtx.slug) || findActiveCustomerMembershipRow();
       if (isValidJoinedMembershipRow(persisted, persisted?.business_id || getActiveBusinessUuid())) {
-        consumeCustomerInviteSuccess();
+        if (shouldShowCustomerInviteSuccessScreen()) {
+          await showCustomerInviteSuccessView();
+          return "customer-invite-success";
+        }
       }
     }
 
@@ -111240,6 +111715,7 @@
     document.getElementById("authView")?.classList.remove("xb-lg-create", "xb-create-biz-exit");
     document.getElementById("resetPasswordView")?.classList.add("hidden");
     document.getElementById("customerCompleteProfileView")?.classList.add("hidden");
+    document.getElementById("customerInviteSuccessView")?.classList.add("hidden");
     document.getElementById("adminEmailVerifiedView")?.classList.add("hidden");
     document.getElementById("adminView")?.classList.add("hidden");
     document.getElementById("adminOnboardingView")?.classList.add("hidden");
