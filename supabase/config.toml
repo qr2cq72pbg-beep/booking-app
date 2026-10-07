@@ -11,3 +11,6 @@ verify_jwt = false
 [functions.send-customer-notification]
 verify_jwt = false
 
+[functions.send-business-event-notification]
+verify_jwt = false
+

@@ -340,6 +340,37 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({ ok: false, error: "Business not found." }, 403);
   }
 
+  let selectedLinkedIds: string[] = [];
+  if (recipientType === "selected") {
+    const { data: linkedRows, error: linkedError } = await supabase
+      .from("business_customers")
+      .select("customer_user_id")
+      .eq("business_id", businessId)
+      .in("customer_user_id", selectedRecipientUserIds);
+
+    if (linkedError) {
+      return jsonResponse(
+        { ok: false, error: "Could not resolve recipients." },
+        500,
+      );
+    }
+
+    selectedLinkedIds = [
+      ...new Set(
+        (linkedRows || [])
+          .map((row) => String(row.customer_user_id || "").trim())
+          .filter(Boolean),
+      ),
+    ];
+
+    if (!selectedLinkedIds.length) {
+      return jsonResponse(
+        { ok: false, error: "No linked customers in that selection." },
+        400,
+      );
+    }
+  }
+
   const { data: notification, error: notifError } = await supabase
     .from("notifications")
     .insert({
@@ -366,7 +397,7 @@ Deno.serve(async (req: Request) => {
   let crmLinkedRecipientCount = 0;
 
   if (recipientType === "selected") {
-    for (const id of selectedRecipientUserIds) {
+    for (const id of selectedLinkedIds) {
       recipientUserIdSet.add(id);
     }
   } else {

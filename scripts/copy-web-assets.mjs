@@ -15,6 +15,7 @@ const COPY_SCENE_WEBP = [
   "assets/xbook-scene/xbook-liquid-scene-light.webp",
   "assets/xbook-scene/xbook-liquid-scene-dark.webp"
 ];
+const COPY_SERVICE_VISUALS_DIR = "assets/service-visuals";
 const SUPABASE_UMD_SRC = path.join(
   projectRoot,
   "node_modules",
@@ -84,4 +85,13 @@ for (const file of COPY_SCENE_WEBP) {
   copyFile(src, path.join(wwwDir, file));
 }
 
-console.log("[web:copy] Copied index.html, manifest.json, icons/, vendor/, scene WebPs → www/");
+const serviceVisualsSrc = path.join(projectRoot, COPY_SERVICE_VISUALS_DIR);
+if (!fs.existsSync(serviceVisualsSrc)) {
+  console.error(`[web:copy] Missing required directory: ${COPY_SERVICE_VISUALS_DIR}/`);
+  process.exit(1);
+}
+const serviceVisualsDest = path.join(wwwDir, COPY_SERVICE_VISUALS_DIR);
+rmrf(serviceVisualsDest);
+copyDir(serviceVisualsSrc, serviceVisualsDest);
+
+console.log("[web:copy] Copied index.html, manifest.json, icons/, vendor/, scene WebPs, service visuals → www/");

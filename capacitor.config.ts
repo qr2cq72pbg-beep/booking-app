@@ -31,6 +31,15 @@ const config: CapacitorConfig = {
   },
   android: {
     allowMixedContent: false
+  },
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ["alert", "sound", "badge"],
+      // Custom XBook flag (not read by the Capacitor plugin).
+      // Keep false until android/app/google-services.json is present and the
+      // native Android app is rebuilt. register() without FirebaseApp crashes.
+      androidRegister: true
+    }
   }
 };
 
