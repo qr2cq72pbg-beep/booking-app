@@ -53240,6 +53240,93 @@
     #adminAuthCustomerSignupPanel.auth-panel--customer-invite .auth-divider {
       display: none;
     }
+
+    #customerInviteLangSwitch {
+      display: none;
+      position: absolute;
+      top: max(8px, env(safe-area-inset-top, 0px));
+      right: max(10px, env(safe-area-inset-right, 0px));
+      z-index: 6;
+      align-items: center;
+      gap: 0;
+      margin: 0;
+      padding: 2px 3px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        0 6px 18px rgba(18, 40, 90, 0.08);
+      -webkit-backdrop-filter: saturate(180%) blur(16px);
+      backdrop-filter: saturate(180%) blur(16px);
+      pointer-events: auto;
+    }
+    #customerInviteLangSwitch:not([hidden]) {
+      display: inline-flex;
+    }
+    #customerInviteLangSwitch .customer-invite-lang-btn {
+      appearance: none;
+      -webkit-appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      min-height: 32px;
+      margin: 0;
+      padding: 4px 6px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      opacity: 0.52;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #customerInviteLangSwitch .customer-invite-lang-btn.is-active {
+      opacity: 1;
+      color: var(--xb-text-primary, #12203e);
+      background: rgba(255, 255, 255, 0.48);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+    #customerInviteLangSwitch .customer-invite-lang-sep {
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      opacity: 0.28;
+      padding: 0 1px;
+      pointer-events: none;
+      user-select: none;
+    }
+    :root[data-xbook-theme="dark"] #customerInviteLangSwitch,
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch {
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(12, 24, 52, 0.38);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 8px 20px rgba(0, 0, 0, 0.22);
+    }
+    :root[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn,
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn {
+      color: rgba(230, 238, 255, 0.72);
+    }
+    :root[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn.is-active,
+    html[data-xbook-theme="dark"] #customerInviteLangSwitch .customer-invite-lang-btn.is-active {
+      color: #f4f7ff;
+      background: rgba(255, 255, 255, 0.14);
+    }
+    @media (max-width: 420px) {
+      #customerInviteLangSwitch {
+        top: max(6px, env(safe-area-inset-top, 0px));
+        right: max(8px, env(safe-area-inset-right, 0px));
+      }
+    }
     :is(
       #adminAuthCustomerSignupPanel,
       #adminAuthCustomerJoinPanel,
@@ -75648,6 +75735,13 @@
         <div class="xb-create-biz-atmosphere__waves"></div>
         <div class="xb-create-biz-atmosphere__orb"></div>
       </div>
+      <div id="customerInviteLangSwitch" class="customer-invite-lang-switch" hidden data-i18n-ignore role="group" aria-label="Language">
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="mk" aria-pressed="false" onclick="setCustomerInviteLanguage('mk')">MK</button>
+        <span class="customer-invite-lang-sep" aria-hidden="true">|</span>
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="en" aria-pressed="false" onclick="setCustomerInviteLanguage('en')">EN</button>
+        <span class="customer-invite-lang-sep" aria-hidden="true">|</span>
+        <button type="button" class="customer-invite-lang-btn" data-invite-lang="sq" aria-pressed="false" onclick="setCustomerInviteLanguage('sq')">SQ</button>
+      </div>
       <div class="auth-card-inner">
         <div class="auth-brand auth-brand--auth-screen">
           <img class="xbook-logo xbook-logo--md" src="icons/xbook-logo.png" alt="" width="46" height="46" decoding="async" />
@@ -91475,6 +91569,7 @@
     syncLanguagePickerUi();
     syncLanguageSettingValue();
     syncXbookAppearanceUi();
+    if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
     if (typeof refreshAdminI18nDynamicUi === "function") refreshAdminI18nDynamicUi();
     const bookingsSection = document.getElementById("adminSectionBookings");
     if (
@@ -91502,6 +91597,7 @@
     syncLanguagePickerUi();
     syncLanguageSettingValue();
     syncXbookAppearanceUi();
+    if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
   }
 
   function syncLanguageSettingValue() {
@@ -101276,7 +101372,50 @@
     document.getElementById("authView")?.classList.toggle("xb-lg-create", !isJoin);
     document.getElementById("authView")?.classList.remove("xb-create-biz-exit");
     if (!isJoin) xbBindCreateBusinessKeyboardScroll();
+    if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
   }
+
+  function isCustomerInviteLangSwitchSurface() {
+    const auth = document.getElementById("authView");
+    if (!auth || auth.classList.contains("hidden")) return false;
+    const signup = document.getElementById("adminAuthCustomerSignupPanel");
+    const unavailable = document.getElementById("customerInviteUnavailablePanel");
+    const login = document.getElementById("adminAuthLoginPanel");
+    const inviteSignupVisible = !!(
+      signup &&
+      !signup.classList.contains("hidden") &&
+      signup.classList.contains("auth-panel--customer-invite")
+    );
+    const inviteUnavailableVisible = !!(unavailable && !unavailable.classList.contains("hidden"));
+    const inviteLoginVisible = !!(
+      login &&
+      !login.classList.contains("hidden") &&
+      typeof isCustomerInviteFlowActive === "function" &&
+      isCustomerInviteFlowActive()
+    );
+    return inviteSignupVisible || inviteUnavailableVisible || inviteLoginVisible;
+  }
+
+  function syncCustomerInviteLangSwitch() {
+    const el = document.getElementById("customerInviteLangSwitch");
+    if (!el) return;
+    const show = isCustomerInviteLangSwitchSurface();
+    el.hidden = !show;
+    el.setAttribute("aria-hidden", show ? "false" : "true");
+    const active = typeof currentLanguage === "string" ? currentLanguage : "en";
+    el.querySelectorAll("[data-invite-lang]").forEach((btn) => {
+      const on = String(btn.getAttribute("data-invite-lang") || "") === active;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  function setCustomerInviteLanguage(code) {
+    if (typeof setAppLanguage === "function") setAppLanguage(code);
+    syncCustomerInviteLangSwitch();
+  }
+  window.setCustomerInviteLanguage = setCustomerInviteLanguage;
+  window.syncCustomerInviteLangSwitch = syncCustomerInviteLangSwitch;
 
   function applyCustomerInviteSignupChrome(active, businessName) {
     const panel = document.getElementById("adminAuthCustomerSignupPanel");
@@ -101305,6 +101444,7 @@
       applyTranslations(panel);
       if (nameEl) nameEl.textContent = String(businessName || nameEl.textContent || "").trim();
     }
+    if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
   }
 
   function isExistingCustomerSignupError(error) {
@@ -123203,9 +123343,11 @@
     input.type = isPassword ? "text" : "password";
     if (btn) {
       const label = isPassword ? "Hide" : "Show";
-      btn.textContent = btn.hasAttribute("data-account-password-toggle")
-        ? translateRuntimeText(label)
-        : label;
+      const inviteToggle = !!btn.closest("#adminAuthCustomerSignupPanel.auth-panel--customer-invite");
+      btn.textContent =
+        btn.hasAttribute("data-account-password-toggle") || inviteToggle
+          ? translateRuntimeText(label)
+          : label;
     }
   }
 
