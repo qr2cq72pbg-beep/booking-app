@@ -53380,8 +53380,15 @@
       object-fit: cover;
     }
     .customer-invite-identity__logo.hidden,
-    .customer-invite-identity__initials.hidden {
+    .customer-invite-identity__initials.hidden,
+    .customer-invite-identity__avatar.hidden {
       display: none !important;
+    }
+    #customerAuthLoginCode,
+    #customerWelcomeLoginCode {
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
+      text-align: center;
     }
     .customer-invite-identity__initials {
       color: var(--xb-text-primary, #12203e);
@@ -53514,7 +53521,43 @@
       margin: 0 0 22px;
     }
     #customerInviteSuccessCodeSlot {
-      display: none !important;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      margin: 0 0 22px;
+    }
+    #customerInviteSuccessCodeSlot:not([hidden]) {
+      display: flex;
+    }
+    .customer-invite-success__code-title {
+      margin: 0;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .customer-invite-success__code {
+      margin: 0;
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+    .customer-invite-success__code-hint,
+    .customer-invite-success__code-status {
+      margin: 0;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .customer-invite-success__code-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
     }
     .customer-invite-success__download-title {
       margin: 0 0 12px;
@@ -57225,7 +57268,8 @@
     #modeView.xb-welcome .mode-entry-action:nth-child(2) { animation-delay: 240ms, 240ms; }
     #modeView.xb-welcome .mode-entry-action:nth-child(3) { animation-delay: 280ms, 280ms; }
     #modeView.xb-welcome .mode-entry-action:nth-child(4) { animation-delay: 325ms, 325ms; }
-    #modeView.xb-welcome .mode-entry-trust-line { animation-delay: 365ms, 365ms; }
+    #modeView.xb-welcome .mode-entry-action:nth-child(5) { animation-delay: 355ms, 355ms; }
+    #modeView.xb-welcome .mode-entry-trust-line { animation-delay: 390ms, 390ms; }
 
     #modeView.xb-welcome .mode-entry-mark {
       position: relative;
@@ -57351,7 +57395,7 @@
       margin-bottom: 8px;
     }
 
-    #modeView.xb-welcome .mode-entry-action:nth-child(4) {
+    #modeView.xb-welcome .mode-entry-action:nth-child(5) {
       margin-top: 6px;
     }
 
@@ -57821,11 +57865,11 @@
       color: var(--xb-text-primary);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) {
       gap: 0;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead {
       margin: 0 0 14px;
       font-size: 15px;
       font-weight: 400;
@@ -57840,9 +57884,9 @@
       margin: 0 0 2px;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--oauth,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-apple {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--oauth,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-apple {
       position: relative;
       isolation: isolate;
       overflow: hidden;
@@ -57854,17 +57898,17 @@
       transition: transform var(--xb-motion-fast, 90ms) var(--xb-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--oauth:active:not(:disabled) {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--oauth:active:not(:disabled) {
       transform: scale(0.987);
       opacity: 1;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--oauth > * {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--oauth > * {
       position: relative;
       z-index: 1;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google {
       color: var(--xb-brand, #001b5e) !important;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(220, 236, 255, 0.16) 48%, rgba(186, 216, 255, 0.1) 100%) !important;
@@ -57877,7 +57921,7 @@
       backdrop-filter: none;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google::before {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google::before {
       content: "";
       position: absolute;
       left: 10%;
@@ -57889,25 +57933,25 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google:hover {
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google:hover {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.44) 0%, rgba(220, 236, 255, 0.22) 48%, rgba(186, 216, 255, 0.14) 100%) !important;
         border-color: rgba(255, 255, 255, 0.78) !important;
       }
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-apple {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-apple {
       background: #000 !important;
       color: #fff !important;
       border: 1px solid #000 !important;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22) !important;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-apple:hover {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-apple:hover {
       background: #1a1a1a !important;
       border-color: #1a1a1a !important;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-divider {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-divider {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -57924,8 +57968,8 @@
       opacity: 0.78;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-divider::before,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-divider::after {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-divider::before,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-divider::after {
       content: "";
       flex: 1;
       height: 1px;
@@ -57940,7 +57984,7 @@
       );
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-field-label {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-field-label {
       margin: 10px 0 6px;
       font-size: 12px;
       font-weight: 600;
@@ -57948,8 +57992,8 @@
       color: var(--xb-text-secondary);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input {
       min-height: 52px;
       margin: 0;
       padding: 0 16px;
@@ -57973,19 +58017,19 @@
         background 180ms var(--xb-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input {
       padding-right: 72px;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input::placeholder {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input::placeholder {
       color: color-mix(in srgb, var(--xb-text-secondary) 78%, transparent);
       opacity: 1;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus-visible,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input:focus,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input:focus-visible {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus-visible,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input:focus,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input:focus-visible {
       outline: none;
       border-color: rgba(61, 130, 255, 0.46);
       background:
@@ -57996,8 +58040,8 @@
         0 10px 28px rgba(43, 106, 240, 0.12);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:-webkit-autofill,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input:-webkit-autofill {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:-webkit-autofill,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input:-webkit-autofill {
       -webkit-text-fill-color: var(--xb-text-primary);
       caret-color: var(--xb-brand);
       box-shadow:
@@ -58005,7 +58049,7 @@
         0 0 0 1000px #eaf2fb inset;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-toggle {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-toggle {
       right: 8px;
       z-index: 2;
       min-width: 44px;
@@ -58018,14 +58062,14 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-toggle:hover,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-toggle:active {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-toggle:hover,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-toggle:active {
       color: var(--xb-brand);
       background: transparent;
       transform: translateY(-50%);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--primary-xbook {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--primary-xbook {
       position: relative;
       isolation: isolate;
       overflow: hidden;
@@ -58045,7 +58089,7 @@
       transition: transform var(--xb-motion-fast, 90ms) var(--xb-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--primary-xbook::before {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--primary-xbook::before {
       content: "";
       position: absolute;
       left: -8%;
@@ -58057,12 +58101,12 @@
       background: radial-gradient(ellipse 78% 48% at 50% 58%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 36%, transparent 66%);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--primary-xbook:hover {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--primary-xbook:hover {
       filter: none;
       background: linear-gradient(180deg, #6aa2ff 0%, var(--xb-brand-luminous, #3d82ff) 46%, var(--xb-brand-luminous-deep, #2b6af0) 100%);
     }
 
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--primary-xbook:active:not(:disabled) {
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--primary-xbook:active:not(:disabled) {
       transform: scale(0.987);
       opacity: 1;
     }
@@ -58121,13 +58165,13 @@
     }
 
     #authView.xb-lg-create .auth-brand,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .admin-auth-oauth,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-divider,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-field-label,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > input,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .password-wrap,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-btn--primary,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .admin-auth-oauth,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-divider,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-field-label,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > input,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .password-wrap,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-btn--primary,
     #authView.xb-lg-create #adminAuthLoginPanel > .auth-link-btn--forgot,
     #authView.xb-lg-create .auth-return-home-btn {
       animation:
@@ -58136,23 +58180,23 @@
     }
 
     #authView.xb-lg-create .auth-brand { animation-delay: 20ms, 20ms; }
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead { animation-delay: 90ms, 90ms; }
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .admin-auth-oauth { animation-delay: 140ms, 140ms; }
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-divider { animation-delay: 180ms, 180ms; }
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-field-label,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > input,
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .password-wrap { animation-delay: 210ms, 210ms; }
-    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-btn--primary { animation-delay: 260ms, 260ms; }
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead { animation-delay: 90ms, 90ms; }
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .admin-auth-oauth { animation-delay: 140ms, 140ms; }
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-divider { animation-delay: 180ms, 180ms; }
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-field-label,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > input,
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .password-wrap { animation-delay: 210ms, 210ms; }
+    #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-btn--primary { animation-delay: 260ms, 260ms; }
     #authView.xb-lg-create .auth-return-home-btn { animation-delay: 320ms, 320ms; }
 
     #authView.xb-lg-create.xb-create-biz-exit .auth-brand,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .admin-auth-oauth,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-divider,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-field-label,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > input,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .password-wrap,
-    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-btn--primary,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .admin-auth-oauth,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-divider,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-field-label,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > input,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .password-wrap,
+    #authView.xb-lg-create.xb-create-biz-exit :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-btn--primary,
     #authView.xb-lg-create.xb-create-biz-exit #adminAuthLoginPanel > .auth-link-btn--forgot,
     #authView.xb-lg-create.xb-create-biz-exit .auth-return-home-btn {
       animation: xb-create-biz-recede 150ms var(--xb-ease-out, cubic-bezier(0.16, 1, 0.3, 1)) forwards;
@@ -58173,6 +58217,7 @@
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-action:nth-child(2) { animation-delay: 18ms; }
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-action:nth-child(3) { animation-delay: 32ms; }
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-action:nth-child(4) { animation-delay: 46ms; }
+    #modeView.xb-welcome.xb-welcome-handoff .mode-entry-action:nth-child(5) { animation-delay: 58ms; }
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-welcome { animation-delay: 28ms; }
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-headline { animation-delay: 28ms; }
     #modeView.xb-welcome.xb-welcome-handoff .mode-entry-subtitle { animation-delay: 28ms; }
@@ -58202,6 +58247,7 @@
     #modeView.xb-welcome.xb-welcome-return .mode-entry-action:nth-child(2) { animation-delay: 125ms, 125ms; }
     #modeView.xb-welcome.xb-welcome-return .mode-entry-action:nth-child(3) { animation-delay: 145ms, 145ms; }
     #modeView.xb-welcome.xb-welcome-return .mode-entry-action:nth-child(4) { animation-delay: 165ms, 165ms; }
+    #modeView.xb-welcome.xb-welcome-return .mode-entry-action:nth-child(5) { animation-delay: 180ms, 180ms; }
     #modeView.xb-welcome.xb-welcome-return .mode-entry-trust-line { animation-delay: 185ms, 185ms; }
 
     @keyframes xb-create-biz-rise {
@@ -58224,15 +58270,15 @@
       to { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.99); }
     }
 
-    html.xb-android #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google,
-    body.xb-android #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google {
+    html.xb-android #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google,
+    body.xb-android #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(226, 238, 255, 0.34) 100%) !important;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
 
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google {
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(226, 238, 255, 0.34) 100%) !important;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
@@ -58240,9 +58286,9 @@
     }
 
     @media (prefers-reduced-transparency: reduce) {
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input {
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(236, 243, 255, 0.7) 100%) !important;
         -webkit-backdrop-filter: none;
         backdrop-filter: none;
@@ -58254,13 +58300,13 @@
 
     @media (prefers-reduced-motion: reduce) {
       #authView.xb-lg-create .auth-brand,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .admin-auth-oauth,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-divider,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-field-label,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > input,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .password-wrap,
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-btn--primary,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .admin-auth-oauth,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-divider,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-field-label,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > input,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .password-wrap,
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-btn--primary,
       #authView.xb-lg-create #adminAuthLoginPanel > .auth-link-btn--forgot,
       #authView.xb-lg-create .auth-return-home-btn,
       #authView.xb-lg-create .xb-create-biz-atmosphere__glow,
@@ -58281,8 +58327,8 @@
       #modeView.xb-welcome.xb-welcome-return .mode-entry-trust-line {
         animation: none !important;
       }
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--oauth:active:not(:disabled),
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .auth-btn--primary-xbook:active:not(:disabled) {
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--oauth:active:not(:disabled),
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .auth-btn--primary-xbook:active:not(:disabled) {
         transform: none;
       }
     }
@@ -58294,7 +58340,7 @@
       }
       #authView.xb-lg-create .auth-brand__name { font-size: 20px; }
       #authView.xb-lg-create .auth-brand__welcome { margin-top: 8px; font-size: 20px; }
-      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) > .auth-card-lead { margin-bottom: 10px; }
+      #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) > .auth-card-lead { margin-bottom: 10px; }
     }
 
     @media (max-width: 360px) {
@@ -58325,8 +58371,8 @@
       color: var(--xb-text-primary);
     }
 
-    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google,
-    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google {
+    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google,
+    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google {
       color: var(--xb-text-primary) !important;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 32, 62, 0.28) 48%, rgba(10, 18, 36, 0.42) 100%) !important;
       border-color: rgba(255, 255, 255, 0.22) !important;
@@ -58339,16 +58385,16 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google:hover,
-      html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) button.auth-btn--oauth-google:hover {
+      :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google:hover,
+      html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) button.auth-btn--oauth-google:hover {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(18, 32, 62, 0.32) 48%, rgba(10, 18, 36, 0.46) 100%) !important;
       }
     }
 
-    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input,
-    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input,
-    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input,
-    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) .password-wrap input {
+    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input,
+    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input,
+    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input,
+    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) .password-wrap input {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 32, 62, 0.28) 48%, rgba(10, 18, 36, 0.42) 100%);
       border-color: rgba(186, 214, 255, 0.22);
       color: var(--xb-text-primary);
@@ -58358,10 +58404,10 @@
         0 8px 22px rgba(0, 0, 0, 0.22);
     }
 
-    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus,
-    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus-visible,
-    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus,
-    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel) input:focus-visible {
+    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus,
+    :root[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus-visible,
+    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus,
+    html[data-xbook-theme="dark"] #authView.xb-lg-create :is(#adminAuthLoginPanel, #adminAuthSignupPanel, #adminAuthCustomerSignupPanel, #adminAuthCustomerCodePanel) input:focus-visible {
       border-color: rgba(106, 168, 255, 0.62);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(18, 32, 62, 0.34) 48%, rgba(10, 18, 36, 0.46) 100%);
     }
@@ -75835,6 +75881,12 @@
               <p class="mode-entry-action__hint" data-i18n="modeCreateCustomerHint">Book and manage appointments. You can join a business anytime.</p>
             </div>
             <div class="mode-entry-action">
+              <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="chooseCustomerLoginWithCode()" data-i18n="customerLoginWithCode">
+                Login with code
+              </button>
+              <p class="mode-entry-action__hint" data-i18n="customerLoginCodeHint">Enter the 9-digit code from XBook web.</p>
+            </div>
+            <div class="mode-entry-action">
               <button type="button" class="mode-entry-btn mode-entry-btn--secondary" onclick="chooseAdmin()">
                 Sign In
               </button>
@@ -76079,6 +76131,15 @@
           <button type="button" id="customerInviteLoginLink" class="auth-link-btn hidden" onclick="showCustomerInviteExistingLogin()" data-i18n="customerInviteLoginLink">Already have an account? Log in</button>
         </div>
 
+        <div id="adminAuthCustomerCodePanel" class="auth-panel hidden">
+          <p class="auth-card-lead" data-i18n="customerLoginWithCode">Login with code</p>
+          <label class="auth-field-label" for="customerWelcomeLoginCode" data-i18n="customerLoginCodeLabel">Login code</label>
+          <input id="customerWelcomeLoginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="11" placeholder="482 731 946" aria-describedby="customerWelcomeLoginCodeHint" oninput="onCustomerLoginCodeInput(event)" />
+          <p id="customerWelcomeLoginCodeHint" class="auth-card-lead customer-join-code-hint" data-i18n="customerLoginCodeHint">Enter the 9-digit code from XBook web.</p>
+          <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="customerLoginWithCode()" data-i18n="customerLoginCodeSubmit">Log in</button>
+          <button type="button" class="auth-link-btn" onclick="showAuthView()" data-i18n="customerLoginCodeBack">Use email and password</button>
+        </div>
+
         <div id="customerInviteUnavailablePanel" class="auth-panel hidden">
           <h2 class="auth-card-title" style="font-size: 1.15rem; margin-bottom: 6px" data-i18n="customerInviteUnavailableTitle">Invitation unavailable</h2>
           <p class="auth-card-lead" data-i18n="customerInviteUnavailableLead">This invitation link is invalid or no longer available.</p>
@@ -76238,7 +76299,16 @@
           </div>
           <p id="customerInviteSuccessBusinessName" class="customer-invite-identity__name" data-i18n-ignore></p>
         </div>
-        <div id="customerInviteSuccessCodeSlot" hidden aria-hidden="true"></div>
+        <div id="customerInviteSuccessCodeSlot" hidden aria-hidden="true">
+          <p class="customer-invite-success__code-title" data-i18n="customerInviteLoginCodeTitle">Your XBook login code</p>
+          <p id="customerInviteLoginCodeValue" class="customer-invite-success__code" data-i18n-ignore></p>
+          <p id="customerInviteLoginCodeHint" class="customer-invite-success__code-hint" data-i18n="customerInviteLoginCodeHint">Valid for 30 minutes</p>
+          <p id="customerInviteLoginCodeStatus" class="customer-invite-success__code-status hidden"></p>
+          <div class="customer-invite-success__code-actions">
+            <button type="button" id="customerInviteCopyCodeBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook hidden" onclick="copyCustomerInviteLoginCode()" data-i18n="customerInviteLoginCodeCopy">Copy code</button>
+            <button type="button" id="customerInviteReissueCodeBtn" class="auth-btn auth-btn--ghost hidden" onclick="reissueCustomerInviteLoginCode()" data-i18n="customerInviteLoginCodeReissue">Generate new code</button>
+          </div>
+        </div>
         <p class="customer-invite-success__download-title" data-i18n="customerInviteDownloadTitle">Download XBook</p>
         <div class="customer-invite-success__actions">
           <button type="button" id="customerInviteDownloadIosBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="openXbookAppDownload('ios')" data-i18n="customerInviteDownloadIos">Download for iPhone</button>
@@ -80527,7 +80597,17 @@
                 <button type="button" class="password-toggle" onclick="togglePasswordVisibility('customerAuthPassword', this)">Show</button>
               </div>
               <button type="button" class="auth-btn auth-btn--primary" onclick="customerLogin()">Log in</button>
+              <button type="button" class="auth-link-btn" onclick="setCustomerAuthPanel('code')" data-i18n="customerLoginWithCode">Login with code</button>
               <button type="button" class="auth-link-btn" onclick="setCustomerAuthPanel('signup')">Create customer account</button>
+            </div>
+
+            <div id="customerAuthCodePanel" class="auth-panel hidden">
+              <p class="auth-card-lead" data-i18n="customerLoginWithCode">Login with code</p>
+              <label class="auth-field-label" for="customerAuthLoginCode" data-i18n="customerLoginCodeLabel">Login code</label>
+              <input id="customerAuthLoginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="11" placeholder="482 731 946" aria-describedby="customerAuthLoginCodeHint" oninput="onCustomerLoginCodeInput(event)" />
+              <p id="customerAuthLoginCodeHint" class="auth-card-lead customer-join-code-hint" data-i18n="customerLoginCodeHint">Enter the 9-digit code from XBook web.</p>
+              <button type="button" class="auth-btn auth-btn--primary" onclick="customerLoginWithCode()" data-i18n="customerLoginCodeSubmit">Log in</button>
+              <button type="button" class="auth-link-btn" onclick="setCustomerAuthPanel('login')" data-i18n="customerLoginCodeBack">Use email and password</button>
             </div>
 
             <div id="customerAuthSignupPanel" class="auth-panel hidden">
@@ -83691,6 +83771,20 @@
       customerInviteDownloadTitle: "Download XBook",
       customerInviteDownloadIos: "Download for iPhone",
       customerInviteDownloadAndroid: "Download for Android",
+      customerInviteLoginCodeTitle: "Your XBook login code",
+      customerInviteLoginCodeHint: "Valid for 30 minutes",
+      customerInviteLoginCodeCopy: "Copy code",
+      customerInviteLoginCodeCopied: "Copied",
+      customerInviteLoginCodeReissue: "Generate new code",
+      customerInviteLoginCodeActive: "A login code is already active. Generate a new one if you need it again.",
+      customerInviteLoginCodeIssueFailed: "Could not create a login code. Try again.",
+      customerInviteLoginCodeUnavailable: "Login with code is unavailable right now.",
+      customerLoginWithCode: "Login with code",
+      customerLoginCodeLabel: "Login code",
+      customerLoginCodeHint: "Enter the 9-digit code from XBook web.",
+      customerLoginCodeSubmit: "Log in",
+      customerLoginCodeBack: "Use email and password",
+      customerLoginCodeInvalid: "Invalid or expired code. Try again.",
       customerInviteUnavailableTitle: "Invitation unavailable",
       customerInviteUnavailableLead: "This invitation link is invalid or no longer available.",
       customerInviteAlreadyExists: "An XBook account already exists for this email. Log in to continue.",
@@ -85284,6 +85378,20 @@
       customerInviteDownloadTitle: "Преземете го XBook",
       customerInviteDownloadIos: "Преземи за iPhone",
       customerInviteDownloadAndroid: "Преземи за Android",
+      customerInviteLoginCodeTitle: "Вашиот XBook код",
+      customerInviteLoginCodeHint: "Важи 30 минути",
+      customerInviteLoginCodeCopy: "Копирај код",
+      customerInviteLoginCodeCopied: "Копирано",
+      customerInviteLoginCodeReissue: "Генерирај нов код",
+      customerInviteLoginCodeActive: "Кодот е веќе активен. Генерирајте нов ако ви треба повторно.",
+      customerInviteLoginCodeIssueFailed: "Не можевме да го создадеме кодот. Обидете се повторно.",
+      customerInviteLoginCodeUnavailable: "Најавата со код не е достапна во моментов.",
+      customerLoginWithCode: "Најави се со код",
+      customerLoginCodeLabel: "Код за најава",
+      customerLoginCodeHint: "Внесете го 9-цифрениот код од XBook на веб.",
+      customerLoginCodeSubmit: "Најави се",
+      customerLoginCodeBack: "Користи е-пошта и лозинка",
+      customerLoginCodeInvalid: "Неважечки или истечен код. Обидете се повторно.",
       customerInviteUnavailableTitle: "Поканата не е достапна",
       customerInviteUnavailableLead: "Овој линк за покана е невалиден или повеќе не е достапен.",
       customerInviteAlreadyExists: "Веќе постои XBook сметка за оваа е-пошта. Најавете се за да продолжите.",
@@ -86870,6 +86978,20 @@
       customerInviteDownloadTitle: "Shkarkoni XBook",
       customerInviteDownloadIos: "Shkarko për iPhone",
       customerInviteDownloadAndroid: "Shkarko për Android",
+      customerInviteLoginCodeTitle: "Kodi juaj i hyrjes XBook",
+      customerInviteLoginCodeHint: "Vlen 30 minuta",
+      customerInviteLoginCodeCopy: "Kopjo kodin",
+      customerInviteLoginCodeCopied: "U kopjua",
+      customerInviteLoginCodeReissue: "Gjenero kod të ri",
+      customerInviteLoginCodeActive: "Një kod hyrjeje është tashmë aktiv. Gjeneroni një të ri nëse ju nevojitet përsëri.",
+      customerInviteLoginCodeIssueFailed: "Nuk mundëm të krijonim kodin. Provoni përsëri.",
+      customerInviteLoginCodeUnavailable: "Hyrja me kod nuk është e disponueshme tani.",
+      customerLoginWithCode: "Hyni me kod",
+      customerLoginCodeLabel: "Kodi i hyrjes",
+      customerLoginCodeHint: "Shkruani kodin 9-shifror nga XBook në web.",
+      customerLoginCodeSubmit: "Hyni",
+      customerLoginCodeBack: "Përdorni email dhe fjalëkalimin",
+      customerLoginCodeInvalid: "Kod i pavlefshëm ose i skaduar. Provoni përsëri.",
       customerInviteUnavailableTitle: "Ftesa nuk është e disponueshme",
       customerInviteUnavailableLead: "Kjo lidhje ftese është e pavlefshme ose nuk është më e disponueshme.",
       customerInviteAlreadyExists: "Ekziston tashmë një llogari XBook për këtë email. Hyni për të vazhduar.",
@@ -91627,6 +91749,37 @@
     "+ Add appointment": "+ Shto termin"
   });
 
+  Object.assign(I18N_UI.mk, {
+    "Your XBook login code": "Вашиот XBook код",
+    "Valid for 30 minutes": "Важи 30 минути",
+    "Copy code": "Копирај код",
+    "Copied": "Копирано",
+    "Generate new code": "Генерирај нов код",
+    "A login code is already active. Generate a new one if you need it again.": "Кодот е веќе активен. Генерирајте нов ако ви треба повторно.",
+    "Could not create a login code. Try again.": "Не можевме да го создадеме кодот. Обидете се повторно.",
+    "Login with code is unavailable right now.": "Најавата со код не е достапна во моментов.",
+    "Login with code": "Најави се со код",
+    "Login code": "Код за најава",
+    "Enter the 9-digit code from XBook web.": "Внесете го 9-цифрениот код од XBook на веб.",
+    "Use email and password": "Користи е-пошта и лозинка",
+    "Invalid or expired code. Try again.": "Неважечки или истечен код. Обидете се повторно."
+  });
+  Object.assign(I18N_UI.sq, {
+    "Your XBook login code": "Kodi juaj i hyrjes XBook",
+    "Valid for 30 minutes": "Vlen 30 minuta",
+    "Copy code": "Kopjo kodin",
+    "Copied": "U kopjua",
+    "Generate new code": "Gjenero kod të ri",
+    "A login code is already active. Generate a new one if you need it again.": "Një kod hyrjeje është tashmë aktiv. Gjeneroni një të ri nëse ju nevojitet përsëri.",
+    "Could not create a login code. Try again.": "Nuk mundëm të krijonim kodin. Provoni përsëri.",
+    "Login with code is unavailable right now.": "Hyrja me kod nuk është e disponueshme tani.",
+    "Login with code": "Hyni me kod",
+    "Login code": "Kodi i hyrjes",
+    "Enter the 9-digit code from XBook web.": "Shkruani kodin 9-shifror nga XBook në web.",
+    "Use email and password": "Përdorni email dhe fjalëkalimin",
+    "Invalid or expired code. Try again.": "Kod i pavlefshëm ose i skaduar. Provoni përsëri."
+  });
+
   function i18nResolveDynamic(s) {
     if (!s) return null;
     if (currentLanguage === "mk") return i18nResolveDynamicMk(s);
@@ -93294,7 +93447,7 @@
       returnTab: Object.values(CUSTOMER_MOBILE_TAB).includes(returnTab)
         ? returnTab
         : CUSTOMER_MOBILE_TAB.PROFILE,
-      panel: opts.panel === "signup" ? "signup" : "login",
+      panel: opts.panel === "signup" ? "signup" : opts.panel === "code" ? "code" : "login",
       fromSuccess: opts.fromSuccess === true,
       resumePublicBooking: opts.resumePublicBooking === true
     };
@@ -101324,7 +101477,8 @@
       document.getElementById("customerInviteSuccessLogo"),
       document.getElementById("customerInviteSuccessInitials"),
       snap.name,
-      snap.logoUrl
+      snap.logoUrl,
+      { hideAvatarWithoutLogo: true }
     );
     applyTranslations(view);
     fillInviteBusinessIdentity(
@@ -101332,7 +101486,8 @@
       document.getElementById("customerInviteSuccessLogo"),
       document.getElementById("customerInviteSuccessInitials"),
       snap.name,
-      snap.logoUrl
+      snap.logoUrl,
+      { hideAvatarWithoutLogo: true }
     );
     syncCustomerInviteDownloadButtons();
     if (typeof syncCustomerInviteLangSwitch === "function") syncCustomerInviteLangSwitch();
@@ -101342,6 +101497,7 @@
       if (topbar) topbar.style.display = "none";
     }
     setAppShellState(APP_SHELL_STATE.READY, { reason: "customer-invite-success" });
+    void issueCustomerInviteLoginCode({ reissue: false });
   }
 
   function maybeRestoreCustomerInviteAfterCallback() {
@@ -101733,18 +101889,26 @@
     const login = document.getElementById("adminAuthLoginPanel");
     const signup = document.getElementById("adminAuthSignupPanel");
     const customer = document.getElementById("adminAuthCustomerSignupPanel");
+    const customerCode = document.getElementById("adminAuthCustomerCodePanel");
     const join = document.getElementById("adminAuthCustomerJoinPanel");
     const inviteUnavailable = document.getElementById("customerInviteUnavailablePanel");
     const isSignup = mode === "signup";
     const isCustomerSignup = mode === "customer";
+    const isCustomerCode = mode === "customer-code";
     const isJoin = mode === "join";
     const isInvite = mode === "invite";
     const isInviteUnavailable = mode === "invite-unavailable";
-    login?.classList.toggle("hidden", isSignup || isJoin || isCustomerSignup || isInvite || isInviteUnavailable);
+    login?.classList.toggle("hidden", isSignup || isJoin || isCustomerSignup || isCustomerCode || isInvite || isInviteUnavailable);
     signup?.classList.toggle("hidden", !isSignup);
     customer?.classList.toggle("hidden", !(isCustomerSignup || isInvite));
+    customerCode?.classList.toggle("hidden", !isCustomerCode);
     join?.classList.toggle("hidden", !isJoin);
     inviteUnavailable?.classList.toggle("hidden", !isInviteUnavailable);
+    if (isCustomerCode) {
+      const codeEl = document.getElementById("customerWelcomeLoginCode");
+      if (codeEl) codeEl.value = "";
+      applyTranslations(customerCode);
+    }
     if (isCustomerSignup) {
       clearStandaloneCustomerSignupContext();
     }
@@ -101758,6 +101922,8 @@
       welcomeEl.classList.toggle("hidden", isJoin || isInvite || isInviteUnavailable);
       if (isCustomerSignup) {
         welcomeEl.textContent = t("modeCreateCustomerTitle", "Create Customer Account");
+      } else if (isCustomerCode) {
+        welcomeEl.textContent = t("customerLoginWithCode", "Login with code");
       } else if (!isJoin && !isInvite && !isInviteUnavailable) {
         welcomeEl.textContent = isSignup ? "Create Business Account" : "Welcome Back";
       }
@@ -101836,7 +102002,8 @@
   window.setCustomerInviteLanguage = setCustomerInviteLanguage;
   window.syncCustomerInviteLangSwitch = syncCustomerInviteLangSwitch;
 
-  function fillInviteBusinessIdentity(nameEl, logoEl, initialsEl, name, logoUrl) {
+  function fillInviteBusinessIdentity(nameEl, logoEl, initialsEl, name, logoUrl, options) {
+    const hideAvatarWithoutLogo = !!(options && options.hideAvatarWithoutLogo);
     const displayName = String(name || "").trim();
     if (nameEl) {
       nameEl.setAttribute("data-i18n-ignore", "");
@@ -101847,22 +102014,39 @@
         ? getBusinessInitials(displayName)
         : displayName.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase()) || "XB";
     const url = String(logoUrl || "").trim();
-    if (initialsEl) initialsEl.textContent = initials;
-    if (!logoEl) return;
+    const avatarWrap =
+      logoEl?.closest?.(".customer-invite-identity__avatar") ||
+      initialsEl?.closest?.(".customer-invite-identity__avatar") ||
+      null;
+    if (initialsEl) initialsEl.textContent = hideAvatarWithoutLogo && !url ? "" : initials;
+    const showInitialsFallback = () => {
+      if (hideAvatarWithoutLogo) {
+        initialsEl?.classList.add("hidden");
+        avatarWrap?.classList.add("hidden");
+      } else {
+        initialsEl?.classList.remove("hidden");
+        avatarWrap?.classList.remove("hidden");
+      }
+    };
+    if (!logoEl) {
+      showInitialsFallback();
+      return;
+    }
     logoEl.onerror = () => {
       logoEl.classList.add("hidden");
       logoEl.removeAttribute("src");
-      initialsEl?.classList.remove("hidden");
+      showInitialsFallback();
     };
     if (url) {
       logoEl.alt = displayName;
       logoEl.src = url;
       logoEl.classList.remove("hidden");
       initialsEl?.classList.add("hidden");
+      avatarWrap?.classList.remove("hidden");
     } else {
       logoEl.classList.add("hidden");
       logoEl.removeAttribute("src");
-      initialsEl?.classList.remove("hidden");
+      showInitialsFallback();
     }
   }
 
@@ -102222,14 +102406,22 @@
   function setCustomerAuthPanel(mode) {
     const login = document.getElementById("customerAuthLoginPanel");
     const signup = document.getElementById("customerAuthSignupPanel");
+    const code = document.getElementById("customerAuthCodePanel");
     const isSignup = mode === "signup";
-    login?.classList.toggle("hidden", isSignup);
+    const isCode = mode === "code";
+    login?.classList.toggle("hidden", isSignup || isCode);
     signup?.classList.toggle("hidden", !isSignup);
+    code?.classList.toggle("hidden", !isCode);
     if (!isSignup) {
       const confirmEl = document.getElementById("customerAuthConfirmPassword");
       const signupPwEl = document.getElementById("customerSignupPassword");
       if (confirmEl) confirmEl.value = "";
       if (signupPwEl) signupPwEl.value = "";
+    }
+    if (isCode) {
+      const codeEl = document.getElementById("customerAuthLoginCode");
+      if (codeEl) codeEl.value = "";
+      applyTranslations(code);
     }
   }
 
@@ -110927,6 +111119,9 @@
 
   let standaloneCustomerAuthSkipLocalBusiness = false;
   let customerExplicitJoinSlugAfterAuth = "";
+  let customerInviteLoginCodePlaintext = "";
+  let customerInviteLoginCodeIssueInFlight = false;
+  let customerLoginWithCodeInFlight = false;
 
   function markStandaloneCustomerAuthSkipLocalBusiness() {
     standaloneCustomerAuthSkipLocalBusiness = true;
@@ -111716,6 +111911,7 @@
     document.getElementById("resetPasswordView")?.classList.add("hidden");
     document.getElementById("customerCompleteProfileView")?.classList.add("hidden");
     document.getElementById("customerInviteSuccessView")?.classList.add("hidden");
+    customerInviteLoginCodePlaintext = "";
     document.getElementById("adminEmailVerifiedView")?.classList.add("hidden");
     document.getElementById("adminView")?.classList.add("hidden");
     document.getElementById("adminOnboardingView")?.classList.add("hidden");
@@ -116556,6 +116752,7 @@
     const nextPanel =
       panel === "signup" ||
       panel === "customer" ||
+      panel === "customer-code" ||
       panel === "join" ||
       panel === "invite" ||
       panel === "invite-unavailable"
@@ -123491,6 +123688,20 @@
     showAuthView("signup");
   }
 
+  async function chooseCustomerLoginWithCode() {
+    if (currentUser) {
+      if (currentUserRoleLoadStatus === "none") {
+        await loadCurrentUserRole();
+      }
+      await routeAuthenticatedUser({
+        reason: "choose-customer-login-code-blocked"
+      });
+      return;
+    }
+    await xbHandoffWelcomeToCreateBusiness();
+    showAuthView("customer-code");
+  }
+
   async function chooseCreateCustomerAccount() {
     if (currentUser) {
       if (currentUserRoleLoadStatus === "none") {
@@ -124222,6 +124433,296 @@
     });
   }
 
+  function normalizeCustomerAppLoginCode(raw) {
+    return String(raw || "").replace(/\D/g, "").slice(0, 9);
+  }
+
+  function readVisibleCustomerLoginCodeInput() {
+    const welcomePanel = document.getElementById("adminAuthCustomerCodePanel");
+    const hubPanel = document.getElementById("customerAuthCodePanel");
+    if (welcomePanel && !welcomePanel.classList.contains("hidden")) {
+      return document.getElementById("customerWelcomeLoginCode")?.value || "";
+    }
+    if (hubPanel && !hubPanel.classList.contains("hidden")) {
+      return document.getElementById("customerAuthLoginCode")?.value || "";
+    }
+    return (
+      document.getElementById("customerWelcomeLoginCode")?.value ||
+      document.getElementById("customerAuthLoginCode")?.value ||
+      ""
+    );
+  }
+
+  function formatCustomerAppLoginCodeDisplay(canonical) {
+    const digits = normalizeCustomerAppLoginCode(canonical);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return digits.slice(0, 3) + " " + digits.slice(3);
+    return digits.slice(0, 3) + " " + digits.slice(3, 6) + " " + digits.slice(6);
+  }
+
+  function setCustomerInviteLoginCodeStatus(message, show) {
+    const el = document.getElementById("customerInviteLoginCodeStatus");
+    if (!el) return;
+    el.textContent = message || "";
+    el.classList.toggle("hidden", !show || !message);
+  }
+
+  function revealCustomerInviteLoginCodeSlot() {
+    const slot = document.getElementById("customerInviteSuccessCodeSlot");
+    if (!slot) return;
+    slot.hidden = false;
+    slot.setAttribute("aria-hidden", "false");
+  }
+
+  function renderCustomerInviteLoginCode(result) {
+    const valueEl = document.getElementById("customerInviteLoginCodeValue");
+    const copyBtn = document.getElementById("customerInviteCopyCodeBtn");
+    const reissueBtn = document.getElementById("customerInviteReissueCodeBtn");
+    revealCustomerInviteLoginCodeSlot();
+    if (result && result.issued && result.code) {
+      customerInviteLoginCodePlaintext = normalizeCustomerAppLoginCode(result.code);
+      if (valueEl) valueEl.textContent = result.code_display || formatCustomerAppLoginCodeDisplay(customerInviteLoginCodePlaintext);
+      copyBtn?.classList.remove("hidden");
+      reissueBtn?.classList.remove("hidden");
+      setCustomerInviteLoginCodeStatus("", false);
+      return;
+    }
+    customerInviteLoginCodePlaintext = "";
+    if (valueEl) valueEl.textContent = "";
+    copyBtn?.classList.add("hidden");
+    reissueBtn?.classList.remove("hidden");
+    if (result && result.active) {
+      setCustomerInviteLoginCodeStatus(t("customerInviteLoginCodeActive", "A login code is already active. Generate a new one if you need it again."), true);
+      return;
+    }
+    setCustomerInviteLoginCodeStatus(
+      t(
+        result && result.unavailable ? "customerInviteLoginCodeUnavailable" : "customerInviteLoginCodeIssueFailed",
+        result && result.unavailable
+          ? "Login with code is unavailable right now."
+          : "Could not create a login code. Try again."
+      ),
+      true
+    );
+  }
+
+  async function invokeCustomerAppLoginFunction(name, body, opts) {
+    const headers = {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_ANON_KEY
+    };
+    if (opts && opts.withSession) {
+      const { data } = await sb.auth.getSession();
+      const token = String(data?.session?.access_token || "").trim();
+      if (!token) return { ok: false, status: 401, json: null };
+      headers.Authorization = "Bearer " + token;
+    } else {
+      headers.Authorization = "Bearer " + SUPABASE_ANON_KEY;
+    }
+    const res = await fetch(String(SUPABASE_URL).replace(/\/$/, "") + "/functions/v1/" + name, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body || {})
+    });
+    let json = null;
+    try {
+      json = await res.json();
+    } catch (e) {
+      json = null;
+    }
+    return { ok: res.ok, status: res.status, json };
+  }
+
+  async function issueCustomerInviteLoginCode(opts) {
+    const reissue = !!(opts && opts.reissue);
+    if (customerInviteLoginCodeIssueInFlight) return;
+    if (!initSupabaseClient()) {
+      renderCustomerInviteLoginCode({ unavailable: true });
+      return;
+    }
+    customerInviteLoginCodeIssueInFlight = true;
+    try {
+      const slug = getCustomerInviteContext().slug || "";
+      const res = await invokeCustomerAppLoginFunction(
+        "issue-customer-app-login-code",
+        { business_slug: slug, reissue: reissue === true },
+        { withSession: true }
+      );
+      const payload = res.json && typeof res.json === "object" ? res.json : {};
+      if (res.status === 503 || payload.error === "not_configured") {
+        renderCustomerInviteLoginCode({ unavailable: true });
+        return;
+      }
+      if (payload.ok && payload.issued && payload.code) {
+        renderCustomerInviteLoginCode({
+          issued: true,
+          code: payload.code,
+          code_display: payload.code_display
+        });
+        return;
+      }
+      if (payload.ok && payload.active) {
+        renderCustomerInviteLoginCode({ active: true });
+        return;
+      }
+      renderCustomerInviteLoginCode({});
+    } catch (e) {
+      renderCustomerInviteLoginCode({});
+    } finally {
+      customerInviteLoginCodeIssueInFlight = false;
+    }
+  }
+
+  async function copyCustomerInviteLoginCode() {
+    const canonical = normalizeCustomerAppLoginCode(customerInviteLoginCodePlaintext);
+    if (!/^[1-9]\d{8}$/.test(canonical)) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(canonical);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = canonical;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      showToast(t("customerInviteLoginCodeCopied", "Copied"), "success");
+    } catch (e) {
+      showToast(t("customerInviteLoginCodeIssueFailed", "Could not create a login code. Try again."), "error");
+    }
+  }
+
+  async function reissueCustomerInviteLoginCode() {
+    await issueCustomerInviteLoginCode({ reissue: true });
+  }
+
+  function onCustomerLoginCodeInput(event) {
+    const el = event && event.target ? event.target : document.getElementById("customerAuthLoginCode");
+    if (!el) return;
+    const formatted = formatCustomerAppLoginCodeDisplay(el.value);
+    if (el.value !== formatted) {
+      const start = el.selectionStart;
+      el.value = formatted;
+      if (typeof start === "number") {
+        const next = formatted.length;
+        try {
+          el.setSelectionRange(next, next);
+        } catch (e) {
+          /* ignore */
+        }
+      }
+    }
+  }
+
+  async function customerLoginWithCode() {
+    if (customerLoginWithCodeInFlight) return;
+    if (!initSupabaseClient()) return;
+    const canonical = normalizeCustomerAppLoginCode(readVisibleCustomerLoginCodeInput());
+    const invalidMsg = t("customerLoginCodeInvalid", "Invalid or expired code. Try again.");
+    if (!/^[1-9]\d{8}$/.test(canonical)) {
+      showToast(invalidMsg, "error");
+      return;
+    }
+
+    customerLoginWithCodeInFlight = true;
+    try {
+      const res = await invokeCustomerAppLoginFunction(
+        "redeem-customer-app-login-code",
+        { code: canonical },
+        { withSession: false }
+      );
+      const payload = res.json && typeof res.json === "object" ? res.json : {};
+      const tokenHash = String(payload.token_hash || "").trim();
+      const verifyType = payload.type === "email" ? "email" : "magiclink";
+      const businessSlug = normalizeBusinessSlug(payload.business_slug || "");
+      if (!res.ok || !payload.ok || !tokenHash) {
+        showToast(invalidMsg, "error");
+        return;
+      }
+
+      let { data, error } = await sb.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: verifyType
+      });
+      if ((error || !data?.session?.access_token) && verifyType !== "email") {
+        ({ data, error } = await sb.auth.verifyOtp({
+          token_hash: tokenHash,
+          type: "email"
+        }));
+      }
+      if (error || !data?.session?.access_token || !data?.user) {
+        showToast(invalidMsg, "error");
+        return;
+      }
+
+      const { data: sessionData } = await sb.auth.getSession();
+      if (!sessionData?.session?.access_token || !sessionData.session.user) {
+        showToast(invalidMsg, "error");
+        return;
+      }
+
+      currentUser = sessionData.session.user;
+      let emailConfirmedAt = currentUser.email_confirmed_at || currentUser.confirmed_at;
+      if (!emailConfirmedAt) {
+        const { data: freshUserData } = await sb.auth.getUser();
+        if (freshUserData?.user) {
+          currentUser = freshUserData.user;
+          emailConfirmedAt = currentUser.email_confirmed_at || currentUser.confirmed_at;
+        }
+      }
+      if (!emailConfirmedAt) {
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        showToast(invalidMsg, "error");
+        updateCustomerAuthUI();
+        return;
+      }
+
+      const role = await loadCurrentUserRole();
+      if (role === "admin") {
+        showToast("This is an Admin account. Use Admin login instead.", "error");
+        await sb.auth.signOut();
+        currentUser = null;
+        currentUserRole = null;
+        currentUserRoleLoadStatus = "none";
+        updateCustomerAuthUI();
+        return;
+      }
+
+      const codeEl = document.getElementById("customerAuthLoginCode");
+      if (codeEl) codeEl.value = "";
+      const welcomeCodeEl = document.getElementById("customerWelcomeLoginCode");
+      if (welcomeCodeEl) welcomeCodeEl.value = "";
+
+      if (businessSlug) markCustomerExplicitJoinSlug(businessSlug);
+
+      if (currentUserRoleLoadStatus === "resolved" && currentUserRole === "customer") {
+        showToast("Customer login success.", "success");
+        updateCustomerAuthUI();
+      }
+
+      await routeAuthenticatedUser({
+        reason: "customer-login-code",
+        customerPushSource: "customer-login-code"
+      });
+    } catch (e) {
+      showToast(invalidMsg, "error");
+    } finally {
+      customerLoginWithCodeInFlight = false;
+    }
+  }
+
+  window.copyCustomerInviteLoginCode = copyCustomerInviteLoginCode;
+  window.reissueCustomerInviteLoginCode = reissueCustomerInviteLoginCode;
+  window.onCustomerLoginCodeInput = onCustomerLoginCodeInput;
+  window.customerLoginWithCode = customerLoginWithCode;
+  window.chooseCustomerLoginWithCode = chooseCustomerLoginWithCode;
+
   async function customerLogout() {
     if (!initSupabaseClient()) return;
     customerLogoutInProgress = true;
@@ -124231,6 +124732,7 @@
       customerNotifPrefsLoadedUid = "";
       clearPendingAuth();
       await sb.auth.signOut();
+      customerInviteLoginCodePlaintext = "";
       clearSavedCustomerBusinessContext();
       clearBusinessFromUrl();
       businessId = null;
