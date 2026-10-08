@@ -39883,23 +39883,62 @@
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      --xb-invite-text: var(--xb-text-primary, #0c1b3a);
+      --xb-invite-muted: var(--xb-text-secondary, #5d6d86);
+      --xb-invite-luminous: var(--xb-brand-luminous, #3d82ff);
+      --xb-invite-cta: linear-gradient(180deg, #6aa8ff 0%, #3d82ff 40%, #2f6ef5 68%, #2158d8 100%);
+      --xb-invite-cta-border: rgba(255, 255, 255, 0.42);
+      --xb-invite-cta-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), 0 8px 18px rgba(61, 130, 255, 0.28);
+      --xb-invite-glass-border: rgba(255, 255, 255, 0.94);
+      --xb-invite-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(120, 160, 210, 0.16);
+      --xb-invite-scene:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(220, 236, 255, 0.16) 46%, rgba(231, 236, 251, 0.28) 100%),
+        url("assets/xbook-scene/xbook-liquid-scene-light.webp");
     }
     .business-invite-sheet__backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(8, 18, 40, 0.42);
+      background: rgba(8, 18, 40, 0.38);
     }
     .business-invite-sheet__panel {
       position: relative;
+      isolation: isolate;
       width: min(100%, 440px);
       max-height: min(88vh, 720px);
       overflow: auto;
       margin: 0;
-      padding: 22px 20px calc(28px + env(safe-area-inset-bottom, 0px));
+      padding: 10px 20px calc(28px + env(safe-area-inset-bottom, 0px));
       border-radius: 24px 24px 0 0;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      background: linear-gradient(180deg, rgba(248, 252, 255, 0.96) 0%, rgba(228, 239, 255, 0.92) 100%);
-      box-shadow: 0 -12px 40px rgba(16, 42, 88, 0.18);
+      border: 1px solid var(--xb-invite-glass-border);
+      background-color: var(--xb-scene-canvas-light, #E7ECFB);
+      background-image: var(--xb-invite-scene);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover;
+      box-shadow:
+        var(--xb-invite-glass-highlight),
+        0 -20px 44px rgba(70, 112, 176, 0.22);
+      color: var(--xb-invite-text);
+    }
+    .business-invite-sheet__panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(214, 230, 255, 0.12) 52%, rgba(231, 236, 251, 0.18) 100%);
+    }
+    .business-invite-sheet__panel > * {
+      position: relative;
+      z-index: 1;
+    }
+    .business-invite-sheet__grab {
+      width: 42px;
+      height: 5px;
+      margin: 2px auto 12px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--xb-invite-muted) 38%, transparent);
     }
     .business-invite-sheet__head {
       display: flex;
@@ -39909,7 +39948,7 @@
     }
     .business-invite-sheet__title {
       margin: 0;
-      color: var(--xb-text-primary, #0c1b3a);
+      color: var(--xb-invite-text);
       font-size: 20px;
       font-weight: 700;
       letter-spacing: -0.03em;
@@ -39918,10 +39957,11 @@
     .business-invite-sheet__close {
       width: 36px;
       height: 36px;
-      border: 0;
+      border: 1px solid var(--xb-invite-glass-border);
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--xb-text-primary, #0c1b3a);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(214, 230, 255, 0.28) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      color: var(--xb-invite-text);
       font-size: 22px;
       line-height: 1;
       cursor: pointer;
@@ -39956,22 +39996,24 @@
     }
     .business-invite-sheet__name {
       margin: 0;
-      color: var(--xb-text-primary, #0c1b3a);
+      color: var(--xb-invite-text);
       font-size: 17px;
       font-weight: 700;
     }
     .business-invite-sheet__lead {
       margin: 0 0 16px;
-      color: var(--xb-text-secondary, #5b6b8c);
+      color: var(--xb-invite-muted);
       font-size: 14px;
       line-height: 1.45;
     }
     .business-invite-sheet__url {
       margin: 0 0 12px;
       padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.7);
-      color: var(--xb-text-primary, #0c1b3a);
+      border-radius: 14px;
+      border: 1px solid var(--xb-invite-glass-border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(220, 236, 255, 0.22) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      color: var(--xb-invite-text);
       font-size: 13px;
       word-break: break-all;
     }
@@ -39991,8 +40033,11 @@
     .business-invite-sheet__qr-host {
       padding: 12px;
       border-radius: 16px;
-      background: #fff;
-      box-shadow: 0 8px 20px rgba(28, 58, 120, 0.1);
+      border: 1px solid var(--xb-invite-glass-border);
+      background: #ffffff;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 8px 20px rgba(28, 58, 120, 0.12);
     }
     .business-invite-sheet .auth-btn {
       min-height: 48px;
@@ -40002,53 +40047,69 @@
     }
     .business-invite-sheet .auth-btn.auth-btn--primary-xbook,
     .business-invite-sheet .auth-btn.auth-btn--primary {
-      background: linear-gradient(180deg, #6aa8ff 0%, #3d82ff 40%, #2f6ef5 68%, #2158d8 100%);
-      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: var(--xb-invite-cta);
+      border: 1px solid var(--xb-invite-cta-border);
       color: #fff;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.34),
-        0 8px 18px rgba(61, 130, 255, 0.28);
+      box-shadow: var(--xb-invite-cta-shadow);
     }
     .business-invite-sheet .auth-btn.auth-btn--ghost {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(214, 230, 255, 0.3) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      color: var(--xb-text-primary, #0c1b3a);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(214, 230, 255, 0.28) 100%);
+      border: 1px solid var(--xb-invite-glass-border);
+      color: var(--xb-invite-text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+    }
+    :root[data-xbook-theme="dark"] .business-invite-sheet,
+    html[data-xbook-theme="dark"] .business-invite-sheet,
+    body.app-theme-dark .business-invite-sheet {
+      --xb-invite-text: #f4f7fb;
+      --xb-invite-muted: #9aa7bc;
+      --xb-invite-glass-border: rgba(255, 255, 255, 0.22);
+      --xb-invite-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(40, 80, 160, 0.2);
+      --xb-invite-scene:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(18, 32, 62, 0.28) 48%, rgba(14, 35, 80, 0.42) 100%),
+        url("assets/xbook-scene/xbook-liquid-scene-dark.webp");
     }
     :root[data-xbook-theme="dark"] .business-invite-sheet__panel,
     html[data-xbook-theme="dark"] .business-invite-sheet__panel,
     body.app-theme-dark .business-invite-sheet__panel {
-      background: linear-gradient(180deg, rgba(22, 38, 74, 0.96) 0%, rgba(12, 22, 48, 0.94) 100%);
-      border-color: rgba(255, 255, 255, 0.22);
+      background-color: var(--xb-scene-canvas-dark, #0E2350);
     }
-    :root[data-xbook-theme="dark"] .business-invite-sheet__title,
-    :root[data-xbook-theme="dark"] .business-invite-sheet__name,
+    :root[data-xbook-theme="dark"] .business-invite-sheet__panel::before,
+    html[data-xbook-theme="dark"] .business-invite-sheet__panel::before,
+    body.app-theme-dark .business-invite-sheet__panel::before {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(18, 32, 62, 0.22) 100%);
+    }
     :root[data-xbook-theme="dark"] .business-invite-sheet__close,
-    html[data-xbook-theme="dark"] .business-invite-sheet__title,
-    html[data-xbook-theme="dark"] .business-invite-sheet__name,
     html[data-xbook-theme="dark"] .business-invite-sheet__close,
-    body.app-theme-dark .business-invite-sheet__title,
-    body.app-theme-dark .business-invite-sheet__name,
-    body.app-theme-dark .business-invite-sheet__close {
-      color: #f4f7fb;
-    }
-    :root[data-xbook-theme="dark"] .business-invite-sheet__lead,
-    html[data-xbook-theme="dark"] .business-invite-sheet__lead,
-    body.app-theme-dark .business-invite-sheet__lead {
-      color: #9aa7bc;
-    }
+    body.app-theme-dark .business-invite-sheet__close,
     :root[data-xbook-theme="dark"] .business-invite-sheet .auth-btn.auth-btn--ghost,
     html[data-xbook-theme="dark"] .business-invite-sheet .auth-btn.auth-btn--ghost,
-    body.app-theme-dark .business-invite-sheet .auth-btn.auth-btn--ghost {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 32, 62, 0.42) 100%);
-      border-color: rgba(255, 255, 255, 0.2);
-      color: #f4f7fb;
-    }
+    body.app-theme-dark .business-invite-sheet .auth-btn.auth-btn--ghost,
     :root[data-xbook-theme="dark"] .business-invite-sheet__url,
     html[data-xbook-theme="dark"] .business-invite-sheet__url,
     body.app-theme-dark .business-invite-sheet__url {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f4f7fb;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 32, 62, 0.42) 100%);
+      color: var(--xb-invite-text);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .business-invite-sheet .auth-btn,
+      #customerInviteSuccessView .auth-btn {
+        transition: none;
+      }
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      .business-invite-sheet__panel {
+        background-image:
+          linear-gradient(180deg, rgba(231, 236, 251, 0.88) 0%, rgba(214, 230, 255, 0.92) 100%),
+          url("assets/xbook-scene/xbook-liquid-scene-light.webp");
+      }
+      :root[data-xbook-theme="dark"] .business-invite-sheet__panel,
+      html[data-xbook-theme="dark"] .business-invite-sheet__panel,
+      body.app-theme-dark .business-invite-sheet__panel {
+        background-image:
+          linear-gradient(180deg, rgba(14, 35, 80, 0.88) 0%, rgba(12, 22, 48, 0.94) 100%),
+          url("assets/xbook-scene/xbook-liquid-scene-dark.webp");
+      }
     }
 
     #adminSectionClients .admin-clients-screen__title,
@@ -53640,31 +53701,65 @@
       border-radius: 0 !important;
       box-shadow: none !important;
       background-color: var(--xb-scene-canvas-light, #E7ECFB) !important;
-      background-image:
-        linear-gradient(
-          180deg,
-          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 16%, transparent) 0%,
-          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 28%, transparent) 36%,
-          color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 42%, transparent) 100%
-        ),
-        url("assets/xbook-scene/xbook-liquid-scene-light.webp") !important;
-      background-size: cover, cover !important;
-      background-position: 50% 0, 50% 0 !important;
-      background-repeat: no-repeat !important;
+      background-image: none !important;
       color: var(--xb-text-primary, #0c1b3a);
       padding: 0 !important;
     }
     html[data-xbook-theme="dark"] #customerInviteSuccessView.auth-card:not(.hidden) {
       background-color: var(--xb-scene-canvas-dark, #0E2350) !important;
-      background-image:
-        linear-gradient(
-          180deg,
-          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 16%, transparent) 0%,
-          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 28%, transparent) 36%,
-          color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 46%, transparent) 100%
-        ),
-        url("assets/xbook-scene/xbook-liquid-scene-dark.webp") !important;
       color: var(--xb-text-primary, #f4f7fb);
+    }
+    #customerInviteSuccessView .customer-invite-success__scene {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      background: var(--xb-scene-canvas-light, #E7ECFB);
+    }
+    #customerInviteSuccessView .customer-invite-success__scene .xb-scene__canvas {
+      position: absolute;
+      inset: 0;
+      background: inherit;
+    }
+    #customerInviteSuccessView .customer-invite-success__scene .xb-scene__art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    #customerInviteSuccessView .customer-invite-success__scene .xb-scene__art--dark {
+      display: none;
+    }
+    #customerInviteSuccessView .customer-invite-success__scene::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 16%, transparent) 0%,
+        color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 28%, transparent) 36%,
+        color-mix(in srgb, var(--xb-scene-canvas-light, #E7ECFB) 42%, transparent) 100%
+      );
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView .customer-invite-success__scene {
+      background: var(--xb-scene-canvas-dark, #0E2350);
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView .customer-invite-success__scene .xb-scene__art--light {
+      display: none;
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView .customer-invite-success__scene .xb-scene__art--dark {
+      display: block;
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView .customer-invite-success__scene::after {
+      background: linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 16%, transparent) 0%,
+        color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 28%, transparent) 36%,
+        color-mix(in srgb, var(--xb-scene-canvas-dark, #0E2350) 46%, transparent) 100%
+      );
     }
     #customerInviteSuccessView > .auth-card-inner {
       position: relative;
@@ -53744,12 +53839,23 @@
       font-size: 14px;
       font-weight: 500;
     }
+    .customer-invite-success__code-card {
+      width: 100%;
+      padding: 16px 14px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.94);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(220, 236, 255, 0.22) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 0 rgba(120, 160, 210, 0.16),
+        0 12px 28px rgba(70, 112, 176, 0.12);
+    }
     .customer-invite-success__code {
-      margin: 0;
+      margin: 0 0 8px;
       color: var(--xb-text-primary, #0c1b3a);
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      font-size: clamp(26px, 8vw, 32px);
+      font-weight: 750;
+      letter-spacing: 0.16em;
       line-height: 1.2;
       font-variant-numeric: tabular-nums;
     }
@@ -53765,6 +53871,51 @@
       flex-direction: column;
       gap: 8px;
       width: 100%;
+    }
+    #customerInviteSuccessView .auth-btn {
+      min-height: 48px;
+      border-radius: 16px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+    #customerInviteSuccessView .auth-btn.auth-btn--primary,
+    #customerInviteSuccessView .auth-btn.auth-btn--primary-xbook,
+    #customerInviteSuccessView .customer-invite-store-btn {
+      background: linear-gradient(180deg, #6aa8ff 0%, #3d82ff 40%, #2f6ef5 68%, #2158d8 100%);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      color: #fff;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.34),
+        0 8px 18px rgba(61, 130, 255, 0.28);
+    }
+    #customerInviteSuccessView .auth-btn.auth-btn--ghost {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(214, 230, 255, 0.28) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.94);
+      color: var(--xb-text-primary, #0c1b3a);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+    }
+    .customer-invite-store-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+    .customer-invite-store-btn__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+    }
+    .customer-invite-store-btn__icon svg {
+      display: block;
+      width: 22px;
+      height: 22px;
+    }
+    .customer-invite-store-btn__icon--apple {
+      color: #fff;
     }
     .customer-invite-success__download-title {
       margin: 0 0 12px;
@@ -53786,7 +53937,23 @@
       opacity: 0.45;
       cursor: not-allowed;
     }
-    body:has(#customerInviteSuccessView:not(.hidden)) .topbar {
+    html[data-xbook-theme="dark"] .customer-invite-success__code-card {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(18, 32, 62, 0.34) 100%);
+    }
+    html[data-xbook-theme="dark"] .customer-invite-success__code,
+    html[data-xbook-theme="dark"] .customer-invite-success__title,
+    html[data-xbook-theme="dark"] .customer-invite-success__download-title {
+      color: #f4f7fb;
+    }
+    html[data-xbook-theme="dark"] #customerInviteSuccessView .auth-btn.auth-btn--ghost {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 32, 62, 0.42) 100%);
+      border-color: rgba(255, 255, 255, 0.22);
+      color: #f4f7fb;
+    }
+    body:has(#customerInviteSuccessView:not(.hidden)) .topbar,
+    body:has(#customerInviteSuccessView:not(.hidden)) #customerMobileBottomNav,
+    body:has(#customerInviteSuccessView:not(.hidden)) #adminMobileBottomNav {
       display: none !important;
     }
     html:has(#customerInviteSuccessView:not(.hidden)),
@@ -76548,6 +76715,28 @@
     </div>
 
     <div id="customerInviteSuccessView" class="card auth-card hidden" role="main" aria-labelledby="customerInviteSuccessTitle">
+      <div class="xb-scene xb-scene--light customer-invite-success__scene" aria-hidden="true">
+        <div class="xb-scene__canvas"></div>
+        <div class="xb-scene__melt"></div>
+        <img
+          class="xb-scene__art xb-scene__art--light"
+          src="assets/xbook-scene/xbook-liquid-scene-light.webp"
+          width="780"
+          height="1688"
+          alt=""
+          draggable="false"
+          decoding="async"
+        />
+        <img
+          class="xb-scene__art xb-scene__art--dark"
+          src="assets/xbook-scene/xbook-liquid-scene-dark.webp"
+          width="780"
+          height="1688"
+          alt=""
+          draggable="false"
+          decoding="async"
+        />
+      </div>
       <div class="customer-invite-lang-switch" hidden data-i18n-ignore role="group" aria-label="Language">
         <button type="button" class="customer-invite-lang-btn" data-invite-lang="mk" aria-pressed="false" onclick="setCustomerInviteLanguage('mk')">MK</button>
         <span class="customer-invite-lang-sep" aria-hidden="true">|</span>
@@ -76568,26 +76757,45 @@
         <h1 id="customerInviteSuccessTitle" class="customer-invite-success__title" data-i18n="customerInviteSuccessTitle">Your XBook profile is ready</h1>
         <p class="customer-invite-success__connected" data-i18n="customerInviteSuccessConnected">You are connected to</p>
         <div id="customerInviteSuccessIdentity">
-          <div class="customer-invite-identity__avatar" aria-hidden="true">
+          <div class="customer-invite-identity__avatar hidden" aria-hidden="true">
             <img id="customerInviteSuccessLogo" class="customer-invite-identity__logo hidden" alt="" />
-            <span id="customerInviteSuccessInitials" class="customer-invite-identity__initials"></span>
+            <span id="customerInviteSuccessInitials" class="customer-invite-identity__initials hidden"></span>
           </div>
           <p id="customerInviteSuccessBusinessName" class="customer-invite-identity__name" data-i18n-ignore></p>
         </div>
         <div id="customerInviteSuccessCodeSlot" hidden aria-hidden="true">
           <p class="customer-invite-success__code-title" data-i18n="customerInviteLoginCodeTitle">Your XBook login code</p>
-          <p id="customerInviteLoginCodeValue" class="customer-invite-success__code" data-i18n-ignore></p>
-          <p id="customerInviteLoginCodeHint" class="customer-invite-success__code-hint" data-i18n="customerInviteLoginCodeHint">Valid for 30 minutes</p>
+          <div class="customer-invite-success__code-card">
+            <p id="customerInviteLoginCodeValue" class="customer-invite-success__code" data-i18n-ignore></p>
+            <p id="customerInviteLoginCodeHint" class="customer-invite-success__code-hint" data-i18n="customerInviteLoginCodeHint">Valid for 30 minutes</p>
+          </div>
           <p id="customerInviteLoginCodeStatus" class="customer-invite-success__code-status hidden"></p>
           <div class="customer-invite-success__code-actions">
-            <button type="button" id="customerInviteCopyCodeBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook hidden" onclick="copyCustomerInviteLoginCode()" data-i18n="customerInviteLoginCodeCopy">Copy code</button>
+            <button type="button" id="customerInviteCopyCodeBtn" class="auth-btn auth-btn--primary hidden" onclick="copyCustomerInviteLoginCode()" data-i18n="customerInviteLoginCodeCopy">Copy code</button>
             <button type="button" id="customerInviteReissueCodeBtn" class="auth-btn auth-btn--ghost hidden" onclick="reissueCustomerInviteLoginCode()" data-i18n="customerInviteLoginCodeReissue">Generate new code</button>
           </div>
         </div>
         <p class="customer-invite-success__download-title" data-i18n="customerInviteDownloadTitle">Download XBook</p>
         <div class="customer-invite-success__actions">
-          <button type="button" id="customerInviteDownloadIosBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="openXbookAppDownload('ios')" data-i18n="customerInviteDownloadIos">Download for iPhone</button>
-          <button type="button" id="customerInviteDownloadAndroidBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="openXbookAppDownload('android')" data-i18n="customerInviteDownloadAndroid">Download for Android</button>
+          <button type="button" id="customerInviteDownloadIosBtn" class="auth-btn customer-invite-store-btn" onclick="openXbookAppDownload('ios')">
+            <span class="customer-invite-store-btn__icon customer-invite-store-btn__icon--apple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false" fill="currentColor">
+                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+            </span>
+            <span data-i18n="customerInviteDownloadIos">Download for iPhone</span>
+          </button>
+          <button type="button" id="customerInviteDownloadAndroidBtn" class="auth-btn customer-invite-store-btn" onclick="openXbookAppDownload('android')">
+            <span class="customer-invite-store-btn__icon customer-invite-store-btn__icon--play" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <polygon fill="#4285F4" points="2,3 2,21 13,12"/>
+                <polygon fill="#34A853" points="13,12 17.6,14.7 20.8,12.9 20.8,11.1 17.6,9.3"/>
+                <polygon fill="#FBBC04" points="2,21 13,12 17.6,14.7"/>
+                <polygon fill="#EA4335" points="2,3 17.6,9.3 13,12"/>
+              </svg>
+            </span>
+            <span data-i18n="customerInviteDownloadAndroid">Download for Android</span>
+          </button>
         </div>
       </div>
     </div>
@@ -80716,6 +80924,7 @@
     <div id="businessInviteCustomersSheet" class="business-invite-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="businessInviteCustomersTitle" hidden onclick="closeBusinessInviteCustomersSheet()">
       <div class="business-invite-sheet__backdrop" aria-hidden="true"></div>
       <div class="business-invite-sheet__panel" onclick="event.stopPropagation()">
+        <div class="business-invite-sheet__grab" aria-hidden="true"></div>
         <div class="business-invite-sheet__head">
           <h2 id="businessInviteCustomersTitle" class="business-invite-sheet__title" data-i18n="businessInviteCustomersTitle">Invite your customers to XBook</h2>
           <button type="button" class="business-invite-sheet__close" onclick="closeBusinessInviteCustomersSheet()" data-i18n-aria-label="commonBack" aria-label="Back">×</button>
