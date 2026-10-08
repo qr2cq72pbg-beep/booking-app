@@ -39843,6 +39843,157 @@
       padding: 0;
       min-width: 0;
     }
+    #adminSectionClients .admin-clients-invite-btn,
+    .overview-invite-shortcut {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      margin: 2px 0 0;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.46) 0%, rgba(214, 230, 255, 0.3) 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 8px 18px rgba(28, 58, 120, 0.1);
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+    }
+    .overview-invite-shortcut {
+      min-height: 36px;
+      margin: 10px 0 0;
+      font-size: 13px;
+    }
+    #adminSectionClients .admin-clients-invite-btn:active,
+    .overview-invite-shortcut:active {
+      transform: translateY(1px);
+    }
+    .business-invite-sheet.hidden,
+    .business-invite-sheet[hidden] {
+      display: none !important;
+    }
+    .business-invite-sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 10220;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .business-invite-sheet__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 18, 40, 0.42);
+    }
+    .business-invite-sheet__panel {
+      position: relative;
+      width: min(100%, 440px);
+      max-height: min(88vh, 720px);
+      overflow: auto;
+      margin: 0;
+      padding: 22px 20px calc(28px + env(safe-area-inset-bottom, 0px));
+      border-radius: 24px 24px 0 0;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: linear-gradient(180deg, rgba(248, 252, 255, 0.96) 0%, rgba(228, 239, 255, 0.92) 100%);
+      box-shadow: 0 -12px 40px rgba(16, 42, 88, 0.18);
+    }
+    .business-invite-sheet__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .business-invite-sheet__title {
+      margin: 0;
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+    }
+    .business-invite-sheet__close {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .business-invite-sheet__identity {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin: 18px 0 12px;
+      text-align: center;
+    }
+    .business-invite-sheet__avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(214, 230, 255, 0.28) 100%);
+    }
+    .business-invite-sheet__avatar.hidden,
+    .business-invite-sheet__logo.hidden,
+    .business-invite-sheet__initials.hidden,
+    .business-invite-sheet__url.hidden,
+    .business-invite-sheet__qr.hidden {
+      display: none !important;
+    }
+    .business-invite-sheet__logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .business-invite-sheet__name {
+      margin: 0;
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .business-invite-sheet__lead {
+      margin: 0 0 16px;
+      color: var(--xb-text-secondary, #5b6b8c);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .business-invite-sheet__url {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--xb-text-primary, #0c1b3a);
+      font-size: 13px;
+      word-break: break-all;
+    }
+    .business-invite-sheet__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .business-invite-sheet__actions .auth-btn {
+      width: 100%;
+    }
+    .business-invite-sheet__qr {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .business-invite-sheet__qr-host {
+      padding: 12px;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(28, 58, 120, 0.1);
+    }
 
     #adminSectionClients .admin-clients-screen__title,
     #adminSectionClients .client-detail-sheet__title {
@@ -76478,6 +76629,7 @@
               <time id="overviewDatePillText" class="overview-dash-date-strip__text"></time>
             </div>
           </div>
+          <button type="button" id="overviewInviteCustomersBtn" class="overview-invite-shortcut" onclick="openBusinessInviteCustomersSheet()" data-i18n="businessInviteCustomers">Invite Customers</button>
           <div class="overview-identity__foot overview-dash-header__foot">
             <span id="businessIdDisplay" class="overview-hero__slug"></span>
             <span id="overviewHeroStatus" class="overview-identity__status"></span>
@@ -78085,6 +78237,7 @@
                   </button>
                   <h2 class="admin-native-screen__title admin-clients-screen__title" data-i18n="screenClients">Customers</h2>
                   <p class="admin-native-screen__subtitle admin-clients-screen__subtitle" data-i18n="clientsSubtitle">Search and review customer history</p>
+                  <button type="button" id="clientsInviteCustomersBtn" class="admin-clients-invite-btn" onclick="openBusinessInviteCustomersSheet()" data-i18n="businessInviteCustomers">Invite Customers</button>
                 </header>
                 <label class="clients-search-wrap" data-i18n-aria-label="clientsSearchAria" aria-label="Search customers">
                   <span class="clients-search-wrap__icon" aria-hidden="true"></span>
@@ -80412,6 +80565,33 @@
           </div>
         </div>
       </footer>
+    </div>
+
+    <div id="businessInviteCustomersSheet" class="business-invite-sheet hidden" role="dialog" aria-modal="true" aria-labelledby="businessInviteCustomersTitle" hidden onclick="closeBusinessInviteCustomersSheet()">
+      <div class="business-invite-sheet__backdrop" aria-hidden="true"></div>
+      <div class="business-invite-sheet__panel" onclick="event.stopPropagation()">
+        <div class="business-invite-sheet__head">
+          <h2 id="businessInviteCustomersTitle" class="business-invite-sheet__title" data-i18n="businessInviteCustomersTitle">Invite your customers to XBook</h2>
+          <button type="button" class="business-invite-sheet__close" onclick="closeBusinessInviteCustomersSheet()" data-i18n-aria-label="commonBack" aria-label="Back">×</button>
+        </div>
+        <div id="businessInviteIdentity" class="business-invite-sheet__identity">
+          <div class="business-invite-sheet__avatar hidden" aria-hidden="true">
+            <img id="businessInviteLogo" class="business-invite-sheet__logo hidden" alt="" />
+            <span id="businessInviteInitials" class="business-invite-sheet__initials hidden"></span>
+          </div>
+          <p id="businessInviteBusinessName" class="business-invite-sheet__name" data-i18n-ignore></p>
+        </div>
+        <p class="business-invite-sheet__lead" data-i18n="businessInviteCustomersLead">Share the invite. Customers can create a profile and book appointments with your business.</p>
+        <p id="businessInviteUrlFallback" class="business-invite-sheet__url hidden" tabindex="0"></p>
+        <div class="business-invite-sheet__actions">
+          <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="shareBusinessCustomerInvite()" data-i18n="businessInviteShare">Share Invite</button>
+          <button type="button" class="auth-btn auth-btn--ghost" onclick="copyBusinessCustomerInviteLink()" data-i18n="businessInviteCopy">Copy Link</button>
+          <button type="button" id="businessInviteShowQrBtn" class="auth-btn auth-btn--ghost" onclick="toggleBusinessInviteQr()" data-i18n="businessInviteShowQr">Show QR Code</button>
+        </div>
+        <div id="businessInviteQrWrap" class="business-invite-sheet__qr hidden" hidden>
+          <div id="businessInviteQrHost" class="business-invite-sheet__qr-host" aria-label="Invite QR code"></div>
+        </div>
+      </div>
     </div>
 
     <div id="publicView" class="hidden">
@@ -83785,6 +83965,16 @@
       customerLoginCodeSubmit: "Log in",
       customerLoginCodeBack: "Use email and password",
       customerLoginCodeInvalid: "Invalid or expired code. Try again.",
+      businessInviteCustomers: "Invite Customers",
+      businessInviteCustomersTitle: "Invite your customers to XBook",
+      businessInviteCustomersLead: "Share the invite. Customers can create a profile and book appointments with your business.",
+      businessInviteShare: "Share Invite",
+      businessInviteCopy: "Copy Link",
+      businessInviteCopied: "Invite link copied.",
+      businessInviteShowQr: "Show QR Code",
+      businessInviteHideQr: "Hide QR Code",
+      businessInviteShareText: "{name} invites you to join XBook. Create your profile and book appointments easily.",
+      businessInviteMissingSlug: "Set your business booking link first.",
       customerInviteUnavailableTitle: "Invitation unavailable",
       customerInviteUnavailableLead: "This invitation link is invalid or no longer available.",
       customerInviteAlreadyExists: "An XBook account already exists for this email. Log in to continue.",
@@ -85392,6 +85582,16 @@
       customerLoginCodeSubmit: "Најави се",
       customerLoginCodeBack: "Користи е-пошта и лозинка",
       customerLoginCodeInvalid: "Неважечки или истечен код. Обидете се повторно.",
+      businessInviteCustomers: "Покани клиенти",
+      businessInviteCustomersTitle: "Поканете ги вашите клиенти во XBook",
+      businessInviteCustomersLead: "Споделете ја поканата. Клиентите ќе можат да креираат профил и да закажуваат термини во вашиот бизнис.",
+      businessInviteShare: "Сподели покана",
+      businessInviteCopy: "Копирај линк",
+      businessInviteCopied: "Линкот за покана е копиран.",
+      businessInviteShowQr: "Прикажи QR-код",
+      businessInviteHideQr: "Скриј QR-код",
+      businessInviteShareText: "{name} ве поканува да се приклучите на XBook. Креирајте го вашиот профил и закажувајте термини лесно.",
+      businessInviteMissingSlug: "Прво поставете го линкот на бизнисот.",
       customerInviteUnavailableTitle: "Поканата не е достапна",
       customerInviteUnavailableLead: "Овој линк за покана е невалиден или повеќе не е достапен.",
       customerInviteAlreadyExists: "Веќе постои XBook сметка за оваа е-пошта. Најавете се за да продолжите.",
@@ -86992,6 +87192,16 @@
       customerLoginCodeSubmit: "Hyni",
       customerLoginCodeBack: "Përdorni email dhe fjalëkalimin",
       customerLoginCodeInvalid: "Kod i pavlefshëm ose i skaduar. Provoni përsëri.",
+      businessInviteCustomers: "Fto klientë",
+      businessInviteCustomersTitle: "Ftoni klientët tuaj në XBook",
+      businessInviteCustomersLead: "Ndani ftesën. Klientët mund të krijojnë profil dhe të rezervojnë termine te biznesi juaj.",
+      businessInviteShare: "Ndaj ftesën",
+      businessInviteCopy: "Kopjo lidhjen",
+      businessInviteCopied: "Lidhja e ftesës u kopjua.",
+      businessInviteShowQr: "Shfaq kodin QR",
+      businessInviteHideQr: "Fshih kodin QR",
+      businessInviteShareText: "{name} ju fton të bashkoheni me XBook. Krijoni profilin tuaj dhe rezervoni termine lehtë.",
+      businessInviteMissingSlug: "Së pari vendosni lidhjen e biznesit.",
       customerInviteUnavailableTitle: "Ftesa nuk është e disponueshme",
       customerInviteUnavailableLead: "Kjo lidhje ftese është e pavlefshme ose nuk është më e disponueshme.",
       customerInviteAlreadyExists: "Ekziston tashmë një llogari XBook për këtë email. Hyni për të vazhduar.",
@@ -91778,6 +91988,29 @@
     "Enter the 9-digit code from XBook web.": "Shkruani kodin 9-shifror nga XBook në web.",
     "Use email and password": "Përdorni email dhe fjalëkalimin",
     "Invalid or expired code. Try again.": "Kod i pavlefshëm ose i skaduar. Provoni përsëri."
+  });
+
+  Object.assign(I18N_UI.mk, {
+    "Invite Customers": "Покани клиенти",
+    "Invite your customers to XBook": "Поканете ги вашите клиенти во XBook",
+    "Share the invite. Customers can create a profile and book appointments with your business.": "Споделете ја поканата. Клиентите ќе можат да креираат профил и да закажуваат термини во вашиот бизнис.",
+    "Share Invite": "Сподели покана",
+    "Copy Link": "Копирај линк",
+    "Invite link copied.": "Линкот за покана е копиран.",
+    "Show QR Code": "Прикажи QR-код",
+    "Hide QR Code": "Скриј QR-код",
+    "Set your business booking link first.": "Прво поставете го линкот на бизнисот."
+  });
+  Object.assign(I18N_UI.sq, {
+    "Invite Customers": "Fto klientë",
+    "Invite your customers to XBook": "Ftoni klientët tuaj në XBook",
+    "Share the invite. Customers can create a profile and book appointments with your business.": "Ndani ftesën. Klientët mund të krijojnë profil dhe të rezervojnë termine te biznesi juaj.",
+    "Share Invite": "Ndaj ftesën",
+    "Copy Link": "Kopjo lidhjen",
+    "Invite link copied.": "Lidhja e ftesës u kopjua.",
+    "Show QR Code": "Shfaq kodin QR",
+    "Hide QR Code": "Fshih kodin QR",
+    "Set your business booking link first.": "Së pari vendosni lidhjen e biznesit."
   });
 
   function i18nResolveDynamic(s) {
@@ -102770,6 +103003,200 @@
     return origin + (path || "/");
   }
 
+  function getPersistedBusinessInviteSlug() {
+    return normalizeBusinessSlug(businessSettings?.business_slug || "");
+  }
+
+  function buildBusinessCustomerInviteUrl() {
+    const slug = getPersistedBusinessInviteSlug();
+    if (!slug) return "";
+    const baseHref = resolveAppPublicBaseHref();
+    if (!baseHref) return "";
+    try {
+      const url = new URL(baseHref);
+      url.searchParams.set("business", slug);
+      url.searchParams.set("invite", "1");
+      url.searchParams.delete("manage");
+      url.searchParams.delete("reset_password");
+      return url.toString();
+    } catch (e) {
+      const clean = String(baseHref).split("#")[0].split("?")[0];
+      return clean + "?business=" + encodeURIComponent(slug) + "&invite=1";
+    }
+  }
+
+  function fillBusinessInviteIdentity() {
+    const name = String(businessSettings?.business_name || "").trim();
+    const logoUrl = String(businessSettings?.business_logo_url || "").trim();
+    const nameEl = document.getElementById("businessInviteBusinessName");
+    const logoEl = document.getElementById("businessInviteLogo");
+    const initialsEl = document.getElementById("businessInviteInitials");
+    const wrap = logoEl?.closest?.(".business-invite-sheet__avatar") || null;
+    if (nameEl) {
+      nameEl.setAttribute("data-i18n-ignore", "");
+      nameEl.textContent = name;
+    }
+    if (initialsEl) {
+      initialsEl.textContent = "";
+      initialsEl.classList.add("hidden");
+    }
+    if (!logoEl) return;
+    logoEl.onerror = () => {
+      logoEl.classList.add("hidden");
+      logoEl.removeAttribute("src");
+      wrap?.classList.add("hidden");
+    };
+    if (logoUrl) {
+      logoEl.alt = name;
+      logoEl.src = logoUrl;
+      logoEl.classList.remove("hidden");
+      wrap?.classList.remove("hidden");
+    } else {
+      logoEl.classList.add("hidden");
+      logoEl.removeAttribute("src");
+      wrap?.classList.add("hidden");
+    }
+  }
+
+  function setBusinessInviteQrVisible(visible) {
+    const wrap = document.getElementById("businessInviteQrWrap");
+    const btn = document.getElementById("businessInviteShowQrBtn");
+    const host = document.getElementById("businessInviteQrHost");
+    wrap?.classList.toggle("hidden", !visible);
+    if (wrap) wrap.hidden = !visible;
+    if (btn) {
+      btn.setAttribute("data-i18n", visible ? "businessInviteHideQr" : "businessInviteShowQr");
+      btn.textContent = visible
+        ? t("businessInviteHideQr", "Hide QR Code")
+        : t("businessInviteShowQr", "Show QR Code");
+    }
+    if (!visible || !host) return;
+    const url = buildBusinessCustomerInviteUrl();
+    if (typeof generateBookingQr === "function") {
+      generateBookingQr(host, url);
+    }
+  }
+
+  function openBusinessInviteCustomersSheet() {
+    const url = buildBusinessCustomerInviteUrl();
+    if (!url) {
+      showToast(t("businessInviteMissingSlug", "Set your business booking link first."), "error");
+      return;
+    }
+    const sheet = document.getElementById("businessInviteCustomersSheet");
+    if (!sheet) return;
+    fillBusinessInviteIdentity();
+    const fallback = document.getElementById("businessInviteUrlFallback");
+    if (fallback) {
+      fallback.textContent = url;
+      fallback.classList.add("hidden");
+    }
+    setBusinessInviteQrVisible(false);
+    sheet.hidden = false;
+    sheet.classList.remove("hidden");
+    applyTranslations(sheet);
+    fillBusinessInviteIdentity();
+  }
+
+  function closeBusinessInviteCustomersSheet() {
+    const sheet = document.getElementById("businessInviteCustomersSheet");
+    sheet?.classList.add("hidden");
+    if (sheet) sheet.hidden = true;
+    setBusinessInviteQrVisible(false);
+  }
+
+  async function shareBusinessCustomerInvite() {
+    const url = buildBusinessCustomerInviteUrl();
+    const name = String(businessSettings?.business_name || "").trim();
+    if (!url) {
+      showToast(t("businessInviteMissingSlug", "Set your business booking link first."), "error");
+      return;
+    }
+    const text = tFormat(
+      "businessInviteShareText",
+      "{name} invites you to join XBook. Create your profile and book appointments easily.",
+      { name: name || "XBook" }
+    );
+    if (typeof navigator.share === "function") {
+      try {
+        await navigator.share({
+          title: name || t("businessInviteCustomers", "Invite Customers"),
+          text,
+          url
+        });
+        return;
+      } catch (err) {
+        if (err?.name === "AbortError") return;
+      }
+    }
+    await copyBusinessCustomerInviteLink();
+  }
+
+  async function copyBusinessCustomerInviteLink() {
+    const url = buildBusinessCustomerInviteUrl();
+    if (!url) {
+      showToast(t("businessInviteMissingSlug", "Set your business booking link first."), "error");
+      return;
+    }
+    const okMsg = t("businessInviteCopied", "Invite link copied.");
+    const fallback = document.getElementById("businessInviteUrlFallback");
+    const revealFallback = () => {
+      if (!fallback) return;
+      fallback.textContent = url;
+      fallback.classList.remove("hidden");
+      try {
+        const range = document.createRange();
+        range.selectNodeContents(fallback);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+      } catch (e) {
+        /* ignore */
+      }
+    };
+    try {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        await navigator.clipboard.writeText(url);
+        fallback?.classList.add("hidden");
+        showToast(okMsg, "success");
+        return;
+      }
+      throw new Error("clipboard-unavailable");
+    } catch (err) {
+      try {
+        const tempInput = document.createElement("input");
+        tempInput.value = url;
+        tempInput.setAttribute("readonly", "");
+        tempInput.style.position = "fixed";
+        tempInput.style.left = "-9999px";
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        const copied = document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        if (copied) {
+          fallback?.classList.add("hidden");
+          showToast(okMsg, "success");
+          return;
+        }
+      } catch (e) {
+        /* fall through to selectable URL */
+      }
+      revealFallback();
+    }
+  }
+
+  function toggleBusinessInviteQr() {
+    const wrap = document.getElementById("businessInviteQrWrap");
+    const visible = !(wrap && !wrap.classList.contains("hidden") && !wrap.hidden);
+    setBusinessInviteQrVisible(visible);
+  }
+
+  window.openBusinessInviteCustomersSheet = openBusinessInviteCustomersSheet;
+  window.closeBusinessInviteCustomersSheet = closeBusinessInviteCustomersSheet;
+  window.shareBusinessCustomerInvite = shareBusinessCustomerInvite;
+  window.copyBusinessCustomerInviteLink = copyBusinessCustomerInviteLink;
+  window.toggleBusinessInviteQr = toggleBusinessInviteQr;
+
   function buildPublicBookingLink(identifier = null) {
     const publicId =
       normalizeBusinessSlug(identifier) ||
@@ -106780,7 +107207,11 @@
       return;
     }
 
-    const size = host.id === "onboardingStep5QrHost" || host.id === "onboardingLaunchQrHost" ? 160 : 200;
+    const size = host.id === "onboardingStep5QrHost" || host.id === "onboardingLaunchQrHost"
+      ? 160
+      : host.id === "businessInviteQrHost"
+        ? 220
+        : 200;
 
     if (typeof window.QRCode === "function") {
       try {
@@ -111924,6 +112355,9 @@
     document.body.classList.remove("xbook-demo-customer-active");
     customerMyBookingsViewOpen = false;
     document.getElementById("customerMyBookingsCard")?.classList.add("hidden");
+    if (typeof closeBusinessInviteCustomersSheet === "function") {
+      closeBusinessInviteCustomersSheet();
+    }
   }
 
   function showModeView(opts = {}) {
