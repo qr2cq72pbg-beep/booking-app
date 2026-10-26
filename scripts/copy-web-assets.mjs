@@ -10,7 +10,7 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const wwwDir = path.join(projectRoot, "www");
 
 const COPY_FILES = ["index.html", "manifest.json"];
-const COPY_DIRS = ["icons", "vendor"];
+const COPY_DIRS = ["icons", "vendor", "legal"];
 const COPY_SCENE_WEBP = [
   "assets/xbook-scene/xbook-liquid-scene-light.webp",
   "assets/xbook-scene/xbook-liquid-scene-dark.webp"

@@ -92,13 +92,13 @@ BEGIN
     RAISE EXCEPTION 'test 1 failed: trial must have timestamps and no package';
   END IF;
 
-  -- 2 + 3) Starts at insert time and lasts exactly 168 hours
+  -- 2 + 3) Starts at insert time and lasts exactly 336 hours (14 days)
   v_hours := EXTRACT(EPOCH FROM (v_sub.expires_at - v_sub.starts_at)) / 3600.0;
-  IF v_hours IS DISTINCT FROM 168 THEN
-    RAISE EXCEPTION 'test 3 failed: trial hours=% expected 168', v_hours;
+  IF v_hours IS DISTINCT FROM 336 THEN
+    RAISE EXCEPTION 'test 3 failed: trial hours=% expected 336', v_hours;
   END IF;
-  IF v_sub.expires_at <> v_sub.starts_at + interval '7 days' THEN
-    RAISE EXCEPTION 'test 3 failed: expires_at is not starts_at + 7 days';
+  IF v_sub.expires_at <> v_sub.starts_at + interval '14 days' THEN
+    RAISE EXCEPTION 'test 3 failed: expires_at is not starts_at + 14 days';
   END IF;
 
   SELECT * INTO v_el FROM public.business_trial_eligibility WHERE owner_user_id = v_owner_a;

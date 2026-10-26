@@ -35,9 +35,9 @@ WHERE table_schema = 'public'
   )
 ORDER BY table_name, column_name;
 
--- 4) Exactly 168 hours
-SELECT EXTRACT(EPOCH FROM (interval '7 days'))::bigint AS trial_seconds;
--- Expect 604800
+-- 4) Exactly 336 hours (new trials = 14 days)
+SELECT EXTRACT(EPOCH FROM (interval '14 days'))::bigint AS trial_seconds;
+-- Expect 1209600
 
 SELECT
   public._subscription_entitlement_status(

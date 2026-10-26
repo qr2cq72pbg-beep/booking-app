@@ -1,5 +1,5 @@
 -- =============================================================================
--- XBOOK Phase 4F — Automatic one-time 7-day Business Account trial
+-- XBOOK Phase 4F — Automatic one-time 14-day Business Account trial
 -- =============================================================================
 -- READ THIS FIRST
 --
@@ -28,7 +28,8 @@
 -- Completing onboarding is not required.
 -- service_role / SQL-editor / other uid-less inserts do not auto-grant.
 --
--- Duration: starts_at + interval '7 days' = exactly 168 hours, server clock.
+-- Duration: starts_at + interval '14 days' = exactly 336 hours, server clock.
+-- (Trials granted before the 14-day change keep their stored 7-day window.)
 -- One trial per owner UUID, durable even if business_settings is deleted.
 --
 -- BOOKING ENFORCEMENT GAP (Phase 4E — not authorized here):
@@ -60,7 +61,7 @@ ALTER TABLE public.business_subscriptions
         AND starts_at IS NOT NULL
         AND expires_at IS NOT NULL
         AND expires_on IS NOT NULL
-        AND expires_at = starts_at + interval '7 days'
+        AND (expires_at = starts_at + interval '7 days' OR expires_at = starts_at + interval '14 days')
       )
     );
 
@@ -68,13 +69,15 @@ COMMENT ON COLUMN public.business_subscriptions.starts_at IS
   'Authoritative start instant for trial rows. Paid and complimentary keep starts_on.';
 
 COMMENT ON COLUMN public.business_subscriptions.expires_at IS
-  'Authoritative trial expiry instant (starts_at + 7 days). '
+  'Authoritative trial expiry instant (starts_at + 14 days for new trials; '
+  'trials granted before this migration keep starts_at + 7 days). '
   'NULL for paid calendar-month and complimentary rows.';
 
 COMMENT ON TABLE public.business_subscriptions IS
   'Current access entitlement. No row = unconfigured, not expired. '
   'access_kind complimentary with expires_on NULL = FREE UNTIL CHANGED. '
-  'access_kind trial uses starts_at/expires_at for exact 168-hour expiry. '
+  'access_kind trial uses starts_at/expires_at for exact expiry '
+  '(14 days for new trials, 7 days for legacy trials). '
   'Phase 4F does not enforce bookings.';
 
 -- -----------------------------------------------------------------------------
@@ -131,7 +134,7 @@ CREATE TABLE IF NOT EXISTS public.business_trial_eligibility (
         consumed_reason = 'automatic_trial'
         AND trial_starts_at IS NOT NULL
         AND trial_expires_at IS NOT NULL
-        AND trial_expires_at = trial_starts_at + interval '7 days'
+        AND (trial_expires_at = trial_starts_at + interval '7 days' OR trial_expires_at = trial_starts_at + interval '14 days')
       )
       OR (
         consumed_reason = 'preexisting_owner'
@@ -288,7 +291,7 @@ BEGIN
   END IF;
 
   v_starts_at := v_now;
-  v_expires_at := v_starts_at + interval '7 days';
+  v_expires_at := v_starts_at + interval '14 days';
   v_starts_on := (v_starts_at AT TIME ZONE 'UTC')::date;
   v_expires_on := (v_expires_at AT TIME ZONE 'UTC')::date;
 
@@ -365,7 +368,7 @@ BEGIN
     v_starts_at,
     v_expires_at,
     p_business_id,
-    'Automatic 7-day XBOOK Business trial'
+    'Automatic 14-day XBOOK Business trial'
   )
   RETURNING id INTO v_history_id;
 
@@ -435,7 +438,7 @@ END;
 $$;
 
 COMMENT ON FUNCTION public._business_settings_after_insert_trial() IS
-  'AFTER INSERT on business_settings. Grants a 7-day trial only when auth.uid() '
+  'AFTER INSERT on business_settings. Grants a 14-day trial only when auth.uid() '
   'equals NEW.business_id. Trusted uid-less inserts are created without a trial. '
   'owner_mismatch and unexpected grant failures abort the business insert.';
 

@@ -1,0 +1,79 @@
+:root {
+  --bg: #f4f7fc;
+  --text: #12203e;
+  --muted: #5b6b8c;
+  --accent: #2b6af0;
+  --line: rgba(18, 32, 62, 0.1);
+  --mark: #fff3c4;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1222;
+    --text: #e8edf7;
+    --muted: #9aa8c4;
+    --accent: #8db5ff;
+    --line: rgba(255, 255, 255, 0.12);
+    --mark: #4a3b00;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1222;
+  --text: #e8edf7;
+  --muted: #9aa8c4;
+  --accent: #8db5ff;
+  --line: rgba(255, 255, 255, 0.12);
+  --mark: #4a3b00;
+}
+/* In-app Classic style (solid neutral surfaces; light = white & black, dark = charcoal & champagne). */
+:root[data-style="classic"] {
+  --bg: #ffffff;
+  --text: #0b0b0c;
+  --muted: #6e6e73;
+  --accent: #111112;
+  --line: rgba(10, 10, 12, 0.08);
+  --mark: #f1ebdd;
+}
+:root[data-style="classic"][data-theme="dark"] {
+  --bg: #191918;
+  --text: #f5f2ec;
+  --muted: #a39e94;
+  --accent: #d9be8c;
+  --line: rgba(255, 255, 255, 0.08);
+  --mark: #3a3222;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main, .lang, .draft { max-width: 760px; margin-left: auto; margin-right: auto; }
+h1 { font-size: 26px; line-height: 1.25; letter-spacing: -0.02em; margin: 8px 0 4px; }
+h2 { font-size: 18px; line-height: 1.35; margin: 28px 0 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+p, li { overflow-wrap: break-word; }
+ul { padding-left: 20px; }
+li { margin: 6px 0; }
+a { color: var(--accent); }
+.meta { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+mark { background: var(--mark); color: inherit; padding: 0 3px; border-radius: 4px; }
+.lang { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.lang a {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.lang a[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.draft { margin-bottom: 12px; padding: 10px 12px; border-radius: 12px; background: var(--mark); font-size: 13px; }
+body.embedded .lang, body.embedded .draft { display: none; }
+body.embedded { padding-top: 8px; }
