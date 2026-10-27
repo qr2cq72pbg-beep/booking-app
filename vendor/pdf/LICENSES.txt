@@ -1,0 +1,3 @@
+jsPDF 4.2.1 (MIT) — https://github.com/parallax/jsPDF
+jspdf-autotable 5.0.9 (MIT) — https://github.com/simonbengtsson/jsPDF-AutoTable
+Noto Sans (SIL Open Font License 1.1), subset Latin/Latin Extended/Cyrillic — https://fonts.google.com/noto

@@ -78131,6 +78131,144 @@
     }
   </style>
 
+  <style id="xbook-analytics-export-sheet">
+    /* The shared sheet head is a 3-column grid; this sheet has only title + close, so the title spans the first two. */
+    #analyticsPeriodSheet .analytics-sheet__head > .analytics-sheet__title {
+      grid-column: 1 / span 2;
+    }
+    #analyticsPeriodSheet .analytics-sheet__head > .analytics-sheet__close {
+      grid-column: 3;
+    }
+    #analyticsPeriodSheet:not(.analytics-sheet--export) :is(.xba-export-panel, .xba-export-panel__title),
+    #analyticsPeriodSheet.analytics-sheet--export :is(#analyticsPeriodSheetTitle, .admin-performance-period-controls, .admin-performance-custom-card, .analytics-sheet__body > .analytics-sheet__footnote) {
+      display: none !important;
+    }
+    #analyticsPeriodSheet .xba-export-step {
+      margin: 0 0 16px;
+    }
+    #analyticsPeriodSheet .xba-export-step__title {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    #analyticsPeriodSheet .xba-export-step__hint {
+      margin: 8px 0 0;
+      font-size: 12.5px;
+      line-height: 1.35;
+      opacity: 0.75;
+    }
+    #analyticsPeriodSheet select#xbaExportPreset {
+      width: 100%;
+    }
+    #analyticsPeriodSheet .xba-export-custom {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    #analyticsPeriodSheet .xba-export-custom .admin-performance-field,
+    #analyticsPeriodSheet .xba-export-custom input[type="date"] {
+      min-width: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box;
+    }
+    #analyticsPeriodSheet .xba-export-custom.hidden {
+      display: none;
+    }
+    #analyticsPeriodSheet .xba-export-sheet__period {
+      margin: 10px 0 0;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    #analyticsPeriodSheet .xba-export-sheet__period.is-error {
+      color: #d92d20;
+    }
+    #analyticsPeriodSheet .xba-export-options button.admin-performance-preset,
+    body.admin-mobile-shell-active #adminView #analyticsPeriodSheet .xba-export-options button.admin-performance-preset {
+      height: auto !important;
+      min-height: 44px !important;
+      padding: 8px 10px !important;
+      white-space: normal !important;
+      line-height: 1.25 !important;
+      text-align: center;
+    }
+    #analyticsPeriodSheet .xba-export-options--types button[data-xba-report-type="full"] {
+      grid-column: 1 / -1;
+    }
+    #analyticsPeriodSheet .xba-export-panel > .analytics-sheet__footnote {
+      margin-top: 14px;
+    }
+    #analyticsPeriodSheet button.admin-performance-generate.xba-export-sheet__btn,
+    body.admin-mobile-shell-active #adminView #analyticsPeriodSheet button.admin-performance-generate.xba-export-sheet__btn {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 52px !important;
+      padding: 8px 16px !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0 0 !important;
+    }
+    #analyticsPeriodSheet .xba-export-sheet__label {
+      font-weight: 700;
+    }
+    #analyticsPeriodSheet button.xba-export-sheet__btn:disabled {
+      opacity: 0.6 !important;
+      cursor: not-allowed;
+    }
+    #analyticsPeriodSheet button.xba-export-sheet__btn.is-loading {
+      opacity: 0.85 !important;
+      cursor: progress;
+    }
+  </style>
+  <style id="xbook-edge-swipe-back">
+    .xbook-edge-back {
+      --xbook-edge-back-progress: 0;
+      position: fixed;
+      left: 0;
+      top: 50%;
+      z-index: 2147483000;
+      width: 40px;
+      height: 40px;
+      margin-top: -20px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: 0;
+      color: #fff;
+      background: rgba(20, 22, 28, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      backdrop-filter: blur(14px) saturate(140%);
+      transform: translateX(calc(-44px + var(--xbook-edge-back-progress) * 58px)) scale(calc(0.82 + var(--xbook-edge-back-progress) * 0.18));
+      transition: opacity 0.16s ease, transform 0.18s ease, background-color 0.16s ease;
+    }
+    .xbook-edge-back.is-visible {
+      opacity: calc(0.35 + var(--xbook-edge-back-progress) * 0.65);
+      transition: background-color 0.16s ease;
+    }
+    .xbook-edge-back.is-armed {
+      background: rgba(10, 132, 255, 0.92);
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+    .xbook-edge-back svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .xbook-edge-back { transition: none; }
+    }
+  </style>
   <style id="xbook-password-visibility">
     /* Eye toggle sits inside the field: no button chrome in any theme (beats glass/classic button skins). */
     html body :is(#authView, #resetPasswordView, #customerStartCard, #customerMobileAuthOverlay, #accountPasswordSecuritySheet, #publicView, body) .password-wrap > .password-toggle {
@@ -98308,6 +98446,137 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       }
     }
   </style>
+  <style id="xbook-analytics-segmented-tabs">
+    /* Analytics Преглед | Клиенти | Тим | Услуги = the Bookings calendar Ден | Недела | Месец segmented control:
+       one row, four equal segments, no scrolling. Colours mirror the calendar control per theme. */
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav {
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: 0 !important;
+      height: 44px !important;
+      min-height: 44px !important;
+      padding: 3px !important;
+      box-sizing: border-box !important;
+      align-items: stretch !important;
+      overflow: hidden !important;
+      overflow-x: hidden !important;
+      scroll-snap-type: none !important;
+      border: 0 !important;
+      border-radius: 12px !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav .analytics-hub-nav__item,
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      align-self: stretch !important;
+      flex: none !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      height: 100% !important;
+      min-height: 0 !important;
+      max-height: 100% !important;
+      padding: 0 clamp(2px, 1vw, 8px) !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 10px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+      font-size: clamp(11px, 3.4vw, 13px) !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+      letter-spacing: -0.01em !important;
+      text-transform: none !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: clip !important;
+      transform: none !important;
+      box-sizing: border-box !important;
+    }
+    /* Albanian labels are longest ("Përmbledhje"): one size step down so all four still fit in one row. */
+    html[lang="sq"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html[lang="sq"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      font-size: clamp(9.5px, 2.9vw, 12.5px) !important;
+      letter-spacing: -0.02em !important;
+      padding: 0 2px !important;
+    }
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav .analytics-hub-nav__item::before,
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav .analytics-hub-nav__item::after {
+      display: none !important;
+      content: none !important;
+    }
+    /* Liquid Glass · light */
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(250, 252, 255, 0.56) 52%, rgba(236, 244, 255, 0.48) 100%) !important;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.92), inset 0 1px 0 rgb(255, 255, 255), inset 0 -1px 0 rgba(120, 160, 210, 0.12), 0 0 0 0.5px rgba(0, 27, 94, 0.07), 0 14px 34px rgba(40, 72, 130, 0.12), 0 2px 6px rgba(40, 72, 130, 0.05) !important;
+    }
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(76, 90, 114) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active,
+    html:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(0, 27, 94) !important;
+      background: linear-gradient(180deg, rgba(232, 242, 255, 0.92) 0%, rgba(214, 232, 255, 0.78) 100%) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    /* Liquid Glass · dark */
+    html[data-xbook-theme="dark"]:not([data-xbook-style="classic"]):not([data-xbook-style="metal"]):not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav {
+      background: linear-gradient(180deg, rgba(38, 56, 102, 0.58) 0%, rgba(18, 30, 62, 0.66) 52%, rgba(10, 20, 44, 0.74) 100%) !important;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -1px 0 rgba(40, 80, 160, 0.18), 0 18px 40px rgba(0, 0, 0, 0.4) !important;
+    }
+    html[data-xbook-theme="dark"]:not([data-xbook-style="classic"]):not([data-xbook-style="metal"]):not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html[data-xbook-theme="dark"]:not([data-xbook-style="classic"]):not([data-xbook-style="metal"]):not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(169, 181, 202) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    html[data-xbook-theme="dark"]:not([data-xbook-style="classic"]):not([data-xbook-style="metal"]):not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active,
+    html[data-xbook-theme="dark"]:not([data-xbook-style="classic"]):not([data-xbook-style="metal"]):not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(244, 247, 251) !important;
+      background: linear-gradient(180deg, rgba(61, 130, 255, 0.34) 0%, rgba(22, 42, 88, 0.78) 100%) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+    /* Classic */
+    html[data-xbook-style="classic"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav {
+      background: linear-gradient(rgb(25, 25, 24), rgb(25, 25, 24)) !important;
+      box-shadow: inset 0 0 0 1px rgba(222, 196, 146, 0.1), inset 0 1px 0 rgba(255, 240, 210, 0.04), 0 12px 28px rgba(0, 0, 0, 0.4) !important;
+    }
+    html[data-xbook-style="classic"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html[data-xbook-style="classic"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(163, 158, 148) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    html[data-xbook-style="classic"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active,
+    html[data-xbook-style="classic"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(217, 190, 140) !important;
+      background: linear-gradient(rgb(42, 38, 31), rgb(42, 38, 31)) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    }
+    /* Liquid Metal */
+    html[data-xbook-style="metal"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav {
+      background: linear-gradient(180deg, rgba(28, 44, 84, 0.9) 0%, rgba(14, 25, 54, 0.94) 100%) !important;
+      box-shadow: inset 0 0 0 1px rgba(200, 220, 255, 0.18), inset 0 1px 0 rgba(222, 234, 255, 0.2), inset 0 0 0 0.5px rgba(141, 181, 255, 0.14), inset 0 -1px 0 rgba(30, 70, 160, 0.22), 0 14px 32px -12px rgba(0, 0, 0, 0.55) !important;
+    }
+    html[data-xbook-style="metal"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item,
+    html[data-xbook-style="metal"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(198, 208, 224) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    html[data-xbook-style="metal"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active,
+    html[data-xbook-style="metal"]:not(#xbt-a):not(#xbt-b):not(#xbt-c):not(#xbt-d):not(#xbt-e):not(#xbt-f):not(#xbt-g):not(#xbt-h):not(#xbt-i):not(#xbt-j) body #adminView .analytics-hub-nav button.analytics-hub-nav__item.is-active:is(:hover, :focus, :focus-visible, :active) {
+      color: rgb(244, 247, 251) !important;
+      background: linear-gradient(180deg, rgba(61, 130, 255, 0.34) 0%, rgba(22, 42, 88, 0.78) 100%) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+  </style>
 </head>
 
 <body class="app-theme-minimal">
@@ -100929,12 +101198,54 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
                   <div class="analytics-sheet__handle" aria-hidden="true"></div>
                   <div class="analytics-sheet__head">
                     <h3 id="analyticsPeriodSheetTitle" class="analytics-sheet__title" data-i18n="analyticsReportPeriod">Report period</h3>
+                    <h3 class="analytics-sheet__title xba-export-panel__title" data-i18n="xbaExportMenu">Export report</h3>
                     <button type="button" class="analytics-sheet__close" onclick="closeAnalyticsPeriodSheet()" data-i18n-aria-label="analyticsClose" aria-label="Close">×</button>
                   </div>
                   <div class="analytics-sheet__body">
+                  <div class="xba-export-panel">
+                    <div class="xba-export-step">
+                      <p class="xba-export-step__title" data-i18n="xbaStepPeriod">1. Report period</p>
+                      <select id="xbaExportPreset" class="admin-performance-select" data-i18n-aria-label="analyticsReportPeriod" aria-label="Report period"></select>
+                      <div id="xbaExportCustom" class="admin-performance-custom-months xba-export-custom hidden" hidden>
+                        <div class="admin-performance-field">
+                          <label class="admin-performance-field__label" for="xbaExportStart" data-i18n="analyticsStartDate">Start date</label>
+                          <input id="xbaExportStart" class="admin-performance-select" type="date">
+                        </div>
+                        <div class="admin-performance-field">
+                          <label class="admin-performance-field__label" for="xbaExportEnd" data-i18n="analyticsEndDate">End date</label>
+                          <input id="xbaExportEnd" class="admin-performance-select" type="date">
+                        </div>
+                      </div>
+                      <p id="xbaExportPeriodText" class="xba-export-sheet__period" aria-live="polite"></p>
+                    </div>
+                    <div class="xba-export-step">
+                      <p class="xba-export-step__title" data-i18n="xbaStepType">2. Report type</p>
+                      <div class="analytics-period-options xba-export-options xba-export-options--types" role="radiogroup" data-i18n-aria-label="xbaStepType" aria-label="Report type">
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="full" data-i18n="xbaReportFull">Complete business analysis</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="customers" data-i18n="xbaReportCustomers">Customer analysis</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="services" data-i18n="xbaReportServices">Service analysis</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="team" data-i18n="xbaReportTeam">Team analysis</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="advanced" data-i18n="xbaReportAdvanced">Advanced analysis</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-type="overview" data-i18n="xbaReportOverview">Business overview</button>
+                      </div>
+                    </div>
+                    <div class="xba-export-step">
+                      <p class="xba-export-step__title" data-i18n="xbaStepFormat">3. Format</p>
+                      <div class="analytics-period-options xba-export-options" role="radiogroup" data-i18n-aria-label="xbaStepFormat" aria-label="Format">
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-format="pdf">PDF</button>
+                        <button type="button" class="admin-performance-preset" role="radio" aria-checked="false" data-xba-report-format="csv" data-i18n="xbaFormatCsv">CSV / Excel</button>
+                      </div>
+                      <p id="xbaExportFormatHint" class="xba-export-step__hint"></p>
+                    </div>
+                    <button type="button" id="xbaExportGenerate" class="admin-performance-generate xba-export-sheet__btn">
+                      <span class="xba-export-sheet__label" data-xba-export-label data-i18n="xbaGenerateReport">Generate report</span>
+                    </button>
+                    <p class="analytics-sheet__footnote" data-i18n="xbaCsvNoteText">Booking value is an estimate from booking prices, not collected payments.</p>
+                  </div>
                   <section class="admin-performance-period-controls" data-i18n-aria-label="analyticsReportPeriod" aria-label="Report period">
                     <div id="performancePresetChips" class="analytics-period-options" role="group" data-i18n-aria-label="analyticsQuickPresets" aria-label="Quick period presets">
                       <button type="button" class="admin-performance-preset" data-performance-preset="today" data-i18n="analyticsPeriodToday">Today</button>
+                      <button type="button" class="admin-performance-preset" data-performance-preset="yesterday" data-i18n="analyticsPeriodYesterday">Yesterday</button>
                       <button type="button" class="admin-performance-preset" data-performance-preset="this_week" data-i18n="analyticsPeriodThisWeek">This week</button>
                       <button type="button" class="admin-performance-preset" data-performance-preset="last_7" data-i18n="analyticsPeriodLast7">Last 7 days</button>
                       <button type="button" class="admin-performance-preset" data-performance-preset="last_30" data-i18n="analyticsPeriodLast30">Last 30 days</button>
@@ -105674,6 +105985,103 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       xbaCsvNoteText: "Booking value is an estimate from booking prices, not collected payments.",
       xbaCsvNote: "Note",
       xbaCsvGenerated: "Generated",
+      xbaErrNetwork: "No connection to the server. Check the internet connection and try again.",
+      xbaErrAuth: "Your session is not authorised for this business. Sign out, sign in again and retry.",
+      xbaErrTimeout: "The server did not finish preparing the report for this period. Choose a shorter period and try again.",
+      xbaErrMissing: "A required reporting function is not available on the server.",
+      xbaErrInvalid: "The server rejected the report request.",
+      xbaErrServer: "The server returned an error while loading the report.",
+      xbaErrContext: "Open the Business Analytics screen and try again.",
+      xbaNotePartOmitted: "Not included: {part} — {reason}",
+      xbaPartNewReturning: "New and returning customers",
+      xbaColAvg: "Average per visit",
+      xbaColCount: "Appointments",
+      xbaColLastVisit: "Last visit in period",
+      xbaColServicesUsed: "Services in period",
+      xbaColStatus: "Status",
+      xbaColType: "Type",
+      xbaColValue: "Estimated value",
+      xbaColValueShare: "Share of value",
+      xbaColVisits: "Completed visits",
+      xbaCurrency: "Currency",
+      xbaExportFetchingCustomers: "Loading customers {n} of {total}…",
+      xbaExportFetchingServices: "Loading services {n} of {total}…",
+      xbaExportSelected: "Report covers",
+      xbaExportZipHint: "ZIP with one Excel-ready CSV table per section",
+      xbaFormatCsv: "CSV / Excel",
+      xbaGenerateReport: "Generate report",
+      xbaNoteAdvanced: "Lifetime columns cover all visits ever; period columns cover only the selected period.",
+      xbaNoteCancelRate: "Cancellation rate = cancelled ÷ (scheduled + cancelled) appointments dated in the period.",
+      xbaNoteCustomerPeriod: "Visits and values count only completed visits dated in the selected period (no future, cancelled or earlier visits).",
+      xbaNoteLastVisit: "Last visit is shown when it falls inside the period; it is empty when the customer also visited after the period ended.",
+      xbaNoteMismatch: "Customer totals differ from the business totals; please contact XBOOK support.",
+      xbaNoteNoTrends: "Trends and busiest times are not included because the trend report is not enabled on the server.",
+      xbaNoteServiceClients: "Clients per service are counted separately for each service; one customer can appear under several services.",
+      xbaNoteServiceMismatch: "The service total differs from the business total because some appointments have no service assigned.",
+      xbaNoteServicesSkipped: "Services per customer are not listed because the catalogue has too many services for one report.",
+      xbaNoteServicesUsed: "Services in period lists catalogue services used; services removed from the catalogue are not named.",
+      xbaNoteTeam: "Each appointment belongs to one team member, so team totals add up to the business totals; appointments without a team member are listed as Unassigned.",
+      xbaNoteTeamMismatch: "The team total differs from the business total; appointments outside the team report are not listed.",
+      xbaNoteUnknownPrice: "Some appointments have no price and are not included in the estimated value.",
+      xbaNoteUnlinked: "{visits} completed visits ({value}) have no customer details (no name, phone or e-mail) and are not listed per customer. They are included in the business totals.",
+      xbaNoteUpcoming: "Upcoming appointments are dated in the selected period but have not happened yet; they are not counted as completed visits.",
+      xbaReportAdvanced: "Advanced analysis",
+      xbaReportCustomers: "Customer analysis",
+      xbaReportFull: "Complete business analysis",
+      xbaReportLoadFailed: "Could not load the report data. Check your connection and try again.",
+      xbaReportNoCustomers: "No customers match the selected period and filters.",
+      xbaReportNoVisits: "No completed visits in the selected period.",
+      xbaReportOverview: "Business overview",
+      xbaReportServices: "Service analysis",
+      xbaReportTeam: "Team analysis",
+      xbaSectionCustomerMix: "Customer mix",
+      xbaSectionCustomers: "Customers",
+      xbaSectionInsights: "Additional insights",
+      xbaSectionServices: "Services",
+      xbaSectionSummary: "Business summary",
+      xbaSectionTeam: "Team",
+      xbaStatusInProgress: "In progress now",
+      xbaStatusUnconfirmed: "Past, not confirmed",
+      xbaStatusUpcoming: "Upcoming (later in the period)",
+      xbaStepFormat: "3. Format",
+      xbaStepPeriod: "1. Report period",
+      xbaStepType: "2. Report type",
+      xbaSumAvgVisit: "Average value per completed visit",
+      xbaSumCancelled: "Cancelled appointments",
+      xbaSumCustomers: "Customers with completed visits",
+      xbaSumServicesUsed: "Services with completed visits",
+      xbaSumTeamActive: "Team members with completed visits",
+      xbaSumValue: "Estimated value of completed services",
+      xbaTableCustomers: "Customers with completed visits",
+      xbaTableFrequency: "Visit frequency (all customers with visits, all time)",
+      xbaTableHighestValue: "Highest-value services",
+      xbaTableMostUsed: "Most used services",
+      xbaTableNewReturning: "New and returning customers in the period",
+      xbaTableServices: "Services",
+      xbaTableStatus: "Appointments in the period by status",
+      xbaTableTeam: "Team members",
+      xbaTotal: "Total",
+      xbaTotalCustomers: "Total ({n} customers)",
+      xbaExportMenu: "Export report",
+      xbaExportCsvAction: "Export CSV",
+      xbaExportPdfAction: "Export PDF",
+      xbaExportCsvHint: "Spreadsheet for Excel or Google Sheets",
+      xbaExportPdfHint: "A4 report to share, save or print",
+      xbaExportPreparing: "Preparing…",
+      xbaExportFetching: "Loading {n} of {total}…",
+      xbaExportPdfDone: "PDF report ready.",
+      xbaExportPdfFailed: "Could not create the PDF report.",
+      xbaExportBusy: "An export is already in progress.",
+      xbaExportTooLarge: "The report is too large to export. Narrow the period or filters.",
+      xbaTrendsUnavailable: "Trends and busiest times are not included: the trend report is not enabled on the server yet.",
+      xbaTrendsFailed: "Trends could not be loaded and are not included.",
+      xbaBucketDay: "Daily",
+      xbaBucketWeek: "Weekly",
+      xbaBucketMonth: "Monthly",
+      xbaCsvSort: "Sort",
+      xbaCsvTotalRows: "Customers in report",
+      xbaPdfPage: "Page {n} of {total}",
+      xbaPdfSummary: "Summary",
       xbaCsvPeriod: "Period",
       xbaCsvBusiness: "Business",
       xbaAvgShort: "avg {money}",
@@ -106201,6 +106609,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       analyticsBookedAhead: "Booked ahead",
       analyticsVisits: "visits",
       analyticsPeriodToday: "Today",
+      analyticsPeriodYesterday: "Yesterday",
       analyticsPeriodLast7: "Last 7 days",
       analyticsPeriodLast30: "Last 30 days",
       analyticsPeriodLast90: "Last 90 days",
@@ -107523,6 +107932,103 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       xbaCsvNoteText: "Вредноста на термините е проценка според цените на термините, а не наплатени плаќања.",
       xbaCsvNote: "Забелешка",
       xbaCsvGenerated: "Креирано",
+      xbaErrNetwork: "Нема врска со серверот. Проверете ја интернет-врската и обидете се повторно.",
+      xbaErrAuth: "Сесијата нема дозвола за овој бизнис. Одјавете се, најавете се повторно и обидете се пак.",
+      xbaErrTimeout: "Серверот не стигна да го подготви извештајот за овој период. Изберете пократок период и обидете се повторно.",
+      xbaErrMissing: "Потребна серверска функција за извештаи не е достапна.",
+      xbaErrInvalid: "Серверот го одби барањето за извештај.",
+      xbaErrServer: "Серверот врати грешка при вчитување на извештајот.",
+      xbaErrContext: "Отворете го екранот Аналитика во бизнис-приказот и обидете се повторно.",
+      xbaNotePartOmitted: "Не е вклучено: {part} — {reason}",
+      xbaPartNewReturning: "Нови и повратни клиенти",
+      xbaColAvg: "Просек по посета",
+      xbaColCount: "Термини",
+      xbaColLastVisit: "Последна посета во периодот",
+      xbaColServicesUsed: "Услуги во периодот",
+      xbaColStatus: "Статус",
+      xbaColType: "Вид",
+      xbaColValue: "Проценета вредност",
+      xbaColValueShare: "Удел во вредноста",
+      xbaColVisits: "Завршени посети",
+      xbaCurrency: "Валута",
+      xbaExportFetchingCustomers: "Се вчитуваат клиенти {n} од {total}…",
+      xbaExportFetchingServices: "Се вчитуваат услуги {n} од {total}…",
+      xbaExportSelected: "Извештајот опфаќа",
+      xbaExportZipHint: "ZIP со посебна CSV-табела за Excel за секој дел",
+      xbaFormatCsv: "CSV / Excel",
+      xbaGenerateReport: "Генерирај извештај",
+      xbaNoteAdvanced: "Колоните „вкупно“ ги опфаќаат сите досегашни посети; колоните „во периодот“ само избраниот период.",
+      xbaNoteCancelRate: "Стапка на откажување = откажани ÷ (закажани + откажани) термини со датум во периодот.",
+      xbaNoteCustomerPeriod: "Посетите и вредностите ги опфаќаат само завршените посети со датум во избраниот период (без идни, откажани или претходни посети).",
+      xbaNoteLastVisit: "Последната посета се прикажува кога е во периодот; празна е ако клиентот имал посета и по крајот на периодот.",
+      xbaNoteMismatch: "Збировите по клиенти се разликуваат од вкупните збирови; контактирајте ја поддршката на XBOOK.",
+      xbaNoteNoTrends: "Трендовите и најпрометните часови не се вклучени бидејќи извештајот за трендови не е овозможен на серверот.",
+      xbaNoteServiceClients: "Клиентите се бројат посебно за секоја услуга; еден клиент може да се појави кај повеќе услуги.",
+      xbaNoteServiceMismatch: "Збирот по услуги се разликува од вкупниот збир бидејќи некои термини немаат доделена услуга.",
+      xbaNoteServicesSkipped: "Услугите по клиент не се наведени бидејќи ценовникот има премногу услуги за еден извештај.",
+      xbaNoteServicesUsed: "„Услуги во периодот“ ги наведува користените услуги од ценовникот; услугите отстранети од ценовникот не се именувани.",
+      xbaNoteTeam: "Секој термин припаѓа на еден член на тимот, па збировите по тим се еднакви на вкупните; термините без член се прикажани како „Недоделено“.",
+      xbaNoteTeamMismatch: "Збирот по тим се разликува од вкупниот збир; термините надвор од извештајот за тимот не се наведени.",
+      xbaNoteUnknownPrice: "Некои термини немаат цена и не се вклучени во проценетата вредност.",
+      xbaNoteUnlinked: "{visits} завршени посети ({value}) немаат податоци за клиент (без име, телефон или е-пошта) и не се прикажани по клиент. Вклучени се во вкупните збирови.",
+      xbaNoteUpcoming: "Претстојните термини се со датум во избраниот период, но сè уште не се одржани; не се бројат како завршени посети.",
+      xbaReportAdvanced: "Напредна анализа",
+      xbaReportCustomers: "Анализа на клиенти",
+      xbaReportFull: "Целосна анализа на бизнисот",
+      xbaReportLoadFailed: "Податоците за извештајот не можеа да се вчитаат. Проверете ја врската и обидете се повторно.",
+      xbaReportNoCustomers: "Нема клиенти за избраниот период и филтри.",
+      xbaReportNoVisits: "Нема завршени посети во избраниот период.",
+      xbaReportOverview: "Преглед на бизнисот",
+      xbaReportServices: "Анализа на услуги",
+      xbaReportTeam: "Анализа на тим",
+      xbaSectionCustomerMix: "Структура на клиенти",
+      xbaSectionCustomers: "Клиенти",
+      xbaSectionInsights: "Дополнителни показатели",
+      xbaSectionServices: "Услуги",
+      xbaSectionSummary: "Резиме на бизнисот",
+      xbaSectionTeam: "Тим",
+      xbaStatusInProgress: "Во тек сега",
+      xbaStatusUnconfirmed: "Минати, непотврдени",
+      xbaStatusUpcoming: "Претстојни (подоцна во периодот)",
+      xbaStepFormat: "3. Формат",
+      xbaStepPeriod: "1. Период на извештај",
+      xbaStepType: "2. Вид на извештај",
+      xbaSumAvgVisit: "Просечна вредност по завршена посета",
+      xbaSumCancelled: "Откажани термини",
+      xbaSumCustomers: "Клиенти со завршени посети",
+      xbaSumServicesUsed: "Услуги со завршени посети",
+      xbaSumTeamActive: "Членови на тимот со завршени посети",
+      xbaSumValue: "Проценета вредност на завршени услуги",
+      xbaTableCustomers: "Клиенти со завршени посети",
+      xbaTableFrequency: "Фреквенција на посети (сите клиенти со посети, досега)",
+      xbaTableHighestValue: "Услуги со најголема вредност",
+      xbaTableMostUsed: "Најкористени услуги",
+      xbaTableNewReturning: "Нови и повратни клиенти во периодот",
+      xbaTableServices: "Услуги",
+      xbaTableStatus: "Термини во периодот по статус",
+      xbaTableTeam: "Членови на тимот",
+      xbaTotal: "Вкупно",
+      xbaTotalCustomers: "Вкупно ({n} клиенти)",
+      xbaExportMenu: "Извези извештај",
+      xbaExportCsvAction: "Извези CSV",
+      xbaExportPdfAction: "Извези PDF",
+      xbaExportCsvHint: "Табела за Excel или Google Sheets",
+      xbaExportPdfHint: "A4 извештај за споделување, зачувување или печатење",
+      xbaExportPreparing: "Се подготвува…",
+      xbaExportFetching: "Се вчитуваат {n} од {total}…",
+      xbaExportPdfDone: "PDF-извештајот е подготвен.",
+      xbaExportPdfFailed: "PDF-извештајот не можеше да се креира.",
+      xbaExportBusy: "Извозот е веќе во тек.",
+      xbaExportTooLarge: "Извештајот е преголем за извоз. Скратете го периодот или филтрите.",
+      xbaTrendsUnavailable: "Трендовите и најпрометните часови не се вклучени: извештајот за трендови сè уште не е овозможен на серверот.",
+      xbaTrendsFailed: "Трендовите не можеа да се вчитаат и не се вклучени.",
+      xbaBucketDay: "Дневно",
+      xbaBucketWeek: "Неделно",
+      xbaBucketMonth: "Месечно",
+      xbaCsvSort: "Подредување",
+      xbaCsvTotalRows: "Клиенти во извештајот",
+      xbaPdfPage: "Страница {n} од {total}",
+      xbaPdfSummary: "Преглед",
       xbaCsvPeriod: "Период",
       xbaCsvBusiness: "Бизнис",
       xbaAvgShort: "прос. {money}",
@@ -108050,6 +108556,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       analyticsBookedAhead: "Со иден термин",
       analyticsVisits: "посети",
       analyticsPeriodToday: "Денес",
+      analyticsPeriodYesterday: "Вчера",
       analyticsPeriodLast7: "Последни 7 дена",
       analyticsPeriodLast30: "Последни 30 дена",
       analyticsPeriodLast90: "Последни 90 дена",
@@ -109368,6 +109875,103 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       xbaCsvNoteText: "Vlera e rezervimeve është vlerësim nga çmimet e rezervimeve, jo pagesa të arkëtuara.",
       xbaCsvNote: "Shënim",
       xbaCsvGenerated: "Krijuar",
+      xbaErrNetwork: "Nuk ka lidhje me serverin. Kontrolloni lidhjen me internetin dhe provoni përsëri.",
+      xbaErrAuth: "Sesioni nuk ka leje për këtë biznes. Dilni, hyni përsëri dhe provoni sërish.",
+      xbaErrTimeout: "Serveri nuk arriti ta përgatisë raportin për këtë periudhë. Zgjidhni një periudhë më të shkurtër dhe provoni përsëri.",
+      xbaErrMissing: "Një funksion i nevojshëm i raporteve nuk është i disponueshëm në server.",
+      xbaErrInvalid: "Serveri e refuzoi kërkesën për raport.",
+      xbaErrServer: "Serveri ktheu një gabim gjatë ngarkimit të raportit.",
+      xbaErrContext: "Hapni ekranin e Analitikës së biznesit dhe provoni përsëri.",
+      xbaNotePartOmitted: "Nuk përfshihet: {part} — {reason}",
+      xbaPartNewReturning: "Klientë të rinj dhe të kthyer",
+      xbaColAvg: "Mesatarja për vizitë",
+      xbaColCount: "Takime",
+      xbaColLastVisit: "Vizita e fundit në periudhë",
+      xbaColServicesUsed: "Shërbimet në periudhë",
+      xbaColStatus: "Statusi",
+      xbaColType: "Lloji",
+      xbaColValue: "Vlera e vlerësuar",
+      xbaColValueShare: "Pjesa e vlerës",
+      xbaColVisits: "Vizita të përfunduara",
+      xbaCurrency: "Monedha",
+      xbaExportFetchingCustomers: "Po ngarkohen klientët {n} nga {total}…",
+      xbaExportFetchingServices: "Po ngarkohen shërbimet {n} nga {total}…",
+      xbaExportSelected: "Raporti përfshin",
+      xbaExportZipHint: "ZIP me një tabelë CSV për Excel për çdo seksion",
+      xbaFormatCsv: "CSV / Excel",
+      xbaGenerateReport: "Gjenero raportin",
+      xbaNoteAdvanced: "Kolonat e përgjithshme përfshijnë të gjitha vizitat; kolonat e periudhës vetëm periudhën e zgjedhur.",
+      xbaNoteCancelRate: "Shkalla e anulimit = të anuluara ÷ (të planifikuara + të anuluara) takime me datë në periudhë.",
+      xbaNoteCustomerPeriod: "Vizitat dhe vlerat numërojnë vetëm vizitat e përfunduara me datë në periudhën e zgjedhur (pa vizita të ardhshme, të anuluara ose më të hershme).",
+      xbaNoteLastVisit: "Vizita e fundit shfaqet kur bie brenda periudhës; është bosh kur klienti ka pasur vizitë edhe pas përfundimit të periudhës.",
+      xbaNoteMismatch: "Totalet sipas klientëve ndryshojnë nga totalet e biznesit; kontaktoni mbështetjen e XBOOK.",
+      xbaNoteNoTrends: "Trendet dhe oraret më të ngarkuara nuk përfshihen sepse raporti i trendeve nuk është aktivizuar në server.",
+      xbaNoteServiceClients: "Klientët numërohen veçmas për çdo shërbim; një klient mund të shfaqet në disa shërbime.",
+      xbaNoteServiceMismatch: "Totali sipas shërbimeve ndryshon nga totali i biznesit sepse disa takime nuk kanë shërbim të caktuar.",
+      xbaNoteServicesSkipped: "Shërbimet sipas klientit nuk renditen sepse katalogu ka shumë shërbime për një raport.",
+      xbaNoteServicesUsed: "„Shërbimet në periudhë“ rendit shërbimet e përdorura nga katalogu; shërbimet e hequra nga katalogu nuk emërtohen.",
+      xbaNoteTeam: "Çdo takim i përket një anëtari të ekipit, prandaj totalet e ekipit përputhen me totalet e biznesit; takimet pa anëtar shfaqen si „Pa caktuar“.",
+      xbaNoteTeamMismatch: "Totali i ekipit ndryshon nga totali i biznesit; takimet jashtë raportit të ekipit nuk renditen.",
+      xbaNoteUnknownPrice: "Disa takime nuk kanë çmim dhe nuk përfshihen në vlerën e vlerësuar.",
+      xbaNoteUnlinked: "{visits} vizita të përfunduara ({value}) nuk kanë të dhëna klienti (pa emër, telefon ose email) dhe nuk renditen sipas klientit. Ato përfshihen në totalet e biznesit.",
+      xbaNoteUpcoming: "Takimet e ardhshme kanë datë në periudhën e zgjedhur por ende nuk kanë ndodhur; nuk numërohen si vizita të përfunduara.",
+      xbaReportAdvanced: "Analizë e avancuar",
+      xbaReportCustomers: "Analiza e klientëve",
+      xbaReportFull: "Analizë e plotë e biznesit",
+      xbaReportLoadFailed: "Të dhënat e raportit nuk mund të ngarkoheshin. Kontrolloni lidhjen dhe provoni përsëri.",
+      xbaReportNoCustomers: "Asnjë klient nuk përputhet me periudhën dhe filtrat e zgjedhur.",
+      xbaReportNoVisits: "Nuk ka vizita të përfunduara në periudhën e zgjedhur.",
+      xbaReportOverview: "Pasqyra e biznesit",
+      xbaReportServices: "Analiza e shërbimeve",
+      xbaReportTeam: "Analiza e ekipit",
+      xbaSectionCustomerMix: "Përbërja e klientëve",
+      xbaSectionCustomers: "Klientët",
+      xbaSectionInsights: "Tregues shtesë",
+      xbaSectionServices: "Shërbimet",
+      xbaSectionSummary: "Përmbledhja e biznesit",
+      xbaSectionTeam: "Ekipi",
+      xbaStatusInProgress: "Në vazhdim tani",
+      xbaStatusUnconfirmed: "Të kaluara, të pakonfirmuara",
+      xbaStatusUpcoming: "Të ardhshme (më vonë në periudhë)",
+      xbaStepFormat: "3. Formati",
+      xbaStepPeriod: "1. Periudha e raportit",
+      xbaStepType: "2. Lloji i raportit",
+      xbaSumAvgVisit: "Vlera mesatare për vizitë të përfunduar",
+      xbaSumCancelled: "Takime të anuluara",
+      xbaSumCustomers: "Klientë me vizita të përfunduara",
+      xbaSumServicesUsed: "Shërbime me vizita të përfunduara",
+      xbaSumTeamActive: "Anëtarë të ekipit me vizita të përfunduara",
+      xbaSumValue: "Vlera e vlerësuar e shërbimeve të përfunduara",
+      xbaTableCustomers: "Klientë me vizita të përfunduara",
+      xbaTableFrequency: "Shpeshtësia e vizitave (të gjithë klientët me vizita, gjithsej)",
+      xbaTableHighestValue: "Shërbimet me vlerën më të lartë",
+      xbaTableMostUsed: "Shërbimet më të përdorura",
+      xbaTableNewReturning: "Klientë të rinj dhe të kthyer në periudhë",
+      xbaTableServices: "Shërbimet",
+      xbaTableStatus: "Takimet në periudhë sipas statusit",
+      xbaTableTeam: "Anëtarët e ekipit",
+      xbaTotal: "Gjithsej",
+      xbaTotalCustomers: "Gjithsej ({n} klientë)",
+      xbaExportMenu: "Eksporto raportin",
+      xbaExportCsvAction: "Eksporto CSV",
+      xbaExportPdfAction: "Eksporto PDF",
+      xbaExportCsvHint: "Tabelë për Excel ose Google Sheets",
+      xbaExportPdfHint: "Raport A4 për ta ndarë, ruajtur ose printuar",
+      xbaExportPreparing: "Po përgatitet…",
+      xbaExportFetching: "Po ngarkohen {n} nga {total}…",
+      xbaExportPdfDone: "Raporti PDF është gati.",
+      xbaExportPdfFailed: "Raporti PDF nuk mund të krijohej.",
+      xbaExportBusy: "Një eksport është tashmë në vazhdim.",
+      xbaExportTooLarge: "Raporti është shumë i madh për eksport. Ngushtoni periudhën ose filtrat.",
+      xbaTrendsUnavailable: "Trendet dhe oraret më të ngarkuara nuk përfshihen: raporti i trendeve ende nuk është aktivizuar në server.",
+      xbaTrendsFailed: "Trendet nuk mund të ngarkoheshin dhe nuk përfshihen.",
+      xbaBucketDay: "Ditore",
+      xbaBucketWeek: "Javore",
+      xbaBucketMonth: "Mujore",
+      xbaCsvSort: "Renditja",
+      xbaCsvTotalRows: "Klientë në raport",
+      xbaPdfPage: "Faqja {n} nga {total}",
+      xbaPdfSummary: "Përmbledhje",
       xbaCsvPeriod: "Periudha",
       xbaCsvBusiness: "Biznesi",
       xbaAvgShort: "mes. {money}",
@@ -109892,6 +110496,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       analyticsBookedAhead: "Me rezervim të ardhshëm",
       analyticsVisits: "vizita",
       analyticsPeriodToday: "Sot",
+      analyticsPeriodYesterday: "Dje",
       analyticsPeriodLast7: "7 ditët e fundit",
       analyticsPeriodLast30: "30 ditët e fundit",
       analyticsPeriodLast90: "90 ditët e fundit",
@@ -137038,6 +137643,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       }
       bindAppShellListeners();
       bindCustomerPreviewNavigationListeners();
+      if (isNativeIosApp()) bindXbookIosEdgeSwipeBack();
       bindNavigationDebugTracing();
       setAppShellState(APP_SHELL_STATE.LOADING, { reason: "cold-start", title: "Restoring session…" });
       const handledNativeLaunch = await consumeNativeAuthLaunchUrlIfPresent("cold-start-launch-url");
@@ -144546,13 +145152,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     if (!isNativeCapacitorApp()) return;
     const AppPlugin = getCapacitorAppPlugin() || window.Capacitor?.Plugins?.App;
     if (!AppPlugin || typeof AppPlugin.addListener !== "function") return;
-    AppPlugin.addListener("backButton", (event) => {
-      if (handleXbookSystemBack()) return;
-      if (event?.canGoBack) {
-        window.history.back();
-        return;
-      }
-      if (typeof AppPlugin.exitApp === "function") AppPlugin.exitApp();
+    // Back never leaves XBOOK: at a root screen it does nothing (users leave via Home / Recents).
+    AppPlugin.addListener("backButton", () => {
+      handleXbookSystemBack();
     });
   }
 
@@ -144630,11 +145232,90 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     return false;
   }
 
+  /** In-app back arrows, deepest screen first. System Back taps the first visible one. */
+  const XBOOK_BACK_ARROW_SELECTORS = [
+    "#crossAnalyticsFilterClose",
+    "#xaPickerBack",
+    "#caDetBackBtn",
+    "#caSegBackBtn",
+    "#clientDetailBackBtn",
+    "#clientsListBackBtn",
+    ".services-edit-card__back",
+    "#adminCalendarDayBackBtn",
+    ".admin-add-premium__back",
+    ".settings-sub-back--sheet",
+    "#adminBookingRulesSettingsBack",
+    "#adminServicesSettingsBack",
+    "#adminStaffSettingsBack",
+    "#adminCustomizeHubBack",
+    "#adminOnboardingEditCloseBtn",
+    "#adminOnboardingBackBtn",
+    '.admin-ca-seg-back[onclick="leaveBusinessNotificationsInbox()"]',
+    "#caHomeBackBtn",
+    "#saHomeBackBtn",
+    "#staffHomeBackBtn",
+    "#crossHomeBackBtn",
+    "#perfHomeBackBtn",
+    ".admin-mobile-setup-back__btn",
+    "#customerMyBookingsCard .customer-my-history-back-btn",
+    ".customer-my-bookings-back-btn",
+    "#customerManualBusinessBackBtn",
+    ".customer-mobile-auth-back",
+    ".customer-profile-join-back",
+    ".customer-hub-footer .auth-btn--ghost",
+    ".auth-return-home-btn"
+  ];
+
+  function isXbookBackArrowVisible(el) {
+    if (!el || el.disabled || el.closest("[hidden]")) return false;
+    // Opacity is ignored on purpose: screens fade their back arrow in, and it is already tappable.
+    if (typeof el.checkVisibility === "function") {
+      return el.checkVisibility({ checkVisibilityCSS: true });
+    }
+    return el.getClientRects().length > 0 && window.getComputedStyle(el).visibility !== "hidden";
+  }
+
+  function tapVisibleXbookBackArrow() {
+    for (const selector of XBOOK_BACK_ARROW_SELECTORS) {
+      const btn = Array.from(document.querySelectorAll(selector)).find(isXbookBackArrowVisible);
+      if (!btn) continue;
+      btn.click();
+      return true;
+    }
+    return false;
+  }
+
+  /** A booking, sign-in, save or account action is in flight: Back must not interrupt it. */
+  function isXbookBackNavigationBlocked() {
+    try {
+      return !!(
+        publicBookingCreateInFlight ||
+        adminAddBookingInFlight ||
+        manageBookingActionInFlight ||
+        completeProfileSubmitting ||
+        customerProfileEditSubmitting ||
+        accountPasswordChangeSaving ||
+        customerLeaveInFlight ||
+        xbookDeleteAccountBusy ||
+        logoutInFlight ||
+        adminCustomizeSaveInFlight ||
+        settingsClientApprovalSaving ||
+        oauthSignInInFlight ||
+        customerLoginWithCodeInFlight ||
+        nativeAuthCallbackInFlight ||
+        customerPreviewBusy
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+
   /**
-   * Hardware Back (Android): close the topmost layer, go back one step or screen,
-   * and only report "not handled" at a root screen (the caller then exits the app).
+   * Hardware Back (Android) and edge swipe-back (iOS): close the topmost layer, go back one
+   * step or screen, and only report "not handled" at a root screen (where Back does nothing).
    */
   function handleXbookSystemBack() {
+    if (isXbookBackNavigationBlocked()) return true;
     if (closeTopmostXbookOverlay()) return true;
     if (typeof handleAdminSettingsSystemBack === "function" && handleAdminSettingsSystemBack()) return true;
     if (handleCustomerPreviewSystemBack()) return true;
@@ -144647,6 +145328,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       publicBookingGoBack();
       return true;
     }
+    if (tapVisibleXbookBackArrow()) return true;
     const body = document.body;
     if (
       body.classList.contains("admin-mobile-shell-active") &&
@@ -144674,6 +145356,101 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     if (event.key !== "Escape" || event.defaultPrevented) return;
     if (closeTopmostXbookOverlay()) event.preventDefault();
   });
+
+  function isXbookEdgeSwipeExcluded(target) {
+    if (!(target instanceof Element)) return true;
+    if (
+      target.closest(
+        'input, textarea, select, [contenteditable="true"], .public-schedule-cols-area, #publicBusinessGalleryLightboxWrap, [data-xbook-no-swipe-back]'
+      )
+    ) {
+      return true;
+    }
+    // A horizontal strip (calendar days, carousels) that is scrolled away from its start owns the drag.
+    for (let el = target; el && el !== document.body; el = el.parentElement) {
+      if (el.scrollLeft > 0 && el.scrollWidth > el.clientWidth + 1) return true;
+    }
+    const active = document.activeElement;
+    if (active && active.matches?.("input, textarea, select, [contenteditable='true']")) return true;
+    if (typeof isXbookConfirmOpen === "function" && isXbookConfirmOpen()) return true;
+    if (typeof isLogoutConfirmOpen === "function" && isLogoutConfirmOpen()) return true;
+    return isXbookBackNavigationBlocked();
+  }
+
+  /** iOS: swipe right from the left screen edge performs the same Back as the in-app arrow. */
+  function bindXbookIosEdgeSwipeBack() {
+    if (window.__xbookEdgeSwipeBackBound || !document.body) return;
+    window.__xbookEdgeSwipeBackBound = true;
+    const EDGE_PX = 22;
+    const COMMIT_PX = 72;
+    const indicator = document.createElement("div");
+    indicator.className = "xbook-edge-back";
+    indicator.setAttribute("aria-hidden", "true");
+    indicator.innerHTML = '<svg viewBox="0 0 24 24" focusable="false"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>';
+    document.body.appendChild(indicator);
+    let track = null;
+
+    const paint = (dx) => {
+      const progress = Math.max(0, Math.min(dx / COMMIT_PX, 1));
+      indicator.style.setProperty("--xbook-edge-back-progress", String(progress));
+      indicator.classList.toggle("is-armed", progress >= 1);
+      indicator.classList.add("is-visible");
+    };
+    const reset = () => {
+      track = null;
+      indicator.classList.remove("is-visible", "is-armed");
+      indicator.style.setProperty("--xbook-edge-back-progress", "0");
+    };
+
+    document.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.touches.length !== 1) return reset();
+        const touch = event.touches[0];
+        if (touch.clientX > EDGE_PX || isXbookEdgeSwipeExcluded(event.target)) return;
+        track = { x: touch.clientX, y: touch.clientY, t: event.timeStamp, locked: false, dx: 0 };
+      },
+      { passive: true, capture: true }
+    );
+
+    document.addEventListener(
+      "touchmove",
+      (event) => {
+        if (!track) return;
+        if (event.touches.length !== 1) return reset();
+        const touch = event.touches[0];
+        const dx = touch.clientX - track.x;
+        const dy = touch.clientY - track.y;
+        if (!track.locked) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+          if (dx <= 0 || Math.abs(dy) > dx * 0.7) return reset();
+          track.locked = true;
+        }
+        if (event.cancelable) event.preventDefault();
+        track.dx = dx;
+        paint(dx);
+      },
+      { passive: false, capture: true }
+    );
+
+    const finish = (event) => {
+      if (!track) return;
+      const { locked, dx, t } = track;
+      const velocity = dx / Math.max(1, event.timeStamp - t);
+      const commit = event.type === "touchend" && locked && (dx >= COMMIT_PX || (dx >= 36 && velocity > 0.45));
+      reset();
+      if (!commit) return;
+      try {
+        window.Capacitor?.Plugins?.Haptics?.impact?.({ style: "LIGHT" });
+      } catch (e) {
+        /* haptics are optional */
+      }
+      handleXbookSystemBack();
+    };
+    document.addEventListener("touchend", finish, { passive: true, capture: true });
+    document.addEventListener("touchcancel", finish, { passive: true, capture: true });
+  }
+  window.bindXbookIosEdgeSwipeBack = bindXbookIosEdgeSwipeBack;
 
   function canReturnFromManageToMyBookings() {
     return !!(currentUser && currentUserRole === "customer");
@@ -154564,6 +155341,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   // ---- Period labels ----
   const XBA_PRESET_LABELS = Object.freeze({
     today: ["analyticsPeriodToday", "Today"],
+    yesterday: ["analyticsPeriodYesterday", "Yesterday"],
     this_week: ["analyticsPeriodThisWeek", "This week"],
     last_7: ["analyticsPeriodLast7", "Last 7 days"],
     last_30: ["analyticsPeriodLast30", "Last 30 days"],
@@ -154897,21 +155675,39 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     return tFormat("xbaHoursShort", "{n} h", { n: h.toLocaleString(xbaLocale()) });
   }
 
-  // ---- CSV export ----
-  function xbaCsvDelimiter() {
-    return currentLanguage === "en" ? "," : ";";
-  }
-
-  function xbaCsvValue(value) {
-    if (value == null) return "";
-    if (typeof value === "number") {
-      if (!Number.isFinite(value)) return "";
-      const text = String(Math.round(value * 100) / 100);
-      return xbaCsvDelimiter() === ";" ? text.replace(".", ",") : text;
-    }
-    const s = String(value);
-    return /[";,\n\r\t]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-  }
+  // ---- Business reports (CSV / ZIP + PDF) ----
+  // The export sheet asks for period, report type and format. Data is fetched for the chosen period through the
+  // existing owner-only analytics RPCs (never the dashboard caches), so a report never depends on the screen it
+  // was started from and never changes the dashboard period.
+  // Column types: text (untrusted user/business text), label (app-generated text), int, num, money, pct, phone, date, datetime.
+  const XBA_REPORT_TYPES = Object.freeze(["full", "customers", "services", "team", "advanced", "overview"]);
+  const XBA_REPORT_FILE_KEYS = Object.freeze({
+    full: "full-report",
+    customers: "customers",
+    services: "services",
+    team: "team",
+    advanced: "advanced",
+    overview: "overview"
+  });
+  const XBA_EXPORT_PRESETS = Object.freeze([
+    "today",
+    "yesterday",
+    "this_week",
+    "last_7",
+    "last_30",
+    "this_month",
+    "last_month",
+    "this_quarter",
+    "last_90",
+    "last_12_months",
+    "ytd"
+  ]);
+  const XBA_NUMERIC_TYPES = new Set(["int", "num", "money", "pct"]);
+  const XBA_EXPORT_PAGE_SIZE = 100;
+  const XBA_EXPORT_MAX_ROWS = 20000;
+  const XBA_EXPORT_MAX_SERVICE_LOOKUPS = 40;
+  const xbaExportState = { preset: "this_month", startDate: "", endDate: "", type: "full", format: "pdf" };
+  let xbaExportBusy = false;
 
   function xbaNumOrNull(value) {
     if (value == null || value === "") return null;
@@ -154919,130 +155715,1232 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     return Number.isFinite(n) ? n : null;
   }
 
-  function xbaTrendText(trend) {
-    const status = trend && typeof trend === "object" ? String(trend.status || "") : "";
-    const pct = Number(trend && trend.pct);
-    if ((status === "increase" || status === "decrease") && Number.isFinite(pct)) return `${status === "increase" ? "+" : "-"}${Math.abs(pct)}%`;
-    if (status === "new") return t("xbaChipNew", "New");
-    if (status === "no_change") return "0%";
-    return "";
+  function xbaCurrencyCode() {
+    return getBusinessCurrencyMeta()?.code || getBusinessCurrencyCode() || "";
   }
 
-  function xbaCsvHeader(title, range) {
-    return [
-      [title],
-      [t("xbaCsvBusiness", "Business"), businessSettings?.business_name || ""],
-      [t("xbaCsvPeriod", "Period"), xbaPeriodLabel(range), range?.startDate || "", range?.endDate || ""],
-      [t("xbaCsvGenerated", "Generated"), new Date().toISOString()],
-      [t("xbaCsvNote", "Note"), t("xbaCsvNoteText", "Booking value is an estimate from booking prices, not collected payments.")],
-      []
-    ];
+  function xbaMoneyLabel(label) {
+    const code = xbaCurrencyCode();
+    return code ? `${label} (${code})` : label;
   }
 
-  async function xbaCsvRows(section, range) {
-    if (section === "performance") {
-      const r = xbaLastOverview.report;
-      if (!r) return null;
-      const rows = xbaCsvHeader(t("commonAnalytics", "Analytics") + " · " + t("analyticsOverview", "Overview"), range);
-      rows.push([t("xbaCsvMetric", "Metric"), t("xbaCsvValue", "Value")]);
-      rows.push([t("xbaCsvBookingValue", "Estimated booking value"), xbaNumOrNull(r.completedRevenue)]);
-      rows.push([t("xbaCompletedVisits", "Completed visits"), xbaNumOrNull(r.completedAppts)]);
-      rows.push([t("analyticsUpcoming", "Upcoming"), xbaNumOrNull(r.upcomingAppts)]);
-      rows.push([t("xbaCsvBookedValue", "Booked value (upcoming)"), xbaNumOrNull(r.upcomingRevenue)]);
-      rows.push([t("analyticsCancelled", "Cancelled"), xbaNumOrNull(r.cancelledAppts)]);
-      rows.push([t("xbaCancellationRate", "Cancellation rate") + " %", xbaCancellationRate(r)]);
-      rows.push([t("xbaAvgVisitValue", "Avg visit value"), xbaNumOrNull(r.avgValue)]);
-      const trends = await xbaFetchTrends(range, null);
-      if (trends) {
-        rows.push([], [t("xbaCsvTrend", "Trend"), trends.bucket]);
-        rows.push([t("xbaCsvFrom", "From"), t("xbaCsvTo", "To"), t("xbaCompletedVisits", "Completed visits"), t("xbaCsvBookingValue", "Estimated booking value"), t("analyticsCancelled", "Cancelled"), t("xbaCsvScheduled", "Scheduled"), t("xbaCsvNewClients", "New clients")]);
-        (trends.series || []).forEach((s) => rows.push([s.bucket_start, s.bucket_end, xbaNumOrNull(s.completed_visits), xbaNumOrNull(s.completed_value), xbaNumOrNull(s.cancelled), xbaNumOrNull(s.scheduled), xbaNumOrNull(s.new_customers)]));
-        const days = xbaWeekdayNames();
-        rows.push([], [t("xbaBusiestTimes", "Busiest times")], [t("xbaCsvDay", "Day"), t("xbaCsvHour", "Hour"), t("xbaCsvBookings", "Bookings")]);
-        (trends.busy_times || []).forEach((b) => rows.push([days[xbaNum(b.dow) - 1] || b.dow, `${String(b.hour).padStart(2, "0")}:00`, xbaNumOrNull(b.bookings)]));
-      }
-      return rows;
-    }
-    if (section === "customer-analytics") {
-      const p = customerAnalyticsCache?.payload;
-      if (!p) return null;
-      const o = p.overview || {};
-      const rows = xbaCsvHeader(t("commonAnalytics", "Analytics") + " · " + t("xbaTabClients", "Clients"), range);
-      rows.push([t("xbaCsvMetric", "Metric"), t("xbaCsvValue", "Value")]);
-      [["xbaActiveClients", "Active clients", o.active_customers], ["caSegNew", "New Customers", o.new_customers], ["caSegReturning", "Returning Customers", o.returning_customers],
-       ["caKpiAvgVisits", "Avg visits / customer", o.average_visits_per_customer], ["caKpiRepeatRate", "Repeat rate", o.repeat_rate_pct], ["caKpiTotal", "Total customers", o.total_customers],
-       ["caKpiWithVisits", "Customers with visits", o.customers_with_visits]].forEach(([k, f, v]) => rows.push([t(k, f), xbaNumOrNull(v)]));
-      const groups = [
-        [t("caCardFreq", "Visit frequency"), buildCustomerAnalyticsFreqRows(p.frequency || {})],
-        [t("xaGender", "Gender"), buildCustomerAnalyticsGenderRows(p.demographics?.gender)],
-        [t("xaAge", "Age"), buildCustomerAnalyticsAgeRows(p.demographics?.age)],
-        [t("caCardCities", "Top cities"), buildCustomerAnalyticsCityRows(p.demographics?.cities)]
-      ];
-      groups.forEach(([title, list]) => {
-        rows.push([], [title]);
-        (list || []).forEach((row) => rows.push([row.label, xbaNumOrNull(row.count)]));
-      });
-      const risk = customerAnalyticsExclusiveAtRisk(p.inactivity || {});
-      rows.push([], [t("xbaWinBack", "Clients to win back")]);
-      rows.push([t("caRisk3059", "30–59 days"), risk.d30to59], [t("caRisk6089", "60–89 days"), risk.d60to89], [t("caRisk90", "90+ days"), risk.d90plus], [t("analyticsBookedAhead", "Booked ahead"), risk.bookedAhead]);
-      return rows;
-    }
-    if (section === "service-analytics" || section === "staff-analytics") {
-      const isStaff = section === "staff-analytics";
-      const p = isStaff ? staffAnalyticsCache?.payload : serviceAnalyticsCache?.payload;
-      const list = isStaff ? p?.staff : p?.services;
-      if (!Array.isArray(list)) return null;
-      const rows = xbaCsvHeader(t("commonAnalytics", "Analytics") + " · " + (isStaff ? t("analyticsTeam", "Team") : t("analyticsServices", "Services")), range);
-      rows.push([
-        isStaff ? t("xbaCsvTeamMember", "Team member") : t("xbaCsvService", "Service"),
-        t("xbaCompletedVisits", "Completed visits"), t("xbaCsvBookingValue", "Estimated booking value"),
-        t("xbaCsvVisitShare", "Visit share %"), t("xbaCsvValueShare", "Value share %"),
-        t("xbaCsvVisitTrend", "Visits vs previous"), t("xbaCsvValueTrend", "Value vs previous"),
-        t("xbaCsvClients", "Clients"), t("analyticsUpcoming", "Upcoming"), t("analyticsCancelled", "Cancelled"), t("xbaCancellationRate", "Cancellation rate") + " %",
-        ...(isStaff ? [t("xbaCsvHours", "Completed hours")] : [])
-      ]);
-      list.forEach((row) => rows.push([
-        isStaff && isStaffAnalyticsUnassigned(row) ? t("staUnassigned", "Unassigned") : String(row.display_name || ""),
-        xbaNumOrNull(row.completed_visits), xbaNumOrNull(row.completed_revenue),
-        xbaNumOrNull(row.visit_share_pct), xbaNumOrNull(row.revenue_share_pct),
-        xbaTrendText(row.visit_trend), xbaTrendText(row.revenue_trend),
-        xbaNumOrNull(row.unique_customers), xbaNumOrNull(row.upcoming_bookings), xbaNumOrNull(row.cancelled_bookings), xbaNumOrNull(row.cancellation_rate),
-        ...(isStaff ? [row.completed_minutes != null ? Math.round((xbaNum(row.completed_minutes) / 60) * 10) / 10 : null] : [])
-      ]));
-      return rows;
-    }
-    if (section === "cross-analytics") {
-      const st = typeof crossAnalyticsState === "object" ? crossAnalyticsState : null;
-      if (!st || !Array.isArray(st.rows)) return null;
-      const rows = xbaCsvHeader(t("analyticsAdvanced", "Advanced analysis"), st.range || range);
-      const filters = Object.entries(st.appliedFilters || {}).filter(([, v]) => v != null && v !== "" && !(Array.isArray(v) && !v.length));
-      rows.splice(5, 0, [t("xbaCsvFilters", "Filters"), filters.length ? filters.map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("|") : v}`).join("; ") : t("xbaCsvNoFilters", "None")]);
-      if (st.hasMore) rows.splice(6, 0, [t("xbaCsvPartial", "Rows"), t("xbaCsvPartialText", "Only the rows loaded on screen are included. Load more to export more.")]);
-      rows.push([t("xbaCsvName", "Name"), "#", t("xbaCsvPhone", "Phone"), t("xbaCsvEmail", "Email"), "VIP",
-        t("xbaCsvPeriodVisits", "Visits in period"), t("xbaCsvPeriodValue", "Value in period"), t("xbaCsvLifetimeVisits", "Lifetime visits"), t("xbaCsvLifetimeValue", "Lifetime value"),
-        t("xbaCsvLastVisit", "Last visit"), t("xbaCsvNextAppointment", "Next appointment")]);
-      st.rows.forEach((c) => rows.push([c.display_name || "", c.customer_number != null ? formatCustomerNumberDisplay(c.customer_number) : "", c.phone || "", c.email || "", c.is_vip ? "VIP" : "",
-        xbaNumOrNull(c.period_completed_visits ?? c.completed_visits_period), xbaNumOrNull(c.period_completed_revenue ?? c.completed_revenue_period),
-        xbaNumOrNull(c.completed_visits_lifetime), xbaNumOrNull(c.completed_revenue_lifetime),
-        c.last_completed_visit_at || "", c.next_appointment_at || ""]));
-      return rows;
-    }
-    return null;
+  /** Timestamp → DD.MM.YYYY HH:mm in the business timezone (device timezone as fallback). */
+  function xbaFormatDateTimeLocal(value) {
+    if (!value) return "";
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    const p = xbaBusinessDateParts(date);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${pad(p.day)}.${pad(p.monthIndex + 1)}.${p.year} ${pad(p.hour)}:${pad(p.minute)}`;
   }
 
-  async function xbaDeliverFile(name, text) {
-    const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+  function xbaBusinessDateParts(date) {
+    const tz = typeof getBusinessBookingsTimezoneId === "function" ? getBusinessBookingsTimezoneId() : "";
+    return (tz && getDateTimePartsInTimeZone(tz, date)) || deviceLocalNowParts(date);
+  }
+
+  /** Local business calendar date (YYYY-MM-DD) of a timestamp. */
+  function xbaBusinessIsoDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    const p = xbaBusinessDateParts(date);
+    return formatDate(p.year, p.monthIndex, p.day);
+  }
+
+  function xbaRangeDates(range) {
+    if (!range?.startDate) return "";
+    return range.startDate === range.endDate
+      ? formatXbookDateDmy(range.startDate)
+      : `${formatXbookDateDmy(range.startDate)} – ${formatXbookDateDmy(range.endDate)}`;
+  }
+
+  function xbaReportCell(value, type) {
+    return { v: value, type };
+  }
+
+  function xbaSafeDiv(a, b) {
+    const x = xbaNumOrNull(a);
+    const y = xbaNumOrNull(b);
+    return x != null && y ? x / y : null;
+  }
+
+  function xbaSum(rows, pick) {
+    return rows.reduce((sum, row) => sum + (xbaNumOrNull(pick(row)) || 0), 0);
+  }
+
+  function xbaReportTypeLabel(type) {
+    const labels = {
+      full: ["xbaReportFull", "Complete business analysis"],
+      customers: ["xbaReportCustomers", "Customer analysis"],
+      services: ["xbaReportServices", "Service analysis"],
+      team: ["xbaReportTeam", "Team analysis"],
+      advanced: ["xbaReportAdvanced", "Advanced analysis"],
+      overview: ["xbaReportOverview", "Business overview"]
+    };
+    const entry = labels[type] || labels.full;
+    return t(entry[0], entry[1]);
+  }
+
+  /** Readable labels for the Advanced Analytics filters (same wording as the on-screen chips). */
+  function xaAppliedFilterLabels(rawFilters) {
+    const f = buildXaRpcFilters(rawFilters);
+    const out = [];
+    const push = (kind, value, label) => out.push({ kind, value, label });
+    (f.gender || []).forEach((value) => push("gender", value, formatXaGender(value)));
+    (f.age_buckets || []).forEach((value) => push("age", value, formatXaAgeBucket(value)));
+    (f.city_ids || []).forEach((id) => {
+      const city = xaCityCatalog.find((row) => String(row.id).toLowerCase() === String(id).toLowerCase());
+      push("city", id, xaCityLabel(city));
+    });
+    if (f.city_unknown) push("city_unknown", "1", t("xaChipCityUnknown", "Unknown city"));
+    if (f.is_vip === true) push("vip", "true", t("xaPresetVip", "VIP"));
+    if (f.is_vip === false) push("vip", "false", t("xaVipNot", "Not VIP"));
+    if (f.customer_type === "new") push("type", "new", t("xaPresetNew", "New"));
+    if (f.customer_type === "returning") push("type", "returning", t("xaPresetReturning", "Returning"));
+    if (f.visit_frequency === "repeat") push("freq", "repeat", t("xaPresetRepeat", "Repeat"));
+    if (f.visit_frequency === "single") push("freq", "single", t("xaFreqSingle", "Single visit"));
+    if (f.inactive_days_min != null) {
+      push("inactive", String(f.inactive_days_min), t("xaChipInactive", "Inactive {n}+ days").replace("{n}", String(f.inactive_days_min)));
+    }
+    if (f.has_future_booking === true) push("future", "true", t("xaFutureYes", "Has future booking"));
+    if (f.has_future_booking === false) push("future", "false", t("xaFutureNo", "No future booking"));
+    if (f.lifetime_visits_min != null) {
+      push("visits", String(f.lifetime_visits_min), t("xaChipVisits", "{n}+ visits").replace("{n}", String(f.lifetime_visits_min)));
+    }
+    if (f.lifetime_revenue_min != null) {
+      push("revenue", String(f.lifetime_revenue_min), t("xaChipRevenue", "Revenue ≥ {n}").replace("{n}", formatXaRowMoney(f.lifetime_revenue_min)));
+    }
+    (f.service_ids || []).forEach((id) => push("service", id, t("xaChipUsed", "Used: {n}").replace("{n}", xaServiceName(id))));
+    (f.service_ids_none || []).forEach((id) => push("service_none", id, t("xaChipNotUsed", "Not used: {n}").replace("{n}", xaServiceName(id))));
+    (f.staff_ids || []).forEach((id) => push("staff", id, t("xaChipStaff", "Staff: {n}").replace("{n}", xaStaffName(id))));
+    return out;
+  }
+
+  function xbaYieldToUi() {
+    return new Promise((resolve) => setTimeout(resolve, 0));
+  }
+
+  // ---- Report data (period-specific, owner-only RPCs) ----
+  /**
+   * Classified report failure: kind = network | auth | timeout | missing | invalid | server | context.
+   * The toast names the RPC and Postgres/PostgREST code so a real-device failure can be traced from one screenshot.
+   */
+  function xbaReportFailure(kind, rpc, error) {
+    const code = String(error?.code || "").trim();
+    const message = String(error?.message || error || "").trim();
+    const messages = {
+      network: ["xbaErrNetwork", "No connection to the server. Check the internet connection and try again."],
+      auth: ["xbaErrAuth", "Your session is not authorised for this business. Sign out, sign in again and retry."],
+      timeout: ["xbaErrTimeout", "The server did not finish preparing the report for this period. Choose a shorter period and try again."],
+      missing: ["xbaErrMissing", "A required reporting function is not available on the server."],
+      invalid: ["xbaErrInvalid", "The server rejected the report request."],
+      server: ["xbaErrServer", "The server returned an error while loading the report."],
+      context: ["xbaErrContext", "Open the Business Analytics screen and try again."]
+    };
+    const entry = messages[kind] || messages.server;
+    const technical = kind === "network" || kind === "context" ? "" : ` [${[rpc, code, kind === "invalid" ? message.slice(0, 80) : ""].filter(Boolean).join(" · ")}]`;
+    const err = new Error(t(entry[0], entry[1]) + technical);
+    err.xbaReport = { kind, rpc, code, message };
+    return err;
+  }
+
+  function xbaClassifyRpcError(rpc, error) {
+    const code = String(error?.code || "").toUpperCase();
+    const message = String(error?.message || error || "");
+    const status = Number(error?.status || 0);
+    if ((typeof navigator !== "undefined" && navigator.onLine === false) || (!code && /failed to fetch|load failed|networkerror|network request failed|network connection|timed out|aborted/i.test(message))) {
+      return xbaReportFailure("network", rpc, error);
+    }
+    if (code === "57014" || /statement timeout|canceling statement/i.test(message)) return xbaReportFailure("timeout", rpc, error);
+    if (code === "42501" || code === "PGRST301" || code === "PGRST302" || status === 401 || status === 403 || /jwt|not authorized/i.test(message)) {
+      return xbaReportFailure("auth", rpc, error);
+    }
+    if (code === "PGRST202" || code === "42883") return xbaReportFailure("missing", rpc, error);
+    if (code === "22023" || code === "22P02" || code === "22007" || code === "22008" || code === "PGRST203" || code === "PGRST100") {
+      return xbaReportFailure("invalid", rpc, error);
+    }
+    return xbaReportFailure("server", rpc, error);
+  }
+
+  /** One owner-only RPC for the export period, with full error details (the dashboard wrappers hide them). */
+  async function xbaExportRpc(name, range, extraArgs, opts = {}) {
+    if (typeof canExecuteBusinessAnalytics === "function" && !canExecuteBusinessAnalytics()) throw xbaReportFailure("context", name);
+    if (!initSupabaseClient()) throw xbaReportFailure("network", name);
+    const bizId = businessId || (typeof getActiveBusinessUuid === "function" ? getActiveBusinessUuid() : "");
+    if (!bizId) throw xbaReportFailure("context", name);
+    // No p_period_kind: that belongs to the dashboard preset, not to an independently chosen export period.
+    const args = { p_business_id: bizId, p_from_date: range.startDate, p_to_date: range.endDate, ...(extraArgs || {}) };
+    let result;
     try {
-      if (typeof File === "function" && navigator.canShare && typeof isNativeCapacitorApp === "function" && isNativeCapacitorApp()) {
-        const file = new File([blob], name, { type: "text/csv" });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: name });
-          return true;
-        }
-      }
+      result = opts.cached === false ? await sb.rpc(name, args) : await xbaCachedRpc(name, args);
     } catch (err) {
-      if (err && err.name === "AbortError") return false;
+      console.error("[report] RPC threw", name, err?.message || err);
+      throw xbaClassifyRpcError(name, err);
     }
+    const { data, error } = result || {};
+    if (error || !data || data.ok === false) {
+      const detail = error || { code: data?.error || "", message: data?.message || data?.error || "empty response" };
+      console.error("[report] RPC failed", JSON.stringify({
+        rpc: name,
+        from: range.startDate,
+        to: range.endDate,
+        extra: extraArgs ? Object.keys(extraArgs) : [],
+        code: detail.code || "",
+        message: detail.message || "",
+        details: detail.details || "",
+        hint: detail.hint || ""
+      }));
+      throw xbaClassifyRpcError(name, detail);
+    }
+    return data;
+  }
+
+  async function xbaFetchPerformance(range) {
+    return mapPerformanceRpcToUiReport(await xbaExportRpc("get_business_performance_report", range), range);
+  }
+
+  async function xbaFetchCustomerOverview(range) {
+    return xbaExportRpc("get_business_customer_analytics_overview", range);
+  }
+
+  /** Every customer matching the period + filters — paged through the same secure Cross Analytics RPC. */
+  async function xbaFetchAllCrossRows(range, filters, sort, onProgress) {
+    const rows = [];
+    let summary = null;
+    let offset = 0;
+    for (;;) {
+      const payload = await xbaExportRpc(
+        "get_business_cross_analytics",
+        range,
+        { p_filters: filters, p_sort: sort, p_limit: XBA_EXPORT_PAGE_SIZE, p_offset: offset },
+        { cached: false }
+      );
+      if (!summary) summary = payload.summary || {};
+      const page = Array.isArray(payload.customers) ? payload.customers : [];
+      rows.push(...page);
+      const total = Number(payload.pagination?.total ?? summary.matched_customers);
+      if (Number.isFinite(total) && total > XBA_EXPORT_MAX_ROWS) {
+        throw new Error(t("xbaExportTooLarge", "The report is too large to export. Narrow the period or filters."));
+      }
+      if (typeof onProgress === "function") onProgress(rows.length, Number.isFinite(total) ? total : rows.length);
+      if (payload.pagination?.has_more !== true || !page.length) break;
+      offset += XBA_EXPORT_PAGE_SIZE;
+      await xbaYieldToUi();
+    }
+    return { rows, summary: summary || {} };
+  }
+
+  /** Customers with at least one completed visit in the period, highest estimated value first. */
+  async function xbaFetchCustomersServed(range, onProgress) {
+    const { rows, summary } = await xbaFetchAllCrossRows(range, { period_visits_min: 1 }, "period_revenue_desc", onProgress);
+    const served = rows.filter((row) => (xbaNumOrNull(row.completed_visits_period) || 0) > 0);
+    served.sort(
+      (a, b) =>
+        (xbaNumOrNull(b.completed_revenue_period) || 0) - (xbaNumOrNull(a.completed_revenue_period) || 0) ||
+        (xbaNumOrNull(b.completed_visits_period) || 0) - (xbaNumOrNull(a.completed_visits_period) || 0) ||
+        String(a.display_name || "").localeCompare(String(b.display_name || ""))
+    );
+    return { rows: served, summary };
+  }
+
+  /**
+   * Services each customer used in the period, from the same RPC's period-scoped service filter (one paged call per
+   * catalogue service that had completed visits). Returns null when there are too many services to look up.
+   */
+  async function xbaFetchServicesByCustomer(range, serviceRows, onProgress) {
+    const lookups = serviceRows.filter((row) => row.service_id && (xbaNumOrNull(row.completed_visits) || 0) > 0);
+    if (lookups.length > XBA_EXPORT_MAX_SERVICE_LOOKUPS) return null;
+    const byCustomer = new Map();
+    for (let i = 0; i < lookups.length; i++) {
+      const service = lookups[i];
+      const { rows } = await xbaFetchAllCrossRows(
+        range,
+        { period_visits_min: 1, service_ids: [String(service.service_id).toLowerCase()], service_scope: "period" },
+        "name_asc"
+      );
+      rows.forEach((row) => {
+        const key = row.analytics_customer_key;
+        if (!key) return;
+        if (!byCustomer.has(key)) byCustomer.set(key, []);
+        byCustomer.get(key).push(String(service.display_name || "").trim());
+      });
+      if (typeof onProgress === "function") onProgress(i + 1, lookups.length);
+      await xbaYieldToUi();
+    }
+    return byCustomer;
+  }
+
+  // ---- Report sections ----
+  function xbaEmptyNote() {
+    return t("xbaReportNoVisits", "No completed visits in the selected period.");
+  }
+
+  function xbaSummaryItems(perf, served, overview) {
+    const rate = xbaCancellationRate(perf);
+    const items = [];
+    if (served) items.push([t("xbaSumCustomers", "Customers with completed visits"), served.length, "int"]);
+    items.push(
+      [t("xbaCompletedVisits", "Completed visits"), perf.completedAppts, "int"],
+      [xbaMoneyLabel(t("xbaSumValue", "Estimated value of completed services")), perf.completedRevenue, "money"],
+      [xbaMoneyLabel(t("xbaSumAvgVisit", "Average value per completed visit")), perf.avgValue, "money"],
+      [t("xbaSumCancelled", "Cancelled appointments"), perf.cancelledAppts, "int"],
+      [t("xbaCancellationRate", "Cancellation rate") + " (%)", rate, "pct"]
+    );
+    if (overview?.overview) {
+      items.push([t("caSegNew", "New Customers"), overview.overview.new_customers, "int"], [t("caSegReturning", "Returning Customers"), overview.overview.returning_customers, "int"]);
+    }
+    return items.map(([label, value, type]) => ({ label, value: xbaNumOrNull(value), type }));
+  }
+
+  function xbaSummaryNotes(perf) {
+    const notes = [t("xbaNoteCancelRate", "Cancellation rate = cancelled ÷ (scheduled + cancelled) appointments dated in the period.")];
+    if ((xbaNumOrNull(perf.quality?.unknown_price_count) || 0) > 0) {
+      notes.push(t("xbaNoteUnknownPrice", "Some appointments have no price and are not included in the estimated value."));
+    }
+    return notes;
+  }
+
+  /** Customer table + reconciliation against the business totals. */
+  function xbaCustomerSection(perf, served, servicesByCustomer, title) {
+    const rows = served.rows;
+    const range = served.range;
+    const visits = xbaSum(rows, (row) => row.completed_visits_period);
+    const value = xbaSum(rows, (row) => row.completed_revenue_period);
+    const columns = [
+      { label: t("xbaCsvName", "Name"), type: "text" },
+      { label: "#", type: "label", pdf: false },
+      { label: t("xbaCsvPhone", "Phone"), type: "phone", pdf: false },
+      { label: t("xbaCsvEmail", "Email"), type: "text", pdf: false },
+      { label: t("xbaColVisits", "Completed visits"), type: "int" },
+      { label: xbaMoneyLabel(t("xbaColValue", "Estimated value")), type: "money" },
+      { label: xbaMoneyLabel(t("xbaColAvg", "Average per visit")), type: "money" },
+      { label: t("xbaColLastVisit", "Last visit in period"), type: "datetime" }
+    ];
+    if (servicesByCustomer) columns.push({ label: t("xbaColServicesUsed", "Services in period"), type: "text" });
+    const table = {
+      title: t("xbaTableCustomers", "Customers with completed visits"),
+      columns,
+      rows: rows.map((row) => {
+        const last = row.last_completed_visit_at;
+        const lastInPeriod = last && xbaBusinessIsoDate(last) >= range.startDate && xbaBusinessIsoDate(last) <= range.endDate ? last : "";
+        const cells = [
+          String(row.display_name || "").trim() || xbaReportCell(t("xaUnknown", "Unknown"), "label"),
+          row.customer_number != null ? formatCustomerNumberDisplay(row.customer_number) : "",
+          row.phone || "",
+          row.email || "",
+          row.completed_visits_period,
+          row.completed_revenue_period,
+          xbaSafeDiv(row.completed_revenue_period, row.completed_visits_period),
+          lastInPeriod
+        ];
+        if (servicesByCustomer) cells.push((servicesByCustomer.get(row.analytics_customer_key) || []).join(", "));
+        return cells;
+      }),
+      totals: [
+        xbaReportCell(tFormat("xbaTotalCustomers", "Total ({n} customers)", { n: rows.length }), "label"),
+        "",
+        "",
+        "",
+        visits,
+        value,
+        xbaSafeDiv(value, visits),
+        "",
+        ...(servicesByCustomer ? [""] : [])
+      ],
+      empty: xbaEmptyNote()
+    };
+    const notes = [
+      t("xbaNoteCustomerPeriod", "Visits and values count only completed visits dated in the selected period (no future, cancelled or earlier visits)."),
+      t("xbaNoteLastVisit", "Last visit is shown when it falls inside the period; it is empty when the customer also visited after the period ended.")
+    ];
+    const missingVisits = (xbaNumOrNull(perf.completedAppts) || 0) - visits;
+    const missingValue = Math.round(((xbaNumOrNull(perf.completedRevenue) || 0) - value) * 100) / 100;
+    if (missingVisits > 0 || Math.abs(missingValue) >= 0.01) {
+      notes.push(
+        tFormat(
+          "xbaNoteUnlinked",
+          "{visits} completed visits ({value}) have no customer details (no name, phone or e-mail) and are not listed per customer. They are included in the business totals.",
+          { visits: xbaFormatNumber(Math.max(0, missingVisits), "int", false), value: `${xbaFormatNumber(missingValue, "money", false)} ${xbaCurrencyCode()}`.trim() }
+        )
+      );
+    } else if (missingVisits < 0) {
+      notes.push(t("xbaNoteMismatch", "Customer totals differ from the business totals; please contact XBOOK support."));
+    }
+    if (servicesByCustomer) {
+      notes.push(t("xbaNoteServicesUsed", "Services in period lists catalogue services used; services removed from the catalogue are not named."));
+    } else if (servicesByCustomer === null) {
+      notes.push(t("xbaNoteServicesSkipped", "Services per customer are not listed because the catalogue has too many services for one report."));
+    }
+    return { title, tables: [table], notes };
+  }
+
+  function xbaServiceSection(perf, servicePayload, title) {
+    const rows = (Array.isArray(servicePayload?.services) ? servicePayload.services : [])
+      .filter((row) => (xbaNumOrNull(row.completed_visits) || 0) > 0 || (xbaNumOrNull(row.upcoming_bookings) || 0) > 0 || (xbaNumOrNull(row.cancelled_bookings) || 0) > 0)
+      .sort((a, b) => (xbaNumOrNull(b.completed_revenue) || 0) - (xbaNumOrNull(a.completed_revenue) || 0) || (xbaNumOrNull(b.completed_visits) || 0) - (xbaNumOrNull(a.completed_visits) || 0));
+    const visits = xbaSum(rows, (row) => row.completed_visits);
+    const value = xbaSum(rows, (row) => row.completed_revenue);
+    const table = {
+      title: t("xbaTableServices", "Services"),
+      columns: [
+        { label: t("xbaCsvService", "Service"), type: "text" },
+        { label: t("xbaColVisits", "Completed visits"), type: "int" },
+        { label: xbaMoneyLabel(t("xbaColValue", "Estimated value")), type: "money" },
+        { label: t("xbaColValueShare", "Share of value") + " (%)", type: "pct" },
+        { label: xbaMoneyLabel(t("xbaColAvg", "Average per visit")), type: "money" },
+        { label: t("xbaCsvClients", "Clients"), type: "int" },
+        { label: t("analyticsCancelled", "Cancelled"), type: "int" }
+      ],
+      rows: rows.map((row) => [
+        String(row.display_name || "").trim() || xbaReportCell(t("xaUnknown", "Unknown"), "label"),
+        row.completed_visits,
+        row.completed_revenue,
+        value > 0 ? (100 * (xbaNumOrNull(row.completed_revenue) || 0)) / value : null,
+        xbaSafeDiv(row.completed_revenue, row.completed_visits),
+        row.unique_customers,
+        row.cancelled_bookings
+      ]),
+      totals: [
+        xbaReportCell(t("xbaTotal", "Total"), "label"),
+        visits,
+        value,
+        value > 0 ? 100 : null,
+        xbaSafeDiv(value, visits),
+        "",
+        xbaSum(rows, (row) => row.cancelled_bookings)
+      ],
+      empty: xbaEmptyNote()
+    };
+    const notes = [t("xbaNoteServiceClients", "Clients per service are counted separately for each service; one customer can appear under several services.")];
+    if (visits !== (xbaNumOrNull(perf.completedAppts) || 0)) {
+      notes.push(t("xbaNoteServiceMismatch", "The service total differs from the business total because some appointments have no service assigned."));
+    }
+    return { title, tables: [table], notes, rows };
+  }
+
+  function xbaTeamSection(perf, staffPayload, title) {
+    const rows = (Array.isArray(staffPayload?.staff) ? staffPayload.staff : [])
+      .filter((row) => (xbaNumOrNull(row.completed_visits) || 0) > 0 || (xbaNumOrNull(row.upcoming_bookings) || 0) > 0)
+      .sort((a, b) => (xbaNumOrNull(b.completed_revenue) || 0) - (xbaNumOrNull(a.completed_revenue) || 0));
+    const visits = xbaSum(rows, (row) => row.completed_visits);
+    const value = xbaSum(rows, (row) => row.completed_revenue);
+    const minutes = xbaSum(rows, (row) => row.completed_minutes);
+    const table = {
+      title: t("xbaTableTeam", "Team members"),
+      columns: [
+        { label: t("xbaCsvTeamMember", "Team member"), type: "text" },
+        { label: t("xbaColVisits", "Completed visits"), type: "int" },
+        { label: xbaMoneyLabel(t("xbaColValue", "Estimated value")), type: "money" },
+        { label: t("xbaColValueShare", "Share of value") + " (%)", type: "pct" },
+        { label: xbaMoneyLabel(t("xbaColAvg", "Average per visit")), type: "money" },
+        { label: t("xbaCsvClients", "Clients"), type: "int" },
+        { label: t("xbaCsvHours", "Completed hours"), type: "num" }
+      ],
+      rows: rows.map((row) => [
+        isStaffAnalyticsUnassigned(row) ? xbaReportCell(t("staUnassigned", "Unassigned"), "label") : String(row.display_name || "").trim(),
+        row.completed_visits,
+        row.completed_revenue,
+        value > 0 ? (100 * (xbaNumOrNull(row.completed_revenue) || 0)) / value : null,
+        xbaSafeDiv(row.completed_revenue, row.completed_visits),
+        row.unique_customers,
+        row.completed_minutes != null ? Math.round((xbaNum(row.completed_minutes) / 60) * 10) / 10 : null
+      ]),
+      totals: [
+        xbaReportCell(t("xbaTotal", "Total"), "label"),
+        visits,
+        value,
+        value > 0 ? 100 : null,
+        xbaSafeDiv(value, visits),
+        "",
+        minutes ? Math.round((minutes / 60) * 10) / 10 : null
+      ],
+      empty: xbaEmptyNote()
+    };
+    const notes = [t("xbaNoteTeam", "Each appointment belongs to one team member, so team totals add up to the business totals; appointments without a team member are listed as Unassigned.")];
+    if (visits !== (xbaNumOrNull(perf.completedAppts) || 0)) {
+      notes.push(t("xbaNoteTeamMismatch", "The team total differs from the business total; appointments outside the team report are not listed."));
+    }
+    return { title, tables: [table], notes };
+  }
+
+  function xbaInsightsSection(perf, overview, serviceRows, title) {
+    const tables = [
+      {
+        title: t("xbaTableStatus", "Appointments in the period by status"),
+        columns: [
+          { label: t("xbaColStatus", "Status"), type: "label" },
+          { label: t("xbaColCount", "Appointments"), type: "int" }
+        ],
+        rows: [
+          [t("analyticsCompleted", "Completed"), perf.completedAppts],
+          [t("xbaStatusInProgress", "In progress now"), perf.inProgress],
+          [t("xbaStatusUpcoming", "Upcoming (later in the period)"), perf.upcomingAppts],
+          [t("xbaStatusUnconfirmed", "Past, not confirmed"), perf.elapsedUnconfirmed],
+          [t("analyticsCancelled", "Cancelled"), perf.cancelledAppts]
+        ]
+      }
+    ];
+    if (overview?.overview) {
+      tables.push({
+        title: t("xbaTableNewReturning", "New and returning customers in the period"),
+        columns: [
+          { label: t("xbaColType", "Type"), type: "label" },
+          { label: t("xbaCsvClients", "Clients"), type: "int" }
+        ],
+        rows: [
+          [t("caSegNew", "New Customers"), overview.overview.new_customers],
+          [t("caSegReturning", "Returning Customers"), overview.overview.returning_customers]
+        ]
+      });
+      const freq = buildCustomerAnalyticsFreqRows(overview.frequency || {});
+      if (freq.length) {
+        tables.push({
+          title: t("xbaTableFrequency", "Visit frequency (all customers with visits, all time)"),
+          columns: [
+            { label: t("caCardFreq", "Visit frequency"), type: "label" },
+            { label: t("xbaCsvClients", "Clients"), type: "int" }
+          ],
+          rows: freq.map((row) => [row.label, row.count])
+        });
+      }
+    }
+    const used = serviceRows.filter((row) => (xbaNumOrNull(row.completed_visits) || 0) > 0);
+    if (used.length) {
+      const top = (list) => list.slice(0, 5).map((row) => [String(row.display_name || "").trim(), row.completed_visits, row.completed_revenue]);
+      const topColumns = [
+        { label: t("xbaCsvService", "Service"), type: "text" },
+        { label: t("xbaColVisits", "Completed visits"), type: "int" },
+        { label: xbaMoneyLabel(t("xbaColValue", "Estimated value")), type: "money" }
+      ];
+      tables.push(
+        { title: t("xbaTableMostUsed", "Most used services"), columns: topColumns, rows: top(used.slice().sort((a, b) => xbaNum(b.completed_visits) - xbaNum(a.completed_visits))) },
+        { title: t("xbaTableHighestValue", "Highest-value services"), columns: topColumns, rows: top(used.slice().sort((a, b) => xbaNum(b.completed_revenue) - xbaNum(a.completed_revenue))) }
+      );
+    }
+    return {
+      title,
+      tables,
+      notes: [
+        t("xbaNoteUpcoming", "Upcoming appointments are dated in the selected period but have not happened yet; they are not counted as completed visits."),
+        t("xbaNoteNoTrends", "Trends and busiest times are not included because the trend report is not enabled on the server.")
+      ]
+    };
+  }
+
+  function xbaAdvancedSection(all, title) {
+    const s = all.summary;
+    return {
+      title,
+      summary: [
+        { label: t("xaMatchedCustomers", "Matched Customers"), value: xbaNumOrNull(s.matched_customers), type: "int" },
+        { label: t("xaMatchedWithVisits", "Matched with Visits"), value: xbaNumOrNull(s.matched_with_visits), type: "int" },
+        { label: t("xbaCsvPeriodVisits", "Visits in period"), value: xbaNumOrNull(s.period_completed_visits), type: "int" },
+        { label: xbaMoneyLabel(t("xbaCsvPeriodValue", "Value in period")), value: xbaNumOrNull(s.period_completed_revenue), type: "money" },
+        { label: t("xaFutureYes", "Has future booking"), value: xbaNumOrNull(s.future_booking_count), type: "int" }
+      ],
+      tables: [
+        {
+          title: t("xbaCsvTotalRows", "Customers in report") + ` (${all.rows.length})`,
+          columns: [
+            { label: t("xbaCsvName", "Name"), type: "text" },
+            { label: "#", type: "label" },
+            { label: t("xbaCsvPhone", "Phone"), type: "phone" },
+            { label: t("xbaCsvEmail", "Email"), type: "text", width: 38 },
+            { label: "VIP", type: "label" },
+            { label: t("xbaCsvPeriodVisits", "Visits in period"), type: "int" },
+            { label: xbaMoneyLabel(t("xbaCsvPeriodValue", "Value in period")), type: "money" },
+            { label: t("xbaCsvLifetimeVisits", "Lifetime visits"), type: "int" },
+            { label: xbaMoneyLabel(t("xbaCsvLifetimeValue", "Lifetime value")), type: "money" },
+            { label: t("xbaCsvLastVisit", "Last visit"), type: "datetime" },
+            { label: t("xbaCsvNextAppointment", "Next appointment"), type: "datetime" }
+          ],
+          rows: all.rows.map((c) => [
+            c.display_name || "",
+            c.customer_number != null ? formatCustomerNumberDisplay(c.customer_number) : "",
+            c.phone || "",
+            c.email || "",
+            c.is_vip ? "VIP" : "",
+            c.completed_visits_period,
+            c.completed_revenue_period,
+            c.completed_visits_lifetime,
+            c.completed_revenue_lifetime,
+            c.last_completed_visit_at || "",
+            c.next_appointment_at || ""
+          ]),
+          empty: t("xbaReportNoCustomers", "No customers match the selected period and filters.")
+        }
+      ],
+      notes: [t("xbaNoteAdvanced", "Lifetime columns cover all visits ever; period columns cover only the selected period.")]
+    };
+  }
+
+  function xbaReportBase(type, range) {
+    return {
+      type,
+      title: xbaReportTypeLabel(type),
+      landscape: type === "advanced",
+      business: String(businessSettings?.business_name || "").trim(),
+      currency: xbaCurrencyCode(),
+      period: { label: range.label || "", startDate: range.startDate, endDate: range.endDate },
+      filters: [],
+      sort: "",
+      generatedAt: new Date(),
+      notes: [t("xbaCsvNoteText", "Booking value is an estimate from booking prices, not collected payments.")],
+      sections: []
+    };
+  }
+
+  async function xbaBuildBusinessReport(type, range, onProgress) {
+    const progress = (text) => typeof onProgress === "function" && onProgress(text);
+    const report = xbaReportBase(type, range);
+    progress(t("xbaExportPreparing", "Preparing…"));
+    if (type === "advanced") {
+      const st = typeof crossAnalyticsState === "object" ? crossAnalyticsState : {};
+      const filters = buildXaRpcFilters(st.appliedFilters);
+      const sort = XA_SORTS.includes(st.sort) ? st.sort : "last_visit_desc";
+      const all = await xbaFetchAllCrossRows(range, filters, sort, (n, total) =>
+        progress(tFormat("xbaExportFetching", "Loading {n} of {total}…", { n, total }))
+      );
+      report.filters = xaAppliedFilterLabels(st.appliedFilters).map((item) => item.label);
+      const sortSelect = document.getElementById("crossAnalyticsSort");
+      const sortOption = sortSelect ? Array.from(sortSelect.options).find((opt) => opt.value === sort) : null;
+      report.sort = sortOption ? String(sortOption.textContent || "").trim() : "";
+      report.sections.push(xbaAdvancedSection(all, t("xbaSectionCustomers", "Customers")));
+      return report;
+    }
+    const needServices = type !== "team";
+    const needStaff = type === "full" || type === "team";
+    const needOverview = type === "full" || type === "customers" || type === "overview";
+    const needCustomers = type === "full" || type === "customers";
+    // Optional parts are left out with an explicit note instead of failing the whole report.
+    const omitted = (labelKey, labelFallback, err) => {
+      console.error("[report] optional part omitted", labelFallback, err?.xbaReport || err?.message || err);
+      report.notes.push(
+        tFormat("xbaNotePartOmitted", "Not included: {part} — {reason}", {
+          part: t(labelKey, labelFallback),
+          reason: String(err?.message || "").replace(/\s*\[.*\]$/, "")
+        }) + (err?.xbaReport?.code ? ` [${err.xbaReport.rpc} · ${err.xbaReport.code}]` : "")
+      );
+    };
+    const [perf, overview, servicePayload, staffPayload] = await Promise.all([
+      xbaFetchPerformance(range),
+      needOverview
+        ? xbaFetchCustomerOverview(range).catch((err) => {
+            if (err?.xbaReport?.kind === "network") throw err;
+            omitted("xbaPartNewReturning", "New and returning customers", err);
+            return null;
+          })
+        : null,
+      needServices ? xbaExportRpc("get_business_service_analytics", range) : null,
+      needStaff ? xbaExportRpc("get_business_staff_analytics", range) : null
+    ]);
+    const serviceRows = Array.isArray(servicePayload?.services) ? servicePayload.services : [];
+    let served = null;
+    let servicesByCustomer;
+    if (needCustomers) {
+      const fetched = await xbaFetchCustomersServed(range, (n, total) =>
+        progress(tFormat("xbaExportFetchingCustomers", "Loading customers {n} of {total}…", { n, total }))
+      );
+      served = { rows: fetched.rows, range };
+      try {
+        servicesByCustomer = fetched.rows.length
+          ? await xbaFetchServicesByCustomer(range, serviceRows, (n, total) =>
+              progress(tFormat("xbaExportFetchingServices", "Loading services {n} of {total}…", { n, total }))
+            )
+          : new Map();
+      } catch (err) {
+        if (err?.xbaReport?.kind === "network") throw err;
+        omitted("xbaColServicesUsed", "Services in period", err);
+        servicesByCustomer = false;
+      }
+    }
+    const summarySection = (title) => ({
+      title,
+      summary: xbaSummaryItems(perf, served?.rows || null, overview),
+      tables: [],
+      notes: xbaSummaryNotes(perf)
+    });
+    if (type === "full") {
+      report.sections.push(
+        summarySection("A · " + t("xbaSectionSummary", "Business summary")),
+        xbaCustomerSection(perf, served, servicesByCustomer, "B · " + t("xbaSectionCustomers", "Customers")),
+        xbaServiceSection(perf, servicePayload, "C · " + t("xbaSectionServices", "Services")),
+        xbaTeamSection(perf, staffPayload, "D · " + t("xbaSectionTeam", "Team")),
+        xbaInsightsSection(perf, overview, serviceRows, "E · " + t("xbaSectionInsights", "Additional insights"))
+      );
+    } else if (type === "customers") {
+      const head = summarySection(t("xbaSectionSummary", "Business summary"));
+      head.summary = head.summary.filter((item) => item.type !== "pct" && item.label !== t("xbaSumCancelled", "Cancelled appointments"));
+      head.notes = [];
+      report.sections.push(head, xbaCustomerSection(perf, served, servicesByCustomer, t("xbaSectionCustomers", "Customers")));
+      const insights = xbaInsightsSection(perf, overview, [], t("xbaSectionCustomerMix", "Customer mix"));
+      insights.tables = insights.tables.slice(1);
+      insights.notes = [];
+      report.sections.push(insights);
+    } else if (type === "services") {
+      const section = xbaServiceSection(perf, servicePayload, t("xbaSectionServices", "Services"));
+      const usedCount = section.rows.filter((row) => (xbaNumOrNull(row.completed_visits) || 0) > 0).length;
+      section.summary = [
+        { label: t("xbaSumServicesUsed", "Services with completed visits"), value: usedCount, type: "int" },
+        { label: t("xbaCompletedVisits", "Completed visits"), value: xbaNumOrNull(perf.completedAppts), type: "int" },
+        { label: xbaMoneyLabel(t("xbaSumValue", "Estimated value of completed services")), value: xbaNumOrNull(perf.completedRevenue), type: "money" },
+        { label: xbaMoneyLabel(t("xbaSumAvgVisit", "Average value per completed visit")), value: xbaNumOrNull(perf.avgValue), type: "money" }
+      ];
+      report.sections.push(section);
+      const insights = xbaInsightsSection(perf, null, serviceRows, t("xbaSectionInsights", "Additional insights"));
+      insights.tables = insights.tables.slice(1);
+      insights.notes = [];
+      if (insights.tables.length) report.sections.push(insights);
+    } else if (type === "team") {
+      const section = xbaTeamSection(perf, staffPayload, t("xbaSectionTeam", "Team"));
+      const active = (Array.isArray(staffPayload?.staff) ? staffPayload.staff : []).filter((row) => !isStaffAnalyticsUnassigned(row) && (xbaNumOrNull(row.completed_visits) || 0) > 0).length;
+      section.summary = [
+        { label: t("xbaSumTeamActive", "Team members with completed visits"), value: active, type: "int" },
+        { label: t("xbaCompletedVisits", "Completed visits"), value: xbaNumOrNull(perf.completedAppts), type: "int" },
+        { label: xbaMoneyLabel(t("xbaSumValue", "Estimated value of completed services")), value: xbaNumOrNull(perf.completedRevenue), type: "money" },
+        { label: xbaMoneyLabel(t("xbaSumAvgVisit", "Average value per completed visit")), value: xbaNumOrNull(perf.avgValue), type: "money" }
+      ];
+      report.sections.push(section);
+    } else {
+      report.sections.push(
+        summarySection(t("xbaSectionSummary", "Business summary")),
+        xbaInsightsSection(perf, overview, serviceRows, t("xbaSectionInsights", "Additional insights"))
+      );
+    }
+    return report;
+  }
+
+  // ---- Cell formatting ----
+  function xbaCellParts(cell, columnType) {
+    if (cell && typeof cell === "object" && !(cell instanceof Date) && "type" in cell) return { value: cell.v, type: cell.type };
+    return { value: cell, type: columnType || "text" };
+  }
+
+  function xbaFormatNumber(value, type, forCsv) {
+    const n = xbaNumOrNull(value);
+    if (n == null) return "";
+    const rounded = type === "int" ? Math.round(n) : Math.round(n * 100) / 100;
+    if (forCsv) {
+      const text = String(rounded);
+      return currentLanguage === "en" ? text : text.replace(".", ",");
+    }
+    // Own grouping instead of toLocaleString: some WebViews ship without Macedonian/Albanian number data.
+    const european = currentLanguage !== "en";
+    const decimals = type === "int" || Number.isInteger(rounded) ? 0 : 2;
+    const [whole, fraction] = Math.abs(rounded).toFixed(decimals).split(".");
+    const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, european ? "." : ",");
+    const text = fraction ? `${grouped}${european ? "," : "."}${type === "money" ? fraction : fraction.replace(/0+$/, "")}` : grouped;
+    return (rounded < 0 ? "-" : "") + text;
+  }
+
+  /** Display text of one cell (PDF, and the base text for CSV). */
+  function xbaCellText(cell, columnType) {
+    const { value, type } = xbaCellParts(cell, columnType);
+    if (value == null || value === "") return "";
+    if (XBA_NUMERIC_TYPES.has(type)) return xbaFormatNumber(value, type, false);
+    if (type === "date") return formatXbookDateDmy(value);
+    if (type === "datetime") return xbaFormatDateTimeLocal(value);
+    return String(value).replace(/\r\n?/g, "\n");
+  }
+
+  // ---- CSV ----
+  function xbaCsvQuote(text) {
+    return /[";\n\r\t]/.test(text) || text !== text.trim() ? `"${text.replace(/"/g, '""')}"` : text;
+  }
+
+  /** Neutralise spreadsheet formulas in untrusted text (OWASP CSV injection). */
+  function xbaCsvSafeText(text) {
+    return /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
+  }
+
+  function xbaCsvCell(cell, columnType) {
+    const { value, type } = xbaCellParts(cell, columnType);
+    if (value == null || value === "") return "";
+    if (XBA_NUMERIC_TYPES.has(type)) return xbaFormatNumber(value, type, true);
+    if (type === "phone") {
+      const phone = String(value).trim();
+      // ="+389…" keeps the leading + and every digit as text in Excel.
+      if (/^\+?[0-9][0-9 ()\-./]{2,}$/.test(phone)) return `="${phone}"`;
+      return xbaCsvQuote(xbaCsvSafeText(phone));
+    }
+    const text = xbaCellText(cell, columnType);
+    return xbaCsvQuote(type === "label" || type === "date" || type === "datetime" ? text : xbaCsvSafeText(text));
+  }
+
+  /** One self-contained CSV: report header, then the given sections. */
+  function xbaReportToCsv(report, sections, titleSuffix) {
+    const lines = [];
+    const row = (cells) => lines.push(cells.join(";"));
+    const label = (text) => xbaCsvQuote(String(text || ""));
+    const safe = (text) => xbaCsvQuote(xbaCsvSafeText(String(text || "")));
+    row([label(titleSuffix ? `${report.title} · ${titleSuffix}` : report.title)]);
+    row([label(t("xbaCsvBusiness", "Business")), safe(report.business)]);
+    row([label(t("analyticsReportPeriod", "Report period")), label(report.period.label), label(formatXbookDateDmy(report.period.startDate)), label(formatXbookDateDmy(report.period.endDate))]);
+    row([label(t("xbaCurrency", "Currency")), label(report.currency)]);
+    if (report.type === "advanced") {
+      row([label(t("xbaCsvFilters", "Filters")), safe(report.filters.length ? report.filters.join(", ") : t("xbaCsvNoFilters", "None"))]);
+      if (report.sort) row([label(t("xbaCsvSort", "Sort")), label(report.sort)]);
+    }
+    row([label(t("xbaCsvGenerated", "Generated")), label(xbaFormatDateTimeLocal(report.generatedAt))]);
+    report.notes.forEach((note) => row([label(t("xbaCsvNote", "Note")), label(note)]));
+    sections.forEach((section) => {
+      lines.push("");
+      row([label(section.title)]);
+      if (section.summary?.length) {
+        row([label(t("xbaCsvMetric", "Metric")), label(t("xbaCsvValue", "Value"))]);
+        section.summary.forEach((item) => row([label(item.label), xbaCsvCell(xbaReportCell(item.value, item.type))]));
+      }
+      (section.tables || []).forEach((table) => {
+        lines.push("");
+        row([label(table.title)]);
+        row(table.columns.map((col) => label(col.label)));
+        if (!table.rows.length && table.empty) row([label(table.empty)]);
+        table.rows.forEach((cells) => row(cells.map((cell, index) => xbaCsvCell(cell, table.columns[index]?.type))));
+        if (table.totals && table.rows.length) row(table.totals.map((cell, index) => xbaCsvCell(cell, table.columns[index]?.type)));
+      });
+      (section.notes || []).forEach((note) => row([label(t("xbaCsvNote", "Note")), label(note)]));
+    });
+    return "﻿" + lines.join("\r\n") + "\r\n";
+  }
+
+  // ---- ZIP (stored, no compression) for the multi-file CSV of the complete report ----
+  let xbaCrcTable = null;
+
+  function xbaCrc32(bytes) {
+    if (!xbaCrcTable) {
+      xbaCrcTable = new Uint32Array(256);
+      for (let n = 0; n < 256; n++) {
+        let c = n;
+        for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+        xbaCrcTable[n] = c >>> 0;
+      }
+    }
+    let crc = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) crc = xbaCrcTable[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function xbaBuildZip(files) {
+    const encoder = new TextEncoder();
+    const now = new Date();
+    const dosTime = (now.getHours() << 11) | (now.getMinutes() << 5) | Math.floor(now.getSeconds() / 2);
+    const dosDate = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+    files.forEach((file) => {
+      const name = encoder.encode(file.name);
+      const data = file.data;
+      const crc = xbaCrc32(data);
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint16(6, 0x0800, true);
+      local.setUint16(8, 0, true);
+      local.setUint16(10, dosTime, true);
+      local.setUint16(12, dosDate, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, data.length, true);
+      local.setUint32(22, data.length, true);
+      local.setUint16(26, name.length, true);
+      local.setUint16(28, 0, true);
+      chunks.push(new Uint8Array(local.buffer), name, data);
+      const entry = new DataView(new ArrayBuffer(46));
+      entry.setUint32(0, 0x02014b50, true);
+      entry.setUint16(4, 20, true);
+      entry.setUint16(6, 20, true);
+      entry.setUint16(8, 0x0800, true);
+      entry.setUint16(10, 0, true);
+      entry.setUint16(12, dosTime, true);
+      entry.setUint16(14, dosDate, true);
+      entry.setUint32(16, crc, true);
+      entry.setUint32(20, data.length, true);
+      entry.setUint32(24, data.length, true);
+      entry.setUint16(28, name.length, true);
+      entry.setUint32(42, offset, true);
+      central.push(new Uint8Array(entry.buffer), name);
+      offset += 30 + name.length + data.length;
+    });
+    const centralSize = central.reduce((sum, part) => sum + part.length, 0);
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true);
+    end.setUint16(8, files.length, true);
+    end.setUint16(10, files.length, true);
+    end.setUint32(12, centralSize, true);
+    end.setUint32(16, offset, true);
+    const parts = [...chunks, ...central, new Uint8Array(end.buffer)];
+    const out = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
+    let pos = 0;
+    parts.forEach((part) => {
+      out.set(part, pos);
+      pos += part.length;
+    });
+    return out;
+  }
+
+  /** CSV export: one CSV for a section report; a ZIP of one CSV per section for the complete report. */
+  function xbaReportToCsvFile(report) {
+    const encoder = new TextEncoder();
+    if (report.type !== "full") {
+      return { bytes: encoder.encode(xbaReportToCsv(report, report.sections)), extension: "csv", mime: "text/csv;charset=utf-8" };
+    }
+    const fileKeys = ["1-summary", "2-customers", "3-services", "4-team", "5-insights"];
+    const files = report.sections.map((section, index) => ({
+      name: `${fileKeys[index] || index + 1}.csv`,
+      data: encoder.encode(xbaReportToCsv(report, [section], section.title))
+    }));
+    return { bytes: xbaBuildZip(files), extension: "zip", mime: "application/zip" };
+  }
+
+  // ---- PDF ----
+  let xbaPdfAssetsPromise = null;
+
+  function xbaLoadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Could not load " + src));
+      document.head.appendChild(script);
+    });
+  }
+
+  async function xbaFetchBase64(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Could not load " + url);
+    return xbaBytesToBase64(new Uint8Array(await response.arrayBuffer()));
+  }
+
+  /** App logo cropped to the mark and downscaled, so each PDF carries only a few KB of branding. */
+  async function xbaLoadLogoDataUrl(url, size) {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = url;
+    await img.decode();
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, size, size);
+    const crop = Math.round(img.naturalWidth * 0.13);
+    ctx.drawImage(img, crop, crop, img.naturalWidth - crop * 2, img.naturalHeight - crop * 2, 0, 0, size, size);
+    return canvas.toDataURL("image/jpeg", 0.88);
+  }
+
+  /** jsPDF, AutoTable and the Cyrillic font load only when the first PDF is requested. */
+  function xbaLoadPdfAssets() {
+    if (!xbaPdfAssetsPromise) {
+      xbaPdfAssetsPromise = (async () => {
+        if (!window.jspdf?.jsPDF) await xbaLoadScript("vendor/pdf/jspdf.umd.min.js");
+        if (typeof window.autoTable !== "function") await xbaLoadScript("vendor/pdf/jspdf.plugin.autotable.min.js");
+        const [regular, bold, logo] = await Promise.all([
+          xbaFetchBase64("vendor/pdf/NotoSans-Regular.ttf"),
+          xbaFetchBase64("vendor/pdf/NotoSans-Bold.ttf"),
+          xbaLoadLogoDataUrl("icons/xbook-logo.png", 128).catch(() => null)
+        ]);
+        if (!window.jspdf?.jsPDF || typeof window.autoTable !== "function") throw new Error("PDF library unavailable");
+        return { jsPDF: window.jspdf.jsPDF, autoTable: window.autoTable, regular, bold, logo };
+      })().catch((err) => {
+        xbaPdfAssetsPromise = null;
+        throw err;
+      });
+    }
+    return xbaPdfAssetsPromise;
+  }
+
+  async function xbaReportToPdf(report) {
+    const { jsPDF, autoTable, regular, bold, logo } = await xbaLoadPdfAssets();
+    const doc = new jsPDF({ orientation: report.landscape ? "landscape" : "portrait", unit: "mm", format: "a4", compress: true });
+    doc.addFileToVFS("NotoSans-Regular.ttf", regular);
+    doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
+    doc.addFileToVFS("NotoSans-Bold.ttf", bold);
+    doc.addFont("NotoSans-Bold.ttf", "NotoSans", "bold");
+    doc.setProperties({ title: report.title, subject: report.business, creator: "XBOOK" });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const margin = 14;
+    const contentW = pageW - margin * 2;
+    const bottomLimit = pageH - 18;
+    const ink = [17, 24, 39];
+    const muted = [107, 114, 128];
+    const rule = [229, 231, 235];
+    const accent = [29, 53, 150];
+    let y = margin;
+    const ensureSpace = (needed) => {
+      if (y + needed > bottomLimit) {
+        doc.addPage();
+        y = margin + 4;
+      }
+    };
+
+    if (logo) doc.addImage(logo, "JPEG", margin, y - 1.2, 8.5, 8.5);
+    doc.setFont("NotoSans", "bold");
+    doc.setFontSize(10);
+    doc.setTextColor(...ink);
+    doc.text("XBOOK", margin + (logo ? 10 : 0), y + 4.4);
+    doc.setFont("NotoSans", "normal");
+    doc.setFontSize(8.5);
+    doc.setTextColor(...muted);
+    doc.text(`${t("xbaCsvGenerated", "Generated")}: ${xbaFormatDateTimeLocal(report.generatedAt)}`, pageW - margin, y + 4.4, { align: "right" });
+    y += 14;
+
+    doc.setFont("NotoSans", "bold");
+    doc.setFontSize(19);
+    doc.setTextColor(...ink);
+    doc.splitTextToSize(report.title, contentW).forEach((line) => {
+      doc.text(line, margin, y);
+      y += 8;
+    });
+    if (report.business) {
+      doc.setFont("NotoSans", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(55, 65, 81);
+      doc.text(report.business, margin, y);
+      y += 7.5;
+    }
+
+    // Reporting period, prominently.
+    const periodDates = xbaRangeDates(report.period);
+    doc.setFillColor(243, 246, 252);
+    doc.setDrawColor(219, 226, 240);
+    doc.roundedRect(margin, y - 4.5, contentW, 11, 2, 2, "FD");
+    doc.setFont("NotoSans", "bold");
+    doc.setFontSize(10.5);
+    doc.setTextColor(...accent);
+    const periodText = `${t("analyticsReportPeriod", "Report period")}: ${periodDates}${report.period.label && report.period.label !== periodDates ? ` (${report.period.label})` : ""}`;
+    doc.text(doc.splitTextToSize(periodText, contentW - 6)[0], margin + 3, y + 2.6);
+    y += 11;
+
+    const metaLine = (labelText, valueText) => {
+      doc.setFontSize(9);
+      doc.setFont("NotoSans", "bold");
+      doc.setTextColor(...muted);
+      const head = `${labelText}: `;
+      const headW = doc.getTextWidth(head);
+      doc.text(head, margin, y);
+      doc.setFont("NotoSans", "normal");
+      doc.setTextColor(...ink);
+      const lines = doc.splitTextToSize(valueText, contentW - headW);
+      lines.forEach((line, index) => doc.text(line, margin + headW, y + index * 4.4));
+      y += lines.length * 4.4 + 1;
+    };
+    metaLine(t("xbaCurrency", "Currency"), report.currency || "—");
+    if (report.type === "advanced") {
+      metaLine(t("xbaCsvFilters", "Filters"), report.filters.length ? report.filters.join(", ") : t("xbaCsvNoFilters", "None"));
+      if (report.sort) metaLine(t("xbaCsvSort", "Sort"), report.sort);
+    }
+
+    const notice = (text, color, size) => {
+      doc.setFont("NotoSans", "normal");
+      doc.setFontSize(size || 8.3);
+      doc.setTextColor(...color);
+      const lines = doc.splitTextToSize(text, contentW);
+      ensureSpace(lines.length * 3.9 + 1);
+      lines.forEach((line) => {
+        doc.text(line, margin, y);
+        y += 3.9;
+      });
+      y += 1.2;
+    };
+    y += 1;
+    report.notes.forEach((note) => notice(note, muted));
+    y += 3;
+
+    const drawSummary = (items) => {
+      const cols = report.landscape ? 5 : 4;
+      const gap = 3;
+      const cardW = (contentW - gap * (cols - 1)) / cols;
+      for (let i = 0; i < items.length; i += cols) {
+        const rowItems = items.slice(i, i + cols);
+        doc.setFont("NotoSans", "normal");
+        doc.setFontSize(7.6);
+        const labelLines = rowItems.map((item) => doc.splitTextToSize(item.label, cardW - 6).slice(0, 3));
+        const cardH = 9 + Math.max(...labelLines.map((lines) => lines.length)) * 3.3 + 5;
+        ensureSpace(cardH + gap);
+        rowItems.forEach((item, index) => {
+          const x = margin + index * (cardW + gap);
+          doc.setFillColor(249, 250, 251);
+          doc.setDrawColor(...rule);
+          doc.roundedRect(x, y, cardW, cardH, 2, 2, "FD");
+          doc.setFont("NotoSans", "normal");
+          doc.setFontSize(7.6);
+          doc.setTextColor(...muted);
+          labelLines[index].forEach((line, li) => doc.text(line, x + 3, y + 4.6 + li * 3.3));
+          doc.setFont("NotoSans", "bold");
+          doc.setFontSize(13.5);
+          doc.setTextColor(...ink);
+          const valueText = xbaCellText(xbaReportCell(item.value, item.type)) || "—";
+          doc.text(valueText, x + 3, y + cardH - 3.6);
+        });
+        y += cardH + gap;
+      }
+      y += 2;
+    };
+
+    const drawTable = (table) => {
+      const visible = table.columns.map((col, index) => ({ col, index })).filter(({ col }) => col.pdf !== false);
+      ensureSpace(20);
+      doc.setFont("NotoSans", "bold");
+      doc.setFontSize(10.5);
+      doc.setTextColor(...ink);
+      doc.text(table.title, margin, y);
+      y += 2.5;
+      if (!table.rows.length) {
+        y += 2.5;
+        notice(table.empty || xbaEmptyNote(), muted, 9);
+        y += 3;
+        return;
+      }
+      const wideTable = visible.length > 4;
+      const columnStyles = {};
+      visible.forEach(({ col }, vi) => {
+        if (col.width) columnStyles[vi] = { cellWidth: col.width };
+        else if (XBA_NUMERIC_TYPES.has(col.type)) columnStyles[vi] = wideTable ? { halign: "right", cellWidth: col.type === "money" ? 22 : 15 } : { halign: "right", cellWidth: 34 };
+        else if (col.type === "datetime") columnStyles[vi] = { cellWidth: 26 };
+        else if (col.type === "phone") columnStyles[vi] = { cellWidth: 25 };
+        else if (col.type === "label" && wideTable) columnStyles[vi] = { cellWidth: col.label.length > 3 ? 20 : 11 };
+      });
+      // Never break a heading word: widen a fixed column to its longest heading word.
+      doc.setFont("NotoSans", "bold");
+      doc.setFontSize(wideTable ? 7.3 : 8.6);
+      Object.entries(columnStyles).forEach(([vi, style]) => {
+        if (typeof style.cellWidth !== "number") return;
+        const longest = Math.max(...String(visible[vi].col.label).split(/\s+/).map((word) => doc.getTextWidth(word)));
+        style.cellWidth = Math.max(style.cellWidth, Math.ceil(longest + (wideTable ? 3.2 : 4) + 0.6));
+      });
+      const pick = (cells) => visible.map(({ col, index }) => xbaCellText(cells[index], col.type));
+      autoTable(doc, {
+        startY: y,
+        head: [visible.map(({ col }) => col.label)],
+        body: table.rows.map(pick),
+        foot: table.totals ? [pick(table.totals)] : undefined,
+        showHead: "everyPage",
+        showFoot: "lastPage",
+        theme: "grid",
+        margin: { left: margin, right: margin, top: margin + 4, bottom: 18 },
+        styles: {
+          font: "NotoSans",
+          fontStyle: "normal",
+          fontSize: wideTable ? 7.8 : 8.8,
+          cellPadding: wideTable ? { top: 1.5, bottom: 1.5, left: 1.6, right: 1.6 } : { top: 1.8, bottom: 1.8, left: 2, right: 2 },
+          textColor: ink,
+          lineColor: rule,
+          lineWidth: 0.2,
+          overflow: "linebreak",
+          valign: "middle"
+        },
+        headStyles: { fillColor: [243, 244, 246], textColor: ink, fontStyle: "bold", fontSize: wideTable ? 7.3 : 8.6 },
+        footStyles: { fillColor: [232, 236, 246], textColor: ink, fontStyle: "bold" },
+        alternateRowStyles: { fillColor: [250, 250, 251] },
+        columnStyles,
+        // AutoTable applies columnStyles to the body only; keep totals aligned with their numbers.
+        didParseCell: (data) => {
+          if (data.section === "foot" && XBA_NUMERIC_TYPES.has(visible[data.column.index]?.col.type)) data.cell.styles.halign = "right";
+        }
+      });
+      y = (doc.lastAutoTable?.finalY || y) + 7;
+    };
+
+    report.sections.forEach((section, index) => {
+      ensureSpace(index === 0 ? 30 : 45);
+      if (index > 0) y += 2;
+      doc.setFont("NotoSans", "bold");
+      doc.setFontSize(14);
+      doc.setTextColor(...accent);
+      doc.text(section.title, margin, y);
+      y += 2;
+      doc.setDrawColor(...accent);
+      doc.setLineWidth(0.5);
+      doc.line(margin, y, margin + 24, y);
+      doc.setLineWidth(0.2);
+      y += 6;
+      if (section.summary?.length) drawSummary(section.summary);
+      (section.tables || []).forEach(drawTable);
+      (section.notes || []).forEach((note) => notice(note, muted));
+      y += 3;
+    });
+
+    const pages = doc.getNumberOfPages();
+    for (let i = 1; i <= pages; i++) {
+      doc.setPage(i);
+      doc.setDrawColor(...rule);
+      doc.setLineWidth(0.2);
+      doc.line(margin, pageH - 11, pageW - margin, pageH - 11);
+      doc.setFont("NotoSans", "normal");
+      doc.setFontSize(7.5);
+      doc.setTextColor(...muted);
+      const footLeft = ["XBOOK", report.business, report.title, periodDates].filter(Boolean).join(" · ");
+      doc.text(doc.splitTextToSize(footLeft, contentW - 40)[0] || "", margin, pageH - 7);
+      doc.text(tFormat("xbaPdfPage", "Page {n} of {total}", { n: i, total: pages }), pageW - margin, pageH - 7, { align: "right" });
+    }
+    return new Uint8Array(doc.output("arraybuffer"));
+  }
+
+  // ---- File delivery ----
+  function xbaBytesToBase64(bytes) {
+    let binary = "";
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    }
+    return btoa(binary);
+  }
+
+  function xbaSlugify(text) {
+    const map = {
+      а: "a", б: "b", в: "v", г: "g", д: "d", ѓ: "gj", е: "e", ж: "zh", з: "z", ѕ: "dz", и: "i", ј: "j", к: "k", л: "l", љ: "lj",
+      м: "m", н: "n", њ: "nj", о: "o", п: "p", р: "r", с: "s", т: "t", ќ: "kj", у: "u", ф: "f", х: "h", ц: "c", ч: "ch", џ: "dzh", ш: "sh",
+      ë: "e", ç: "c"
+    };
+    return String(text || "")
+      .toLowerCase()
+      .split("")
+      .map((ch) => map[ch] ?? ch)
+      .join("")
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40);
+  }
+
+  function xbaReportFileName(report, extension) {
+    const business = xbaSlugify(businessSettings?.business_slug || report.business) || "business";
+    const kind = XBA_REPORT_FILE_KEYS[report.type] || "report";
+    const start = formatXbookDateDmy(report.period.startDate);
+    const end = formatXbookDateDmy(report.period.endDate);
+    const dates = start === end ? start : `${start}_${end}`;
+    return `xbook-${business}-${kind}-${dates}.${extension}`;
+  }
+
+  /**
+   * Native: write to the app cache with Filesystem, then open the system share sheet (Save to Files / Drive / mail…).
+   * Web: browser download. Returns "shared", "downloaded" or "cancelled"; throws when the file could not be delivered.
+   */
+  async function xbaDeliverFile(name, bytes, mime) {
+    if (typeof isNativeCapacitorApp === "function" && isNativeCapacitorApp()) {
+      const plugins = window.Capacitor?.Plugins || {};
+      const fs = plugins.Filesystem;
+      const share = plugins.Share;
+      if (!fs?.writeFile || !share?.share) throw new Error("Filesystem/Share plugins are not available");
+      const written = await fs.writeFile({
+        path: `xbook-exports/${name}`,
+        data: xbaBytesToBase64(bytes),
+        directory: "CACHE",
+        recursive: true
+      });
+      if (!written?.uri) throw new Error("File was not written");
+      try {
+        await share.share({ title: name, files: [written.uri], dialogTitle: name });
+      } catch (err) {
+        if (/cancel/i.test(String(err?.message || err))) return "cancelled";
+        throw err;
+      }
+      return "shared";
+    }
+    const blob = new Blob([bytes], { type: mime });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -155052,39 +156950,222 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 4000);
-    return true;
+    return "downloaded";
   }
 
-  async function xbaExportCsv(button) {
-    const section = adminActiveSection;
+  // ---- Export sheet: period → report type → format → generate ----
+  function xbaExportResolveRange() {
+    if (xbaExportState.preset === "custom") {
+      const { startDate, endDate } = xbaExportState;
+      if (!analyticsParseIsoDate(startDate) || !analyticsParseIsoDate(endDate) || startDate > endDate) return null;
+      return { startDate, endDate, label: t("analyticsCustomPeriod", "Custom period") };
+    }
+    return buildPerformancePeriodRange(xbaExportState.preset, getPerformanceBusinessNowParts().year);
+  }
+
+  function xbaExportPresetLabel(preset) {
+    if (preset === "custom") return t("analyticsCustomPeriod", "Custom period");
+    const entry = XBA_PRESET_LABELS[preset];
+    return entry ? t(entry[0], entry[1]) : preset;
+  }
+
+  /** Start from the dashboard period, without ever writing back to it. */
+  function xbaExportInitFromDashboard() {
     const range = getActivePerformancePeriodRange();
-    if (button) button.disabled = true;
-    try {
-      const rows = await xbaCsvRows(section, range);
-      if (!rows) {
-        showToast(t("xbaExportNothing", "Nothing to export yet. Wait for the report to load."), "info");
-        return;
+    if (!performanceActiveCustom && XBA_EXPORT_PRESETS.includes(performanceActivePreset)) {
+      xbaExportState.preset = performanceActivePreset;
+    } else {
+      xbaExportState.preset = "custom";
+    }
+    xbaExportState.startDate = range?.startDate || "";
+    xbaExportState.endDate = range?.endDate || "";
+  }
+
+  function xbaExportSyncUi() {
+    const select = document.getElementById("xbaExportPreset");
+    if (select) {
+      const options = [...XBA_EXPORT_PRESETS, "custom"];
+      if (select.options.length !== options.length || select.dataset.lang !== currentLanguage) {
+        select.innerHTML = options.map((value) => `<option value="${value}">${escapeHtml(xbaExportPresetLabel(value))}</option>`).join("");
+        select.dataset.lang = currentLanguage;
       }
-      const delim = xbaCsvDelimiter();
-      const csv = "﻿" + rows.map((row) => row.map(xbaCsvValue).join(delim)).join("\r\n");
-      const slug = String(section || "analytics").replace(/[^a-z-]/g, "");
-      const name = `xbook-${slug}-${range?.startDate || ""}_${range?.endDate || ""}.csv`;
-      const ok = await xbaDeliverFile(name, csv);
-      if (ok) showToast(t("xbaExportDone", "CSV file ready."), "success");
+      select.value = xbaExportState.preset;
+    }
+    const custom = document.getElementById("xbaExportCustom");
+    const isCustom = xbaExportState.preset === "custom";
+    if (custom) {
+      custom.hidden = !isCustom;
+      custom.classList.toggle("hidden", !isCustom);
+    }
+    const start = document.getElementById("xbaExportStart");
+    const end = document.getElementById("xbaExportEnd");
+    if (start && document.activeElement !== start) start.value = xbaExportState.startDate || "";
+    if (end && document.activeElement !== end) end.value = xbaExportState.endDate || "";
+    const range = xbaExportResolveRange();
+    const periodEl = document.getElementById("xbaExportPeriodText");
+    if (periodEl) {
+      if (range) {
+        periodEl.textContent = `${t("xbaExportSelected", "Report covers")}: ${xbaRangeDates(range)}`;
+        periodEl.classList.remove("is-error");
+      } else {
+        periodEl.textContent =
+          xbaExportState.startDate && xbaExportState.endDate && xbaExportState.startDate > xbaExportState.endDate
+            ? t("analyticsStartBeforeEnd", "Start date must be before or equal to end date.")
+            : t("analyticsChooseValidDates", "Choose a valid start and end date.");
+        periodEl.classList.add("is-error");
+      }
+    }
+    document.querySelectorAll("[data-xba-report-type]").forEach((btn) => {
+      const on = btn.getAttribute("data-xba-report-type") === xbaExportState.type;
+      btn.classList.toggle("admin-performance-preset--active", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    document.querySelectorAll("[data-xba-report-format]").forEach((btn) => {
+      const on = btn.getAttribute("data-xba-report-format") === xbaExportState.format;
+      btn.classList.toggle("admin-performance-preset--active", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+    });
+    const hint = document.getElementById("xbaExportFormatHint");
+    if (hint) {
+      hint.textContent =
+        xbaExportState.format === "pdf"
+          ? t("xbaExportPdfHint", "A4 report to share, save or print")
+          : xbaExportState.type === "full"
+            ? t("xbaExportZipHint", "ZIP with one Excel-ready CSV table per section")
+            : t("xbaExportCsvHint", "Spreadsheet for Excel or Google Sheets");
+    }
+    const generate = document.getElementById("xbaExportGenerate");
+    if (generate && !xbaExportBusy) generate.disabled = !range;
+  }
+
+  function setXbaExportBusy(busyText) {
+    const generate = document.getElementById("xbaExportGenerate");
+    const label = generate?.querySelector("[data-xba-export-label]");
+    if (generate) {
+      generate.disabled = !!busyText || !xbaExportResolveRange();
+      generate.classList.toggle("is-loading", !!busyText);
+      generate.setAttribute("aria-busy", busyText ? "true" : "false");
+    }
+    if (label) label.textContent = busyText || t("xbaGenerateReport", "Generate report");
+    document.querySelectorAll("#analyticsPeriodSheet .xba-export-panel :is(select, input, [data-xba-report-type], [data-xba-report-format])").forEach((el) => {
+      el.disabled = !!busyText;
+    });
+    document.querySelectorAll("[data-xba-export]").forEach((btn) => {
+      btn.disabled = !!busyText;
+    });
+  }
+
+  async function xbaGenerateReport() {
+    if (xbaExportBusy) {
+      showToast(t("xbaExportBusy", "An export is already in progress."), "info");
+      return;
+    }
+    const range = xbaExportResolveRange();
+    if (!range) {
+      xbaExportSyncUi();
+      return;
+    }
+    const isPdf = xbaExportState.format === "pdf";
+    const type = XBA_REPORT_TYPES.includes(xbaExportState.type) ? xbaExportState.type : "full";
+    xbaExportBusy = true;
+    setXbaExportBusy(t("xbaExportPreparing", "Preparing…"));
+    try {
+      const report = await xbaBuildBusinessReport(type, range, (text) => setXbaExportBusy(text));
+      setXbaExportBusy(t("xbaExportPreparing", "Preparing…"));
+      await xbaYieldToUi();
+      const file = isPdf
+        ? { bytes: await xbaReportToPdf(report), extension: "pdf", mime: "application/pdf" }
+        : xbaReportToCsvFile(report);
+      const outcome = await xbaDeliverFile(xbaReportFileName(report, file.extension), file.bytes, file.mime);
+      if (outcome === "cancelled") return;
+      closeXbaExportSheet();
+      showToast(isPdf ? t("xbaExportPdfDone", "PDF report ready.") : t("xbaExportDone", "CSV file ready."), "success");
     } catch (err) {
-      console.warn("[analytics] CSV export failed", err?.message || err);
-      showToast(t("xbaExportFailed", "Could not create the CSV file."), "error");
+      console.error("[report] export failed", err?.xbaReport ? JSON.stringify(err.xbaReport) : err?.stack || err?.message || err);
+      const message = String(err?.message || "");
+      const known = !!err?.xbaReport || message === t("xbaExportTooLarge", "The report is too large to export. Narrow the period or filters.");
+      const fallback = (isPdf ? t("xbaExportPdfFailed", "Could not create the PDF report.") : t("xbaExportFailed", "Could not create the CSV file.")) + (message ? ` [${message.slice(0, 80)}]` : "");
+      showToast(known ? message : fallback, "error", 9000);
     } finally {
-      if (button) button.disabled = false;
+      xbaExportBusy = false;
+      setXbaExportBusy(null);
+      xbaExportSyncUi();
     }
   }
+
+  function bindXbaExportPanel() {
+    const panel = document.querySelector("#analyticsPeriodSheet .xba-export-panel");
+    if (!panel || panel.dataset.bound === "1") return;
+    panel.dataset.bound = "1";
+    panel.addEventListener("change", (event) => {
+      const id = event.target?.id;
+      if (id === "xbaExportPreset") {
+        xbaExportState.preset = event.target.value;
+        if (xbaExportState.preset !== "custom") {
+          const range = xbaExportResolveRange();
+          xbaExportState.startDate = range?.startDate || "";
+          xbaExportState.endDate = range?.endDate || "";
+        }
+      } else if (id === "xbaExportStart") {
+        xbaExportState.startDate = String(event.target.value || "");
+      } else if (id === "xbaExportEnd") {
+        xbaExportState.endDate = String(event.target.value || "");
+      } else {
+        return;
+      }
+      xbaExportSyncUi();
+    });
+    panel.addEventListener("click", (event) => {
+      const typeBtn = event.target.closest?.("[data-xba-report-type]");
+      if (typeBtn) {
+        xbaExportState.type = typeBtn.getAttribute("data-xba-report-type");
+        xbaExportSyncUi();
+        return;
+      }
+      const formatBtn = event.target.closest?.("[data-xba-report-format]");
+      if (formatBtn) {
+        xbaExportState.format = formatBtn.getAttribute("data-xba-report-format") === "csv" ? "csv" : "pdf";
+        xbaExportSyncUi();
+        return;
+      }
+      if (event.target.closest?.("#xbaExportGenerate")) void xbaGenerateReport();
+    });
+  }
+
+  /** The export choices live in the shared period sheet ("export mode"), so every theme styles them already. */
+  function openXbaExportSheet() {
+    const sheet = moveAnalyticsSheetToBody("analyticsPeriodSheet");
+    if (!sheet) return;
+    bindXbaExportPanel();
+    if (!xbaExportBusy) xbaExportInitFromDashboard();
+    const panel = sheet.querySelector(".xba-export-panel");
+    if (panel) applyTranslations(panel);
+    const exportTitle = sheet.querySelector(".xba-export-panel__title");
+    if (exportTitle) applyTranslations(exportTitle);
+    xbaExportSyncUi();
+    setXbaExportBusy(xbaExportBusy ? t("xbaExportPreparing", "Preparing…") : null);
+    sheet.classList.add("analytics-sheet--export");
+    sheet.setAttribute("aria-label", t("xbaExportMenu", "Export report"));
+    sheet.removeAttribute("aria-labelledby");
+    sheet.hidden = false;
+    sheet.classList.remove("hidden");
+    sheet.querySelector("#xbaExportPreset")?.focus({ preventScroll: true });
+  }
+
+  function closeXbaExportSheet() {
+    if (document.getElementById("analyticsPeriodSheet")?.classList.contains("analytics-sheet--export")) {
+      closeAnalyticsPeriodSheet();
+    }
+  }
+  window.openXbaExportSheet = openXbaExportSheet;
+  window.closeXbaExportSheet = closeXbaExportSheet;
 
   function xbaEnsureExportButton(screen) {
     const bar = screen?.querySelector(".analytics-period-bar");
     if (!bar || bar.querySelector("[data-xba-export]")) return;
     bar.insertAdjacentHTML(
       "beforeend",
-      `<button type="button" class="xba-export-btn" data-xba-export aria-label="${escapeHtml(t("xbaExport", "Export CSV"))}" title="${escapeHtml(t("xbaExport", "Export CSV"))}"><svg class="xba-export-btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/><path d="M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></svg></button>`
+      `<button type="button" class="xba-export-btn" data-xba-export aria-haspopup="dialog" aria-label="${escapeHtml(t("xbaExportMenu", "Export report"))}" title="${escapeHtml(t("xbaExportMenu", "Export report"))}"><svg class="xba-export-btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/><path d="M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></svg></button>`
     );
   }
 
@@ -155095,7 +157176,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       const exportBtn = event.target.closest?.("[data-xba-export]");
       if (exportBtn) {
         event.preventDefault();
-        void xbaExportCsv(exportBtn);
+        openXbaExportSheet();
         return;
       }
       const mixBtn = event.target.closest?.("[data-xba-mix]");
@@ -155243,6 +157324,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   function openAnalyticsPeriodSheet() {
     const sheet = moveAnalyticsSheetToBody("analyticsPeriodSheet");
     if (!sheet) return;
+    sheet.classList.remove("analytics-sheet--export");
+    sheet.removeAttribute("aria-label");
+    sheet.setAttribute("aria-labelledby", "analyticsPeriodSheetTitle");
     syncPerformancePresetChipUi();
     syncAnalyticsCustomDateInputs();
     sheet.hidden = false;
@@ -155255,6 +157339,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     if (!sheet) return;
     sheet.hidden = true;
     sheet.classList.add("hidden");
+    sheet.classList.remove("analytics-sheet--export");
   }
 
   function openAnalyticsQualitySheet() {
@@ -155455,7 +157540,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return false;
     }
     if (startMonth > endMonth) {
-      showToast("Start month must be before or equal to end month.", "error");
+      showToast(t("analyticsStartMonthBeforeEnd", "Start month must be before or equal to end month."), "error");
       return false;
     }
     performanceCustomRangeState = { startMonth, endMonth, year };
@@ -155493,6 +157578,14 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           endDate: todayStr,
           label: t("analyticsPeriodToday", "Today")
         };
+      case "yesterday": {
+        const yesterdayStr = performanceDateOffset(parts, -1);
+        return {
+          startDate: yesterdayStr,
+          endDate: yesterdayStr,
+          label: t("analyticsPeriodYesterday", "Yesterday")
+        };
+      }
       case "last_7":
         return {
           startDate: performanceDateOffset(parts, -6),
@@ -155574,6 +157667,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     }
   }
 
+  /** ISO YYYY-MM-DD → DD.MM.YYYY (calendar date, no timezone shift). */
+  function formatXbookDateDmy(iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ""));
+    return m ? `${m[3]}.${m[2]}.${m[1]}` : String(iso || "");
+  }
+
   function buildPerformanceCustomRangeFromDom() {
     const state = performanceCustomRangeState;
     if (
@@ -155587,8 +157686,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         startDate: state.startDate,
         endDate: state.endDate,
         label: state.startDate === state.endDate
-          ? state.startDate
-          : `${state.startDate} – ${state.endDate}`
+          ? formatXbookDateDmy(state.startDate)
+          : `${formatXbookDateDmy(state.startDate)} – ${formatXbookDateDmy(state.endDate)}`
       };
     }
     const startMonth = Number.isFinite(state?.startMonth)
@@ -155612,7 +157711,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return null;
     }
     if (startMonth > endMonth) {
-      showToast("Start month must be before or equal to end month.", "error");
+      showToast(t("analyticsStartMonthBeforeEnd", "Start month must be before or equal to end month."), "error");
       return null;
     }
     return buildPerformanceMonthRange(year, startMonth, endMonth);
