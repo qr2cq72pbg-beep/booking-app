@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">XBOOK</string>
-    <string name="title_activity_main">XBOOK</string>
+    <string name="app_name">GT Termin</string>
+    <string name="title_activity_main">GT Termin</string>
     <string name="package_name">com.gtwebstudio.booking</string>
     <string name="custom_url_scheme">com.gtwebstudio.booking</string>
 </resources>
