@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Booking">
-  <rect width="512" height="512" rx="108" fill="#2563eb"/>
-  <path fill="#fff" d="M160 148h192a24 24 0 0 1 24 24v48H136v-48a24 24 0 0 1 24-24zm-24 96h240v200a24 24 0 0 1-24 24H160a24 24 0 0 1-24-24V244zm48 48v96h48v-96h-48zm96 0v96h48v-96h-48z"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>GT Termin app icon</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4DA3FF"/><stop offset="1" stop-color="#1560F0"/></linearGradient>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10.0" stdDeviation="11.0" flood-color="#001450" flood-opacity="0.32"/></filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <path d="M512.0 327.0 L512.0 697.0" fill="none" stroke="#FFFFFF" stroke-width="120.0" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M307.0 327.0 L717.0 327.0" fill="none" stroke="#FFFFFF" stroke-width="120.0" stroke-linecap="round" stroke-linejoin="round" filter="url(#lift)"/>
 </svg>

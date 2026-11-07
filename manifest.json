@@ -1,6 +1,6 @@
 {
-  "name": "Book Appointment",
-  "short_name": "Booking",
+  "name": "GT Termin",
+  "short_name": "GT Termin",
   "description": "Book appointments online with your salon or business.",
   "start_url": "/",
   "scope": "/",
