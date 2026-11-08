@@ -17,7 +17,7 @@ export function AppShell() {
       {open ? <div className="backdrop" onClick={() => setOpen(false)} /> : null}
       <aside className={`sidebar ${open ? "open" : ""}`}>
         <div className="brand">
-          <div className="brand-mark">XBOOK</div>
+          <div className="brand-mark">GT Termin</div>
           <div className="brand-sub">Control Center</div>
         </div>
         <nav className="nav" onClick={() => setOpen(false)}>

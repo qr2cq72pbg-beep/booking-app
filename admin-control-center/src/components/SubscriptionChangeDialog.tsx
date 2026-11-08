@@ -122,7 +122,7 @@ export function SubscriptionChangeDialog({
 
           <div className="modal-body">
             <p className="notice">
-              Every paid plan includes the same XBOOK features. They differ only in price and
+              Every paid plan includes the same GT Termin features. They differ only in price and
               duration. Price and expiration come from the server catalog. Remaining paid access is
               kept when you extend an active FLEX, PLUS, or MAX subscription. Converting from FREE
               replaces complimentary access and does not count previous FREE time as revenue.

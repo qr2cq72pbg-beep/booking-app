@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Separate XBOOK platform admin dashboard. Not part of Capacitor mobile builds.",
+  "description": "Separate GT Termin platform admin dashboard. Not part of Capacitor mobile builds.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

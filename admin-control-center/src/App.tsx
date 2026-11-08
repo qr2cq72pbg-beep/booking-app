@@ -15,7 +15,7 @@ function Gate() {
     return (
       <div className="auth-screen">
         <div className="auth-card">
-          <div className="brand-mark" style={{ color: "var(--navy)" }}>XBOOK</div>
+          <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
           <p className="lede">Checking administrator access…</p>
         </div>
       </div>

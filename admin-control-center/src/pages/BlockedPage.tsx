@@ -12,7 +12,7 @@ export function BlockedPage({
   return (
     <div className="auth-screen">
       <div className="auth-card">
-        <div className="brand-mark" style={{ color: "var(--navy)" }}>XBOOK</div>
+        <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
         <h1>{title}</h1>
         <p className="lede">{body}</p>
         {session?.user?.email ? (

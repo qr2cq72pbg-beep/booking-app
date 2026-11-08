@@ -315,7 +315,7 @@ export function mapSubscriptionRecord(
     package_label: complimentary
       ? complimentaryLabel(current?.expires_on ?? null)
       : trial
-        ? "XBOOK FREE TRIAL"
+        ? "GT TERMIN FREE TRIAL"
         : (pkg?.label ?? null),
     paid_months: complimentary || trial ? 0 : (pkg?.paid_months ?? null),
     bonus_months: complimentary || trial ? 0 : (pkg?.bonus_months ?? null),
@@ -439,7 +439,7 @@ export function mapHistoryRow(
     package_label: complimentary
       ? complimentaryLabel(newExpires)
       : trial
-        ? "XBOOK FREE TRIAL"
+        ? "GT TERMIN FREE TRIAL"
         : packageLabel,
     paid_months: asNumber(row.paid_months),
     bonus_months: asNumber(row.bonus_months),

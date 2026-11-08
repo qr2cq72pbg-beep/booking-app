@@ -1,4 +1,4 @@
-# XBOOK Admin Control Center (Phase 3)
+# GT Termin Admin Control Center (Phase 3)
 
 Separate platform-admin web app. It is **not** part of the Capacitor iOS/Android builds and must not be copied into `www/`.
 
@@ -39,9 +39,9 @@ npm run typecheck
 npm run build
 ```
 
-## First super-admin (do not use XBOOK owner signup)
+## First super-admin (do not use GT Termin owner signup)
 
-Do **not** register this person in the XBOOK business-owner or customer app. Do **not** set `user_metadata.role` to `admin` or `customer`. Do **not** insert `business_settings` for this UUID.
+Do **not** register this person in the GT Termin business-owner or customer app. Do **not** set `user_metadata.role` to `admin` or `customer`. Do **not** insert `business_settings` for this UUID.
 
 1. Supabase Dashboard → **Authentication → Users → Add user**
    - Email + password
@@ -117,13 +117,13 @@ Then set `VITE_ADMIN_FUNCTION_URL=http://localhost:54321/functions/v1/admin-cont
 
 ## Subscription packages
 
-All three active plans include the same XBOOK features. They differ only in price and calendar-month duration.
+All three active plans include the same GT Termin features. They differ only in price and calendar-month duration.
 
 | Package | ID | Duration | Price | Effective / month | vs FLEX |
 |---|---|---|---|---|---|
-| XBOOK FLEX | `flex_monthly` | 1 month | €39.99 | €39.99 | — |
-| XBOOK PLUS | `plus_4_months` | 4 months | €119.99 | €30.00 | ~25% |
-| XBOOK MAX | `max_18_months` | 18 months | €499.00 | €27.72 | ~30.7% · Best Value |
+| GT TERMIN FLEX | `flex_monthly` | 1 month | €39.99 | €39.99 | — |
+| GT TERMIN PLUS | `plus_4_months` | 4 months | €119.99 | €30.00 | ~25% |
+| GT TERMIN MAX | `max_18_months` | 18 months | €499.00 | €27.72 | ~30.7% · Best Value |
 
 Legacy `month_1` / `pack_3_1` / `pack_6_2` / `pack_9_3` rows stay in the catalog with `is_active = false` after `supabase-platform-subscriptions-v1-plans.sql`. Do not delete them.
 

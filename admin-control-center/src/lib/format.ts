@@ -59,7 +59,7 @@ export function subscriptionStatusClass(status: string): string {
 
 export function accessKindLabel(kind: string | null | undefined, unlimited = false): string {
   if (kind === "complimentary") return unlimited ? "FREE UNTIL CHANGED" : "FREE";
-  if (kind === "trial") return "XBOOK FREE TRIAL";
+  if (kind === "trial") return "GT TERMIN FREE TRIAL";
   if (kind === "paid") return "Paid";
   return "—";
 }
@@ -117,7 +117,7 @@ export function packageSummary(row: {
 }): string {
   const name = (row.package_label || row.label || "").trim();
   if (row.access_kind === "complimentary") return name || "FREE";
-  if (row.access_kind === "trial") return name || "XBOOK FREE TRIAL";
+  if (row.access_kind === "trial") return name || "GT TERMIN FREE TRIAL";
   if (!name) return "—";
   if (!row.access_months) return name;
   return `${name} · ${formatDurationMonths(row.access_months)}`;

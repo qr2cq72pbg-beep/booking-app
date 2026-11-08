@@ -1,4 +1,4 @@
-// XBOOK Admin Control Center — privileged API.
+// GT Termin Admin Control Center — privileged API.
 // Auth: valid user JWT AND active platform_admins row.
 // Reads: overview, businesses, customers.
 // Writes: manual subscriptions via atomic RPCs only.

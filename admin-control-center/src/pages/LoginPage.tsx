@@ -24,7 +24,7 @@ export function LoginPage() {
   return (
     <div className="auth-screen">
       <div className="auth-card">
-        <div className="brand-mark" style={{ color: "var(--navy)" }}>XBOOK</div>
+        <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
         <h1>Control Center</h1>
         <p className="lede">Sign in with a platform administrator account. Business owner logins are not authorized here.</p>
         {error ? <div className="error-banner">{error}</div> : null}

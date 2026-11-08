@@ -156,7 +156,7 @@ export function SubscriptionsPage() {
     <div>
       <h1>Subscriptions</h1>
       <p className="lede">
-        Manual XBOOK entitlements. FLEX, PLUS, and MAX include the same features and differ only in
+        Manual GT Termin entitlements. FLEX, PLUS, and MAX include the same features and differ only in
         price and duration. FREE is admin-only complimentary access and is never counted as paid
         revenue. Existing businesses without a row are unconfigured, not expired.
       </p>
@@ -186,7 +186,7 @@ export function SubscriptionsPage() {
                   <span className="muted">{formatEur(pkg.effective_monthly_eur)} / month</span>
                 ) : null}
                 {savings ? <span className="muted">Save {savings} versus FLEX</span> : null}
-                <p>{pkg.description || "Same XBOOK features as every other plan."}</p>
+                <p>{pkg.description || "Same GT Termin features as every other plan."}</p>
               </article>
             );
           })}
