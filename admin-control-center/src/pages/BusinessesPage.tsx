@@ -77,21 +77,21 @@ export function BusinessesPage() {
                     className="clickable"
                     onClick={() => navigate(`/businesses/${row.business_id}`)}
                   >
-                    <td>
+                    <td data-label="Business">
                       <div className="stack-cell">
                         <strong>{row.business_name}</strong>
                         <span className="muted">{displayOrDash(row.business_slug)}</span>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Owner">
                       <div className="stack-cell">
                         <span>{displayOrDash(row.owner.display_name)}</span>
                         <span className="muted">{displayOrDash(row.owner.email)}</span>
                         <span className="muted">{displayOrDash(row.owner.phone)}</span>
                       </div>
                     </td>
-                    <td>{formatDate(row.owner.registered_at)}</td>
-                    <td>
+                    <td data-label="Registered">{formatDate(row.owner.registered_at)}</td>
+                    <td data-label="Customers">
                       <div className="stack-cell">
                         <span>{formatNumber(row.customer_counts.crm_records)} CRM</span>
                         <span className="muted">

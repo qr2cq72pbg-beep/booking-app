@@ -1,4 +1,5 @@
 import { useAuth } from "../auth/AuthProvider";
+import { BrandLogo } from "../layout/BrandLogo";
 
 export function BlockedPage({
   title,
@@ -12,7 +13,10 @@ export function BlockedPage({
   return (
     <div className="auth-screen">
       <div className="auth-card">
-        <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+        <div className="auth-brand">
+          <BrandLogo size={52} />
+          <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+        </div>
         <h1>{title}</h1>
         <p className="lede">{body}</p>
         {session?.user?.email ? (

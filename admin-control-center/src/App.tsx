@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "./auth/AuthProvider";
 import { AppShell } from "./layout/AppShell";
+import { BrandLogo } from "./layout/BrandLogo";
 import { BlockedPage } from "./pages/BlockedPage";
 import { BusinessDetailPage } from "./pages/BusinessDetailPage";
 import { BusinessesPage } from "./pages/BusinessesPage";
@@ -15,7 +16,10 @@ function Gate() {
     return (
       <div className="auth-screen">
         <div className="auth-card">
-          <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+          <div className="auth-brand">
+            <BrandLogo size={52} />
+            <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+          </div>
           <p className="lede">Checking administrator access…</p>
         </div>
       </div>
@@ -72,7 +76,7 @@ function Gate() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
       <AuthProvider>
         <Gate />
       </AuthProvider>

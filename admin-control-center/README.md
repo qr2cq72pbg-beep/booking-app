@@ -11,6 +11,23 @@ Phase 3 adds **manual subscription management** on top of the Phase 2 read-only 
 - Authorization is `public.platform_admins` (`is_active = true`). `user_profiles.role = 'admin'` means **business owner**, not platform admin.
 - This app never inserts `business_settings` and never treats a business owner as a super-admin.
 
+## Online (iPhone, Android, desktop)
+
+The Control Center is served from the existing GT Termin Vercel project at **https://booking-app-fawn-five.vercel.app/admin/**.
+
+- `npm run build` writes the static bundle to `../admin/` (repo root). Commit that folder; Vercel serves it as-is.
+- `../vercel.json` rewrites `/admin` and `/admin/*` to `/admin/index.html` (deep links and refresh) and adds `noindex`, `X-Frame-Options: DENY`, `nosniff` and `no-referrer` headers for `/admin`.
+- `../.vercelignore` keeps this source folder, `supabase/` and `*.sql` off the web host.
+- The Edge Function only answers allowed origins. Set the secret once (this replaces the localhost-only default, so keep localhost in the list):
+
+```bash
+supabase secrets set ADMIN_CONTROL_CENTER_ALLOWED_ORIGINS="https://booking-app-fawn-five.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
+```
+
+On iPhone: open the URL in Safari → Share → **Add to Home Screen** for an app-like icon.
+
+Local dev now runs at http://localhost:5173/admin/.
+
 ## Local install
 
 ```bash
@@ -21,7 +38,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173
+Open http://localhost:5173/admin/
 
 Also required before live data will load (do these only after you approve database/function changes):
 
@@ -127,7 +144,7 @@ All three active plans include the same GT Termin features. They differ only in 
 
 Legacy `month_1` / `pack_3_1` / `pack_6_2` / `pack_9_3` rows stay in the catalog with `is_active = false` after `supabase-platform-subscriptions-v1-plans.sql`. Do not delete them.
 
-A one-time 7-day trial is granted automatically when a **new** `business_settings` row is first created (Phase 4F SQL). This Control Center can inspect trials and replace them with paid or complimentary access. Booking restrictions are **not** enforced yet.
+A one-time 14-day trial is granted automatically when a **new** `business_settings` row is first created (Phase 4F SQL). This Control Center can inspect trials and replace them with paid or complimentary access. Booking restrictions are **not** enforced yet.
 
 Expiration uses PostgreSQL calendar-month arithmetic (`date + n * interval '1 month'`). Extending an **active** subscription adds months onto the current expiration so remaining paid access is not lost.
 

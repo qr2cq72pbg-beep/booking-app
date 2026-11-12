@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useAuth } from "../auth/AuthProvider";
+import { BrandLogo } from "../layout/BrandLogo";
 
 export function LoginPage() {
   const { signIn } = useAuth();
@@ -24,7 +25,10 @@ export function LoginPage() {
   return (
     <div className="auth-screen">
       <div className="auth-card">
-        <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+        <div className="auth-brand">
+          <BrandLogo size={52} />
+          <div className="brand-mark" style={{ color: "var(--navy)" }}>GT Termin</div>
+        </div>
         <h1>Control Center</h1>
         <p className="lede">Sign in with a platform administrator account. Business owner logins are not authorized here.</p>
         {error ? <div className="error-banner">{error}</div> : null}

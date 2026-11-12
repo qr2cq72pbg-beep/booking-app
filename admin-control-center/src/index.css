@@ -518,6 +518,7 @@ tr.clickable:hover td { background: #f5f7fd; }
 .package-option.selected { background: var(--navy-soft); }
 .package-option.best-value { border: 1px solid rgba(196, 163, 90, 0.45); }
 .package-option strong { display: block; color: var(--ink); }
+.package-option > span > .muted { display: block; }
 .package-option em {
   font-style: normal;
   font-weight: 800;
@@ -607,4 +608,127 @@ tr.clickable:hover td { background: #f5f7fd; }
     background: rgba(0,10,30,0.45);
     z-index: 15;
   }
+}
+
+/* ---- GT Termin logo ---- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: 24%;
+  box-shadow: 0 6px 16px rgba(0, 20, 80, 0.28);
+}
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.topbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.topbar-brand strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Phone layout (iPhone / Android) ---- */
+@media (max-width: 720px) {
+  html, body { overflow-x: hidden; }
+  .content {
+    padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+      calc(32px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+  .sidebar { padding-top: max(28px, env(safe-area-inset-top)); }
+  h1 { font-size: 24px; }
+  .lede { margin-bottom: 18px; }
+
+  /* Comfortable touch targets */
+  .menu-btn,
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .text-btn,
+  .danger-btn,
+  .filter-pill,
+  .nav a {
+    min-height: 44px;
+  }
+  .primary-btn.compact,
+  .secondary-btn.compact,
+  .text-btn.compact,
+  .danger-btn.compact {
+    min-height: 44px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .filter-pill { padding: 10px 14px; font-size: 13px; }
+  .nav a { display: flex; align-items: center; }
+
+  /* 16px inputs stop iOS Safari from zooming in on focus */
+  input, select, textarea, .search, .auth-card input { font-size: 16px; }
+  .search { width: 100%; }
+  .toolbar { justify-content: stretch; }
+  .toolbar > * { flex: 1 1 100%; }
+  .panel-head { flex-wrap: wrap; }
+
+  /* Tables become readable cards */
+  .table-wrap { overflow-x: visible; }
+  .table-wrap table,
+  .table-wrap tbody,
+  .table-wrap tr,
+  .table-wrap td {
+    display: block;
+    width: 100%;
+  }
+  .table-wrap thead { display: none; }
+  .table-wrap tr {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 14px;
+  }
+  .table-wrap tr:last-child { border-bottom: 0; }
+  .table-wrap td {
+    border: 0;
+    position: relative;
+    padding: 6px 0 6px calc(34% + 10px);
+    min-height: 28px;
+    overflow-wrap: anywhere;
+  }
+  .table-wrap td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 34%;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .table-wrap td[data-label="Actions"] { padding-left: 0; padding-top: 10px; }
+  .table-wrap td[data-label="Actions"]::before { display: none; }
+  .table-wrap .row-actions > * { flex: 1 1 auto; }
+
+  /* Dialogs open as a full-width sheet */
+  .modal-backdrop { padding: 0; align-items: end; }
+  .modal {
+    width: 100%;
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .modal-actions { flex-direction: column-reverse; align-items: stretch; }
+  .modal-actions > * { width: 100%; }
+  .confirm-row { align-items: flex-start; gap: 12px; min-height: 44px; }
+  .confirm-row input[type="checkbox"],
+  .package-option input[type="radio"] { width: 22px; height: 22px; flex: 0 0 22px; }
 }

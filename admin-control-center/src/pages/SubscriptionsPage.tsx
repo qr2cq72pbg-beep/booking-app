@@ -146,7 +146,7 @@ export function SubscriptionsPage() {
     ["Active access", workspace.summary.active, "Paid or FREE currently valid, including FREE UNTIL CHANGED"],
     ["Paid active", workspace.summary.paid_active ?? 0, "FLEX / PLUS / MAX only — the revenue count"],
     ["Complimentary", workspace.summary.complimentary ?? 0, "Active FREE rows — not revenue"],
-    ["Trials", workspace.summary.trial_active ?? 0, "Automatic 7-day trials currently within 168 hours"],
+    ["Trials", workspace.summary.trial_active ?? 0, "Automatic 14-day trials currently running"],
     ["Expired", workspace.summary.expired, "Paid/FREE date is before today, or trial expires_at has passed"],
     ["Unconfigured", workspace.summary.unconfigured, "No entitlement row — not expired"],
     ["Businesses", workspace.summary.total_businesses, "Every business_settings row"],
@@ -161,7 +161,7 @@ export function SubscriptionsPage() {
         revenue. Existing businesses without a row are unconfigured, not expired.
       </p>
       <p className="notice" style={{ marginBottom: 18 }}>
-        Automatic 7-day trials start when a new business is first created. This screen can inspect
+        Automatic 14-day trials start when a new business is first created. This screen can inspect
         them and replace them with paid or complimentary access. Booking restrictions are still not
         enforced. Do not change Angel Touch or Test Barber unless that change is explicitly approved.
       </p>
@@ -262,13 +262,13 @@ export function SubscriptionsPage() {
               <tbody>
                 {rows.map((row) => (
                   <tr key={row.business_id}>
-                    <td>
+                    <td data-label="Business">
                       <div className="stack-cell">
                         <Link to={`/businesses/${row.business_id}`}>{row.business_name}</Link>
                         <span className="muted">{displayOrDash(row.business_slug)}</span>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Package">
                       {row.package_label ? (
                         <div className="stack-cell">
                           <span>{row.package_label}</span>
@@ -282,7 +282,7 @@ export function SubscriptionsPage() {
                         <span className="muted">None</span>
                       )}
                     </td>
-                    <td>
+                    <td data-label="Status">
                       <span className={subscriptionStatusClass(row.status)}>
                         {subscriptionStatusLabel(row.status)}
                       </span>
@@ -296,15 +296,15 @@ export function SubscriptionsPage() {
                         <div className="muted" style={{ marginTop: 6 }}>Starts later</div>
                       ) : null}
                     </td>
-                    <td>
+                    <td data-label="Start">
                       {row.starts_at ? formatDateTime(row.starts_at) : formatCalendarDate(row.starts_on)}
                     </td>
-                    <td>
+                    <td data-label="Expiration">
                       {row.expires_at
                         ? formatDateTime(row.expires_at)
                         : formatExpiration(row.expires_on, row.unlimited === true)}
                     </td>
-                    <td>
+                    <td data-label="Actions">
                       <div className="row-actions">
                         {row.status === "active" && row.access_kind === "paid" ? (
                           <button
@@ -428,9 +428,9 @@ export function SubscriptionsPage() {
                 <tbody>
                   {history.map((entry) => (
                     <tr key={entry.id}>
-                      <td>{formatDateTime(entry.created_at)}</td>
-                      <td>{operationLabel(entry.operation)}</td>
-                      <td>
+                      <td data-label="When">{formatDateTime(entry.created_at)}</td>
+                      <td data-label="Action">{operationLabel(entry.operation)}</td>
+                      <td data-label="Package">
                         <div className="stack-cell">
                           <span>{packageSummary(entry)}</span>
                           <span className="muted">
@@ -440,7 +440,7 @@ export function SubscriptionsPage() {
                           </span>
                         </div>
                       </td>
-                      <td>
+                      <td data-label="Dates">
                         <div className="stack-cell">
                           <span>
                             {entry.new_starts_at || entry.new_expires_at
@@ -460,7 +460,7 @@ export function SubscriptionsPage() {
                           {entry.note ? <span className="muted">{entry.note}</span> : null}
                         </div>
                       </td>
-                      <td>{displayOrDash(entry.actor_email)}</td>
+                      <td data-label="Administrator">{displayOrDash(entry.actor_email)}</td>
                     </tr>
                   ))}
                 </tbody>

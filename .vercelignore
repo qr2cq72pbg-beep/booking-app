@@ -1,0 +1,5 @@
+# Not part of the public web app. Keeps admin source, Supabase functions and SQL scripts off the web host.
+# The built admin panel in /admin is still deployed.
+admin-control-center/
+supabase/
+*.sql

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAuth } from "../auth/AuthProvider";
+import { BrandLogo } from "./BrandLogo";
 
 const LINKS = [
   { to: "/", label: "Overview", end: true },
@@ -17,8 +18,11 @@ export function AppShell() {
       {open ? <div className="backdrop" onClick={() => setOpen(false)} /> : null}
       <aside className={`sidebar ${open ? "open" : ""}`}>
         <div className="brand">
-          <div className="brand-mark">GT Termin</div>
-          <div className="brand-sub">Control Center</div>
+          <BrandLogo size={40} />
+          <div>
+            <div className="brand-mark">GT Termin</div>
+            <div className="brand-sub">Control Center</div>
+          </div>
         </div>
         <nav className="nav" onClick={() => setOpen(false)}>
           {LINKS.map((link) => (
@@ -36,10 +40,13 @@ export function AppShell() {
       </aside>
       <main className="content">
         <div className="topbar">
-          <button type="button" className="menu-btn" onClick={() => setOpen(true)}>
+          <button type="button" className="menu-btn" onClick={() => setOpen(true)} aria-label="Open menu">
             Menu
           </button>
-          <strong>Control Center</strong>
+          <span className="topbar-brand">
+            <BrandLogo size={28} />
+            <strong>GT Termin Admin</strong>
+          </span>
         </div>
         <Outlet />
       </main>

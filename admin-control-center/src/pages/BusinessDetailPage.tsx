@@ -195,25 +195,25 @@ export function BusinessDetailPage() {
               <tbody>
                 {filtered.map((row) => (
                   <tr key={row.id}>
-                    <td>{row.customer_number != null ? String(row.customer_number).padStart(3, "0") : "—"}</td>
-                    <td>{displayOrDash(row.display_name)}</td>
-                    <td>
+                    <td data-label="#">{row.customer_number != null ? String(row.customer_number).padStart(3, "0") : "—"}</td>
+                    <td data-label="Name">{displayOrDash(row.display_name)}</td>
+                    <td data-label="Contact">
                       <div className="stack-cell">
                         <span>{displayOrDash(row.email)}</span>
                         <span className="muted">{displayOrDash(row.phone)}</span>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Identity">
                       <span className={row.is_registered_user ? "pill pill-navy" : "pill pill-guest"}>
                         {identityLabel(row.identity_kind, row.is_registered_user)}
                       </span>
                     </td>
-                    <td>
+                    <td data-label="Status">
                       <span className={statusClass(row.approval_status)}>
                         {approvalLabel(row.approval_status)}
                       </span>
                     </td>
-                    <td>{formatDate(row.first_seen_at)}</td>
+                    <td data-label="First seen">{formatDate(row.first_seen_at)}</td>
                   </tr>
                 ))}
               </tbody>
