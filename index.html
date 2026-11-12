@@ -54043,6 +54043,51 @@
       opacity: 0.45;
       cursor: not-allowed;
     }
+    /* Official store badges (unmodified Apple SVG / Google PNG). Both render at the same visible height;
+       the Google PNG carries built-in transparent padding (41px of 250px), offset with a negative margin. */
+    .customer-invite-success__badges {
+      --store-badge-h: 48px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px 14px;
+    }
+    .customer-invite-store-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      line-height: 0;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .customer-invite-store-badge:hover { opacity: 0.88; }
+    .customer-invite-store-badge:active { transform: scale(0.97); }
+    .customer-invite-store-badge:focus-visible {
+      outline: 2px solid var(--xb-accent, #2f6bff);
+      outline-offset: 3px;
+    }
+    .customer-invite-store-badge img {
+      display: block;
+      width: auto;
+      max-width: none;
+      pointer-events: none;
+    }
+    .customer-invite-store-badge--apple img {
+      height: var(--store-badge-h);
+    }
+    .customer-invite-store-badge--google {
+      overflow: hidden;
+      height: var(--store-badge-h);
+    }
+    .customer-invite-store-badge--google img {
+      height: calc(var(--store-badge-h) * 250 / 168);
+      margin: calc(var(--store-badge-h) * -41 / 168);
+    }
+    @media (max-width: 340px) {
+      .customer-invite-success__badges { --store-badge-h: 42px; }
+    }
     html[data-xbook-theme="dark"] .customer-invite-success__code-card {
       border-color: rgba(255, 255, 255, 0.22);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(18, 32, 62, 0.34) 100%);
@@ -99186,26 +99231,13 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           </div>
         </div>
         <p class="customer-invite-success__download-title" data-i18n="customerInviteDownloadTitle">Download GT Termin</p>
-        <div class="customer-invite-success__actions">
-          <button type="button" id="customerInviteDownloadIosBtn" class="auth-btn customer-invite-store-btn" onclick="openXbookAppDownload('ios')">
-            <span class="customer-invite-store-btn__icon customer-invite-store-btn__icon--apple" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false" fill="currentColor">
-                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-              </svg>
-            </span>
-            <span data-i18n="customerInviteDownloadIos">Download for iPhone</span>
-          </button>
-          <button type="button" id="customerInviteDownloadAndroidBtn" class="auth-btn customer-invite-store-btn" onclick="openXbookAppDownload('android')">
-            <span class="customer-invite-store-btn__icon customer-invite-store-btn__icon--play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <polygon fill="#4285F4" points="2,3 2,21 13,12"/>
-                <polygon fill="#34A853" points="13,12 17.6,14.7 20.8,12.9 20.8,11.1 17.6,9.3"/>
-                <polygon fill="#FBBC04" points="2,21 13,12 17.6,14.7"/>
-                <polygon fill="#EA4335" points="2,3 17.6,9.3 13,12"/>
-              </svg>
-            </span>
-            <span data-i18n="customerInviteDownloadAndroid">Download for Android</span>
-          </button>
+        <div class="customer-invite-success__actions customer-invite-success__badges" id="customerInviteStoreBadges">
+          <a id="customerInviteDownloadIosBtn" class="customer-invite-store-badge customer-invite-store-badge--apple" href="https://apps.apple.com/mk/app/gt-termin/id6778896143" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store" data-i18n-aria-label="customerInviteDownloadIos">
+            <img src="assets/store-badges/app-store-badge-en.svg" alt="" width="120" height="40" decoding="async" draggable="false" />
+          </a>
+          <a id="customerInviteDownloadAndroidBtn" class="customer-invite-store-badge customer-invite-store-badge--google" href="https://play.google.com/store/apps/details?id=com.gtwebstudio.booking" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play" data-i18n-aria-label="customerInviteDownloadAndroid">
+            <img src="assets/store-badges/google-play-badge-en.png" alt="" width="646" height="250" decoding="async" draggable="false" />
+          </a>
         </div>
       </div>
     </div>
@@ -105452,8 +105484,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
    */
   const APP_PUBLIC_BASE_URL = "https://booking-app-fawn-five.vercel.app";
   const XBOOK_NATIVE_AUTH_CALLBACK_URL = "xbook://auth/callback";
-  const XBOOK_IOS_DOWNLOAD_URL = "";
-  const XBOOK_ANDROID_DOWNLOAD_URL = "";
+  const XBOOK_IOS_DOWNLOAD_URL = "https://apps.apple.com/mk/app/gt-termin/id6778896143";
+  const XBOOK_ANDROID_DOWNLOAD_URL = "https://play.google.com/store/apps/details?id=com.gtwebstudio.booking";
 
   /* ============================================================
    * i18n — lightweight translation layer (English, Macedonian, Albanian)
@@ -107266,8 +107298,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       customerInviteSuccessTitle: "Your GT Termin profile is ready",
       customerInviteSuccessConnected: "You are connected to",
       customerInviteDownloadTitle: "Download GT Termin",
-      customerInviteDownloadIos: "Download for iPhone",
-      customerInviteDownloadAndroid: "Download for Android",
+      customerInviteDownloadIos: "Download on the App Store",
+      customerInviteDownloadAndroid: "Get it on Google Play",
       customerInviteLoginCodeTitle: "Your GT Termin login code",
       customerInviteLoginCodeHint: "Valid for 30 minutes",
       customerInviteLoginCodeCopy: "Copy code",
@@ -109213,8 +109245,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       customerInviteSuccessTitle: "Вашиот GT Termin профил е подготвен",
       customerInviteSuccessConnected: "Поврзани сте со",
       customerInviteDownloadTitle: "Преземете го GT Termin",
-      customerInviteDownloadIos: "Преземи за iPhone",
-      customerInviteDownloadAndroid: "Преземи за Android",
+      customerInviteDownloadIos: "Преземете од App Store",
+      customerInviteDownloadAndroid: "Преземете од Google Play",
       customerInviteLoginCodeTitle: "Вашиот GT Termin код",
       customerInviteLoginCodeHint: "Важи 30 минути",
       customerInviteLoginCodeCopy: "Копирај код",
@@ -111153,8 +111185,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       customerInviteSuccessTitle: "Profili juaj GT Termin është gati",
       customerInviteSuccessConnected: "Jeni i lidhur me",
       customerInviteDownloadTitle: "Shkarkoni GT Termin",
-      customerInviteDownloadIos: "Shkarko për iPhone",
-      customerInviteDownloadAndroid: "Shkarko për Android",
+      customerInviteDownloadIos: "Shkarkoni nga App Store",
+      customerInviteDownloadAndroid: "Shkarkoni nga Google Play",
       customerInviteLoginCodeTitle: "Kodi juaj i hyrjes GT Termin",
       customerInviteLoginCodeHint: "Vlen 30 minuta",
       customerInviteLoginCodeCopy: "Kopjo kodin",
@@ -126178,14 +126210,23 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const androidBtn = document.getElementById("customerInviteDownloadAndroidBtn");
     const iosUrl = getXbookIosDownloadUrl();
     const androidUrl = getXbookAndroidDownloadUrl();
-    if (iosBtn) {
-      iosBtn.disabled = !iosUrl;
-      iosBtn.setAttribute("aria-disabled", iosUrl ? "false" : "true");
+    if (iosBtn && iosUrl) iosBtn.setAttribute("href", iosUrl);
+    if (androidBtn && androidUrl) androidBtn.setAttribute("href", androidUrl);
+    // Order by device: Android → Google Play first; iPhone/iPad and everything else → App Store first.
+    const wrap = document.getElementById("customerInviteStoreBadges");
+    if (wrap && iosBtn && androidBtn) {
+      if (getCustomerInviteStoreDevice() === "android") wrap.insertBefore(androidBtn, iosBtn);
+      else wrap.insertBefore(iosBtn, androidBtn);
     }
-    if (androidBtn) {
-      androidBtn.disabled = !androidUrl;
-      androidBtn.setAttribute("aria-disabled", androidUrl ? "false" : "true");
-    }
+  }
+
+  function getCustomerInviteStoreDevice() {
+    const ua = String(navigator.userAgent || "");
+    if (/android/i.test(ua)) return "android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "ios";
+    // iPadOS reports a desktop Mac user agent; a touch-capable "Mac" is an iPad.
+    if (/Macintosh/i.test(ua) && (navigator.maxTouchPoints || 0) > 1) return "ios";
+    return "other";
   }
 
   function openXbookAppDownload(kind) {
