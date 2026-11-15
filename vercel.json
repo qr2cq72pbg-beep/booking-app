@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/guide", "destination": "/guide/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/:path*", "destination": "/admin/index.html" }

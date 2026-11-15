@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="mk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f3f7ff" />
+    <title>GT Termin — Водич за сопственици на бизнис</title>
+    <link rel="icon" type="image/png" href="assets/img/gt-termin-icon.png" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+    <link rel="stylesheet" href="assets/css/guide.css?v=3" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="top__inner">
+        <a class="brand" href="#/" aria-label="GT Termin">
+          <img class="brand__logo" src="assets/img/gt-termin-icon.png" alt="" width="36" height="36" />
+          <span class="brand__text">
+            <span class="brand__name">GT Termin</span>
+            <span class="brand__sub" data-ui="brandSub"></span>
+          </span>
+        </a>
+        <div class="lang" role="group" data-ui-label="language">
+          <button type="button" data-lang="mk">MK</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="sq">SQ</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="hero__eyebrow" data-ui="heroEyebrow"></p>
+        <h1 class="hero__title" id="hero-title" data-ui="heroTitle"></h1>
+        <p class="hero__lead" data-ui="heroLead"></p>
+        <div class="hero__actions">
+          <button type="button" class="btn btn--primary" id="heroCta"></button>
+        </div>
+        <div class="stores">
+          <span class="stores__label" data-ui="getApp"></span>
+          <div class="stores__badges">
+            <a class="store store--apple" href="https://apps.apple.com/mk/app/gt-termin/id6778896143" target="_blank" rel="noopener noreferrer" aria-label="Download on the App Store">
+              <img src="assets/img/badges/app-store-badge-en.svg" alt="" width="120" height="40" />
+            </a>
+            <a class="store store--google" href="https://play.google.com/store/apps/details?id=com.gtwebstudio.booking" target="_blank" rel="noopener noreferrer" aria-label="Get it on Google Play">
+              <img src="assets/img/badges/google-play-badge-en.png" alt="" width="646" height="250" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="journey" id="journey" aria-label="Guide">
+        <div class="progressbar" aria-hidden="true"><span id="progressFill"></span></div>
+        <p class="progress-text" id="progressText"></p>
+        <nav class="stepper" id="stepper" data-ui-label="stepsNav"></nav>
+        <article class="step" id="step" tabindex="-1"></article>
+        <div class="pager" id="pager"></div>
+      </section>
+
+      <section class="more" aria-labelledby="more-title">
+        <h2 id="more-title" data-ui="moreTitle"></h2>
+        <p class="section-lead" data-ui="moreLead"></p>
+        <div class="more__grid" id="moreGrid"></div>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title" data-ui="faqTitle"></h2>
+        <div class="faq__list" id="faqList"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span data-ui="footer"></span>
+      <a href="mailto:gtterminsupport@gtwebstudio.com" data-ui="contact"></a>
+    </footer>
+
+    <dialog class="zoom" id="zoom">
+      <button type="button" class="zoom__close" id="zoomClose"></button>
+      <div class="zoom__body" id="zoomBody"></div>
+    </dialog>
+
+    <script src="content/ui.js?v=3"></script>
+    <script src="content/content.js?v=3"></script>
+    <script src="assets/js/guide.js?v=3"></script>
+  </body>
+</html>
