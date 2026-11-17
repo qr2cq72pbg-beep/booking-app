@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from "./auth/AuthProvider";
 import { AppShell } from "./layout/AppShell";
 import { BrandLogo } from "./layout/BrandLogo";
 import { BlockedPage } from "./pages/BlockedPage";
+import { BusinessConfigPage } from "./pages/BusinessConfigPage";
 import { BusinessDetailPage } from "./pages/BusinessDetailPage";
 import { BusinessesPage } from "./pages/BusinessesPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -67,6 +68,7 @@ function Gate() {
         <Route path="/" element={<OverviewPage />} />
         <Route path="/businesses" element={<BusinessesPage />} />
         <Route path="/businesses/:businessId" element={<BusinessDetailPage />} />
+        <Route path="/businesses/:businessId/configure" element={<BusinessConfigPage />} />
         <Route path="/subscriptions" element={<SubscriptionsPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

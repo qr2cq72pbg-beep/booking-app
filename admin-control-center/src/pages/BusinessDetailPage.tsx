@@ -17,6 +17,8 @@ import {
 import type { BusinessCustomer, BusinessDetail } from "../lib/types";
 import { AdminApiError } from "../lib/types";
 
+const PUBLIC_APP_URL = "https://booking-app-fawn-five.vercel.app/";
+
 function statusClass(status: string): string {
   const value = status.toLowerCase();
   if (value === "approved") return "pill pill-ok";
@@ -90,12 +92,20 @@ export function BusinessDetailPage() {
         ) : (
           <div className="avatar">{initial}</div>
         )}
-        <div>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <h1>{business.business_name}</h1>
           <p className="lede" style={{ marginBottom: 0 }}>
             {displayOrDash(business.business_slug)}
             {business.business_category ? ` · ${business.business_category}` : ""}
           </p>
+        </div>
+        <div className="row-actions">
+          {business.business_slug ? (
+            <a className="secondary-btn" href={`${PUBLIC_APP_URL}?business=${encodeURIComponent(business.business_slug)}`} target="_blank" rel="noreferrer">
+              Преглед за клиенти ↗
+            </a>
+          ) : null}
+          <Link className="primary-btn" to={`/businesses/${business.business_id}/configure`}>Отвори како сопственик</Link>
         </div>
       </div>
 

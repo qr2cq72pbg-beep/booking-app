@@ -4,9 +4,9 @@ import { useAuth } from "../auth/AuthProvider";
 import { BrandLogo } from "./BrandLogo";
 
 const LINKS = [
-  { to: "/", label: "Overview", end: true },
-  { to: "/businesses", label: "Businesses", end: false },
-  { to: "/subscriptions", label: "Subscriptions", end: false },
+  { to: "/", label: "Преглед", end: true },
+  { to: "/businesses", label: "Бизниси", end: false },
+  { to: "/subscriptions", label: "Претплати", end: false },
 ];
 
 export function AppShell() {
@@ -32,16 +32,16 @@ export function AppShell() {
           ))}
         </nav>
         <div className="sidebar-foot">
-          <div className="sidebar-email">{admin?.email || "Signed in"}</div>
+          <div className="sidebar-email">{admin?.email || "Најавен"}</div>
           <button type="button" className="ghost-btn" onClick={() => void signOut()}>
-            Log out
+            Одјава
           </button>
         </div>
       </aside>
       <main className="content">
         <div className="topbar">
-          <button type="button" className="menu-btn" onClick={() => setOpen(true)} aria-label="Open menu">
-            Menu
+          <button type="button" className="menu-btn" onClick={() => setOpen(true)} aria-label="Отвори мени">
+            Мени
           </button>
           <span className="topbar-brand">
             <BrandLogo size={28} />

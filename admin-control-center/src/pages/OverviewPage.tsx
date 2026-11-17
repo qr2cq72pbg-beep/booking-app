@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
+import { Link } from "react-router-dom";
 import { fetchOverview } from "../lib/adminApi";
+import { fetchOnboardingOverview, type OnboardingOverview } from "../lib/configApi";
 import { formatNumber } from "../lib/format";
 import type { OverviewMetrics } from "../lib/types";
 import { AdminApiError } from "../lib/types";
@@ -8,11 +10,17 @@ import { AdminApiError } from "../lib/types";
 export function OverviewPage() {
   const { accessToken } = useAuth();
   const [data, setData] = useState<OverviewMetrics | null>(null);
+  const [onboarding, setOnboarding] = useState<OnboardingOverview | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!accessToken) return;
     let cancelled = false;
+    void fetchOnboardingOverview(accessToken)
+      .then((o) => {
+        if (!cancelled) setOnboarding(o);
+      })
+      .catch(() => {});
     void fetchOverview(accessToken)
       .then((overview) => {
         if (!cancelled) setData(overview);
@@ -82,9 +90,40 @@ export function OverviewPage() {
     ],
   ] as const;
 
+  const lifecycleCards: Array<[string, number | null]> = onboarding
+    ? [
+        ["Вкупно бизниси", onboarding.total],
+        ["Активни (платено/бесплатно)", onboarding.active],
+        ["Пробен период", onboarding.trial],
+        ["Истечени", onboarding.expired],
+        ["Нацрти", onboarding.draft],
+        ["Покани што чекаат", onboarding.pending_invitations],
+        ["Без претплата", onboarding.unconfigured],
+        ["Клиенти (регистрирани)", data.unique_registered_customers],
+        ["Термини", data.bookings_available ? data.total_bookings : null],
+      ]
+    : [];
+
   return (
     <div>
-      <h1>Overview</h1>
+      <div className="page-head">
+        <div>
+          <h1>Преглед</h1>
+          <p className="lede">Статус на сите бизниси на платформата во живо.</p>
+        </div>
+        <Link className="primary-btn" to="/businesses">Бизниси</Link>
+      </div>
+      {lifecycleCards.length ? (
+        <div className="stat-grid" style={{ marginBottom: 28 }}>
+          {lifecycleCards.map(([label, value]) => (
+            <article className="stat-card" key={label}>
+              <strong>{formatNumber(value)}</strong>
+              <span>{label}</span>
+            </article>
+          ))}
+        </div>
+      ) : null}
+      <h2>Детални бројки</h2>
       <p className="lede">
         Live counts from the linked Supabase project. Unique people are not the same as
         memberships or CRM rows. Staff members are never counted as owners.

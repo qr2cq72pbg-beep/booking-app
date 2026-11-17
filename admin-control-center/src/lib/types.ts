@@ -54,6 +54,12 @@ export type BusinessListItem = {
   onboarding_step: number | null;
   owner: OwnerSummary;
   customer_counts: CustomerCounts;
+  lifecycle?: "draft" | "invited" | "trial" | "active" | "expired" | "unconfigured";
+  subscription_expires?: string | null;
+  staff_count?: number;
+  service_count?: number;
+  bookings_total?: number;
+  last_booking_at?: string | null;
 };
 
 export type BusinessDetail = BusinessListItem & {

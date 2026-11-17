@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="mk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
+<meta name="referrer" content="no-referrer" />
+<title>GT Termin — Активирај го профилот</title>
+<link rel="icon" href="../icons/icon-192.png" />
+<style>
+  :root { --navy: #001b5e; --blue: #1560f0; --ink: #0f172a; --muted: #5b6578; --line: #d9e0ee; --bg: #f3f5fb; --ok: #0f6b4c; --danger: #9b1c2c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--ink); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+  .card { width: 100%; max-width: 440px; background: #fff; border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 27, 94, 0.08); padding: 28px 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .brand img { width: 44px; height: 44px; border-radius: 12px; }
+  .brand strong { font-size: 1.15rem; color: var(--navy); }
+  h1 { font-size: 1.35rem; margin: 0 0 8px; }
+  p { color: var(--muted); line-height: 1.5; margin: 0 0 14px; }
+  label { display: block; font-weight: 650; font-size: 0.9rem; margin: 12px 0 6px; }
+  input { width: 100%; min-height: 46px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; font: inherit; }
+  button { width: 100%; min-height: 48px; margin-top: 18px; border: 0; border-radius: 12px; background: var(--navy); color: #fff;
+    font: inherit; font-weight: 700; cursor: pointer; }
+  button[disabled] { opacity: 0.6; cursor: default; }
+  .error { color: var(--danger); background: #fdecee; border-radius: 12px; padding: 10px 12px; margin-top: 12px; font-size: 0.92rem; }
+  .ok { color: var(--ok); }
+  .stores { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .stores img { height: 44px; }
+  .web-link { display: inline-block; margin-top: 14px; color: var(--blue); font-weight: 650; }
+  .hidden { display: none !important; }
+  .biz { font-weight: 750; color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="card" aria-live="polite">
+  <div class="brand"><img src="../icons/icon-192.png" alt="" /><strong>GT Termin</strong></div>
+
+  <section id="stateLoading"><p data-t="loading">Се вчитува…</p></section>
+
+  <section id="stateForm" class="hidden">
+    <h1 data-t="title">Активирај го профилот</h1>
+    <p><span data-t="ready">Вашиот бизнис е подготвен:</span> <span id="bizName" class="biz"></span></p>
+    <p data-t="lead">Поставете лозинка. Со неа ќе се најавувате во апликацијата GT Termin.</p>
+    <form id="form" novalidate>
+      <label for="pw" data-t="password">Лозинка</label>
+      <input id="pw" type="password" autocomplete="new-password" minlength="8" required />
+      <label for="pw2" data-t="confirm">Потврди лозинка</label>
+      <input id="pw2" type="password" autocomplete="new-password" minlength="8" required />
+      <div id="formError" class="error hidden" role="alert"></div>
+      <button id="submit" type="submit" data-t="submit">Активирај</button>
+    </form>
+  </section>
+
+  <section id="stateDone" class="hidden">
+    <h1 class="ok" data-t="doneTitle">Профилот е активиран</h1>
+    <p data-t="doneLead">Најавете се во GT Termin со вашата е-пошта и новата лозинка. Сите поставки на бизнисот се веќе подготвени.</p>
+    <div class="stores">
+      <a href="https://apps.apple.com/mk/app/gt-termin/id6778896143"><img src="../assets/store-badges/app-store-badge-en.svg" alt="App Store" /></a>
+      <a href="https://play.google.com/store/apps/details?id=com.gtwebstudio.booking"><img src="../assets/store-badges/google-play-badge-en.png" alt="Google Play" /></a>
+    </div>
+    <a class="web-link" href="../" data-t="web">Отвори GT Termin на веб</a>
+  </section>
+
+  <section id="stateError" class="hidden">
+    <h1 data-t="errTitle">Линкот не е важечки</h1>
+    <p id="errText" data-t="errExpired">Линкот за активација е истечен или веќе искористен. Побарајте нова покана од GT Termin.</p>
+  </section>
+</main>
+
+<script src="../vendor/supabase-js.min.js"></script>
+<script>
+(function () {
+  var SUPABASE_URL = "https://sdqothuulzeczcncyfqd.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_Gn743-ISr01JNKmrOOc8Mw_S3TbNbaU";
+  var T = {
+    mk: {},
+    en: { loading: "Loading…", title: "Activate your account", ready: "Your business is ready:",
+      lead: "Set a password. You will use it to sign in to the GT Termin app.", password: "Password", confirm: "Confirm password",
+      submit: "Activate", doneTitle: "Your account is active", doneLead: "Sign in to GT Termin with your e-mail and new password. Your business is already set up.",
+      web: "Open GT Termin on the web", errTitle: "This link is not valid", errExpired: "The activation link has expired or was already used. Ask GT Termin for a new invitation.",
+      short: "The password must have at least 8 characters.", mismatch: "The passwords do not match.", failed: "Activation failed. Please try again." },
+    sq: { loading: "Po ngarkohet…", title: "Aktivizoni llogarinë", ready: "Biznesi juaj është gati:",
+      lead: "Vendosni një fjalëkalim. Me të do të hyni në aplikacionin GT Termin.", password: "Fjalëkalimi", confirm: "Konfirmo fjalëkalimin",
+      submit: "Aktivizo", doneTitle: "Llogaria u aktivizua", doneLead: "Hyni në GT Termin me email-in dhe fjalëkalimin e ri. Biznesi juaj është gati.",
+      web: "Hap GT Termin në web", errTitle: "Lidhja nuk është e vlefshme", errExpired: "Lidhja e aktivizimit ka skaduar ose është përdorur. Kërkoni një ftesë të re nga GT Termin.",
+      short: "Fjalëkalimi duhet të ketë të paktën 8 karaktere.", mismatch: "Fjalëkalimet nuk përputhen.", failed: "Aktivizimi dështoi. Provoni përsëri." }
+  };
+  var MK_EXTRA = { short: "Лозинката мора да има најмалку 8 знаци.", mismatch: "Лозинките не се совпаѓаат.", failed: "Активацијата не успеа. Обидете се повторно." };
+  var params = new URLSearchParams(location.search);
+  var hash = new URLSearchParams(location.hash.replace(/^#/, ""));
+  var lang = ["mk", "en", "sq"].indexOf(params.get("lang")) >= 0 ? params.get("lang") : "mk";
+  document.documentElement.lang = lang;
+  function t(key) { return (T[lang] && T[lang][key]) || MK_EXTRA[key] || ""; }
+  document.querySelectorAll("[data-t]").forEach(function (el) { var v = (T[lang] || {})[el.getAttribute("data-t")]; if (v) el.textContent = v; });
+  if (lang !== "mk") document.title = "GT Termin — " + t("title");
+
+  function show(id) {
+    ["stateLoading", "stateForm", "stateDone", "stateError"].forEach(function (s) {
+      document.getElementById(s).classList.toggle("hidden", s !== id);
+    });
+  }
+  function fail() { show("stateError"); }
+
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: true, flowType: "implicit", storageKey: "gt-termin-activation" }
+  });
+
+  async function start() {
+    if (hash.get("error") || params.get("error")) return fail();
+    var tokenHash = params.get("token_hash");
+    if (tokenHash) {
+      var verified = await sb.auth.verifyOtp({ token_hash: tokenHash, type: params.get("type") === "recovery" ? "recovery" : "invite" });
+      if (verified.error) return fail();
+    }
+    var got = await sb.auth.getSession();
+    var session = got.data && got.data.session;
+    if (!session) {
+      // The implicit-flow hash is parsed asynchronously on first load.
+      await new Promise(function (r) { setTimeout(r, 600); });
+      session = (await sb.auth.getSession()).data.session;
+    }
+    if (!session) return fail();
+    history.replaceState(null, "", location.pathname + "?lang=" + lang);
+    var biz = await sb.from("business_settings").select("business_name").eq("business_id", session.user.id).maybeSingle();
+    document.getElementById("bizName").textContent = (biz.data && biz.data.business_name) || "";
+    show("stateForm");
+    document.getElementById("pw").focus();
+  }
+
+  document.getElementById("form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var pw = document.getElementById("pw").value;
+    var pw2 = document.getElementById("pw2").value;
+    var err = document.getElementById("formError");
+    err.classList.add("hidden");
+    if (pw.length < 8) { err.textContent = t("short"); err.classList.remove("hidden"); return; }
+    if (pw !== pw2) { err.textContent = t("mismatch"); err.classList.remove("hidden"); return; }
+    var btn = document.getElementById("submit");
+    btn.disabled = true;
+    try {
+      var up = await sb.auth.updateUser({ password: pw });
+      if (up.error) throw up.error;
+      var done = await sb.rpc("complete_business_activation");
+      if (done.error) throw done.error;
+      await sb.auth.signOut({ scope: "local" });
+      show("stateDone");
+    } catch (x) {
+      err.textContent = t("failed");
+      err.classList.remove("hidden");
+      btn.disabled = false;
+    }
+  });
+
+  start().catch(fail);
+})();
+</script>
+</body>
+</html>
