@@ -35,6 +35,7 @@ import {
 } from "../lib/configApi";
 import { formatDateTime } from "../lib/format";
 import { CategorySelect } from "../components/CategorySelect";
+import { SERVICE_VISUALS, suggestedVisualKeys, suggestVisualFromName, visualByKey, VISUAL_TABS } from "../lib/serviceVisuals";
 
 type Tab = "profile" | "services" | "staff" | "schedule" | "appearance" | "activation" | "subscription" | "audit";
 const TABS: Array<[Tab, string]> = [
@@ -242,8 +243,9 @@ function ProfileTab({ settings, token, run }: { settings: BusinessSettings; toke
 // ---------------------------------------------------------------------------
 function ServicesTab({ config, token, run }: { config: BusinessConfig; token: string; run: Runner }) {
   const id = config.settings.business_id;
-  const empty = { id: "", name: "", duration: "30", price: "" };
+  const empty = { id: "", name: "", duration: "30", price: "", visual: "", visualTouched: false };
   const [form, setForm] = useState(empty);
+  const category = config.settings.business_category;
   const anyCustomList = config.staff.some((m) => !m.all_services);
   const currency = "MKD";
 
@@ -251,7 +253,7 @@ function ServicesTab({ config, token, run }: { config: BusinessConfig; token: st
     const ok = await run(
       () => saveService(token, id, {
         id: form.id || undefined, name: form.name, duration: Number(form.duration),
-        price: form.price === "" ? null : Number(form.price),
+        price: form.price === "" ? null : Number(form.price), service_visual_key: form.visual || null,
       } as Partial<ServiceRow>),
       form.id ? "Услугата е изменета." : "Услугата е додадена.",
     );
@@ -262,10 +264,13 @@ function ServicesTab({ config, token, run }: { config: BusinessConfig; token: st
     <>
       <Panel title={form.id ? "Измени услуга" : "Нова услуга"}>
         <div className="form-grid">
-          <TextField label="Име на услугата *" value={form.name} max={80} onChange={(x) => setForm({ ...form, name: x })} />
+          <TextField label="Име на услугата *" value={form.name} max={80} onChange={(x) => setForm({
+            ...form, name: x, visual: form.visualTouched ? form.visual : suggestVisualFromName(x, category) || form.visual,
+          })} />
           <TextField label="Времетраење (минути) *" type="number" value={form.duration} onChange={(x) => setForm({ ...form, duration: x })} />
           <TextField label={`Цена (${currency})`} type="number" value={form.price} onChange={(x) => setForm({ ...form, price: x })} />
         </div>
+        <VisualPicker category={category} value={form.visual} onChange={(key) => setForm({ ...form, visual: key, visualTouched: true })} />
         <div className="row-actions" style={{ marginTop: 12 }}>
           {form.id ? <button type="button" className="secondary-btn" onClick={() => setForm(empty)}>Откажи</button> : null}
           <button type="button" className="primary-btn" onClick={() => void submit()}>{form.id ? "Зачувај" : "Додај услуга"}</button>
@@ -282,12 +287,17 @@ function ServicesTab({ config, token, run }: { config: BusinessConfig; token: st
               <tbody>
                 {config.services.map((svc) => (
                   <tr key={svc.id}>
-                    <td data-label="Услуга"><strong>{svc.name}</strong></td>
+                    <td data-label="Услуга">
+                      <div className="svc-cell">
+                        {visualByKey(svc.service_visual_key) ? <img className="svc-thumb" src={visualByKey(svc.service_visual_key)!.src} alt="" /> : <span className="svc-thumb empty" />}
+                        <strong>{svc.name}</strong>
+                      </div>
+                    </td>
                     <td data-label="Времетраење">{svc.duration ?? 30} мин</td>
                     <td data-label="Цена">{svc.price == null ? "—" : `${svc.price} ${currency}`}</td>
                     <td>
                       <div className="row-actions">
-                        <button type="button" className="text-btn" onClick={() => setForm({ id: svc.id, name: svc.name, duration: String(svc.duration ?? 30), price: svc.price == null ? "" : String(svc.price) })}>Уреди</button>
+                        <button type="button" className="text-btn" onClick={() => setForm({ id: svc.id, name: svc.name, duration: String(svc.duration ?? 30), price: svc.price == null ? "" : String(svc.price), visual: svc.service_visual_key || "", visualTouched: true })}>Уреди</button>
                         {anyCustomList ? (
                           <button type="button" className="text-btn" onClick={() => void run(() => assignServiceToAll(token, id, svc.id), "Услугата е доделена на сите вработени.")}>Додели на сите</button>
                         ) : null}
@@ -307,12 +317,50 @@ function ServicesTab({ config, token, run }: { config: BusinessConfig; token: st
   );
 }
 
+function VisualPicker({ category, value, onChange }: { category: string | null; value: string; onChange: (key: string) => void }) {
+  const [tab, setTab] = useState<(typeof VISUAL_TABS)[number]["id"]>("suggested");
+  const keys = tab === "suggested" ? suggestedVisualKeys(category)
+    : tab === "all" ? SERVICE_VISUALS.map((x) => x.key)
+    : SERVICE_VISUALS.filter((x) => x.pack === tab).map((x) => x.key);
+  const current = visualByKey(value);
+  return (
+    <div className="visual-picker">
+      <div className="visual-head">
+        <span className="field-label" style={{ margin: 0 }}>Слика на услугата</span>
+        <span className="muted">{current ? current.label : "Без визуел"}</span>
+      </div>
+      <div className="filter-pills">
+        {VISUAL_TABS.map((t) => (
+          <button key={t.id} type="button" className={`filter-pill ${tab === t.id ? "active" : ""}`} onClick={() => setTab(t.id)}>{t.label}</button>
+        ))}
+      </div>
+      <div className="visual-grid">
+        <button type="button" className={`visual-tile none ${!value ? "active" : ""}`} onClick={() => onChange("")}>
+          <span className="visual-none">—</span><span>Без визуел</span>
+        </button>
+        {keys.map((key) => {
+          const vis = visualByKey(key)!;
+          return (
+            <button key={key} type="button" className={`visual-tile ${value === key ? "active" : ""}`} onClick={() => onChange(key)} aria-pressed={value === key}>
+              <img src={vis.src} alt="" loading="lazy" />
+              <span>{vis.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------------------
 function StaffTab({ config, token, run }: { config: BusinessConfig; token: string; run: Runner }) {
   const id = config.settings.business_id;
   const [selected, setSelected] = useState<string | null>(config.staff[0]?.id || null);
   const [newName, setNewName] = useState("");
   const [newRole, setNewRole] = useState("");
+  const [newPhoto, setNewPhoto] = useState<File | null>(null);
+  const newPhotoUrl = useMemo(() => (newPhoto ? URL.createObjectURL(newPhoto) : ""), [newPhoto]);
+  useEffect(() => () => { if (newPhotoUrl) URL.revokeObjectURL(newPhotoUrl); }, [newPhotoUrl]);
   const member = config.staff.find((m) => m.id === selected) || null;
 
   return (
@@ -335,10 +383,22 @@ function StaffTab({ config, token, run }: { config: BusinessConfig; token: strin
           <TextField label="Име на нов вработен" value={newName} max={80} onChange={setNewName} />
           <TextField label="Улога" value={newRole} max={80} onChange={setNewRole} placeholder="пр. Фризер" />
         </div>
+        <div className="photo-row">
+          {newPhotoUrl ? <img className="avatar" src={newPhotoUrl} alt="" /> : <div className="avatar">{(newName || "?").slice(0, 1)}</div>}
+          <ImagePicker label={newPhoto ? "Промени фотографија" : "Фотографија (изборно)"} onPick={setNewPhoto} />
+          {newPhoto ? <button type="button" className="text-btn danger-text" onClick={() => setNewPhoto(null)}>Отстрани</button> : null}
+        </div>
         <button type="button" className="primary-btn" style={{ marginTop: 10 }} onClick={() => void run(async () => {
-          await saveStaff(token, id, { name: newName, role: newRole || null, active: true });
+          const name = newName;
+          const role = newRole || null;
+          const staffId = await saveStaff(token, id, { name, role, active: true });
+          if (newPhoto && staffId) {
+            const url = await uploadBusinessImage(token, id, "staff", newPhoto, staffId);
+            await saveStaff(token, id, { id: staffId, name, role, active: true, photo_url: url });
+          }
           setNewName("");
           setNewRole("");
+          setNewPhoto(null);
         }, "Вработениот е додаден.")}>Додај вработен</button>
       </Panel>
       {member ? <StaffEditor key={member.id} member={member} config={config} token={token} run={run} /> : null}
@@ -608,36 +668,27 @@ function ImagePicker({ label, onPick }: { label: string; onPick: (file: File) =>
 }
 
 const APPEARANCE_KEYS: Array<keyof BusinessSettings> = [
-  "business_accent_color", "public_show_logo", "public_show_prices", "public_show_staff", "public_show_address", "public_show_about",
+  "business_accent_color", "public_show_prices", "public_show_staff", "public_show_address", "public_show_about",
 ];
 
 function AppearanceTab({ config, token, run }: { config: BusinessConfig; token: string; run: Runner }) {
   const { draft, set, changed } = useSettingsDraft(config.settings);
   const id = config.settings.business_id;
-  const upload = (kind: "logo" | "cover") => (file: File) => void run(async () => {
+  const upload = (kind: "cover") => (file: File) => void run(async () => {
     const url = await uploadBusinessImage(token, id, kind, file);
-    await updateBusinessSettings(token, id, kind === "logo" ? { business_logo_url: url } : { business_cover_url: url });
-  }, kind === "logo" ? "Логото е зачувано." : "Насловната слика е зачувана.");
+    await updateBusinessSettings(token, id, { business_cover_url: url });
+  }, "Насловната слика е зачувана.");
   return (
     <>
-      <Panel title="Лого и насловна слика">
-        <div className="image-grid">
-          <div>
-            <div className="image-box">{config.settings.business_logo_url ? <img src={config.settings.business_logo_url} alt="Лого" /> : <span className="muted">Нема лого</span>}</div>
-            <ImagePicker label="Прикачи лого" onPick={upload("logo")} />
-          </div>
-          <div>
-            <div className="image-box wide">{config.settings.business_cover_url ? <img src={config.settings.business_cover_url} alt="Насловна" /> : <span className="muted">Нема насловна слика</span>}</div>
-            <ImagePicker label="Прикачи насловна" onPick={upload("cover")} />
-          </div>
-        </div>
+      <Panel title="Насловна слика">
+        <div className="image-box wide cover-box">{config.settings.business_cover_url ? <img src={config.settings.business_cover_url} alt="Насловна" /> : <span className="muted">Нема насловна слика</span>}</div>
+        <ImagePicker label={config.settings.business_cover_url ? "Промени насловна" : "Прикачи насловна"} onPick={upload("cover")} />
       </Panel>
       <Panel title="Страница за закажување" actions={<button type="button" className="primary-btn" onClick={() => void run(() => updateBusinessSettings(token, id, changed(APPEARANCE_KEYS)), "Изгледот е зачуван.")}>Зачувај</button>}>
         <label className="field-label" style={{ maxWidth: 220 }}>
           Боја на брендот
           <input className="search" type="color" value={draft.business_accent_color || "#001b5e"} onChange={(e) => set("business_accent_color", e.target.value)} />
         </label>
-        <Check label="Прикажи лого" checked={!!draft.public_show_logo} onChange={(v) => set("public_show_logo", v)} />
         <Check label="Прикажи цени" checked={!!draft.public_show_prices} onChange={(v) => set("public_show_prices", v)} />
         <Check label="Прикажи вработени" checked={!!draft.public_show_staff} onChange={(v) => set("public_show_staff", v)} />
         <Check label="Прикажи адреса" checked={!!draft.public_show_address} onChange={(v) => set("public_show_address", v)} />

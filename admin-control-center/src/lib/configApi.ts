@@ -45,7 +45,7 @@ export type BusinessSettings = {
   onboarding_completed_at: string | null;
 };
 
-export type ServiceRow = { id: string; name: string; duration: number | null; price: number | null; icon_key: string | null };
+export type ServiceRow = { id: string; name: string; duration: number | null; price: number | null; icon_key: string | null; service_visual_key: string | null };
 export type DayHours = { dow: number; start: string; end: string; break_start: string | null; break_end: string | null };
 export type StaffRow = {
   id: string;
@@ -139,8 +139,10 @@ export const deleteService = (token: string, businessId: string, serviceId: stri
   call(token, "delete_service", { business_id: businessId, service_id: serviceId });
 export const assignServiceToAll = (token: string, businessId: string, serviceId: string) =>
   call(token, "assign_service_to_all_staff", { business_id: businessId, service_id: serviceId });
-export const saveStaff = (token: string, businessId: string, staff: Partial<StaffRow>) =>
-  call(token, "save_staff", { business_id: businessId, staff });
+export async function saveStaff(token: string, businessId: string, staff: Partial<StaffRow>): Promise<string> {
+  const res = await call(token, "save_staff", { business_id: businessId, staff });
+  return String((res as unknown as { staff_id?: string }).staff_id || staff.id || "");
+}
 export const deleteStaff = (token: string, businessId: string, staffId: string) =>
   call(token, "delete_staff", { business_id: businessId, staff_id: staffId });
 export const setStaffServices = (token: string, businessId: string, staffId: string, all: boolean, ids: string[]) =>
