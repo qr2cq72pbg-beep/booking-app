@@ -34,6 +34,7 @@ import {
   type StaffRow,
 } from "../lib/configApi";
 import { formatDateTime } from "../lib/format";
+import { CategorySelect } from "../components/CategorySelect";
 
 type Tab = "profile" | "services" | "staff" | "schedule" | "appearance" | "activation" | "subscription" | "audit";
 const TABS: Array<[Tab, string]> = [
@@ -210,11 +211,17 @@ function ProfileTab({ settings, token, run }: { settings: BusinessSettings; toke
   return (
     <Panel
       title="Профил на бизнисот"
-      actions={<button type="button" className="primary-btn" onClick={() => void run(() => updateBusinessSettings(token, settings.business_id, changed(PROFILE_KEYS)), "Профилот е зачуван.")}>Зачувај</button>}
+      actions={<button type="button" className="primary-btn" onClick={() => void run(async () => {
+        if (!draft.business_category) throw new Error("Изберете категорија на бизнисот.");
+        await updateBusinessSettings(token, settings.business_id, changed(PROFILE_KEYS));
+      }, "Профилот е зачуван.")}>Зачувај</button>}
     >
       <div className="form-grid">
         <TextField label="Име на бизнисот *" value={v("business_name")} max={80} onChange={(x) => set("business_name", x)} />
-        <TextField label="Категорија" value={v("business_category")} max={60} onChange={(x) => set("business_category", x)} />
+        <label className="field-label">
+          Категорија *
+          <CategorySelect value={draft.business_category} onChange={(id) => set("business_category", id)} />
+        </label>
         <TextField label="Код на бизнисот (линк)" value={v("business_slug")} max={60} onChange={(x) => set("business_slug", x.toLowerCase())} />
         <TextField label="Кратко мото" value={v("public_tagline")} max={140} onChange={(x) => set("public_tagline", x)} />
         <TextField label="Телефон" type="tel" value={v("business_phone")} max={40} onChange={(x) => set("business_phone", x)} />

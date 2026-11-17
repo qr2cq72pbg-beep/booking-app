@@ -205,6 +205,39 @@ export const LIFECYCLE_CLASS: Record<Lifecycle, string> = {
   expired: "pill pill-danger",
   unconfigured: "pill pill-guest",
 };
+/** Same ids as the app (index.html XBOOK_BUSINESS_CATEGORIES), Macedonian labels from the app's mk dictionary. */
+export const BUSINESS_CATEGORIES: Array<{ id: string; label: string }> = [
+  { id: "barber", label: "Бербер" },
+  { id: "hair-salon", label: "Фризерски салон" },
+  { id: "beauty-salon", label: "Салон за убавина" },
+  { id: "nail-studio", label: "Студио за нокти" },
+  { id: "makeup-artist", label: "Шминкер" },
+  { id: "massage-therapy", label: "Масажа и нега на тело" },
+  { id: "dental-clinic", label: "Стоматолошка ординација" },
+  { id: "other", label: "Друго" },
+];
+/** Older values the app still displays but no longer offers (XBOOK_BUSINESS_CATEGORY_LEGACY_LABELS). */
+const LEGACY_CATEGORIES: Record<string, string> = {
+  "spa-wellness": "Спа и велнес", "medical-clinic": "Медицинска клиника", physiotherapy: "Физиотерапија",
+  chiropractic: "Хиропрактика", "fitness-gym": "Фитнес центар", "personal-trainer": "Личен тренер",
+  "yoga-studio": "Јога студио", "pilates-studio": "Пилатес студио", "tattoo-studio": "Тату студио",
+  "aesthetics-clinic": "Естетска клиника", "cosmetic-studio": "Козметичко студио", "eyebrows-lashes": "Веѓи и трепки",
+  "therapy-counseling": "Терапија и советување", "pet-grooming": "Дотерување на миленици",
+  "photography-studio": "Фотографско студио", "education-tutoring": "Образование и подучување",
+  "automotive-services": "Автомобилски услуги", "professional-services": "Професионални услуги",
+};
+const CATEGORY_ALIASES: Record<string, string> = { salon: "hair-salon", dentist: "dental-clinic", clinic: "medical-clinic", fitness: "fitness-gym" };
+/** Same normalisation as the app's normalizeBusinessCategoryId. */
+export function normalizeCategoryId(raw: string | null | undefined): string {
+  const v = String(raw || "").trim().toLowerCase();
+  return v ? CATEGORY_ALIASES[v] || v : "";
+}
+export function categoryLabel(raw: string | null | undefined): string {
+  const id = normalizeCategoryId(raw);
+  return BUSINESS_CATEGORIES.find((c) => c.id === id)?.label || LEGACY_CATEGORIES[id] || String(raw || "");
+}
+export const isSelectableCategory = (raw: string | null | undefined) => BUSINESS_CATEGORIES.some((c) => c.id === normalizeCategoryId(raw));
+
 export const DAY_NAMES = ["Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота"];
 export const DAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
 

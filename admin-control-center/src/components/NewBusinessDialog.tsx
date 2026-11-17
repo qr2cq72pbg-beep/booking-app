@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { createDraftBusiness, errorText, type NewBusinessInput } from "../lib/configApi";
+import { CategorySelect } from "./CategorySelect";
 
 function slugify(value: string): string {
   return value
@@ -51,6 +52,10 @@ export function NewBusinessDialog({
       setError("Внесете име на бизнисот, име и е-пошта на сопственикот.");
       return;
     }
+    if (!form.business_category) {
+      setError("Изберете категорија на бизнисот.");
+      return;
+    }
     if (!/^[a-z0-9](?:[a-z0-9-]{1,58}[a-z0-9])$/.test(form.business_slug)) {
       setError("Кодот на бизнисот: 3–60 мали латинични букви, бројки или цртички.");
       return;
@@ -86,8 +91,8 @@ export function NewBusinessDialog({
                 <input className="search" value={form.business_name} onChange={(e) => set("business_name", e.target.value)} required maxLength={80} />
               </label>
               <label className="field-label">
-                Категорија
-                <input className="search" value={form.business_category} onChange={(e) => set("business_category", e.target.value)} maxLength={60} placeholder="пр. Салон за убавина" />
+                Категорија *
+                <CategorySelect value={form.business_category} onChange={(id) => set("business_category", id)} />
               </label>
               <label className="field-label">
                 Име и презиме на сопственикот *

@@ -16,6 +16,7 @@ import {
 } from "../lib/format";
 import type { BusinessCustomer, BusinessDetail } from "../lib/types";
 import { AdminApiError } from "../lib/types";
+import { categoryLabel } from "../lib/configApi";
 
 const PUBLIC_APP_URL = "https://booking-app-fawn-five.vercel.app/";
 
@@ -96,7 +97,7 @@ export function BusinessDetailPage() {
           <h1>{business.business_name}</h1>
           <p className="lede" style={{ marginBottom: 0 }}>
             {displayOrDash(business.business_slug)}
-            {business.business_category ? ` · ${business.business_category}` : ""}
+            {business.business_category ? ` · ${categoryLabel(business.business_category)}` : ""}
           </p>
         </div>
         <div className="row-actions">
