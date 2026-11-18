@@ -87,6 +87,7 @@ export function BusinessConfigPage() {
       return true;
     } catch (err) {
       setToast({ ok: false, text: errorText(err) });
+      await reload();
       return false;
     }
   };
@@ -712,20 +713,30 @@ function ActivationTab({ config, token, run }: { config: BusinessConfig; token: 
       </Panel>
     );
   }
-  const step = ob.status === "draft" ? 0 : ob.status === "invited" ? 1 : 2;
+  const delivery = config.invite_delivery;
+  const failed = ob.status === "invited" && !!delivery && !delivery.ok;
+  const step = ob.status === "draft" || failed ? 0 : ob.status === "invited" ? 1 : 2;
   const missing: string[] = [];
   if (!config.services.length) missing.push("услуги");
   if (!config.staff.length) missing.push("вработени");
   return (
     <Panel title="Активација на сопственикот">
       <ol className="steps">
-        {["Нацрт", "Покана испратена", "Активиран"].map((label, i) => <li key={label} className={i <= step ? "done" : ""}>{label}</li>)}
+        {["Нацрт", failed ? "Праќањето не успеа" : "Покана испратена", "Активиран"].map((label, i) => (
+          <li key={label} className={i <= step ? "done" : failed && i === 1 ? "failed" : ""}>{label}</li>
+        ))}
       </ol>
       <div className="meta-grid">
         <div className="meta-item"><span>Сопственик</span><strong>{ob.owner_name || "—"}</strong><div className="muted">{ob.owner_email}</div><div className="muted">{ob.owner_phone || ""}</div></div>
-        <div className="meta-item"><span>Покана</span><strong>{ob.invited_at ? formatDateTime(ob.invited_at) : "Не е испратена"}</strong><div className="muted">Испратена {ob.invite_count}× · јазик {ob.preferred_language.toUpperCase()}</div></div>
+        <div className="meta-item"><span>Покана</span><strong>{failed ? "Не е доставена" : ob.invited_at ? formatDateTime(ob.invited_at) : "Не е испратена"}</strong><div className="muted">{failed && delivery ? `Неуспешен обид ${formatDateTime(delivery.at)} · ` : ""}Успешно испратена {ob.invite_count}× · јазик {ob.preferred_language.toUpperCase()}</div></div>
         <div className="meta-item"><span>Сметка</span><strong>{ob.status === "active" ? "Активна" : acc?.email_confirmed_at ? "Линкот е отворен, активацијата не е завршена" : acc ? "Чека сопственикот да го отвори линкот" : "Се креира при праќање"}</strong><div className="muted">{acc?.last_sign_in_at ? `Последна најава ${formatDateTime(acc.last_sign_in_at)}` : ""}</div></div>
       </div>
+      {failed && delivery ? (
+        <div className="error-banner">{delivery.message || "Е-поштата за активација не е испратена."} Претходно испратените линкови повеќе не важат — испратете повторно.</div>
+      ) : null}
+      {ob.status === "invited" && delivery?.ok && delivery.channel === "supabase_auth" ? (
+        <div className="notice">Последната покана ({formatDateTime(delivery.at)}) е испратена преку Supabase (резервно), бидејќи доменот gtwebstudio.com не е потврден во Resend. Пораката е стандардната од Supabase, без GT Termin дизајн.</div>
+      ) : null}
       {ob.status !== "active" && missing.length ? <div className="notice">Сè уште нема {missing.join(" и ")}. Поканата може да се прати, но бизнисот не е целосно подготвен.</div> : null}
       <p className="muted">
         Сопственикот добива е-пошта од GT Termin со линк за активација (еднократен, со рок на важење). Ја потврдува е-поштата, сам поставува лозинка
@@ -739,7 +750,7 @@ function ActivationTab({ config, token, run }: { config: BusinessConfig; token: 
         ) : null}
         {ob.status === "invited" ? (
           <>
-            <button type="button" className="primary-btn" onClick={() => void run(() => sendInvitation(token, id), acc?.email_confirmed_at ? "Испратен е линк за поставување лозинка." : "Поканата е испратена повторно.")}>Испрати повторно</button>
+            <button type="button" className="primary-btn" onClick={() => void run(() => sendInvitation(token, id), acc?.email_confirmed_at ? "Испратен е линк за поставување лозинка." : "Поканата е испратена повторно.")}>{failed ? "Обиди се повторно" : "Испрати повторно"}</button>
             <button type="button" className="danger-btn" disabled={!!acc?.email_confirmed_at} onClick={() => {
               if (window.confirm("Да се откаже поканата? Линкот престанува да важи, а подготвениот бизнис останува.")) void run(() => cancelInvitation(token, id), "Поканата е откажана.");
             }}>Откажи покана</button>

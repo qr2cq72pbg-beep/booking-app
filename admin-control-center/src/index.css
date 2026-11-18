@@ -921,3 +921,4 @@ select.search { font-family: inherit; }
 @media (max-width: 720px) {
   .visual-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+.steps li.failed { background: #fde8ea; color: var(--danger); }
