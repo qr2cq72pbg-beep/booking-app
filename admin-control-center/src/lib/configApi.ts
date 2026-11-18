@@ -92,7 +92,7 @@ export type BusinessConfig = {
   booking_count: number;
   public_url: string | null;
   /** Latest activation e-mail attempt: ok=false means the owner did NOT get a working link. */
-  invite_delivery: { ok: boolean; at: string; channel: string | null; message: string | null } | null;
+  invite_delivery: { ok: boolean; at: string; channel: string | null; delivery_event: string | null; message: string | null } | null;
 };
 
 export type OnboardingOverview = {

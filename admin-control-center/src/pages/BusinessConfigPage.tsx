@@ -702,6 +702,12 @@ function AppearanceTab({ config, token, run }: { config: BusinessConfig; token: 
 }
 
 // ---------------------------------------------------------------------------
+const DELIVERY_LABEL: Record<string, string> = {
+  sent: "испратена, се чека достава", delivered: "доставена", delivery_delayed: "доставата доцни",
+  bounced: "вратена (адресата не постои или одбива)", complained: "означена како спам", opened: "отворена", clicked: "линкот е кликнат",
+  queued: "во ред за праќање", scheduled: "закажана",
+};
+
 function ActivationTab({ config, token, run }: { config: BusinessConfig; token: string; run: Runner }) {
   const id = config.settings.business_id;
   const ob = config.onboarding;
@@ -733,6 +739,11 @@ function ActivationTab({ config, token, run }: { config: BusinessConfig; token: 
       </div>
       {failed && delivery ? (
         <div className="error-banner">{delivery.message || "Е-поштата за активација не е испратена."} Претходно испратените линкови повеќе не важат — испратете повторно.</div>
+      ) : null}
+      {ob.status === "invited" && delivery?.ok && delivery.channel === "resend" ? (
+        <div className={delivery.delivery_event === "bounced" || delivery.delivery_event === "complained" ? "error-banner" : "notice"}>
+          Последна покана {formatDateTime(delivery.at)} · статус кај Resend: <strong>{DELIVERY_LABEL[delivery.delivery_event || ""] || delivery.delivery_event || "непознат"}</strong>
+        </div>
       ) : null}
       {ob.status === "invited" && delivery?.ok && delivery.channel === "supabase_auth" ? (
         <div className="notice">Последната покана ({formatDateTime(delivery.at)}) е испратена преку Supabase (резервно), бидејќи доменот gtwebstudio.com не е потврден во Resend. Пораката е стандардната од Supabase, без GT Termin дизајн.</div>
