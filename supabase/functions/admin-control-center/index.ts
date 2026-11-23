@@ -35,6 +35,7 @@ import {
   utcToday,
   type SubscriptionOperation,
 } from "../_shared/admin-subscriptions.ts";
+import { enrichBusinessList, handleBusinessConfigAction } from "../_shared/admin-business-config.ts";
 
 type JsonMap = Record<string, unknown>;
 
@@ -101,7 +102,8 @@ Deno.serve(async (req) => {
 
     if (action === "list_businesses") {
       const q = asTrimmed(body.q);
-      const businesses = await loadBusinessList(admin, q);
+      // Lifecycle status (draft / invited / trial / active / expired) and counts per business.
+      const businesses = await enrichBusinessList(admin, await loadBusinessList(admin, q) as Record<string, unknown>[]);
       await writeAdminAudit(admin, {
         actorUserId: userId,
         action: "list_businesses",
@@ -276,6 +278,10 @@ Deno.serve(async (req) => {
       });
       return jsonResponse(req, { ok: true, result: applied.data });
     }
+
+    // Prepared businesses, configuration and owner activation (admin-business-config.ts).
+    const configResponse = await handleBusinessConfigAction(req, action, body, { admin, userId });
+    if (configResponse) return configResponse;
 
     return jsonResponse(req, { ok: false, error: "invalid_action" }, 400);
   } catch (err) {

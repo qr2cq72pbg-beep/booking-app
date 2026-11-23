@@ -23,3 +23,11 @@ verify_jwt = false
 [functions.admin-control-center]
 verify_jwt = true
 
+[functions.staff-access]
+# Public redeem; owner actions verify the JWT inside the function.
+verify_jwt = false
+
+[functions.send-staff-booking-push]
+# Database webhook on staff_push_events; the event is loaded and claimed server-side.
+verify_jwt = false
+

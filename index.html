@@ -73892,6 +73892,164 @@
       border-radius: 18px;
     }
 
+    /* —— Employee agenda (view only) —— */
+    body.staff-agenda-active .topbar { display: none !important; }
+    .staff-agenda {
+      max-width: 640px; margin: 0 auto;
+      padding: calc(env(safe-area-inset-top, 0px) + 14px) 16px calc(env(safe-area-inset-bottom, 0px) + 28px);
+      color: var(--theme-text-primary, #0d0d12);
+    }
+    .staff-agenda.hidden { display: none !important; }
+    .staff-agenda__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .staff-agenda__who { min-width: 0; }
+    .staff-agenda__business { margin: 0; font-size: 1.3rem; font-weight: 800; line-height: 1.2; overflow-wrap: anywhere; }
+    .staff-agenda__business, .staff-agenda__date-group, .staff-agenda-item__title, .staff-agenda-item__time strong {
+      color: var(--theme-text-primary, #0d0d12);
+    }
+    .staff-agenda__member { margin: 2px 0 0; color: var(--theme-text-secondary, #555); font-size: 0.9rem; }
+    .staff-agenda__tools { display: flex; gap: 8px; flex: 0 0 auto; }
+    .staff-agenda__icon-btn {
+      width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 14px; display: inline-flex;
+      align-items: center; justify-content: center; cursor: pointer;
+      background: var(--theme-surface-elevated, #fff); color: var(--theme-text-primary, #0d0d12);
+      border: 1px solid var(--theme-border-default, rgba(0,0,0,0.12));
+    }
+    .staff-agenda__icon-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .staff-agenda__icon-btn[aria-busy="true"] svg { animation: staffAgendaSpin 0.9s linear infinite; }
+    @keyframes staffAgendaSpin { to { transform: rotate(360deg); } }
+    .staff-agenda__offline { margin: 0 0 12px; padding: 10px 12px; border-radius: 12px; font-size: 0.88rem;
+      background: var(--theme-surface-muted, #fff6e5); color: var(--theme-text-secondary, #6b5200); }
+    .staff-agenda__section-title { margin: 18px 0 8px; font-size: 0.82rem; font-weight: 750; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--theme-text-tertiary, #777); }
+    .staff-agenda__day-nav { display: flex; align-items: center; gap: 8px; margin: 18px 0 8px; }
+    .staff-agenda__day-label {
+      flex: 1 1 auto; min-height: 44px; border-radius: 14px; font: inherit; font-weight: 750; cursor: pointer;
+      background: var(--theme-surface-elevated, #fff); color: var(--theme-text-primary, #0d0d12);
+      border: 1px solid var(--theme-border-default, rgba(0,0,0,0.12));
+    }
+    .staff-agenda__list, #staffAgendaUpcomingList { display: flex; flex-direction: column; gap: 8px; }
+    .staff-agenda__date-group { margin: 12px 0 6px; font-weight: 750; font-size: 0.95rem; }
+    .staff-agenda-item {
+      display: grid; grid-template-columns: 64px 1fr auto; gap: 10px; align-items: start; padding: 12px;
+      border-radius: 16px; background: var(--theme-surface-elevated, #fff);
+      border: 1px solid var(--theme-border-subtle, rgba(0,0,0,0.08));
+    }
+    .staff-agenda-item--next { border-width: 2px; border-color: var(--theme-text-link, #2563eb); }
+    .staff-agenda-item--cancelled { opacity: 0.6; }
+    .staff-agenda-item--cancelled .staff-agenda-item__title { text-decoration: line-through; }
+    .staff-agenda-item__time { display: flex; flex-direction: column; font-variant-numeric: tabular-nums; }
+    .staff-agenda-item__time strong { font-size: 1.05rem; }
+    .staff-agenda-item__time span { font-size: 0.82rem; color: var(--theme-text-tertiary, #777); }
+    .staff-agenda-item__body { min-width: 0; }
+    .staff-agenda-item__title { font-weight: 750; overflow-wrap: anywhere; }
+    .staff-agenda-item__meta, .staff-agenda-item__staff { font-size: 0.88rem; color: var(--theme-text-secondary, #555); }
+    .staff-agenda-item__date { font-size: 0.82rem; color: var(--theme-text-tertiary, #777); margin-bottom: 2px; }
+    .staff-agenda-item__notes { margin-top: 6px; font-size: 0.86rem; padding: 6px 8px; border-radius: 10px;
+      background: var(--theme-surface-muted, rgba(0,0,0,0.04)); overflow-wrap: anywhere; white-space: pre-line; }
+    .staff-agenda-chip { font-size: 0.74rem; font-weight: 750; padding: 4px 8px; border-radius: 999px; white-space: nowrap;
+      background: var(--theme-surface-muted, rgba(0,0,0,0.06)); color: var(--theme-text-secondary, #555); }
+    .staff-agenda-chip--confirmed { background: rgba(22, 163, 74, 0.14); color: #15803d; }
+    .staff-agenda-chip--pending { background: rgba(217, 119, 6, 0.16); color: #b45309; }
+    .staff-agenda-chip--cancelled { background: rgba(220, 38, 38, 0.12); color: #b91c1c; }
+    body.app-theme-dark .staff-agenda-chip--confirmed { color: #4ade80; }
+    body.app-theme-dark .staff-agenda-chip--pending { color: #fbbf24; }
+    body.app-theme-dark .staff-agenda-chip--cancelled { color: #f87171; }
+    .staff-agenda__empty { padding: 14px; border-radius: 16px; text-align: center; font-size: 0.92rem;
+      color: var(--theme-text-tertiary, #777); border: 1px dashed var(--theme-border-default, rgba(0,0,0,0.16)); }
+    .staff-agenda__updated { margin: 18px 0 0; text-align: center; font-size: 0.78rem; color: var(--theme-text-tertiary, #777); }
+    /* Owner: app access section inside the staff card */
+    #adminSectionStaff .staff-access__status { margin: 0 0 8px; font-weight: 650; }
+    #adminSectionStaff .staff-access__scope { display: flex; flex-direction: column; gap: 2px; margin: 4px 0 6px; }
+    #adminSectionStaff .staff-access__scope-label { font-size: 0.86rem; color: var(--xb-bs-muted); }
+    #adminSectionStaff .staff-access__scope input[type="radio"] { width: 20px; height: 20px; margin: 0; flex: 0 0 auto; }
+    #adminSectionStaff .staff-access__code { display: flex; flex-direction: column; gap: 6px; align-items: flex-start;
+      margin: 8px 0; padding: 12px; border-radius: 14px; background: var(--xb-bs-control-fill); border: 1px solid var(--xb-bs-glass-border); }
+    #adminSectionStaff .staff-access__code.hidden { display: none; }
+    #adminSectionStaff .staff-access__code-label, #adminSectionStaff .staff-access__code-expiry,
+    #adminSectionStaff .staff-access__code-help { font-size: 0.84rem; color: var(--xb-bs-muted); }
+    #adminSectionStaff .staff-access__code-value { font-size: 1.6rem; letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+    #adminSectionStaff .staff-access__actions { gap: 8px; flex-wrap: wrap; }
+    body.staff-viewer-full #adminSectionProfile [onclick*="openAdminSettingsCategory('services')"],
+    body.staff-viewer-full #adminSectionProfile [onclick*="openAdminSettingsServicesFromCategory"],
+    body.staff-viewer-full #adminSectionProfile [onclick*="openAdminSettingsStaffFromCategory"] { opacity: 1; }
+    /* Team member inside the Business shell: view-only calendar, owner features locked */
+    body.staff-viewer-mode:not(.staff-viewer-can-create) #adminCalendarAgendaPrompt,
+    body.staff-viewer-mode:not(.staff-viewer-can-create) #adminCalendarServiceTrigger,
+    body.staff-viewer-mode #adminSectionManual .admin-saas-field--status,
+    body.staff-viewer-mode .admin-booking-modal__btn--edit,
+    body.staff-viewer-mode .admin-booking-modal__actions-row,
+    body.staff-viewer-mode .admin-booking-modal__customer-detail { display: none !important; }
+    body.staff-viewer-mode:not(.staff-viewer-full) #adminMobileBottomNav .admin-mobile-nav-item:not([data-admin-mobile-tab="calendar"]):not([data-admin-mobile-tab="settings"]),
+    body.staff-viewer-mode:not(.staff-viewer-full) #adminNav .admin-nav-btn:not([data-admin-section="calendar"]):not([data-admin-section="profile"]),
+    body.staff-viewer-mode #adminSectionProfile [onclick]:not([onclick*="openAdminSettingsCategory('account')"]):not([onclick*="backAdminSettingsAccountCategory"]):not([onclick*="closeAdminSettingsCategory"]):not([onclick*="openXbookAppearancePicker"]):not([onclick*="openLanguagePicker"]):not([onclick*="requestUserLogout"]):not([onclick*="openAdminHelpSupportFromSettings"]):not([onclick*="openAdminAboutXbookFromSettings"]):not([onclick*="openAdminLegalFromSettings"]) { opacity: 0.45; }
+
+    #adminSectionStaff .staff-rules,
+    #adminSectionStaff .staff-rules__conflicts {
+      margin-top: 16px;
+      padding: 14px 14px 12px;
+      border-radius: 18px;
+      background: var(--xb-bs-glass-fill) !important;
+      border: 1px solid var(--xb-bs-glass-border);
+      box-shadow: var(--xb-bs-glass-highlight), var(--xb-bs-glass-shadow);
+      color: var(--xb-bs-text);
+    }
+    #adminSectionStaff .staff-rules.hidden,
+    #adminSectionStaff .staff-rules__conflicts.hidden { display: none; }
+    #adminSectionStaff .staff-rules__head { margin-bottom: 10px; }
+    #adminSectionStaff .staff-rules__title { margin: 0; font-size: 1.02rem; font-weight: 750; color: var(--xb-bs-text); }
+    #adminSectionStaff .staff-rules__hint { margin: 4px 0 0; font-size: 0.86rem; color: var(--xb-bs-muted); }
+    #adminSectionStaff .staff-rules__toggle {
+      display: flex; align-items: center; gap: 10px; min-height: 44px;
+      font-weight: 650; cursor: pointer;
+    }
+    #adminSectionStaff .staff-rules__toggle input,
+    #adminSectionStaff .staff-rules__check input,
+    #adminSectionStaff .staff-hours-row__day input { width: 20px; height: 20px; flex: 0 0 auto; margin: 0; }
+    #adminSectionStaff .staff-rules__list { display: flex; flex-direction: column; gap: 6px; margin: 6px 0 10px; }
+    #adminSectionStaff .staff-rules__check {
+      display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px;
+      border-radius: 14px; background: var(--xb-bs-control-fill); border: 1px solid var(--xb-bs-glass-border);
+      cursor: pointer;
+    }
+    #adminSectionStaff .staff-rules__check span:first-of-type { flex: 1 1 auto; min-width: 0; }
+    #adminSectionStaff .staff-rules__meta { color: var(--xb-bs-muted); font-size: 0.84rem; white-space: nowrap; }
+    #adminSectionStaff .staff-rules__empty { margin: 6px 0; color: var(--xb-bs-muted); font-size: 0.88rem; }
+    #adminSectionStaff .staff-rules__copy { display: flex; flex-direction: column; gap: 6px; font-size: 0.86rem; color: var(--xb-bs-muted); }
+    #adminSectionStaff .staff-rules__copy select,
+    #adminSectionStaff .staff-hours-row input[type="time"] {
+      min-height: 40px; border-radius: 12px; border: 1px solid var(--xb-bs-glass-border);
+      background: var(--xb-bs-control-fill); color: var(--xb-bs-text); padding: 6px 10px; font: inherit;
+    }
+    #adminSectionStaff .staff-hours-row input[type="time"] {
+      width: 7.4rem !important; max-width: 7.4rem; flex: 0 0 auto; margin: 0;
+    }
+    #adminSectionStaff .staff-rules__actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+    #adminSectionStaff .staff-rules__hours { display: flex; flex-direction: column; gap: 8px; margin: 6px 0 4px; }
+    #adminSectionStaff .staff-hours-row {
+      display: grid; grid-template-columns: minmax(110px, 1fr) auto; gap: 6px 10px; align-items: center;
+      padding: 8px 12px; border-radius: 14px; background: var(--xb-bs-control-fill); border: 1px solid var(--xb-bs-glass-border);
+    }
+    #adminSectionStaff .staff-hours-row__day { display: flex; align-items: center; gap: 10px; font-weight: 650; min-height: 40px; cursor: pointer; }
+    #adminSectionStaff .staff-hours-row__times,
+    #adminSectionStaff .staff-hours-row__break { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    #adminSectionStaff .staff-hours-row__break { grid-column: 1 / -1; font-size: 0.84rem; color: var(--xb-bs-muted); }
+    #adminSectionStaff .staff-hours-row__break { justify-content: flex-start; }
+    #adminSectionStaff .staff-hours-row__break-label { flex: 1 0 100%; }
+    #adminSectionStaff .staff-hours-row__off-label { display: none; color: var(--xb-bs-muted); font-size: 0.86rem; }
+    #adminSectionStaff .staff-hours-row--off .staff-hours-row__times input,
+    #adminSectionStaff .staff-hours-row--off .staff-hours-row__times span[aria-hidden],
+    #adminSectionStaff .staff-hours-row--off .staff-hours-row__break { display: none; }
+    #adminSectionStaff .staff-hours-row--off .staff-hours-row__off-label { display: inline; }
+    #adminSectionStaff .staff-rules__conflicts ul { margin: 8px 0 0; padding-left: 18px; font-size: 0.88rem; }
+    #adminSectionStaff .staff-rules__conflicts strong { font-size: 0.92rem; }
+    @media (max-width: 420px) {
+      #adminSectionStaff .staff-hours-row { grid-template-columns: 1fr; }
+      #adminSectionStaff .staff-hours-row__times { justify-content: flex-start; }
+    }
+    #adminSectionServices .services-edit-card__assign-all { margin-top: 10px; }
+    #adminSectionServices .services-edit-card__assign-all.hidden { display: none; }
+    .public-staff-card-initials--any { font-size: 1.15rem; }
+
     #adminSectionStaff .staff-time-off__head {
       display: flex;
       align-items: flex-start;
@@ -98942,14 +99100,15 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           </div>
           <div class="auth-divider" role="separator" hidden aria-hidden="true"><span>or</span></div>
           <label class="auth-field-label" for="authEmail">Email</label>
-          <input id="authEmail" type="email" autocomplete="email" placeholder="you@email.com" />
+          <input id="authEmail" type="email" autocomplete="email" enterkeyhint="next" placeholder="you@email.com" />
           <label class="auth-field-label" for="authPassword">Password</label>
           <div class="password-wrap">
-            <input id="authPassword" type="password" autocomplete="current-password" placeholder="Password" />
+            <input id="authPassword" type="password" autocomplete="current-password" enterkeyhint="go" placeholder="Password" />
             <button type="button" class="password-toggle" aria-label="Show password" data-i18n-aria-label="passwordShow" aria-pressed="false" onpointerdown="event.preventDefault()" onclick="togglePasswordVisibility('authPassword', this)"><svg class="password-toggle__icon password-toggle__icon--show" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="password-toggle__icon password-toggle__icon--hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.4 5.2A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-3.2 4.2"/><path d="M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7a9.8 9.8 0 0 0 5.4-1.6"/></svg></button>
           </div>
           <button type="button" class="auth-link-btn auth-link-btn--forgot" onclick="sendPasswordResetEmail()">Forgot password</button>
-          <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="login()">Log in</button>
+          <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="runPasswordLoginOnce(login)">Log in</button>
+          <button type="button" class="auth-link-btn" onclick="showAuthView('staff-code')" data-i18n="staffLoginLink">Team member? Log in with a code</button>
         </div>
 
         <div id="adminAuthSignupPanel" class="auth-panel hidden">
@@ -99035,6 +99194,14 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           <p id="customerWelcomeLoginCodeHint" class="auth-card-lead customer-join-code-hint" data-i18n="customerLoginCodeHint">Enter the 9-digit code from GT Termin web.</p>
           <button type="button" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="customerLoginWithCode()" data-i18n="customerLoginCodeSubmit">Log in</button>
           <button type="button" class="auth-link-btn" onclick="showAuthView()" data-i18n="customerLoginCodeBack">Use email and password</button>
+        </div>
+
+        <div id="adminAuthStaffCodePanel" class="auth-panel hidden">
+          <p class="auth-card-lead" data-i18n="staffLoginLead">Enter the code you received from the business owner.</p>
+          <label class="auth-field-label" for="staffLoginCode" data-i18n="staffLoginCodeLabel">Team member code</label>
+          <input id="staffLoginCode" inputmode="numeric" autocomplete="one-time-code" maxlength="11" placeholder="482 731 946" enterkeyhint="go" oninput="onCustomerLoginCodeInput(event)" onkeydown="if (event.key === 'Enter' &amp;&amp; !event.isComposing) { event.preventDefault(); staffLoginWithCode(); }" />
+          <button type="button" id="staffLoginSubmitBtn" class="auth-btn auth-btn--primary auth-btn--primary-xbook" onclick="staffLoginWithCode()" data-i18n="staffLoginSubmit">Open my appointments</button>
+          <button type="button" class="auth-link-btn" onclick="showAuthView()" data-i18n="staffLoginBack">Back to login</button>
         </div>
 
         <div id="customerInviteUnavailablePanel" class="auth-panel hidden">
@@ -100373,6 +100540,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
             <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="cancelEditService()" data-i18n="commonCancel">Cancel</button>
           </div>
           <p class="admin-saas-hint services-edit-card__hint">If an old service has no duration, the system uses 30 min as a fallback.</p>
+          <div id="editServiceAssignAllRow" class="services-edit-card__assign-all hidden">
+            <button type="button" class="admin-saas-btn admin-saas-btn--muted admin-saas-btn--compact" onclick="assignEditedServiceToAllStaff()" data-i18n="serviceAssignAllStaff">Assign to all team members</button>
+            <p class="admin-saas-hint" data-i18n="serviceAssignAllStaffHint">Adds this service to every team member who has a custom service list.</p>
+          </div>
         </div>
       </div>
           </section>
@@ -100517,6 +100688,67 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
               <button type="button" class="admin-saas-btn admin-saas-btn--primary" onclick="saveEditedStaffMember()" data-i18n="commonSave">Save</button>
               <button type="button" class="admin-saas-btn admin-saas-btn--muted" onclick="cancelEditStaffMember()" data-i18n="commonCancel">Cancel</button>
             </div>
+            <div id="staffRulesConflicts" class="staff-rules__conflicts hidden" role="status" aria-live="polite"></div>
+            <section id="staffServicesSection" class="staff-rules hidden" aria-labelledby="staffServicesTitle">
+              <div class="staff-rules__head">
+                <h3 id="staffServicesTitle" class="staff-rules__title" data-i18n="staffServicesTitle">Services</h3>
+                <p class="staff-rules__hint" data-i18n="staffServicesHint">Choose which services this team member performs.</p>
+              </div>
+              <label class="staff-rules__toggle">
+                <input id="staffAllServicesToggle" type="checkbox" checked onchange="onStaffAllServicesToggle()" />
+                <span data-i18n="staffAllServices">Performs all services</span>
+              </label>
+              <div id="staffServicesCustom" class="hidden">
+                <div id="staffServicesPicker" class="staff-rules__list" role="group" data-i18n-aria-label="staffServicesTitle" aria-label="Services"></div>
+                <label class="staff-rules__copy">
+                  <span data-i18n="staffCopyServicesFrom">Copy from team member</span>
+                  <select id="staffServicesCopyFrom" onchange="copyStaffServicesFrom(this.value)"></select>
+                </label>
+              </div>
+              <div class="staff-rules__actions">
+                <button type="button" id="staffSaveServicesBtn" class="admin-saas-btn admin-saas-btn--primary admin-saas-btn--compact" onclick="saveStaffServices()" data-i18n="staffSaveServices">Save services</button>
+              </div>
+            </section>
+            <section id="staffHoursSection" class="staff-rules hidden" aria-labelledby="staffHoursTitle">
+              <div class="staff-rules__head">
+                <h3 id="staffHoursTitle" class="staff-rules__title" data-i18n="staffHoursTitle">Working hours</h3>
+                <p class="staff-rules__hint" data-i18n="staffHoursHint">Set this team member's weekly schedule and breaks.</p>
+              </div>
+              <label class="staff-rules__toggle">
+                <input id="staffUsesBusinessHoursToggle" type="checkbox" checked onchange="onStaffUsesBusinessHoursToggle()" />
+                <span data-i18n="staffUsesBusinessHours">Same as business hours</span>
+              </label>
+              <div id="staffHoursEditor" class="staff-rules__hours hidden"></div>
+              <div class="staff-rules__actions">
+                <button type="button" id="staffSaveHoursBtn" class="admin-saas-btn admin-saas-btn--primary admin-saas-btn--compact" onclick="saveStaffHours()" data-i18n="staffSaveHours">Save working hours</button>
+              </div>
+            </section>
+            <section id="staffAccessSection" class="staff-rules hidden" aria-labelledby="staffAccessTitle">
+              <div class="staff-rules__head">
+                <h3 id="staffAccessTitle" class="staff-rules__title" data-i18n="staffAccessTitle">App access</h3>
+                <p class="staff-rules__hint" data-i18n="staffAccessHint">Let this team member see appointments in GT Termin (view only).</p>
+              </div>
+              <p id="staffAccessStatus" class="staff-access__status" role="status"></p>
+              <div class="staff-access__scope" role="radiogroup" aria-labelledby="staffAccessScopeLabel">
+                <span id="staffAccessScopeLabel" class="staff-access__scope-label" data-i18n="staffAccessScopeLabel">Can see</span>
+                <label class="staff-rules__toggle"><input type="radio" name="staffAccessScope" value="own" onchange="saveStaffAccessScope('own')" /><span data-i18n="staffAccessScopeOwn">Only their own appointments</span></label>
+                <label class="staff-rules__toggle"><input type="radio" name="staffAccessScope" value="all" onchange="saveStaffAccessScope('all')" /><span data-i18n="staffAccessScopeAll">All appointments of the business</span></label>
+                <label class="staff-rules__toggle"><input type="radio" name="staffAccessScope" value="full" onchange="saveStaffAccessScope('full')" /><span data-i18n="staffAccessScopeFull">Full business view (read only)</span></label>
+                <span class="staff-access__scope-label" data-i18n="staffAccessScopeFullHint">Sees reports, revenue and all clients with contact details. For partners and managers only.</span>
+              </div>
+              <label id="staffAccessCanCreateRow" class="staff-rules__toggle hidden"><input type="checkbox" id="staffAccessCanCreate" onchange="saveStaffCanCreateBookings(this.checked)" /><span data-i18n="staffAccessCanCreate">Can create appointments for themselves</span></label>
+              <div id="staffAccessCodeBox" class="staff-access__code hidden" role="status" aria-live="polite">
+                <span class="staff-access__code-label" data-i18n="staffAccessCodeLabel">Code for the team member</span>
+                <strong id="staffAccessCodeValue" class="staff-access__code-value"></strong>
+                <span id="staffAccessCodeExpiry" class="staff-access__code-expiry"></span>
+                <span class="staff-access__code-help" data-i18n="staffAccessCodeHelp">In GT Termin: Log in → "Team member? Log in with a code" → enter this code. It works once.</span>
+                <button type="button" class="admin-saas-btn admin-saas-btn--muted admin-saas-btn--compact" onclick="copyStaffAccessCode()" data-i18n="staffAccessCopy">Copy code</button>
+              </div>
+              <div class="staff-rules__actions staff-access__actions">
+                <button type="button" id="staffAccessRevokeBtn" class="admin-saas-btn admin-saas-btn--ghost-danger admin-saas-btn--compact hidden" onclick="revokeStaffAccess()" data-i18n="staffAccessRevoke">Remove access</button>
+                <button type="button" id="staffAccessIssueBtn" class="admin-saas-btn admin-saas-btn--primary admin-saas-btn--compact" onclick="issueStaffAccessCode()" data-i18n="staffAccessIssue">Create access code</button>
+              </div>
+            </section>
             <section class="staff-time-off" aria-labelledby="staffTimeOffTitle">
               <div class="staff-time-off__head">
                 <div>
@@ -103409,6 +103641,45 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       </div>
     </div>
 
+    <div id="staffAgendaView" class="staff-agenda hidden" role="main" aria-labelledby="staffAgendaBusiness">
+      <header class="staff-agenda__header">
+        <div class="staff-agenda__who">
+          <h1 id="staffAgendaBusiness" class="staff-agenda__business">GT Termin</h1>
+          <p id="staffAgendaMember" class="staff-agenda__member"></p>
+        </div>
+        <div class="staff-agenda__tools">
+          <button type="button" id="staffAgendaRefreshBtn" class="staff-agenda__icon-btn" onclick="refreshStaffAgenda({ manual: true })" data-i18n-aria-label="staffAgendaRefresh" aria-label="Refresh">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+          </button>
+          <button type="button" class="staff-agenda__icon-btn" onclick="staffAgendaSignOut()" data-i18n-aria-label="staffAgendaSignOut" aria-label="Sign out">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 17l5-5-5-5"/><path d="M20 12H9"/><path d="M12 19H5V5h7"/></svg>
+          </button>
+        </div>
+      </header>
+      <p id="staffAgendaOffline" class="staff-agenda__offline hidden" role="status" data-i18n="staffAgendaOffline">No connection. Showing the last loaded appointments.</p>
+      <section class="staff-agenda__next" aria-labelledby="staffAgendaNextTitle">
+        <h2 id="staffAgendaNextTitle" class="staff-agenda__section-title" data-i18n="staffAgendaNext">Next appointment</h2>
+        <div id="staffAgendaNextCard"></div>
+      </section>
+      <section class="staff-agenda__day" aria-labelledby="staffAgendaDayLabel">
+        <div class="staff-agenda__day-nav">
+          <button type="button" class="staff-agenda__icon-btn" onclick="staffAgendaShiftDay(-1)" data-i18n-aria-label="staffAgendaPrevDay" aria-label="Previous day">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button type="button" id="staffAgendaDayLabel" class="staff-agenda__day-label" onclick="staffAgendaGoToday()"></button>
+          <button type="button" class="staff-agenda__icon-btn" onclick="staffAgendaShiftDay(1)" data-i18n-aria-label="staffAgendaNextDay" aria-label="Next day">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div id="staffAgendaDayList" class="staff-agenda__list"></div>
+      </section>
+      <section class="staff-agenda__upcoming" aria-labelledby="staffAgendaUpcomingTitle">
+        <h2 id="staffAgendaUpcomingTitle" class="staff-agenda__section-title" data-i18n="staffAgendaUpcoming">Coming up</h2>
+        <div id="staffAgendaUpcomingList"></div>
+      </section>
+      <p id="staffAgendaUpdated" class="staff-agenda__updated"></p>
+    </div>
+
     <div id="publicView" class="hidden">
 
       <div id="xbookLiquidScene" class="xb-scene xb-scene--light" aria-hidden="true">
@@ -103585,13 +103856,13 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
               <div class="auth-divider" role="separator" hidden aria-hidden="true"><span>or</span></div>
               <p class="auth-card-lead">Sign in to book and manage your appointments.</p>
               <label class="auth-field-label" for="customerAuthEmail">Email</label>
-              <input id="customerAuthEmail" type="email" autocomplete="email" placeholder="you@email.com" />
+              <input id="customerAuthEmail" type="email" autocomplete="email" enterkeyhint="next" placeholder="you@email.com" />
               <label class="auth-field-label" for="customerAuthPassword">Password</label>
               <div class="password-wrap">
-                <input id="customerAuthPassword" type="password" autocomplete="current-password" placeholder="Password" />
+                <input id="customerAuthPassword" type="password" autocomplete="current-password" enterkeyhint="go" placeholder="Password" />
                 <button type="button" class="password-toggle" aria-label="Show password" data-i18n-aria-label="passwordShow" aria-pressed="false" onpointerdown="event.preventDefault()" onclick="togglePasswordVisibility('customerAuthPassword', this)"><svg class="password-toggle__icon password-toggle__icon--show" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="password-toggle__icon password-toggle__icon--hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.4 5.2A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-3.2 4.2"/><path d="M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7a9.8 9.8 0 0 0 5.4-1.6"/></svg></button>
               </div>
-              <button type="button" class="auth-btn auth-btn--primary" onclick="customerLogin()">Log in</button>
+              <button type="button" class="auth-btn auth-btn--primary" onclick="runPasswordLoginOnce(customerLogin)">Log in</button>
               <button type="button" class="auth-link-btn" onclick="setCustomerAuthPanel('code')" data-i18n="customerLoginWithCode">Login with code</button>
               <button type="button" class="auth-link-btn" onclick="setCustomerAuthPanel('signup')">Create customer account</button>
             </div>
@@ -104710,7 +104981,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
               </span>
               <span class="customer-profile-support-card__copy">
                 <strong>Email support</strong>
-                <span>xbooksupport@gtwebstudio.com</span>
+                <span>gtterminsupport@gtwebstudio.com</span>
               </span>
               <span class="customer-mobile-profile-chevron" aria-hidden="true">›</span>
             </button>
@@ -104731,7 +105002,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           </header>
           <div class="customer-profile-edit-sheet__body customer-profile-legal">
             <iframe id="customerProfilePrivacyFrame" class="xb-legal-frame" title="Privacy Policy" data-legal-doc="privacy"></iframe>
-            <p class="customer-profile-info-copy">Questions? Contact <a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=GT%20Termin%20Support">xbooksupport@gtwebstudio.com</a>.</p>
+            <p class="customer-profile-info-copy">Questions? Contact <a class="customer-profile-info-email" href="mailto:gtterminsupport@gtwebstudio.com?subject=GT%20Termin%20Support">gtterminsupport@gtwebstudio.com</a>.</p>
           </div>
         </div>
       </div>
@@ -104749,7 +105020,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           </header>
           <div class="customer-profile-edit-sheet__body customer-profile-legal">
             <iframe id="customerProfileTermsFrame" class="xb-legal-frame" title="Terms of Service" data-legal-doc="terms"></iframe>
-            <p class="customer-profile-info-copy">Support: <a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=GT%20Termin%20Support">xbooksupport@gtwebstudio.com</a></p>
+            <p class="customer-profile-info-copy">Support: <a class="customer-profile-info-email" href="mailto:gtterminsupport@gtwebstudio.com?subject=GT%20Termin%20Support">gtterminsupport@gtwebstudio.com</a></p>
           </div>
         </div>
       </div>
@@ -104775,7 +105046,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
             <p class="customer-profile-info-about-brand">GT Termin</p>
             <p class="customer-profile-info-about-version">Version <span id="customerProfileAboutVersion">1.0</span></p>
             <p class="customer-profile-info-copy">Developed and maintained by GT Web Studio.</p>
-            <p class="customer-profile-info-copy">Support:<br><a class="customer-profile-info-email" href="mailto:xbooksupport@gtwebstudio.com?subject=GT%20Termin%20Support">xbooksupport@gtwebstudio.com</a></p>
+            <p class="customer-profile-info-copy">Support:<br><a class="customer-profile-info-email" href="mailto:gtterminsupport@gtwebstudio.com?subject=GT%20Termin%20Support">gtterminsupport@gtwebstudio.com</a></p>
             <p class="customer-profile-info-about-note">© 2026 GT Web Studio<br>All rights reserved.</p>
           </div>
         </div>
@@ -105770,6 +106041,91 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       staffDeleteBlockedLast: "You can't delete your only team member. Edit this profile instead, or add another team member first.",
       staffUnassigned: "Unassigned",
       staffNoneAvailableShort: "No team members available",
+      staffServicesTitle: "Services",
+      staffServicesHint: "Choose which services this team member performs.",
+      staffAllServices: "Performs all services",
+      staffServicesNone: "Add services first.",
+      staffCopyServicesFrom: "Copy from team member",
+      staffCopyServicesPlaceholder: "Choose…",
+      staffServicesCopied: "Copied. Press Save services to keep it.",
+      staffSaveServices: "Save services",
+      staffServicesSaved: "Services saved.",
+      staffHoursTitle: "Working hours",
+      staffHoursHint: "Set this team member's weekly schedule and breaks.",
+      staffUsesBusinessHours: "Same as business hours",
+      staffHoursDayOff: "Day off",
+      staffHoursBreak: "Break (optional)",
+      staffSaveHours: "Save working hours",
+      staffHoursSaved: "Working hours saved.",
+      staffRulesConflictsTitle: "{n} upcoming appointments no longer fit these settings. They were kept as they are; review them in the calendar.",
+      serviceAssignAllStaff: "Assign to all team members",
+      serviceAssignAllStaffHint: "Adds this service to every team member who has a custom service list.",
+      serviceAssignedAllStaff: "Service assigned to all team members.",
+      bookAnyStaff: "Any available",
+      bookAnyStaffRole: "First free team member",
+      bookAnyStaffNoRepeat: "Repeat bookings need a specific team member.",
+      bookNoServicesForStaff: "No services available",
+      bookNoServicesForStaffHint: "This team member has no bookable services. Choose another team member.",
+      staffLoginLink: "Team member? Log in with a code",
+      staffViewerLocked: "Only the business owner can open this. Team members can view the calendar.",
+      staffViewerReadOnly: "View only. Ask the business owner to change appointments.",
+      staffViewerAccessChanged: "Your access was changed by the business owner.",
+      staffViewerAccessRemoved: "Your access to this business was removed.",
+      staffLoginTitle: "Team member login",
+      staffLoginLead: "Enter the code you received from the business owner.",
+      staffLoginCodeLabel: "Team member code",
+      staffLoginSubmit: "Open my appointments",
+      staffLoginBack: "Back to login",
+      staffLoginCodeInvalid: "Invalid or expired code. Ask the business owner for a new code.",
+      staffLoginTooMany: "Too many attempts. Try again in 15 minutes.",
+      staffAgendaRefresh: "Refresh",
+      staffAgendaSignOut: "Sign out",
+      staffAgendaSignOutConfirm: "Sign out of GT Termin on this device?",
+      staffAgendaOffline: "No connection. Showing the last loaded appointments.",
+      staffAgendaNext: "Next appointment",
+      staffAgendaPrevDay: "Previous day",
+      staffAgendaNextDay: "Next day",
+      staffAgendaUpcoming: "Coming up",
+      staffAgendaToday: "Today",
+      staffAgendaTomorrow: "Tomorrow",
+      staffAgendaStatusConfirmed: "Confirmed",
+      staffAgendaStatusPending: "Pending",
+      staffAgendaStatusCancelled: "Cancelled",
+      staffAgendaNoName: "Customer",
+      staffAgendaMinutes: "min",
+      staffAgendaWith: "With",
+      staffAgendaScopeAll: "All appointments",
+      staffAgendaScopeOwn: "Your appointments",
+      staffAgendaNoUpcoming: "No upcoming appointments.",
+      staffAgendaNoneThisDay: "No appointments on this day.",
+      staffAgendaNoneComing: "Nothing scheduled in the next 30 days.",
+      staffAgendaUpdatedAt: "Updated at {time}",
+      staffAgendaAccessEnded: "Your access has ended. Ask the business owner for a new code.",
+      staffAccessTitle: "App access",
+      staffAccessHint: "Let this team member see appointments in GT Termin (view only).",
+      staffAccessScopeLabel: "Can see",
+      staffAccessScopeOwn: "Only their own appointments",
+      staffAccessScopeAll: "All appointments of the business",
+      staffAccessCanCreate: "Can create appointments for themselves",
+      staffAccessScopeFull: "Full business view (read only)",
+      staffAccessScopeFullHint: "Sees reports, revenue and all clients with contact details. For partners and managers only.",
+      staffAccessScopeFullConfirm: "This team member will see reports, revenue and all clients with contact details (read only). Continue?",
+      staffAccessScopeSaved: "Saved.",
+      staffAccessCodeLabel: "Code for the team member",
+      staffAccessCodeHelp: "In GT Termin: Log in → \"Team member? Log in with a code\" → enter this code. It works once.",
+      staffAccessCodeValidUntil: "Valid until {time}",
+      staffAccessCopy: "Copy code",
+      staffAccessCopied: "Code copied.",
+      staffAccessIssue: "Create access code",
+      staffAccessIssueAnother: "Code for another device",
+      staffAccessIssueFailed: "Could not create a code. Please try again.",
+      staffAccessRevoke: "Remove access",
+      staffAccessRevokeConfirm: "Remove app access? The team member is signed out on all devices. Appointments are not changed.",
+      staffAccessRevoked: "Access removed.",
+      staffAccessInactive: "Activate this team member first.",
+      staffAccessConnected: "Has access to GT Termin.",
+      staffAccessWaiting: "Waiting for the team member to enter the code.",
+      staffAccessNone: "No app access.",
       timeOffTitle: "Time off",
       timeOffSubtitle: "Mark days this team member is unavailable.",
       timeOffAdd: "Add time off",
@@ -107717,6 +108073,91 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       staffDeleteBlockedLast: "Не можете да го избришете единствениот член од тимот. Наместо тоа, уредете го овој профил или прво додајте друг член.",
       staffUnassigned: "Нема доделен",
       staffNoneAvailableShort: "Нема достапни членови од тимот",
+      staffServicesTitle: "Услуги",
+      staffServicesHint: "Изберете кои услуги ги изведува овој член од тимот.",
+      staffAllServices: "Ги изведува сите услуги",
+      staffServicesNone: "Прво додадете услуги.",
+      staffCopyServicesFrom: "Копирај од член од тимот",
+      staffCopyServicesPlaceholder: "Изберете…",
+      staffServicesCopied: "Копирано. Притиснете „Зачувај услуги“ за да се зачува.",
+      staffSaveServices: "Зачувај услуги",
+      staffServicesSaved: "Услугите се зачувани.",
+      staffHoursTitle: "Работно време",
+      staffHoursHint: "Поставете го неделниот распоред и паузите на овој член од тимот.",
+      staffUsesBusinessHours: "Исто како работното време на бизнисот",
+      staffHoursDayOff: "Слободен ден",
+      staffHoursBreak: "Пауза (изборно)",
+      staffSaveHours: "Зачувај работно време",
+      staffHoursSaved: "Работното време е зачувано.",
+      staffRulesConflictsTitle: "{n} идни термини повеќе не одговараат на овие поставки. Останати се како што се; проверете ги во календарот.",
+      serviceAssignAllStaff: "Додели на сите вработени",
+      serviceAssignAllStaffHint: "Ја додава услугата на секој член од тимот што има посебна листа на услуги.",
+      serviceAssignedAllStaff: "Услугата е доделена на сите вработени.",
+      bookAnyStaff: "Било кој слободен",
+      bookAnyStaffRole: "Прв слободен член од тимот",
+      bookAnyStaffNoRepeat: "За повторливи термини изберете конкретен член од тимот.",
+      bookNoServicesForStaff: "Нема достапни услуги",
+      bookNoServicesForStaffHint: "Овој член од тимот нема услуги за закажување. Изберете друг член од тимот.",
+      staffLoginLink: "Член од тимот? Најави се со код",
+      staffViewerLocked: "Ова е достапно само за сопственикот на бизнисот. Како вработен го гледате календарот.",
+      staffViewerReadOnly: "Само преглед. За промена на термин обратете се кај сопственикот.",
+      staffViewerAccessChanged: "Сопственикот ви го промени пристапот.",
+      staffViewerAccessRemoved: "Пристапот до бизнисот ви е одземен.",
+      staffLoginTitle: "Најава за член од тимот",
+      staffLoginLead: "Внесете го кодот што го добивте од сопственикот на бизнисот.",
+      staffLoginCodeLabel: "Код за член од тимот",
+      staffLoginSubmit: "Отвори ги моите термини",
+      staffLoginBack: "Назад кон најава",
+      staffLoginCodeInvalid: "Кодот е погрешен или истечен. Побарајте нов код од сопственикот.",
+      staffLoginTooMany: "Премногу обиди. Обидете се повторно за 15 минути.",
+      staffAgendaRefresh: "Освежи",
+      staffAgendaSignOut: "Одјави се",
+      staffAgendaSignOutConfirm: "Да се одјавите од GT Termin на овој уред?",
+      staffAgendaOffline: "Нема конекција. Прикажани се последно вчитаните термини.",
+      staffAgendaNext: "Следен термин",
+      staffAgendaPrevDay: "Претходен ден",
+      staffAgendaNextDay: "Следен ден",
+      staffAgendaUpcoming: "Наредни термини",
+      staffAgendaToday: "Денес",
+      staffAgendaTomorrow: "Утре",
+      staffAgendaStatusConfirmed: "Потврден",
+      staffAgendaStatusPending: "На чекање",
+      staffAgendaStatusCancelled: "Откажан",
+      staffAgendaNoName: "Клиент",
+      staffAgendaMinutes: "мин",
+      staffAgendaWith: "Кај",
+      staffAgendaScopeAll: "Сите термини",
+      staffAgendaScopeOwn: "Ваши термини",
+      staffAgendaNoUpcoming: "Нема претстојни термини.",
+      staffAgendaNoneThisDay: "Нема термини на овој ден.",
+      staffAgendaNoneComing: "Нема закажано во наредните 30 дена.",
+      staffAgendaUpdatedAt: "Ажурирано во {time}",
+      staffAgendaAccessEnded: "Вашиот пристап е прекинат. Побарајте нов код од сопственикот.",
+      staffAccessTitle: "Пристап до апликацијата",
+      staffAccessHint: "Овозможете му на овој член од тимот да ги гледа термините во GT Termin (само преглед).",
+      staffAccessScopeLabel: "Може да гледа",
+      staffAccessScopeOwn: "Само свои термини",
+      staffAccessScopeAll: "Сите термини на бизнисот",
+      staffAccessCanCreate: "Може сам да закажува термини (само за себе)",
+      staffAccessScopeFull: "Целосен преглед на бизнисот (само читање)",
+      staffAccessScopeFullHint: "Гледа извештаи, приходи и сите клиенти со контакти. Само за партнери и менаџери.",
+      staffAccessScopeFullConfirm: "Овој вработен ќе гледа извештаи, приходи и сите клиенти со контакти (само читање). Да продолжам?",
+      staffAccessScopeSaved: "Зачувано.",
+      staffAccessCodeLabel: "Код за членот од тимот",
+      staffAccessCodeHelp: "Во GT Termin: Најава → „Член од тимот? Најави се со код“ → внесете го кодот. Важи еднаш.",
+      staffAccessCodeValidUntil: "Важи до {time}",
+      staffAccessCopy: "Копирај код",
+      staffAccessCopied: "Кодот е копиран.",
+      staffAccessIssue: "Креирај код за пристап",
+      staffAccessIssueAnother: "Код за друг уред",
+      staffAccessIssueFailed: "Не може да се креира код. Обидете се повторно.",
+      staffAccessRevoke: "Одземи пристап",
+      staffAccessRevokeConfirm: "Да се одземе пристапот? Членот од тимот ќе биде одјавен на сите уреди. Термините не се менуваат.",
+      staffAccessRevoked: "Пристапот е одземен.",
+      staffAccessInactive: "Прво активирајте го овој член од тимот.",
+      staffAccessConnected: "Има пристап до GT Termin.",
+      staffAccessWaiting: "Се чека членот од тимот да го внесе кодот.",
+      staffAccessNone: "Нема пристап до апликацијата.",
       timeOffTitle: "Отсуство",
       timeOffSubtitle: "Означете денови кога овој член од тимот не е достапен.",
       timeOffAdd: "Додај отсуство",
@@ -109663,6 +110104,91 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       staffDeleteBlockedLast: "Nuk mund ta fshini anëtarin tuaj të vetëm të ekipit. Ndryshoni këtë profil, ose shtoni më parë një anëtar tjetër ekipi.",
       staffUnassigned: "I pacaktuar",
       staffNoneAvailableShort: "Nuk ka anëtarë ekipi të disponueshëm",
+      staffServicesTitle: "Shërbimet",
+      staffServicesHint: "Zgjidhni cilat shërbime i kryen ky anëtar i ekipit.",
+      staffAllServices: "I kryen të gjitha shërbimet",
+      staffServicesNone: "Shtoni fillimisht shërbime.",
+      staffCopyServicesFrom: "Kopjo nga anëtari i ekipit",
+      staffCopyServicesPlaceholder: "Zgjidhni…",
+      staffServicesCopied: "U kopjua. Shtypni „Ruaj shërbimet“ për ta ruajtur.",
+      staffSaveServices: "Ruaj shërbimet",
+      staffServicesSaved: "Shërbimet u ruajtën.",
+      staffHoursTitle: "Orari i punës",
+      staffHoursHint: "Caktoni orarin javor dhe pushimet e këtij anëtari të ekipit.",
+      staffUsesBusinessHours: "Njësoj si orari i biznesit",
+      staffHoursDayOff: "Ditë pushimi",
+      staffHoursBreak: "Pushim (opsional)",
+      staffSaveHours: "Ruaj orarin",
+      staffHoursSaved: "Orari i punës u ruajt.",
+      staffRulesConflictsTitle: "{n} termine të ardhshme nuk përputhen më me këto cilësime. U ruajtën siç janë; kontrollojini në kalendar.",
+      serviceAssignAllStaff: "Caktoje te i gjithë stafi",
+      serviceAssignAllStaffHint: "E shton këtë shërbim te çdo anëtar i ekipit që ka listë të veçantë shërbimesh.",
+      serviceAssignedAllStaff: "Shërbimi iu caktua të gjithë stafit.",
+      bookAnyStaff: "Kushdo i lirë",
+      bookAnyStaffRole: "Anëtari i parë i lirë i ekipit",
+      bookAnyStaffNoRepeat: "Për terminet e përsëritura zgjidhni një anëtar të caktuar të ekipit.",
+      bookNoServicesForStaff: "Nuk ka shërbime në dispozicion",
+      bookNoServicesForStaffHint: "Ky anëtar i ekipit nuk ka shërbime për rezervim. Zgjidhni një anëtar tjetër.",
+      staffLoginLink: "Anëtar i ekipit? Hyni me kod",
+      staffViewerLocked: "Kjo është vetëm për pronarin e biznesit. Si anëtar i ekipit shihni kalendarin.",
+      staffViewerReadOnly: "Vetëm për shikim. Për ndryshime drejtohuni te pronari.",
+      staffViewerAccessChanged: "Pronari jua ndryshoi qasjen.",
+      staffViewerAccessRemoved: "Qasja juaj në këtë biznes u hoq.",
+      staffLoginTitle: "Hyrja për anëtarët e ekipit",
+      staffLoginLead: "Shkruani kodin që morët nga pronari i biznesit.",
+      staffLoginCodeLabel: "Kodi i anëtarit të ekipit",
+      staffLoginSubmit: "Hap terminet e mia",
+      staffLoginBack: "Kthehu te hyrja",
+      staffLoginCodeInvalid: "Kodi është i gabuar ose ka skaduar. Kërkoni një kod të ri nga pronari.",
+      staffLoginTooMany: "Shumë përpjekje. Provoni përsëri pas 15 minutash.",
+      staffAgendaRefresh: "Rifresko",
+      staffAgendaSignOut: "Dil",
+      staffAgendaSignOutConfirm: "Të dilni nga GT Termin në këtë pajisje?",
+      staffAgendaOffline: "Nuk ka lidhje. Shfaqen terminet e ngarkuara së fundi.",
+      staffAgendaNext: "Termini i radhës",
+      staffAgendaPrevDay: "Dita e mëparshme",
+      staffAgendaNextDay: "Dita tjetër",
+      staffAgendaUpcoming: "Në vijim",
+      staffAgendaToday: "Sot",
+      staffAgendaTomorrow: "Nesër",
+      staffAgendaStatusConfirmed: "I konfirmuar",
+      staffAgendaStatusPending: "Në pritje",
+      staffAgendaStatusCancelled: "I anuluar",
+      staffAgendaNoName: "Klient",
+      staffAgendaMinutes: "min",
+      staffAgendaWith: "Me",
+      staffAgendaScopeAll: "Të gjitha terminet",
+      staffAgendaScopeOwn: "Terminet tuaja",
+      staffAgendaNoUpcoming: "Nuk ka termine të ardhshme.",
+      staffAgendaNoneThisDay: "Nuk ka termine në këtë ditë.",
+      staffAgendaNoneComing: "Asgjë e planifikuar në 30 ditët e ardhshme.",
+      staffAgendaUpdatedAt: "Përditësuar në {time}",
+      staffAgendaAccessEnded: "Qasja juaj ka përfunduar. Kërkoni një kod të ri nga pronari.",
+      staffAccessTitle: "Qasja në aplikacion",
+      staffAccessHint: "Lejojeni këtë anëtar të ekipit t'i shohë terminet në GT Termin (vetëm shikim).",
+      staffAccessScopeLabel: "Mund të shohë",
+      staffAccessScopeOwn: "Vetëm terminet e veta",
+      staffAccessScopeAll: "Të gjitha terminet e biznesit",
+      staffAccessCanCreate: "Mund të caktojë termine për veten",
+      staffAccessScopeFull: "Pamje e plotë e biznesit (vetëm lexim)",
+      staffAccessScopeFullHint: "Sheh raportet, të ardhurat dhe të gjithë klientët me kontakte. Vetëm për partnerë dhe menaxherë.",
+      staffAccessScopeFullConfirm: "Ky anëtar do të shohë raportet, të ardhurat dhe të gjithë klientët me kontakte (vetëm lexim). Vazhdoj?",
+      staffAccessScopeSaved: "U ruajt.",
+      staffAccessCodeLabel: "Kodi për anëtarin e ekipit",
+      staffAccessCodeHelp: "Në GT Termin: Hyrja → „Anëtar i ekipit? Hyni me kod“ → shkruani këtë kod. Vlen një herë.",
+      staffAccessCodeValidUntil: "Vlen deri më {time}",
+      staffAccessCopy: "Kopjo kodin",
+      staffAccessCopied: "Kodi u kopjua.",
+      staffAccessIssue: "Krijo kod qasjeje",
+      staffAccessIssueAnother: "Kod për pajisje tjetër",
+      staffAccessIssueFailed: "Kodi nuk u krijua. Provoni përsëri.",
+      staffAccessRevoke: "Hiq qasjen",
+      staffAccessRevokeConfirm: "Të hiqet qasja? Anëtari i ekipit do të dalë nga të gjitha pajisjet. Terminet nuk ndryshojnë.",
+      staffAccessRevoked: "Qasja u hoq.",
+      staffAccessInactive: "Aktivizojeni fillimisht këtë anëtar të ekipit.",
+      staffAccessConnected: "Ka qasje në GT Termin.",
+      staffAccessWaiting: "Pritet që anëtari i ekipit të shkruajë kodin.",
+      staffAccessNone: "Nuk ka qasje në aplikacion.",
       timeOffTitle: "Leje",
       timeOffSubtitle: "Shënoni ditët kur ky anëtar ekipi nuk është i disponueshëm.",
       timeOffAdd: "Shto leje",
@@ -111780,6 +112306,19 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       "This time is inside break / pause.": "Ова време е во рамките на пауза.",
       "This time is not available.": "Ова време не е достапно.",
       "This team member is unavailable at this time.": "Овој член од тимот не е достапен во ова време.",
+      "This team member does not perform this service.": "Овој член од тимот не ја изведува оваа услуга.",
+      "This team member does not work on this day.": "Овој член од тимот не работи на овој ден.",
+      "This time is outside this team member's working hours.": "Ова време е надвор од работното време на овој член од тимот.",
+      "This time overlaps this team member's break.": "Ова време се преклопува со паузата на овој член од тимот.",
+      "No team member is available for this service at this time.": "Нема слободен член од тимот за оваа услуга во ова време.",
+      "Choose at least one service, or choose all services.": "Изберете барем една услуга или сите услуги.",
+      "Choose at least one working day.": "Изберете барем еден работен ден.",
+      "End time must be after start time.": "Крајот мора да биде по почетокот.",
+      "The break must be inside the working hours.": "Паузата мора да биде во рамките на работното време.",
+      "Each day can be set only once.": "Секој ден може да се постави само еднаш.",
+      "Invalid working hours.": "Неважечко работно време.",
+      "Only the business owner can change this.": "Само сопственикот на бизнисот може да го промени ова.",
+      "Could not save. Please try again.": "Не може да се зачува. Обидете се повторно.",
       "This overlaps another time-off period for this team member.": "Ова се преклопува со друг период на отсуство за овој член од тимот.",
       "Time off saved.": "Отсуството е зачувано.",
       "Time off removed.": "Отсуството е избришано.",
@@ -112053,6 +112592,19 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       "This time is inside break / pause.": "Kjo orë është brenda pushimit / pauzës.",
       "This time is not available.": "Kjo orë nuk është e disponueshme.",
       "This team member is unavailable at this time.": "Ky anëtar ekipi nuk është i disponueshëm në këtë kohë.",
+      "This team member does not perform this service.": "Ky anëtar i ekipit nuk e kryen këtë shërbim.",
+      "This team member does not work on this day.": "Ky anëtar i ekipit nuk punon në këtë ditë.",
+      "This time is outside this team member's working hours.": "Kjo orë është jashtë orarit të punës së këtij anëtari të ekipit.",
+      "This time overlaps this team member's break.": "Kjo orë mbivendoset me pushimin e këtij anëtari të ekipit.",
+      "No team member is available for this service at this time.": "Asnjë anëtar i ekipit nuk është i lirë për këtë shërbim në këtë orë.",
+      "Choose at least one service, or choose all services.": "Zgjidhni të paktën një shërbim ose të gjitha shërbimet.",
+      "Choose at least one working day.": "Zgjidhni të paktën një ditë pune.",
+      "End time must be after start time.": "Ora e mbarimit duhet të jetë pas orës së fillimit.",
+      "The break must be inside the working hours.": "Pushimi duhet të jetë brenda orarit të punës.",
+      "Each day can be set only once.": "Çdo ditë mund të caktohet vetëm një herë.",
+      "Invalid working hours.": "Orar pune i pavlefshëm.",
+      "Only the business owner can change this.": "Vetëm pronari i biznesit mund ta ndryshojë këtë.",
+      "Could not save. Please try again.": "Nuk u ruajt. Provoni përsëri.",
       "This overlaps another time-off period for this team member.": "Kjo mbivendoset me një periudhë tjetër lejeje për këtë anëtar ekipi.",
       "Time off saved.": "Leja u ruajt.",
       "Time off removed.": "Leja u fshi.",
@@ -117617,6 +118169,11 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   let adminCalendarServiceFilter = "";
   let staffTimeOffRows = [];
   let publicStaffUnavailability = [];
+  /** staffId -> { allServices, serviceIds:Set, usesBusinessHours, hoursByDow:{dow:{start,end,breakStart,breakEnd}} }.
+   * Missing entry = performs every service and follows business hours (the default). */
+  let staffBookingRules = new Map();
+  /** True once the server-side staff rules (services + individual hours) are available. */
+  let staffBookingRulesServerReady = false;
   let staffTimeOffConflictState = null;
   let adminCalendarAnchorDate = new Date();
   let adminBookingsMainView = "calendar";
@@ -117996,11 +118553,32 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   const CUSTOMER_APP_VERSION = "1.0";
-  const XBOOK_SUPPORT_EMAIL = "xbooksupport@gtwebstudio.com";
+  // Installed app version from native metadata (iOS CFBundleShortVersionString/CFBundleVersion,
+  // Android versionName/versionCode). The web build keeps CUSTOMER_APP_VERSION.
+  let nativeAppInfoPromise = null;
+  function setAppVersionText(el, withBuild) {
+    if (!el) return;
+    el.textContent = CUSTOMER_APP_VERSION;
+    const AppPlugin = isCapacitorNativePlatform() ? getCapacitorAppPlugin() : null;
+    if (!AppPlugin || typeof AppPlugin.getInfo !== "function") return;
+    if (!nativeAppInfoPromise) {
+      nativeAppInfoPromise = AppPlugin.getInfo().catch(() => {
+        nativeAppInfoPromise = null;
+        return null;
+      });
+    }
+    nativeAppInfoPromise.then((info) => {
+      const version = String(info?.version || "").trim();
+      if (!version) return;
+      const build = String(info?.build || "").trim();
+      el.textContent = withBuild && build ? version + " (" + build + ")" : version;
+    });
+  }
+  const XBOOK_SUPPORT_EMAIL = "gtterminsupport@gtwebstudio.com";
   const CUSTOMER_SUPPORT_EMAIL = XBOOK_SUPPORT_EMAIL;
   const XBOOK_SUPPORT_PHONE = "+38978359201";
   const XBOOK_SUPPORT_MAILTO =
-    "mailto:xbooksupport@gtwebstudio.com?subject=" + encodeURIComponent("GT Termin Support");
+    "mailto:gtterminsupport@gtwebstudio.com?subject=" + encodeURIComponent("GT Termin Support");
   const CUSTOMER_PROFILE_INFO_SHEET_IDS = [
     "customerProfileHelpSheet",
     "customerProfilePrivacySheet",
@@ -120649,6 +121227,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const plat = String(platform || getNativePushPlatform() || "").trim().toLowerCase();
     if (!token || !plat) return false;
     rememberNativePushDeviceToken(token);
+    if (isStaffAccessUser(currentUser)) {
+      return upsertStaffPushTokenToServer(token, plat);
+    }
     if (currentUserRole === "admin") {
       return upsertBusinessPushTokenToServer(token, plat);
     }
@@ -121279,6 +121860,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       if (String(data?.type || "").trim() === "booking_changed") {
         void refreshCustomerAfterBookingChange("push-received");
       }
+      if (String(data?.type || "").trim() === "staff_booking" && isStaffAgendaVisible()) {
+        void refreshStaffAgenda();
+      }
     });
 
     plugin.addListener("pushNotificationActionPerformed", (action) => {
@@ -121302,6 +121886,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       }
       if (type === "customer_booking" || type === "customer_join") {
         queueOrApplyBusinessSystemPushInbox();
+      }
+      if (type === "staff_booking") {
+        openStaffAgendaFromPush(String(data?.date || "").trim());
       }
     });
   }
@@ -123392,7 +123979,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     hub.removeAttribute("hidden");
     hub.hidden = false;
     const versionEl = document.getElementById("customerMobileProfileAppVersion");
-    if (versionEl) versionEl.textContent = CUSTOMER_APP_VERSION;
+    setAppVersionText(versionEl, false);
     if (typeof applyTranslations === "function") applyTranslations(hub);
     if (isCustomerMobileShellEnabled()) {
       document.getElementById("customerMobileBottomNav")?.classList.add("hidden");
@@ -123447,7 +124034,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   function openCustomerProfileAboutSheet() {
     const versionEl = document.getElementById("customerProfileAboutVersion");
-    if (versionEl) versionEl.textContent = CUSTOMER_APP_VERSION;
+    setAppVersionText(versionEl, true);
     showCustomerProfileInfoSheet("customerProfileAboutSheet");
   }
   window.openCustomerProfileAboutSheet = openCustomerProfileAboutSheet;
@@ -123501,8 +124088,11 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   async function contactCustomerSupport() {
     const email = CUSTOMER_SUPPORT_EMAIL;
+    // Native: Capacitor hands mailto: navigations to the system mail app (iOS UIApplication.open, Android ACTION_VIEW).
     if (isCapacitorNativePlatform()) {
-      await copyTextToClipboardWithToast(email, "Support email copied");
+      if (!openDeviceUri(XBOOK_SUPPORT_MAILTO)) {
+        await copyTextToClipboardWithToast(email, "Support email copied");
+      }
       return;
     }
     try {
@@ -124025,7 +124615,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     switcherRow?.classList.toggle("hidden", !showBusinessSection);
     logoutSection?.classList.toggle("hidden", !isCustomer);
 
-    if (versionEl) versionEl.textContent = CUSTOMER_APP_VERSION;
+    setAppVersionText(versionEl, false);
 
     if (logged && guest) {
       logged.classList.toggle("hidden", !isCustomer);
@@ -126709,15 +127299,23 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const signup = document.getElementById("adminAuthSignupPanel");
     const customer = document.getElementById("adminAuthCustomerSignupPanel");
     const customerCode = document.getElementById("adminAuthCustomerCodePanel");
+    const staffCode = document.getElementById("adminAuthStaffCodePanel");
     const join = document.getElementById("adminAuthCustomerJoinPanel");
     const inviteUnavailable = document.getElementById("customerInviteUnavailablePanel");
     const isSignup = mode === "signup";
     const isCustomerSignup = mode === "customer";
     const isCustomerCode = mode === "customer-code";
+    const isStaffCode = mode === "staff-code";
     const isJoin = mode === "join";
     const isInvite = mode === "invite";
     const isInviteUnavailable = mode === "invite-unavailable";
-    login?.classList.toggle("hidden", isSignup || isJoin || isCustomerSignup || isCustomerCode || isInvite || isInviteUnavailable);
+    login?.classList.toggle("hidden", isSignup || isJoin || isCustomerSignup || isCustomerCode || isStaffCode || isInvite || isInviteUnavailable);
+    staffCode?.classList.toggle("hidden", !isStaffCode);
+    if (isStaffCode) {
+      const staffCodeEl = document.getElementById("staffLoginCode");
+      if (staffCodeEl) staffCodeEl.value = "";
+      applyTranslations(staffCode);
+    }
     signup?.classList.toggle("hidden", !isSignup);
     customer?.classList.toggle("hidden", !(isCustomerSignup || isInvite));
     customerCode?.classList.toggle("hidden", !isCustomerCode);
@@ -126743,6 +127341,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         welcomeEl.textContent = t("modeCreateCustomerTitle", "Create Customer Account");
       } else if (isCustomerCode) {
         welcomeEl.textContent = t("customerLoginWithCode", "Login with code");
+      } else if (isStaffCode) {
+        welcomeEl.textContent = t("staffLoginTitle", "Team member login");
       } else if (!isJoin && !isInvite && !isInviteUnavailable) {
         welcomeEl.textContent = isSignup ? "Create Business Account" : "Welcome Back";
       }
@@ -127888,8 +128488,30 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     return getActiveStaffMembers();
   }
 
-  function getEligiblePublicStaffForService() {
-    return getEligiblePublicBookingStaff();
+  function getEligiblePublicStaffForService(service) {
+    const serviceId = service && typeof service === "object" ? service.id : service;
+    return getEligiblePublicBookingStaff().filter((staff) => staffPerformsService(staff.id, serviceId));
+  }
+
+  /** "Било кој слободен" is a choice, not a staff id; the server assigns the member. */
+  const PUBLIC_ANY_STAFF_CHOICE = "any";
+
+  function isPublicAnyStaffChoice() {
+    return selectedPublicStaffChoice === PUBLIC_ANY_STAFF_CHOICE && !publicStaffAutoSelectedId;
+  }
+
+  /** Offered only with 2+ members and when the server supports create_booking_any_staff. */
+  function isPublicAnyStaffOptionEnabled() {
+    return staffBookingRulesServerReady && getEligiblePublicBookingStaff().length > 1;
+  }
+
+  /** Services the current staff choice can book (all services before a choice is made). */
+  function isServiceBookableForPublicStaffChoice(service) {
+    if (!service) return false;
+    const staffId = getSelectedPublicStaffId();
+    if (staffId) return staffPerformsService(staffId, service.id);
+    if (isPublicAnyStaffChoice()) return getEligiblePublicStaffForService(service).length > 0;
+    return true;
   }
 
   /** True when there is no active, bookable staff member at all — booking must be blocked. */
@@ -127986,7 +128608,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const preserve = opts.preserveChoice === true;
     const current = preserve ? selectedPublicStaffChoice : null;
     selectedPublicStaffChoice =
-      current && eligible.some((s) => s.id === current) ? current : null;
+      current && (current === PUBLIC_ANY_STAFF_CHOICE || eligible.some((s) => s.id === current))
+        ? current
+        : null;
     if (hidden) {
       hidden.value = selectedPublicStaffChoice || "";
     }
@@ -128501,6 +129125,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const resolvedId = bizId && isValidUuid(bizId) ? bizId : getActiveBusinessUuid();
     if (!resolvedId) return false;
     if (currentUserRole === "customer") return false;
+    if (typeof isStaffFullViewer === "function" && isStaffFullViewer() && staffViewerFullActive) {
+      return String(resolvedId) === staffViewerBusinessId();
+    }
     if (currentUserRole === "admin") return true;
     if (currentUser?.id && String(currentUser.id) === String(resolvedId)) return true;
     return false;
@@ -128818,6 +129445,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function syncMissingBusinessCustomers(opts = {}) {
+    // Team members never write the customer list (owner-only server step).
+    if (typeof isStaffViewer === "function" && isStaffViewer()) return { created: 0 };
     const bizId = getActiveBusinessUuid();
     if (!bizId || !canLoadBusinessCustomersForBiz(bizId) || !initSupabaseClient()) {
       return { created: 0 };
@@ -129667,7 +130296,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
           serviceId: selectedService?.id || null,
           date: selectedDate || null,
           slot: selectedSlot || null,
-          staffId: getSelectedPublicStaffId() || null,
+          staffId: getSelectedPublicStaffId() || (isPublicAnyStaffChoice() ? PUBLIC_ANY_STAFF_CHOICE : null),
           businessSlug: slug || null
         })
       );
@@ -129709,7 +130338,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       }
       if (st.date) selectedDate = st.date;
       if (st.slot) selectedSlot = st.slot;
-      if (st.staffId && (staffMembers || []).some((s) => s.id === st.staffId && s.active !== false)) {
+      if (
+        st.staffId &&
+        (st.staffId === PUBLIC_ANY_STAFF_CHOICE
+          ? isPublicAnyStaffOptionEnabled()
+          : (staffMembers || []).some((s) => s.id === st.staffId && s.active !== false))
+      ) {
         selectedPublicStaffChoice = st.staffId;
         const hidden = document.getElementById("publicStaff");
         if (hidden) hidden.value = st.staffId;
@@ -130106,6 +130740,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   function getPublicBookingStaffSummaryLabel() {
     const staffId = getSelectedPublicStaffId();
+    if (!staffId && isPublicAnyStaffChoice()) return t("bookAnyStaff", "Any available");
     return staffId ? getStaffName(staffId) : "—";
   }
 
@@ -135688,6 +136323,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return "unresolved";
     }
 
+    if (isStaffAccessUser(currentUser)) {
+      return await enterStaffAgenda({ reason });
+    }
+
     if (currentUserRoleLoadStatus === "none") {
       await loadCurrentUserRole();
     }
@@ -137234,6 +137873,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   async function applyAuthenticatedSession(session) {
     currentUser = session.user;
+    if (isStaffAccessUser(session.user)) {
+      return await enterStaffAgenda({ reason: "apply-session" });
+    }
     let role = await loadCurrentUserRole();
     role = await reconcileAdminRoleFromSignupMetadataIfNeeded(session.user, role);
 
@@ -137739,6 +138381,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     document.getElementById("adminView")?.classList.add("hidden");
     document.getElementById("adminOnboardingView")?.classList.add("hidden");
     document.getElementById("publicView")?.classList.add("hidden");
+    document.getElementById("staffAgendaView")?.classList.add("hidden");
+    document.body.classList.remove("staff-agenda-active");
+    stopStaffAgendaTimer();
     document.getElementById("xbookDemoHomeView")?.classList.add("hidden");
     document.getElementById("xbookDemoAdminView")?.classList.add("hidden");
     document.getElementById("xbookDemoAdminView")?.classList.remove("xbook-demo-admin--calendar");
@@ -137984,7 +138629,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         coverSrc: "icons/xbook-logo-hero.png",
         publicLink: "xbook.app/book/studio-gt",
         accentColor: "#001b5e",
-        supportEmail: "xbooksupport@gtwebstudio.com",
+        supportEmail: "gtterminsupport@gtwebstudio.com",
         branding: {
           logo: "Logo uploaded",
           cover: "Cover image set",
@@ -142629,6 +143274,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         ? "authSignupEmail"
         : panel === "customer" || panel === "invite"
           ? "customerAccountEmail"
+          : panel === "staff-code"
+            ? "staffLoginCode"
           : panel === "customer-code"
             ? "customerWelcomeLoginCode"
             : panel === "join"
@@ -142669,6 +143316,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       panel === "signup" ||
       panel === "customer" ||
       panel === "customer-code" ||
+      panel === "staff-code" ||
       panel === "join" ||
       panel === "invite" ||
       panel === "invite-unavailable"
@@ -144131,6 +144779,13 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   function setAdminSection(sectionKey, opts = {}) {
+    if (typeof isStaffViewer === "function" && isStaffViewer() && !staffViewerAllowsSection(sectionKey)) {
+      if (!opts.silent && staffViewerAllowsSection(adminActiveSection)) {
+        showStaffViewerLocked();
+        return;
+      }
+      sectionKey = "calendar";
+    }
     releaseNavigationInteractionState();
     const key = ADMIN_SECTION_PANEL_IDS[sectionKey] ? sectionKey : "overview";
     adminActiveSection = key;
@@ -144289,7 +144944,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       if (!opts.fromCalendar) adminAddOpenedFromCalendar = false;
       if (typeof hideAdminAddBookingSuccessState === "function") hideAdminAddBookingSuccessState();
       bindAdminAddBookingSummaryEvents();
-      void ensureBusinessCustomersLoaded().then(() => {
+      if (!isStaffViewer()) void ensureBusinessCustomersLoaded().then(() => {
         if (adminAddCustomerSelectedKey) {
           const selected = getClientsForActiveBusiness(bookings).find(
             (c) => c.key === adminAddCustomerSelectedKey
@@ -144394,6 +145049,13 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   function setAdminMobileTab(tab, opts = {}) {
+    if (typeof isStaffViewer === "function" && isStaffViewer() && !staffViewerAllowsMobileTab(tab)) {
+      if (!opts.silent) {
+        showStaffViewerLocked();
+        return;
+      }
+      tab = "calendar";
+    }
     releaseNavigationInteractionState();
     const key = ADMIN_MOBILE_TAB_SECTIONS[tab] ? tab : "overview";
     adminActiveMobileTab = key;
@@ -144575,6 +145237,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   function adminMobileOpenNewBooking() {
+    if (typeof isStaffViewer === "function" && isStaffViewer() && !staffViewerCanCreate()) {
+      showStaffViewerReadOnly();
+      return;
+    }
     adminMobileFromSetup = false;
     setAdminSection("manual");
   }
@@ -144837,6 +145503,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     document.getElementById("homeBtn")?.classList.add("hidden");
     syncAdminNativeToolbar();
     initAdminDashboard();
+    if (typeof isStaffViewer === "function" && isStaffViewer()) return;
     void refreshOwnerSubscriptionAccess({ force: true });
     businessAdminShellRouted = true;
     if (typeof consumePendingBusinessPushRoute === "function") {
@@ -152075,7 +152742,16 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       const verifyType = payload.type === "email" ? "email" : "magiclink";
       const businessSlug = normalizeBusinessSlug(payload.business_slug || "");
       if (!res.ok || !payload.ok || !tokenHash) {
-        showToast(invalidMsg, "error");
+        // Not a customer code: it may be an employee access code (same 9-digit format).
+        const staffResult = res.status === 429 ? "invalid" : await redeemStaffAccessCode(canonical);
+        if (staffResult === "ok") {
+          const codeInput = document.getElementById("customerAuthLoginCode");
+          if (codeInput) codeInput.value = "";
+          const welcomeInput = document.getElementById("customerWelcomeLoginCode");
+          if (welcomeInput) welcomeInput.value = "";
+          return;
+        }
+        showToast(staffResult === "too_many" ? t("staffLoginTooMany", "Too many attempts. Try again in 15 minutes.") : invalidMsg, "error");
         return;
       }
 
@@ -152251,6 +152927,44 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     history.replaceState(null, "", window.location.pathname);
     showAuthView();
   }
+
+  // One email/password sign-in at a time: the Log in buttons and the keyboard Go key share this guard,
+  // so a double tap or Go + tap cannot start two Supabase sign-ins.
+  let xbPasswordLoginInFlight = false;
+  function runPasswordLoginOnce(handler) {
+    if (xbPasswordLoginInFlight || typeof handler !== "function") return;
+    xbPasswordLoginInFlight = true;
+    Promise.resolve()
+      .then(handler)
+      .catch((err) => console.warn("[auth] password login failed", err))
+      .finally(() => {
+        xbPasswordLoginInFlight = false;
+      });
+  }
+  window.runPasswordLoginOnce = runPasswordLoginOnce;
+
+  // Mobile keyboard actions on the Business Owner and Customer login panels (enterkeyhint next / go):
+  // Next on the email field moves to the password field; Go on the password field runs the Log in handler.
+  const XB_LOGIN_KEYBOARD_FIELDS = {
+    authEmail: { next: "authPassword" },
+    authPassword: { submit: () => login() },
+    customerAuthEmail: { next: "customerAuthPassword" },
+    customerAuthPassword: { submit: () => customerLogin() }
+  };
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" || event.isComposing) return;
+    const field = event.target;
+    const action = field && XB_LOGIN_KEYBOARD_FIELDS[field.id];
+    if (!action) return;
+    event.preventDefault();
+    if (action.next) {
+      const nextEl = document.getElementById(action.next);
+      if (nextEl && !nextEl.disabled) nextEl.focus();
+      return;
+    }
+    field.blur();
+    runPasswordLoginOnce(action.submit);
+  });
 
   async function login() {
     if (!initSupabaseClient()) return;
@@ -152545,6 +153259,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   window.submitXbookDeleteAccount = submitXbookDeleteAccount;
 
   function requestUserLogout(kind) {
+    if (typeof isStaffViewer === "function" && isStaffViewer()) {
+      void staffAgendaSignOut();
+      return;
+    }
     if (logoutInFlight || customerLogoutInProgress) return;
     pendingLogoutKind = kind === "customer" ? "customer" : "admin";
     openLogoutConfirm();
@@ -153674,7 +154392,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     resetBusinessCustomersCache();
 
-    await ensureBusinessSettings();
+    const staffFullView = typeof isStaffViewer === "function" && isStaffViewer();
+    if (staffFullView) await loadBusinessSettings();
+    else await ensureBusinessSettings();
     const publicIdentifier = getBusinessPublicIdentifier();
     syncAdminPublicShareLinkUi(buildPublicBookingLink(publicIdentifier));
     const businessIdDisplay = document.getElementById("businessIdDisplay");
@@ -153682,15 +154402,15 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     await loadServices();
     await loadStaffMembers();
-    await ensureOwnerStaffMemberIfNeeded();
+    if (!staffFullView) await ensureOwnerStaffMemberIfNeeded();
     await checkBookingStaffColumn();
     await loadBookings(false, { mode: "full" });
     await loadStaffTimeOff();
     await loadBlockedDays();
-    if (readBlockPublicHolidaysSetting()) {
+    if (!staffFullView && readBlockPublicHolidaysSetting()) {
       await syncBusinessHolidayClosedDays();
     }
-    await syncMissingBusinessCustomers();
+    if (!staffFullView) await syncMissingBusinessCustomers();
 
     fillBusinessSettingsForm();
     syncOverviewHeroUi();
@@ -153712,6 +154432,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       updateAdminAddBookingSummary();
     }
     startBookingRealtime();
+    if (staffFullView) return; // owner notifications stay with the owner
     if (typeof bindBusinessInboxLiveRefresh === "function") bindBusinessInboxLiveRefresh();
     void startBusinessInboxRealtime("loadAdminData");
     void refreshBusinessNotificationsUnreadBadge();
@@ -155077,7 +155798,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   /** True only when a resolved admin is actually looking at Business View. */
   function isAdminBusinessViewActive() {
-    if (currentUserRole !== "admin") return false;
+    const fullViewer = typeof isStaffFullViewer === "function" && isStaffFullViewer() && staffViewerFullActive;
+    if (currentUserRole !== "admin" && !fullViewer) return false;
     const adminView = document.getElementById("adminView");
     return !!(adminView && !adminView.classList.contains("hidden"));
   }
@@ -164888,6 +165610,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   /** True only when the signed-in admin is loading their own row (business_id = auth.uid()). */
   function isAdminOwnerBusinessSettingsContext() {
     if (isCustomerPreviewActive()) return false;
+    if (typeof isStaffFullViewer === "function" && isStaffFullViewer() && staffViewerFullActive) {
+      return isValidUuid(businessId) && String(businessId) === staffViewerBusinessId();
+    }
     return (
       currentUserRole === "admin" &&
       !!currentUser?.id &&
@@ -166733,6 +167458,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     setSelectedServiceVisualKey("edit", service.service_visual_key);
     setServiceDurationFieldError("editServiceDurationError", "");
     syncServiceDurationPresetHighlight("editServiceDuration", '[data-duration-presets-for="editServiceDuration"]');
+    syncServiceAssignAllRow();
 
     setServicesEditMode(true);
     document.getElementById("editServiceCard").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -166825,7 +167551,22 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     if (!list) return;
 
     try {
-      const serviceRows = Array.isArray(services) ? services : [];
+      const allServiceRows = Array.isArray(services) ? services : [];
+      // Only services the chosen team member (or anyone, for "Било кој слободен") performs.
+      const serviceRows = allServiceRows.filter((s) => isServiceBookableForPublicStaffChoice(s));
+      if (selectedService && !serviceRows.some((s) => s.id === selectedService.id)) {
+        selectedService = null;
+        if (hidden) hidden.value = "";
+      }
+
+      if (!serviceRows.length && allServiceRows.length && !publicDataLoading) {
+        list.innerHTML = customerEmptyStateHtml(
+          t("bookNoServicesForStaff", "No services available"),
+          t("bookNoServicesForStaffHint", "This team member has no bookable services. Choose another team member."),
+          "calendar"
+        );
+        return;
+      }
 
       if (!serviceRows.length) {
         if (publicDataLoading) {
@@ -167135,7 +167876,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return;
     }
 
-    services.forEach(s => {
+    const selfId = isStaffViewer() ? staffViewerSelfId() : "";
+    services.filter((s) => !selfId || staffPerformsService(selfId, s.id)).forEach(s => {
       const option = document.createElement("option");
       option.value = s.id;
       option.textContent = `${s.name} - ${getServiceDurationValue(s)} min`;
@@ -167175,6 +167917,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
       staffMembers = data || [];
       staffFeatureAvailable = true;
+      await loadOwnerStaffBookingRules(guard);
       return;
     }
 
@@ -167183,10 +167926,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       if (isCustomerPublicLoadGuardCurrent(guard)) {
         staffMembers = [];
         staffFeatureAvailable = true;
+        applyStaffBookingRules([], false);
       }
       return;
     }
 
+    const publicRulesPromise = fetchPublicStaffBookingRules(bizUuid);
     const { data, error } = await sb.rpc("get_public_staff", { p_business_id: bizUuid });
 
     if (!isCustomerPublicLoadGuardCurrent(guard)) return;
@@ -167199,6 +167944,66 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     staffMembers = Array.isArray(data) ? data : [];
     staffFeatureAvailable = true;
+    const publicRules = await publicRulesPromise;
+    if (!isCustomerPublicLoadGuardCurrent(guard)) return;
+    applyStaffBookingRules(publicRules.rows, publicRules.ok);
+  }
+
+  /** Owner context: rules from staff_members flags + staff_services + staff_working_hours (RLS). */
+  async function loadOwnerStaffBookingRules(guard) {
+    if (!initSupabaseClient() || !businessId) {
+      applyStaffBookingRules([], false);
+      return;
+    }
+    const [svcRes, hoursRes] = await Promise.all([
+      sb.from("staff_services").select("staff_id, service_id").eq("business_id", businessId),
+      sb.from("staff_working_hours")
+        .select("staff_id, dow, start_time, end_time, break_start, break_end")
+        .eq("business_id", businessId)
+    ]);
+    if (guard && !isCustomerPublicLoadGuardCurrent(guard)) return;
+    const ready = !svcRes.error && !hoursRes.error;
+    const serviceIdsByStaff = new Map();
+    (ready ? svcRes.data || [] : []).forEach((row) => {
+      const key = String(row.staff_id || "");
+      if (!serviceIdsByStaff.has(key)) serviceIdsByStaff.set(key, []);
+      serviceIdsByStaff.get(key).push(String(row.service_id || ""));
+    });
+    const hoursByStaff = new Map();
+    (ready ? hoursRes.data || [] : []).forEach((row) => {
+      const key = String(row.staff_id || "");
+      if (!hoursByStaff.has(key)) hoursByStaff.set(key, []);
+      hoursByStaff.get(key).push({
+        dow: row.dow,
+        start: row.start_time,
+        end: row.end_time,
+        break_start: row.break_start,
+        break_end: row.break_end
+      });
+    });
+    const rows = (staffMembers || []).map((staff) => {
+      const key = String(staff.id || "");
+      const allServices = !ready || staff.all_services !== false;
+      const usesBusinessHours = !ready || staff.uses_business_hours !== false;
+      return {
+        staff_id: key,
+        all_services: allServices,
+        service_ids: allServices ? null : serviceIdsByStaff.get(key) || [],
+        uses_business_hours: usesBusinessHours,
+        weekly_hours: usesBusinessHours ? null : hoursByStaff.get(key) || []
+      };
+    });
+    applyStaffBookingRules(rows, ready);
+  }
+
+  async function fetchPublicStaffBookingRules(bizUuid) {
+    try {
+      const { data, error } = await sb.rpc("get_public_staff_booking_rules", { p_business_id: bizUuid });
+      if (error) return { ok: false, rows: [] };
+      return { ok: true, rows: Array.isArray(data) ? data : [] };
+    } catch (err) {
+      return { ok: false, rows: [] };
+    }
   }
 
   /**
@@ -167667,6 +168472,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     syncEditStaffPhotoPreview();
     void loadStaffTimeOff().then(() => renderStaffTimeOffList());
+    renderStaffRulesEditor(staff);
+    renderStaffAccessSection(staff);
 
     const panel = document.getElementById("editStaffCard");
     if (panel) {
@@ -167693,6 +168500,1361 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     document.getElementById("editStaffCard")?.classList.add("hidden");
     closeStaffTimeOffForm();
     closeStaffTimeOffConflict();
+    renderStaffRulesEditor(null);
+    renderStaffAccessSection(null);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Staff services + individual working hours (owner). Server is the authority
+  // (set_staff_services / set_staff_working_hours); these screens only edit.
+  // ---------------------------------------------------------------------------
+  const STAFF_RULES_DAY_KEYS = {
+    0: "daySunday", 1: "dayMonday", 2: "dayTuesday", 3: "dayWednesday",
+    4: "dayThursday", 5: "dayFriday", 6: "daySaturday"
+  };
+  const STAFF_RULES_DAY_FALLBACK = {
+    0: "Sunday", 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday"
+  };
+  let staffRulesEditorStaffId = null;
+
+  function renderStaffRulesEditor(staff) {
+    staffRulesEditorStaffId = staff?.id || null;
+    const show = !!staff && staffBookingRulesServerReady;
+    document.getElementById("staffServicesSection")?.classList.toggle("hidden", !show);
+    document.getElementById("staffHoursSection")?.classList.toggle("hidden", !show);
+    hideStaffRuleConflicts();
+    if (!show) return;
+
+    const rule = getStaffBookingRule(staff.id);
+    const allToggle = document.getElementById("staffAllServicesToggle");
+    if (allToggle) allToggle.checked = !rule || rule.allServices;
+    renderStaffServicesPicker(rule && !rule.allServices ? rule.serviceIds : null);
+    renderStaffServicesCopyOptions(staff.id);
+    syncStaffServicesCustomVisibility();
+
+    const bizToggle = document.getElementById("staffUsesBusinessHoursToggle");
+    if (bizToggle) bizToggle.checked = !rule || rule.usesBusinessHours;
+    renderStaffHoursEditor(rule && !rule.usesBusinessHours ? rule.hoursByDow : null);
+    syncStaffHoursEditorVisibility();
+  }
+
+  function renderStaffServicesPicker(selectedIds) {
+    const mount = document.getElementById("staffServicesPicker");
+    if (!mount) return;
+    const rows = [...(services || [])].sort((a, b) =>
+      String(a.name || "").localeCompare(String(b.name || ""), undefined, { sensitivity: "base" })
+    );
+    if (!rows.length) {
+      mount.innerHTML = `<p class="staff-rules__empty">${escapeHtml(t("staffServicesNone", "Add services first."))}</p>`;
+      return;
+    }
+    mount.innerHTML = rows
+      .map((s) => {
+        const checked = selectedIds && selectedIds.has(String(s.id)) ? " checked" : "";
+        return (
+          `<label class="staff-rules__check"><input type="checkbox" value="${escapeHtml(String(s.id))}"${checked} />` +
+          `<span>${i18nUserHtml(s.name || "")}</span>` +
+          `<span class="staff-rules__meta">${escapeHtml(String(getServiceDurationValue(s)))} min</span></label>`
+        );
+      })
+      .join("");
+  }
+
+  function renderStaffServicesCopyOptions(staffId) {
+    const select = document.getElementById("staffServicesCopyFrom");
+    if (!select) return;
+    const others = (staffMembers || []).filter((s) => String(s.id) !== String(staffId));
+    select.innerHTML =
+      `<option value="">${escapeHtml(t("staffCopyServicesPlaceholder", "Choose…"))}</option>` +
+      others.map((s) => `<option value="${escapeHtml(String(s.id))}">${escapeHtml(s.name || "")}</option>`).join("");
+    select.closest(".staff-rules__copy")?.classList.toggle("hidden", !others.length);
+  }
+
+  function syncStaffServicesCustomVisibility() {
+    const all = document.getElementById("staffAllServicesToggle")?.checked !== false;
+    document.getElementById("staffServicesCustom")?.classList.toggle("hidden", all);
+  }
+
+  function onStaffAllServicesToggle() {
+    const all = document.getElementById("staffAllServicesToggle")?.checked !== false;
+    if (!all) {
+      // Start from "everything ticked" so the owner only removes what does not apply.
+      const boxes = [...document.querySelectorAll("#staffServicesPicker input[type=checkbox]")];
+      if (boxes.length && !boxes.some((b) => b.checked)) boxes.forEach((b) => { b.checked = true; });
+    }
+    syncStaffServicesCustomVisibility();
+  }
+
+  function copyStaffServicesFrom(sourceId) {
+    if (!sourceId) return;
+    const rule = getStaffBookingRule(sourceId);
+    const allToggle = document.getElementById("staffAllServicesToggle");
+    if (!rule || rule.allServices) {
+      if (allToggle) allToggle.checked = true;
+    } else {
+      if (allToggle) allToggle.checked = false;
+      document.querySelectorAll("#staffServicesPicker input[type=checkbox]").forEach((box) => {
+        box.checked = rule.serviceIds.has(String(box.value));
+      });
+    }
+    syncStaffServicesCustomVisibility();
+    const select = document.getElementById("staffServicesCopyFrom");
+    if (select) select.value = "";
+    showToast(t("staffServicesCopied", "Copied. Press Save services to keep it."), "info");
+  }
+
+  function setStaffRulesButtonBusy(id, busy) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.disabled = !!busy;
+    btn.setAttribute("aria-busy", busy ? "true" : "false");
+  }
+
+  async function reloadStaffRulesAfterSave(staffId) {
+    await loadStaffMembers();
+    const staff = (staffMembers || []).find((s) => String(s.id) === String(staffId));
+    if (staff && String(staffRulesEditorStaffId) === String(staffId)) renderStaffRulesEditor(staff);
+    await showStaffRuleConflicts(staffId);
+  }
+
+  async function saveStaffServices() {
+    const staffId = staffRulesEditorStaffId;
+    if (!staffId || !initSupabaseClient()) return;
+    const all = document.getElementById("staffAllServicesToggle")?.checked !== false;
+    const ids = all
+      ? null
+      : [...document.querySelectorAll("#staffServicesPicker input[type=checkbox]:checked")].map((b) => b.value);
+    if (!all && !ids.length) {
+      showToast("Choose at least one service, or choose all services.", "error");
+      return;
+    }
+    setStaffRulesButtonBusy("staffSaveServicesBtn", true);
+    try {
+      const { error } = await sb.rpc("set_staff_services", {
+        p_staff_id: staffId,
+        p_all_services: all,
+        p_service_ids: ids
+      });
+      if (error) {
+        showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+        return;
+      }
+      showToast(t("staffServicesSaved", "Services saved."), "success");
+      await reloadStaffRulesAfterSave(staffId);
+    } finally {
+      setStaffRulesButtonBusy("staffSaveServicesBtn", false);
+    }
+  }
+
+  function renderStaffHoursEditor(hoursByDow) {
+    const mount = document.getElementById("staffHoursEditor");
+    if (!mount) return;
+    const workingDays = getWorkingDaysArray().map(Number);
+    mount.innerHTML = WORK_DAY_ORDER_MON_FIRST.map((dow) => {
+      const day = hoursByDow ? hoursByDow[dow] : null;
+      const on = hoursByDow ? !!day : workingDays.includes(dow);
+      const win = getWorkWindowForDayOfWeek(dow);
+      const start = day ? minutesToTime(day.start) : String(win.start || "09:00").slice(0, 5);
+      const end = day ? minutesToTime(day.end) : String(win.end || "17:00").slice(0, 5);
+      const bs = day && day.breakStart != null ? minutesToTime(day.breakStart) : "";
+      const be = day && day.breakEnd != null ? minutesToTime(day.breakEnd) : "";
+      const dayName = t(STAFF_RULES_DAY_KEYS[dow], STAFF_RULES_DAY_FALLBACK[dow]);
+      return (
+        `<div class="staff-hours-row${on ? "" : " staff-hours-row--off"}" data-dow="${dow}">` +
+        `<label class="staff-hours-row__day"><input type="checkbox" class="staff-hours-row__on"${on ? " checked" : ""} onchange="onStaffHoursDayToggle(this)" />` +
+        `<span>${escapeHtml(dayName)}</span></label>` +
+        `<div class="staff-hours-row__times">` +
+        `<input type="time" step="900" class="staff-hours-row__start" value="${escapeHtml(start)}" aria-label="${escapeHtml(dayName)} – ${escapeHtml(t("timeOffFrom", "From"))}" />` +
+        `<span aria-hidden="true">–</span>` +
+        `<input type="time" step="900" class="staff-hours-row__end" value="${escapeHtml(end)}" aria-label="${escapeHtml(dayName)} – ${escapeHtml(t("timeOffTo", "To"))}" />` +
+        `<span class="staff-hours-row__off-label">${escapeHtml(t("staffHoursDayOff", "Day off"))}</span>` +
+        `</div>` +
+        `<div class="staff-hours-row__break">` +
+        `<span class="staff-hours-row__break-label">${escapeHtml(t("staffHoursBreak", "Break (optional)"))}</span>` +
+        `<input type="time" step="900" class="staff-hours-row__break-start" value="${escapeHtml(bs)}" aria-label="${escapeHtml(dayName)} – ${escapeHtml(t("staffHoursBreak", "Break (optional)"))}" />` +
+        `<span aria-hidden="true">–</span>` +
+        `<input type="time" step="900" class="staff-hours-row__break-end" value="${escapeHtml(be)}" aria-label="${escapeHtml(dayName)} – ${escapeHtml(t("staffHoursBreak", "Break (optional)"))}" />` +
+        `</div></div>`
+      );
+    }).join("");
+  }
+
+  function onStaffHoursDayToggle(input) {
+    input?.closest(".staff-hours-row")?.classList.toggle("staff-hours-row--off", !input.checked);
+  }
+
+  function syncStaffHoursEditorVisibility() {
+    const biz = document.getElementById("staffUsesBusinessHoursToggle")?.checked !== false;
+    document.getElementById("staffHoursEditor")?.classList.toggle("hidden", biz);
+  }
+
+  function onStaffUsesBusinessHoursToggle() {
+    syncStaffHoursEditorVisibility();
+  }
+
+  /** Reads the editor; returns { ok, hours } or { ok:false, message } (server-identical messages). */
+  function readStaffHoursEditor() {
+    const hours = [];
+    for (const row of document.querySelectorAll("#staffHoursEditor .staff-hours-row")) {
+      if (!row.querySelector(".staff-hours-row__on")?.checked) continue;
+      const dow = Number(row.dataset.dow);
+      const start = String(row.querySelector(".staff-hours-row__start")?.value || "").slice(0, 5);
+      const end = String(row.querySelector(".staff-hours-row__end")?.value || "").slice(0, 5);
+      const bs = String(row.querySelector(".staff-hours-row__break-start")?.value || "").slice(0, 5);
+      const be = String(row.querySelector(".staff-hours-row__break-end")?.value || "").slice(0, 5);
+      if (!start || !end) return { ok: false, message: "Invalid working hours." };
+      const s = timeToMinutes(start);
+      const e = timeToMinutes(end);
+      if (e <= s) return { ok: false, message: "End time must be after start time." };
+      if (!!bs !== !!be) return { ok: false, message: "The break must be inside the working hours." };
+      if (bs) {
+        const b1 = timeToMinutes(bs);
+        const b2 = timeToMinutes(be);
+        if (b2 <= b1 || b1 < s || b2 > e) return { ok: false, message: "The break must be inside the working hours." };
+      }
+      hours.push({ dow, start, end, break_start: bs || null, break_end: be || null });
+    }
+    if (!hours.length) return { ok: false, message: "Choose at least one working day." };
+    return { ok: true, hours };
+  }
+
+  async function saveStaffHours() {
+    const staffId = staffRulesEditorStaffId;
+    if (!staffId || !initSupabaseClient()) return;
+    const useBusinessHours = document.getElementById("staffUsesBusinessHoursToggle")?.checked !== false;
+    let hours = null;
+    if (!useBusinessHours) {
+      const read = readStaffHoursEditor();
+      if (!read.ok) {
+        showToast(read.message, "error");
+        return;
+      }
+      hours = read.hours;
+    }
+    setStaffRulesButtonBusy("staffSaveHoursBtn", true);
+    try {
+      const { error } = await sb.rpc("set_staff_working_hours", {
+        p_staff_id: staffId,
+        p_uses_business_hours: useBusinessHours,
+        p_hours: hours
+      });
+      if (error) {
+        showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+        return;
+      }
+      showToast(t("staffHoursSaved", "Working hours saved."), "success");
+      await reloadStaffRulesAfterSave(staffId);
+    } finally {
+      setStaffRulesButtonBusy("staffSaveHoursBtn", false);
+    }
+  }
+
+  function hideStaffRuleConflicts() {
+    const box = document.getElementById("staffRulesConflicts");
+    if (!box) return;
+    box.classList.add("hidden");
+    box.innerHTML = "";
+  }
+
+  /** Existing appointments are never changed; the owner just sees which ones no longer fit. */
+  async function showStaffRuleConflicts(staffId) {
+    hideStaffRuleConflicts();
+    if (!staffId || !initSupabaseClient()) return;
+    const { data, error } = await sb.rpc("list_staff_rule_conflicts", { p_staff_id: staffId });
+    const rows = !error && Array.isArray(data) ? data : [];
+    const box = document.getElementById("staffRulesConflicts");
+    if (!box || !rows.length) return;
+    const items = rows
+      .slice(0, 8)
+      .map((r) => {
+        const when = `${String(r.booking_date || "").slice(0, 10)} ${String(r.booking_time || "").slice(0, 5)}`;
+        return `<li>${escapeHtml(when)} · ${i18nUserHtml(r.customer_name || "")} · ${i18nUserHtml(r.service_name || "")}</li>`;
+      })
+      .join("");
+    const more = rows.length > 8 ? `<li>…</li>` : "";
+    box.innerHTML =
+      `<strong>${escapeHtml(tFormat("staffRulesConflictsTitle",
+        "{n} upcoming appointments no longer fit these settings. They were kept as they are; review them in the calendar.",
+        { n: rows.length }))}</strong><ul>${items}${more}</ul>`;
+    box.classList.remove("hidden");
+  }
+
+  function syncServiceAssignAllRow() {
+    const row = document.getElementById("editServiceAssignAllRow");
+    if (!row) return;
+    const anyCustomList =
+      staffBookingRulesServerReady && [...staffBookingRules.values()].some((rule) => !rule.allServices);
+    row.classList.toggle("hidden", !anyCustomList);
+  }
+
+  async function assignEditedServiceToAllStaff() {
+    const serviceId = document.getElementById("editServiceId")?.value;
+    if (!serviceId || !initSupabaseClient()) return;
+    const { error } = await sb.rpc("assign_service_to_all_staff", { p_service_id: serviceId });
+    if (error) {
+      showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+      return;
+    }
+    await loadStaffMembers();
+    showToast(t("serviceAssignedAllStaff", "Service assigned to all team members."), "success");
+  }
+
+  // ---------------------------------------------------------------------------
+  // Employee access (view only). The account is created by the staff-access
+  // Edge Function; app_metadata.gt_account = "staff" cannot be set by users.
+  // All data comes from get_staff_agenda, which enforces access server-side.
+  // ---------------------------------------------------------------------------
+  function isStaffAccessUser(user) {
+    return String(user?.app_metadata?.gt_account || "") === "staff";
+  }
+
+  let staffLoginInFlight = false;
+
+  /**
+   * Redeems an employee code (staff-access) and opens the agenda.
+   * Returns "ok", "invalid" or "too_many". Shared by the employee screen and the
+   * general "Login with code" field (employees often use the latter).
+   */
+  async function redeemStaffAccessCode(canonical) {
+    const res = await invokeCustomerAppLoginFunction(
+      "staff-access",
+      { action: "redeem", code: canonical },
+      { withSession: false }
+    );
+    const payload = res.json && typeof res.json === "object" ? res.json : {};
+    if (!res.ok || !payload.ok || !payload.token_hash) return res.status === 429 ? "too_many" : "invalid";
+    const verifyType = payload.type === "email" ? "email" : "magiclink";
+    let { data, error } = await sb.auth.verifyOtp({ token_hash: payload.token_hash, type: verifyType });
+    if ((error || !data?.session) && verifyType !== "email") {
+      ({ data, error } = await sb.auth.verifyOtp({ token_hash: payload.token_hash, type: "email" }));
+    }
+    const user = data?.session?.user || null;
+    if (error || !user || !isStaffAccessUser(user)) {
+      if (data?.session) await sb.auth.signOut({ scope: "local" });
+      return "invalid";
+    }
+    currentUser = user;
+    currentUserRole = null;
+    currentUserRoleLoadStatus = "none";
+    await enterStaffAgenda({ reason: "staff-code-login" });
+    return "ok";
+  }
+
+  async function staffLoginWithCode() {
+    if (staffLoginInFlight || !initSupabaseClient()) return;
+    const input = document.getElementById("staffLoginCode");
+    const canonical = normalizeCustomerAppLoginCode(input?.value || "");
+    const invalidMsg = t("staffLoginCodeInvalid", "Invalid or expired code. Ask the business owner for a new code.");
+    if (!/^[1-9]\d{8}$/.test(canonical)) {
+      showToast(invalidMsg, "error");
+      return;
+    }
+    staffLoginInFlight = true;
+    const btn = document.getElementById("staffLoginSubmitBtn");
+    if (btn) btn.disabled = true;
+    try {
+      const result = await redeemStaffAccessCode(canonical);
+      if (result !== "ok") {
+        showToast(result === "too_many" ? t("staffLoginTooMany", "Too many attempts. Try again in 15 minutes.") : invalidMsg, "error");
+        return;
+      }
+      if (input) input.value = "";
+    } catch (err) {
+      showToast(invalidMsg, "error");
+    } finally {
+      staffLoginInFlight = false;
+      if (btn) btn.disabled = false;
+    }
+  }
+
+  const STAFF_AGENDA_REFRESH_MS = 60 * 1000;
+  const STAFF_AGENDA_DAYS_AHEAD = 30;
+  // var (not const): hideAllViews() may run during start-up before this line is evaluated.
+  var staffAgendaState = { data: null, dayData: null, selectedDate: null, loading: false, timer: null, updatedAt: 0 };
+  let staffAgendaVisibilityBound = false;
+
+  function staffAgendaTimezone() {
+    return staffAgendaState.data?.business?.timezone || "Europe/Skopje";
+  }
+
+  /** Today's date (YYYY-MM-DD) and minutes since midnight in the business timezone. */
+  function staffAgendaNow() {
+    const parts = {};
+    try {
+      new Intl.DateTimeFormat("en-CA", {
+        timeZone: staffAgendaTimezone(), year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+      }).formatToParts(new Date()).forEach((p) => { parts[p.type] = p.value; });
+    } catch (e) {
+      const d = new Date();
+      parts.year = String(d.getFullYear()); parts.month = String(d.getMonth() + 1).padStart(2, "0");
+      parts.day = String(d.getDate()).padStart(2, "0"); parts.hour = String(d.getHours()); parts.minute = String(d.getMinutes());
+    }
+    return { dateStr: `${parts.year}-${parts.month}-${parts.day}`, minutes: Number(parts.hour) * 60 + Number(parts.minute) };
+  }
+
+  function staffAgendaAddDays(dateStr, n) {
+    const d = new Date(dateStr + "T12:00:00Z");
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function staffAgendaLocale() {
+    return { mk: "mk-MK", sq: "sq-AL" }[currentLanguage] || "en-GB";
+  }
+
+  function staffAgendaDateLabel(dateStr) {
+    const today = staffAgendaNow().dateStr;
+    let label = dateStr;
+    try {
+      label = new Intl.DateTimeFormat(staffAgendaLocale(), { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" })
+        .format(new Date(dateStr + "T12:00:00Z"));
+    } catch (e) { /* keep ISO date */ }
+    if (dateStr === today) return `${t("staffAgendaToday", "Today")} · ${label}`;
+    if (dateStr === staffAgendaAddDays(today, 1)) return `${t("staffAgendaTomorrow", "Tomorrow")} · ${label}`;
+    return label;
+  }
+
+  function staffAgendaStatusKey(booking) {
+    const s = String(booking?.status || "").toLowerCase();
+    if (s.startsWith("cancel")) return "cancelled";
+    if (s.startsWith("confirm")) return "confirmed";
+    if (s.startsWith("pend")) return "pending";
+    return "other";
+  }
+
+  function staffAgendaStatusLabel(booking) {
+    const key = staffAgendaStatusKey(booking);
+    if (key === "cancelled") return t("staffAgendaStatusCancelled", "Cancelled");
+    if (key === "confirmed") return t("staffAgendaStatusConfirmed", "Confirmed");
+    if (key === "pending") return t("staffAgendaStatusPending", "Pending");
+    return String(booking?.status || "");
+  }
+
+  function staffAgendaItemHtml(booking, opts = {}) {
+    const start = String(booking.time || "").slice(0, 5);
+    const duration = Number(booking.duration_minutes) || 30;
+    const end = minutesToTime((timeToMinutes(start) + duration) % 1440);
+    const status = staffAgendaStatusKey(booking);
+    const showStaff = staffAgendaState.data?.scope === "all" && booking.staff_name;
+    const notes = String(booking.notes || "").trim();
+    return (
+      `<article class="staff-agenda-item staff-agenda-item--${status}${opts.next ? " staff-agenda-item--next" : ""}">` +
+      `<div class="staff-agenda-item__time"><strong>${escapeHtml(start)}</strong><span>${escapeHtml(end)}</span></div>` +
+      `<div class="staff-agenda-item__body">` +
+      (opts.showDate ? `<div class="staff-agenda-item__date">${escapeHtml(staffAgendaDateLabel(booking.date))}</div>` : "") +
+      `<div class="staff-agenda-item__title">${i18nUserHtml(booking.customer_name || t("staffAgendaNoName", "Customer"))}</div>` +
+      `<div class="staff-agenda-item__meta">${i18nUserHtml(booking.service_name || "")} · ${escapeHtml(String(duration))} ${escapeHtml(t("staffAgendaMinutes", "min"))}</div>` +
+      (showStaff ? `<div class="staff-agenda-item__staff">${escapeHtml(t("staffAgendaWith", "With"))} ${i18nUserHtml(booking.staff_name)}</div>` : "") +
+      (notes ? `<div class="staff-agenda-item__notes">${escapeHtml(notes)}</div>` : "") +
+      `</div>` +
+      `<span class="staff-agenda-chip staff-agenda-chip--${status}">${escapeHtml(staffAgendaStatusLabel(booking))}</span>` +
+      `</article>`
+    );
+  }
+
+  function staffAgendaEmptyHtml(key, fallback) {
+    return `<p class="staff-agenda__empty">${escapeHtml(t(key, fallback))}</p>`;
+  }
+
+  function renderStaffAgenda() {
+    const data = staffAgendaState.data;
+    if (!data) return;
+    const view = document.getElementById("staffAgendaView");
+    if (!view) return;
+    const now = staffAgendaNow();
+    const bookings = Array.isArray(data.bookings) ? data.bookings : [];
+    const startMin = (b) => timeToMinutes(String(b.time || "").slice(0, 5));
+
+    const biz = document.getElementById("staffAgendaBusiness");
+    if (biz) biz.textContent = data.business?.name || "GT Termin";
+    const member = document.getElementById("staffAgendaMember");
+    if (member) {
+      const scope = data.scope === "all"
+        ? t("staffAgendaScopeAll", "All appointments")
+        : t("staffAgendaScopeOwn", "Your appointments");
+      member.textContent = `${data.staff?.name || ""} · ${scope}`;
+    }
+
+    // Next appointment that has not ended yet.
+    const next = bookings.find((b) =>
+      staffAgendaStatusKey(b) !== "cancelled" &&
+      (b.date > now.dateStr || (b.date === now.dateStr && startMin(b) + (Number(b.duration_minutes) || 30) > now.minutes))
+    );
+    const nextCard = document.getElementById("staffAgendaNextCard");
+    if (nextCard) {
+      nextCard.innerHTML = next
+        ? staffAgendaItemHtml(next, { next: true, showDate: true })
+        : staffAgendaEmptyHtml("staffAgendaNoUpcoming", "No upcoming appointments.");
+    }
+
+    const selected = staffAgendaState.selectedDate || now.dateStr;
+    const dayLabel = document.getElementById("staffAgendaDayLabel");
+    if (dayLabel) dayLabel.textContent = staffAgendaDateLabel(selected);
+    const daySource = staffAgendaState.dayData && staffAgendaState.dayData.from === selected
+      ? staffAgendaState.dayData.bookings || []
+      : bookings;
+    const dayItems = daySource.filter((b) => b.date === selected);
+    const dayList = document.getElementById("staffAgendaDayList");
+    if (dayList) {
+      dayList.innerHTML = dayItems.length
+        ? dayItems.map((b) => staffAgendaItemHtml(b, { next: next && b.id === next.id })).join("")
+        : staffAgendaEmptyHtml("staffAgendaNoneThisDay", "No appointments on this day.");
+    }
+
+    // Coming up: from tomorrow on, grouped by date, without cancelled ones.
+    const upcoming = bookings.filter((b) => b.date > now.dateStr && staffAgendaStatusKey(b) !== "cancelled");
+    const upcomingList = document.getElementById("staffAgendaUpcomingList");
+    if (upcomingList) {
+      let html = "";
+      let lastDate = "";
+      upcoming.forEach((b) => {
+        if (b.date !== lastDate) {
+          html += `<h3 class="staff-agenda__date-group">${escapeHtml(staffAgendaDateLabel(b.date))}</h3>`;
+          lastDate = b.date;
+        }
+        html += staffAgendaItemHtml(b);
+      });
+      upcomingList.innerHTML = html || staffAgendaEmptyHtml("staffAgendaNoneComing", "Nothing scheduled in the next 30 days.");
+    }
+
+    const updated = document.getElementById("staffAgendaUpdated");
+    if (updated && staffAgendaState.updatedAt) {
+      const time = new Date(staffAgendaState.updatedAt).toLocaleTimeString(staffAgendaLocale(), { hour: "2-digit", minute: "2-digit" });
+      updated.textContent = tFormat("staffAgendaUpdatedAt", "Updated at {time}", { time });
+    }
+  }
+
+  function isStaffAgendaAccessError(error) {
+    const msg = String(error?.message || "").toLowerCase();
+    return error?.code === "42501" || msg.includes("not active") || msg.includes("jwt") || msg.includes("permission denied");
+  }
+
+  async function handleStaffAgendaAccessLost() {
+    stopStaffAgendaTimer();
+    staffAgendaState.data = null;
+    staffAgendaState.dayData = null;
+    showToast(t("staffAgendaAccessEnded", "Your access has ended. Ask the business owner for a new code."), "error");
+    await detachStaffPushTokenForSignOut();
+    try {
+      await sb.auth.signOut({ scope: "local" });
+    } catch (e) { /* ignore */ }
+    currentUser = null;
+    currentUserRole = null;
+    showAuthView("staff-code");
+  }
+
+  async function refreshStaffAgenda(opts = {}) {
+    if (staffAgendaState.loading || !initSupabaseClient()) return;
+    staffAgendaState.loading = true;
+    const btn = document.getElementById("staffAgendaRefreshBtn");
+    btn?.setAttribute("aria-busy", "true");
+    try {
+      const today = staffAgendaNow().dateStr;
+      const main = await sb.rpc("get_staff_agenda", {
+        p_from: today,
+        p_to: staffAgendaAddDays(today, STAFF_AGENDA_DAYS_AHEAD)
+      });
+      if (main.error) {
+        if (isStaffAgendaAccessError(main.error)) {
+          await handleStaffAgendaAccessLost();
+          return;
+        }
+        document.getElementById("staffAgendaOffline")?.classList.remove("hidden");
+        if (opts.manual) showToast(t("staffAgendaOffline", "No connection. Showing the last loaded appointments."), "error");
+        return;
+      }
+      document.getElementById("staffAgendaOffline")?.classList.add("hidden");
+      staffAgendaState.data = main.data;
+      if (!staffAgendaState.selectedDate) staffAgendaState.selectedDate = staffAgendaNow().dateStr;
+      const selected = staffAgendaState.selectedDate;
+      if (selected < main.data.from || selected > main.data.to) {
+        const day = await sb.rpc("get_staff_agenda", { p_from: selected, p_to: selected });
+        staffAgendaState.dayData = day.error ? null : day.data;
+      } else {
+        staffAgendaState.dayData = null;
+      }
+      staffAgendaState.updatedAt = Date.now();
+      renderStaffAgenda();
+    } catch (err) {
+      document.getElementById("staffAgendaOffline")?.classList.remove("hidden");
+    } finally {
+      staffAgendaState.loading = false;
+      btn?.setAttribute("aria-busy", "false");
+    }
+  }
+
+  function isStaffAgendaVisible() {
+    const view = document.getElementById("staffAgendaView");
+    return !!view && !view.classList.contains("hidden");
+  }
+
+  function stopStaffAgendaTimer() {
+    if (staffAgendaState && staffAgendaState.timer) {
+      clearInterval(staffAgendaState.timer);
+      staffAgendaState.timer = null;
+    }
+  }
+
+  function startStaffAgendaTimer() {
+    stopStaffAgendaTimer();
+    staffAgendaState.timer = setInterval(() => {
+      if (!document.hidden && isStaffAgendaVisible()) void refreshStaffAgenda();
+    }, STAFF_AGENDA_REFRESH_MS);
+    if (!staffAgendaVisibilityBound) {
+      staffAgendaVisibilityBound = true;
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && isStaffAgendaVisible()) void refreshStaffAgenda();
+      });
+    }
+  }
+
+  async function enterStaffAgenda(opts = {}) {
+    if (await enterStaffBusinessView(opts)) {
+      void ensureStaffPushNotificationsReady("staff-business-view");
+      return "staff";
+    }
+    hideAllViews();
+    const view = document.getElementById("staffAgendaView");
+    if (!view) return "staff";
+    view.classList.remove("hidden");
+    document.body.classList.add("staff-agenda-active");
+    applyTranslations(view);
+    if (typeof setAppShellState === "function") {
+      setAppShellState(APP_SHELL_STATE.READY, { reason: "staff-agenda-" + (opts.reason || "open") });
+    }
+    if (staffAgendaPendingDate) {
+      staffAgendaState.selectedDate = staffAgendaPendingDate;
+      staffAgendaPendingDate = "";
+    }
+    if (staffAgendaState.data) renderStaffAgenda();
+    startStaffAgendaTimer();
+    await refreshStaffAgenda();
+    void ensureStaffPushNotificationsReady("staff-agenda");
+    return "staff";
+  }
+
+  // —— Employee view inside the normal Business shell (view-only calendar) ——
+  // Same adminView, calendar, navigation and themes as the owner. Data comes only from
+  // read-only sources: the public booking-page RPCs (hours, services without prices, team)
+  // and get_staff_agenda (the server applies "own"/"all"). No owner table is read, and every
+  // write stays refused server-side (RLS business_id = auth.uid(), owner-only RPCs).
+  var staffViewerMode = false;
+  var staffViewerRange = null;
+  var staffViewerScope = "own";
+  var staffViewerSelf = null;
+  var staffViewerTimer = null;
+  var staffViewerGateBound = false;
+  const STAFF_VIEWER_SECTIONS = new Set(["calendar", "profile"]);
+  const STAFF_VIEWER_MOBILE_TABS = new Set(["calendar", "settings"]);
+  // Settings rows an employee may open: appearance, language, sign out, help and legal.
+  const STAFF_FULL_VIEW_SETTINGS_ALLOWED =
+    /openAdminSettingsCategory\('services'\)|openAdminSettingsServicesFromCategory|openAdminSettingsStaffFromCategory/;
+  const STAFF_VIEWER_SETTINGS_ALLOWED =
+    /openAdminSettingsCategory\('account'\)|backAdminSettingsAccountCategory|closeAdminSettingsCategory|openXbookAppearancePicker|openLanguagePicker|requestUserLogout|openAdminHelpSupportFromSettings|openAdminAboutXbookFromSettings|openAdminLegalFromSettings/;
+
+  function isStaffViewer() {
+    return staffViewerMode === true && isStaffAccessUser(currentUser);
+  }
+
+  // —— Full Business View ('full'): the owner screens, read-only ——
+  // Reads go through the server's read-only rules (supabase-staff-full-view-v1.sql).
+  // Every write is refused by the server; this guard also stops them in the app.
+  const STAFF_FULL_VIEW_SECTIONS = new Set([
+    "home", "overview", "calendar", "bookings", "clients", "performance", "customer-analytics",
+    "service-analytics", "staff-analytics", "cross-analytics", "services", "staff", "profile"
+  ]);
+  const STAFF_READ_RPC = /^(get_|list_|count_|is_|check_)/;
+  const STAFF_WRITE_RPC_ALLOWED = new Set(["upsert_staff_push_token", "delete_staff_push_token"]);
+  var staffViewerFullActive = false;
+  var staffViewerEntering = false;
+  var staffReadOnlyToastAt = 0;
+
+  function isStaffFullViewer() {
+    return isStaffViewer() && staffViewerScope === "full";
+  }
+
+  function staffViewerBusinessId() {
+    return String(currentUser?.app_metadata?.business_id || "");
+  }
+
+  function staffReadOnlyError() {
+    return { message: t("staffViewerReadOnly", "View only. Ask the business owner to change appointments."), code: "staff_read_only" };
+  }
+
+  function notifyStaffReadOnlyBlocked() {
+    const now = Date.now();
+    if (now - staffReadOnlyToastAt < 2500) return;
+    staffReadOnlyToastAt = now;
+    showStaffViewerReadOnly();
+  }
+
+  /** Chainable, awaitable "refused" result in the shape of a Supabase query. */
+  function staffReadOnlyResult() {
+    const res = { data: null, error: staffReadOnlyError(), count: null, status: 403, statusText: "read-only" };
+    const chain = new Proxy(function () {}, {
+      get(_target, key) {
+        if (key === "then") return (ok, bad) => Promise.resolve(res).then(ok, bad);
+        if (key === "catch") return () => Promise.resolve(res);
+        if (key === "finally") return (fn) => Promise.resolve(res).finally(fn);
+        return () => chain;
+      },
+      apply() {
+        return chain;
+      }
+    });
+    return chain;
+  }
+
+  /** Finds a property descriptor on the object or its prototype chain. */
+  function findPropertyDescriptor(obj, key) {
+    for (let o = obj; o; o = Object.getPrototypeOf(o)) {
+      const d = Object.getOwnPropertyDescriptor(o, key);
+      if (d) return { owner: o, descriptor: d };
+    }
+    return null;
+  }
+
+  /** Wraps a client so the listed methods are refused and everything else works as before. */
+  function staffGuardProxy(target, refusedMethods, refuse) {
+    return new Proxy(target, {
+      get(t, key) {
+        if (refusedMethods.includes(key)) return refuse(key);
+        const v = Reflect.get(t, key, t);
+        return typeof v === "function" ? v.bind(t) : v;
+      }
+    });
+  }
+
+  /** While a team member is signed in, the app itself can only read. */
+  function installStaffReadOnlyGuard() {
+    if (!sb || sb.__staffGuard) return;
+    const ownFrom = Object.prototype.hasOwnProperty.call(sb, "from");
+    const ownRpc = Object.prototype.hasOwnProperty.call(sb, "rpc");
+    const origFrom = sb.from;
+    const origRpc = sb.rpc;
+    const storageRef = findPropertyDescriptor(sb, "storage");
+    const functionsRef = findPropertyDescriptor(sb, "functions");
+    const readStorage = () => (storageRef?.descriptor.get ? storageRef.descriptor.get.call(sb) : storageRef?.descriptor.value);
+    const readFunctions = () => (functionsRef?.descriptor.get ? functionsRef.descriptor.get.call(sb) : functionsRef?.descriptor.value);
+    sb.__staffGuard = { ownFrom, ownRpc, origFrom, origRpc, storageRef, functionsRef };
+    const refusedQuery = () => () => {
+      notifyStaffReadOnlyBlocked();
+      return staffReadOnlyResult();
+    };
+    const refusedAsync = () => async () => {
+      notifyStaffReadOnlyBlocked();
+      return { data: null, error: staffReadOnlyError() };
+    };
+    sb.from = (table) => staffGuardProxy(origFrom.call(sb, table), ["insert", "update", "upsert", "delete"], refusedQuery);
+    sb.rpc = (name, args, opts) => {
+      const n = String(name || "");
+      if (STAFF_READ_RPC.test(n) || STAFF_WRITE_RPC_ALLOWED.has(n) || (n === "staff_create_booking" && staffViewerCanCreate())) {
+        return origRpc.call(sb, name, args, opts);
+      }
+      notifyStaffReadOnlyBlocked();
+      return staffReadOnlyResult();
+    };
+    if (storageRef) {
+      Object.defineProperty(sb, "storage", {
+        configurable: true,
+        get() {
+          const storage = readStorage();
+          return new Proxy(storage, {
+            get(t, key) {
+              if (key === "from") {
+                return (bucket) => staffGuardProxy(t.from(bucket),
+                  ["upload", "update", "remove", "move", "copy", "uploadToSignedUrl", "createSignedUploadUrl"], refusedAsync);
+              }
+              const v = Reflect.get(t, key, t);
+              return typeof v === "function" ? v.bind(t) : v;
+            }
+          });
+        }
+      });
+    }
+    if (functionsRef) {
+      Object.defineProperty(sb, "functions", {
+        configurable: true,
+        get() {
+          const fns = readFunctions();
+          return new Proxy(fns, {
+            get(t, key) {
+              if (key === "invoke") {
+                return (name, o) => (name === "staff-access" ? t.invoke(name, o) : Promise.resolve({ data: null, error: staffReadOnlyError() }));
+              }
+              const v = Reflect.get(t, key, t);
+              return typeof v === "function" ? v.bind(t) : v;
+            }
+          });
+        }
+      });
+    }
+  }
+
+  function removeStaffReadOnlyGuard() {
+    const g = sb && sb.__staffGuard;
+    if (!g) return;
+    if (g.ownFrom) sb.from = g.origFrom; else delete sb.from;
+    if (g.ownRpc) sb.rpc = g.origRpc; else delete sb.rpc;
+    for (const [key, ref] of [["storage", g.storageRef], ["functions", g.functionsRef]]) {
+      if (!ref) continue;
+      if (ref.owner === sb) Object.defineProperty(sb, key, ref.descriptor);
+      else delete sb[key];
+    }
+    delete sb.__staffGuard;
+  }
+
+  /** Removes every piece of business data from memory, the screen and browser storage. */
+  function purgeStaffBusinessData(bizId) {
+    const id = String(bizId || staffViewerBusinessId() || businessId || "");
+    staffViewerFullActive = false;
+    document.body.classList.remove("staff-viewer-full");
+    bookings = [];
+    services = [];
+    staffMembers = [];
+    businessSettings = null;
+    blockedDays = [];
+    staffTimeOffRows = [];
+    try { resetBusinessCustomersCache(); } catch (e) { /* ignore */ }
+    try { xbaRpcCache.clear(); } catch (e) { /* ignore */ }
+    ["bookingsList", "clientsList"].forEach((elId) => {
+      const el = document.getElementById(elId);
+      if (el) el.innerHTML = "";
+    });
+    [localStorage, sessionStorage].forEach((store) => {
+      try {
+        if (!id) return;
+        const keys = [];
+        for (let i = 0; i < store.length; i++) {
+          const k = store.key(i);
+          if (k && k.includes(id)) keys.push(k);
+        }
+        keys.forEach((k) => store.removeItem(k));
+      } catch (e) { /* storage unavailable */ }
+    });
+  }
+
+  /** Full view: the owner's own loading path (reads only; owner-only steps are skipped). */
+  async function loadStaffFullViewData() {
+    businessId = staffViewerBusinessId();
+    staffViewerFullActive = true;
+    document.body.classList.add("staff-viewer-full");
+    await loadAdminData();
+  }
+
+  /** Server says the level or access changed: clear sensitive data, then follow the new level. */
+  async function handleStaffViewerAccessChange(wasFull, stillHasAccess) {
+    if (wasFull && (!stillHasAccess || staffViewerScope !== "full")) {
+      purgeStaffBusinessData();
+    }
+    if (!stillHasAccess) {
+      await signOutStaffAfterRevocation();
+      return;
+    }
+    showToast(t("staffViewerAccessChanged", "Your access was changed by the business owner."), "info");
+    await enterStaffBusinessView({ reason: "access-changed" });
+  }
+
+  async function signOutStaffAfterRevocation() {
+    stopStaffViewerTimer();
+    purgeStaffBusinessData();
+    leaveStaffViewerMode();
+    try { await detachStaffPushTokenForSignOut(); } catch (e) { /* ignore */ }
+    try { await sb.auth.signOut({ scope: "local" }); } catch (e) { /* ignore */ }
+    currentUser = null;
+    currentUserRole = null;
+    showAuthView();
+    showToast(t("staffViewerAccessRemoved", "Your access to this business was removed."), "info");
+  }
+
+  /** Owner switched on "can create appointments for themselves" (staff_members.can_create_bookings). */
+  function staffViewerCanCreate() {
+    return isStaffViewer() && staffViewerSelf?.can_create_bookings === true;
+  }
+
+  function staffViewerSelfId() {
+    return String(staffViewerSelf?.id || currentUser?.app_metadata?.staff_id || "");
+  }
+
+  function staffViewerAllowsSection(key) {
+    if (key === "manual") return staffViewerCanCreate();
+    if (isStaffFullViewer()) return STAFF_FULL_VIEW_SECTIONS.has(key);
+    return STAFF_VIEWER_SECTIONS.has(key);
+  }
+
+  function staffViewerAllowsMobileTab(tab) {
+    return isStaffFullViewer() ? true : STAFF_VIEWER_MOBILE_TABS.has(tab);
+  }
+
+  /** Team members only ever book for themselves. */
+  function staffViewerAddStaffList() {
+    if (!isStaffViewer()) return getActiveStaffMembers();
+    const id = staffViewerSelfId();
+    return (staffMembers || []).filter((m) => String(m.id) === id);
+  }
+
+  function showStaffViewerLocked() {
+    showToast(t("staffViewerLocked", "Only the business owner can open this. Team members can view the calendar."), "info");
+  }
+
+  function showStaffViewerReadOnly() {
+    showToast(t("staffViewerReadOnly", "View only. Ask the business owner to change appointments."), "info");
+  }
+
+  function staffViewerShiftDate(dateStr, days) {
+    const d = new Date(String(dateStr).slice(0, 10) + "T12:00:00Z");
+    d.setUTCDate(d.getUTCDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+
+  /** Bookings around the viewed date (max 62 days per call, enforced by get_staff_agenda). */
+  async function loadStaffViewerBookings(anchorDate) {
+    if (!initSupabaseClient()) return false;
+    const anchor = /^\d{4}-\d{2}-\d{2}$/.test(anchorDate || "") ? anchorDate : staffAgendaNow().dateStr;
+    const { data, error } = await sb.rpc("get_staff_agenda", {
+      p_from: staffViewerShiftDate(anchor, -31),
+      p_to: staffViewerShiftDate(anchor, 31)
+    });
+    if (error || !data || data.ok !== true) {
+      console.warn("[staff-view] agenda load failed", error?.message || "");
+      if (staffViewerMode && !staffViewerEntering && /not active|42501/i.test(String(error?.message || "") + String(error?.code || ""))) {
+        void handleStaffViewerAccessChange(staffViewerFullActive, false);
+      }
+      return false;
+    }
+    const previousScope = staffViewerScope;
+    staffViewerScope = data.scope === "full" ? "full" : data.scope === "all" ? "all" : "own";
+    if (staffViewerMode && !staffViewerEntering && staffViewerFullActive && staffViewerScope !== "full") {
+      void handleStaffViewerAccessChange(true, true);
+      return false;
+    }
+    if (staffViewerMode && !staffViewerEntering && previousScope !== "full" && staffViewerScope === "full") {
+      void handleStaffViewerAccessChange(false, true);
+      return false;
+    }
+    staffViewerSelf = data.staff || null;
+    document.body.classList.toggle("staff-viewer-can-create", staffViewerSelf?.can_create_bookings === true);
+    staffViewerRange = { from: String(data.from || ""), to: String(data.to || "") };
+    if (staffViewerFullActive) return true; // full view keeps the owner booking data (bookings_api)
+    const serviceIdByName = {};
+    (services || []).forEach((svc) => { if (svc?.name) serviceIdByName[String(svc.name).trim()] = svc.id; });
+    bookings = (Array.isArray(data.bookings) ? data.bookings : []).map((b) => ({
+      id: b.id,
+      business_id: businessId,
+      date: b.date,
+      time: b.time,
+      duration_minutes: b.duration_minutes,
+      customer_name: b.customer_name || "",
+      name: b.customer_name || "",
+      service_name: b.service_name || "",
+      service: b.service_name || "",
+      service_id: serviceIdByName[String(b.service_name || "").trim()] || null,
+      staff_id: b.staff_id || null,
+      staff_name: b.staff_name || "",
+      booking_status: b.status || "Pending",
+      status: b.status || "Pending",
+      notes: b.notes || null,
+      customer_phone: "",
+      customer_email: "",
+      booking_price: null
+    }));
+    bookingsCacheMode = "full";
+    return true;
+  }
+
+  function bindStaffViewerSettingsGate() {
+    if (staffViewerGateBound) return;
+    staffViewerGateBound = true;
+    // Capture phase: runs before the rows' own onclick handlers.
+    document.addEventListener("click", (e) => {
+      if (!isStaffViewer()) return;
+      const row = e.target.closest?.("#adminSectionProfile [onclick]");
+      if (!row) return;
+      const handler = row.getAttribute("onclick") || "";
+      if (STAFF_VIEWER_SETTINGS_ALLOWED.test(handler)) return;
+      if (isStaffFullViewer() && STAFF_FULL_VIEW_SETTINGS_ALLOWED.test(handler)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      showStaffViewerLocked();
+    }, true);
+  }
+
+  function stopStaffViewerTimer() {
+    if (staffViewerTimer) clearInterval(staffViewerTimer);
+    staffViewerTimer = null;
+  }
+
+  function startStaffViewerTimer() {
+    stopStaffViewerTimer();
+    staffViewerTimer = setInterval(() => {
+      if (!isStaffViewer() || document.visibilityState === "hidden") return;
+      void loadStaffViewerBookings(getAdminCalendarSelectedDateStr()).then(async (ok) => {
+        if (!ok) return;
+        if (staffViewerFullActive) await loadBookings(true, { mode: "full" });
+        if (adminActiveSection === "calendar") renderAdminCalendar();
+      });
+    }, 60 * 1000);
+  }
+
+  function leaveStaffViewerMode() {
+    stopStaffViewerTimer();
+    staffViewerMode = false;
+    staffViewerRange = null;
+    staffViewerSelf = null;
+    document.body.classList.remove("staff-viewer-mode", "staff-viewer-can-create", "staff-viewer-full");
+    staffViewerFullActive = false;
+    removeStaffReadOnlyGuard();
+    bookings = [];
+    services = [];
+    staffMembers = [];
+    businessSettings = null;
+    businessId = null;
+  }
+
+  async function enterStaffBusinessView(opts = {}) {
+    if (staffViewerEntering) return false;
+    staffViewerEntering = true;
+    try {
+      return await enterStaffBusinessViewInner(opts);
+    } finally {
+      staffViewerEntering = false;
+    }
+  }
+
+  async function enterStaffBusinessViewInner(opts = {}) {
+    if (!isStaffAccessUser(currentUser) || !initSupabaseClient()) return false;
+    const bizId = String(currentUser?.app_metadata?.business_id || "").trim();
+    if (!isValidUuid(bizId)) return false;
+    try {
+      const [settingsRes, svcRes, teamRes, rulesRes] = await Promise.all([
+        fetchPublicBusinessSettingsRow(bizId),
+        sb.rpc("get_public_services", { p_business_id: bizId }),
+        sb.rpc("get_public_staff", { p_business_id: bizId }),
+        fetchPublicStaffBookingRules(bizId)
+      ]);
+      const row = settingsRes?.data || null;
+      if (!row) return false;
+      businessId = bizId;
+      businessSettings = {
+        ...row,
+        business_id: bizId,
+        onboarding_completed_at: row.onboarding_completed_at || "staff-view"
+      };
+      // Prices are never shown to team members.
+      services = (Array.isArray(svcRes?.data) ? svcRes.data : []).map((svc) => ({ ...svc, business_id: bizId, price: null }));
+      staffViewerMode = true;
+      staffViewerFullActive = false;
+      installStaffReadOnlyGuard();
+      document.body.classList.add("staff-viewer-mode");
+      document.body.classList.remove("staff-agenda-active", "staff-viewer-full");
+      if (!(await loadStaffViewerBookings(staffAgendaPendingDate || ""))) {
+        leaveStaffViewerMode();
+        return false;
+      }
+      const team = (Array.isArray(teamRes?.data) ? teamRes.data : []).map((m) => ({ ...m, business_id: bizId }));
+      const selfId = staffViewerSelf?.id || currentUser?.app_metadata?.staff_id || "";
+      staffMembers = staffViewerScope === "all" || staffViewerScope === "full" ? team : team.filter((m) => m.id === selfId);
+      if (!staffMembers.length && staffViewerSelf) {
+        staffMembers = [{ ...staffViewerSelf, active: true, business_id: bizId }];
+      }
+      staffFeatureAvailable = true;
+      bookingStaffColumnAvailable = true;
+      applyStaffBookingRules(rulesRes?.rows || [], !!rulesRes?.ok);
+      bindStaffViewerSettingsGate();
+      adminActiveSection = "calendar";
+      showAdminView();
+      if (document.body.classList.contains("admin-mobile-shell-active")) setAdminMobileTab("calendar", { silent: true });
+      else setAdminSection("calendar", { silent: true });
+      if (staffViewerScope === "full") {
+        await loadStaffFullViewData();
+      }
+      if (staffAgendaPendingDate) {
+        openAdminCalendarDayView(staffAgendaPendingDate);
+        staffAgendaPendingDate = "";
+      }
+      if (typeof setAppShellState === "function") {
+        setAppShellState(APP_SHELL_STATE.READY, { reason: "staff-business-" + (opts.reason || "open") });
+      }
+      startStaffViewerTimer();
+      return true;
+    } catch (err) {
+      console.warn("[staff-view] could not open the business view", err?.message || err);
+      leaveStaffViewerMode();
+      return false;
+    }
+  }
+
+  // —— Employee push (F4): device token + opening the agenda from a notification ——
+  var staffAgendaPendingDate = ""; // var: a cold-start push tap may arrive early
+
+  async function upsertStaffPushTokenToServer(deviceToken, platform) {
+    const token = String(deviceToken || "").trim();
+    const plat = String(platform || "").trim().toLowerCase();
+    if (!token || !plat || !initSupabaseClient() || !isStaffAccessUser(currentUser)) return false;
+    try {
+      const { error } = await sb.rpc("upsert_staff_push_token", {
+        p_device_token: token,
+        p_platform: plat,
+        p_locale: currentLanguage
+      });
+      if (error) {
+        console.warn("[staff-push] token upsert failed:", error.message);
+        return false;
+      }
+      logNotifications("staff push token saved", { platform: plat });
+      return true;
+    } catch (err) {
+      console.warn("[staff-push] token upsert exception:", err?.message || err);
+      return false;
+    }
+  }
+
+  async function ensureStaffPushNotificationsReady(reason) {
+    if (!isPushNotificationsSupported() || !isStaffAccessUser(currentUser)) return;
+    await requestNativePushRegistration(reason);
+    await persistNativePushTokenForCurrentRole();
+  }
+
+  /** Stop pushes to this device before the session ends (the token row is the employee's own). */
+  async function detachStaffPushTokenForSignOut() {
+    const token = String(getRememberedNativePushDeviceToken() || "").trim();
+    if (!token || !initSupabaseClient()) return;
+    try {
+      await sb.rpc("delete_staff_push_token", { p_device_token: token });
+    } catch (err) {
+      /* the server also skips revoked members */
+    }
+  }
+
+  function openStaffAgendaFromPush(dateStr) {
+    const date = /^\d{4}-\d{2}-\d{2}$/.test(dateStr) ? dateStr : "";
+    if (isStaffViewer()) {
+      void loadStaffViewerBookings(date || getAdminCalendarSelectedDateStr()).then((ok) => {
+        if (!ok) return;
+        if (date) openAdminCalendarDayView(date);
+        else renderAdminCalendar();
+      });
+      return;
+    }
+    if (isStaffAgendaVisible()) {
+      if (date) staffAgendaSelectDate(date);
+      void refreshStaffAgenda();
+      return;
+    }
+    // Cold start: the session restore opens the agenda and picks up this date.
+    staffAgendaPendingDate = date;
+    if (isStaffAccessUser(currentUser)) void enterStaffAgenda({ reason: "push-open" });
+  }
+
+  function staffAgendaSelectDate(dateStr) {
+    staffAgendaState.selectedDate = dateStr;
+    const data = staffAgendaState.data;
+    if (data && dateStr >= data.from && dateStr <= data.to) {
+      staffAgendaState.dayData = null;
+      renderStaffAgenda();
+      return;
+    }
+    void refreshStaffAgenda();
+  }
+
+  function staffAgendaShiftDay(delta) {
+    const base = staffAgendaState.selectedDate || staffAgendaNow().dateStr;
+    staffAgendaSelectDate(staffAgendaAddDays(base, delta));
+  }
+
+  function staffAgendaGoToday() {
+    staffAgendaSelectDate(staffAgendaNow().dateStr);
+  }
+
+  async function staffAgendaSignOut() {
+    const okToLeave = await showXbookConfirm(t("staffAgendaSignOutConfirm", "Sign out of GT Termin on this device?"), {
+      title: t("staffAgendaSignOut", "Sign out"),
+      confirmLabel: t("staffAgendaSignOut", "Sign out"),
+      destructive: false
+    });
+    if (!okToLeave) return;
+    stopStaffAgendaTimer();
+    staffAgendaState.data = null;
+    staffAgendaState.dayData = null;
+    staffAgendaState.selectedDate = null;
+    purgeStaffBusinessData();
+    leaveStaffViewerMode();
+    await detachStaffPushTokenForSignOut();
+    try {
+      await sb.auth.signOut({ scope: "local" });
+    } catch (e) { /* ignore */ }
+    currentUser = null;
+    currentUserRole = null;
+    showAuthView();
+  }
+
+  // —— Owner: app access for a team member ——
+  let staffAccessEditorStaff = null;
+  let staffAccessLastCode = "";
+
+  function renderStaffAccessSection(staff) {
+    staffAccessEditorStaff = staff || null;
+    const section = document.getElementById("staffAccessSection");
+    if (!section) return;
+    // Hidden until the server supports employee access (columns present).
+    const supported = !!staff && Object.prototype.hasOwnProperty.call(staff, "access_enabled");
+    section.classList.toggle("hidden", !supported);
+    if (!supported) return;
+    if (String(staffAccessLastCodeStaffId) !== String(staff.id)) hideStaffAccessCode();
+
+    const connected = !!staff.access_user_id && staff.access_enabled === true;
+    const waiting = !staff.access_user_id && staff.access_enabled === true;
+    const inactive = staff.active === false;
+    const status = document.getElementById("staffAccessStatus");
+    if (status) {
+      status.textContent = inactive
+        ? t("staffAccessInactive", "Activate this team member first.")
+        : connected
+          ? t("staffAccessConnected", "Has access to GT Termin.")
+          : waiting
+            ? t("staffAccessWaiting", "Waiting for the team member to enter the code.")
+            : t("staffAccessNone", "No app access.");
+    }
+    document.querySelectorAll('input[name="staffAccessScope"]').forEach((input) => {
+      const level = staff.access_scope === "full" ? "full" : staff.access_scope === "all" ? "all" : "own";
+      input.checked = input.value === level;
+    });
+    // Shown once the server has the permission column (supabase-staff-create-booking-v1.sql).
+    const canCreateSupported = Object.prototype.hasOwnProperty.call(staff, "can_create_bookings");
+    document.getElementById("staffAccessCanCreateRow")?.classList.toggle("hidden", !canCreateSupported);
+    const canCreateInput = document.getElementById("staffAccessCanCreate");
+    if (canCreateInput) canCreateInput.checked = staff.can_create_bookings === true;
+    const issueBtn = document.getElementById("staffAccessIssueBtn");
+    if (issueBtn) {
+      issueBtn.disabled = inactive;
+      issueBtn.textContent = connected
+        ? t("staffAccessIssueAnother", "Code for another device")
+        : t("staffAccessIssue", "Create access code");
+    }
+    document.getElementById("staffAccessRevokeBtn")?.classList.toggle("hidden", !(connected || waiting));
+  }
+
+  let staffAccessLastCodeStaffId = null;
+
+  function hideStaffAccessCode() {
+    staffAccessLastCode = "";
+    staffAccessLastCodeStaffId = null;
+    document.getElementById("staffAccessCodeBox")?.classList.add("hidden");
+  }
+
+  async function reloadStaffAccessSection(staffId) {
+    await loadStaffMembers();
+    const staff = (staffMembers || []).find((s) => String(s.id) === String(staffId));
+    if (staff && String(staffAccessEditorStaff?.id) === String(staffId)) renderStaffAccessSection(staff);
+  }
+
+  async function saveStaffAccessScope(scope) {
+    const staff = staffAccessEditorStaff;
+    if (!staff || !initSupabaseClient()) return;
+    if (scope === "full") {
+      const okFull = await showXbookConfirm(
+        t("staffAccessScopeFullConfirm", "This team member will see reports, revenue and all clients with contact details (read only). Continue?"),
+        { title: t("staffAccessScopeFull", "Full business view (read only)"), confirmLabel: t("commonContinue", "Continue"), destructive: false }
+      );
+      if (!okFull) {
+        renderStaffAccessSection(staff);
+        return;
+      }
+    }
+    const { error } = await sb.rpc("set_staff_access_scope", { p_staff_id: staff.id, p_scope: scope });
+    if (error) {
+      showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+      renderStaffAccessSection(staff);
+      return;
+    }
+    showToast(t("staffAccessScopeSaved", "Saved."), "success");
+    await reloadStaffAccessSection(staff.id);
+  }
+
+  async function saveStaffCanCreateBookings(enabled) {
+    const staff = staffAccessEditorStaff;
+    if (!staff || !initSupabaseClient() || !businessId) return;
+    const { error } = await sb
+      .from("staff_members")
+      .update({ can_create_bookings: !!enabled })
+      .eq("id", staff.id)
+      .eq("business_id", businessId);
+    if (error) {
+      showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+      renderStaffAccessSection(staff);
+      return;
+    }
+    showToast(t("staffAccessScopeSaved", "Saved."), "success");
+    await reloadStaffAccessSection(staff.id);
+  }
+
+  async function issueStaffAccessCode() {
+    const staff = staffAccessEditorStaff;
+    if (!staff || !initSupabaseClient()) return;
+    const btn = document.getElementById("staffAccessIssueBtn");
+    if (btn) btn.disabled = true;
+    try {
+      const res = await invokeCustomerAppLoginFunction(
+        "staff-access",
+        { action: "issue_code", staff_id: staff.id },
+        { withSession: true }
+      );
+      const payload = res.json && typeof res.json === "object" ? res.json : {};
+      if (!res.ok || !payload.ok || !payload.code) {
+        showToast(t("staffAccessIssueFailed", "Could not create a code. Please try again."), "error");
+        return;
+      }
+      staffAccessLastCode = String(payload.code);
+      staffAccessLastCodeStaffId = staff.id;
+      const value = document.getElementById("staffAccessCodeValue");
+      if (value) value.textContent = staffAccessLastCode;
+      const expiry = document.getElementById("staffAccessCodeExpiry");
+      if (expiry) {
+        let when = String(payload.expires_at || "");
+        try {
+          when = new Date(payload.expires_at).toLocaleString(staffAgendaLocale(), {
+            day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
+          });
+        } catch (e) { /* keep raw */ }
+        expiry.textContent = tFormat("staffAccessCodeValidUntil", "Valid until {time}", { time: when });
+      }
+      document.getElementById("staffAccessCodeBox")?.classList.remove("hidden");
+      await reloadStaffAccessSection(staff.id);
+    } finally {
+      if (btn) btn.disabled = staffAccessEditorStaff?.active === false;
+    }
+  }
+
+  async function copyStaffAccessCode() {
+    if (!staffAccessLastCode) return;
+    await copyTextToClipboardWithToast(staffAccessLastCode, t("staffAccessCopied", "Code copied."));
+  }
+
+  async function revokeStaffAccess() {
+    const staff = staffAccessEditorStaff;
+    if (!staff || !initSupabaseClient()) return;
+    const confirmed = await showXbookConfirm(
+      t("staffAccessRevokeConfirm", "Remove app access? The team member is signed out on all devices. Appointments are not changed."),
+      { title: t("staffAccessRevoke", "Remove access"), confirmLabel: t("staffAccessRevoke", "Remove access"), destructive: true }
+    );
+    if (!confirmed) return;
+    const res = await invokeCustomerAppLoginFunction(
+      "staff-access",
+      { action: "revoke", staff_id: staff.id },
+      { withSession: true }
+    );
+    if (!res.ok || !res.json?.ok) {
+      // Fallback: switch access off in the database (data access stops at once).
+      const { error } = await sb.rpc("revoke_staff_access", { p_staff_id: staff.id });
+      if (error) {
+        showToast(extractRpcErrorMessage(error) || "Could not save. Please try again.", "error");
+        return;
+      }
+    }
+    hideStaffAccessCode();
+    showToast(t("staffAccessRevoked", "Access removed."), "success");
+    await reloadStaffAccessSection(staff.id);
   }
 
   function triggerEditStaffPhotoPick() {
@@ -168131,6 +170293,95 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     });
   }
 
+  function staffRuleTimeToMinutes(value) {
+    const raw = String(value ?? "").trim();
+    const m = raw.match(/^(\d{1,2}):(\d{2})/);
+    if (!m) return null;
+    return Number(m[1]) * 60 + Number(m[2]);
+  }
+
+  function applyStaffBookingRules(rows, serverReady) {
+    const next = new Map();
+    (Array.isArray(rows) ? rows : []).forEach((row) => {
+      const staffId = String(row?.staff_id || "");
+      if (!staffId) return;
+      const allServices = row.all_services !== false;
+      const usesBusinessHours = row.uses_business_hours !== false;
+      const hoursByDow = {};
+      if (!usesBusinessHours) {
+        (Array.isArray(row.weekly_hours) ? row.weekly_hours : []).forEach((h) => {
+          const dow = Number(h?.dow);
+          const start = staffRuleTimeToMinutes(h?.start ?? h?.start_time);
+          const end = staffRuleTimeToMinutes(h?.end ?? h?.end_time);
+          if (!Number.isInteger(dow) || start == null || end == null) return;
+          hoursByDow[dow] = {
+            start,
+            end,
+            breakStart: staffRuleTimeToMinutes(h?.break_start),
+            breakEnd: staffRuleTimeToMinutes(h?.break_end)
+          };
+        });
+      }
+      next.set(staffId, {
+        allServices,
+        serviceIds: new Set((allServices ? [] : row.service_ids || []).map((id) => String(id))),
+        usesBusinessHours,
+        hoursByDow
+      });
+    });
+    staffBookingRules = next;
+    staffBookingRulesServerReady = !!serverReady;
+  }
+
+  function getStaffBookingRule(staffId) {
+    if (!staffId) return null;
+    return staffBookingRules.get(String(staffId)) || null;
+  }
+
+  /** Missing rule = performs every service (default for existing staff). */
+  function staffPerformsService(staffId, serviceId) {
+    const rule = getStaffBookingRule(staffId);
+    if (!rule || rule.allServices || !serviceId) return true;
+    return rule.serviceIds.has(String(serviceId));
+  }
+
+  /** null when the individual schedule allows the range, otherwise "day" | "hours" | "break". */
+  function getStaffHoursViolation(staffId, dateStr, startMin, endMin) {
+    const rule = getStaffBookingRule(staffId);
+    if (!rule || rule.usesBusinessHours || !dateStr || !Number.isFinite(startMin)) return null;
+    const dow = dayOfWeekFromDateStr(dateStr);
+    const day = rule.hoursByDow[dow];
+    if (!day) return "day";
+    const end = Number.isFinite(endMin) ? endMin : startMin;
+    if (startMin < day.start || end > day.end) return "hours";
+    if (day.breakStart != null && day.breakEnd != null && startMin < day.breakEnd && end > day.breakStart) {
+      return "break";
+    }
+    return null;
+  }
+
+  /** Time off OR outside the staff member's individual hours / break. */
+  function isStaffUnavailable(dateStr, startMin, endMin, staffId) {
+    if (!staffId) return false;
+    return isStaffOnTimeOff(dateStr, startMin, endMin, staffId) ||
+      !!getStaffHoursViolation(staffId, dateStr, startMin, endMin);
+  }
+
+  const STAFF_RULE_MESSAGES = {
+    service: "This team member does not perform this service.",
+    day: "This team member does not work on this day.",
+    hours: "This time is outside this team member's working hours.",
+    break: "This time overlaps this team member's break."
+  };
+
+  /** Same messages as the server; translated in showToast via I18N_MESSAGES. */
+  function getStaffBookingRuleError(staffId, serviceId, dateStr, startMin, endMin) {
+    if (!staffId) return null;
+    if (!staffPerformsService(staffId, serviceId)) return STAFF_RULE_MESSAGES.service;
+    const hours = getStaffHoursViolation(staffId, dateStr, startMin, endMin);
+    return hours ? STAFF_RULE_MESSAGES[hours] : null;
+  }
+
   function staffHasTimeOffOnDate(dateStr, staffId) {
     return isStaffOnTimeOff(dateStr, 0, 1440, staffId);
   }
@@ -168491,7 +170742,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return;
     }
 
-    const activeStaff = getActiveStaffMembers();
+    const activeStaff = staffViewerAddStaffList();
     if (activeStaff.length === 0) {
       select.innerHTML = `<option value="">${escapeHtml(t("staffNoneAvailableShort", "No team members available"))}</option>`;
       select.disabled = true;
@@ -168612,11 +170863,24 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
       mount.innerHTML = "";
 
-      // "Any available" has been removed — no default selection. The
-      // customer must explicitly tap a real team member to continue.
+      // No default selection: the customer taps a team member or
+      // "Било кој слободен" (assigned by the server at booking time).
+      const anyEnabled = isPublicAnyStaffOptionEnabled();
       let choice = selectedId || selectedPublicStaffChoice || null;
-      if (choice && !eligible.some((s) => s.id === choice)) {
+      if (choice === PUBLIC_ANY_STAFF_CHOICE ? !anyEnabled : choice && !eligible.some((s) => s.id === choice)) {
         choice = null;
+      }
+
+      if (anyEnabled) {
+        mount.appendChild(
+          buildPublicStaffCard({
+            staffId: PUBLIC_ANY_STAFF_CHOICE,
+            name: t("bookAnyStaff", "Any available"),
+            role: t("bookAnyStaffRole", "First free team member"),
+            anyAvailable: true,
+            selected: choice === PUBLIC_ANY_STAFF_CHOICE
+          })
+        );
       }
 
       eligible.forEach((staff) => {
@@ -168659,9 +170923,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     const photo = String(photoUrl || "").trim();
     const initials = escapeHtml(staffMemberInitials(name));
-    const avatarInner = photo
+    const avatarInner = opts?.anyAvailable
+      ? `<span class="public-staff-card-initials public-staff-card-initials--any" aria-hidden="true">✦</span>`
+      : photo
       ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="public-staff-card-initials" style="display:none">${initials}</span>`
       : `<span class="public-staff-card-initials">${initials}</span>`;
+    if (opts?.anyAvailable) card.classList.add("public-staff-card--any");
 
     let ratingHtml = "";
     const ratingNum = Number(rating);
@@ -168736,6 +171003,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   /** Returns the exact chosen/auto-selected staff UUID, or null if none chosen yet. */
   function getSelectedPublicStaffId() {
     if (publicStaffAutoSelectedId) return publicStaffAutoSelectedId;
+    if (selectedPublicStaffChoice === PUBLIC_ANY_STAFF_CHOICE) return null;
     return selectedPublicStaffChoice || null;
   }
 
@@ -168748,7 +171016,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     if (!dateStr || !service) return false;
 
     const staffId = getSelectedPublicStaffId();
-    if (!staffId) return false;
+    if (!staffId && !isPublicAnyStaffChoice()) return false;
     return isPublicScheduleSlotAvailable(dateStr, startMins, staffId, service);
   }
 
@@ -168893,6 +171161,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function loadBookingsFull(silent = false) {
+    if (typeof isStaffViewer === "function" && isStaffViewer() && !staffViewerFullActive) {
+      return loadStaffViewerBookings(getAdminCalendarSelectedDateStr());
+    }
     const guard = captureCustomerPublicLoadGuard();
     const { data, error } = await sb
       .from("bookings_api")
@@ -171590,6 +173861,21 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function invokeCreateBookingRpc(params) {
+    if (typeof isStaffViewer === "function" && isStaffViewer()) {
+      // Team member: only for themselves, confirmed; the server checks the permission.
+      const phone = String(params.customerPhone || "").trim();
+      const { data, error } = await sb.rpc("staff_create_booking", {
+        p_service_id: params.serviceId,
+        p_date: params.date,
+        p_time: params.time,
+        p_customer_name: params.customerName,
+        p_customer_phone: phone && phone !== ADMIN_ADD_OPTIONAL_PHONE_PLACEHOLDER ? phone : null,
+        p_customer_email: params.customerEmail ?? null,
+        p_notes: params.notes ?? null
+      });
+      if (error) return { data: null, error: { message: formatBookingRpcError(error) } };
+      return { data, error: null };
+    }
     if (isCustomerPreviewActive()) {
       console.warn("[customer-preview] blocked create_booking RPC");
       return {
@@ -171609,6 +173895,25 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         };
       }
       customerUserId = verified.userId;
+    }
+
+    if (params.anyStaff) {
+      const anyRes = await sb.rpc("create_booking_any_staff", {
+        p_business_id: params.businessId,
+        p_service_id: params.serviceId,
+        p_date: params.date,
+        p_time: params.time,
+        p_customer_name: params.customerName,
+        p_customer_phone: params.customerPhone,
+        p_customer_email: params.customerEmail ?? null,
+        p_notes: params.notes ?? null,
+        p_customer_user_id: customerUserId,
+        p_booking_status: params.bookingStatus || "Confirmed"
+      });
+      if (anyRes.error) {
+        return { data: null, error: normalizePublicBookingRpcError(anyRes.error) };
+      }
+      return { data: anyRes.data, error: null };
     }
 
     const { data, error } = await sb.rpc("create_booking", {
@@ -171934,7 +174239,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         return { ok: false, message: RECURRING_BOOKINGS_UNAVAILABLE_MSG };
       }
 
-      if (staffId && isStaffOnTimeOff(date, start, end, staffId)) {
+      if (staffId && (isStaffUnavailable(date, start, end, staffId) || !staffPerformsService(staffId, service?.id))) {
         return { ok: false, message: RECURRING_BOOKINGS_UNAVAILABLE_MSG };
       }
     }
@@ -172084,6 +174389,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return;
     }
 
+    const addStaffRuleError = getStaffBookingRuleError(staffId, service?.id, date, start, end);
+    if (addStaffRuleError) {
+      showToast(addStaffRuleError, "error");
+      return;
+    }
+
     if (staffId && isStaffOnTimeOff(date, start, end, staffId)) {
       showToast(t("timeOffUnavailable"), "error");
       return;
@@ -172115,12 +174426,15 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       }
     }
 
-    const { error: ensureCustomerError } = await invokeEnsureBusinessCustomerRpc({
-      businessId,
-      name: customerName,
-      phone: customerPhoneForAdminAddBookingRpc(customerPhone),
-      email: customerEmail || ""
-    });
+    // Team members: the server registers the client (staff_create_booking).
+    const { error: ensureCustomerError } = isStaffViewer()
+      ? { error: null }
+      : await invokeEnsureBusinessCustomerRpc({
+          businessId,
+          name: customerName,
+          phone: customerPhoneForAdminAddBookingRpc(customerPhone),
+          email: customerEmail || ""
+        });
 
     if (ensureCustomerError) {
       showToast(ensureCustomerError.message, "error");
@@ -172164,16 +174478,19 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       if (staffRow && staffRow.name) successStaffName = staffRow.name;
     }
 
-    await sendBookingEmailNotification("booking_created", insertedBooking?.id, {
-      source: "admin",
-      manageToken: insertedBooking?.manage_token || null
-    });
+    if (!isStaffViewer()) {
+      await sendBookingEmailNotification("booking_created", insertedBooking?.id, {
+        source: "admin",
+        manageToken: insertedBooking?.manage_token || null
+      });
+    }
 
     const normalizedBooking = normalizeCreateBookingResult(insertedBooking);
     if (normalizedBooking?.id) {
       markAdminSelfCreatedBooking(normalizedBooking.id);
       mergeBookingIntoLocalCache(normalizedBooking);
-      void notifyAdminNewBookingLocal(normalizedBooking, { source: "admin-create" });
+      if (!isStaffViewer()) void notifyAdminNewBookingLocal(normalizedBooking, { source: "admin-create" });
+      else void loadStaffViewerBookings(date);
     }
 
     keepLocked = true;
@@ -172296,6 +174613,21 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return;
     }
 
+    // Same rule as the server: an untouched slot keeps its existing booking as is.
+    const editSlotUnchanged =
+      !!originalBooking &&
+      getBookingStatus(originalBooking) !== "Cancelled" &&
+      String(originalBooking.staff_id || "") === String(staffId || "") &&
+      String(originalBooking.service_id || "") === String(serviceId || "") &&
+      String(originalBooking.date || "") === String(newDate || "") &&
+      String(originalBooking.time || "").slice(0, 5) === String(newTime || "").slice(0, 5);
+    const editStaffRuleError = editSlotUnchanged
+      ? null
+      : getStaffBookingRuleError(staffId, serviceId, newDate, start, end);
+    if (editStaffRuleError) {
+      showToast(editStaffRuleError, "error");
+      return;
+    }
     if (staffId && isStaffOnTimeOff(newDate, start, end, staffId)) {
       showToast(t("timeOffUnavailable"), "error");
       return;
@@ -173990,6 +176322,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return { type: "time-off", time: timeStr };
     }
 
+    if (staffId && getStaffBookingRuleError(staffId, service?.id, dateStr, startMins, endMins)) {
+      return { type: "unavailable", time: timeStr };
+    }
+
     if (isAdminScheduleSlotAvailable(dateStr, startMins, staffId, service, dayBookings)) {
       return { type: "available", time: timeStr };
     }
@@ -174031,12 +176367,14 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     if (bookingStaffColumnAvailable && activeStaff.length > 0) {
       if (staffId) {
-        if (isStaffOnTimeOff(dateStr, startMin, endMin, staffId)) return false;
+        if (!staffPerformsService(staffId, service.id)) return false;
+        if (isStaffUnavailable(dateStr, startMin, endMin, staffId)) return false;
         if (adminCalendarRangeOverlapsBookings(startMin, endMin, staffId, bookingsForDay)) return false;
         return !hasConflict(dateStr, timeStr, service.id, null, staffId);
       }
       return activeStaff.some((staff) => {
-        if (isStaffOnTimeOff(dateStr, startMin, endMin, staff.id)) return false;
+        if (!staffPerformsService(staff.id, service.id)) return false;
+        if (isStaffUnavailable(dateStr, startMin, endMin, staff.id)) return false;
         if (adminCalendarRangeOverlapsBookings(startMin, endMin, staff.id, bookingsForDay)) return false;
         return !hasConflict(dateStr, timeStr, service.id, null, staff.id);
       });
@@ -174124,7 +176462,9 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   function openAdminCalendarServicePicker() {
     const list = document.getElementById("adminCalendarServicePickerList");
+    const selfId = isStaffViewer() ? staffViewerSelfId() : "";
     const items = [...services]
+      .filter((s) => !selfId || staffPerformsService(selfId, s.id))
       .sort((a, b) => {
         const durDiff = getServiceDurationValue(a) - getServiceDurationValue(b);
         if (durDiff !== 0) return durDiff;
@@ -174521,7 +176861,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const staffEl = document.getElementById("adminAddStaff");
     if (!section || !staffEl) return;
 
-    const active = getActiveStaffMembers();
+    const active = staffViewerAddStaffList();
     const canPickStaff = staffFeatureAvailable && bookingStaffColumnAvailable && active.length > 0;
     if (canPickStaff && active.length === 1) {
       staffEl.value = active[0].id;
@@ -174906,6 +177246,15 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   function openQuickAddBooking(dateStr, time, staffId, durationMinutes, serviceIdOverride) {
+    if (typeof isStaffViewer === "function" && isStaffViewer()) {
+      if (!staffViewerCanCreate()) {
+        showStaffViewerReadOnly();
+        return;
+      }
+      staffId = staffViewerSelfId();
+      renderAdminAddServiceOptions();
+      renderAdminAddStaffOptions(staffId);
+    }
     adminAddOpenedFromCalendar = true;
     bindAdminAddBookingSummaryEvents();
     setAdminSection("manual", { skipRender: true, fromCalendar: true });
@@ -175523,7 +177872,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       return { meta, entries: buildAdminMobileBookedEntries(dateStr, dayBookings), needsService: true };
     }
 
-    const staffId = adminCalendarStaffFilter || "";
+    // While a team member books (service picked, permission on), free slots are their own.
+    const staffId = isStaffViewer() && staffViewerCanCreate() && getAdminCalendarSelectedService()
+      ? staffViewerSelfId()
+      : (adminCalendarStaffFilter || "");
     const slotTimes = enumerateAdminMobileAgendaTimes(dateStr, service);
     const entries = [];
     const seenTimes = new Set();
@@ -176020,6 +178372,15 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   function renderAdminCalendar() {
+    if (typeof isStaffViewer === "function" && isStaffViewer() && !staffViewerFullActive && staffViewerRange) {
+      const viewed = getAdminCalendarSelectedDateStr();
+      if (viewed < staffViewerShiftDate(staffViewerRange.from, 7) || viewed > staffViewerShiftDate(staffViewerRange.to, -7)) {
+        const range = staffViewerRange;
+        void loadStaffViewerBookings(viewed).then((ok) => {
+          if (ok && staffViewerRange !== range && adminActiveSection === "calendar") renderAdminCalendar();
+        });
+      }
+    }
     ensureAdminCalendarMobileDefaultView();
     populateAdminCalendarStaffFilter();
     populateAdminCalendarServiceFilter();
@@ -176082,7 +178443,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     const id = String(bookingId || "").trim();
     const booking = bookings.find((b) => String(b.id) === id);
     if (!booking) return;
-    await ensureBusinessCustomersLoaded();
+    if (!isStaffViewer()) await ensureBusinessCustomersLoaded();
     adminBookingDetailModalId = booking.id;
     const service = services.find((s) => s.id === booking.service_id);
     const status = getBookingStatus(booking);
@@ -176157,6 +178518,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function adminModalEditBooking() {
+    if (isStaffViewer()) {
+      showStaffViewerReadOnly();
+      return;
+    }
     const id = adminBookingDetailModalId;
     if (!id) return;
     closeAdminBookingDetailModal();
@@ -176167,6 +178532,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function adminModalCancelBooking() {
+    if (isStaffViewer()) {
+      showStaffViewerReadOnly();
+      return;
+    }
     const id = adminBookingDetailModalId;
     if (!id) return;
     const ok = await cancelBooking(id);
@@ -176178,6 +178547,10 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
   }
 
   async function adminModalDeleteBooking() {
+    if (isStaffViewer()) {
+      showStaffViewerReadOnly();
+      return;
+    }
     const id = adminBookingDetailModalId;
     if (!id) return;
     const ok = await deleteBooking(id);
@@ -176248,6 +178621,13 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
   function isPublicScheduleSlotAvailable(dateStr, startMins, staffId, service) {
     if (!dateStr || !service) return false;
+    // "Било кој слободен": bookable when at least one qualified member is free.
+    if (!staffId && isPublicAnyStaffChoice()) {
+      return getEligiblePublicStaffForService(service).some((staff) =>
+        isPublicScheduleSlotAvailable(dateStr, startMins, staff.id, service)
+      );
+    }
+    if (staffId && !staffPerformsService(staffId, service.id)) return false;
     if (isAdminScheduleDayClosed(dateStr)) return false;
     if (!isAdminScheduleDayWorking(dateStr)) return false;
     if (isOutsideBookingWindow(dateStr)) return false;
@@ -176269,7 +178649,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
 
     if (isSlotInBreak(timeStr, duration)) return false;
     if (adminScheduleRangeOverlapsBreak(startMin, endMin)) return false;
-    if (staffId && isStaffOnTimeOff(dateStr, startMin, endMin, staffId)) return false;
+    if (staffId && isStaffUnavailable(dateStr, startMin, endMin, staffId)) return false;
 
     return !hasConflict(dateStr, timeStr, service.id, null, staffId || "");
   }
@@ -177467,6 +179847,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
    * Falls back to the generic date hint when no staff is resolved yet. */
   function getPublicDateStepStaffSubtitle() {
     const staffId = getSelectedPublicStaffId();
+    if (!staffId && isPublicAnyStaffChoice()) return t("bookAnyStaff", "Any available");
     if (!staffId) return "";
     const staff = staffMembers.find((s) => s.id === staffId);
     if (!staff) return "";
@@ -177525,7 +179906,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       calendar.appendChild(div);
     }
 
-    const canCheckAvailability = !!(selectedService && getSelectedPublicStaffId());
+    const canCheckAvailability = !!(selectedService && (getSelectedPublicStaffId() || isPublicAnyStaffChoice()));
 
     for (let day = 1; day <= daysInMonth; day++) {
       const dateStr = formatDate(year, month, day);
@@ -177975,7 +180356,8 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
     // exact, active staff_id. This should not normally trigger — the wizard
     // only reaches this step once a team member is chosen/auto-selected —
     // but we never trust client state alone (see also the RPC-side check).
-    if (!staffId) {
+    const anyStaffBooking = !staffId && isPublicAnyStaffChoice();
+    if (!staffId && !anyStaffBooking) {
       showToast(t("bookStaffSelectionRequired", "Please select a team member to continue."), "error");
       if (isPublicStaffStepEnabled()) {
         goToPublicBookingStep(PUBLIC_BOOKING_STEP.STAFF, { silent: true });
@@ -178072,8 +180454,12 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       // is still active and still belongs to this business right before we
       // submit. If they were removed/deactivated mid-flow, stop and send the
       // customer back to choose again instead of silently swapping them out.
-      const stillValidStaff = staffMembers.find((s) => s.id === staffId);
-      if (!stillValidStaff || stillValidStaff.active === false) {
+      const stillValidStaff = anyStaffBooking ? null : staffMembers.find((s) => s.id === staffId);
+      if (
+        anyStaffBooking
+          ? !getEligiblePublicStaffForService(selectedService).length
+          : !stillValidStaff || stillValidStaff.active === false
+      ) {
         showToast(
           t("bookStaffNoLongerAvailable", "This team member is no longer available. Please choose someone else."),
           "error"
@@ -178108,6 +180494,11 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       const recurring = getPublicRecurringSelection();
       const isRecurringSeries = recurring.rule === "weekly" || recurring.rule === "biweekly";
       let occurrenceDates = null;
+
+      if (isRecurringSeries && anyStaffBooking) {
+        showToast(t("bookAnyStaffNoRepeat", "Repeat bookings need a specific team member."), "error");
+        return;
+      }
 
       if (isRecurringSeries) {
         occurrenceDates = buildRecurringOccurrenceDates(
@@ -178227,6 +180618,7 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
         customerEmail: email || currentUser.email || null,
         notes: notes || null,
         staffId,
+        anyStaff: anyStaffBooking,
         customerUserId: verifiedCustomer.userId,
         bookingStatus: "Confirmed",
         requireAuthenticatedCustomer: true
@@ -178392,8 +180784,11 @@ html[data-xbook-style="metal"][data-xbook-theme="dark"] #publicBusinessGalleryLi
       if (staffId) {
         return slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staffId);
       }
+      // Free when at least one member who performs this service is free.
       return !activeStaff.some(
-        (staff) => !slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staff.id)
+        (staff) =>
+          staffPerformsService(staff.id, serviceId) &&
+          !slotConflictsForStaff(date, time, serviceId, ignoreBookingId, staff.id)
       );
     }
 

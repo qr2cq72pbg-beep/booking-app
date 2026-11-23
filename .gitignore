@@ -10,3 +10,7 @@ www/*
 # ios/
 # android/
 *.zip
+
+# Local release artifacts and production database backups (never commit: binaries, customer data)
+release-builds/
+backups/
