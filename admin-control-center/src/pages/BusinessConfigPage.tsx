@@ -547,6 +547,9 @@ function StaffEditor({ member, config, token, run }: { member: StaffRow; config:
         <p className="notice" style={{ marginTop: 0 }}>
           „Целосен преглед“ отвора извештаи, аналитика, приходи и сите клиенти со контакти (само читање). Доделете го само на партнери и менаџери.
         </p>
+        <Check label="Може сам да закажува термини (само за себе)" checked={member.can_create_bookings}
+          onChange={(v) => void run(() => saveStaff(token, id, { id: member.id, name: member.name, role: member.role, active: member.active, can_create_bookings: v }), "Зачувано.")} />
+        <p className="muted" style={{ marginTop: 0 }}>Промените се зачувуваат веднаш. Измена и откажување на термини останува само кај сопственикот.</p>
         {code ? (
           <div className="notice">
             Код за вработениот: <strong className="code">{code.code}</strong> · важи до {formatDateTime(code.expires_at)} · само еднаш.

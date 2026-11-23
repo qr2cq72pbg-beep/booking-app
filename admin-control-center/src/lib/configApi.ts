@@ -60,6 +60,7 @@ export type StaffRow = {
   access_enabled: boolean;
   access_scope: "own" | "all" | "full";
   access_connected: boolean;
+  can_create_bookings: boolean;
 };
 export type Onboarding = {
   status: "draft" | "invited" | "active";
