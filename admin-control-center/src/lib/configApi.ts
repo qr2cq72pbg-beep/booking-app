@@ -58,7 +58,7 @@ export type StaffRow = {
   uses_business_hours: boolean;
   weekly_hours: DayHours[];
   access_enabled: boolean;
-  access_scope: "own" | "all";
+  access_scope: "own" | "all" | "full";
   access_connected: boolean;
 };
 export type Onboarding = {
@@ -159,7 +159,7 @@ export const addClosedDays = (token: string, businessId: string, dates: string[]
   call(token, "add_closed_days", { business_id: businessId, dates, reason });
 export const deleteClosedDay = (token: string, businessId: string, date: string) =>
   call(token, "delete_closed_day", { business_id: businessId, date });
-export const setStaffAccessScope = (token: string, businessId: string, staffId: string, scope: "own" | "all") =>
+export const setStaffAccessScope = (token: string, businessId: string, staffId: string, scope: "own" | "all" | "full") =>
   call(token, "set_staff_access_scope", { business_id: businessId, staff_id: staffId, scope });
 export async function issueStaffCode(token: string, businessId: string, staffId: string) {
   const res = await call(token, "issue_staff_code", { business_id: businessId, staff_id: staffId });

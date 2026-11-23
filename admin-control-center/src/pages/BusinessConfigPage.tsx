@@ -538,7 +538,15 @@ function StaffEditor({ member, config, token, run }: { member: StaffRow; config:
         <div className="check-list">
           <label className="check-row"><input type="radio" name={`scope-${member.id}`} checked={member.access_scope === "own"} onChange={() => void run(() => setStaffAccessScope(token, id, member.id, "own"), "Зачувано.")} /><span>Само свои термини</span></label>
           <label className="check-row"><input type="radio" name={`scope-${member.id}`} checked={member.access_scope === "all"} onChange={() => void run(() => setStaffAccessScope(token, id, member.id, "all"), "Зачувано.")} /><span>Сите термини на бизнисот</span></label>
+          <label className="check-row"><input type="radio" name={`scope-${member.id}`} checked={member.access_scope === "full"} onChange={() => {
+            if (window.confirm("Целосен преглед на бизнисот: вработениот ќе гледа извештаи, аналитика, приходи и сите клиенти со телефони и е-пошта (само читање, без измени). Да продолжам?")) {
+              void run(() => setStaffAccessScope(token, id, member.id, "full"), "Зачувано.");
+            }
+          }} /><span>Целосен преглед на бизнисот (само читање)</span></label>
         </div>
+        <p className="notice" style={{ marginTop: 0 }}>
+          „Целосен преглед“ отвора извештаи, аналитика, приходи и сите клиенти со контакти (само читање). Доделете го само на партнери и менаџери.
+        </p>
         {code ? (
           <div className="notice">
             Код за вработениот: <strong className="code">{code.code}</strong> · важи до {formatDateTime(code.expires_at)} · само еднаш.
